@@ -1,12 +1,163 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="dark light" />
-    <title>Launcher Dashboard</title>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GESTIONALE</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:#0b0f18;
+      color:#fff;
+    }
+
+    header{
+      padding:24px;
+      text-align:center;
+      border-bottom:1px solid #222;
+    }
+
+    header h1{
+      margin:0;
+      letter-spacing:6px;
+    }
+
+    header p{
+      margin-top:8px;
+      color:#aaa;
+      font-size:14px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:20px;
+      padding:30px;
+      padding-bottom:120px;
+    }
+
+    .card{
+      background:#111827;
+      border:1px solid #222;
+      border-radius:14px;
+      padding:20px;
+      cursor:pointer;
+      transition:all .2s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-6px);
+      border-color:#d8b34a;
+      box-shadow:0 0 18px rgba(216,179,74,.4);
+    }
+
+    .card i{
+      font-size:26px;
+      color:#d8b34a;
+      margin-bottom:14px;
+    }
+
+    .card h3{
+      margin:0 0 6px;
+    }
+
+    .card p{
+      margin:0;
+      font-size:14px;
+      color:#bbb;
+    }
+
+    footer{
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      background:#0b0f18;
+      border-top:1px solid #222;
+      display:flex;
+      justify-content:space-around;
+      padding:14px 0;
+    }
+
+    footer button{
+      background:none;
+      border:none;
+      color:#aaa;
+      font-size:12px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      cursor:pointer;
+    }
+
+    footer button i{
+      font-size:18px;
+      margin-bottom:4px;
+    }
+
+    footer button:hover{
+      color:#d8b34a;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>GESTIONALE</h1>
+  <p>Dashboard operativa</p>
+</header>
+
+<section class="grid">
+
+  <div class="card" onclick="openLink('https://josephsocialmedia2-spec.github.io/acquisizione/')">
+    <i class="fa-solid fa-building"></i>
+    <h3>Acquisizione</h3>
+    <p>Gestione acquisizione</p>
+  </div>
+
+  <div class="card" onclick="openLink('https://josephsocialmedia2-spec.github.io/lead/')">
+    <i class="fa-solid fa-user-check"></i>
+    <h3>Lead</h3>
+    <p>Gestione contatti</p>
+  </div>
+
+  <div class="card" onclick="openLink('https://josephsocialmedia2-spec.github.io/promozione/')">
+    <i class="fa-solid fa-bullhorn"></i>
+    <h3>Promozione</h3>
+    <p>Campagne e visibilità</p>
+  </div>
+
+  <div class="card" onclick="openLink('https://josephsocialmedia2-spec.github.io/Digital-Sale-Immobiliare/')">
+    <i class="fa-solid fa-handshake"></i>
+    <h3>Digital Sale</h3>
+    <p>Vendita immobiliare</p>
+  </div>
+
+</section>
+
+<footer>
+  <button onclick="scrollToTop()"><i class="fa-solid fa-house"></i>Home</button>
+  <button><i class="fa-solid fa-chart-line"></i>Stats</button>
+  <button><i class="fa-solid fa-plus-circle"></i>Nuovo</button>
+  <button><i class="fa-solid fa-list-check"></i>Task</button>
+  <button><i class="fa-solid fa-gear"></i>Setup</button>
+</footer>
+
+<script>
+  function openLink(url){
+    window.open(url,"_blank");
+  }
+  function scrollToTop(){
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+</script>
+
+</body>
 </html>
