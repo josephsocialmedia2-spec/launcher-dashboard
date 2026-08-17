@@ -1,169 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GESTIONALE</title>
-
-  <!-- Font Awesome -->
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-
-  <style>
-    body{
-      margin:0;
-      font-family: Arial, Helvetica, sans-serif;
-      background:#0b0f18;
-      color:#fff;
-    }
-
-    header{
-      padding:24px;
-      text-align:center;
-      border-bottom:1px solid #222;
-    }
-
-    header h1{
-      margin:0;
-      letter-spacing:6px;
-    }
-
-    header p{
-      margin-top:8px;
-      color:#aaa;
-      font-size:14px;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:20px;
-      padding:30px;
-      padding-bottom:120px;
-    }
-
-    .card{
-      background:#111827;
-      border:1px solid #222;
-      border-radius:14px;
-      padding:20px;
-      cursor:pointer;
-      transition:all .2s ease;
-    }
-
-    .card:hover{
-      transform:translateY(-6px);
-      border-color:#d8b34a;
-      box-shadow:0 0 18px rgba(216,179,74,.4);
-    }
-
-    .card i{
-      font-size:26px;
-      color:#d8b34a;
-      margin-bottom:14px;
-    }
-
-    .card h3{
-      margin:0 0 6px;
-    }
-
-    .card p{
-      margin:0;
-      font-size:14px;
-      color:#bbb;
-    }
-
-    footer{
-      position:fixed;
-      bottom:0;
-      left:0;
-      right:0;
-      background:#0b0f18;
-      border-top:1px solid #222;
-      display:flex;
-      justify-content:space-around;
-      padding:14px 0;
-    }
-
-    footer button{
-      background:none;
-      border:none;
-      color:#aaa;
-      font-size:12px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      cursor:pointer;
-    }
-
-    footer button i{
-      font-size:18px;
-      margin-bottom:4px;
-    }
-
-    footer button:hover{
-      color:#d8b34a;
-    }
-  </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F1 Gestionale</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--bg:#070907;--p:#101510;--p2:#171d18;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--sea:#50c9e8;--gold:#d8b34a;--academy:#b89cff}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt);font-family:Arial,Helvetica,sans-serif}header{padding:28px 18px 22px;text-align:center;border-bottom:1px solid #1c251e}header .ey{color:var(--g);font-size:11px;font-weight:900;letter-spacing:.18em}header h1{margin:7px 0 4px;letter-spacing:.12em;font-size:clamp(28px,5vw,48px)}header p{margin:0;color:var(--mut);font-size:13px}.wrap{max-width:1240px;margin:auto;padding:22px 16px 100px}.section-title{display:flex;align-items:center;gap:10px;margin:28px 0 12px}.section-title::after{content:'';height:1px;flex:1;background:var(--line)}.section-title h2{margin:0;font-size:15px;letter-spacing:.10em}.section-title.ops h2{color:var(--g)}.section-title.academy h2{color:var(--academy)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.card{position:relative;display:flex;flex-direction:column;min-height:180px;padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--p);color:#fff;text-decoration:none;transition:.18s}.card:hover{transform:translateY(-3px);border-color:var(--g);box-shadow:0 16px 34px rgba(0,0,0,.25)}.card .icon{width:46px;height:46px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,var(--g),#20ce70);color:#07100a;font-size:21px;margin-bottom:13px}.card h3{margin:0 0 7px;font-size:16px}.card p{margin:0;color:var(--mut);font-size:12px;line-height:1.45}.card .go{margin-top:auto;padding-top:14px;color:var(--g);font-size:10px;font-weight:900;letter-spacing:.08em}.organizer{grid-column:1/-1;min-height:auto;padding:22px;border:2px solid rgba(57,242,138,.62);background:radial-gradient(circle at 85% 10%,rgba(57,242,138,.18),transparent 32%),linear-gradient(135deg,#08120c,#101b13)}.organizer-top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;flex-wrap:wrap}.organizer .icon{background:linear-gradient(135deg,var(--gold),var(--g))}.organizer h3{font-size:clamp(20px,3vw,28px)}.mini{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}.mini a{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border:1px solid #334238;border-radius:9px;background:#121a14;color:#fff;text-decoration:none;font-size:10px;font-weight:900}.mini a:hover{border-color:var(--g)}.open-org{display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border-radius:10px;background:var(--g);color:#07100a;text-decoration:none;font-weight:900;font-size:11px}.academy-card{border-color:#393148;background:linear-gradient(145deg,#121017,#17141f)}.academy-card:hover{border-color:var(--academy)}.academy-card .icon{background:linear-gradient(135deg,var(--academy),var(--sea))}.academy-card .go{color:var(--academy)}.status{position:absolute;top:12px;right:12px;padding:5px 7px;border-radius:999px;border:1px solid #35513d;color:var(--g);font-size:7px;font-weight:900;letter-spacing:.08em}.note{margin-top:22px;padding:13px 15px;border:1px solid var(--line);border-radius:12px;background:#0c100d;color:var(--mut);font-size:11px;line-height:1.55}footer{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:28px;padding:13px;background:rgba(7,9,7,.95);border-top:1px solid var(--line);backdrop-filter:blur(8px)}footer a{color:var(--mut);text-decoration:none;font-size:11px;font-weight:800}footer a:hover{color:var(--g)}@media(max-width:650px){.wrap{padding-left:12px;padding-right:12px}.organizer-top{display:block}.open-org{margin-top:14px}.grid{grid-template-columns:1fr}.card{min-height:155px}}
+</style>
 </head>
-
 <body>
-
-<header>
-  <h1>GESTIONALE</h1>
-  <p>Dashboard operativa</p>
-</header>
-
+<header><div class="ey">F1 IMMOBILIARE</div><h1>GESTIONALE</h1><p>Operatività separata dalla formazione. Il lunedì parti sempre dall'Organizer.</p></header>
+<main class="wrap">
+<div class="section-title ops"><h2>ORGANIZER DEL LUNEDÌ</h2></div>
 <section class="grid">
-
-  <div class="card" onclick="openLink('https://josephsocialmedia2-spec.github.io/acquisizione/')">
-    <i class="fa-solid fa-building"></i>
-    <h3>Acquisizione</h3>
-    <p>Gestione acquisizione</p>
-  </div>
-
-  <div class="card" onclick="openLink('https://josephsocialmedia2-spec.github.io/lead/')">
-    <i class="fa-solid fa-user-check"></i>
-    <h3>Lead</h3>
-    <p>Gestione contatti</p>
-  </div>
-
-  <div class="card" onclick="openLink('https://josephsocialmedia2-spec.github.io/promozione/')">
-    <i class="fa-solid fa-bullhorn"></i>
-    <h3>Promozione</h3>
-    <p>Campagne e visibilità</p>
-  </div>
-
-  <div class="card" onclick="openLink('https://josephsocialmedia2-spec.github.io/Digital-Sale-Immobiliare/')">
-    <i class="fa-solid fa-handshake"></i>
-    <h3>Digital Sale</h3>
-    <p>Vendita immobiliare</p>
-  </div>
-
-  <div class="card" onclick="openLink('https://josephsocialmedia2-spec.github.io/immobili-in-zona/f1_network/index.html')">
-    <i class="fa-solid fa-people-group"></i>
-    <h3>F1 Network Territoriale</h3>
-    <p>Professionisti locali, contatti e appuntamenti del lunedì</p>
-  </div>
-
+<article class="card organizer"><div class="organizer-top"><div><div class="icon"><i class="fa-solid fa-route"></i></div><h3>ORGANIZER LUNEDÌ</h3><p>Ti guida nell'ordine corretto: agenda → social → radar → CRM → Network territoriale → acquisizione/follow-up → chiusura giornata.</p></div><a class="open-org" href="organizer-lunedi.html"><i class="fa-solid fa-play"></i> APRI ORGANIZER</a></div><div class="mini"><a target="_blank" rel="noopener" href="https://calendar.google.com/calendar/u/0/r"><i class="fa-solid fa-calendar-days"></i> Calendar</a><a target="_blank" rel="noopener" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html"><i class="fa-solid fa-calendar-week"></i> Social lunedì</a><a target="_blank" rel="noopener" href="https://chatgpt.com/c/6a800733-4604-83eb-a50c-237c59e63bbd"><i class="fa-solid fa-radar"></i> Radar</a><a target="_blank" rel="noopener" href="https://josephsocialmedia2-spec.github.io/immobili-in-zona/f1_network/index.html"><i class="fa-solid fa-people-group"></i> F1 Network</a><a target="_blank" rel="noopener" href="https://script.google.com/macros/s/AKfycbzrN3cgNVdkxbXBFq-8Z2FyRfeowXKhHjK7dBJ28iJb8lO-XSxF1BWbgRgxs70p5_W7/exec"><i class="fa-solid fa-address-book"></i> CRM</a></div></article>
 </section>
 
-<footer>
-  <button onclick="scrollToTop()"><i class="fa-solid fa-house"></i>Home</button>
-  <button><i class="fa-solid fa-chart-line"></i>Stats</button>
-  <button><i class="fa-solid fa-plus-circle"></i>Nuovo</button>
-  <button><i class="fa-solid fa-list-check"></i>Task</button>
-  <button><i class="fa-solid fa-gear"></i>Setup</button>
-</footer>
+<div class="section-title ops"><h2>OPERATIVITÀ F1</h2></div>
+<section class="grid">
+<a class="card" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/u/0/r"><span class="status">PRIMA ATTIVITÀ</span><div class="icon"><i class="fa-solid fa-calendar-days"></i></div><h3>Google Calendar</h3><p>Appuntamenti, richiami e organizzazione della giornata.</p><span class="go">APRI →</span></a>
+<a class="card" target="_blank" rel="noopener" href="https://josephsocialmedia2-spec.github.io/immobili-in-zona/f1_network/index.html"><span class="status">OGNI LUNEDÌ</span><div class="icon"><i class="fa-solid fa-people-group"></i></div><h3>F1 Network Territoriale</h3><p>Professionisti locali, telefonate, appuntamenti e costruzione rete Comune per Comune.</p><span class="go">APRI NETWORK →</span></a>
+<a class="card" target="_blank" rel="noopener" href="https://chatgpt.com/c/6a800733-4604-83eb-a50c-237c59e63bbd"><div class="icon"><i class="fa-solid fa-radar"></i></div><h3>Nuovi immobili trovati</h3><p>Radar F1: nuovi annunci, privati, ribassi, ripubblicazioni e opportunità.</p><span class="go">APRI RADAR →</span></a>
+<a class="card" target="_blank" rel="noopener" href="https://script.google.com/macros/s/AKfycbzrN3cgNVdkxbXBFq-8Z2FyRfeowXKhHjK7dBJ28iJb8lO-XSxF1BWbgRgxs70p5_W7/exec"><div class="icon"><i class="fa-solid fa-address-book"></i></div><h3>Contatti / CRM</h3><p>Registra lead, richiami, appuntamenti, stati ed esiti delle attività.</p><span class="go">APRI CRM →</span></a>
+<a class="card" target="_blank" rel="noopener" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html"><span class="status">OGNI LUNEDÌ</span><div class="icon"><i class="fa-solid fa-calendar-week"></i></div><h3>Lunedì — Social F1</h3><p>Controlla Reel e caroselli e programma l'intera settimana.</p><span class="go">APRI CONTROLLO SOCIAL →</span></a>
+<a class="card" target="_blank" rel="noopener" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/content-center.html"><div class="icon"><i class="fa-solid fa-layer-group"></i></div><h3>Open Social Scheduler</h3><p>Centro contenuti per creare, organizzare e programmare le pubblicazioni.</p><span class="go">APRI SCHEDULER →</span></a>
+<a class="card" target="_blank" rel="noopener" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/portali-pubblicazione.html"><div class="icon"><i class="fa-solid fa-building-circle-arrow-right"></i></div><h3>Pubblica sui portali</h3><p>Accesso centralizzato ai principali portali immobiliari.</p><span class="go">APRI PORTALI →</span></a>
+<a class="card" target="_blank" rel="noopener" href="https://josephsocialmedia2-spec.github.io/immobili-in-zona/"><div class="icon"><i class="fa-solid fa-house"></i></div><h3>Annunci immobiliari</h3><p>Consulta gli annunci e le opportunità territoriali.</p><span class="go">APRI ANNUNCI →</span></a>
+<a class="card" target="_blank" rel="noopener" href="https://f1immobiliare.com/pages/acquisizione-immobiliare"><div class="icon"><i class="fa-solid fa-phone"></i></div><h3>Script acquisizione immobiliare</h3><p>Script operativo per le telefonate di acquisizione immobili.</p><span class="go">APRI SCRIPT →</span></a>
+<a class="card" target="_blank" rel="noopener" href="https://f1immobiliare.com/pages/acquisizione-siti-internet-social"><div class="icon"><i class="fa-solid fa-laptop"></i></div><h3>Script acquisizione aziende</h3><p>Script operativo per siti internet, social e acquisizione clienti.</p><span class="go">APRI SCRIPT →</span></a>
+<a class="card" target="_blank" rel="noopener" href="https://cdn.shopify.com/s/files/1/1046/2730/6835/files/F1_Immobiliare_Procedura_Premium_Prequalifica_Venditore_COMPLETA.pdf?v=1784820648"><div class="icon"><i class="fa-solid fa-file-circle-check"></i></div><h3>Prequalifica venditore</h3><p>Procedura premium completa prima della gestione commerciale del venditore.</p><span class="go">APRI PROCEDURA →</span></a>
+<a class="card" target="_blank" rel="noopener" href="https://cdn.shopify.com/s/files/1/1046/2730/6835/files/F1_Immobiliare_-_Porta_a_Porta_Volantino_Premium.pdf?v=1784845457"><div class="icon"><i class="fa-solid fa-envelopes-bulk"></i></div><h3>Distribuzione volantini</h3><p>Procedura premium porta a porta.</p><span class="go">APRI PROCEDURA →</span></a>
+<a class="card" target="_blank" rel="noopener" href="https://f1immobiliare.com/pages/prossima-campagna"><div class="icon"><i class="fa-brands fa-whatsapp"></i></div><h3>Campagna WhatsApp</h3><p>Preparazione materiale, invio e registrazione della prossima campagna.</p><span class="go">APRI CAMPAGNA →</span></a>
+<a class="card" target="_blank" rel="noopener" href="https://cdn.shopify.com/s/files/1/1046/2730/6835/files/F1_Immobiliare_Piano_Contenuti_Annuale_2026_2027.xlsx?v=1784943531"><div class="icon"><i class="fa-solid fa-table"></i></div><h3>Piano contenutistico annuale</h3><p>Piano F1 Immobiliare 2026–2027.</p><span class="go">APRI PIANO →</span></a>
+</section>
 
-<script>
-  function openLink(url){
-    window.open(url,"_blank");
-  }
-  function scrollToTop(){
-    window.scrollTo({top:0,behavior:"smooth"});
-  }
-</script>
-
-</body>
-</html>
+<div class="section-title academy"><h2>F1 ACADEMY · FORMAZIONE</h2></div>
+<section class="grid">
+<a class="card academy-card" target="_blank" rel="noopener" href="https://f1immobiliare.com/pages/role-play-academy"><div class="icon"><i class="fa-solid fa-people-arrows"></i></div><h3>Role Play Academy</h3><p>Simulazioni, allenamento e gestione delle obiezioni.</p><span class="go">APRI ACADEMY →</span></a>
+<a class="card academy-card" target="_blank" rel="noopener" href="https://www.fad-anfa.it/login/index.php#section-3-"><div class="icon"><i class="fa-solid fa-graduation-cap"></i></div><h3>FAD ANFA</h3><p>Formazione e percorso di studio sulla piattaforma FAD.</p><span class="go">APRI FAD →</span></a>
+<a class="card academy-card" target="_blank" rel="noopener" href="https://f1immobiliare.com/pages/f1-academy"><div class="icon"><i class="fa-solid fa-chalkboard-user"></i></div><h3>F1 Academy</h3><p>Manuali, video e formazione dei funzionari.</p><span class="go">APRI F1 ACADEMY →</span></a>
+<a class="card academy-card" target="_blank" rel="noopener" href="https://f1immobiliare.com/pages/acquisizione-giornaliera"><div class="icon"><i class="fa-solid fa-book-open"></i></div><h3>Teoria F1 Academy</h3><p>Metodo, principi e acquisizione giornaliera.</p><span class="go">APRI TEORIA →</span></a>
+<a class="card academy-card" target="_blank" rel="noopener" href="https://cdn.shopify.com/s/files/1/1046/2730/6835/files/ChatGPT_Image_23_lug_2026_11_33_49.png?v=1784851165"><div class="icon"><i class="fa-solid fa-euro-sign"></i></div><h3>Guadagni funzionario</h3><p>Schema compensi e valori economici di riferimento.</p><span class="go">APRI SCHEMA →</span></a>
+</section>
+<div class="note"><b>Struttura:</b> la parte alta serve per lavorare. La sezione F1 Academy serve per formarsi e non interrompe il flusso operativo del lunedì.</div>
+</main>
+<footer><a href="organizer-lunedi.html"><i class="fa-solid fa-route"></i> Organizer lunedì</a><a href="#"><i class="fa-solid fa-house"></i> Home</a></footer>
+</body></html>
