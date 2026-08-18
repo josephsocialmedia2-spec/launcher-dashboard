@@ -1,0 +1,116 @@
+name: F1 Gruppi Facebook Reminder
+
+on:
+  schedule:
+    - cron: '30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Crea promemoria gruppi dovuti
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const cfg = JSON.parse(fs.readFileSync('f1-gruppi-social.json', 'utf8'));
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const PREFIX = '[F1 GRUPPI] ';
+
+            function romeParts(date = new Date()) {
+              const parts = new Intl.DateTimeFormat('en-CA', {
+                timeZone: 'Europe/Rome', year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+              }).formatToParts(date);
+              return Object.fromEntries(parts.map(p => [p.type, p.value]));
+            }
+            function romeYMD(date = new Date()) {
+              const p = romeParts(date);
+              return `${p.year}-${p.month}-${p.day}`;
+            }
+            function addDays(ymd, days) {
+              const d = new Date(`${ymd}T12:00:00Z`);
+              d.setUTCDate(d.getUTCDate() + days);
+              return d.toISOString().slice(0, 10);
+            }
+
+            const now = new Date();
+            const local = romeParts(now);
+            const manual = context.eventName === 'workflow_dispatch';
+            if (!manual && Number(local.hour) !== 8) {
+              core.info(`Ora italiana ${local.hour}:${local.minute}: nessun promemoria, attendo le 08:30.`);
+              return;
+            }
+
+            const today = romeYMD(now);
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner, repo, state: 'all', per_page: 100, sort: 'created', direction: 'desc'
+            });
+
+            for (const g of cfg.groups) {
+              if (!g.commercialAllowed || g.classification === 'RED') continue;
+
+              const prefix = `${PREFIX}${g.id} —`;
+              const related = issues.filter(i => !i.pull_request && i.title.startsWith(prefix));
+              const open = related.find(i => i.state === 'open');
+              if (open) {
+                core.info(`${g.name}: promemoria già aperto #${open.number}.`);
+                continue;
+              }
+
+              const closed = related
+                .filter(i => i.state === 'closed' && i.closed_at)
+                .sort((a,b) => new Date(b.closed_at) - new Date(a.closed_at));
+
+              let due = g.initialDue;
+              if (closed.length && g.intervalDays) {
+                due = addDays(romeYMD(new Date(closed[0].closed_at)), g.intervalDays);
+              }
+              if (!due || due > today) {
+                core.info(`${g.name}: prossima data ${due || 'non prevista'}.`);
+                continue;
+              }
+
+              const rules = (g.rules || []).map(r => `- ${r}`).join('\n');
+              const body = [
+                `## PUBBLICAZIONE F1 DA ESEGUIRE`,
+                ``,
+                `**Gruppo:** ${g.name}`,
+                `**Zona:** ${g.zone || '—'}`,
+                `**Data utile:** ${due}`,
+                `**Contenuto previsto:** ${g.contentTitle || '—'}`,
+                g.facebookUrl ? `**Link gruppo:** ${g.facebookUrl}` : `**Link gruppo:** da inserire nel registro`,
+                ``,
+                `### Regole da rispettare`,
+                rules || '- Nessuna regola registrata.',
+                ``,
+                `### Regola operativa F1`,
+                g.operationalNote || '—',
+                ``,
+                `### Procedura`,
+                `- [ ] Apri il gruppo Facebook`,
+                `- [ ] Controlla che le regole non siano cambiate`,
+                `- [ ] Pubblica il contenuto previsto`,
+                `- [ ] Se hai modificato il contenuto, scrivilo in un commento a questa Issue`,
+                `- [ ] **Chiudi questa Issue solo dopo aver pubblicato**`,
+                ``,
+                `La data di chiusura dell'Issue viene usata come data dell'ultima pubblicazione e fa partire il conteggio per la prossima uscita.`
+              ].join('\n');
+
+              const created = await github.rest.issues.create({
+                owner, repo,
+                title: `${prefix} PUBBLICA ORA — ${today}`,
+                body,
+                assignees: [owner]
+              });
+              core.info(`Creato promemoria #${created.data.number} per ${g.name}.`);
+            }
