@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "timezone": "Europe/Rome",
+  "reminderHour": 8,
+  "reminderMinute": 30,
+  "groups": [
+    {
+      "id": "susa-e-si-riusa",
+      "name": "Susa e si Riusa",
+      "zone": "Valle di Susa / Provincia di Torino",
+      "facebookUrl": "",
+      "classification": "RED",
+      "commercialAllowed": false,
+      "intervalDays": null,
+      "initialDue": null,
+      "contentTitle": "Nessun contenuto commerciale F1",
+      "rules": [
+        "Autopromozione, spam e link irrilevanti non sono permessi.",
+        "I beni pubblicati devono essere ceduti esclusivamente a titolo gratuito.",
+        "È vietata la vendita.",
+        "È vietata la donazione di medicinali.",
+        "Post e commenti devono essere educati.",
+        "L'oggetto viene assegnato al primo che commenta; in caso di mancato ritiro passa al secondo.",
+        "Il ritiro avviene nel luogo indicato dal donatore."
+      ],
+      "operationalNote": "NON PUBBLICARE post promozionali F1 Immobiliare in questo gruppo. Il gruppo resta nel registro per evitare errori."
+    },
+    {
+      "id": "sei-di-sant-antonino-di-susa",
+      "name": "Sei di Sant'Antonino di Susa",
+      "zone": "Sant'Antonino di Susa",
+      "facebookUrl": "",
+      "classification": "GREEN_CONTROLLED",
+      "commercialAllowed": true,
+      "intervalDays": 30,
+      "initialDue": "2026-08-18",
+      "contentTitle": "F1 Immobiliare — valutazione strategica / ricerca immobili a Sant'Antonino di Susa",
+      "rules": [
+        "Annunci di lavoro: indicare nome della ditta e dettagli; altrimenti vengono cancellati.",
+        "I post pubblicitari possono essere inseriti una sola volta; per riportarli in alto usare i commenti.",
+        "Vietati commenti offensivi.",
+        "Vietati messaggi a carattere religioso.",
+        "Pubblicità di negozi o palestre: massimo 1 volta al mese.",
+        "Per artigianato: più foto e massimo 1 post a settimana.",
+        "I post che non rispettano le regole vengono cancellati."
+      ],
+      "operationalNote": "Per F1 adottiamo prudenzialmente una frequenza massima di 1 nuovo post promozionale ogni 30 giorni. Evitare duplicati; se necessario riportare in alto il post esistente con un commento, in linea con il regolamento."
+    }
+  ]
+}
