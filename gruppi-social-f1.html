@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F1 Immobiliare · Calendario Gruppi Facebook</title>
+<style>
+:root{--bg:#070907;--panel:#101510;--panel2:#151c17;--line:#29342c;--txt:#f7faf7;--mut:#a9b5ac;--green:#39f28a;--yellow:#f1c75b;--red:#ff6767;--blue:#66c9ff}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt);font-family:Arial,Helvetica,sans-serif}.wrap{max-width:1180px;margin:auto;padding:26px 16px 70px}header{display:flex;gap:18px;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;margin-bottom:20px}.brand{font-size:11px;font-weight:900;letter-spacing:.18em;color:var(--green)}h1{margin:5px 0 5px;font-size:clamp(26px,4vw,44px)}header p{margin:0;color:var(--mut);font-size:13px;max-width:760px;line-height:1.5}.actions{display:flex;gap:8px;flex-wrap:wrap}button,.btn{border:1px solid var(--line);background:#121913;color:#fff;padding:10px 12px;border-radius:10px;font-weight:800;font-size:11px;cursor:pointer;text-decoration:none}button:hover,.btn:hover{border-color:var(--green)}.primary{background:var(--green);color:#07100a;border-color:var(--green)}.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.kpi{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}.kpi b{display:block;font-size:26px}.kpi span{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em}.today{border:1px solid rgba(57,242,138,.55);background:radial-gradient(circle at 90% 0,rgba(57,242,138,.14),transparent 34%),var(--panel);border-radius:16px;padding:18px;margin-bottom:18px}.today h2,.section h2{font-size:15px;margin:0 0 12px;letter-spacing:.08em}.today-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}.due-card{background:#0c120e;border:1px solid #304138;border-radius:13px;padding:14px}.due-card h3{margin:6px 0;font-size:16px}.due-card p{margin:5px 0;color:var(--mut);font-size:12px;line-height:1.45}.badge{display:inline-flex;padding:5px 8px;border-radius:999px;font-size:9px;font-weight:900;letter-spacing:.07em}.green{color:var(--green);border:1px solid rgba(57,242,138,.45);background:rgba(57,242,138,.08)}.red{color:var(--red);border:1px solid rgba(255,103,103,.45);background:rgba(255,103,103,.08)}.yellow{color:var(--yellow);border:1px solid rgba(241,199,91,.45);background:rgba(241,199,91,.08)}.blue{color:var(--blue);border:1px solid rgba(102,201,255,.45);background:rgba(102,201,255,.08)}.row-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}.section{margin-top:22px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel)}table{width:100%;border-collapse:collapse;min-width:920px}th,td{text-align:left;padding:12px;border-bottom:1px solid #202a22;vertical-align:top}th{font-size:9px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;background:#0d120e;position:sticky;top:0}td{font-size:11px;line-height:1.4}.name{font-size:13px;font-weight:900}.muted{color:var(--mut)}.history{display:grid;gap:8px}.history-item{display:flex;justify-content:space-between;gap:12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px}.history-item strong{display:block;font-size:12px}.history-item small{color:var(--mut)}.empty{padding:18px;border:1px dashed var(--line);border-radius:12px;color:var(--mut);font-size:12px}.note{margin-top:18px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;color:var(--mut);font-size:11px;line-height:1.5;background:#0b0f0c}dialog{max-width:650px;width:calc(100% - 30px);border:1px solid var(--line);border-radius:16px;background:#0d130f;color:#fff;padding:0}dialog::backdrop{background:rgba(0,0,0,.7)}.dialog-head{display:flex;justify-content:space-between;align-items:center;padding:15px 17px;border-bottom:1px solid var(--line)}.dialog-body{padding:17px}.dialog-body li{margin:8px 0;color:#d7dfd9;font-size:12px;line-height:1.45}.close{background:transparent;font-size:18px;padding:4px 8px}.warn{color:var(--yellow)}@media(max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}header{align-items:flex-start}.wrap{padding-top:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<div><div class="brand">F1 IMMOBILIARE · SOCIAL CONTROL</div><h1>Calendario Gruppi Facebook</h1><p>Ti dice dove pubblicare, quando puoi ripubblicare e cosa risulta già pubblicato. La chiusura del promemoria GitHub registra la pubblicazione e avvia automaticamente il conteggio per la prossima data utile.</p></div>
+<div class="actions"><button id="notifyBtn">ATTIVA NOTIFICHE BROWSER</button><button onclick="loadAll()">AGGIORNA</button><a class="btn" href="https://github.com/josephsocialmedia2-spec/launcher-dashboard/issues" target="_blank" rel="noopener">PROMEMORIA GITHUB</a></div>
+</header>
+
+<section class="kpis">
+<div class="kpi"><b id="kDue">–</b><span>Da pubblicare ora</span></div>
+<div class="kpi"><b id="kFuture">–</b><span>Programmati</span></div>
+<div class="kpi"><b id="kBlocked">–</b><span>Gruppi bloccati</span></div>
+<div class="kpi"><b id="kDone">–</b><span>Pubblicazioni registrate</span></div>
+</section>
+
+<section class="today"><h2>OGGI · <span id="todayLabel"></span></h2><div id="todayGrid" class="today-grid"><div class="empty">Caricamento calendario…</div></div></section>
+
+<section class="section"><h2>REGISTRO GRUPPI E REGOLE</h2><div class="table-wrap"><table><thead><tr><th>Gruppo</th><th>Stato</th><th>Regola operativa</th><th>Ultima pubblicazione</th><th>Prossima data</th><th>Contenuto</th><th>Azioni</th></tr></thead><tbody id="groupsBody"></tbody></table></div></section>
+
+<section class="section"><h2>STORICO PUBBLICAZIONI</h2><div id="history" class="history"><div class="empty">Nessuna pubblicazione registrata.</div></div></section>
+
+<div class="note"><strong>Come si usa:</strong> quando compare un promemoria verde, apri l'Issue GitHub, pubblica nel gruppo e poi <strong>chiudi l'Issue</strong>. La data di chiusura diventa la data ufficiale dell'ultima pubblicazione. Il sistema impedirà di creare un nuovo promemoria prima dell'intervallo previsto. I gruppi rossi restano visibili apposta per evitare pubblicazioni vietate.</div>
+</div>
+
+<dialog id="rulesDialog"><div class="dialog-head"><strong id="rulesTitle">Regole</strong><button class="close" onclick="rulesDialog.close()">×</button></div><div class="dialog-body"><ul id="rulesList"></ul><p id="rulesNote" class="warn"></p></div></dialog>
+
+<script>
+const REPO='josephsocialmedia2-spec/launcher-dashboard';
+const ISSUE_PREFIX='[F1 GRUPPI] ';
+let CONFIG=null, ISSUES=[];
+const fmtDate=d=>new Intl.DateTimeFormat('it-IT',{timeZone:'Europe/Rome',day:'2-digit',month:'2-digit',year:'numeric'}).format(d);
+const ymdRome=d=>{const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Rome',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(d);const o=Object.fromEntries(p.map(x=>[x.type,x.value]));return `${o.year}-${o.month}-${o.day}`};
+const todayYMD=()=>ymdRome(new Date());
+const addDays=(ymd,n)=>{const d=new Date(ymd+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
+const humanYMD=ymd=>ymd?fmtDate(new Date(ymd+'T12:00:00Z')):'—';
+function groupIssues(g){return ISSUES.filter(i=>!i.pull_request && i.title.startsWith(ISSUE_PREFIX+g.id+' —'));}
+function stateFor(g){
+ if(!g.commercialAllowed||g.classification==='RED')return {kind:'blocked',label:'NON PUBBLICARE',next:null,last:null,open:null};
+ const its=groupIssues(g), open=its.find(i=>i.state==='open');
+ const closed=its.filter(i=>i.state==='closed'&&i.closed_at).sort((a,b)=>new Date(b.closed_at)-new Date(a.closed_at));
+ const last=closed.length?ymdRome(new Date(closed[0].closed_at)):null;
+ let next=last?addDays(last,g.intervalDays):g.initialDue;
+ const due=open||(!next?false:next<=todayYMD());
+ return {kind:due?'due':'future',label:open?'PROMEMORIA APERTO':due?'DA PUBBLICARE':'ATTENDI',next,last,open};
+}
+function badge(s){if(s.kind==='blocked')return '<span class="badge red">NON PUBBLICARE</span>';if(s.kind==='due')return '<span class="badge green">'+s.label+'</span>';return '<span class="badge yellow">'+s.label+'</span>'}
+function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function showRules(id){const g=CONFIG.groups.find(x=>x.id===id);rulesTitle.textContent=g.name;rulesList.innerHTML=g.rules.map(r=>'<li>'+esc(r)+'</li>').join('');rulesNote.textContent=g.operationalNote||'';rulesDialog.showModal()}
+function render(){
+ todayLabel.textContent=fmtDate(new Date());
+ let due=0,future=0,blocked=0,done=0;
+ const allClosed=ISSUES.filter(i=>!i.pull_request&&i.state==='closed'&&i.title.startsWith(ISSUE_PREFIX));done=allClosed.length;
+ const todayCards=[]; groupsBody.innerHTML='';
+ CONFIG.groups.forEach(g=>{
+   const s=stateFor(g); if(s.kind==='due')due++; else if(s.kind==='future')future++; else blocked++;
+   if(s.kind==='due'){
+     const issueUrl=s.open?s.open.html_url:'https://github.com/'+REPO+'/issues';
+     todayCards.push(`<article class="due-card"><span class="badge green">DA FARE</span><h3>${esc(g.name)}</h3><p><strong>${esc(g.contentTitle)}</strong></p><p>${esc(g.operationalNote||'')}</p><div class="row-actions"><a class="btn primary" target="_blank" rel="noopener" href="${issueUrl}">APRI PROMEMORIA</a><button onclick="showRules('${g.id}')">REGOLE</button>${g.facebookUrl?`<a class="btn" target="_blank" rel="noopener" href="${esc(g.facebookUrl)}">APRI GRUPPO</a>`:''}</div></article>`);
+   }
+   const action=s.open?`<a class="btn" target="_blank" rel="noopener" href="${s.open.html_url}">APRI ISSUE</a>`:'';
+   groupsBody.insertAdjacentHTML('beforeend',`<tr><td><div class="name">${esc(g.name)}</div><div class="muted">${esc(g.zone||'')}</div></td><td>${badge(s)}</td><td>${esc(g.operationalNote||'')}</td><td>${humanYMD(s.last)}</td><td>${s.kind==='blocked'?'BLOCCATO':humanYMD(s.next)}</td><td>${esc(g.contentTitle||'')}</td><td><div class="row-actions"><button onclick="showRules('${g.id}')">REGOLE</button>${action}${g.facebookUrl?`<a class="btn" target="_blank" rel="noopener" href="${esc(g.facebookUrl)}">GRUPPO</a>`:''}</div></td></tr>`);
+ });
+ kDue.textContent=due;kFuture.textContent=future;kBlocked.textContent=blocked;kDone.textContent=done;
+ todayGrid.innerHTML=todayCards.length?todayCards.join(''):'<div class="empty">Nessuna pubblicazione da fare oggi. Il sistema continua a controllare le prossime date utili.</div>';
+ const hist=allClosed.sort((a,b)=>new Date(b.closed_at)-new Date(a.closed_at));
+ history.innerHTML=hist.length?hist.map(i=>{const id=i.title.slice(ISSUE_PREFIX.length).split(' —')[0];const g=CONFIG.groups.find(x=>x.id===id);return `<div class="history-item"><div><strong>${esc(g?g.name:id)}</strong><small>${fmtDate(new Date(i.closed_at))} · ${esc(g?g.contentTitle:'Pubblicazione gruppo')}</small></div><a class="btn" href="${i.html_url}" target="_blank" rel="noopener">VEDI REGISTRO</a></div>`}).join(''):'<div class="empty">Nessuna pubblicazione ancora registrata. La prima verrà registrata quando chiuderai il relativo promemoria GitHub.</div>';
+ if(due>0)notifyDue(due);
+}
+async function loadAll(){
+ try{
+  const [cfgRes,issueRes]=await Promise.all([fetch('f1-gruppi-social.json?ts='+Date.now()),fetch('https://api.github.com/repos/'+REPO+'/issues?state=all&per_page=100&sort=created&direction=desc')]);
+  if(!cfgRes.ok||!issueRes.ok)throw new Error('Errore caricamento');
+  CONFIG=await cfgRes.json();ISSUES=await issueRes.json();render();
+ }catch(e){todayGrid.innerHTML='<div class="empty">Impossibile aggiornare il calendario. Riprova tra poco.</div>';console.error(e)}
+}
+async function enableNotifications(){if(!('Notification'in window)){alert('Questo browser non supporta le notifiche.');return}const p=await Notification.requestPermission();notifyBtn.textContent=p==='granted'?'NOTIFICHE ATTIVE':'NOTIFICHE NON ATTIVE';if(p==='granted')notifyDue(Number(kDue.textContent)||0)}
+function notifyDue(n){if(n>0&&'Notification'in window&&Notification.permission==='granted'){const key='f1notify-'+todayYMD();if(sessionStorage.getItem(key))return;new Notification('F1 Immobiliare',{body:`${n} gruppo/i da pubblicare oggi. Apri il calendario F1.`});sessionStorage.setItem(key,'1')}}
+notifyBtn.addEventListener('click',enableNotifications);loadAll();setInterval(loadAll,15*60*1000);
+</script>
+</body>
+</html>
