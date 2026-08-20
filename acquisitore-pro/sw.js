@@ -1,5 +1,5 @@
-const CACHE='acquisitore-pro-v10-deluxe-appartamenti-signorili';
-const ASSETS=['./manifest.webmanifest','./icon.svg','./acquisizione-vai-qui-addon.js','./reel-social-addon.js','./backup-addon.js','./piano-pubblicazione-addon.js','./strategia-dettagli-addon.js','./piano-deluxe-whatsapp-addon.js'];
+const CACHE='acquisitore-pro-v11-digital-strategist';
+const ASSETS=['./manifest.webmanifest','./icon.svg','./acquisizione-vai-qui-addon.js','./reel-social-addon.js','./backup-addon.js','./piano-pubblicazione-addon.js','./strategia-dettagli-addon.js','./piano-deluxe-whatsapp-addon.js','./digital-strategist-addon.js'];
 
 function preparaPagina(html){
   let out=html
@@ -13,6 +13,7 @@ function preparaPagina(html){
   if(!out.includes('piano-pubblicazione-addon.js'))tags.push('<script src="./piano-pubblicazione-addon.js"></script>');
   if(!out.includes('strategia-dettagli-addon.js'))tags.push('<script src="./strategia-dettagli-addon.js"></script>');
   if(!out.includes('piano-deluxe-whatsapp-addon.js'))tags.push('<script src="./piano-deluxe-whatsapp-addon.js"></script>');
+  if(!out.includes('digital-strategist-addon.js'))tags.push('<script src="./digital-strategist-addon.js"></script>');
   if(tags.length)out=out.includes('</body>')?out.replace('</body>',tags.join('')+'</body>'):out+tags.join('');
   return out;
 }
