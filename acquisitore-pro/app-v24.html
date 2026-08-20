@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#102844">
+<link rel="manifest" href="./manifest-v24.webmanifest">
+<title>Acquisitore Pro</title>
+<style>
+:root{--n:#102844;--b:#2879c8;--g:#1f9d50;--r:#d63c34;--o:#f28a1e;--bg:#f3f6fa;--l:#d9e1eb;--t:#11233b}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--t)}
+header{position:sticky;top:0;z-index:20;background:var(--n);color:#fff;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+header strong{font-size:20px}header small{display:block;font-size:10px;opacity:.8}.status{font-size:10px;padding:5px 8px;border-radius:99px;background:#ffffff22}
+.wrap{max-width:920px;margin:auto;padding:12px 12px 90px}.card{background:#fff;border:1px solid var(--l);border-radius:15px;padding:13px;margin:10px 0}
+h2,h3{margin:6px 0 10px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.big{border:0;border-radius:14px;padding:15px 10px;font-weight:900;background:#fff;box-shadow:0 2px 8px #0001}.big span{display:block;font-size:30px;margin-bottom:5px}
+.c1{background:#28a745;color:#fff}.c2{background:#2879c8;color:#fff}.c3{background:#f28a1e;color:#fff}.c4{background:#7b43bd;color:#fff}.c5{background:#17a6b6;color:#fff}.c6{background:#e94c40;color:#fff}
+.toolbar{display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn{border:0;border-radius:11px;padding:12px;font-weight:900;background:#edf2f7;color:#102844}.primary{background:var(--n);color:#fff}.green{background:var(--g);color:#fff}.blue{background:var(--b);color:#fff}.orange{background:var(--o);color:#fff}.danger{background:var(--r);color:#fff}
+.fields input,.fields textarea,.fields select{width:100%;padding:11px;margin:5px 0 9px;border:1px solid var(--l);border-radius:9px;background:white}.fields textarea{min-height:72px}
+.say{background:#eff7ff;border:1px solid #b9d6f6;border-radius:12px;padding:14px;font-size:18px;line-height:1.35;font-weight:800}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}.answers button{padding:10px;border:1px solid var(--l);border-radius:9px;background:#fff;font-weight:800}
+.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.metric{text-align:center;background:#fff;border:1px solid var(--l);border-radius:10px;padding:8px;font-size:10px}.metric b{display:block;font-size:20px}
+.goal{padding:9px;border-radius:9px;background:#fff8e5;margin:6px 0;font-size:12px;font-weight:800}.won{background:#e6f7ec;color:#176233}
+.zoneHero{width:100%;padding:16px;border:0;border-radius:15px;background:linear-gradient(90deg,#b32019,#f28a1e);color:#fff;font-size:18px;font-weight:950}
+.zoneActions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.zoneBox{margin-top:9px;padding:11px;border:1px solid #efc36d;background:#fffdf5;border-radius:11px}
+.list{display:grid;gap:7px}.row{background:#fff;border:1px solid var(--l);border-radius:10px;padding:10px}.row b{display:block;margin-bottom:4px}
+.pill{display:inline-block;border-radius:99px;padding:4px 7px;background:#eaf4ff;font-size:10px;font-weight:900;margin:2px}
+.progress{height:8px;background:#e1e7ed;border-radius:99px;overflow:hidden;margin:4px 0}.progress i{display:block;height:100%;background:#2879c8}
+details{background:#fff;border:1px solid var(--l);border-radius:11px;margin:8px 0;padding:10px}summary{font-weight:900;cursor:pointer}
+dialog{border:0;border-radius:15px;width:94%;max-width:800px;padding:0}dialog::backdrop{background:#07152499}.dh{background:var(--n);color:#fff;padding:13px;font-weight:900;display:flex;justify-content:space-between}.db{padding:13px;max-height:78vh;overflow:auto}
+.fixed{position:fixed;bottom:0;left:0;right:0;background:#102844;padding:8px;display:grid;grid-template-columns:1fr 1fr;gap:8px;z-index:30}.fixed button{padding:13px;border:0;border-radius:10px;font-weight:900;color:white}
+.small{font-size:11px;color:#68778a}.hidden{display:none!important}
+@media(max-width:650px){.metrics{grid-template-columns:1fr 1fr}.grid3{grid-template-columns:1fr}.toolbar,.zoneActions{grid-template-columns:1fr}.answers{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div><strong>ACQUISITORE PRO</strong><small>v24 · F1 IMMOBILIARE · SMARTPHONE FIRST</small></div><div id="netStatus" class="status">AVVIO</div></header>
+<main class="wrap">
+<section class="card">
+<div class="toolbar"><button id="installBtn" class="btn blue hidden">📲 INSTALLA APP</button><button id="selfCheckBtn" class="btn">🩺 AUTODIAGNOSI</button></div>
+<div id="healthLine" class="small" style="margin-top:7px">Controllo locale in corso…</div>
+</section>
+<section class="card">
+<h3>RISULTATI</h3>
+<div class="metrics">
+<div class="metric"><b id="mContacts">0</b>CONTATTI</div><div class="metric"><b id="mConv">0</b>CONVERSAZIONI</div><div class="metric"><b id="mNews">0</b>NOTIZIE</div><div class="metric"><b id="mAppt">0</b>APPUNTAMENTI</div><div class="metric"><b id="mProps">0</b>IMMOBILI</div>
+</div>
+<div id="goalsBox"></div>
+<div class="toolbar" style="margin-top:8px"><button id="newsBtn" class="btn green">📰 NOTIZIA PRESA +1</button><button id="goalsBtn" class="btn blue">🎯 IMPOSTA TRAGUARDI</button></div>
+</section>
+<section class="card"><h2>COSA HAI DAVANTI A TE?</h2><div class="grid2">
+<button class="big c1" data-situation="persona"><span>👥</span>PERSONA</button><button class="big c2" data-situation="cartello"><span>🏷️</span>CARTELLO VENDESI</button><button class="big c3" data-situation="condominio"><span>🏢</span>CONDOMINIO / CASA</button><button class="big c4" data-situation="attivita"><span>🏪</span>NEGOZIO / BAR</button><button class="big c5" data-situation="professionista"><span>👔</span>PROFESSIONISTA</button><button class="big c6" data-situation="telefono"><span>☎️</span>TELEFONATA</button>
+</div></section>
+<section class="card"><div id="say" class="say">Scegli la situazione. Ti dico cosa fare e cosa dire.</div><div class="answers">
+<button data-answer="si">🙂 SÌ / DISPONIBILE</button><button data-answer="no">✖ NO</button><button data-answer="nonsa">❓ NON SA</button><button data-answer="fretta">⏱ HA FRETTA</button><button data-answer="diffidente">🛡 È DIFFIDENTE</button><button data-answer="interessato">♥ È INTERESSATO</button>
+</div></section>
+<section class="card fields"><h3>CONTATTO IN CORSO</h3><input id="name" placeholder="Nome / riferimento"><input id="phone" inputmode="tel" placeholder="Telefono"><input id="address" placeholder="Indirizzo / zona"><select id="source"><option>Giro zona</option><option>Cartello</option><option>Annuncio</option><option>Segnalazione</option><option>Professionista / collaboratore</option><option>Persona che ci ha contattato</option></select><textarea id="note" placeholder="Nota rapida"></textarea><select id="outcome"><option>Da richiamare</option><option>Possibile vendita</option><option>Interessato</option><option>Appuntamento</option><option>Valutazione</option><option>Segnalazione</option><option>Nuovo immobile</option><option>Non interessato</option><option>Da ripassare</option></select><input id="nextAction" placeholder="Prossima azione"><input id="nextDate" type="date"></section>
+<section class="card"><button id="zoneOpenBtn" class="zoneHero">📍 VAI IN ZONA</button><div class="zoneActions"><button id="hereBtn" class="btn primary">📍 SONO QUI — VIA / CIVICO / ZONA</button><button id="manualZoneBtn" class="btn">➕ INSERISCI VIA E CIVICO</button><button id="resumeBtn" class="btn blue">↪ PROSEGUI DA IERI</button><button id="nextZoneBtn" class="btn orange">➡ PROSSIMA VIA</button></div><div id="zoneBox" class="zoneBox">Nessuna destinazione selezionata.</div></section>
+<section class="card"><div class="grid2"><button id="contactsBtn" class="btn primary">👥 CONTATTI SALVATI</button><button id="reportBtn" class="btn blue">📊 SCARICA REPORT</button><button id="backupBtn" class="btn green">💾 BACKUP / RIPRISTINO</button><button id="sellerBtn" class="btn orange">📂 DOCUMENTI PER VENDERE CASA</button><button id="publicationBtn" class="btn">📅 PIANO PUBBLICAZIONE</button><button id="reelBtn" class="btn">🎬 REEL SOCIAL</button></div></section>
+<section class="card"><details><summary>💼 DIGITAL STRATEGIST</summary><p class="small">Portfolio Performance Report e condivisione WhatsApp.</p><div class="toolbar"><button id="portfolioBtn" class="btn">📄 APRI PORTFOLIO</button><button id="portfolioWaBtn" class="btn green">🟢 INVIA SU WHATSAPP</button></div></details><details><summary>✨ PIANI MARKETING DELUXE</summary><div id="deluxeBox"></div></details></section>
+</main>
+<div class="fixed"><button id="closeContactBtn" class="green">✓ CHIUDI CONTATTO</button><button id="stopBtn" class="danger">⚠ STOP / SALVA</button></div>
+<dialog id="genericDialog"><div class="dh"><span id="dialogTitle">DETTAGLI</span><button id="dialogClose">✕</button></div><div id="dialogBody" class="db"></div></dialog>
+<script defer src="./app-v24.js"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw-v24.js',{scope:'./',updateViaCache:'none'}).then(r=>r.update().catch(()=>{})).catch(()=>{}),{once:true});}</script>
+</body></html>
