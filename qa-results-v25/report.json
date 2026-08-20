@@ -12,24 +12,24 @@
     "maxFailures": 0,
     "metadata": {
       "ci": {
-        "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/73a425755a8a42c04c3db782514a752d45d36bde",
-        "commitHash": "73a425755a8a42c04c3db782514a752d45d36bde",
-        "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32412014091"
+        "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/222447f2987d69b7aed8a69e84167f5efbcb6823",
+        "commitHash": "222447f2987d69b7aed8a69e84167f5efbcb6823",
+        "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32412212762"
       },
       "gitCommit": {
-        "shortHash": "73a4257",
-        "hash": "73a425755a8a42c04c3db782514a752d45d36bde",
-        "subject": "release: reset Acquisitore Pro safely to canonical v25",
-        "body": "release: reset Acquisitore Pro safely to canonical v25",
+        "shortHash": "222447f",
+        "hash": "222447f2987d69b7aed8a69e84167f5efbcb6823",
+        "subject": "qa: align canonical cache identity with v25 regression contract",
+        "body": "qa: align canonical cache identity with v25 regression contract",
         "author": {
           "name": "josephsocialmedia2-spec",
           "email": "joseph.socialmedia2@gmail.com",
-          "time": 1787256200000
+          "time": 1787256336000
         },
         "committer": {
           "name": "josephsocialmedia2-spec",
           "email": "joseph.socialmedia2@gmail.com",
-          "time": 1787256200000
+          "time": 1787256336000
         },
         "branch": "release/acquisitore-pro-v25-final"
       },
@@ -53,24 +53,24 @@
         "retries": 0,
         "metadata": {
           "ci": {
-            "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/73a425755a8a42c04c3db782514a752d45d36bde",
-            "commitHash": "73a425755a8a42c04c3db782514a752d45d36bde",
-            "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32412014091"
+            "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/222447f2987d69b7aed8a69e84167f5efbcb6823",
+            "commitHash": "222447f2987d69b7aed8a69e84167f5efbcb6823",
+            "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32412212762"
           },
           "gitCommit": {
-            "shortHash": "73a4257",
-            "hash": "73a425755a8a42c04c3db782514a752d45d36bde",
-            "subject": "release: reset Acquisitore Pro safely to canonical v25",
-            "body": "release: reset Acquisitore Pro safely to canonical v25",
+            "shortHash": "222447f",
+            "hash": "222447f2987d69b7aed8a69e84167f5efbcb6823",
+            "subject": "qa: align canonical cache identity with v25 regression contract",
+            "body": "qa: align canonical cache identity with v25 regression contract",
             "author": {
               "name": "josephsocialmedia2-spec",
               "email": "joseph.socialmedia2@gmail.com",
-              "time": 1787256200000
+              "time": 1787256336000
             },
             "committer": {
               "name": "josephsocialmedia2-spec",
               "email": "joseph.socialmedia2@gmail.com",
-              "time": 1787256200000
+              "time": 1787256336000
             },
             "branch": "release/acquisitore-pro-v25-final"
           },
@@ -91,24 +91,24 @@
         "retries": 0,
         "metadata": {
           "ci": {
-            "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/73a425755a8a42c04c3db782514a752d45d36bde",
-            "commitHash": "73a425755a8a42c04c3db782514a752d45d36bde",
-            "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32412014091"
+            "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/222447f2987d69b7aed8a69e84167f5efbcb6823",
+            "commitHash": "222447f2987d69b7aed8a69e84167f5efbcb6823",
+            "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32412212762"
           },
           "gitCommit": {
-            "shortHash": "73a4257",
-            "hash": "73a425755a8a42c04c3db782514a752d45d36bde",
-            "subject": "release: reset Acquisitore Pro safely to canonical v25",
-            "body": "release: reset Acquisitore Pro safely to canonical v25",
+            "shortHash": "222447f",
+            "hash": "222447f2987d69b7aed8a69e84167f5efbcb6823",
+            "subject": "qa: align canonical cache identity with v25 regression contract",
+            "body": "qa: align canonical cache identity with v25 regression contract",
             "author": {
               "name": "josephsocialmedia2-spec",
               "email": "joseph.socialmedia2@gmail.com",
-              "time": 1787256200000
+              "time": 1787256336000
             },
             "committer": {
               "name": "josephsocialmedia2-spec",
               "email": "joseph.socialmedia2@gmail.com",
-              "time": 1787256200000
+              "time": 1787256336000
             },
             "branch": "release/acquisitore-pro-v25-final"
           },
@@ -131,12 +131,292 @@
     "workers": 2,
     "webServer": {
       "command": "python3 -m http.server 4173 -d .",
-      "url": "http://127.0.0.1:4173/acquisitore-pro/app-v25.html",
+      "url": "http://127.0.0.1:4173/acquisitore-pro/index.html",
       "reuseExistingServer": false,
       "timeout": 15000
     }
   },
   "suites": [
+    {
+      "title": "acquisitore-pro-v25-canonical.spec.js",
+      "file": "acquisitore-pro-v25-canonical.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "percorso canonico: v25, manifest, service worker e offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 969,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T20:06:09.368Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4d6a3f7e55d4cfe0bac5-289381257b164381327a",
+          "file": "acquisitore-pro-v25-canonical.spec.js",
+          "line": 19,
+          "column": 1
+        },
+        {
+          "title": "migrazione automatica: dati v23/v24 vengono caricati nella v25 canonica",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 698,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T20:06:11.930Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4d6a3f7e55d4cfe0bac5-ee3844fd56b3143ccfdb",
+          "file": "acquisitore-pro-v25-canonical.spec.js",
+          "line": 42,
+          "column": 1
+        },
+        {
+          "title": "ripristino PWA: conserva dati e riapre la v25 canonica",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1186,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T20:06:12.646Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4d6a3f7e55d4cfe0bac5-666339d706e07b4b96ce",
+          "file": "acquisitore-pro-v25-canonical.spec.js",
+          "line": 61,
+          "column": 1
+        },
+        {
+          "title": "canonical mobile: nessun overflow e pulsanti zona/form dentro viewport",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 651,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T20:06:13.849Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4d6a3f7e55d4cfe0bac5-6764ac64f1deff917589",
+          "file": "acquisitore-pro-v25-canonical.spec.js",
+          "line": 78,
+          "column": 1
+        },
+        {
+          "title": "percorso canonico: v25, manifest, service worker e offline",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 990,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T20:06:15.219Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4d6a3f7e55d4cfe0bac5-a84f598894042b45aeb1",
+          "file": "acquisitore-pro-v25-canonical.spec.js",
+          "line": 19,
+          "column": 1
+        },
+        {
+          "title": "migrazione automatica: dati v23/v24 vengono caricati nella v25 canonica",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 716,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T20:06:16.323Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4d6a3f7e55d4cfe0bac5-5b69bc69d3a3ff0b333b",
+          "file": "acquisitore-pro-v25-canonical.spec.js",
+          "line": 42,
+          "column": 1
+        },
+        {
+          "title": "ripristino PWA: conserva dati e riapre la v25 canonica",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1170,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T20:06:17.053Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4d6a3f7e55d4cfe0bac5-14b4f1b5bbdb862dcce3",
+          "file": "acquisitore-pro-v25-canonical.spec.js",
+          "line": 61,
+          "column": 1
+        },
+        {
+          "title": "canonical mobile: nessun overflow e pulsanti zona/form dentro viewport",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 820,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T20:06:18.239Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4d6a3f7e55d4cfe0bac5-31d42a47e7fd10442560",
+          "file": "acquisitore-pro-v25-canonical.spec.js",
+          "line": 78,
+          "column": 1
+        }
+      ]
+    },
     {
       "title": "acquisitore-pro-v25.spec.js",
       "file": "acquisitore-pro-v25.spec.js",
@@ -156,15 +436,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 763,
+                  "duration": 708,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:01.016Z",
+                  "startTime": "2026-08-20T20:06:09.427Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -190,15 +470,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 110,
+                  "duration": 154,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:02.262Z",
+                  "startTime": "2026-08-20T20:06:11.664Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -224,15 +504,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1384,
+                  "duration": 1282,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:02.384Z",
+                  "startTime": "2026-08-20T20:06:11.838Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -258,15 +538,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1414,
+                  "duration": 1427,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:03.780Z",
+                  "startTime": "2026-08-20T20:06:13.133Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -292,15 +572,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1108,
+                  "duration": 1172,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:05.204Z",
+                  "startTime": "2026-08-20T20:06:14.573Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -326,15 +606,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 817,
+                  "duration": 798,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:06.327Z",
+                  "startTime": "2026-08-20T20:06:15.757Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -360,15 +640,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 638,
+                  "duration": 690,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:07.161Z",
+                  "startTime": "2026-08-20T20:06:16.564Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -394,15 +674,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1119,
+                  "duration": 963,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:07.808Z",
+                  "startTime": "2026-08-20T20:06:17.263Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -428,15 +708,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 904,
+                  "duration": 1078,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:08.936Z",
+                  "startTime": "2026-08-20T20:06:18.239Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -462,15 +742,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1417,
+                  "duration": 1277,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:09.852Z",
+                  "startTime": "2026-08-20T20:06:19.328Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -496,15 +776,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 917,
+                  "duration": 935,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:11.283Z",
+                  "startTime": "2026-08-20T20:06:20.619Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -530,15 +810,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 964,
+                  "duration": 1031,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:12.214Z",
+                  "startTime": "2026-08-20T20:06:21.563Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -564,15 +844,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 664,
+                  "duration": 704,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:13.189Z",
+                  "startTime": "2026-08-20T20:06:22.605Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -598,15 +878,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 622,
+                  "duration": 620,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:13.864Z",
+                  "startTime": "2026-08-20T20:06:23.325Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -632,15 +912,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 332,
+                  "duration": 621,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:14.494Z",
+                  "startTime": "2026-08-20T20:06:23.957Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -666,15 +946,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 622,
+                  "duration": 1355,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:14.833Z",
+                  "startTime": "2026-08-20T20:06:24.589Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -689,7 +969,7 @@
         },
         {
           "title": "offline: service worker installa shell e riapre app senza rete",
-          "ok": false,
+          "ok": true,
           "tags": [],
           "tests": [
             {
@@ -700,65 +980,20 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "failed",
-                  "duration": 614,
-                  "error": {
-                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m",
-                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n    at /home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js:282:73",
-                    "location": {
-                      "file": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js",
-                      "column": 73,
-                      "line": 282
-                    },
-                    "snippet": "\u001b[0m \u001b[90m 280 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mreload({ waitUntil\u001b[33m:\u001b[39m\u001b[32m'domcontentloaded'\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 281 |\u001b[39m   \u001b[36mconst\u001b[39m cacheNames \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mevaluate(() \u001b[33m=>\u001b[39m caches\u001b[33m.\u001b[39mkeys())\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 282 |\u001b[39m   expect(cacheNames\u001b[33m.\u001b[39msome(k \u001b[33m=>\u001b[39m k\u001b[33m.\u001b[39mincludes(\u001b[32m'acquisitore-pro-v25-shell'\u001b[39m)))\u001b[33m.\u001b[39mtoBeTruthy()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 283 |\u001b[39m   \u001b[36mawait\u001b[39m context\u001b[33m.\u001b[39msetOffline(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 284 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mreload({ waitUntil\u001b[33m:\u001b[39m\u001b[32m'domcontentloaded'\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 285 |\u001b[39m   \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'header'\u001b[39m))\u001b[33m.\u001b[39mtoContainText(\u001b[32m'ACQUISITORE PRO'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
-                  },
-                  "errors": [
-                    {
-                      "location": {
-                        "file": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js",
-                        "column": 73,
-                        "line": 282
-                      },
-                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n  280 |   await page.reload({ waitUntil:'domcontentloaded' });\n  281 |   const cacheNames = await page.evaluate(() => caches.keys());\n> 282 |   expect(cacheNames.some(k => k.includes('acquisitore-pro-v25-shell'))).toBeTruthy();\n      |                                                                         ^\n  283 |   await context.setOffline(true);\n  284 |   await page.reload({ waitUntil:'domcontentloaded' });\n  285 |   await expect(page.locator('header')).toContainText('ACQUISITORE PRO');\n    at /home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js:282:73"
-                    }
-                  ],
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 689,
+                  "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:15.462Z",
+                  "startTime": "2026-08-20T20:06:25.955Z",
                   "annotations": [],
-                  "attachments": [
-                    {
-                      "name": "screenshot",
-                      "contentType": "image/png",
-                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-desktop-chromium/test-failed-1.png"
-                    },
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-desktop-chromium/video.webm"
-                    },
-                    {
-                      "name": "error-context",
-                      "contentType": "text/markdown",
-                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-desktop-chromium/error-context.md"
-                    },
-                    {
-                      "name": "trace",
-                      "contentType": "application/zip",
-                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-desktop-chromium/trace.zip"
-                    }
-                  ],
-                  "errorLocation": {
-                    "file": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js",
-                    "column": 73,
-                    "line": 282
-                  }
+                  "attachments": []
                 }
               ],
-              "status": "unexpected"
+              "status": "expected"
             }
           ],
           "id": "2d6692c8b444c774f277-b359b618f27f255e09e9",
@@ -779,15 +1014,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 2,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 733,
+                  "duration": 599,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:16.812Z",
+                  "startTime": "2026-08-20T20:06:26.654Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -813,15 +1048,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 2,
-                  "parallelIndex": 0,
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1555,
+                  "duration": 1367,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:17.656Z",
+                  "startTime": "2026-08-20T20:06:27.261Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -847,15 +1082,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 847,
+                  "duration": 589,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:01.009Z",
+                  "startTime": "2026-08-20T20:06:19.087Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -881,15 +1116,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 118,
+                  "duration": 44,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:02.354Z",
+                  "startTime": "2026-08-20T20:06:19.684Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -915,15 +1150,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1529,
+                  "duration": 1417,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:02.492Z",
+                  "startTime": "2026-08-20T20:06:19.736Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -949,15 +1184,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1629,
+                  "duration": 1536,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:04.033Z",
+                  "startTime": "2026-08-20T20:06:21.163Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -983,15 +1218,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1236,
+                  "duration": 1163,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:05.670Z",
+                  "startTime": "2026-08-20T20:06:22.713Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1017,15 +1252,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 889,
+                  "duration": 799,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:06.916Z",
+                  "startTime": "2026-08-20T20:06:23.890Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1051,15 +1286,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 875,
+                  "duration": 677,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:07.816Z",
+                  "startTime": "2026-08-20T20:06:24.700Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1085,15 +1320,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1174,
+                  "duration": 1041,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:08.701Z",
+                  "startTime": "2026-08-20T20:06:25.385Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1119,15 +1354,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1244,
+                  "duration": 1063,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:09.887Z",
+                  "startTime": "2026-08-20T20:06:26.439Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1153,15 +1388,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1393,
+                  "duration": 1349,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:11.142Z",
+                  "startTime": "2026-08-20T20:06:27.516Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1187,15 +1422,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 978,
+                  "duration": 878,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:12.546Z",
+                  "startTime": "2026-08-20T20:06:28.873Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1221,15 +1456,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1025,
+                  "duration": 871,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:13.531Z",
+                  "startTime": "2026-08-20T20:06:29.758Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1255,15 +1490,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 689,
+                  "duration": 679,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:14.564Z",
+                  "startTime": "2026-08-20T20:06:30.638Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1289,15 +1524,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 636,
+                  "duration": 596,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:15.261Z",
+                  "startTime": "2026-08-20T20:06:31.325Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1323,15 +1558,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 277,
+                  "duration": 618,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:15.911Z",
+                  "startTime": "2026-08-20T20:06:31.929Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1357,15 +1592,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 437,
+                  "duration": 770,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:16.198Z",
+                  "startTime": "2026-08-20T20:06:32.554Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1380,7 +1615,7 @@
         },
         {
           "title": "offline: service worker installa shell e riapre app senza rete",
-          "ok": false,
+          "ok": true,
           "tags": [],
           "tests": [
             {
@@ -1391,65 +1626,20 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
-                  "status": "failed",
-                  "duration": 781,
-                  "error": {
-                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m",
-                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n    at /home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js:282:73",
-                    "location": {
-                      "file": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js",
-                      "column": 73,
-                      "line": 282
-                    },
-                    "snippet": "\u001b[0m \u001b[90m 280 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mreload({ waitUntil\u001b[33m:\u001b[39m\u001b[32m'domcontentloaded'\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 281 |\u001b[39m   \u001b[36mconst\u001b[39m cacheNames \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mevaluate(() \u001b[33m=>\u001b[39m caches\u001b[33m.\u001b[39mkeys())\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 282 |\u001b[39m   expect(cacheNames\u001b[33m.\u001b[39msome(k \u001b[33m=>\u001b[39m k\u001b[33m.\u001b[39mincludes(\u001b[32m'acquisitore-pro-v25-shell'\u001b[39m)))\u001b[33m.\u001b[39mtoBeTruthy()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 283 |\u001b[39m   \u001b[36mawait\u001b[39m context\u001b[33m.\u001b[39msetOffline(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 284 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mreload({ waitUntil\u001b[33m:\u001b[39m\u001b[32m'domcontentloaded'\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 285 |\u001b[39m   \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'header'\u001b[39m))\u001b[33m.\u001b[39mtoContainText(\u001b[32m'ACQUISITORE PRO'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
-                  },
-                  "errors": [
-                    {
-                      "location": {
-                        "file": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js",
-                        "column": 73,
-                        "line": 282
-                      },
-                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n  280 |   await page.reload({ waitUntil:'domcontentloaded' });\n  281 |   const cacheNames = await page.evaluate(() => caches.keys());\n> 282 |   expect(cacheNames.some(k => k.includes('acquisitore-pro-v25-shell'))).toBeTruthy();\n      |                                                                         ^\n  283 |   await context.setOffline(true);\n  284 |   await page.reload({ waitUntil:'domcontentloaded' });\n  285 |   await expect(page.locator('header')).toContainText('ACQUISITORE PRO');\n    at /home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js:282:73"
-                    }
-                  ],
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 632,
+                  "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:16.644Z",
+                  "startTime": "2026-08-20T20:06:33.332Z",
                   "annotations": [],
-                  "attachments": [
-                    {
-                      "name": "screenshot",
-                      "contentType": "image/png",
-                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-mobile-chromium/test-failed-1.png"
-                    },
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-mobile-chromium/video.webm"
-                    },
-                    {
-                      "name": "error-context",
-                      "contentType": "text/markdown",
-                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-mobile-chromium/error-context.md"
-                    },
-                    {
-                      "name": "trace",
-                      "contentType": "application/zip",
-                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-mobile-chromium/trace.zip"
-                    }
-                  ],
-                  "errorLocation": {
-                    "file": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js",
-                    "column": 73,
-                    "line": 282
-                  }
+                  "attachments": []
                 }
               ],
-              "status": "unexpected"
+              "status": "expected"
             }
           ],
           "id": "2d6692c8b444c774f277-4fddefc44348f49f16d3",
@@ -1470,15 +1660,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 3,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 953,
+                  "duration": 609,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:18.243Z",
+                  "startTime": "2026-08-20T20:06:33.972Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1504,15 +1694,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 3,
-                  "parallelIndex": 1,
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1308,
+                  "duration": 1248,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:04:19.327Z",
+                  "startTime": "2026-08-20T20:06:34.591Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1530,11 +1720,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-08-20T20:04:00.127Z",
-    "duration": 20566.033,
-    "expected": 36,
+    "startTime": "2026-08-20T20:06:08.379Z",
+    "duration": 27516.273999999998,
+    "expected": 46,
     "skipped": 0,
-    "unexpected": 2,
+    "unexpected": 0,
     "flaky": 0
   }
 }
