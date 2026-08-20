@@ -1,0 +1,1450 @@
+{
+  "config": {
+    "configFile": "/home/runner/work/launcher-dashboard/launcher-dashboard/playwright.v25.config.js",
+    "rootDir": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "ci": {
+        "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/588fd0a2801ba0bbd9de09bcb9d5cea26bf1ac8e",
+        "commitHash": "588fd0a2801ba0bbd9de09bcb9d5cea26bf1ac8e",
+        "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32411523109"
+      },
+      "gitCommit": {
+        "shortHash": "588fd0a",
+        "hash": "588fd0a2801ba0bbd9de09bcb9d5cea26bf1ac8e",
+        "subject": "qa: run autonomous v25 regression on release branch",
+        "body": "qa: run autonomous v25 regression on release branch",
+        "author": {
+          "name": "josephsocialmedia2-spec",
+          "email": "joseph.socialmedia2@gmail.com",
+          "time": 1787255882000
+        },
+        "committer": {
+          "name": "josephsocialmedia2-spec",
+          "email": "joseph.socialmedia2@gmail.com",
+          "time": 1787255882000
+        },
+        "branch": "release/acquisitore-pro-v25-final"
+      },
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/588fd0a2801ba0bbd9de09bcb9d5cea26bf1ac8e",
+            "commitHash": "588fd0a2801ba0bbd9de09bcb9d5cea26bf1ac8e",
+            "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32411523109"
+          },
+          "gitCommit": {
+            "shortHash": "588fd0a",
+            "hash": "588fd0a2801ba0bbd9de09bcb9d5cea26bf1ac8e",
+            "subject": "qa: run autonomous v25 regression on release branch",
+            "body": "qa: run autonomous v25 regression on release branch",
+            "author": {
+              "name": "josephsocialmedia2-spec",
+              "email": "joseph.socialmedia2@gmail.com",
+              "time": 1787255882000
+            },
+            "committer": {
+              "name": "josephsocialmedia2-spec",
+              "email": "joseph.socialmedia2@gmail.com",
+              "time": 1787255882000
+            },
+            "branch": "release/acquisitore-pro-v25-final"
+          },
+          "actualWorkers": 2
+        },
+        "id": "desktop-chromium",
+        "name": "desktop-chromium",
+        "testDir": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "ci": {
+            "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/588fd0a2801ba0bbd9de09bcb9d5cea26bf1ac8e",
+            "commitHash": "588fd0a2801ba0bbd9de09bcb9d5cea26bf1ac8e",
+            "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32411523109"
+          },
+          "gitCommit": {
+            "shortHash": "588fd0a",
+            "hash": "588fd0a2801ba0bbd9de09bcb9d5cea26bf1ac8e",
+            "subject": "qa: run autonomous v25 regression on release branch",
+            "body": "qa: run autonomous v25 regression on release branch",
+            "author": {
+              "name": "josephsocialmedia2-spec",
+              "email": "joseph.socialmedia2@gmail.com",
+              "time": 1787255882000
+            },
+            "committer": {
+              "name": "josephsocialmedia2-spec",
+              "email": "joseph.socialmedia2@gmail.com",
+              "time": 1787255882000
+            },
+            "branch": "release/acquisitore-pro-v25-final"
+          },
+          "actualWorkers": 2
+        },
+        "id": "mobile-chromium",
+        "name": "mobile-chromium",
+        "testDir": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.55.0",
+    "workers": 2,
+    "webServer": {
+      "command": "python3 -m http.server 4173 -d .",
+      "url": "http://127.0.0.1:4173/acquisitore-pro/app-v25.html",
+      "reuseExistingServer": false,
+      "timeout": 15000
+    }
+  },
+  "suites": [
+    {
+      "title": "acquisitore-pro-v25.spec.js",
+      "file": "acquisitore-pro-v25.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "avvio, performance, console e nessun backend nascosto",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 778,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:47.989Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-64c6bbd1a105bec441f0",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "PWA: manifest, PNG reali e service worker pubblicati correttamente",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 110,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:49.925Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-75d7f50484275b8352d0",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 47,
+          "column": 1
+        },
+        {
+          "title": "contatto CRUD completo: inserisci, salva, riapri, modifica, elimina",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1351,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:50.050Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-81eeebdb273fbef1fcca",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 67,
+          "column": 1
+        },
+        {
+          "title": "contatori, traguardi e trofeo persistono",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1389,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:51.417Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-f3dd9645aecde4cd083f",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "zona CRUD completo e persistenza",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1063,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:52.820Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-4beb576d6d5e64d6f968",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 105,
+          "column": 1
+        },
+        {
+          "title": "SONO QUI: GPS autorizzato, reverse geocode e salvataggio",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 759,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:53.897Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-e5cefad5b6be50ba5cc8",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 127,
+          "column": 1
+        },
+        {
+          "title": "SONO QUI: permesso negato non blocca e lascia inserimento manuale",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 663,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:54.667Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-acec305cbe49a6da4727",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 140,
+          "column": 1
+        },
+        {
+          "title": "PROSEGUI DA IERI: recupera punto e aggiunge vie adiacenti senza duplicati",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1107,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:55.340Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-de6634d552a8fe01bd85",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 151,
+          "column": 1
+        },
+        {
+          "title": "report: download JSON e CSV reali",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 874,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:56.459Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-cc8c527ad954fe2399da",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 167,
+          "column": 1
+        },
+        {
+          "title": "backup: scarica, altera, ripristina; backup invalido non distrugge dati",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1475,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:57.343Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-b11f50320bd7f41e500a",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 181,
+          "column": 1
+        },
+        {
+          "title": "documenti, prequalifica e strategia: salva e riapri",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 893,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:58.827Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-b9507a52219cdb493a32",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 200,
+          "column": 1
+        },
+        {
+          "title": "piano pubblicazione: salva, riapri, modalità cliente e blocco javascript URL",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 996,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:59.730Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-b01e3d9ab79bf59ccdab",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 216,
+          "column": 1
+        },
+        {
+          "title": "XSS base: dati utente sono testo, non HTML eseguibile",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 670,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:00.741Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-6a6a101bf5e99b85b1b9",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 235,
+          "column": 1
+        },
+        {
+          "title": "Reel e canali operativi: pulsanti/link presenti e schemi sicuri",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 625,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:01.421Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-edb9d5c63509c327078a",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 245,
+          "column": 1
+        },
+        {
+          "title": "servizi esterni principali raggiungibili senza errore server",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1357,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:02.056Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-e44593348dd258c600d7",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 255,
+          "column": 1
+        },
+        {
+          "title": "API geografiche live rispondono senza 5xx",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1384,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:03.420Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-6cf5ff403ed8b40326d1",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 270,
+          "column": 1
+        },
+        {
+          "title": "offline: service worker installa shell e riapre app senza rete",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 814,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:04.818Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-b359b618f27f255e09e9",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 277,
+          "column": 1
+        },
+        {
+          "title": "responsive smartphone/desktop: nessun overflow, modali e touch target corretti",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 631,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:05.643Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-061726c8d85f46c4b9c6",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 290,
+          "column": 1
+        },
+        {
+          "title": "smoke navigazione: tutti i moduli principali aprono senza errori console",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chromium",
+              "projectName": "desktop-chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1402,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:06.286Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-165b0a6dc751dee05cc4",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 305,
+          "column": 1
+        },
+        {
+          "title": "avvio, performance, console e nessun backend nascosto",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 860,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:47.972Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-788f3225d8ebe608b0c7",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "PWA: manifest, PNG reali e service worker pubblicati correttamente",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 119,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:50.002Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-585c89848dd981d85d4f",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 47,
+          "column": 1
+        },
+        {
+          "title": "contatto CRUD completo: inserisci, salva, riapri, modifica, elimina",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1497,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:50.136Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-d47476e66b44f43c8185",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 67,
+          "column": 1
+        },
+        {
+          "title": "contatori, traguardi e trofeo persistono",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1533,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:51.652Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-f495aca985631a86bf96",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 88,
+          "column": 1
+        },
+        {
+          "title": "zona CRUD completo e persistenza",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1147,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:53.194Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-367c607c0868e60be62c",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 105,
+          "column": 1
+        },
+        {
+          "title": "SONO QUI: GPS autorizzato, reverse geocode e salvataggio",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 947,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:54.350Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-b0a268abccb46e45c32e",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 127,
+          "column": 1
+        },
+        {
+          "title": "SONO QUI: permesso negato non blocca e lascia inserimento manuale",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 911,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:55.306Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-d57c9de0dd960abcee2f",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 140,
+          "column": 1
+        },
+        {
+          "title": "PROSEGUI DA IERI: recupera punto e aggiunge vie adiacenti senza duplicati",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1124,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:56.228Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-582a3cdd02f71e838201",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 151,
+          "column": 1
+        },
+        {
+          "title": "report: download JSON e CSV reali",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1230,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:57.364Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-2fddeb1ea77e448b0ca6",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 167,
+          "column": 1
+        },
+        {
+          "title": "backup: scarica, altera, ripristina; backup invalido non distrugge dati",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1443,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:58:58.608Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-b683b2be13e6d8a112cb",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 181,
+          "column": 1
+        },
+        {
+          "title": "documenti, prequalifica e strategia: salva e riapri",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1013,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:00.064Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-1d6c23271cabb0f7173e",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 200,
+          "column": 1
+        },
+        {
+          "title": "piano pubblicazione: salva, riapri, modalità cliente e blocco javascript URL",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1050,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:01.086Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-b9c70b84dcd41d567149",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 216,
+          "column": 1
+        },
+        {
+          "title": "XSS base: dati utente sono testo, non HTML eseguibile",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 682,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:02.144Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-1814e9686630cd66ea07",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 235,
+          "column": 1
+        },
+        {
+          "title": "Reel e canali operativi: pulsanti/link presenti e schemi sicuri",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 641,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:02.835Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-93039a77aaf960c6cd07",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 245,
+          "column": 1
+        },
+        {
+          "title": "servizi esterni principali raggiungibili senza errore server",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 138,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:03.486Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-247e3a31fdaf1c2b8884",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 255,
+          "column": 1
+        },
+        {
+          "title": "API geografiche live rispondono senza 5xx",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1187,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:03.632Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-dcb2f96a5676be4770fb",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 270,
+          "column": 1
+        },
+        {
+          "title": "offline: service worker installa shell e riapre app senza rete",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 930,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:04.827Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-4fddefc44348f49f16d3",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 277,
+          "column": 1
+        },
+        {
+          "title": "responsive smartphone/desktop: nessun overflow, modali e touch target corretti",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 811,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:05.770Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-bfb7fc6f7c360a16f30b",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 290,
+          "column": 1
+        },
+        {
+          "title": "smoke navigazione: tutti i moduli principali aprono senza errori console",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chromium",
+              "projectName": "mobile-chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 1388,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-08-20T19:59:06.595Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2d6692c8b444c774f277-5854acdbc7c57e1cf02b",
+          "file": "acquisitore-pro-v25.spec.js",
+          "line": 305,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-08-20T19:58:47.061Z",
+    "duration": 20985.975,
+    "expected": 38,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
