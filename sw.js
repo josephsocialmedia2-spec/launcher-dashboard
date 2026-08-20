@@ -1,5 +1,3 @@
-const CACHE='f1-gestionale-v3';
-const CORE=['./','./index.html','./crm.html','./gestione-app.html','./organizer-lunedi.html','./gruppi-social-f1.html','./acquisitore-pro/index.html'];
-self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(CACHE);for(const url of CORE){try{await c.add(url)}catch(err){}}await self.skipWaiting()})()));
-self.addEventListener('activate',e=>e.waitUntil((async()=>{const keys=await caches.keys();await Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)));await self.clients.claim()})()));
-self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;const u=new URL(e.request.url);if(u.origin!==location.origin)return;e.respondWith((async()=>{try{const r=await fetch(e.request,{cache:'no-store'});const c=await caches.open(CACHE);c.put(e.request,r.clone()).catch(()=>{});return r}catch(err){return (await caches.match(e.request))||(await caches.match('./index.html'))}})())});
+self.addEventListener('install',e=>{self.skipWaiting()});
+self.addEventListener('activate',e=>{e.waitUntil((async()=>{try{const keys=await caches.keys();await Promise.all(keys.map(k=>caches.delete(k)))}catch(_){}try{await self.registration.unregister()}catch(_){}const clients=await self.clients.matchAll({type:'window'});for(const c of clients){try{c.navigate(c.url)}catch(_){}}})())});
+// Emergency no-cache worker: intentionally no fetch handler.
