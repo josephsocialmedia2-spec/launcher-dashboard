@@ -1,9 +1,9 @@
-const CACHE='acquisitore-pro-core-v22';
+const CACHE='acquisitore-pro-core-v23';
 const CORE=['./index.html','./manifest.webmanifest','./icon-192.svg','./icon-512.svg','./core-loader.js'];
 function attachLoader(html){
   let out=html.replaceAll('Referral','Segnalazione').replaceAll('Partner','Professionista / collaboratore').replaceAll('Inbound','Persona che ci ha contattato');
   if(out.includes('core-loader.js'))return out;
-  const tag='<script src="./core-loader.js?v=22"></script>';
+  const tag='<script src="./core-loader.js?v=23"></script>';
   return out.includes('</body>')?out.replace('</body>',tag+'</body>'):out+tag;
 }
 async function preparedResponse(response){const html=attachLoader(await response.text());return new Response(html,{status:response.status,statusText:response.statusText,headers:{'content-type':'text/html; charset=utf-8'}})}
