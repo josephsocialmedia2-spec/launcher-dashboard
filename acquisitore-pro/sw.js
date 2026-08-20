@@ -1,5 +1,5 @@
-const CACHE='acquisitore-pro-v12-stable';
-const ASSETS=['./index.html','./manifest.webmanifest','./icon.svg','./acquisizione-vai-qui-addon.js','./reel-social-addon.js','./backup-addon.js','./piano-pubblicazione-addon.js','./strategia-dettagli-addon.js','./piano-deluxe-whatsapp-addon.js','./digital-strategist-addon.js'];
+const CACHE='acquisitore-pro-v13-chiudi-contatto';
+const ASSETS=['./index.html','./manifest.webmanifest','./icon.svg','./acquisizione-vai-qui-addon.js','./reel-social-addon.js','./backup-addon.js','./piano-pubblicazione-addon.js','./strategia-dettagli-addon.js','./piano-deluxe-whatsapp-addon.js','./digital-strategist-addon.js','./chiudi-contatto-addon.js'];
 
 function preparaPagina(html){
   let out=html
@@ -14,32 +14,30 @@ function preparaPagina(html){
   if(!out.includes('strategia-dettagli-addon.js'))tags.push('<script src="./strategia-dettagli-addon.js"></script>');
   if(!out.includes('piano-deluxe-whatsapp-addon.js'))tags.push('<script src="./piano-deluxe-whatsapp-addon.js"></script>');
   if(!out.includes('digital-strategist-addon.js'))tags.push('<script src="./digital-strategist-addon.js"></script>');
+  if(!out.includes('chiudi-contatto-addon.js'))tags.push('<script src="./chiudi-contatto-addon.js"></script>');
   if(tags.length)out=out.includes('</body>')?out.replace('</body>',tags.join('')+'</body>'):out+tags.join('');
   return out;
 }
 
-async function fetchConTimeout(request,ms=6000){
-  const controller=new AbortController();
-  const timer=setTimeout(()=>controller.abort(),ms);
-  try{return await fetch(request,{cache:'no-store',signal:controller.signal})}
-  finally{clearTimeout(timer)}
-}
-
 async function paginaAggiornata(request){
   try{
-    const response=await fetchConTimeout(request);
-    if(!response.ok)throw new Error('HTTP '+response.status);
+    const ctl=new AbortController();
+    const timer=setTimeout(()=>ctl.abort(),6000);
+    const response=await fetch(request,{cache:'no-store',signal:ctl.signal});
+    clearTimeout(timer);
     const html=await response.text();
-    const cache=await caches.open(CACHE);
-    cache.put('./index.html',new Response(html,{headers:{'content-type':'text/html; charset=utf-8'}})).catch(()=>{});
-    return new Response(preparaPagina(html),{status:200,headers:{'content-type':'text/html; charset=utf-8','cache-control':'no-store'}});
+    const headers=new Headers(response.headers);
+    headers.set('content-type','text/html; charset=utf-8');
+    const prepared=preparaPagina(html);
+    caches.open(CACHE).then(cache=>cache.put('./index.html',new Response(prepared,{headers:{'content-type':'text/html; charset=utf-8'}}))).catch(()=>{});
+    return new Response(prepared,{status:response.status,statusText:response.statusText,headers});
   }catch(err){
     const cached=await caches.match('./index.html');
     if(cached){
       const html=await cached.text();
-      return new Response(preparaPagina(html),{status:200,headers:{'content-type':'text/html; charset=utf-8'}});
+      return new Response(preparaPagina(html),{headers:{'content-type':'text/html; charset=utf-8'}});
     }
-    return new Response('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><body style="font-family:Arial;padding:24px"><h2>Acquisitore Pro</h2><p>Connessione non disponibile. Riprova tra poco.</p><button onclick="location.reload()">RIPROVA</button></body>',{status:200,headers:{'content-type':'text/html; charset=utf-8'}});
+    throw err;
   }
 }
 
@@ -52,26 +50,15 @@ self.addEventListener('install',event=>{
 });
 
 self.addEventListener('activate',event=>{
-  event.waitUntil((async()=>{
-    const keys=await caches.keys();
-    await Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)));
-    await self.clients.claim();
-  })());
+  event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));
 });
 
 self.addEventListener('fetch',event=>{
-  if(event.request.method!=='GET')return;
+  if(event.request.method!=='GET') return;
   const url=new URL(event.request.url);
-  const isPage=event.request.mode==='navigate'||url.pathname.endsWith('/acquisitore-pro/')||url.pathname.endsWith('/acquisitore-pro/index.html');
+  const isPage=event.request.mode==='navigate' || url.pathname.endsWith('/acquisitore-pro/') || url.pathname.endsWith('/acquisitore-pro/index.html');
   if(isPage){event.respondWith(paginaAggiornata(event.request));return;}
-  if(url.origin!==self.location.origin)return;
-  event.respondWith((async()=>{
-    const cached=await caches.match(event.request);
-    if(cached)return cached;
-    try{
-      const response=await fetchConTimeout(event.request,6000);
-      if(response.ok){const cache=await caches.open(CACHE);cache.put(event.request,response.clone()).catch(()=>{});}
-      return response;
-    }catch(e){return new Response('',{status:504,statusText:'Offline'});}
-  })());
+  event.respondWith(caches.match(event.request).then(cached=>cached||fetch(event.request).then(response=>{
+    const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy)).catch(()=>{});return response;
+  })));
 });
