@@ -1,16 +1,29 @@
 {
-  "generatedAt": "2026-08-20T20:02:01.229Z",
-  "exitCode": 0,
-  "passed": 38,
-  "failed": 0,
+  "generatedAt": "2026-08-20T20:04:20.763Z",
+  "exitCode": 1,
+  "passed": 36,
+  "failed": 2,
   "skipped": 0,
   "stats": {
-    "startTime": "2026-08-20T20:01:44.083Z",
-    "duration": 17092.188000000002,
-    "expected": 38,
+    "startTime": "2026-08-20T20:04:00.127Z",
+    "duration": 20566.033,
+    "expected": 36,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 2,
     "flaky": 0
   },
-  "failures": []
+  "failures": [
+    {
+      "title": "offline: service worker installa shell e riapre app senza rete",
+      "project": "desktop-chromium",
+      "status": "failed",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n  280 |   await page.reload({ waitUntil:'domcontentloaded' });\n  281 |   const cacheNames = await page.evaluate(() => caches.keys());\n> 282 |   expect(cacheNames.some(k => k.includes('acquisitore-pro-v25-shell'))).toBeTruthy();\n      |                                                                         ^\n  283 |   await context.setOffline(true);\n  284 |   await page.reload({ waitUntil:'domcontentloaded' });\n  285 |   await expect(page.locator('header')).toContainText('ACQUISITORE PRO');\n    at /home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js:282:73"
+    },
+    {
+      "title": "offline: service worker installa shell e riapre app senza rete",
+      "project": "mobile-chromium",
+      "status": "failed",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n  280 |   await page.reload({ waitUntil:'domcontentloaded' });\n  281 |   const cacheNames = await page.evaluate(() => caches.keys());\n> 282 |   expect(cacheNames.some(k => k.includes('acquisitore-pro-v25-shell'))).toBeTruthy();\n      |                                                                         ^\n  283 |   await context.setOffline(true);\n  284 |   await page.reload({ waitUntil:'domcontentloaded' });\n  285 |   await expect(page.locator('header')).toContainText('ACQUISITORE PRO');\n    at /home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js:282:73"
+    }
+  ]
 }

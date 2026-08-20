@@ -12,24 +12,24 @@
     "maxFailures": 0,
     "metadata": {
       "ci": {
-        "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/c907e07ca4f57569e137877d491a23e0979443bf",
-        "commitHash": "c907e07ca4f57569e137877d491a23e0979443bf",
-        "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32411809345"
+        "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/73a425755a8a42c04c3db782514a752d45d36bde",
+        "commitHash": "73a425755a8a42c04c3db782514a752d45d36bde",
+        "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32412014091"
       },
       "gitCommit": {
-        "shortHash": "c907e07",
-        "hash": "c907e07ca4f57569e137877d491a23e0979443bf",
-        "subject": "release: make tested v25 the canonical Acquisitore Pro app",
-        "body": "release: make tested v25 the canonical Acquisitore Pro app",
+        "shortHash": "73a4257",
+        "hash": "73a425755a8a42c04c3db782514a752d45d36bde",
+        "subject": "release: reset Acquisitore Pro safely to canonical v25",
+        "body": "release: reset Acquisitore Pro safely to canonical v25",
         "author": {
           "name": "josephsocialmedia2-spec",
           "email": "joseph.socialmedia2@gmail.com",
-          "time": 1787256070000
+          "time": 1787256200000
         },
         "committer": {
           "name": "josephsocialmedia2-spec",
           "email": "joseph.socialmedia2@gmail.com",
-          "time": 1787256070000
+          "time": 1787256200000
         },
         "branch": "release/acquisitore-pro-v25-final"
       },
@@ -53,24 +53,24 @@
         "retries": 0,
         "metadata": {
           "ci": {
-            "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/c907e07ca4f57569e137877d491a23e0979443bf",
-            "commitHash": "c907e07ca4f57569e137877d491a23e0979443bf",
-            "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32411809345"
+            "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/73a425755a8a42c04c3db782514a752d45d36bde",
+            "commitHash": "73a425755a8a42c04c3db782514a752d45d36bde",
+            "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32412014091"
           },
           "gitCommit": {
-            "shortHash": "c907e07",
-            "hash": "c907e07ca4f57569e137877d491a23e0979443bf",
-            "subject": "release: make tested v25 the canonical Acquisitore Pro app",
-            "body": "release: make tested v25 the canonical Acquisitore Pro app",
+            "shortHash": "73a4257",
+            "hash": "73a425755a8a42c04c3db782514a752d45d36bde",
+            "subject": "release: reset Acquisitore Pro safely to canonical v25",
+            "body": "release: reset Acquisitore Pro safely to canonical v25",
             "author": {
               "name": "josephsocialmedia2-spec",
               "email": "joseph.socialmedia2@gmail.com",
-              "time": 1787256070000
+              "time": 1787256200000
             },
             "committer": {
               "name": "josephsocialmedia2-spec",
               "email": "joseph.socialmedia2@gmail.com",
-              "time": 1787256070000
+              "time": 1787256200000
             },
             "branch": "release/acquisitore-pro-v25-final"
           },
@@ -91,24 +91,24 @@
         "retries": 0,
         "metadata": {
           "ci": {
-            "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/c907e07ca4f57569e137877d491a23e0979443bf",
-            "commitHash": "c907e07ca4f57569e137877d491a23e0979443bf",
-            "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32411809345"
+            "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/73a425755a8a42c04c3db782514a752d45d36bde",
+            "commitHash": "73a425755a8a42c04c3db782514a752d45d36bde",
+            "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32412014091"
           },
           "gitCommit": {
-            "shortHash": "c907e07",
-            "hash": "c907e07ca4f57569e137877d491a23e0979443bf",
-            "subject": "release: make tested v25 the canonical Acquisitore Pro app",
-            "body": "release: make tested v25 the canonical Acquisitore Pro app",
+            "shortHash": "73a4257",
+            "hash": "73a425755a8a42c04c3db782514a752d45d36bde",
+            "subject": "release: reset Acquisitore Pro safely to canonical v25",
+            "body": "release: reset Acquisitore Pro safely to canonical v25",
             "author": {
               "name": "josephsocialmedia2-spec",
               "email": "joseph.socialmedia2@gmail.com",
-              "time": 1787256070000
+              "time": 1787256200000
             },
             "committer": {
               "name": "josephsocialmedia2-spec",
               "email": "joseph.socialmedia2@gmail.com",
-              "time": 1787256070000
+              "time": 1787256200000
             },
             "branch": "release/acquisitore-pro-v25-final"
           },
@@ -159,12 +159,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 697,
+                  "duration": 763,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:44.797Z",
+                  "startTime": "2026-08-20T20:04:01.016Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -193,12 +193,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 76,
+                  "duration": 110,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:45.841Z",
+                  "startTime": "2026-08-20T20:04:02.262Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -227,12 +227,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1161,
+                  "duration": 1384,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:45.927Z",
+                  "startTime": "2026-08-20T20:04:02.384Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -261,12 +261,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1163,
+                  "duration": 1414,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:47.097Z",
+                  "startTime": "2026-08-20T20:04:03.780Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -295,12 +295,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 883,
+                  "duration": 1108,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:48.270Z",
+                  "startTime": "2026-08-20T20:04:05.204Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -329,12 +329,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 652,
+                  "duration": 817,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:49.163Z",
+                  "startTime": "2026-08-20T20:04:06.327Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -363,12 +363,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 587,
+                  "duration": 638,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:49.822Z",
+                  "startTime": "2026-08-20T20:04:07.161Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -397,12 +397,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 928,
+                  "duration": 1119,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:50.418Z",
+                  "startTime": "2026-08-20T20:04:07.808Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -431,12 +431,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 783,
+                  "duration": 904,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:51.353Z",
+                  "startTime": "2026-08-20T20:04:08.936Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -465,12 +465,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1356,
+                  "duration": 1417,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:52.144Z",
+                  "startTime": "2026-08-20T20:04:09.852Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -499,12 +499,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 798,
+                  "duration": 917,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:53.507Z",
+                  "startTime": "2026-08-20T20:04:11.283Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -533,12 +533,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 811,
+                  "duration": 964,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:54.312Z",
+                  "startTime": "2026-08-20T20:04:12.214Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -567,12 +567,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 577,
+                  "duration": 664,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:55.134Z",
+                  "startTime": "2026-08-20T20:04:13.189Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -601,12 +601,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 581,
+                  "duration": 622,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:55.718Z",
+                  "startTime": "2026-08-20T20:04:13.864Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -635,12 +635,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 782,
+                  "duration": 332,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:56.307Z",
+                  "startTime": "2026-08-20T20:04:14.494Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -669,12 +669,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1328,
+                  "duration": 622,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:57.096Z",
+                  "startTime": "2026-08-20T20:04:14.833Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -689,7 +689,7 @@
         },
         {
           "title": "offline: service worker installa shell e riapre app senza rete",
-          "ok": true,
+          "ok": false,
           "tags": [],
           "tests": [
             {
@@ -702,18 +702,63 @@
                 {
                   "workerIndex": 0,
                   "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 687,
-                  "errors": [],
+                  "status": "failed",
+                  "duration": 614,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n    at /home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js:282:73",
+                    "location": {
+                      "file": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js",
+                      "column": 73,
+                      "line": 282
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 280 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mreload({ waitUntil\u001b[33m:\u001b[39m\u001b[32m'domcontentloaded'\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 281 |\u001b[39m   \u001b[36mconst\u001b[39m cacheNames \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mevaluate(() \u001b[33m=>\u001b[39m caches\u001b[33m.\u001b[39mkeys())\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 282 |\u001b[39m   expect(cacheNames\u001b[33m.\u001b[39msome(k \u001b[33m=>\u001b[39m k\u001b[33m.\u001b[39mincludes(\u001b[32m'acquisitore-pro-v25-shell'\u001b[39m)))\u001b[33m.\u001b[39mtoBeTruthy()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 283 |\u001b[39m   \u001b[36mawait\u001b[39m context\u001b[33m.\u001b[39msetOffline(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 284 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mreload({ waitUntil\u001b[33m:\u001b[39m\u001b[32m'domcontentloaded'\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 285 |\u001b[39m   \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'header'\u001b[39m))\u001b[33m.\u001b[39mtoContainText(\u001b[32m'ACQUISITORE PRO'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js",
+                        "column": 73,
+                        "line": 282
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n  280 |   await page.reload({ waitUntil:'domcontentloaded' });\n  281 |   const cacheNames = await page.evaluate(() => caches.keys());\n> 282 |   expect(cacheNames.some(k => k.includes('acquisitore-pro-v25-shell'))).toBeTruthy();\n      |                                                                         ^\n  283 |   await context.setOffline(true);\n  284 |   await page.reload({ waitUntil:'domcontentloaded' });\n  285 |   await expect(page.locator('header')).toContainText('ACQUISITORE PRO');\n    at /home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js:282:73"
+                    }
+                  ],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:58.431Z",
+                  "startTime": "2026-08-20T20:04:15.462Z",
                   "annotations": [],
-                  "attachments": []
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-desktop-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-desktop-chromium/video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-desktop-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-desktop-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js",
+                    "column": 73,
+                    "line": 282
+                  }
                 }
               ],
-              "status": "expected"
+              "status": "unexpected"
             }
           ],
           "id": "2d6692c8b444c774f277-b359b618f27f255e09e9",
@@ -734,15 +779,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
+                  "workerIndex": 2,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 574,
+                  "duration": 733,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:59.129Z",
+                  "startTime": "2026-08-20T20:04:16.812Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -768,15 +813,15 @@
               "projectName": "desktop-chromium",
               "results": [
                 {
-                  "workerIndex": 0,
+                  "workerIndex": 2,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1146,
+                  "duration": 1555,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:59.713Z",
+                  "startTime": "2026-08-20T20:04:17.656Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -805,12 +850,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 719,
+                  "duration": 847,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:44.784Z",
+                  "startTime": "2026-08-20T20:04:01.009Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -839,12 +884,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 82,
+                  "duration": 118,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:45.858Z",
+                  "startTime": "2026-08-20T20:04:02.354Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -873,12 +918,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1310,
+                  "duration": 1529,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:45.950Z",
+                  "startTime": "2026-08-20T20:04:02.492Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -907,12 +952,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1354,
+                  "duration": 1629,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:47.275Z",
+                  "startTime": "2026-08-20T20:04:04.033Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -941,12 +986,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 945,
+                  "duration": 1236,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:48.636Z",
+                  "startTime": "2026-08-20T20:04:05.670Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -975,12 +1020,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 765,
+                  "duration": 889,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:49.587Z",
+                  "startTime": "2026-08-20T20:04:06.916Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1009,12 +1054,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 757,
+                  "duration": 875,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:50.360Z",
+                  "startTime": "2026-08-20T20:04:07.816Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1043,12 +1088,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 992,
+                  "duration": 1174,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:51.122Z",
+                  "startTime": "2026-08-20T20:04:08.701Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1077,12 +1122,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1102,
+                  "duration": 1244,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:52.123Z",
+                  "startTime": "2026-08-20T20:04:09.887Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1111,12 +1156,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1162,
+                  "duration": 1393,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:53.243Z",
+                  "startTime": "2026-08-20T20:04:11.142Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1145,12 +1190,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 921,
+                  "duration": 978,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:54.416Z",
+                  "startTime": "2026-08-20T20:04:12.546Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1179,12 +1224,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 907,
+                  "duration": 1025,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:55.345Z",
+                  "startTime": "2026-08-20T20:04:13.531Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1213,12 +1258,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 618,
+                  "duration": 689,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:56.259Z",
+                  "startTime": "2026-08-20T20:04:14.564Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1247,12 +1292,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 531,
+                  "duration": 636,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:56.884Z",
+                  "startTime": "2026-08-20T20:04:15.261Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1281,12 +1326,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 476,
+                  "duration": 277,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:57.421Z",
+                  "startTime": "2026-08-20T20:04:15.911Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1315,12 +1360,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 526,
+                  "duration": 437,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:57.902Z",
+                  "startTime": "2026-08-20T20:04:16.198Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1335,7 +1380,7 @@
         },
         {
           "title": "offline: service worker installa shell e riapre app senza rete",
-          "ok": true,
+          "ok": false,
           "tags": [],
           "tests": [
             {
@@ -1348,18 +1393,63 @@
                 {
                   "workerIndex": 1,
                   "parallelIndex": 1,
-                  "status": "passed",
-                  "duration": 776,
-                  "errors": [],
+                  "status": "failed",
+                  "duration": 781,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n    at /home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js:282:73",
+                    "location": {
+                      "file": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js",
+                      "column": 73,
+                      "line": 282
+                    },
+                    "snippet": "\u001b[0m \u001b[90m 280 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mreload({ waitUntil\u001b[33m:\u001b[39m\u001b[32m'domcontentloaded'\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 281 |\u001b[39m   \u001b[36mconst\u001b[39m cacheNames \u001b[33m=\u001b[39m \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mevaluate(() \u001b[33m=>\u001b[39m caches\u001b[33m.\u001b[39mkeys())\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 282 |\u001b[39m   expect(cacheNames\u001b[33m.\u001b[39msome(k \u001b[33m=>\u001b[39m k\u001b[33m.\u001b[39mincludes(\u001b[32m'acquisitore-pro-v25-shell'\u001b[39m)))\u001b[33m.\u001b[39mtoBeTruthy()\u001b[33m;\u001b[39m\n \u001b[90m     |\u001b[39m                                                                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 283 |\u001b[39m   \u001b[36mawait\u001b[39m context\u001b[33m.\u001b[39msetOffline(\u001b[36mtrue\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 284 |\u001b[39m   \u001b[36mawait\u001b[39m page\u001b[33m.\u001b[39mreload({ waitUntil\u001b[33m:\u001b[39m\u001b[32m'domcontentloaded'\u001b[39m })\u001b[33m;\u001b[39m\n \u001b[90m 285 |\u001b[39m   \u001b[36mawait\u001b[39m expect(page\u001b[33m.\u001b[39mlocator(\u001b[32m'header'\u001b[39m))\u001b[33m.\u001b[39mtoContainText(\u001b[32m'ACQUISITORE PRO'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js",
+                        "column": 73,
+                        "line": 282
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeTruthy\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mfalse\u001b[39m\n\n  280 |   await page.reload({ waitUntil:'domcontentloaded' });\n  281 |   const cacheNames = await page.evaluate(() => caches.keys());\n> 282 |   expect(cacheNames.some(k => k.includes('acquisitore-pro-v25-shell'))).toBeTruthy();\n      |                                                                         ^\n  283 |   await context.setOffline(true);\n  284 |   await page.reload({ waitUntil:'domcontentloaded' });\n  285 |   await expect(page.locator('header')).toContainText('ACQUISITORE PRO');\n    at /home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js:282:73"
+                    }
+                  ],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:58.434Z",
+                  "startTime": "2026-08-20T20:04:16.644Z",
                   "annotations": [],
-                  "attachments": []
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-mobile-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-mobile-chromium/video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-mobile-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/home/runner/work/launcher-dashboard/launcher-dashboard/test-results/acquisitore-pro-v25-offlin-d0ac0-ell-e-riapre-app-senza-rete-mobile-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v25.spec.js",
+                    "column": 73,
+                    "line": 282
+                  }
                 }
               ],
-              "status": "expected"
+              "status": "unexpected"
             }
           ],
           "id": "2d6692c8b444c774f277-4fddefc44348f49f16d3",
@@ -1380,15 +1470,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
+                  "workerIndex": 3,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 662,
+                  "duration": 953,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:59.218Z",
+                  "startTime": "2026-08-20T20:04:18.243Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1414,15 +1504,15 @@
               "projectName": "mobile-chromium",
               "results": [
                 {
-                  "workerIndex": 1,
+                  "workerIndex": 3,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1239,
+                  "duration": 1308,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T20:01:59.887Z",
+                  "startTime": "2026-08-20T20:04:19.327Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1440,11 +1530,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-08-20T20:01:44.083Z",
-    "duration": 17092.188000000002,
-    "expected": 38,
+    "startTime": "2026-08-20T20:04:00.127Z",
+    "duration": 20566.033,
+    "expected": 36,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 2,
     "flaky": 0
   }
 }
