@@ -1,25 +1,30 @@
-const CACHE='acquisitore-pro-v3-italiano';
-const ASSETS=['./manifest.webmanifest','./icon.svg'];
+const CACHE='acquisitore-pro-v4-reel-social';
+const ASSETS=['./manifest.webmanifest','./icon.svg','./reel-social-addon.js'];
 
-function traduciInterfaccia(html){
-  return html
+function preparaPagina(html){
+  let out=html
     .replaceAll('Referral','Segnalazione')
     .replaceAll('Partner','Professionista / collaboratore')
     .replaceAll('Inbound','Persona che ci ha contattato (sito/social/pubblicità)');
+  if(!out.includes('reel-social-addon.js')){
+    const tag='<script src="./reel-social-addon.js"></script>';
+    out=out.includes('</body>')?out.replace('</body>',tag+'</body>'):out+tag;
+  }
+  return out;
 }
 
-async function paginaItaliana(request){
+async function paginaAggiornata(request){
   try{
     const response=await fetch(request,{cache:'no-store'});
     const html=await response.text();
     const headers=new Headers(response.headers);
     headers.set('content-type','text/html; charset=utf-8');
-    return new Response(traduciInterfaccia(html),{status:response.status,statusText:response.statusText,headers});
+    return new Response(preparaPagina(html),{status:response.status,statusText:response.statusText,headers});
   }catch(err){
     const cached=await caches.match('./index.html');
     if(cached){
       const html=await cached.text();
-      return new Response(traduciInterfaccia(html),{headers:{'content-type':'text/html; charset=utf-8'}});
+      return new Response(preparaPagina(html),{headers:{'content-type':'text/html; charset=utf-8'}});
     }
     throw err;
   }
@@ -37,13 +42,8 @@ self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET') return;
   const url=new URL(event.request.url);
   const isPage=event.request.mode==='navigate' || url.pathname.endsWith('/acquisitore-pro/') || url.pathname.endsWith('/acquisitore-pro/index.html');
-  if(isPage){
-    event.respondWith(paginaItaliana(event.request));
-    return;
-  }
+  if(isPage){event.respondWith(paginaAggiornata(event.request));return;}
   event.respondWith(caches.match(event.request).then(cached=>cached||fetch(event.request).then(response=>{
-    const copy=response.clone();
-    caches.open(CACHE).then(cache=>cache.put(event.request,copy));
-    return response;
+    const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));return response;
   })));
 });
