@@ -1,4 +1,4 @@
-const CACHE='acquisitore-pro-v9-piano-deluxe-whatsapp';
+const CACHE='acquisitore-pro-v10-deluxe-appartamenti-signorili';
 const ASSETS=['./manifest.webmanifest','./icon.svg','./acquisizione-vai-qui-addon.js','./reel-social-addon.js','./backup-addon.js','./piano-pubblicazione-addon.js','./strategia-dettagli-addon.js','./piano-deluxe-whatsapp-addon.js'];
 
 function preparaPagina(html){
