@@ -18,7 +18,7 @@ module.exports = defineConfig({
   ],
   webServer: {
     command: 'python3 -m http.server 4173 -d .',
-    url: 'http://127.0.0.1:4173/acquisitore-pro/app-v25.html',
+    url: 'http://127.0.0.1:4173/acquisitore-pro/index.html',
     reuseExistingServer: false,
     timeout: 15000
   }
