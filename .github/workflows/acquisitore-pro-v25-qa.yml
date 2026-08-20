@@ -23,12 +23,12 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
-      - name: Run v25 regression and capture JSON
+      - name: Run v25 canonical regression and capture JSON
         shell: bash
         run: |
           mkdir -p qa-results-v25
           set +e
-          npx playwright test tests/acquisitore-pro-v25.spec.js --config=playwright.v25.config.js --reporter=json > qa-results-v25/report.json
+          npx playwright test tests/acquisitore-pro-v25.spec.js tests/acquisitore-pro-v25-canonical.spec.js --config=playwright.v25.config.js --reporter=json > qa-results-v25/report.json
           code=$?
           echo "$code" > qa-results-v25/exit-code.txt
           exit 0
@@ -69,7 +69,7 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add -- qa-results-v25/report.json qa-results-v25/summary.json qa-results-v25/exit-code.txt
           if ! git diff --cached --quiet; then
-            git commit -m "qa: store Acquisitore Pro v25 regression results"
+            git commit -m "qa: store Acquisitore Pro v25 canonical regression results"
             git push origin HEAD:release/acquisitore-pro-v25-final
           fi
       - name: Upload artifacts
