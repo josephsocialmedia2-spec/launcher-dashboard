@@ -62,5 +62,6 @@ dialog{border:0;border-radius:15px;width:94%;max-width:800px;padding:0}dialog::b
 <div class="fixed"><button id="closeContactBtn" class="green">✓ CHIUDI CONTATTO</button><button id="stopBtn" class="danger">⚠ STOP / SALVA</button></div>
 <dialog id="genericDialog"><div class="dh"><span id="dialogTitle">DETTAGLI</span><button id="dialogClose">✕</button></div><div id="dialogBody" class="db"></div></dialog>
 <script defer src="./app-v24.js"></script>
+<script defer src="./app-v24-extra.js"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw-v24.js',{scope:'./',updateViaCache:'none'}).then(r=>r.update().catch(()=>{})).catch(()=>{}),{once:true});}</script>
 </body></html>
