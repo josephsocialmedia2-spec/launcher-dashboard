@@ -1,5 +1,5 @@
-const CACHE='acquisitore-pro-v5-backup-dati';
-const ASSETS=['./manifest.webmanifest','./icon.svg','./reel-social-addon.js','./backup-addon.js'];
+const CACHE='acquisitore-pro-v6-acquisizione-vai-qui';
+const ASSETS=['./manifest.webmanifest','./icon.svg','./acquisizione-vai-qui-addon.js','./reel-social-addon.js','./backup-addon.js'];
 
 function preparaPagina(html){
   let out=html
@@ -7,6 +7,7 @@ function preparaPagina(html){
     .replaceAll('Partner','Professionista / collaboratore')
     .replaceAll('Inbound','Persona che ci ha contattato (sito/social/pubblicità)');
   const tags=[];
+  if(!out.includes('acquisizione-vai-qui-addon.js'))tags.push('<script src="./acquisizione-vai-qui-addon.js"></script>');
   if(!out.includes('reel-social-addon.js'))tags.push('<script src="./reel-social-addon.js"></script>');
   if(!out.includes('backup-addon.js'))tags.push('<script src="./backup-addon.js"></script>');
   if(tags.length)out=out.includes('</body>')?out.replace('</body>',tags.join('')+'</body>'):out+tags.join('');
