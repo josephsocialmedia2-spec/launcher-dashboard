@@ -1,5 +1,5 @@
-const CACHE='acquisitore-pro-v13-chiudi-contatto';
-const ASSETS=['./index.html','./manifest.webmanifest','./icon.svg','./acquisizione-vai-qui-addon.js','./reel-social-addon.js','./backup-addon.js','./piano-pubblicazione-addon.js','./strategia-dettagli-addon.js','./piano-deluxe-whatsapp-addon.js','./digital-strategist-addon.js','./chiudi-contatto-addon.js'];
+const CACHE='acquisitore-pro-v14-installabile';
+const ASSETS=['./index.html','./manifest.webmanifest','./icon.svg','./icon-192.svg','./icon-512.svg','./acquisizione-vai-qui-addon.js','./reel-social-addon.js','./backup-addon.js','./piano-pubblicazione-addon.js','./strategia-dettagli-addon.js','./piano-deluxe-whatsapp-addon.js','./digital-strategist-addon.js','./chiudi-contatto-addon.js'];
 
 function preparaPagina(html){
   let out=html
@@ -58,6 +58,10 @@ self.addEventListener('fetch',event=>{
   const url=new URL(event.request.url);
   const isPage=event.request.mode==='navigate' || url.pathname.endsWith('/acquisitore-pro/') || url.pathname.endsWith('/acquisitore-pro/index.html');
   if(isPage){event.respondWith(paginaAggiornata(event.request));return;}
+  if(url.pathname.endsWith('/manifest.webmanifest')){
+    event.respondWith(fetch(event.request,{cache:'no-store'}).catch(()=>caches.match(event.request)));
+    return;
+  }
   event.respondWith(caches.match(event.request).then(cached=>cached||fetch(event.request).then(response=>{
     const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy)).catch(()=>{});return response;
   })));
