@@ -12,24 +12,24 @@
     "maxFailures": 0,
     "metadata": {
       "ci": {
-        "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/55d6f4ebee12e9eee0e46fdce5ee9e3f21f4a871",
-        "commitHash": "55d6f4ebee12e9eee0e46fdce5ee9e3f21f4a871",
-        "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32408933917"
+        "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/ca070e9e1e6f230fb28995a7c669622b78d1823c",
+        "commitHash": "ca070e9e1e6f230fb28995a7c669622b78d1823c",
+        "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32410568777"
       },
       "gitCommit": {
-        "shortHash": "55d6f4e",
-        "hash": "55d6f4ebee12e9eee0e46fdce5ee9e3f21f4a871",
-        "subject": "qa: run Acquisitore Pro v24 regression on main",
-        "body": "qa: run Acquisitore Pro v24 regression on main",
+        "shortHash": "ca070e9",
+        "hash": "ca070e9e1e6f230fb28995a7c669622b78d1823c",
+        "subject": "release: add tested Acquisitore Pro v25 application bundle",
+        "body": "release: add tested Acquisitore Pro v25 application bundle",
         "author": {
           "name": "josephsocialmedia2-spec",
           "email": "joseph.socialmedia2@gmail.com",
-          "time": 1787254161000
+          "time": 1787255243000
         },
         "committer": {
           "name": "josephsocialmedia2-spec",
           "email": "joseph.socialmedia2@gmail.com",
-          "time": 1787254161000
+          "time": 1787255243000
         },
         "branch": "main"
       },
@@ -53,24 +53,24 @@
         "retries": 0,
         "metadata": {
           "ci": {
-            "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/55d6f4ebee12e9eee0e46fdce5ee9e3f21f4a871",
-            "commitHash": "55d6f4ebee12e9eee0e46fdce5ee9e3f21f4a871",
-            "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32408933917"
+            "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/ca070e9e1e6f230fb28995a7c669622b78d1823c",
+            "commitHash": "ca070e9e1e6f230fb28995a7c669622b78d1823c",
+            "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32410568777"
           },
           "gitCommit": {
-            "shortHash": "55d6f4e",
-            "hash": "55d6f4ebee12e9eee0e46fdce5ee9e3f21f4a871",
-            "subject": "qa: run Acquisitore Pro v24 regression on main",
-            "body": "qa: run Acquisitore Pro v24 regression on main",
+            "shortHash": "ca070e9",
+            "hash": "ca070e9e1e6f230fb28995a7c669622b78d1823c",
+            "subject": "release: add tested Acquisitore Pro v25 application bundle",
+            "body": "release: add tested Acquisitore Pro v25 application bundle",
             "author": {
               "name": "josephsocialmedia2-spec",
               "email": "joseph.socialmedia2@gmail.com",
-              "time": 1787254161000
+              "time": 1787255243000
             },
             "committer": {
               "name": "josephsocialmedia2-spec",
               "email": "joseph.socialmedia2@gmail.com",
-              "time": 1787254161000
+              "time": 1787255243000
             },
             "branch": "main"
           },
@@ -91,24 +91,24 @@
         "retries": 0,
         "metadata": {
           "ci": {
-            "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/55d6f4ebee12e9eee0e46fdce5ee9e3f21f4a871",
-            "commitHash": "55d6f4ebee12e9eee0e46fdce5ee9e3f21f4a871",
-            "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32408933917"
+            "commitHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/commit/ca070e9e1e6f230fb28995a7c669622b78d1823c",
+            "commitHash": "ca070e9e1e6f230fb28995a7c669622b78d1823c",
+            "buildHref": "https://github.com/josephsocialmedia2-spec/launcher-dashboard/actions/runs/32410568777"
           },
           "gitCommit": {
-            "shortHash": "55d6f4e",
-            "hash": "55d6f4ebee12e9eee0e46fdce5ee9e3f21f4a871",
-            "subject": "qa: run Acquisitore Pro v24 regression on main",
-            "body": "qa: run Acquisitore Pro v24 regression on main",
+            "shortHash": "ca070e9",
+            "hash": "ca070e9e1e6f230fb28995a7c669622b78d1823c",
+            "subject": "release: add tested Acquisitore Pro v25 application bundle",
+            "body": "release: add tested Acquisitore Pro v25 application bundle",
             "author": {
               "name": "josephsocialmedia2-spec",
               "email": "joseph.socialmedia2@gmail.com",
-              "time": 1787254161000
+              "time": 1787255243000
             },
             "committer": {
               "name": "josephsocialmedia2-spec",
               "email": "joseph.socialmedia2@gmail.com",
-              "time": 1787254161000
+              "time": 1787255243000
             },
             "branch": "main"
           },
@@ -159,12 +159,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 705,
+                  "duration": 966,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:29:57.865Z",
+                  "startTime": "2026-08-20T19:47:57.556Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -193,12 +193,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 998,
+                  "duration": 1271,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:00.119Z",
+                  "startTime": "2026-08-20T19:47:59.995Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -227,7 +227,7 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "failed",
-                  "duration": 8111,
+                  "duration": 8519,
                   "error": {
                     "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m failed\n\nLocator:  locator('[data-contact-edit]').first()\nExpected: visible\nReceived: <element(s) not found>\nTimeout:  7000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 7000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-contact-edit]').first()\u001b[22m\n",
                     "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m failed\n\nLocator:  locator('[data-contact-edit]').first()\nExpected: visible\nReceived: <element(s) not found>\nTimeout:  7000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 7000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-contact-edit]').first()\u001b[22m\n\n    at /home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v24.spec.js:58:22",
@@ -251,7 +251,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:01.133Z",
+                  "startTime": "2026-08-20T19:48:01.287Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -306,12 +306,12 @@
                   "workerIndex": 2,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 763,
+                  "duration": 983,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:09.878Z",
+                  "startTime": "2026-08-20T19:48:10.670Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -340,12 +340,12 @@
                   "workerIndex": 2,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 772,
+                  "duration": 1085,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:10.733Z",
+                  "startTime": "2026-08-20T19:48:11.777Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -374,12 +374,12 @@
                   "workerIndex": 2,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 751,
+                  "duration": 848,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:11.512Z",
+                  "startTime": "2026-08-20T19:48:12.879Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -408,12 +408,12 @@
                   "workerIndex": 2,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 831,
+                  "duration": 1034,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:12.270Z",
+                  "startTime": "2026-08-20T19:48:13.737Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -442,12 +442,12 @@
                   "workerIndex": 2,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1252,
+                  "duration": 1328,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:13.109Z",
+                  "startTime": "2026-08-20T19:48:14.781Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -476,7 +476,7 @@
                   "workerIndex": 2,
                   "parallelIndex": 0,
                   "status": "timedOut",
-                  "duration": 45168,
+                  "duration": 45217,
                   "error": {
                     "message": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m",
                     "stack": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m"
@@ -497,7 +497,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:14.369Z",
+                  "startTime": "2026-08-20T19:48:16.119Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -547,12 +547,12 @@
                   "workerIndex": 4,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1124,
+                  "duration": 1244,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:31:00.226Z",
+                  "startTime": "2026-08-20T19:49:02.251Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -581,12 +581,12 @@
                   "workerIndex": 4,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1198,
+                  "duration": 1909,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:31:01.451Z",
+                  "startTime": "2026-08-20T19:49:03.616Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -615,12 +615,12 @@
                   "workerIndex": 4,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 564,
+                  "duration": 635,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:31:02.668Z",
+                  "startTime": "2026-08-20T19:49:05.543Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -649,12 +649,12 @@
                   "workerIndex": 4,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 522,
+                  "duration": 608,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:31:03.240Z",
+                  "startTime": "2026-08-20T19:49:06.189Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -683,12 +683,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 890,
+                  "duration": 1014,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:29:57.871Z",
+                  "startTime": "2026-08-20T19:47:57.541Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -717,12 +717,12 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1035,
+                  "duration": 1439,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:00.301Z",
+                  "startTime": "2026-08-20T19:48:00.031Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -751,7 +751,7 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "failed",
-                  "duration": 8195,
+                  "duration": 8576,
                   "error": {
                     "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m failed\n\nLocator:  locator('[data-contact-edit]').first()\nExpected: visible\nReceived: <element(s) not found>\nTimeout:  7000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 7000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-contact-edit]').first()\u001b[22m\n",
                     "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m failed\n\nLocator:  locator('[data-contact-edit]').first()\nExpected: visible\nReceived: <element(s) not found>\nTimeout:  7000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 7000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-contact-edit]').first()\u001b[22m\n\n    at /home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v24.spec.js:58:22",
@@ -775,7 +775,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:01.347Z",
+                  "startTime": "2026-08-20T19:48:01.495Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -830,12 +830,12 @@
                   "workerIndex": 3,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 802,
+                  "duration": 1112,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:10.237Z",
+                  "startTime": "2026-08-20T19:48:11.010Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -864,12 +864,12 @@
                   "workerIndex": 3,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 854,
+                  "duration": 1139,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:11.114Z",
+                  "startTime": "2026-08-20T19:48:12.277Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -898,12 +898,12 @@
                   "workerIndex": 3,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 744,
+                  "duration": 995,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:11.974Z",
+                  "startTime": "2026-08-20T19:48:13.426Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -932,12 +932,12 @@
                   "workerIndex": 3,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 901,
+                  "duration": 1166,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:12.725Z",
+                  "startTime": "2026-08-20T19:48:14.432Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -966,12 +966,12 @@
                   "workerIndex": 3,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1293,
+                  "duration": 1462,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:13.634Z",
+                  "startTime": "2026-08-20T19:48:15.613Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1000,7 +1000,7 @@
                   "workerIndex": 3,
                   "parallelIndex": 1,
                   "status": "timedOut",
-                  "duration": 45514,
+                  "duration": 45646,
                   "error": {
                     "message": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m",
                     "stack": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m"
@@ -1021,7 +1021,7 @@
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:30:14.935Z",
+                  "startTime": "2026-08-20T19:48:17.090Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -1071,12 +1071,12 @@
                   "workerIndex": 5,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1101,
+                  "duration": 1211,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:31:01.325Z",
+                  "startTime": "2026-08-20T19:49:03.945Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1105,12 +1105,12 @@
                   "workerIndex": 5,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 1007,
+                  "duration": 1739,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:31:02.511Z",
+                  "startTime": "2026-08-20T19:49:05.254Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1139,12 +1139,12 @@
                   "workerIndex": 5,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 606,
+                  "duration": 731,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:31:03.529Z",
+                  "startTime": "2026-08-20T19:49:07.010Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1173,12 +1173,12 @@
                   "workerIndex": 5,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 629,
+                  "duration": 726,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-08-20T19:31:04.143Z",
+                  "startTime": "2026-08-20T19:49:07.751Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -1196,8 +1196,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-08-20T19:29:57.171Z",
-    "duration": 67642.39000000001,
+    "startTime": "2026-08-20T19:47:56.649Z",
+    "duration": 71896.834,
     "expected": 22,
     "skipped": 0,
     "unexpected": 4,
