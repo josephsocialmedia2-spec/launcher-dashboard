@@ -1,38 +1,16 @@
 {
-  "generatedAt": "2026-08-20T19:49:08.620Z",
-  "exitCode": 1,
+  "generatedAt": "2026-08-20T20:08:25.322Z",
+  "exitCode": 0,
+  "passed": 46,
+  "failed": 0,
+  "skipped": 0,
   "stats": {
-    "startTime": "2026-08-20T19:47:56.649Z",
-    "duration": 71896.834,
-    "expected": 22,
+    "startTime": "2026-08-20T20:07:57.720Z",
+    "duration": 27530.376,
+    "expected": 46,
     "skipped": 0,
-    "unexpected": 4,
+    "unexpected": 0,
     "flaky": 0
   },
-  "failures": [
-    {
-      "title": "contatto: modifica ed elimina realmente",
-      "project": "desktop-chromium",
-      "status": "failed",
-      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m failed\n\nLocator:  locator('[data-contact-edit]').first()\nExpected: visible\nReceived: <element(s) not found>\nTimeout:  7000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 7000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-contact-edit]').first()\u001b[22m\n\n\n  56 |   const edit = page.locator('[data-contact-edit]').first();\n  57 |   const del = page.locator('[data-contact-delete]').first();\n> 58 |   await expect(edit).toBeVisible();\n     |                      ^\n  59 |   await expect(del).toBeVisible();\n  60 |   await edit.click();\n  61 |   await expect(page.locator('#name')).toHaveValue(/Mario Rossi EDIT/);\n    at /home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v24.spec.js:58:22"
-    },
-    {
-      "title": "documenti venditore e prequalifica: salva e riapri",
-      "project": "desktop-chromium",
-      "status": "timedOut",
-      "error": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m"
-    },
-    {
-      "title": "contatto: modifica ed elimina realmente",
-      "project": "mobile-chromium",
-      "status": "failed",
-      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m()\u001b[22m failed\n\nLocator:  locator('[data-contact-edit]').first()\nExpected: visible\nReceived: <element(s) not found>\nTimeout:  7000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" with timeout 7000ms\u001b[22m\n\u001b[2m  - waiting for locator('[data-contact-edit]').first()\u001b[22m\n\n\n  56 |   const edit = page.locator('[data-contact-edit]').first();\n  57 |   const del = page.locator('[data-contact-delete]').first();\n> 58 |   await expect(edit).toBeVisible();\n     |                      ^\n  59 |   await expect(del).toBeVisible();\n  60 |   await edit.click();\n  61 |   await expect(page.locator('#name')).toHaveValue(/Mario Rossi EDIT/);\n    at /home/runner/work/launcher-dashboard/launcher-dashboard/tests/acquisitore-pro-v24.spec.js:58:22"
-    },
-    {
-      "title": "documenti venditore e prequalifica: salva e riapri",
-      "project": "mobile-chromium",
-      "status": "timedOut",
-      "error": "\u001b[31mTest timeout of 45000ms exceeded.\u001b[39m"
-    }
-  ]
+  "failures": []
 }
