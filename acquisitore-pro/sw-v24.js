@@ -1,5 +1,5 @@
-const CACHE='acquisitore-pro-v24-shell-1';
-const CORE=['./app-v24.html','./app-v24.js','./manifest-v24.webmanifest','./icon-192.svg','./icon-512.svg'];
+const CACHE='acquisitore-pro-v24-shell-2';
+const CORE=['./app-v24.html','./app-v24.js','./app-v24-extra.js','./manifest-v24.webmanifest','./icon-192.svg','./icon-512.svg'];
 self.addEventListener('install',event=>event.waitUntil((async()=>{const c=await caches.open(CACHE);await c.addAll(CORE);await self.skipWaiting()})()));
 self.addEventListener('activate',event=>event.waitUntil((async()=>{for(const k of await caches.keys())if(k.startsWith('acquisitore-pro-v24-')&&k!==CACHE)await caches.delete(k);await self.clients.claim()})()));
 async function refresh(request,cached,event){const p=fetch(request,{cache:'no-store'}).then(async r=>{if(r.ok){const c=await caches.open(CACHE);await c.put(request,r.clone())}return r}).catch(()=>null);if(cached){event.waitUntil(p);return cached}const r=await p;if(r)return r;return new Response('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width"><body style="font-family:Arial;padding:24px"><h2>Acquisitore Pro</h2><p>Prima apertura senza rete: collegati una volta per installare la copia locale.</p></body>',{headers:{'content-type':'text/html; charset=utf-8'}})}
