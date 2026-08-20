@@ -1,15 +1,15 @@
-const CACHE='acquisitore-pro-v4-reel-social';
-const ASSETS=['./manifest.webmanifest','./icon.svg','./reel-social-addon.js'];
+const CACHE='acquisitore-pro-v5-backup-dati';
+const ASSETS=['./manifest.webmanifest','./icon.svg','./reel-social-addon.js','./backup-addon.js'];
 
 function preparaPagina(html){
   let out=html
     .replaceAll('Referral','Segnalazione')
     .replaceAll('Partner','Professionista / collaboratore')
     .replaceAll('Inbound','Persona che ci ha contattato (sito/social/pubblicità)');
-  if(!out.includes('reel-social-addon.js')){
-    const tag='<script src="./reel-social-addon.js"></script>';
-    out=out.includes('</body>')?out.replace('</body>',tag+'</body>'):out+tag;
-  }
+  const tags=[];
+  if(!out.includes('reel-social-addon.js'))tags.push('<script src="./reel-social-addon.js"></script>');
+  if(!out.includes('backup-addon.js'))tags.push('<script src="./backup-addon.js"></script>');
+  if(tags.length)out=out.includes('</body>')?out.replace('</body>',tags.join('')+'</body>'):out+tags.join('');
   return out;
 }
 
