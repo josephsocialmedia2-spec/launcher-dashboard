@@ -4,7 +4,12 @@ on:
   push:
     branches:
       - 'qa/acquisitore-pro-v24-ci'
+    paths-ignore:
+      - 'qa-results/**'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   e2e:
@@ -21,14 +26,72 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
-      - name: Run regression suite
-        run: npm run test:acq
+      - name: Run regression suite and capture JSON
+        shell: bash
+        run: |
+          mkdir -p qa-results
+          set +e
+          npx playwright test tests/acquisitore-pro-v24.spec.js --reporter=json > qa-results/report.json
+          code=$?
+          echo "$code" > qa-results/exit-code.txt
+          exit 0
+      - name: Summarize failures
+        if: always()
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          let report = {};
+          try { report = JSON.parse(fs.readFileSync('qa-results/report.json','utf8')); } catch {}
+          const failures = [];
+          function walkSuite(s) {
+            for (const spec of s.specs || []) {
+              for (const t of spec.tests || []) {
+                for (const r of t.results || []) {
+                  if (r.status && !['passed','skipped'].includes(r.status)) {
+                    failures.push({
+                      title: [...(s.titlePath || []), spec.title].filter(Boolean).join(' > '),
+                      project: t.projectName || '',
+                      status: r.status,
+                      error: (r.errors?.[0]?.message || r.error?.message || '').slice(0,1800)
+                    });
+                  }
+                }
+              }
+            }
+            for (const child of s.suites || []) walkSuite(child);
+          }
+          for (const s of report.suites || []) walkSuite(s);
+          const exitCode = Number((fs.existsSync('qa-results/exit-code.txt') ? fs.readFileSync('qa-results/exit-code.txt','utf8') : '99').trim());
+          const summary = {
+            generatedAt: new Date().toISOString(),
+            exitCode,
+            stats: report.stats || null,
+            failures
+          };
+          fs.writeFileSync('qa-results/summary.json', JSON.stringify(summary,null,2));
+          NODE
+      - name: Commit QA results
+        if: always()
+        shell: bash
+        run: |
+          git config user.name "acquisitore-pro-qa-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -- qa-results/report.json qa-results/summary.json qa-results/exit-code.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "qa: store latest Acquisitore Pro v24 test results"
+            git push origin HEAD:qa/acquisitore-pro-v24-ci
+          fi
       - name: Upload Playwright artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: acquisitore-pro-v24-playwright
           path: |
+            qa-results/
             test-results/
-            playwright-report/
           if-no-files-found: ignore
+      - name: Set workflow result
+        if: always()
+        shell: bash
+        run: exit "$(cat qa-results/exit-code.txt 2>/dev/null || echo 1)"
