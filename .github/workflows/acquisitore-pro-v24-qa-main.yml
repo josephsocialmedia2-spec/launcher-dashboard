@@ -1,4 +1,4 @@
-name: Acquisitore Pro v24 QA Main
+name: Acquisitore Pro v25 QA Main
 
 on:
   push:
@@ -13,7 +13,7 @@ permissions:
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -23,12 +23,12 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
-      - name: Run regression suite and capture JSON
+      - name: Run canonical v25 regression and capture JSON
         shell: bash
         run: |
           mkdir -p qa-results-main
           set +e
-          npx playwright test tests/acquisitore-pro-v24.spec.js --reporter=json > qa-results-main/report.json
+          npx playwright test tests/acquisitore-pro-v25.spec.js tests/acquisitore-pro-v25-canonical.spec.js --config=playwright.v25.config.js --reporter=json > qa-results-main/report.json
           code=$?
           echo "$code" > qa-results-main/exit-code.txt
           exit 0
@@ -41,12 +41,16 @@ jobs:
           let report = {};
           try { report = JSON.parse(fs.readFileSync('qa-results-main/report.json','utf8')); } catch {}
           const failures = [];
+          let passed = 0, failed = 0, skipped = 0;
           function walkSuite(s) {
             for (const spec of s.specs || []) {
               for (const t of spec.tests || []) {
                 for (const r of t.results || []) {
-                  if (r.status && !['passed','skipped'].includes(r.status)) {
-                    failures.push({title:[...(s.titlePath||[]),spec.title].filter(Boolean).join(' > '),project:t.projectName||'',status:r.status,error:(r.errors?.[0]?.message||r.error?.message||'').slice(0,1800)});
+                  if (r.status === 'passed') passed++;
+                  else if (r.status === 'skipped') skipped++;
+                  else if (r.status) {
+                    failed++;
+                    failures.push({title:[...(s.titlePath||[]),spec.title].filter(Boolean).join(' > '),project:t.projectName||'',status:r.status,error:(r.errors?.[0]?.message||r.error?.message||'').slice(0,2400)});
                   }
                 }
               }
@@ -55,7 +59,7 @@ jobs:
           }
           for (const s of report.suites || []) walkSuite(s);
           const exitCode = Number((fs.existsSync('qa-results-main/exit-code.txt') ? fs.readFileSync('qa-results-main/exit-code.txt','utf8') : '99').trim());
-          fs.writeFileSync('qa-results-main/summary.json',JSON.stringify({generatedAt:new Date().toISOString(),exitCode,stats:report.stats||null,failures},null,2));
+          fs.writeFileSync('qa-results-main/summary.json',JSON.stringify({generatedAt:new Date().toISOString(),exitCode,passed,failed,skipped,stats:report.stats||null,failures},null,2));
           NODE
       - name: Commit QA results
         if: always()
@@ -65,14 +69,14 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add -- qa-results-main/report.json qa-results-main/summary.json qa-results-main/exit-code.txt
           if ! git diff --cached --quiet; then
-            git commit -m "qa: store latest Acquisitore Pro v24 main test results"
+            git commit -m "qa: store latest Acquisitore Pro v25 main test results"
             git push origin HEAD:main
           fi
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: acquisitore-pro-v24-playwright-main
+          name: acquisitore-pro-v25-playwright-main
           path: |
             qa-results-main/
             test-results/
