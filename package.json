@@ -1,0 +1,10 @@
+{
+  "name": "launcher-dashboard-qa",
+  "private": true,
+  "scripts": {
+    "test:acq": "playwright test tests/acquisitore-pro-v24.spec.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.55.0"
+  }
+}
