@@ -1,5 +1,5 @@
-const CACHE='acquisitore-pro-v7-piano-pubblicazione';
-const ASSETS=['./manifest.webmanifest','./icon.svg','./acquisizione-vai-qui-addon.js','./reel-social-addon.js','./backup-addon.js','./piano-pubblicazione-addon.js'];
+const CACHE='acquisitore-pro-v8-trasparenza-cliente';
+const ASSETS=['./manifest.webmanifest','./icon.svg','./acquisizione-vai-qui-addon.js','./reel-social-addon.js','./backup-addon.js','./piano-pubblicazione-addon.js','./strategia-dettagli-addon.js'];
 
 function preparaPagina(html){
   let out=html
@@ -11,6 +11,7 @@ function preparaPagina(html){
   if(!out.includes('reel-social-addon.js'))tags.push('<script src="./reel-social-addon.js"></script>');
   if(!out.includes('backup-addon.js'))tags.push('<script src="./backup-addon.js"></script>');
   if(!out.includes('piano-pubblicazione-addon.js'))tags.push('<script src="./piano-pubblicazione-addon.js"></script>');
+  if(!out.includes('strategia-dettagli-addon.js'))tags.push('<script src="./strategia-dettagli-addon.js"></script>');
   if(tags.length)out=out.includes('</body>')?out.replace('</body>',tags.join('')+'</body>'):out+tags.join('');
   return out;
 }
