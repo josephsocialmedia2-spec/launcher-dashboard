@@ -1,0 +1,1 @@
+Diciture semplificate per i funzionari: Segnalazione; Professionista / collaboratore; Persona che ci ha contattato (sito/social/pubblicità).
