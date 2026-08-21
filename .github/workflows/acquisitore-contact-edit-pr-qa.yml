@@ -1,0 +1,19 @@
+name: Acquisitore Contact Edit PR QA
+on:
+  pull_request:
+    branches: ['main']
+permissions:
+  contents: read
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - name: Run complete regression
+        run: npx playwright test tests/acquisitore-pro-v25.spec.js tests/acquisitore-pro-v25-canonical.spec.js tests/acquisitore-pro-v25-live.spec.js tests/acquisitore-pro-mobile-live.spec.js --config=playwright.v25.config.js --reporter=line
