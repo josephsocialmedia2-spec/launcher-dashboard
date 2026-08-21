@@ -1,0 +1,19 @@
+name: Acquisitore Pro Mobile Overlay QA
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - name: Test situation overlay desktop and Pixel 7
+        run: npx playwright test tests/acquisitore-pro-mobile-overlay-local.spec.js --config=playwright.v25.config.js --reporter=line
