@@ -18,3 +18,4 @@ let action='none';try{
 }catch(e){try{localStorage.setItem(MARK,JSON.stringify({ts:new Date().toISOString(),action:'preflight-error',ok:false,error:String(e)}))}catch{}}
 window.__ACQ_MOBILE_PREFLIGHT__={ok:true,action};
 })();
+(()=>{const s=document.createElement('script');s.src='./seller-signals-zone.js?v=10';s.async=false;document.head.appendChild(s)})();
