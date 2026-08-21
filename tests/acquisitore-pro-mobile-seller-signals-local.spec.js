@@ -45,9 +45,15 @@ test('PROSSIMO SELLER e LAVORATO aggiornano davvero lo stato',async({page})=>{
 });
 
 test('fallback telefono: Seller Signal resta disponibile se le fonti non rispondono',async({page})=>{
-  await page.addInitScript(()=>localStorage.setItem('f1SellerSignalCacheV2',JSON.stringify({ts:new Date().toISOString(),records:[{id:'cached-seller',comune:'Condove',indirizzo:'Via Roma 99',cosa_cerco:'Appartamento con cartello',prezzo_attuale:'€99.000',seller_signal:['INVENDUTO','RIBASSO'],score:92,priorita:'ALTA',fonte:'Cache Radar',url:''}]})));
-  await page.route('**/seller-segnalati.json*',route=>route.abort());
-  await page.route('https://josephsocialmedia2-spec.github.io/immobili-in-zona/**',route=>route.abort());
+  await page.addInitScript(()=>{
+    localStorage.setItem('f1SellerSignalCacheV2',JSON.stringify({ts:new Date().toISOString(),records:[{id:'cached-seller',comune:'Condove',indirizzo:'Via Roma 99',cosa_cerco:'Appartamento con cartello',prezzo_attuale:'€99.000',seller_signal:['INVENDUTO','RIBASSO'],score:92,priorita:'ALTA',fonte:'Cache Radar',url:''}]}));
+    const originalFetch=window.fetch.bind(window);
+    window.fetch=(input,init)=>{
+      const u=String(input&&input.url?input.url:input||'');
+      if(u.includes('seller-segnalati.json')||u.includes('/seller_radar_auto/data/giro_acquisizione.csv'))return Promise.reject(new TypeError('QA offline Seller Signal'));
+      return originalFetch(input,init);
+    };
+  });
   await page.goto('/acquisitore-pro-mobile/index.html?qa='+Date.now(),{waitUntil:'domcontentloaded'});
   await page.waitForFunction(()=>!!window.F1SellerSignalsZone);
   await page.locator('#zoneOpenBtn').click();
