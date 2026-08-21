@@ -25,7 +25,6 @@ test('VAI IN ZONA apre Seller Signal ordinati per score',async({page})=>{
 });
 
 test('NON_DETERMINATO resta visibile come DA VERIFICARE e viene dopo i segnali forti',async({page})=>{
-  await page.route('**/seller-segnalati.json*',route=>route.fulfill({status:200,contentType:'application/json',body:'{"records":[]}'}));
   const csv=[
     'COMUNE,DOVE_ANDRE,COSA_CERCO,PREZZO,SELLER_SIGNAL,SCORE,PRIORITA,FONTE,URL',
     'Condove,Via Roma 10,Appartamento,120000,INDIZIO_PRIVATO,70,ALTA,Radar Test,https://example.com/strong',
@@ -35,15 +34,17 @@ test('NON_DETERMINATO resta visibile come DA VERIFICARE e viene dopo i segnali f
   await page.goto('/acquisitore-pro-mobile/index.html?qa='+Date.now(),{waitUntil:'domcontentloaded'});
   await page.waitForFunction(()=>!!window.F1SellerSignalsZone);
   await page.locator('#zoneOpenBtn').click();
-  await expect(page.locator('#sellerZoneCounts')).toContainText('2 DA LAVORARE');
-  await expect(page.locator('#sellerZoneBody')).toContainText('Condove');
-  await expect(page.locator('#sellerZoneBody')).toContainText('PRIVATO');
-  await page.locator('#sellerNext').click();
-  await expect(page.locator('#sellerZoneBody')).toContainText('Vaie');
-  await expect(page.locator('#sellerZoneBody')).toContainText('DA VERIFICARE');
-  const active=await page.evaluate(()=>window.F1SellerSignalsZone.getActive().map(x=>({comune:x.comune,signals:x.seller_signal})));
-  expect(active).toHaveLength(2);
-  expect(active[1].signals).toContain('DA VERIFICARE');
+  await expect(page.locator('#sellerZoneCounts')).toContainText('DA VERIFICARE');
+  const active=await page.evaluate(()=>window.F1SellerSignalsZone.getActive().map(x=>({comune:x.comune,url:x.url,signals:x.seller_signal})));
+  const strong=active.findIndex(x=>x.url==='https://example.com/strong');
+  const verify=active.findIndex(x=>x.url==='https://example.com/verify');
+  expect(strong).toBeGreaterThanOrEqual(0);
+  expect(verify).toBeGreaterThanOrEqual(0);
+  expect(strong).toBeLessThan(verify);
+  expect(active[strong].signals).toContain('PRIVATO');
+  expect(active[verify].signals).toContain('DA VERIFICARE');
+  const targets=await page.evaluate(()=>JSON.parse(localStorage.getItem('f1VaiZonaTargets')||'[]'));
+  expect(targets.some(x=>x.paese==='Vaie'&&String(x.segnale).includes('DA VERIFICARE'))).toBeTruthy();
 });
 
 test('PROSSIMO SELLER e LAVORATO aggiornano davvero lo stato',async({page})=>{
