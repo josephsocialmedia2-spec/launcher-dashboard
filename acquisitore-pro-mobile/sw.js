@@ -1,7 +1,8 @@
-const CACHE='acquisitore-pro-mobile-clean-v1';
+const CACHE='acquisitore-pro-mobile-clean-v2';
 const CORE=[
   './index.html',
   './manifest.webmanifest',
+  './preflight.js',
   '../acquisitore-pro/app-v25.css',
   '../acquisitore-pro/app-v25.js',
   '../acquisitore-pro/icon-v25-192.png',
