@@ -1,8 +1,9 @@
-const CACHE='acquisitore-pro-v25-shell-canonical-1';
+const CACHE='acquisitore-pro-v25-shell-canonical-2';
 const CORE=[
   './index.html',
   './app-v25.html',
   './app-v25.css',
+  './contact-id-repair.js',
   './app-v25.js',
   './manifest.webmanifest',
   './icon-v25-192.png',
