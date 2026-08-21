@@ -23,6 +23,7 @@
 <div class="fixed"><button id="closeContactBtn" class="green">✓ CHIUDI CONTATTO</button><button id="stopBtn" class="danger">⚠ STOP / SALVA</button></div>
 <dialog id="genericDialog"><div class="dh"><span id="dialogTitle">DETTAGLI</span><button id="dialogClose">✕</button></div><div id="dialogBody" class="db"></div></dialog>
 <script src="./preflight.js"></script>
+<script defer src="../acquisitore-pro/contact-id-repair.js"></script>
 <script defer src="../acquisitore-pro/app-v25.js"></script>
 <script>if('serviceWorker'in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'}).then(r=>r.update().catch(()=>{})).catch(()=>{}),{once:true});}</script>
 </body>
