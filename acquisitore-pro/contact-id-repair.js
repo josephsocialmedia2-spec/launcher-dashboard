@@ -9,7 +9,7 @@ function repairStore(key){try{const raw=localStorage.getItem(key);if(!raw)return
 function repairSnapshot(){try{const raw=localStorage.getItem(SNAP);if(!raw)return 0;const snap=JSON.parse(raw);if(!snap?.state||!Array.isArray(snap.state.contacts))return 0;const r=repairContacts(snap.state.contacts);if(r.changed){snap.state.contacts=r.list;localStorage.setItem(SNAP,JSON.stringify(snap))}return r.repaired}catch{return 0}}
 let repaired=0;for(const key of STORES)repaired+=repairStore(key);repaired+=repairSnapshot();
 try{localStorage.setItem(MARK,JSON.stringify({ts:new Date().toISOString(),repaired,ok:true}))}catch{}
-document.addEventListener('click',e=>{const b=e.target.closest?.('#publicationBtn');if(!b)return;e.preventDefault();e.stopImmediatePropagation();const w=window.open(PUBLICATION_TARGET,'_blank','noopener,noreferrer');if(!w)window.location.href=PUBLICATION_TARGET},true);
+document.addEventListener('click',e=>{const b=e.target.closest?.('#publicationBtn');if(!b)return;e.preventDefault();e.stopImmediatePropagation();window.location.assign(PUBLICATION_TARGET)},true);
 document.addEventListener('click',e=>{const b=e.target.closest?.('[data-contact-edit]');if(!b)return;setTimeout(()=>{const banner=document.getElementById('editBanner'),name=document.getElementById('name');if(banner?.classList.contains('on')&&name){name.scrollIntoView({behavior:'smooth',block:'center'});try{name.focus({preventScroll:true})}catch{name.focus()}}},120)},true);
 window.__ACQ_CONTACT_ID_REPAIR__={ok:true,repaired};
 })();
