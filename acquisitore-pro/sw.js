@@ -1,4 +1,4 @@
-const CACHE='acquisitore-pro-v25-shell-canonical-2';
+const CACHE='acquisitore-pro-v25-shell-canonical-3';
 const CORE=[
   './index.html',
   './app-v25.html',
