@@ -13,7 +13,7 @@ permissions:
 jobs:
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -23,12 +23,12 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
-      - name: Run canonical and live v25 regression and capture JSON
+      - name: Run canonical, live and clean-scope mobile regression
         shell: bash
         run: |
           mkdir -p qa-results-main
           set +e
-          npx playwright test tests/acquisitore-pro-v25.spec.js tests/acquisitore-pro-v25-canonical.spec.js tests/acquisitore-pro-v25-live.spec.js --config=playwright.v25.config.js --reporter=json > qa-results-main/report.json
+          npx playwright test tests/acquisitore-pro-v25.spec.js tests/acquisitore-pro-v25-canonical.spec.js tests/acquisitore-pro-v25-live.spec.js tests/acquisitore-pro-mobile-live.spec.js --config=playwright.v25.config.js --reporter=json > qa-results-main/report.json
           code=$?
           echo "$code" > qa-results-main/exit-code.txt
           exit 0
