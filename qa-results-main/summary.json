@@ -1,23 +1,16 @@
 {
-  "generatedAt": "2026-08-21T04:37:29.147Z",
-  "exitCode": 1,
-  "passed": 73,
-  "failed": 1,
+  "generatedAt": "2026-08-21T04:47:10.811Z",
+  "exitCode": 0,
+  "passed": 74,
+  "failed": 0,
   "skipped": 0,
   "stats": {
-    "startTime": "2026-08-21T04:36:48.123Z",
-    "duration": 40951.548,
-    "expected": 73,
+    "startTime": "2026-08-21T04:46:36.206Z",
+    "duration": 34552.226,
+    "expected": 74,
     "skipped": 0,
-    "unexpected": 1,
+    "unexpected": 0,
     "flaky": 0
   },
-  "failures": [
-    {
-      "title": "mobile clean live: contatto storico senza ID si modifica nel modale",
-      "project": "desktop-chromium",
-      "status": "failed",
-      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#dialogBody')\nExpected string: \u001b[32m\"Contatto Modificato\"\u001b[39m\nReceived string: \u001b[31m\"Senza IDVia Roma 3239333000000 · WhatsAppPossibile venditaCartellocartello vendesi via Roma 32 appartamento · Prossima: controlloMODIFICAELIMINA\"\u001b[39m\nTimeout: 8000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('#dialogBody')\u001b[22m\n\u001b[2m    12 × locator resolved to <div class=\"db\" id=\"dialogBody\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Senza IDVia Roma 3239333000000 · WhatsAppPossibile venditaCartellocartello vendesi via Roma 32 appartamento · Prossima: controlloMODIFICAELIMINA\"\u001b[22m\n\n\n   7 | test('mobile clean live: service worker scope nuovo e offline',async({page,context,request})=>{test.setTimeout(120000);await openLive(page,request);await page.evaluate(()=>navigator.serviceWorker.ready.then(()=>true));const reg=await page.evaluate(()=>navigator.serviceWorker.getRegistration().then(r=>({scope:r?.scope||'',script:r?.active?.scriptURL||''})));expect(reg.scope).toContain('/acquisitore-pro-mobile/');expect(reg.script).toContain('/acquisitore-pro-mobile/sw.js');await page.reload({waitUntil:'domcontentloaded'});await context.setOffline(true);await page.reload({waitUntil:'domcontentloaded'});await expect(page.locator('header')).toContainText('MOBILE CLEAN');await expect(page.locator('#newContactBtn')).toBeVisible();await context.setOffline(false)});\n   8 | test('mobile clean live: migra dati precedenti sullo stesso origin',async({page,request})=>{test.setTimeout(120000);await page.addInitScript(()=>{localStorage.removeItem('acqProV25');localStorage.removeItem('acqProV25Snapshot');localStorage.setItem('acqProMobile',JSON.stringify({contacts:[{id:'legacy-mobile',name:'Dato Smartphone',phone:'39333111111',address:'Via Mobile 7',source:'Giro zona',note:'Storico',outcome:'Appuntamento',next:'',date:'',ts:'2026-08-20T10:00:00.000Z'}],stats:{c:1,v:4,a:1,i:0}}));localStorage.setItem('f1Performance',JSON.stringify({news:2,goals:{v:100,news:20,a:5,i:3}}));});await openLive(page,request);await expect(page.locator('#mContacts')).toHaveText('1');await expect(page.locator('#mConv')).toHaveText('4');await expect(page.locator('#mNews')).toHaveText('2');await page.locator('#contactsBtn').click();await expect(page.l"
-    }
-  ]
+  "failures": []
 }
