@@ -1,10 +1,10 @@
-const CACHE='acquisitore-pro-mobile-clean-v10';
+const CACHE='acquisitore-pro-mobile-clean-v11';
 const CORE=[
   './index.html',
   './manifest.webmanifest',
   './preflight.js',
   './contact-modal.js',
-  './seller-signals-zone.js',
+  './seller-signals-zone-v11.js',
   '../acquisitore-pro/app-v25.css',
   '../acquisitore-pro/contact-id-repair.js',
   '../acquisitore-pro/app-v25.js',
