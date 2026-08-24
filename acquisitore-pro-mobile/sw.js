@@ -1,9 +1,12 @@
-const CACHE='acquisitore-pro-mobile-clean-v12-content-history';
+const CACHE='acquisitore-pro-mobile-clean-v13-prospecting-susa';
 const CORE=[
   './index.html',
   './manifest.webmanifest',
   './preflight.js',
   './contact-modal.js',
+  './prospecting-susa.css',
+  './prospecting-susa.js',
+  './susa-prospecting-data.json',
   './seller-signals-zone-v11.js',
   '../acquisitore-pro/app-v25.css',
   '../acquisitore-pro/contact-id-repair.js',

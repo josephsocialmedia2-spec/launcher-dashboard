@@ -28,7 +28,7 @@ jobs:
         run: |
           mkdir -p qa-results-main
           set +e
-          npx playwright test tests/acquisitore-pro-v25.spec.js tests/acquisitore-pro-v25-canonical.spec.js tests/acquisitore-pro-v25-live.spec.js tests/acquisitore-pro-mobile-live.spec.js --config=playwright.v25.config.js --reporter=json > qa-results-main/report.json
+          npx playwright test tests/acquisitore-pro-v25.spec.js tests/acquisitore-pro-v25-canonical.spec.js tests/acquisitore-pro-v25-live.spec.js tests/acquisitore-pro-mobile-live.spec.js tests/acquisitore-pro-mobile-prospecting-susa.spec.js --config=playwright.v25.config.js --reporter=json > qa-results-main/report.json
           code=$?
           echo "$code" > qa-results-main/exit-code.txt
           exit 0
