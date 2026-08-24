@@ -1,7 +1,7 @@
 (()=>{'use strict';
 const STORES=['acqProV25','acqProV24','acqProMobile'];
 const SNAP='acqProV25Snapshot',MARK='acqContactIdRepair';
-const PUBLICATION_TARGET='https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html';
+const PUBLICATION_TARGET='https://josephsocialmedia2-spec.github.io/open-social-scheduler/monday-control.html?view=last-3-days';
 const safeId=/^[A-Za-z0-9._:-]+$/;
 function makeId(i){try{return 'legacy-'+crypto.randomUUID()}catch{return 'legacy-'+Date.now().toString(36)+'-'+i+'-'+Math.random().toString(36).slice(2,9)}}
 function repairContacts(list){if(!Array.isArray(list))return{list,changed:false,repaired:0};const seen=new Set();let changed=false,repaired=0;const out=list.map((c,i)=>{if(!c||typeof c!=='object')return c;let id=c.id==null?'':String(c.id).trim();if(!id||!safeId.test(id)||seen.has(id)){id=makeId(i);changed=true;repaired++}else if(c.id!==id){changed=true}seen.add(id);return changed&&c.id!==id?{...c,id}:c});return{list:out,changed,repaired}}
