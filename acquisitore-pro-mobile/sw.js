@@ -1,4 +1,4 @@
-const CACHE='acquisitore-pro-mobile-clean-v11';
+const CACHE='acquisitore-pro-mobile-clean-v12-content-history';
 const CORE=[
   './index.html',
   './manifest.webmanifest',
