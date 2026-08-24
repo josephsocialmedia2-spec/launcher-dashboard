@@ -1,16 +1,23 @@
 {
-  "generatedAt": "2026-08-21T11:57:08.190Z",
-  "exitCode": 0,
-  "passed": 74,
-  "failed": 0,
+  "generatedAt": "2026-08-24T07:00:57.812Z",
+  "exitCode": 1,
+  "passed": 73,
+  "failed": 1,
   "skipped": 0,
   "stats": {
-    "startTime": "2026-08-21T11:56:30.658Z",
-    "duration": 37464.346,
-    "expected": 74,
+    "startTime": "2026-08-24T07:00:18.002Z",
+    "duration": 39740.473,
+    "expected": 73,
     "skipped": 0,
-    "unexpected": 0,
+    "unexpected": 1,
     "flaky": 0
   },
-  "failures": []
+  "failures": [
+    {
+      "title": "mobile clean live: form statico eliminato e CRUD contatto in modale",
+      "project": "desktop-chromium",
+      "status": "failed",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveValue\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#mcName')\nExpected string: \u001b[32m\"Test Mobile Pulito\"\u001b[39m\nReceived string: \u001b[31m\"Test Mobile Pulito\u001b[7mVia Test 10\u001b[27m\"\u001b[39m\nTimeout: 8000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveValue\" with timeout 8000ms\u001b[22m\n\u001b[2m  - waiting for locator('#mcName')\u001b[22m\n\u001b[2m    12 × locator resolved to <input id=\"mcName\" placeholder=\"Nome / riferimento\" value=\"Test Mobile PulitoVia Test 10\"/>\u001b[22m\n\u001b[2m       - unexpected value \"Test Mobile PulitoVia Test 10\"\u001b[22m\n\n\n   9 | test('mobile clean live: contatto storico senza ID si modifica nel modale',async({page,request})=>{test.setTimeout(120000);await page.addInitScript(()=>{for(const k of ['acqProV25','acqProV25Snapshot','acqProV24'])localStorage.removeItem(k);localStorage.setItem('acqProMobile',JSON.stringify({contacts:[{name:'Senza ID',phone:'39333000000',address:'Via Roma 32',source:'Cartello',note:'cartello vendesi via Roma 32 appartamento',outcome:'Possibile vendita',next:'controllo',date:'',ts:'2026-08-20T10:00:00.000Z'}],stats:{c:1,v:1,a:0,i:1}}));});const errors=await openLive(page,request);await page.locator('#contactsBtn').click();await expect(page.locator('[data-contact-edit]')).toHaveCount(1);await page.locator('[data-contact-edit]').click();await expect(page.locator('#dialogTitle')).toHaveText('MODIFICA CONTATTO');await expect(page.locator('#mcName')).toHaveValue('Senza ID');await page.locator('#mcName').fill('Contatto Modificato');await page.locator('#mcNote').fill('modifica riuscita');await page.locator('#mcSave').click();await page.waitForLoadState('domcontentloaded');await expect(page.locator('#dialogTitle')).toHaveText('CONTATTI SALVATI');await expect(page.locator('#dialogBody')).toContainText('Contatto Modificato');await expect(page.locator('#dialogBody')).toContainText('modifica riuscita');expect(errors).toEqual([])});\n  10 | test('mobile clean live: preflight ripara stato malformato senza crash',async({page,request})=>{test.setTimeout(120000);await page.addInitScript(()=>{localStorage.setItem('acqProV25',JSON.stringify({contacts:[null,42,{id:'ok',name:'Recuperato',phone:123,address:null,source:null,note:{x:1},outcome:null}],zones:[null,'bad',{paese:7,via:'Via Recupero',civico:3,lat:'45.1',lon:'7.4'}],counters:{conversations:'5',news:'2'},goals:{conversations:'100'},events:new Array(20"
+    }
+  ]
 }
