@@ -1,3 +1,4 @@
+(()=>{'use strict';
 const CORE='acqProV25',KEY='acqProFieldOpsV26',MEDIA='AcquisitoreProFieldMediaV26',PRICING='https://www.agentpricing.com/j.malafronte';
 const $=id=>document.getElementById(id),uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
