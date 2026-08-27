@@ -1,0 +1,60 @@
+name: F1 Guida Mattutina Smartphone
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/f1-guida-mattutina-smartphone.yml"
+  schedule:
+    # 08:00 Europe/Rome: due slot UTC, il gate sceglie quello corretto con CET/CEST.
+    - cron: "0 6,7 * * *"
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  guida-mattino:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Gate 08:00 ora italiana
+        id: gate
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          HOUR=$(TZ=Europe/Rome date +%H)
+          if [ "$HOUR" = "08" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Invia promemoria su GitHub Mobile
+        if: steps.gate.outputs.run == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          DATA=$(TZ=Europe/Rome date '+%d/%m/%Y')
+          cat > /tmp/morning.md <<EOF
+          ## F1 — cosa faccio oggi — $DATA
+
+          Apri dal telefono: **https://josephsocialmedia2-spec.github.io/launcher-dashboard/oggi.html**
+
+          1. **Calendar** — appuntamenti e richiami.
+          2. **Giro F1** — scegli Comune e microzona: https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/presidio_bisettimanale.html
+          3. **Radar** — nuovi immobili, ribassi e uscite: https://josephsocialmedia2-spec.github.io/launcher-dashboard/radar-operativo.html
+          4. **Seller / contatti** — prepara la lista; stessa via non significa proprietario.
+          5. **RPO** — verifica prima delle telefonate commerciali.
+          6. **Script** — chiama e registra subito l'esito.
+          7. **Territorio** — vai solo nella microzona prioritaria.
+          8. **CRM** — chiamato / passato / richiamare / appuntamento.
+          9. **Brief** — prima di un appuntamento: https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/appointment_brief.html
+
+          **Regola:** prima lavoro i contatti utilizzabili; poi mi muovo sul territorio dove c'è un motivo concreto.
+          EOF
+          gh issue comment 18 --repo josephsocialmedia2-spec/launcher-dashboard --body-file /tmp/morning.md
