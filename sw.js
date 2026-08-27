@@ -1,15 +1,17 @@
-const CACHE='f1-operativo-v20260827-2';
+const CACHE='f1-operativo-v20260827-3';
 const STATIC=[
   './oggi.html',
   './giro-acquisizione.html',
   './telefonate-oggi.html',
   './incrocio-giro-contatti.html',
   './market-intelligence.html',
+  './setup-cloud.html',
   './index.html',
   './manifest.webmanifest',
   './pwa.js',
   './supabase-config.js',
-  './supabase-sync.js'
+  './supabase-sync.js',
+  './field-sync.js'
 ];
 self.addEventListener('install',event=>{
   event.waitUntil(caches.open(CACHE).then(c=>c.addAll(STATIC)).then(()=>self.skipWaiting()));
