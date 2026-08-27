@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-27T17:59:14.366Z",
+  "generatedAt": "2026-08-27T18:07:34.224Z",
   "exitCode": 0,
   "passed": 83,
   "failed": 0,
   "skipped": 1,
   "stats": {
-    "startTime": "2026-08-27T17:58:36.406Z",
-    "duration": 37903.294,
+    "startTime": "2026-08-27T18:06:57.398Z",
+    "duration": 36646.496999999996,
     "expected": 83,
     "skipped": 1,
     "unexpected": 0,
