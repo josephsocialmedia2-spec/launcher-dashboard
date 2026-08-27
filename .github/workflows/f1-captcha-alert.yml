@@ -1,0 +1,32 @@
+name: F1 CAPTCHA Alert
+
+on:
+  workflow_dispatch:
+    inputs:
+      context:
+        description: Contesto del controllo manuale
+        required: false
+        default: F1
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notifica issue smartphone
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CTX: ${{ inputs.context }}
+        shell: bash
+        run: |
+          DATA=$(TZ=Europe/Rome date '+%d/%m/%Y %H:%M')
+          gh issue comment 18 --repo josephsocialmedia2-spec/launcher-dashboard --body "⚠️ **F1 — INTERVENTO RICHIESTO — $DATA**
+
+CAPTCHA / controllo manuale rilevato sul PC (${CTX}).
+
+**Torna al PC:** Chrome è rimasto aperto sulla pagina esatta da completare. Il sistema è in stato **ATTESA OPERATORE** e non tenta di aggirare il controllo.
+
+L'URL della pagina non viene pubblicato qui per privacy."
