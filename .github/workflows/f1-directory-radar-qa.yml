@@ -1,0 +1,44 @@
+name: F1 Directory Radar QA
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "windows-directory-radar/**"
+      - ".github/workflows/f1-directory-radar-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Syntax
+        run: python -m py_compile windows-directory-radar/f1_directory_radar.py
+      - name: Test normalizzazione e incrocio
+        shell: bash
+        run: |
+          python - <<'PY'
+          import importlib.util
+          p='windows-directory-radar/f1_directory_radar.py'
+          s=importlib.util.spec_from_file_location('f1dr',p)
+          m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+          assert m.skey('Via Montecapretto') == m.skey('VIA MONTE CAPRETTO 24')
+          assert m.skey('Via Rubiana 142/2') == m.skey('VIA RUBIANA')
+          t={'comune':'Almese','street':m.street('Via Rubiana'),'civic':'142'}
+          c={'Comune':'ALMESE','Via':'VIA RUBIANA','Civico':'142','Telefono':'0110000000'}
+          ok,kind,dist=m.match(c,t)
+          assert ok and kind=='CIVICO_ESATTO' and dist==0
+          c2={'Comune':'ALMESE','Via':'VIA RUBIANA','Civico':'119','Telefono':'0110000001'}
+          ok,kind,dist=m.match(c2,t)
+          assert ok and kind=='STESSA_VIA' and dist==23
+          c3={'Comune':'Rosta','Via':'VIA RUBIANA','Civico':'142','Telefono':'0110000002'}
+          assert not m.match(c3,t)[0]
+          print('QA OK')
+          PY
