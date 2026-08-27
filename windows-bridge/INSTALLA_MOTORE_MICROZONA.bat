@@ -12,6 +12,12 @@ mkdir "%BASE%" 2>nul
 mkdir "%BASE%\data" 2>nul
 mkdir "%BASE%\IMPORTA_ESISTENTI" 2>nul
 
+rem Se il pacchetto contiene gia il database storico, copialo nella cartella privata locale.
+if exist "%~dp0IMPORTA_ESISTENTI\*" (
+  echo Copio archivio contatti esistente...
+  xcopy /Y /I "%~dp0IMPORTA_ESISTENTI\*" "%BASE%\IMPORTA_ESISTENTI\" >nul
+)
+
 echo [1/5] Controllo Python...
 where py >nul 2>nul
 if errorlevel 1 (
@@ -34,7 +40,6 @@ if errorlevel 1 goto :error
 >>"%RUN%" echo cd /d "%BASE%"
 >>"%RUN%" echo powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -UseBasicParsing '%URL%' -OutFile '%SCRIPT%'" ^>nul 2^>nul
 >>"%RUN%" echo py "%SCRIPT%"
-
 
 echo [4/5] Creo collegamenti Desktop...
 powershell -NoProfile -ExecutionPolicy Bypass -Command "$ws=New-Object -ComObject WScript.Shell;$d=[Environment]::GetFolderPath('Desktop');$s=$ws.CreateShortcut((Join-Path $d 'F1 - Lista Mattino.lnk'));$s.TargetPath='%RUN%';$s.WorkingDirectory='%BASE%';$s.IconLocation='shell32.dll,167';$s.Save()"
