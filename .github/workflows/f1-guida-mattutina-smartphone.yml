@@ -45,16 +45,13 @@ jobs:
 
           Apri dal telefono: **https://josephsocialmedia2-spec.github.io/launcher-dashboard/oggi.html**
 
-          1. **Calendar** — appuntamenti e richiami.
-          2. **Giro F1** — scegli Comune e microzona: https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/presidio_bisettimanale.html
-          3. **Radar** — nuovi immobili, ribassi e uscite: https://josephsocialmedia2-spec.github.io/launcher-dashboard/radar-operativo.html
-          4. **Seller / contatti** — prepara la lista; stessa via non significa proprietario.
-          5. **RPO** — verifica prima delle telefonate commerciali.
-          6. **Script** — chiama e registra subito l'esito.
-          7. **Territorio** — vai solo nella microzona prioritaria.
-          8. **CRM** — chiamato / passato / richiamare / appuntamento.
-          9. **Brief** — prima di un appuntamento: https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/appointment_brief.html
+          1. **Calendar** — controlla appuntamenti e richiami già fissati.
+          2. **Giro Acquisizione** — mentre sei fuori usa questa sola schermata: https://josephsocialmedia2-spec.github.io/launcher-dashboard/giro-acquisizione.html
+             - mappa, immobile/segnale, fonte e motivo;
+             - premi ARRIVATO / TROVATO / NON TROVATO / CARTELLO / FOTO / VOLANTINO.
+          3. **Al rientro: Telefonate di oggi** — numeri collegati alle vie lavorate, motivo della chiamata e apertura suggerita: https://josephsocialmedia2-spec.github.io/launcher-dashboard/telefonate-oggi.html
+          4. **Brief** — solo se hai un appuntamento: https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/appointment_brief.html
 
-          **Regola:** prima lavoro i contatti utilizzabili; poi mi muovo sul territorio dove c'è un motivo concreto.
+          **Non devi aprire Radar, Seller o CRM:** lavorano dietro le quinte.
           EOF
           gh issue comment 18 --repo josephsocialmedia2-spec/launcher-dashboard --body-file /tmp/morning.md
