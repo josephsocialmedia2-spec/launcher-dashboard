@@ -1,4 +1,4 @@
-const CACHE='f1-operativo-v20260831-central-1';
+const CACHE='f1-operativo-v20260831-susa20-centrale-2';
 const STATIC=[
   './oggi.html',
   './giro-acquisizione.html',
