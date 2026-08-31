@@ -1,16 +1,28 @@
 {
-  "version": 1,
+  "version": 2,
   "canonical_entrypoint": "oggi.html",
-  "rule": "OGGI COSA FACCIO e l'unica interfaccia operativa. Le altre pagine sono viste o motori interni.",
+  "territory": {
+    "center": "Susa",
+    "radius_km": 20,
+    "rule": "Tutti i Radar e le liste operative del primo ufficio sono governati dal perimetro Susa 20 km."
+  },
+  "rule": "OGGI COSA FACCIO e l'unica cabina di regia; F1 Centrale Telefonate Guidate e l'unico punto da cui partono le telefonate.",
   "operational_views": [
     {"id":"giro","label":"Giro Acquisizione","path":"giro-acquisizione.html"},
-    {"id":"telefonate","label":"Telefonate di oggi","path":"telefonate-oggi.html"},
-    {"id":"contatti","label":"Incrocio Giro / Contatti","path":"incrocio-giro-contatti.html"},
-    {"id":"crm","label":"CRM","path":"crm.html"}
+    {"id":"call-station","label":"F1 Centrale Telefonate Guidate","path":"telefonate-oggi.html","local_pc":"http://127.0.0.1:8766/","local_mobile":"http://f1-radar.local:8766/","role":"UNICO_PUNTO_CHIAMATE"},
+    {"id":"contatti","label":"Incrocio Giro / Contatti","path":"incrocio-giro-contatti.html","role":"ALIMENTAZIONE_TECNICA"},
+    {"id":"crm","label":"CRM","path":"crm.html","entry_rule":"SOLO_DOPO_ESITO_UTILE"}
   ],
+  "prospect_pipeline": {
+    "classification": "PROSPECT_NON_CRM",
+    "sources": ["Seller Radar AUTO", "microzone", "directory pubbliche", "siti professionali/pubblici", "attivita commerciali", "imprese e professionisti", "annunci con contatto esplicito"],
+    "fields": ["comune", "nome/attivita", "categoria", "telefono pubblico", "email pubblica", "motivo contatto", "segnale Radar", "fonte", "score"],
+    "privacy": "Telefoni, email, esiti e lista unificata restano sul PC e non sono pubblicati su GitHub.",
+    "compliance": "Nessun bypass di login/CAPTCHA o aree riservate; verifica fonte pubblica, pertinenza e RPO/privacy prima del contatto."
+  },
   "radar_and_intelligence": [
-    {"id":"seller-radar","label":"Seller Radar unico","path":"seller-radar-unico.html","source":"seller_radar_auto/data/giro_acquisizione.csv"},
-    {"id":"seller-segnalati","label":"Seller Segnalati","path":"seller-segnalati.html","role":"archivio manuale + automatico"},
+    {"id":"seller-radar","label":"Seller Radar unico","path":"seller-radar-unico.html","source":"seller_radar_auto/data/giro_acquisizione.csv","territory":"Susa 20 km"},
+    {"id":"seller-segnalati","label":"Seller Segnalati","path":"seller-segnalati.html","role":"archivio segnali"},
     {"id":"market-intelligence","label":"Market Intelligence","path":"market-intelligence.html"},
     {"id":"brief","label":"Brief appuntamento","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/appointment_brief.html"}
   ],
@@ -20,6 +32,7 @@
   ],
   "infrastructure": [
     {"id":"mobile","label":"F1 Mobile Ready","path":"oggi.html","role":"PWA / interfaccia smartphone"},
+    {"id":"local-call-server","label":"Server locale Centrale Telefonate","path":"windows_valle_susa/f1_mobile_server.py","port":8766},
     {"id":"app","label":"Gestione app","path":"gestione-app.html"},
     {"id":"cloud","label":"Setup cloud","path":"setup-cloud.html"},
     {"id":"cache","label":"Reset cache","path":"reset-cache.html"},
@@ -27,6 +40,7 @@
   ],
   "legacy_redirects": [
     {"id":"radar-operativo-statico","path":"radar-operativo.html","redirect_to":"oggi.html#radar"},
-    {"id":"seller-radar-legacy","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar/","redirect_to":"oggi.html"}
+    {"id":"seller-radar-legacy","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar/","redirect_to":"oggi.html"},
+    {"id":"telefonate-oggi-legacy-logic","path":"telefonate-oggi.html","redirect_role":"BRIDGE_TO_LOCAL_CENTRALE"}
   ]
 }
