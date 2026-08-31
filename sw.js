@@ -1,4 +1,4 @@
-const CACHE='f1-operativo-v20260831-susa20-directory-1';
+const CACHE='f1-operativo-v20260831-susa-km-order-1';
 const STATIC=[
   './oggi.html',
   './giro-acquisizione.html',
