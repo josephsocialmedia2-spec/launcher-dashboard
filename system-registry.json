@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "canonical_entrypoint": "oggi.html",
+  "rule": "OGGI COSA FACCIO e l'unica interfaccia operativa. Le altre pagine sono viste o motori interni.",
+  "operational_views": [
+    {"id":"giro","label":"Giro Acquisizione","path":"giro-acquisizione.html"},
+    {"id":"telefonate","label":"Telefonate di oggi","path":"telefonate-oggi.html"},
+    {"id":"contatti","label":"Incrocio Giro / Contatti","path":"incrocio-giro-contatti.html"},
+    {"id":"crm","label":"CRM","path":"crm.html"}
+  ],
+  "radar_and_intelligence": [
+    {"id":"seller-radar","label":"Seller Radar unico","path":"seller-radar-unico.html","source":"seller_radar_auto/data/giro_acquisizione.csv"},
+    {"id":"seller-segnalati","label":"Seller Segnalati","path":"seller-segnalati.html","role":"archivio manuale + automatico"},
+    {"id":"market-intelligence","label":"Market Intelligence","path":"market-intelligence.html"},
+    {"id":"brief","label":"Brief appuntamento","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/appointment_brief.html"}
+  ],
+  "scheduled_views": [
+    {"id":"monday","label":"Organizer del lunedi","path":"organizer-lunedi.html"},
+    {"id":"groups","label":"Gruppi social F1","path":"gruppi-social-f1.html"}
+  ],
+  "infrastructure": [
+    {"id":"mobile","label":"F1 Mobile Ready","path":"oggi.html","role":"PWA / interfaccia smartphone"},
+    {"id":"app","label":"Gestione app","path":"gestione-app.html"},
+    {"id":"cloud","label":"Setup cloud","path":"setup-cloud.html"},
+    {"id":"cache","label":"Reset cache","path":"reset-cache.html"},
+    {"id":"full-launcher","label":"Gestionale completo / archivio","path":"index.html"}
+  ],
+  "legacy_redirects": [
+    {"id":"radar-operativo-statico","path":"radar-operativo.html","redirect_to":"oggi.html#radar"},
+    {"id":"seller-radar-legacy","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar/","redirect_to":"oggi.html"}
+  ]
+}
