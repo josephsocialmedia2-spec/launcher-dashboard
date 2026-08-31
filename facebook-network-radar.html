@@ -10,9 +10,9 @@
 <div class="ey">F1 IMMOBILIARE · FACEBOOK NETWORK RADAR</div><h1>PERSONE DA LAVORARE</h1>
 <p class="lead">Qui entrano soltanto persone con un segnale concreto: vendita, valutazione, ricerca casa, trasferimento o richiesta immobiliare. Il sistema non invia automaticamente amicizie o Messenger.</p>
 <div class="rule"><b>REGOLA:</b> pochi contatti pertinenti, con calma. Massimo <b>5 nuove richieste lavorate al giorno</b>. Nessun invio massivo, nessun CAPTCHA/login aggirato. Prima si verifica il contesto, poi si apre Facebook e si decide.</div>
-<div id="sourceBox" class="source"><strong>GRUPPO SORGENTE:</strong> <span id="sourceName"></span><div class="small" id="sourceTerritory"></div><div class="actions"><a id="sourceLink" class="btn alt" target="_blank" rel="noopener">APRI GRUPPO</a><a class="btn alt" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/groups.html">TORNA AI GRUPPI</a></div></div>
+<div id="sourceBox" class="source"><strong>SORGENTE FACEBOOK:</strong> <span id="sourceName"></span><div class="small" id="sourceTerritory"></div><div class="actions"><a id="sourceLink" class="btn alt" target="_blank" rel="noopener">APRI GRUPPO</a><a class="btn alt" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/groups.html">TORNA AI GRUPPI</a></div></div>
 <div class="stats"><div class="stat"><b id="total">0</b>candidati</div><div class="stat"><b id="todayCount">0</b>oggi</div><div class="stat"><b id="accepted">0</b>amicizie accettate</div><div class="stat"><b id="leads">0</b>lead</div></div>
-<section class="card"><h2 style="margin-top:0">Aggiungi candidato</h2><p class="small">Se arrivi dal Radar Gruppi, gruppo e territorio vengono compilati automaticamente. Inserisci solo la persona/post che presenta un segnale immobiliare concreto.</p><div class="grid">
+<section class="card"><h2 style="margin-top:0">Aggiungi candidato</h2><p class="small">Se arrivi dal Radar Gruppi o da un segnale trovato nei risultati pubblici, gruppo, territorio, fonte e nota vengono compilati automaticamente. Tu devi identificare la persona reale e verificare il contesto prima del contatto.</p><div class="grid">
 <input class="field" id="name" placeholder="Nome / riferimento"><input class="field" id="zone" placeholder="Comune / zona">
 <input class="field full" id="profile" placeholder="URL profilo Facebook"><input class="field full" id="post" placeholder="URL post specifico / fonte">
 <select class="field" id="signal"><option>VUOLE VENDERE</option><option>CHIEDE VALUTAZIONE</option><option>CERCA CASA</option><option>TRASFERIMENTO</option><option>IMMOBILE EREDITATO</option><option>ALTRO SEGNALE</option></select>
@@ -22,9 +22,11 @@
 </main><div class="foot"><div class="footin"><a href="oggi.html">OGGI</a><a href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/groups.html">GRUPPI</a><a href="crm.html">CRM</a></div></div>
 <script>
 const KEY='f1FacebookNetworkRadarV1',DAILY='f1FacebookNetworkDailyV1',MAX=5;
-const GROUPS='https://josephsocialmedia2-spec.github.io/open-social-scheduler/groups.html';
 const params=new URLSearchParams(location.search);
-const groupContext={name:params.get('group')||'',url:params.get('group_url')||'',territory:params.get('territory')||'',id:params.get('group_id')||'',source:params.get('source')||''};
+const groupContext={
+ name:params.get('group')||'',url:params.get('group_url')||'',territory:params.get('territory')||'',id:params.get('group_id')||'',source:params.get('source')||'',
+ prefillNote:params.get('prefill_note')||'',prefillSignal:params.get('prefill_signal')||'',postUrl:params.get('post_url')||''
+};
 const day=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Rome'}).format(new Date());
 function load(){try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}}
 function save(x){localStorage.setItem(KEY,JSON.stringify(x));render()}
@@ -32,7 +34,7 @@ function daily(){try{let d=JSON.parse(localStorage.getItem(DAILY)||'{}');return 
 function saveDaily(d){localStorage.setItem(DAILY,JSON.stringify(d))}
 function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function id(){return 'fb-'+Date.now()+'-'+Math.random().toString(36).slice(2,7)}
-function applyGroupContext(){if(!groupContext.name&&!groupContext.url&&!groupContext.territory)return;sourceBox.classList.add('show');sourceName.textContent=groupContext.name||'Gruppo Facebook';sourceTerritory.textContent=groupContext.territory||'';if(groupContext.url){sourceLink.href=groupContext.url;sourceLink.style.display='inline-flex'}else sourceLink.style.display='none';if(groupContext.name&&!group.value)group.value=groupContext.name;if(groupContext.territory&&!zone.value)zone.value=groupContext.territory}
+function applyGroupContext(){if(!groupContext.name&&!groupContext.url&&!groupContext.territory&&!groupContext.prefillNote&&!groupContext.postUrl)return;sourceBox.classList.add('show');sourceName.textContent=groupContext.name||'Segnale Facebook';sourceTerritory.textContent=groupContext.territory||'';if(groupContext.url){sourceLink.href=groupContext.url;sourceLink.style.display='inline-flex'}else sourceLink.style.display='none';if(groupContext.name&&!group.value)group.value=groupContext.name;if(groupContext.territory&&!zone.value)zone.value=groupContext.territory;if(groupContext.prefillNote&&!note.value)note.value=groupContext.prefillNote;if(groupContext.postUrl&&!post.value)post.value=groupContext.postUrl;if(groupContext.prefillSignal&&[...signal.options].some(o=>o.value===groupContext.prefillSignal))signal.value=groupContext.prefillSignal}
 function addCandidate(){let n=name.value.trim(),p=profile.value.trim(),po=post.value.trim();if(!n||(!p&&!po)){alert('Inserisci almeno nome/riferimento e URL profilo o post.');return}let a=load();a.unshift({id:id(),name:n,zone:zone.value.trim(),profile:p,post:po,signal:signal.value,group:group.value.trim(),groupUrl:groupContext.url||'',groupId:groupContext.id||'',source:groupContext.source||'facebook',note:note.value.trim(),status:'DA VALUTARE',created:new Date().toISOString(),friendAt:'',acceptedAt:'',messageAt:'',leadAt:''});save(a);[name,profile,post,note].forEach(x=>x.value='');if(!groupContext.name)group.value='';if(!groupContext.territory)zone.value='';applyGroupContext()}
 function update(id,patch){let a=load(),i=a.findIndex(x=>x.id===id);if(i<0)return;a[i]={...a[i],...patch};save(a)}
 function markFriend(id){let d=daily();if(!d.ids.includes(id)&&d.ids.length>=MAX){alert('Limite prudenziale di '+MAX+' nuovi profili oggi raggiunto. Riprendi domani.');return}if(!d.ids.includes(id)){d.ids.push(id);saveDaily(d)}update(id,{status:'RICHIESTA AMICIZIA INVIATA',friendAt:new Date().toISOString()})}
