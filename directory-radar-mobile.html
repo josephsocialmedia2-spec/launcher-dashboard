@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070907">
+<title>F1 Directory Radar</title>
+<link rel="manifest" href="manifest.webmanifest">
+<script defer src="pwa.js"></script>
+<style>
+:root{--bg:#070907;--p:#101510;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--gold:#f4c95d}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt);font-family:Arial,sans-serif}.wrap{max-width:980px;margin:auto;padding:18px 12px 100px}.ey{color:var(--g);font-size:10px;font-weight:900;letter-spacing:.15em}h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}.meta{color:var(--mut);font-size:12px;line-height:1.5}.rule{padding:13px;border-radius:13px;background:#17140d;border:1px solid #66552a;margin:13px 0;color:#e8ddbd}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}.stat,.card{background:var(--p);border:1px solid var(--line);border-radius:13px;padding:12px}.stat{text-align:center;font-size:10px}.stat b{display:block;color:var(--g);font-size:23px}.toolbar{display:grid;grid-template-columns:1fr auto;gap:8px;margin:12px 0}.toolbar input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#0d120e;color:#fff}.btn{display:inline-block;padding:10px 12px;border-radius:9px;background:var(--g);color:#07100a;text-decoration:none;font-size:11px;font-weight:900;border:0;cursor:pointer}.btn.alt{background:#1c261f;color:#fff;border:1px solid var(--line)}.list{display:grid;gap:10px}.name{font-size:17px;font-weight:900}.phone{font-size:18px;color:var(--g);font-weight:900;margin:5px 0}.badge{display:inline-block;padding:5px 8px;border-radius:999px;border:1px solid #66552a;color:var(--gold);font-size:9px;font-weight:900;margin-top:7px}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.empty{padding:35px 12px;text-align:center;border:1px dashed var(--line);border-radius:13px;color:var(--mut)}.foot{position:fixed;left:0;right:0;bottom:0;background:#070907f3;border-top:1px solid var(--line);padding:8px}.footin{max-width:980px;margin:auto;display:flex;gap:7px;justify-content:center}.foot a{padding:10px;border-radius:9px;background:#171d18;color:#fff;text-decoration:none;font-size:10px;font-weight:900}@media(max-width:650px){.stats{grid-template-columns:1fr 1fr 1fr}.toolbar{grid-template-columns:1fr}.toolbar .btn{width:100%}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<div class="ey">F1 IMMOBILIARE · F1 OS MOBILE READY</div>
+<h1>DIRECTORY RADAR</h1>
+<p class="meta">Risultati sincronizzati dal PC dopo la ricerca su fonti pubbliche. Qui vengono mostrati solo i record generati dal Directory Radar.</p>
+<div class="rule"><b>ATTENZIONE:</b> stessa via o stesso civico non significa proprietario. Tutti i risultati restano <b>DA VERIFICARE</b>. Prima di qualunque telefonata commerciale verifica il Registro Pubblico delle Opposizioni.</div>
+<div class="stats"><div class="stat"><b id="tot">0</b>risultati</div><div class="stat"><b id="pb">0</b>PagineBianche</div><div class="stat"><b id="pg">0</b>PagineGialle</div></div>
+<div class="toolbar"><input id="q" placeholder="Cerca nome, telefono, comune, via, immobile..."><button class="btn" id="refresh">AGGIORNA</button></div>
+<div id="status" class="meta">Connessione al cloud F1...</div>
+<div id="list" class="list"></div>
+</main>
+<div class="foot"><div class="footin"><a href="oggi.html">OGGI</a><a href="telefonate-oggi.html">CENTRALE</a><a href="crm.html">CRM</a><a href="setup-cloud.html">CLOUD</a></div></div>
+<script src="supabase-config.js"></script>
+<script src="supabase-sync.js"></script>
+<script>
+let data=[];
+const esc=s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const isDir=c=>/^Directory Radar/i.test(String(c.source||''));
+function firstUrl(note){let m=String(note||'').match(/https?:\/\/[^\s|]+/);return m?m[0]:''}
+function render(){let qq=q.value.toLowerCase().trim(),rows=data.filter(c=>!qq||[c.name,c.phone,c.address,c.source,c.note].join(' ').toLowerCase().includes(qq));tot.textContent=data.length;pb.textContent=data.filter(c=>/PagineBianche/i.test(c.source||'')).length;pg.textContent=data.filter(c=>/PagineGialle/i.test(c.source||'')).length;list.innerHTML=rows.length?rows.map(c=>{let u=firstUrl(c.note);return `<article class="card"><div class="name">${esc(c.name||'Contatto pubblico')}</div><div class="phone">${esc(c.phone||'')}</div><div class="meta">${esc(c.address||'')}<br>${esc(c.source||'Directory Radar')}<br>${esc(c.note||'')}</div><span class="badge">RPO DA VERIFICARE · CALL ALLOWED NO</span><div class="actions">${u?`<a class="btn alt" target="_blank" rel="noopener" href="${esc(u)}">ANNUNCIO / FONTE</a>`:''}<a class="btn alt" target="_blank" rel="noopener" href="https://operatore.registrodelleopposizioni.it/area_riservata/?lang=it">VERIFICA RPO</a></div></article>`}).join(''):'<div class="empty">Nessun risultato Directory Radar sincronizzato.</div>'}
+async function load(){refresh.disabled=true;refresh.textContent='SYNC...';try{if(!window.F1Sync||!F1Sync.ready()){status.innerHTML='Cloud F1 non autenticato su questo dispositivo. <a href="setup-cloud.html" style="color:#39f28a">Configura il cloud</a>.';data=[];render();return}let rows=await F1Sync.pull();data=(rows||[]).filter(isDir).sort((a,b)=>String(b.ts||'').localeCompare(String(a.ts||'')));status.textContent='Cloud F1 sincronizzato · '+data.length+' risultati Directory Radar.';render()}catch(e){status.textContent='Impossibile aggiornare il cloud in questo momento. I dati già presenti sul dispositivo restano disponibili.';try{data=JSON.parse(localStorage.getItem('f1CRMContacts')||'[]').filter(isDir)}catch(_){data=[]}render()}finally{refresh.disabled=false;refresh.textContent='AGGIORNA'}}
+q.oninput=render;refresh.onclick=load;load();
+</script>
+</body>
+</html>

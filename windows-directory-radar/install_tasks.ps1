@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 $base = Join-Path $env:LOCALAPPDATA 'F1DirectoryRadar'
 $py = Join-Path $base '.venv\Scripts\python.exe'
 $pyw = Join-Path $base '.venv\Scripts\pythonw.exe'
-$script = Join-Path $base 'f1_directory_radar.py'
+$script = Join-Path $base 'f1_directory_radar_mobile.py'
 $desktop = [Environment]::GetFolderPath('Desktop')
 $docs = [Environment]::GetFolderPath('MyDocuments')
 $inputDir = Join-Path $docs 'F1_Directory_Radar\IMPORTA_CONTATTI'
@@ -29,13 +29,13 @@ $settingsReport = New-ScheduledTaskSettingsSet -StartWhenAvailable -MultipleInst
 
 $actionNight = New-ScheduledTaskAction -Execute $pyw -Argument ('"'+$script+'" --night') -WorkingDirectory $base
 $triggerNight = New-ScheduledTaskTrigger -Daily -At '02:30'
-Register-ScheduledTask -TaskName 'F1 Directory Radar - Notte' -Action $actionNight -Trigger $triggerNight -Principal $principal -Settings $settingsNight -Description 'Aggiorna annunci, vie e contatti pubblici PagineBianche/PagineGialle e prepara il report F1.' -Force | Out-Null
+Register-ScheduledTask -TaskName 'F1 Directory Radar - Notte' -Action $actionNight -Trigger $triggerNight -Principal $principal -Settings $settingsNight -Description 'Aggiorna annunci, vie e contatti pubblici PagineBianche/PagineGialle, prepara il report e sincronizza F1 OS Mobile Ready.' -Force | Out-Null
 
 $actionReport = New-ScheduledTaskAction -Execute $pyw -Argument ('"'+$script+'" --open-report') -WorkingDirectory $base
 $triggerReport = New-ScheduledTaskTrigger -Daily -At '08:00'
 Register-ScheduledTask -TaskName 'F1 Directory Radar - Report Mattino' -Action $actionReport -Trigger $triggerReport -Principal $principal -Settings $settingsReport -Description 'Apre il report F1 pronto per il lavoro dalla scrivania.' -Force | Out-Null
 
 Write-Host 'Task installati:' -ForegroundColor Green
-Write-Host '  02:30  F1 Directory Radar - Notte'
+Write-Host '  02:30  F1 Directory Radar - Notte + sync F1 OS Mobile Ready'
 Write-Host '  08:00  F1 Directory Radar - Report Mattino'
 Write-Host 'Collegamenti creati sul Desktop.'

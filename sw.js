@@ -1,8 +1,9 @@
-const CACHE='f1-operativo-v20260831-susa20-centrale-2';
+const CACHE='f1-operativo-v20260831-susa20-directory-1';
 const STATIC=[
   './oggi.html',
   './giro-acquisizione.html',
   './telefonate-oggi.html',
+  './directory-radar-mobile.html',
   './incrocio-giro-contatti.html',
   './crm.html',
   './seller-radar-unico.html',
