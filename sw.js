@@ -1,12 +1,18 @@
-const CACHE='f1-operativo-v20260827-3';
+const CACHE='f1-operativo-v20260831-central-1';
 const STATIC=[
   './oggi.html',
   './giro-acquisizione.html',
   './telefonate-oggi.html',
   './incrocio-giro-contatti.html',
+  './crm.html',
+  './seller-radar-unico.html',
+  './seller-segnalati.html',
   './market-intelligence.html',
+  './organizer-lunedi.html',
+  './gruppi-social-f1.html',
+  './gestione-app.html',
   './setup-cloud.html',
-  './index.html',
+  './system-registry.json',
   './manifest.webmanifest',
   './pwa.js',
   './supabase-config.js',
