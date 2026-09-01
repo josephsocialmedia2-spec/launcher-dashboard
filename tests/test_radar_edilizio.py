@@ -42,6 +42,13 @@ class RadarTests(unittest.TestCase):
         self.assertIn('radar-edilizio.html', pwa)
         self.assertIn('radar-edilizio-f1', pwa)
 
+    def test_pwa_cache_contains_radar(self):
+        sw = (ROOT / 'sw.js').read_text(encoding='utf-8')
+        self.assertIn('f1-operativo-v20260901-radar-edilizio-1', sw)
+        self.assertIn("'./radar-edilizio.html'", sw)
+        self.assertIn("'./data/radar_edilizio.json'", sw)
+        self.assertIn("'./pwa.js'", sw)
+
 
 if __name__ == '__main__':
     unittest.main()
