@@ -17,20 +17,25 @@ DB_FILE = DATA / "radar_edilizio.json"
 SEEN_FILE = DATA / "radar_seen.json"
 LOG_FILE = DATA / "radar_scan_log.json"
 
-UA = "F1-Radar-Edilizio/2.0 (+public-data-monitor)"
+UA = "F1-Radar-Edilizio/3.0 (+public-data-monitor)"
 TIMEOUT = 20
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 NAV_TERMS = (
     "albo pretorio", "documenti albo", "atti amministrativi", "pubblicazioni",
     "urbanistica", "edilizia privata", "sportello unico edilizia", "sue",
     "piano regolatore", "prgc"
 )
 EXTRA_KEYWORDS = (
-    "permesso a costruire", "pubblicazione pratiche edilizie", "autorizzazione paesaggistica",
+    "permesso a costruire", "permesso di costruire", "pdc",
+    "scia", "s.c.i.a", "scia alternativa",
+    "cila", "c.i.l.a", "agibilita", "agibilità",
+    "pubblicazione pratiche edilizie", "autorizzazione paesaggistica",
     "variante urbanistica", "variante prgc", "piano regolatore", "piano di recupero",
-    "ampliamento", "riqualificazione", "recupero fabbricato", "lottizzazione",
-    "vendita immobile", "vendita terreno", "lotto edificabile", "piano attuativo",
-    "permesso convenzionato"
+    "ampliamento", "manutenzione straordinaria", "ristrutturazione", "riqualificazione",
+    "restauro", "risanamento", "recupero fabbricato", "demolizione", "ricostruzione",
+    "cambio di destinazione", "lottizzazione", "piano attuativo", "piano esecutivo",
+    "vendita immobile", "vendita terreno", "lotto edificabile", "terreno edificabile",
+    "alienazione", "asta", "permesso convenzionato"
 )
 
 
@@ -65,7 +70,7 @@ def discover_links(url, html, keywords):
         label = normalize(a.get_text(" ", strip=True))
         href = urljoin(url, a["href"])
         context = normalize(a.parent.get_text(" ", strip=True) if a.parent else label)
-        ext_ok = any(x in href.lower() for x in (".pdf", "dettaglio.aspx", "download", "/document", "documenti/"))
+        ext_ok = any(x in href.lower() for x in (".pdf", "dettaglio.aspx", "download", "/document", "documenti/", "/atti-amministrativi/"))
         if ext_ok and relevant(label + " " + context, keywords):
             out.append({"url": href, "label": label or context[:180], "context": context[:500]})
     seen = set()

@@ -7,17 +7,21 @@ on:
     branches: [ main ]
     paths:
       - 'scripts/radar_edilizio_scan.py'
+      - 'scripts/radar_seed_history.py'
       - 'data/radar_sources.json'
+      - 'data/radar_history_seed.json'
       - 'tests/test_radar_edilizio.py'
       - 'radar-edilizio.html'
       - 'oggi.html'
       - 'pwa.js'
+      - 'sw.js'
       - '.github/workflows/radar-edilizio-daily.yml'
 permissions:
   contents: write
 jobs:
   scan:
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
         with:
@@ -27,8 +31,32 @@ jobs:
           python-version: '3.12'
       - name: Install dependencies
         run: pip install requests beautifulsoup4
+      - name: Seed verified history
+        run: python scripts/radar_seed_history.py
       - name: Unit tests
         run: python -m unittest discover -s tests -p 'test_radar_edilizio.py' -v
+      - name: JavaScript syntax checks
+        run: |
+          node --check pwa.js
+          node --check sw.js
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html=Path('radar-edilizio.html').read_text(encoding='utf-8')
+          scripts=re.findall(r'<script>(.*?)</script>', html, re.S|re.I)
+          assert scripts, 'inline radar script not found'
+          Path('/tmp/radar-inline.js').write_text('\n'.join(scripts), encoding='utf-8')
+          PY
+          node --check /tmp/radar-inline.js
+      - name: Public GitHub Pages smoke test
+        run: |
+          BASE='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
+          curl --fail --location --retry 5 --retry-delay 5 "$BASE/radar-edilizio.html" -o /tmp/radar.html
+          grep -q 'RADAR EDILIZIO F1' /tmp/radar.html
+          curl --fail --location --retry 5 --retry-delay 5 "$BASE/data/radar_edilizio.json" -o /tmp/radar.json
+          python -m json.tool /tmp/radar.json >/dev/null
+          curl --fail --location --retry 5 --retry-delay 5 "$BASE/oggi.html" -o /tmp/oggi.html
+          grep -q 'OGGI COSA FACCIO' /tmp/oggi.html
       - name: Daily scan
         run: python scripts/radar_edilizio_scan.py
       - name: Second pass deduplication test

@@ -1,0 +1,45 @@
+{
+  "verified_at": "2026-09-01",
+  "records": [
+    {
+      "comune": "Sauze d’Oulx",
+      "date": "2026-07-02",
+      "atto": "PDC in sanatoria 26/2026 - Albo 339/2026",
+      "classe": "Permesso di costruire in sanatoria",
+      "stato": "DA ANALIZZARE",
+      "source_url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=szdlx254&Tipo=10"
+    },
+    {
+      "comune": "Sauze d’Oulx",
+      "date": "2026-06-26",
+      "atto": "PDC 86/2025 - Albo 330/2026",
+      "classe": "Permesso di costruire",
+      "stato": "DA ANALIZZARE",
+      "source_url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=szdlx254&Tipo=10"
+    },
+    {
+      "comune": "Sauze d’Oulx",
+      "date": "2026-07-29",
+      "atto": "Autorizzazione L.R. 45/89 n. 85/2025 - Albo 405/2026",
+      "classe": "Permesso/autorizzazione edilizia",
+      "stato": "ANALIZZATO PARZIALE",
+      "source_url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=szdlx254&RicRich=28"
+    },
+    {
+      "comune": "Pragelato",
+      "date": "2026-08-28",
+      "atto": "Albo 372/2026 - elenco CILA 01/03/2026–31/07/2026",
+      "classe": "Elenco CILA",
+      "stato": "DA ANALIZZARE",
+      "source_url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=prglt1223&RicCro=1"
+    },
+    {
+      "comune": "Pragelato",
+      "date": "2026-08-28",
+      "atto": "Albo 371/2026 - elenco SCIA 01/03/2026–31/07/2026",
+      "classe": "Elenco SCIA",
+      "stato": "DA ANALIZZARE",
+      "source_url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=prglt1223&RicCro=1"
+    }
+  ]
+}
