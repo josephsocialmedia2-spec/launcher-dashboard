@@ -8,6 +8,10 @@ on:
     paths:
       - 'scripts/radar_edilizio_scan.py'
       - 'data/radar_sources.json'
+      - 'tests/test_radar_edilizio.py'
+      - 'radar-edilizio.html'
+      - 'oggi.html'
+      - 'pwa.js'
       - '.github/workflows/radar-edilizio-daily.yml'
 permissions:
   contents: write
@@ -16,6 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -39,11 +45,12 @@ jobs:
           assert len(bu) >= len(au), 'records unexpectedly removed'
           print('DEDUP PASS',len(bu))
           PY
-      - name: Commit scan state/results
+      - name: Commit scan state/results safely
         run: |
           git config user.name 'f1-radar-bot'
           git config user.email 'actions@users.noreply.github.com'
           git add data/radar_edilizio.json data/radar_seen.json data/radar_scan_log.json || true
           git diff --cached --quiet && exit 0
           git commit -m 'Radar edilizio: aggiornamento automatico'
-          git push
+          git pull --rebase origin main
+          git push origin main
