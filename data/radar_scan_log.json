@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-09-01T17:25:49.869695+00:00",
+  "started_at": "2026-09-01T17:31:06.614522+00:00",
   "scanner_version": 4,
   "geography": {
     "center": "Susa",
@@ -31,12 +31,15 @@
     {
       "comune": "Meana di Susa",
       "km_from_susa": 1.9,
-      "url": "https://www.halleyweb.com/c001149/mc/mc_p_ricerca.php?servizio=",
-      "status": "ERROR",
+      "url": "https://www.comune.meanadisusa.to.it/it-it/amministrazione/documenti-albo-pretorio",
+      "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 0,
-      "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
+      "pages_checked": 4,
+      "http_status": 200,
+      "warnings": [
+        "https://www.halleyweb.com/c001149/mc/mc_p_ricerca.php?servizio=: ConnectionError"
+      ]
     },
     {
       "comune": "Gravere",
@@ -192,6 +195,6 @@
   ],
   "new_records": 0,
   "baseline_imported": 0,
-  "errors": 1,
-  "finished_at": "2026-09-01T17:27:06.818366+00:00"
+  "errors": 0,
+  "finished_at": "2026-09-01T17:32:16.168058+00:00"
 }
