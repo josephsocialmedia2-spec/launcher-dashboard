@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://josephsocialmedia2-spec.github.io/launcher-dashboard/sitemap.xml
