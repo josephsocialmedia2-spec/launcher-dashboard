@@ -1,5 +1,7 @@
 {
-  "started_at": "2026-09-01T07:37:30.075360+00:00",
+  "started_at": "2026-09-01T07:41:51.125572+00:00",
+  "scanner_version": 2,
+  "rebaseline": false,
   "sources": [
     {
       "comune": "Susa",
@@ -7,14 +9,16 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 1,
       "http_status": 200
     },
     {
       "comune": "Sant’Ambrogio di Torino",
       "url": "https://www.comune.santambrogioditorino.to.it/Menu?IDDettaglio=198281",
       "status": "OK",
-      "links": 27,
+      "links": 28,
       "new": 0,
+      "pages_checked": 1,
       "http_status": 200
     },
     {
@@ -23,6 +27,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -31,6 +36,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -39,6 +45,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -47,6 +54,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -55,6 +63,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 2,
       "http_status": 200
     },
     {
@@ -63,6 +72,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -71,6 +81,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -79,6 +90,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -87,7 +99,11 @@
       "status": "OK",
       "links": 0,
       "new": 0,
-      "http_status": 200
+      "pages_checked": 2,
+      "http_status": 200,
+      "warnings": [
+        "http://www.alboinrete.it/sdidero: ConnectTimeout"
+      ]
     },
     {
       "comune": "Borgone Susa",
@@ -95,6 +111,7 @@
       "status": "OK",
       "links": 10,
       "new": 0,
+      "pages_checked": 1,
       "http_status": 200
     },
     {
@@ -103,6 +120,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -111,7 +129,12 @@
       "status": "OK",
       "links": 0,
       "new": 0,
-      "http_status": 200
+      "pages_checked": 1,
+      "http_status": 200,
+      "warnings": [
+        "https://halleyweb.com/c001076/mc/mc_matri_gridev_messi.php?x=&servizio=&bck=: ConnectionError",
+        "https://www.halleyweb.com/c001076/mc/mc_gridev_messi.php?x=&servizio=&bck=: ConnectionError"
+      ]
     },
     {
       "comune": "Mompantero",
@@ -119,7 +142,11 @@
       "status": "OK",
       "links": 0,
       "new": 0,
-      "http_status": 200
+      "pages_checked": 2,
+      "http_status": 200,
+      "warnings": [
+        "http://www.alboinrete.it/mompantero: ConnectTimeout"
+      ]
     },
     {
       "comune": "San Giorio di Susa",
@@ -127,6 +154,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -135,6 +163,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -143,6 +172,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -151,6 +181,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -159,6 +190,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -167,6 +199,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -175,6 +208,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -183,6 +217,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 2,
       "http_status": 200
     },
     {
@@ -191,6 +226,7 @@
       "status": "OK",
       "links": 1,
       "new": 0,
+      "pages_checked": 2,
       "http_status": 200
     },
     {
@@ -199,6 +235,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 1,
       "http_status": 200
     },
     {
@@ -207,6 +244,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -215,6 +253,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -223,6 +262,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -231,14 +271,16 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
       "comune": "Bardonecchia",
       "url": "https://comune.bardonecchia.to.it/servizio/permesso-di-costruire/",
       "status": "OK",
-      "links": 0,
+      "links": 4,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -247,6 +289,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -255,6 +298,7 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 3,
       "http_status": 200
     },
     {
@@ -263,10 +307,11 @@
       "status": "OK",
       "links": 0,
       "new": 0,
+      "pages_checked": 1,
       "http_status": 200
     }
   ],
   "new_records": 0,
   "errors": 0,
-  "finished_at": "2026-09-01T07:37:56.296480+00:00"
+  "finished_at": "2026-09-01T07:43:29.689180+00:00"
 }

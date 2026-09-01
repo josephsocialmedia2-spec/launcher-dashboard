@@ -1,4 +1,5 @@
 {
+  "schema_version": 2,
   "initialized_sources": [
     "Almese|https://comune.almese.to.it/servizio/permesso-di-costruire/",
     "Alpignano|https://www.comune.alpignano.to.it/",
@@ -35,6 +36,10 @@
     "Villar Focchiardo|https://www.comune.villarfocchiardo.to.it/Amministrazione/Uffici/Lavori-pubblici-manutenzione-patrimonio-e-demanio-comunale"
   ],
   "seen_urls": [
+    "https://comune.bardonecchia.to.it/amministrazione/documenti-e-dati/regolamenti/piano-regolatore-generale-cimiteriale-regolamento-cimiteriale/",
+    "https://comune.bardonecchia.to.it/amministrazione/documenti-e-dati/regolamenti/piano-regolatore-generale-comunale/",
+    "https://comune.bardonecchia.to.it/amministrazione/documenti-e-dati/regolamenti/regolamento-edilizio-comunale-allegato-energetico-ambientale-linee-guida-per-il-recupero-architettonico-e-la-riqualificazione-paesaggistica/",
+    "https://comune.bardonecchia.to.it/amministrazione/documenti-e-dati/regolamenti/regolamento-per-lalienazione-dei-beni-immobili-e-dei-beni-mobili/",
     "https://comune.borgonesusa.to.it/wp-content/uploads/2019/12/Guida_MUDE_-_Linee_guida_redazione_elaborati_grafici_V01-23giu2015-3.pdf",
     "https://comune.borgonesusa.to.it/wp-content/uploads/2019/12/Regolamento-edilizio-definitivo-2.pdf",
     "https://comune.borgonesusa.to.it/wp-content/uploads/2019/12/documentazione-per-la-presentazione-del-progetto-1.pdf",
@@ -45,6 +50,7 @@
     "https://comune.borgonesusa.to.it/wp-content/uploads/2019/12/regolamentomanomissioni-1-1.pdf",
     "https://www.comune.borgonesusa.to.it/wp-content/uploads/2020/09/lavoripubblicare.pdf",
     "https://www.comune.borgonesusa.to.it/wp-content/uploads/2022/01/istruttoria-tipo-professionista.pdf",
+    "https://www.comune.santambrogioditorino.to.it/portals/1499/SiscomArchivio/8/AUT_PAESAGGISTICA.pdf",
     "https://www.comune.santambrogioditorino.to.it/portals/1499/SiscomArchivio/8/PDC104_2023.pdf",
     "https://www.comune.santambrogioditorino.to.it/portals/1499/SiscomArchivio/8/PDC57_2025.pdf",
     "https://www.comune.santambrogioditorino.to.it/portals/1499/SiscomArchivio/8/PDC_10_2022.pdf",
