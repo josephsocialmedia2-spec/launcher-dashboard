@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-09-01T15:25:01.278911+00:00",
+  "started_at": "2026-09-01T15:33:37.242482+00:00",
   "scanner_version": 3,
   "rebaseline": false,
   "sources": [
@@ -163,11 +163,11 @@
     {
       "comune": "Venaus",
       "url": "https://www.comune.venaus.to.it/it-it/amministrazione/documenti-dati",
-      "status": "ERROR",
+      "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 0,
-      "error": "ReadTimeout: HTTPSConnectionPool(host='www.comune.venaus.to.it', port=443): Read timed out. (read timeout=20)"
+      "pages_checked": 3,
+      "http_status": 200
     },
     {
       "comune": "Giaglione",
@@ -309,6 +309,6 @@
     }
   ],
   "new_records": 0,
-  "errors": 2,
-  "finished_at": "2026-09-01T15:26:52.187059+00:00"
+  "errors": 1,
+  "finished_at": "2026-09-01T15:35:07.552242+00:00"
 }
