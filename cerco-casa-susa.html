@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Cerchi casa a Susa? Descrivi la casa ideale. Se devi vendere prima di acquistare, richiedi anche la valutazione e il coordinamento dei tempi vendita-acquisto.">
+<title>Cerco casa a Susa | F1</title>
+<style>
+:root{--bg:#07100a;--card:#101710;--line:#2e3d31;--txt:#fff;--mut:#b7c0b9;--g:#39f28a;--gold:#f4c95d}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050805,#0c130e);color:var(--txt);font-family:Arial,sans-serif}.wrap{max-width:860px;margin:auto;padding:22px 14px 80px}.ey{color:var(--g);font-size:11px;font-weight:900;letter-spacing:.14em}.hero,.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin:14px 0}.hero h1{font-size:clamp(34px,8vw,58px);margin:7px 0}.lead{color:var(--mut);line-height:1.55}.choice{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice button,.btn{border:0;border-radius:13px;padding:14px;font-weight:900;cursor:pointer}.choice button{background:#172019;color:#fff;border:1px solid var(--line)}.choice button.active,.btn{background:var(--g);color:#07100a}.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.full{grid-column:1/-1}label{font-size:12px;font-weight:800;color:#dce3de}input,select,textarea{width:100%;margin-top:6px;padding:12px;border-radius:11px;border:1px solid #344538;background:#09100b;color:#fff;font:inherit}textarea{min-height:88px;resize:vertical}.sell{display:none;border-top:1px solid var(--line);margin-top:18px;padding-top:18px}.sell.on{display:block}.check{display:flex;gap:9px;align-items:flex-start;margin:12px 0;color:var(--mut);font-size:12px}.check input{width:18px;height:18px;margin:0;accent-color:var(--g)}.status{margin-top:13px;padding:12px;border-radius:12px;display:none}.status.ok{display:block;background:#0d2817;border:1px solid #286c3e}.status.err{display:block;background:#2a1111;border:1px solid #753232}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.step{padding:14px;border-radius:14px;background:#0c130e;border:1px solid var(--line)}.step b{display:block;color:var(--g);font-size:24px}.small{font-size:11px;color:var(--mut);line-height:1.45}.gold{color:var(--gold)}@media(max-width:700px){.grid,.choice,.steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<div class="ey">F1 · RICERCA CASA LOCALE</div>
+<section class="hero">
+<h1>Cerchi casa a Susa?</h1>
+<p class="lead">Descrivici la casa che stai cercando. Registriamo la tua richiesta e la confrontiamo con le opportunità inserite nel sistema. Se possiedi già una casa da vendere, possiamo analizzare anche il percorso vendita + acquisto per coordinare meglio i tempi.</p>
+<div class="choice"><button id="onlyBuy" class="active" type="button">CERCO CASA</button><button id="buySell" type="button">CERCO CASA E DEVO VENDERE</button></div>
+</section>
+<section class="card">
+<form id="leadForm">
+<input type="hidden" id="target_comune" value="Susa">
+<div class="grid">
+<label>Nome e cognome<input id="nome" required maxlength="120" autocomplete="name"></label>
+<label>Telefono<input id="telefono" required maxlength="30" autocomplete="tel" inputmode="tel"></label>
+<label>Email<input id="email" type="email" maxlength="160" autocomplete="email"></label>
+<label>Budget massimo €<input id="budget_max" type="number" min="1" step="1000" required></label>
+<label>Tipologia<select id="tipologia" required><option value="">Seleziona</option><option>appartamento</option><option>casa indipendente</option><option>semindipendente</option><option>villa</option><option>rustico</option><option>altro</option></select></label>
+<label>Metri quadri minimi<input id="min_mq" type="number" min="1"></label>
+<label>Camere minime<input id="camere" type="number" min="0"></label>
+<label>Quando vuoi acquistare?<select id="tempistica"><option value="">Seleziona</option><option>entro 3 mesi</option><option>3-6 mesi</option><option>6-12 mesi</option><option>oltre 12 mesi</option><option>sto valutando</option></select></label>
+<label>Giardino<select id="giardino"><option value="">Indifferente</option><option value="true">Sì</option><option value="false">No</option></select></label>
+<label>Box<select id="box"><option value="">Indifferente</option><option value="true">Sì</option><option value="false">No</option></select></label>
+<label class="full">Note<textarea id="note" placeholder="Zona preferita, piano, ascensore, stato immobile, esigenze particolari..."></textarea></label>
+</div>
+<div id="sellSection" class="sell">
+<h2>Hai un immobile da vendere?</h2>
+<p class="lead">Lo valutiamo gratuitamente e analizziamo la sequenza più sostenibile tra vendita e nuovo acquisto. L'obiettivo è ridurre il rischio di dover ricorrere a una sistemazione temporanea non desiderata.</p>
+<div class="grid">
+<label>Comune immobile da vendere<input id="sell_comune" maxlength="120"></label>
+<label>Indirizzo / zona<input id="sell_indirizzo" maxlength="180"></label>
+<label>Tipologia<input id="sell_tipologia" maxlength="100"></label>
+<label>Mq<input id="sell_mq" type="number" min="1"></label>
+<label>Locali<input id="sell_locali" type="number" min="0"></label>
+<label>Stato immobile<select id="sell_stato"><option value="">Seleziona</option><option>ottimo</option><option>buono</option><option>da rivedere</option><option>da ristrutturare</option></select></label>
+<label>Mutuo residuo €<input id="mutuo_residuo" type="number" min="0" step="1000"></label>
+<label>Valore atteso €<input id="valore_atteso" type="number" min="0" step="1000"></label>
+</div>
+</div>
+<label class="check"><input id="privacy" type="checkbox" required><span>Acconsento al trattamento dei dati inviati per essere ricontattato in merito alla mia ricerca immobiliare e, se selezionato, alla valutazione dell'immobile da vendere.</span></label>
+<button class="btn" id="submitBtn" type="submit">INVIA LA MIA RICHIESTA</button>
+<div id="status" class="status"></div>
+</form>
+</section>
+<section class="card"><h2>Come funziona</h2><div class="steps"><div class="step"><b>1</b><strong>Compili</strong><p class="small">Ci dici cosa cerchi a Susa.</p></div><div class="step"><b>2</b><strong>Incrociamo</strong><p class="small">La richiesta viene confrontata con le opportunità presenti nel sistema.</p></div><div class="step"><b>3</b><strong>Ti ricontattiamo</strong><p class="small">Se emerge una soluzione coerente, verifichiamo insieme interesse e prossimi passi.</p></div></div></section>
+<section class="card"><h2 class="gold">Devi vendere prima di comprare?</h2><p class="lead">Non trattiamo automaticamente le due operazioni come eventi separati. Valutiamo l'immobile attuale, la casa cercata, il budget e le tempistiche per costruire un percorso coordinato. Le attività di mediazione e le fasi contrattuali sono gestite dal soggetto abilitato.</p></section>
+</main>
+<script>
+const API='https://nqnmlsmeiynxbdojeyjt.supabase.co/rest/v1';
+const KEY='sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu';
+let selling=false;
+const onlyBuy=document.getElementById('onlyBuy'),buySell=document.getElementById('buySell'),sellSection=document.getElementById('sellSection');
+function mode(v){selling=v;onlyBuy.classList.toggle('active',!v);buySell.classList.toggle('active',v);sellSection.classList.toggle('on',v);document.getElementById('sell_comune').required=v}
+onlyBuy.onclick=()=>mode(false);buySell.onclick=()=>mode(true);
+const val=id=>document.getElementById(id).value.trim();
+const num=id=>val(id)===''?null:Number(val(id));
+const tri=id=>val(id)===''?null:val(id)==='true';
+function uuid(){return crypto.randomUUID?crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0,v=c==='x'?r:(r&3|8);return v.toString(16)})}
+async function insert(table,payload){const r=await fetch(`${API}/${table}`,{method:'POST',headers:{'apikey':KEY,'Authorization':`Bearer ${KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(payload)});if(!r.ok)throw new Error((await r.text())||`HTTP ${r.status}`)}
+document.getElementById('leadForm').addEventListener('submit',async e=>{e.preventDefault();const status=document.getElementById('status'),btn=document.getElementById('submitBtn');status.className='status';status.textContent='';btn.disabled=true;btn.textContent='INVIO...';const id=uuid();try{await insert('f1_house_requests',{id,target_comune:'Susa',nome:val('nome'),telefono:val('telefono'),email:val('email')||null,budget_max:num('budget_max'),tipologia:val('tipologia'),min_mq:num('min_mq'),camere:num('camere'),giardino:tri('giardino'),box:tri('box'),tempistica:val('tempistica')||null,deve_vendere:selling,note:val('note')||null,consenso_privacy:true,fonte:'seo_susa'});if(selling){await insert('f1_properties_to_sell',{request_id:id,comune:val('sell_comune'),indirizzo:val('sell_indirizzo')||null,tipologia:val('sell_tipologia')||null,mq:num('sell_mq'),locali:num('sell_locali'),stato_immobile:val('sell_stato')||null,mutuo_residuo:num('mutuo_residuo'),valore_atteso:num('valore_atteso')})}status.className='status ok';status.textContent='Richiesta registrata. Ti ricontatteremo dopo la verifica delle informazioni e delle opportunità compatibili.';e.target.reset();mode(false);window.scrollTo({top:status.offsetTop-100,behavior:'smooth'})}catch(err){status.className='status err';status.textContent='Invio non riuscito. Nessun esito viene dichiarato finché il salvataggio non è confermato. Riprova oppure contatta F1.';console.error(err)}finally{btn.disabled=false;btn.textContent='INVIA LA MIA RICHIESTA'}});
+</script>
+</body>
+</html>
