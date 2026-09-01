@@ -1,4 +1,4 @@
-const CACHE='f1-operativo-v20260901-radar-edilizio-1';
+const CACHE='f1-operativo-v20260901-radar-susa20-2';
 const STATIC=[
   './oggi.html',
   './radar-edilizio.html',
@@ -35,6 +35,10 @@ self.addEventListener('fetch',event=>{
   if(url.origin!==self.location.origin) return;
   if(req.mode==='navigate'){
     event.respondWith(fetch(req).then(res=>{const copy=res.clone();caches.open(CACHE).then(c=>c.put(req,copy));return res}).catch(()=>caches.match(req).then(r=>r||caches.match('./oggi.html'))));
+    return;
+  }
+  if(url.pathname.endsWith('/data/radar_edilizio.json')){
+    event.respondWith(fetch(req).then(res=>{if(res.ok){const copy=res.clone();caches.open(CACHE).then(c=>c.put(req,copy))}return res}).catch(()=>caches.match(req)));
     return;
   }
   event.respondWith(caches.match(req).then(hit=>hit||fetch(req).then(res=>{
