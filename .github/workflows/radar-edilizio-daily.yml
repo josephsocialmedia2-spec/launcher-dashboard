@@ -76,11 +76,13 @@ jobs:
           import json
           a=json.load(open('/tmp/before.json'))
           b=json.load(open('data/radar_edilizio.json'))
-          au=[x.get('source_url') for x in a['opportunities']]
-          bu=[x.get('source_url') for x in b['opportunities']]
-          assert len(bu)==len(set(bu)), 'duplicate source_url detected'
+          au=[x.get('source_url') for x in a['opportunities'] if x.get('source_url')]
+          bu=[x.get('source_url') for x in b['opportunities'] if x.get('source_url')]
+          assert len(bu)==len(set(bu)), 'duplicate real source_url detected'
           assert len(bu) >= len(au), 'records unexpectedly removed'
-          print('DEDUP PASS',len(bu))
+          ids=[x.get('id') for x in b['opportunities']]
+          assert len(ids)==len(set(ids)), 'duplicate opportunity id detected'
+          print('DEDUP PASS real_urls=',len(bu),'opportunities=',len(ids))
           PY
       - name: Commit scan state/results safely
         run: |
