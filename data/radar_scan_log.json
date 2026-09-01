@@ -1,0 +1,272 @@
+{
+  "started_at": "2026-09-01T07:33:20.730393+00:00",
+  "sources": [
+    {
+      "comune": "Susa",
+      "url": "https://www.cittadisusa.it/",
+      "status": "ERROR",
+      "links": 0,
+      "new": 0,
+      "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "url": "https://www.comune.santambrogioditorino.to.it/Menu?IDDettaglio=198281",
+      "status": "OK",
+      "links": 27,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Avigliana",
+      "url": "https://www.comune.avigliana.to.it/it-it/servizi/catasto-e-urbanistica",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Almese",
+      "url": "https://comune.almese.to.it/servizio/permesso-di-costruire/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Rubiana",
+      "url": "https://comune.rubiana.to.it/Servizi?ID=101282",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Villar Dora",
+      "url": "https://www.comune.villardora.to.it/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Caprie",
+      "url": "https://www.comune.caprie.to.it/it-it/amministrazione/modulistica",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Condove",
+      "url": "https://www.comune.condove.to.it/it-it/servizi/catasto-e-urbanistica/permesso-di-costruire-pdc-67-46575-1-36700a8b84702d6dac7b1febcfcdcdf8",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Chiusa di San Michele",
+      "url": "https://www.comune.chiusadisanmichele.to.it/it-it/servizi/catasto-e-urbanistica",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Vaie",
+      "url": "https://www.comune.vaie.to.it/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "San Didero",
+      "url": "https://www.comune.sandidero.to.it/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Borgone Susa",
+      "url": "https://www.comune.borgonesusa.to.it/servizi_ai_cittadini/permesso-di-costruire-pdc/",
+      "status": "OK",
+      "links": 10,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Bussoleno",
+      "url": "https://www.comune.bussoleno.to.it/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Chianocco",
+      "url": "https://www.comune.chianocco.to.it/Servizi/Diritti-di-Segreteria-per-pratiche-edilizie",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Mompantero",
+      "url": "https://www.comune.mompantero.to.it/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "San Giorio di Susa",
+      "url": "https://www.comune.sangioriodisusa.to.it/Servizi?ID=145680",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Villar Focchiardo",
+      "url": "https://www.comune.villarfocchiardo.to.it/Amministrazione/Uffici/Lavori-pubblici-manutenzione-patrimonio-e-demanio-comunale",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Venaus",
+      "url": "https://www.comune.venaus.to.it/it-it/servizi/catasto-e-urbanistica/sportello-unico-per-l-edilizia-sue-645-16-1-7bd5106f985cd97764ff24524c4b1530",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Giaglione",
+      "url": "https://www.comune.giaglione.to.it/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Gravere",
+      "url": "https://www.comune.gravere.to.it/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Exilles",
+      "url": "https://comune.exilles.to.it/argomento/accesso-allinformazione/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Salbertrand",
+      "url": "https://comune.salbertrand.to.it/argomento/accesso-allinformazione/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Oulx",
+      "url": "https://comune.oulx.to.it/servizio/permesso-di-costruire/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Sauze d’Oulx",
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=szdlx254&Tipo=10",
+      "status": "OK",
+      "links": 1,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Cesana Torinese",
+      "url": "https://hosting.pa-online.it/001074/su_procedimento/permesso-di-costruire/fattispecie/0",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Claviere",
+      "url": "https://www.comune.claviere.to.it/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Novalesa",
+      "url": "https://www.comune.novalesa.to.it/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Moncenisio",
+      "url": "https://www.comune.moncenisio.to.it/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Pragelato",
+      "url": "https://www.comune.pragelato.to.it/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Bardonecchia",
+      "url": "https://comune.bardonecchia.to.it/servizio/permesso-di-costruire/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Chiomonte",
+      "url": "https://www.comune.chiomonte.to.it/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Alpignano",
+      "url": "https://www.comune.alpignano.to.it/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "http_status": 200
+    },
+    {
+      "comune": "Casellette",
+      "url": "https://www.comune.casellette.to.it/",
+      "status": "ERROR",
+      "links": 0,
+      "new": 0,
+      "error": "ConnectionError: HTTPSConnectionPool(host='www.comune.casellette.to.it', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.comune.casellette.to.it', port=443): Failed to resolve 'www.comune.casellette.to.it' ([Errno -2] Name or service not known)\"))"
+    }
+  ],
+  "new_records": 0,
+  "errors": 2,
+  "finished_at": "2026-09-01T07:33:47.134863+00:00"
+}

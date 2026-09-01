@@ -3,7 +3,9 @@
     "project": "RADAR EDILIZIO F1",
     "generated_at": "2026-09-01T09:30:00+02:00",
     "status": "IN_POPOLAMENTO",
-    "privacy": "Solo recapiti professionali/aziendali pubblici; nessun recapito personale di proprietari privati."
+    "privacy": "Solo recapiti professionali/aziendali pubblici; nessun recapito personale di proprietari privati.",
+    "last_automatic_scan_utc": "2026-09-01T07:33:20.730393+00:00",
+    "last_scan_new_records": 0
   },
   "opportunities": [
     {
@@ -146,21 +148,117 @@
     }
   ],
   "backlog": [
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-01-22","atto":"SCAGI 8/2026","classe":"Agibilità","stato":"DA ANALIZZARE"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-01-22","atto":"SCIA 84/2025","classe":"Conformità","stato":"DA ANALIZZARE"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-01-23","atto":"SCIA alternativa a PDC 115/2025","classe":"SCIA alternativa","stato":"DA ANALIZZARE"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-02-19","atto":"PDC in sanatoria 61/2024","classe":"Sanatoria","stato":"DA ANALIZZARE"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-02-27","atto":"PDC 105/2025","classe":"Permesso di costruire","stato":"ANALIZZATO"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-03-20","atto":"PDC 35/2026","classe":"Accertamento conformità","stato":"DA ANALIZZARE"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-03-20","atto":"PDC 7/2026","classe":"Permesso di costruire","stato":"ANALIZZATO"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-03-25","atto":"SCIA alternativa 23/2026","classe":"SCIA alternativa","stato":"DA ANALIZZARE"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-04-02","atto":"PDC 33/2026","classe":"Permesso di costruire","stato":"ANALIZZATO"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-04-24","atto":"SCIA 54/2026","classe":"SCIA","stato":"DA ANALIZZARE"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-07-22","atto":"Accertamento conformità 81/2026","classe":"Conformità","stato":"DA ANALIZZARE"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-07-23","atto":"SCIA 85/2026","classe":"SCIA","stato":"DA ANALIZZARE"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-07-27","atto":"Accertamento conformità 72/2026","classe":"Conformità","stato":"DA ANALIZZARE"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-07-27","atto":"SCIA 97/2026","classe":"SCIA","stato":"DA ANALIZZARE"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-07-27","atto":"SCIA 96/2026","classe":"SCIA","stato":"DA ANALIZZARE"},
-    {"comune":"Sant’Ambrogio di Torino","date":"2026-08-20","atto":"SCIA 102/2026","classe":"SCIA","stato":"DA ANALIZZARE"}
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-01-22",
+      "atto": "SCAGI 8/2026",
+      "classe": "Agibilità",
+      "stato": "DA ANALIZZARE"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-01-22",
+      "atto": "SCIA 84/2025",
+      "classe": "Conformità",
+      "stato": "DA ANALIZZARE"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-01-23",
+      "atto": "SCIA alternativa a PDC 115/2025",
+      "classe": "SCIA alternativa",
+      "stato": "DA ANALIZZARE"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-02-19",
+      "atto": "PDC in sanatoria 61/2024",
+      "classe": "Sanatoria",
+      "stato": "DA ANALIZZARE"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-02-27",
+      "atto": "PDC 105/2025",
+      "classe": "Permesso di costruire",
+      "stato": "ANALIZZATO"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-03-20",
+      "atto": "PDC 35/2026",
+      "classe": "Accertamento conformità",
+      "stato": "DA ANALIZZARE"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-03-20",
+      "atto": "PDC 7/2026",
+      "classe": "Permesso di costruire",
+      "stato": "ANALIZZATO"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-03-25",
+      "atto": "SCIA alternativa 23/2026",
+      "classe": "SCIA alternativa",
+      "stato": "DA ANALIZZARE"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-04-02",
+      "atto": "PDC 33/2026",
+      "classe": "Permesso di costruire",
+      "stato": "ANALIZZATO"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-04-24",
+      "atto": "SCIA 54/2026",
+      "classe": "SCIA",
+      "stato": "DA ANALIZZARE"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-07-22",
+      "atto": "Accertamento conformità 81/2026",
+      "classe": "Conformità",
+      "stato": "DA ANALIZZARE"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-07-23",
+      "atto": "SCIA 85/2026",
+      "classe": "SCIA",
+      "stato": "DA ANALIZZARE"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-07-27",
+      "atto": "Accertamento conformità 72/2026",
+      "classe": "Conformità",
+      "stato": "DA ANALIZZARE"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-07-27",
+      "atto": "SCIA 97/2026",
+      "classe": "SCIA",
+      "stato": "DA ANALIZZARE"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-07-27",
+      "atto": "SCIA 96/2026",
+      "classe": "SCIA",
+      "stato": "DA ANALIZZARE"
+    },
+    {
+      "comune": "Sant’Ambrogio di Torino",
+      "date": "2026-08-20",
+      "atto": "SCIA 102/2026",
+      "classe": "SCIA",
+      "stato": "DA ANALIZZARE"
+    }
   ]
 }
