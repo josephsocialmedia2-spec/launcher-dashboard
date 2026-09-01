@@ -16,14 +16,14 @@
 <div class="ey">F1 IMMOBILIARE · CABINA DI REGIA UNICA</div>
 <h1>OGGI COSA FACCIO</h1>
 <p class="lead" id="today"></p>
-<div class="territory"><span class="pill">CENTRO: SUSA · KM 0</span><span class="pill">RAGGIO OPERATIVO: 20 KM</span><span class="pill">ORDINE: DAL PIÙ VICINO</span></div>
+<div class="territory"><span class="pill">CENTRO: SUSA · KM 0</span><span class="pill">PRIMO PERIMETRO: 20 KM VERSO TORINO</span><span class="pill">ORDINE: SUSA → TORINO</span></div>
 <div class="mobileReady"><span class="badge">F1 MOBILE READY</span><div style="margin-top:8px"><strong>PC = motore centrale · smartphone = specchio operativo.</strong></div><div class="meta" id="mobileStatus"></div><button class="btn" id="installBtn" hidden>INSTALLA SUL TELEFONO</button></div>
-<div class="rule"><b>REGOLA UNICA:</b> Susa è <b>km 0</b>. I risultati vengono ordinati esclusivamente per distanza crescente da Susa: prima i più vicini, poi km per km fino a 20 km. <b>Lo score non può più far saltare davanti una località più lontana.</b></div>
+<div class="rule"><b>REGOLA UNICA:</b> la giornata parte da <b>Susa</b> e procede fisicamente verso Torino. Nel primo perimetro operativo vengono ammessi soltanto i Comuni lungo questa progressione fino a circa 20 km: <b>Susa → Bussoleno → Chianocco → San Giorio di Susa → Bruzolo → San Didero → Borgone Susa → Villar Focchiardo → Sant'Antonino di Susa</b>. Lo score ordina solo i risultati dello stesso Comune e non può cambiare l'ordine geografico.</div>
 <div class="summary"><div class="stat"><b id="tot">0</b>segnali validi</div><div class="stat"><b id="go">0</b>vai in zona</div><div class="stat"><b id="check">0</b>da verificare</div><div class="stat"><b id="done">0</b>fasi fatte</div></div>
 <div class="progress"><div class="bar" id="bar"></div></div><div class="lead" id="pct"></div>
 <section class="section"><span class="badge">1 · PRIORITÀ</span><h2>Calendar</h2><p class="meta">Controlla appuntamenti e vincoli già fissati. Le tue priorità vengono prima delle richieste esterne.</p><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/u/0/r">APRI CALENDAR</a></div><label class="check"><input type="checkbox" data-id="calendar"> FATTO</label></section>
-<section class="section" id="telefonate"><span class="badge">2 · MATTINA · UNICO PUNTO CHIAMATE</span><h2>F1 Centrale Telefonate Guidate</h2><p class="meta">La lista prospect deve seguire lo stesso perimetro Susa 20 km.</p><div class="actions"><a class="btn" href="http://127.0.0.1:8766/">APRI CENTRALE SUL PC</a><a class="btn alt" href="telefonate-oggi.html">ACCESSO / TELEFONO</a><a class="btn alt" href="directory-radar-mobile.html">RISULTATI DIRECTORY</a><a class="btn gold" target="_blank" rel="noopener" href="https://operatore.registrodelleopposizioni.it/area_riservata/?lang=it">RPO</a></div><label class="check"><input type="checkbox" data-id="calls"> BLOCCO TELEFONATE LAVORATO</label></section>
-<section class="section" id="radar"><span class="badge">3 · SELLER RADAR SUSA 20 KM</span><h2>Segnali e territorio</h2><p class="meta" id="filterInfo">Calcolo distanze da Susa…</p><div id="radarList"><div class="meta">Caricamento segnali...</div></div><div class="actions"><a class="btn" href="giro-acquisizione.html">APRI GIRO</a><a class="btn alt" href="seller-radar-unico.html">RADAR COMPLETO</a><a class="btn alt" href="seller-segnalati.html">SELLER SEGNALATI</a></div><label class="check"><input type="checkbox" data-id="giro"> RADAR / GIRO LAVORATO</label></section>
+<section class="section" id="telefonate"><span class="badge">2 · MATTINA · UNICO PUNTO CHIAMATE</span><h2>F1 Centrale Telefonate Guidate</h2><p class="meta">La lista prospect deve seguire lo stesso perimetro geografico operativo.</p><div class="actions"><a class="btn" href="http://127.0.0.1:8766/">APRI CENTRALE SUL PC</a><a class="btn alt" href="telefonate-oggi.html">ACCESSO / TELEFONO</a><a class="btn alt" href="directory-radar-mobile.html">RISULTATI DIRECTORY</a><a class="btn gold" target="_blank" rel="noopener" href="https://operatore.registrodelleopposizioni.it/area_riservata/?lang=it">RPO</a></div><label class="check"><input type="checkbox" data-id="calls"> BLOCCO TELEFONATE LAVORATO</label></section>
+<section class="section" id="radar"><span class="badge">3 · SELLER RADAR · SUSA → TORINO</span><h2>Segnali e territorio</h2><p class="meta" id="filterInfo">Applico la progressione geografica Susa → Torino…</p><div id="radarList"><div class="meta">Caricamento segnali...</div></div><div class="actions"><a class="btn" href="giro-acquisizione.html">APRI GIRO</a><a class="btn alt" href="seller-radar-unico.html">RADAR COMPLETO</a><a class="btn alt" href="seller-segnalati.html">SELLER SEGNALATI</a></div><label class="check"><input type="checkbox" data-id="giro"> RADAR / GIRO LAVORATO</label></section>
 <section class="section"><span class="badge">4 · APPUNTAMENTI</span><h2>Brief e Market Intelligence</h2><div class="actions"><a class="btn" target="_blank" rel="noopener" href="https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/appointment_brief.html">APRI BRIEF</a><a class="btn alt" href="market-intelligence.html">DATI MERCATO</a></div><label class="check"><input type="checkbox" data-id="brief"> FATTO / NON SERVE</label></section>
 <section class="section"><span class="badge">5 · SOLO DOPO ESITO UTILE</span><h2>CRM</h2><div class="actions"><a class="btn" href="crm.html">APRI CRM</a></div><label class="check"><input type="checkbox" data-id="crm"> ESITI UTILI REGISTRATI</label></section>
 <section class="section"><span class="badge">6 · ATTIVITÀ PROGRAMMATE</span><h2>Lunedì, gruppi e Network</h2><div class="actions"><a class="btn" href="organizer-lunedi.html">ORGANIZER LUNEDÌ</a><a class="btn alt" href="gruppi-social-f1.html">GRUPPI SOCIAL</a><a class="btn alt" target="_blank" rel="noopener" href="https://josephsocialmedia2-spec.github.io/immobili-in-zona/f1_network/index.html">F1 NETWORK</a></div></section>
@@ -31,33 +31,52 @@
 <div class="foot"><div class="footin"><a href="oggi.html">OGGI</a><a href="telefonate-oggi.html">CENTRALE</a><a href="directory-radar-mobile.html">DIRECTORY</a><a href="giro-acquisizione.html">GIRO</a><a href="crm.html">CRM</a></div></div>
 <script>
 const DATA='https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/data/giro_acquisizione.csv';
-const KM_SUSA={
-  'susa':0,
-  'mompantero':1.4,
-  'meana di susa':1.9,
-  'gravere':3.2,
-  'giaglione':3.5,
-  'venaus':4.3,
-  'mattie':5.2,
-  'chiomonte':5.8,
-  'novalesa':6.8,
-  'bussoleno':7.2,
-  'chianocco':9.1,
-  'moncenisio':9.2,
-  'san giorio di susa':9.8,
-  'exilles':10.8,
-  'bruzolo':11.3,
-  'san didero':12.4,
-  'salbertrand':15.3
-};
-const norm=s=>String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-const kmSusa=r=>KM_SUSA[norm(r.COMUNE)]??Infinity;
+
+// Ordine canonico condiviso con Seller Radar Completo.
+const ROUTE_ORDER=[
+  'susa',
+  'bussoleno',
+  'chianocco',
+  'san giorio di susa',
+  'bruzolo',
+  'san didero',
+  'borgone susa',
+  'villar focchiardo',
+  'sant antonino di susa',
+  'condove',
+  'vaie',
+  'caprie',
+  'chiusa di san michele',
+  'sant ambrogio di torino',
+  'villar dora',
+  'almese',
+  'rubiana',
+  'avigliana',
+  'caselette',
+  'buttigliera alta',
+  'reano',
+  'rosta',
+  'rivoli',
+  'alpignano',
+  'collegno',
+  'grugliasco',
+  'torino'
+];
+const OPERATIVE_20KM=new Set([
+  'susa','bussoleno','chianocco','san giorio di susa','bruzolo','san didero','borgone susa','villar focchiardo','sant antonino di susa'
+]);
+const ROUTE_RANK=new Map(ROUTE_ORDER.map((name,i)=>[name,i]));
+const norm=s=>String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,' ').replace(/\s+/g,' ');
+function canonicalComune(s){let n=norm(s);if(n==='borgone di susa')return 'borgone susa';if(n==='santantonino di susa')return 'sant antonino di susa';if(n==='santambrogio di torino')return 'sant ambrogio di torino';return n}
+function routeRank(r){return ROUTE_RANK.get(canonicalComune(r.COMUNE))??1000}
+function routeSort(a,b){return routeRank(a)-routeRank(b)||canonicalComune(a.COMUNE).localeCompare(canonicalComune(b.COMUNE),'it')||(+b.SCORE||0)-(+a.SCORE||0)||norm(a.DOVE_ANDRE).localeCompare(norm(b.DOVE_ANDRE),'it')}
+function inOperational20(r){return OPERATIVE_20KM.has(canonicalComune(r.COMUNE))}
 const day=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Rome'}).format(new Date());
 const stateKey='f1DailyCentral-'+day();
 function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function parseCSV(t){t=t.replace(/^\uFEFF/,'');let rows=[],r=[],c='',q=false;for(let i=0;i<t.length;i++){let x=t[i];if(q){if(x==='"'&&t[i+1]==='"'){c+='"';i++}else if(x==='"')q=false;else c+=x}else if(x==='"')q=true;else if(x===','){r.push(c);c=''}else if(x==='\n'){r.push(c);rows.push(r);r=[];c=''}else if(x!=='\r')c+=x}if(c||r.length){r.push(c);rows.push(r)}if(rows.length<2)return[];let h=rows.shift();return rows.filter(x=>x.some(Boolean)).map(x=>Object.fromEntries(h.map((k,i)=>[k.trim(),(x[i]||'').trim()]))) }
 function maps(r){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent((r.DOVE_ANDRE||'')+', '+(r.COMUNE||'')+', TO, Italia')}
-async function loadRadar(){try{let res=await fetch(DATA+'?v='+Date.now(),{cache:'no-store'});if(!res.ok)throw new Error(res.status);let raw=parseCSV(await res.text());let data=raw.filter(r=>kmSusa(r)<=20);let excluded=raw.length-data.length;data.sort((a,b)=>kmSusa(a)-kmSusa(b)||(+b.SCORE||0)-(+a.SCORE||0));let goRows=data.filter(r=>/VAI IN ZONA/i.test(r.AZIONE||'')&&!/DA VERIFICARE/i.test(r.DOVE_ANDRE||''));let checkRows=data.filter(r=>!goRows.includes(r));tot.textContent=data.length;go.textContent=goRows.length;check.textContent=checkRows.length;filterInfo.textContent='Ordine geografico attivo: Susa km 0 → località più vicine → massimo 20 km · '+excluded+' segnali fuori raggio esclusi.';let top=goRows.slice(0,6);radarList.innerHTML=top.length?top.map(r=>`<div class="item"><div class="place">${esc(r.COMUNE)} — ${esc(r.DOVE_ANDRE)}</div><div class="distance">${kmSusa(r).toFixed(1)} km da Susa</div><div class="meta">${esc(r.COSA_CERCO)} · ${esc(r.PREZZO||'PREZZO DA VERIFICARE')} · score ${esc(r.SCORE)}</div><div class="actions"><a class="btn" target="_blank" rel="noopener" href="${maps(r)}">MAPPA</a>${r.URL?`<a class="btn alt" target="_blank" rel="noopener" href="${esc(r.URL)}">FONTE</a>`:''}</div></div>`).join(''):'<div class="meta">Nessun indirizzo operativo valido nel raggio Susa 20 km.</div>'}catch(e){radarList.innerHTML='<div class="meta">Seller Radar non raggiungibile in questo momento.</div>'}}
+async function loadRadar(){try{let res=await fetch(DATA+'?v='+Date.now(),{cache:'no-store'});if(!res.ok)throw new Error(res.status);let raw=parseCSV(await res.text());let data=raw.filter(inOperational20).sort(routeSort);let excluded=raw.length-data.length;let goRows=data.filter(r=>/VAI IN ZONA/i.test(r.AZIONE||'')&&!/DA VERIFICARE/i.test(r.DOVE_ANDRE||'')).sort(routeSort);let checkRows=data.filter(r=>!goRows.includes(r)).sort(routeSort);tot.textContent=data.length;go.textContent=goRows.length;check.textContent=checkRows.length;filterInfo.textContent='Ordine attivo: Susa → Bussoleno → Chianocco → San Giorio → Bruzolo → San Didero → Borgone → Villar Focchiardo → Sant\'Antonino. '+excluded+' segnali fuori dal primo perimetro esclusi da OGGI; restano visibili nel Radar Completo.';let top=goRows.slice(0,6);radarList.innerHTML=top.length?top.map(r=>`<div class="item"><div class="place">${esc(r.COMUNE)} — ${esc(r.DOVE_ANDRE)}</div><div class="distance">POSIZIONE ${routeRank(r)+1} · ASSE SUSA → TORINO</div><div class="meta">${esc(r.COSA_CERCO)} · ${esc(r.PREZZO||'PREZZO DA VERIFICARE')} · score ${esc(r.SCORE)}</div><div class="actions"><a class="btn" target="_blank" rel="noopener" href="${maps(r)}">MAPPA</a>${r.URL?`<a class="btn alt" target="_blank" rel="noopener" href="${esc(r.URL)}">FONTE</a>`:''}</div></div>`).join(''):'<div class="meta">Nessun indirizzo operativo valido nel primo perimetro Susa → Torino.</div>'}catch(e){radarList.innerHTML='<div class="meta">Seller Radar non raggiungibile in questo momento.</div>'}}
 let state={};try{state=JSON.parse(localStorage.getItem(stateKey)||'{}')}catch(e){}
 const checks=[...document.querySelectorAll('.check input')];function prog(){let k=checks.filter(x=>x.checked).length,p=Math.round(k/checks.length*100);bar.style.width=p+'%';pct.textContent=p+'% completato · '+k+'/'+checks.length;done.textContent=k}checks.forEach(c=>{c.checked=!!state[c.dataset.id];c.onchange=()=>{state[c.dataset.id]=c.checked;localStorage.setItem(stateKey,JSON.stringify(state));prog()}});
 today.textContent=new Intl.DateTimeFormat('it-IT',{timeZone:'Europe/Rome',weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date());
