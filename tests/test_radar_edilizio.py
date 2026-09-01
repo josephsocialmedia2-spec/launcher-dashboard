@@ -53,6 +53,19 @@ class RadarTests(unittest.TestCase):
         self.assertIn('data/radar_edilizio.json', html)
         self.assertIn('RADAR EDILIZIO F1', html)
 
+    def test_seller_radar_imports_edilizio(self):
+        html = (ROOT / 'seller-radar-unico.html').read_text(encoding='utf-8')
+        self.assertIn("const EDILIZIO='./data/radar_edilizio.json'", html)
+        self.assertIn('RADAR_EDILIZIO', html)
+        self.assertIn('RIFERIMENTO PROFESSIONALE', html)
+        self.assertIn('GIRO + INTELLIGENCE + RADAR EDILIZIO RICONCILIATI', html)
+
+    def test_continuous_schedule(self):
+        workflow = (ROOT / '.github/workflows/radar-edilizio-daily.yml').read_text(encoding='utf-8')
+        self.assertIn("cron: '15 * * * *'", workflow)
+        self.assertIn('seller-radar-unico.html', workflow)
+        self.assertIn('F1 Radar Edilizio Continuous', workflow)
+
     def test_oggi_integration_hook(self):
         oggi = (ROOT / 'oggi.html').read_text(encoding='utf-8')
         pwa = (ROOT / 'pwa.js').read_text(encoding='utf-8')
@@ -65,6 +78,7 @@ class RadarTests(unittest.TestCase):
         self.assertIn('f1-operativo-v20260901-radar-edilizio-1', sw)
         self.assertIn("'./radar-edilizio.html'", sw)
         self.assertIn("'./data/radar_edilizio.json'", sw)
+        self.assertIn("'./seller-radar-unico.html'", sw)
         self.assertIn("'./pwa.js'", sw)
 
 
