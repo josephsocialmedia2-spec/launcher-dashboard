@@ -1,7 +1,7 @@
 {
   "keywords": ["permesso di costruire", "pdc", "scia alternativa", "nuova costruzione", "ristrutturazione", "demolizione", "ricostruzione", "cambio di destinazione", "piano esecutivo", "pec", "alienazione", "asta", "terreno edificabile"],
   "sources": [
-    {"comune":"Susa","url":"https://www.cittadisusa.it/","enabled":true,"verified":false},
+    {"comune":"Susa","url":"https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=ss090&RicCro=1","enabled":true,"verified":true,"mode":"document_links"},
     {"comune":"Sant’Ambrogio di Torino","url":"https://www.comune.santambrogioditorino.to.it/Menu?IDDettaglio=198281","enabled":true,"verified":true,"mode":"document_links"},
     {"comune":"Avigliana","url":"https://www.comune.avigliana.to.it/it-it/servizi/catasto-e-urbanistica","enabled":true,"verified":true},
     {"comune":"Almese","url":"https://comune.almese.to.it/servizio/permesso-di-costruire/","enabled":true,"verified":true},
@@ -33,6 +33,6 @@
     {"comune":"Bardonecchia","url":"https://comune.bardonecchia.to.it/servizio/permesso-di-costruire/","enabled":true,"verified":true},
     {"comune":"Chiomonte","url":"https://www.comune.chiomonte.to.it/","enabled":true,"verified":false},
     {"comune":"Alpignano","url":"https://www.comune.alpignano.to.it/","enabled":true,"verified":false},
-    {"comune":"Casellette","url":"https://www.comune.casellette.to.it/","enabled":true,"verified":false}
+    {"comune":"Casellette","url":"https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=csltt155&RicCro=1","enabled":true,"verified":true,"mode":"document_links"}
   ]
 }
