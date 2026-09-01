@@ -6,30 +6,27 @@
 <meta name="theme-color" content="#070907">
 <title>F1 — Seller Radar Unico</title>
 <style>
-:root{--bg:#070907;--panel:#101510;--line:#2a342c;--text:#fff;--muted:#aeb7b0;--green:#39f28a;--amber:#f4c95d}
-*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--text);font-family:Arial,sans-serif}.wrap{max-width:980px;margin:auto;padding:18px 12px 90px}.ey{color:var(--green);font-size:10px;font-weight:900;letter-spacing:.15em}h1{margin:5px 0 6px;font-size:clamp(28px,8vw,48px)}.lead{color:var(--muted);font-size:13px;line-height:1.5}.badge{display:inline-block;border:1px solid #35513d;color:var(--green);border-radius:999px;padding:6px 9px;font-size:10px;font-weight:900}.route{margin:10px 0 14px;padding:10px 12px;border:1px solid #35513d;border-radius:12px;background:#0c160f;color:#dce7df;font-size:11px;line-height:1.55}.route b{color:var(--green)}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:10px;text-align:center}.stat b{display:block;color:var(--green);font-size:24px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}.top{display:flex;justify-content:space-between;gap:10px}.place{font-size:18px;font-weight:900}.addr{font-size:15px;margin-top:4px}.score{color:var(--green);font-size:11px;font-weight:900}.meta{margin-top:10px;font-size:12px;line-height:1.55}.label{color:var(--muted);font-size:9px;font-weight:900;letter-spacing:.08em;display:block;margin-top:7px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:12px}.btn{display:block;text-align:center;text-decoration:none;border:1px solid #35513d;background:#172319;color:#fff;padding:10px;border-radius:10px;font-size:11px;font-weight:900}.btn.main{background:var(--green);color:#07100a}.section{margin-top:24px}.section h2{font-size:19px}.warn h2{color:var(--amber)}.empty{padding:16px;border:1px dashed var(--line);border-radius:12px;color:var(--muted)}.marketTag{color:var(--amber);font-size:9px;font-weight:900;letter-spacing:.06em}.foot{position:fixed;left:0;right:0;bottom:0;background:#070907f3;border-top:1px solid var(--line);padding:8px}.footin{max-width:980px;margin:auto;display:flex;gap:7px;justify-content:center}.foot a{padding:10px;border-radius:9px;background:#171d18;color:#fff;text-decoration:none;font-size:10px;font-weight:900}@media(max-width:650px){.summary{grid-template-columns:1fr 1fr}.top{display:block}.score{display:inline-block;margin-top:7px}}
+:root{--bg:#070907;--panel:#101510;--line:#2a342c;--text:#fff;--muted:#aeb7b0;--green:#39f28a;--amber:#f4c95d}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--text);font-family:Arial,sans-serif}.wrap{max-width:980px;margin:auto;padding:18px 12px 90px}.ey{color:var(--green);font-size:10px;font-weight:900;letter-spacing:.15em}h1{margin:5px 0 6px;font-size:clamp(28px,8vw,48px)}.lead{color:var(--muted);font-size:13px;line-height:1.5}.badge{display:inline-block;border:1px solid #35513d;color:var(--green);border-radius:999px;padding:6px 9px;font-size:10px;font-weight:900}.route{margin:10px 0 14px;padding:10px 12px;border:1px solid #35513d;border-radius:12px;background:#0c160f;color:#dce7df;font-size:11px;line-height:1.55}.route b{color:var(--green)}.summary{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:10px;text-align:center;font-size:10px}.stat b{display:block;color:var(--green);font-size:24px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}.top{display:flex;justify-content:space-between;gap:10px}.place{font-size:18px;font-weight:900}.addr{font-size:15px;margin-top:4px}.score{color:var(--green);font-size:11px;font-weight:900}.meta{margin-top:10px;font-size:12px;line-height:1.55}.label{color:var(--muted);font-size:9px;font-weight:900;letter-spacing:.08em;display:block;margin-top:7px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:12px}.btn{display:block;text-align:center;text-decoration:none;border:1px solid #35513d;background:#172319;color:#fff;padding:10px;border-radius:10px;font-size:11px;font-weight:900}.btn.main{background:var(--green);color:#07100a}.section{margin-top:24px}.section h2{font-size:19px}.warn h2{color:var(--amber)}.empty{padding:16px;border:1px dashed var(--line);border-radius:12px;color:var(--muted)}.marketTag{color:var(--amber);font-size:9px;font-weight:900;letter-spacing:.06em}.edilTag{color:var(--green);font-size:9px;font-weight:900;letter-spacing:.06em}.foot{position:fixed;left:0;right:0;bottom:0;background:#070907f3;border-top:1px solid var(--line);padding:8px}.footin{max-width:980px;margin:auto;display:flex;gap:7px;justify-content:center}.foot a{padding:10px;border-radius:9px;background:#171d18;color:#fff;text-decoration:none;font-size:10px;font-weight:900}@media(max-width:750px){.summary{grid-template-columns:1fr 1fr}.top{display:block}.score{display:inline-block;margin-top:7px}}
 </style>
 </head>
 <body>
 <main class="wrap">
 <div class="ey">F1 IMMOBILIARE · VISTA DATI UNIFICATA</div>
 <h1>SELLER RADAR</h1>
-<p class="lead">Il Radar riconcilia la coda operativa <b>giro_acquisizione.csv</b> con l'inventario usato da <b>Brief / Market Intelligence</b>. Stesso URL = stesso immobile; i dati Intelligence completano indirizzo e tipologia quando il giro operativo è incompleto.</p>
-<div class="route"><b>ORDINE GEOGRAFICO OBBLIGATORIO:</b> SUSA → TORINO. Lo score non decide più quale Comune viene prima. Lo score ordina soltanto risultati appartenenti allo stesso Comune.</div>
+<p class="lead">Unifica giro acquisizione, Market Intelligence e Radar Edilizio. Permessi, cantieri, cambi d’uso e professionisti entrano direttamente tra i segnali utili all’acquisizione.</p>
+<div class="route"><b>REGOLA:</b> nessuna fonte resta isolata. Un riferimento edilizio utile viene trasformato in segnale Seller Radar con indirizzo, fonte, azione e contatto professionale verificato quando disponibile.</div>
 <span id="state" class="badge">CARICAMENTO...</span>
-<div class="summary"><div class="stat"><b id="tot">0</b>operativi</div><div class="stat"><b id="go">0</b>vai in zona</div><div class="stat"><b id="check">0</b>da verificare</div><div class="stat"><b id="market">0</b>solo intelligence</div></div>
-<section class="section"><h2>VAI IN ZONA · SUSA → TORINO</h2><div id="goList"><div class="empty">Carico...</div></div></section>
-<section class="section warn"><h2>APRI FONTE E VERIFICA · SUSA → TORINO</h2><div id="checkList"><div class="empty">Carico...</div></div></section>
-<section class="section warn"><h2>BRIEF / MARKET INTELLIGENCE · NON ANCORA NEL GIRO</h2><p class="lead">Record di mercato attivi presenti nel Brief/Market Intelligence ma assenti dalla coda operativa. Restano visibili qui per impedire perdite di informazione.</p><div id="marketList"><div class="empty">Carico...</div></div></section>
+<div class="summary"><div class="stat"><b id="tot">0</b>segnali</div><div class="stat"><b id="go">0</b>vai in zona</div><div class="stat"><b id="check">0</b>da verificare</div><div class="stat"><b id="market">0</b>intelligence</div><div class="stat"><b id="edilizio">0</b>edilizio</div></div>
+<section class="section"><h2>VAI IN ZONA · ACQUISIZIONE</h2><div id="goList"><div class="empty">Carico...</div></div></section>
+<section class="section warn"><h2>APRI FONTE / CONTATTA / VERIFICA</h2><div id="checkList"><div class="empty">Carico...</div></div></section>
+<section class="section warn"><h2>BRIEF / MARKET INTELLIGENCE · NON ANCORA NEL GIRO</h2><div id="marketList"><div class="empty">Carico...</div></div></section>
 </main>
-<div class="foot"><div class="footin"><a href="oggi.html">OGGI</a><a href="giro-acquisizione.html">GIRO</a><a href="telefonate-oggi.html">TELEFONATE</a></div></div>
+<div class="foot"><div class="footin"><a href="oggi.html">OGGI</a><a href="giro-acquisizione.html">GIRO</a><a href="radar-edilizio.html">EDILIZIO</a><a href="telefonate-oggi.html">TELEFONATE</a></div></div>
 <script>
 const DATA='https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/data/giro_acquisizione.csv';
 const INTEL='https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/data/intelligence/latest_snapshot.json';
-
-const ROUTE_ORDER=[
-  'susa','bussoleno','chianocco','san giorio di susa','bruzolo','san didero','borgone susa','villar focchiardo','sant antonino di susa','condove','vaie','caprie','chiusa di san michele','sant ambrogio di torino','villar dora','almese','rubiana','avigliana','caselette','buttigliera alta','reano','rosta','rivoli','alpignano','collegno','grugliasco','torino'
-];
+const EDILIZIO='./data/radar_edilizio.json';
+const ROUTE_ORDER=['susa','mompantero','gravere','giaglione','venaus','chiomonte','bussoleno','chianocco','san giorio di susa','exilles','bruzolo','san didero','borgone susa','villar focchiardo','salbertrand','condove','vaie','caprie','chiusa di san michele','sant ambrogio di torino','villar dora','almese','rubiana','avigliana','caselette','alpignano','oulx','sauze d oulx','cesana torinese','claviere','pragelato','bardonecchia','torino'];
 const ROUTE_RANK=new Map(ROUTE_ORDER.map((name,i)=>[name,i]));
 function norm(s){return String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,' ').replace(/\s+/g,' ')}
 function canonicalTown(s){const n=norm(s);if(n==='borgone di susa')return 'borgone susa';if(n==='santantonino di susa')return 'sant antonino di susa';if(n==='santambrogio di torino')return 'sant ambrogio di torino';return n}
@@ -37,78 +34,19 @@ function routeRank(r){return ROUTE_RANK.get(canonicalTown(r.COMUNE))??1000}
 function routeSort(a,b){return routeRank(a)-routeRank(b)||canonicalTown(a.COMUNE).localeCompare(canonicalTown(b.COMUNE),'it')||(+b.SCORE||0)-(+a.SCORE||0)||norm(a.DOVE_ANDRE).localeCompare(norm(b.DOVE_ANDRE),'it')}
 function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function parseCSV(t){t=t.replace(/^\uFEFF/,'');let rows=[],r=[],c='',q=false;for(let i=0;i<t.length;i++){let x=t[i];if(q){if(x==='"'&&t[i+1]==='"'){c+='"';i++}else if(x==='"')q=false;else c+=x}else if(x==='"')q=true;else if(x===','){r.push(c);c=''}else if(x==='\n'){r.push(c);rows.push(r);r=[];c=''}else if(x!=='\r')c+=x}if(c||r.length){r.push(c);rows.push(r)}if(rows.length<2)return[];let h=rows.shift();return rows.filter(x=>x.some(Boolean)).map(x=>Object.fromEntries(h.map((k,i)=>[k.trim(),(x[i]||'').trim()]))) }
-function usableAddress(s){return !!String(s||'').trim()&&!/DA VERIFICARE/i.test(String(s||''))}
+function usableAddress(s){return !!String(s||'').trim()&&!/DA VERIFICARE|DA APPROFONDIRE|INDIRIZZO DA VERIFICARE/i.test(String(s||''))}
 function streetFromText(text){const s=String(text||'').replace(/\s+/g,' ').trim();const m=s.match(/\b(?:via|viale|corso|piazza|strada|borgata|frazione|vicolo|largo)\s+[A-Za-zÀ-ÿ0-9'’.\-\s]{2,80}?(?=,|\s+-\s+|$)/i);return m?m[0].trim():''}
 function intelAddress(i){return String(i.via||i.strada||'').trim()||streetFromText(i.titolo||'')}
 function isLand(i){return /\bterreno\b|edificabile|lotto edificabile|area edificabile/i.test([i.tipologia,i.titolo].join(' '))}
 function price(v){return v===null||v===undefined||v===''?'PREZZO DA VERIFICARE':String(v)}
 function keyUrl(u){return String(u||'').trim().replace(/[?#].*$/,'').replace(/\/$/,'')}
 function maps(r){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent((r.DOVE_ANDRE||'')+', '+(r.COMUNE||'')+', TO, Italia')}
-function card(r,marketOnly=false){return `<article class="card"><div class="top"><div><div class="place">${esc(r.COMUNE)}</div><div class="addr">${esc(r.DOVE_ANDRE||'INDIRIZZO DA VERIFICARE')}</div>${marketOnly?'<div class="marketTag">SOLO BRIEF / MARKET INTELLIGENCE</div>':''}</div><span class="score">${r.SCORE?'score '+esc(r.SCORE):'market'}</span></div><div class="meta"><span class="label">COSA CERCO</span>${esc(r.COSA_CERCO)}<span class="label">TIPO</span>${esc(r.TIPO_OPPORTUNITA||'MERCATO')}<span class="label">PREZZO</span>${esc(r.PREZZO||'PREZZO DA VERIFICARE')}<span class="label">SEGNALE</span>${esc(r.SELLER_SIGNAL||'NON DETERMINATO')}<span class="label">FONTE</span>${esc(r.FONTE)}<span class="label">AZIONE</span>${esc(r.AZIONE)}</div><div class="actions">${usableAddress(r.DOVE_ANDRE)?`<a class="btn main" target="_blank" rel="noopener" href="${maps(r)}">MAPPA</a>`:'<span></span>'}${r.URL?`<a class="btn" target="_blank" rel="noopener" href="${esc(r.URL)}">FONTE</a>`:'<span></span>'}</div></article>`}
-function reconcile(operational,intelligence){
-  const byUrl=new Map();
-  operational.forEach(r=>{const k=keyUrl(r.URL);if(k)byUrl.set(k,r)});
-  const marketOnly=[];
-  for(const i of intelligence){
-    if(i&&i.attivo===false)continue;
-    if(i&&i.venduto_confermato===true)continue;
-    const town=String(i.comune||'').trim();
-    if(!town||!ROUTE_RANK.has(canonicalTown(town)))continue;
-    const k=keyUrl(i.url);
-    const addr=intelAddress(i);
-    const land=isLand(i);
-    const existing=k?byUrl.get(k):null;
-    if(existing){
-      if(!usableAddress(existing.DOVE_ANDRE)&&addr)existing.DOVE_ANDRE=addr;
-      if(land){
-        existing.TIPO_OPPORTUNITA='TERRENO_SVILUPPO';
-        existing.TARGET='TERRENO';
-        existing.OBIETTIVO_COMMERCIALE='ACQUISIZIONE TERRENO / SVILUPPO';
-      }
-      existing.SELLER_SIGNAL=existing.SELLER_SIGNAL&&existing.SELLER_SIGNAL!=='NON_DETERMINATO'?existing.SELLER_SIGNAL+' · INTELLIGENCE':'MARKET_INTELLIGENCE';
-      if(usableAddress(existing.DOVE_ANDRE)&&(/APRI FONTE/i.test(existing.AZIONE||'')||land)){
-        existing.AZIONE=land?'VAI IN ZONA / CONTATTA PER ACQUISIZIONE TERRENO / SVILUPPO':'VAI IN ZONA / VERIFICA SUL POSTO';
-      }
-      continue;
-    }
-    marketOnly.push({
-      COMUNE:town,
-      DOVE_ANDRE:addr||'INDIRIZZO DA VERIFICARE',
-      COSA_CERCO:i.titolo||i.tipologia||'IMMOBILE DA MERCATO',
-      PREZZO:price(i.prezzo),
-      FONTE:i.fonte||'Market Intelligence',
-      SELLER_SIGNAL:'MARKET_INTELLIGENCE',
-      AZIONE:addr?'VERIFICA / QUALIFICA PER SELLER RADAR':'APRI FONTE E VERIFICA INDIRIZZO',
-      URL:i.url||'',
-      SCORE:'',
-      TIPO_OPPORTUNITA:land?'TERRENO_SVILUPPO':String(i.tipologia||'MERCATO').toUpperCase(),
-      TARGET:land?'TERRENO':'IMMOBILE',
-      OBIETTIVO_COMMERCIALE:land?'ACQUISIZIONE TERRENO / SVILUPPO':'QUALIFICA OPPORTUNITA'
-    });
-  }
-  return {operational:operational.sort(routeSort),marketOnly:marketOnly.sort(routeSort)};
-}
-async function load(){
-  try{
-    const stamp='?v='+Date.now();
-    const [csvText,intel]=await Promise.all([
-      fetch(DATA+stamp,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('CSV '+r.status);return r.text()}),
-      fetch(INTEL+stamp,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('INTEL '+r.status);return r.json()})
-    ]);
-    const merged=reconcile(parseCSV(csvText),Array.isArray(intel)?intel:[]);
-    const data=merged.operational;
-    const goRows=data.filter(r=>/VAI IN ZONA/i.test(r.AZIONE||'')&&usableAddress(r.DOVE_ANDRE)).sort(routeSort);
-    const checkRows=data.filter(r=>!goRows.includes(r)).sort(routeSort);
-    tot.textContent=data.length;go.textContent=goRows.length;check.textContent=checkRows.length;market.textContent=merged.marketOnly.length;
-    goList.innerHTML=goRows.length?goRows.map(r=>card(r)).join(''):'<div class="empty">Nessun indirizzo operativo disponibile.</div>';
-    checkList.innerHTML=checkRows.length?checkRows.map(r=>card(r)).join(''):'<div class="empty">Nessun elemento da verificare.</div>';
-    marketList.innerHTML=merged.marketOnly.length?merged.marketOnly.map(r=>card(r,true)).join(''):'<div class="empty">Nessun record Intelligence mancante dal giro operativo.</div>';
-    state.textContent='OPERATIVO + INTELLIGENCE RICONCILIATI · SUSA → TORINO';
-  }catch(e){
-    state.textContent='ERRORE CARICAMENTO';
-    goList.innerHTML='<div class="empty">Impossibile caricare il Seller Radar.</div>';checkList.innerHTML='';marketList.innerHTML='';
-  }
-}
+function contactForOpportunity(o,contacts){const a=norm(o.atto);return (contacts||[]).find(c=>{const p=norm(c.pratica);return p&&a&&(p.includes(a)||a.includes(p)||p.split('/').slice(0,2).join('/').includes(a.split('/').slice(0,2).join('/')));})||null}
+function edilizioRows(db){const contacts=Array.isArray(db&&db.contacts)?db.contacts:[];return (Array.isArray(db&&db.opportunities)?db.opportunities:[]).map(o=>{const c=contactForOpportunity(o,contacts);const pri=String(o.priorita||'MEDIA').toUpperCase();return {COMUNE:o.comune||'',DOVE_ANDRE:o.indirizzo||'DA APPROFONDIRE',COSA_CERCO:[o.tipo,o.descrizione].filter(Boolean).join(' · '),PREZZO:'NON APPLICABILE',FONTE:'RADAR EDILIZIO F1',SELLER_SIGNAL:'RADAR_EDILIZIO',AZIONE:o.azione||'APRI FONTE E QUALIFICA',URL:o.source_url||'',SCORE:pri==='ALTA'?95:pri==='MEDIA'?75:50,TIPO_OPPORTUNITA:o.tipo||'EDILIZIA',TARGET:/terreno/i.test(o.tipo||'')?'TERRENO':'OPPORTUNITA EDILIZIA',OBIETTIVO_COMMERCIALE:'ACQUISIZIONE / NETWORKING',PROFESSIONISTA:(c&&c.nome)||o.professionista||'',TELEFONO:(c&&c.telefono)||'',EMAIL:(c&&c.email)||'',PRIORITA_F1:pri,EDILIZIO:true};})}
+function mergeEdilizio(operational,rows){const byUrl=new Map();operational.forEach(r=>{const k=keyUrl(r.URL);if(k)byUrl.set(k,r)});for(const e of rows){const k=keyUrl(e.URL);const ex=k?byUrl.get(k):null;if(ex){ex.SELLER_SIGNAL=[ex.SELLER_SIGNAL,e.SELLER_SIGNAL].filter(Boolean).join(' · ');ex.PROFESSIONISTA=ex.PROFESSIONISTA||e.PROFESSIONISTA;ex.TELEFONO=ex.TELEFONO||e.TELEFONO;ex.EMAIL=ex.EMAIL||e.EMAIL;ex.PRIORITA_F1=e.PRIORITA_F1;if(!usableAddress(ex.DOVE_ANDRE)&&usableAddress(e.DOVE_ANDRE))ex.DOVE_ANDRE=e.DOVE_ANDRE;continue;}operational.push(e);if(k)byUrl.set(k,e)}return operational}
+function card(r,marketOnly=false){const ref=[r.PROFESSIONISTA,r.TELEFONO,r.EMAIL].filter(Boolean).join(' · ');const tag=r.EDILIZIO?'<div class="edilTag">RADAR EDILIZIO → SELLER RADAR</div>':marketOnly?'<div class="marketTag">SOLO BRIEF / MARKET INTELLIGENCE</div>':'';return `<article class="card"><div class="top"><div><div class="place">${esc(r.COMUNE)}</div><div class="addr">${esc(r.DOVE_ANDRE||'INDIRIZZO DA VERIFICARE')}</div>${tag}</div><span class="score">${r.SCORE?'score '+esc(r.SCORE):'market'}</span></div><div class="meta"><span class="label">COSA CERCO</span>${esc(r.COSA_CERCO)}<span class="label">TIPO</span>${esc(r.TIPO_OPPORTUNITA||'MERCATO')}<span class="label">SEGNALE</span>${esc(r.SELLER_SIGNAL||'NON DETERMINATO')}${ref?`<span class="label">RIFERIMENTO PROFESSIONALE</span>${esc(ref)}`:''}<span class="label">FONTE</span>${esc(r.FONTE)}<span class="label">AZIONE</span>${esc(r.AZIONE)}</div><div class="actions">${usableAddress(r.DOVE_ANDRE)?`<a class="btn main" target="_blank" rel="noopener" href="${maps(r)}">MAPPA</a>`:'<span></span>'}${r.URL?`<a class="btn" target="_blank" rel="noopener" href="${esc(r.URL)}">FONTE</a>`:'<span></span>'}</div></article>`}
+function reconcile(operational,intelligence){const byUrl=new Map();operational.forEach(r=>{const k=keyUrl(r.URL);if(k)byUrl.set(k,r)});const marketOnly=[];for(const i of intelligence){if(i&&i.attivo===false)continue;if(i&&i.venduto_confermato===true)continue;const town=String(i.comune||'').trim();if(!town)continue;const k=keyUrl(i.url);const addr=intelAddress(i);const land=isLand(i);const existing=k?byUrl.get(k):null;if(existing){if(!usableAddress(existing.DOVE_ANDRE)&&addr)existing.DOVE_ANDRE=addr;if(land){existing.TIPO_OPPORTUNITA='TERRENO_SVILUPPO';existing.TARGET='TERRENO';existing.OBIETTIVO_COMMERCIALE='ACQUISIZIONE TERRENO / SVILUPPO'}existing.SELLER_SIGNAL=existing.SELLER_SIGNAL&&existing.SELLER_SIGNAL!=='NON_DETERMINATO'?existing.SELLER_SIGNAL+' · INTELLIGENCE':'MARKET_INTELLIGENCE';continue;}marketOnly.push({COMUNE:town,DOVE_ANDRE:addr||'INDIRIZZO DA VERIFICARE',COSA_CERCO:i.titolo||i.tipologia||'IMMOBILE DA MERCATO',PREZZO:price(i.prezzo),FONTE:i.fonte||'Market Intelligence',SELLER_SIGNAL:'MARKET_INTELLIGENCE',AZIONE:addr?'VERIFICA / QUALIFICA PER SELLER RADAR':'APRI FONTE E VERIFICA INDIRIZZO',URL:i.url||'',SCORE:'',TIPO_OPPORTUNITA:land?'TERRENO_SVILUPPO':String(i.tipologia||'MERCATO').toUpperCase(),TARGET:land?'TERRENO':'IMMOBILE',OBIETTIVO_COMMERCIALE:land?'ACQUISIZIONE TERRENO / SVILUPPO':'QUALIFICA OPPORTUNITA'});}return {operational:operational.sort(routeSort),marketOnly:marketOnly.sort(routeSort)}}
+async function load(){try{const stamp='?v='+Date.now();const [csvText,intel,edb]=await Promise.all([fetch(DATA+stamp,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('CSV '+r.status);return r.text()}),fetch(INTEL+stamp,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('INTEL '+r.status);return r.json()}),fetch(EDILIZIO+stamp,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('EDILIZIO '+r.status);return r.json()})]);const eRows=edilizioRows(edb);const unified=mergeEdilizio(parseCSV(csvText),eRows);const merged=reconcile(unified,Array.isArray(intel)?intel:[]);const data=merged.operational;const goRows=data.filter(r=>/VAI IN ZONA|VISITARE|CONTATTARE/i.test(r.AZIONE||'')&&usableAddress(r.DOVE_ANDRE)).sort(routeSort);const checkRows=data.filter(r=>!goRows.includes(r)).sort(routeSort);tot.textContent=data.length;go.textContent=goRows.length;check.textContent=checkRows.length;market.textContent=merged.marketOnly.length;edilizio.textContent=eRows.length;goList.innerHTML=goRows.length?goRows.map(r=>card(r)).join(''):'<div class="empty">Nessun indirizzo operativo disponibile.</div>';checkList.innerHTML=checkRows.length?checkRows.map(r=>card(r)).join(''):'<div class="empty">Nessun elemento da verificare.</div>';marketList.innerHTML=merged.marketOnly.length?merged.marketOnly.map(r=>card(r,true)).join(''):'<div class="empty">Nessun record Intelligence mancante dal giro operativo.</div>';state.textContent='GIRO + INTELLIGENCE + RADAR EDILIZIO RICONCILIATI';}catch(e){state.textContent='ERRORE CARICAMENTO';goList.innerHTML='<div class="empty">Impossibile caricare il Seller Radar: '+esc(e.message)+'</div>';checkList.innerHTML='';marketList.innerHTML='';}}
 load();
 </script>
 </body></html>
