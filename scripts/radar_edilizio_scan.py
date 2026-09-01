@@ -17,9 +17,9 @@ DB_FILE = DATA / "radar_edilizio.json"
 SEEN_FILE = DATA / "radar_seen.json"
 LOG_FILE = DATA / "radar_scan_log.json"
 
-UA = "F1-Radar-Edilizio/3.0 (+public-data-monitor)"
+UA = "F1-Radar-Edilizio/4.0 (+public-data-monitor)"
 TIMEOUT = 20
-SCHEMA_VERSION = 3
+SCHEMA_VERSION = 4
 NAV_TERMS = (
     "albo pretorio", "documenti albo", "atti amministrativi", "pubblicazioni",
     "urbanistica", "edilizia privata", "sportello unico edilizia", "sue",
@@ -35,7 +35,8 @@ EXTRA_KEYWORDS = (
     "restauro", "risanamento", "recupero fabbricato", "demolizione", "ricostruzione",
     "cambio di destinazione", "lottizzazione", "piano attuativo", "piano esecutivo",
     "vendita immobile", "vendita terreno", "lotto edificabile", "terreno edificabile",
-    "alienazione", "asta", "permesso convenzionato"
+    "alienazione", "asta", "permesso convenzionato", "interventi edili",
+    "pratica edilizia", "cantiere"
 )
 
 
@@ -70,7 +71,10 @@ def discover_links(url, html, keywords):
         label = normalize(a.get_text(" ", strip=True))
         href = urljoin(url, a["href"])
         context = normalize(a.parent.get_text(" ", strip=True) if a.parent else label)
-        ext_ok = any(x in href.lower() for x in (".pdf", "dettaglio.aspx", "download", "/document", "documenti/", "/atti-amministrativi/"))
+        ext_ok = any(x in href.lower() for x in (
+            ".pdf", "dettaglio.aspx", "dettagliofile.aspx", "download", "/document",
+            "documenti/", "/atti-amministrativi/", "mc_p_ricerca", "mc_gridev"
+        ))
         if ext_ok and relevant(label + " " + context, keywords):
             out.append({"url": href, "label": label or context[:180], "context": context[:500]})
     seen = set()
@@ -82,7 +86,7 @@ def discover_links(url, html, keywords):
     return uniq
 
 
-def discover_navigation(url, html, max_links=2):
+def discover_navigation(url, html, max_links=4):
     soup = BeautifulSoup(html, "html.parser")
     candidates = []
     for a in soup.find_all("a", href=True):
@@ -108,7 +112,7 @@ def collect_source_links(session, url, keywords):
     all_links = discover_links(response.url, response.text, keywords)
 
     if len(all_links) < 3:
-        for nav_url in discover_navigation(response.url, response.text, max_links=2):
+        for nav_url in discover_navigation(response.url, response.text, max_links=4):
             try:
                 nav = session.get(nav_url, timeout=TIMEOUT, allow_redirects=True)
                 nav.raise_for_status()
@@ -128,6 +132,35 @@ def make_id(comune, url):
     return f"AUTO-{digest}"
 
 
+def append_signal(db, existing_urls, comune, km, source_page, item, origin):
+    source_url = item["url"]
+    if source_url in existing_urls:
+        return False
+    db.setdefault("opportunities", []).append({
+        "id": make_id(comune, source_url),
+        "comune": comune,
+        "km_from_susa": km,
+        "date": datetime.now().date().isoformat(),
+        "atto": item["label"][:160] or "Atto edilizio rilevato",
+        "tipo": "Atto edilizio da analizzare",
+        "indirizzo": "DA APPROFONDIRE",
+        "catasto": "",
+        "descrizione": item["context"][:350],
+        "societa": "",
+        "professionista": "",
+        "priorita": "MEDIA",
+        "stato": "DA APPROFONDIRE",
+        "azione": "APRI FONTE → TROVA INDIRIZZO → TROVA TECNICO/IMPRESA → QUALIFICA PER ACQUISIZIONE",
+        "source_url": source_url,
+        "source_page": source_page,
+        "verified": False,
+        "origin": origin,
+        "seller_signal": "RADAR_EDILIZIO"
+    })
+    existing_urls.add(source_url)
+    return True
+
+
 def main():
     cfg = load(SOURCES_FILE)
     db = load(DB_FILE)
@@ -137,25 +170,34 @@ def main():
     state_version = int(state.get("schema_version", 1))
     rebaseline_all = state_version != SCHEMA_VERSION
     keywords = list(dict.fromkeys(list(cfg["keywords"]) + list(EXTRA_KEYWORDS)))
+    geo = cfg.get("geography", {})
+    center = geo.get("center", "Susa")
+    max_radius = float(geo.get("max_radius_km", 20))
     now = datetime.now(timezone.utc).isoformat()
     log = {
         "started_at": now,
         "scanner_version": SCHEMA_VERSION,
+        "geography": {"center": center, "max_radius_km": max_radius, "logic": geo.get("logic")},
         "rebaseline": rebaseline_all,
         "sources": [],
         "new_records": 0,
+        "baseline_imported": 0,
         "errors": 0,
     }
 
-    existing_urls = {x.get("source_url") for x in db.get("opportunities", [])}
+    existing_urls = {x.get("source_url") for x in db.get("opportunities", []) if x.get("source_url")}
     session = requests.Session()
     session.headers.update({"User-Agent": UA})
 
-    for src in cfg["sources"]:
-        if not src.get("enabled", True):
-            continue
+    sources = sorted(
+        (x for x in cfg["sources"] if x.get("enabled", True) and float(x.get("km_from_susa", 9999)) <= max_radius),
+        key=lambda x: float(x.get("km_from_susa", 9999))
+    )
+
+    for src in sources:
         comune, url = src["comune"], src["url"]
-        entry = {"comune": comune, "url": url, "status": "", "links": 0, "new": 0, "pages_checked": 0}
+        km = float(src.get("km_from_susa", 9999))
+        entry = {"comune": comune, "km_from_susa": km, "url": url, "status": "", "links": 0, "new": 0, "pages_checked": 0}
         try:
             http_status, links, pages, warnings = collect_source_links(session, url, keywords)
             entry["http_status"] = http_status
@@ -168,8 +210,12 @@ def main():
             if rebaseline_all or source_key not in initialized:
                 for item in links:
                     seen_urls.add(item["url"])
+                    if append_signal(db, existing_urls, comune, km, url, item, "BASELINE_SELLER_RADAR_20KM"):
+                        entry["new"] += 1
+                        log["new_records"] += 1
+                        log["baseline_imported"] += 1
                 initialized.add(source_key)
-                entry["status"] = "BASELINE_CREATED"
+                entry["status"] = "BASELINE_IMPORTED"
                 entry["baseline_count"] = len(links)
             else:
                 for item in links:
@@ -178,25 +224,7 @@ def main():
                         continue
                     seen_urls.add(source_url)
                     entry["new"] += 1
-                    if source_url not in existing_urls:
-                        db.setdefault("opportunities", []).append({
-                            "id": make_id(comune, source_url),
-                            "comune": comune,
-                            "date": datetime.now().date().isoformat(),
-                            "atto": item["label"][:160] or "Nuovo atto rilevato",
-                            "tipo": "Nuovo documento edilizio da analizzare",
-                            "indirizzo": "DA APPROFONDIRE",
-                            "catasto": "",
-                            "descrizione": item["context"][:350],
-                            "societa": "",
-                            "professionista": "",
-                            "priorita": "MEDIA",
-                            "stato": "DA APPROFONDIRE",
-                            "azione": "Aprire il documento, estrarre intervento, indirizzo, tecnico e impresa; poi qualificare priorità F1.",
-                            "source_url": source_url,
-                            "verified": False,
-                        })
-                        existing_urls.add(source_url)
+                    if append_signal(db, existing_urls, comune, km, url, item, "AUTOMATIC_NEW"):
                         log["new_records"] += 1
                 entry["status"] = "OK"
         except Exception as exc:
@@ -205,19 +233,26 @@ def main():
             log["errors"] += 1
         log["sources"].append(entry)
 
-    db["meta"]["last_automatic_scan_utc"] = now
+    db.setdefault("meta", {})["last_automatic_scan_utc"] = now
     db["meta"]["last_scan_new_records"] = log["new_records"]
     db["meta"]["scanner_version"] = SCHEMA_VERSION
+    db["meta"]["geography_logic"] = geo.get("logic", "SELLER_RADAR_SUSA_20KM")
+    db["meta"]["center"] = center
+    db["meta"]["max_radius_km"] = max_radius
     save(DB_FILE, db)
     save(SEEN_FILE, {
         "schema_version": SCHEMA_VERSION,
+        "geography_logic": geo.get("logic", "SELLER_RADAR_SUSA_20KM"),
         "initialized_sources": sorted(initialized),
         "seen_urls": sorted(seen_urls),
     })
     log["finished_at"] = datetime.now(timezone.utc).isoformat()
     save(LOG_FILE, log)
     print(json.dumps({
+        "center": center,
+        "max_radius_km": max_radius,
         "new_records": log["new_records"],
+        "baseline_imported": log["baseline_imported"],
         "errors": log["errors"],
         "sources": len(log["sources"]),
         "links_seen": sum(x.get("links", 0) for x in log["sources"]),
