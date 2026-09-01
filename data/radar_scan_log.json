@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-09-01T07:41:51.125572+00:00",
+  "started_at": "2026-09-01T07:46:37.071191+00:00",
   "scanner_version": 2,
   "rebaseline": false,
   "sources": [
@@ -129,12 +129,8 @@
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 1,
-      "http_status": 200,
-      "warnings": [
-        "https://halleyweb.com/c001076/mc/mc_matri_gridev_messi.php?x=&servizio=&bck=: ConnectionError",
-        "https://www.halleyweb.com/c001076/mc/mc_gridev_messi.php?x=&servizio=&bck=: ConnectionError"
-      ]
+      "pages_checked": 3,
+      "http_status": 200
     },
     {
       "comune": "Mompantero",
@@ -313,5 +309,5 @@
   ],
   "new_records": 0,
   "errors": 0,
-  "finished_at": "2026-09-01T07:43:29.689180+00:00"
+  "finished_at": "2026-09-01T07:48:26.598329+00:00"
 }
