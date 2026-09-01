@@ -35,6 +35,13 @@ class RadarTests(unittest.TestCase):
         self.assertIn('data/radar_edilizio.json', html)
         self.assertIn('RADAR EDILIZIO F1', html)
 
+    def test_oggi_integration_hook(self):
+        oggi = (ROOT / 'oggi.html').read_text(encoding='utf-8')
+        pwa = (ROOT / 'pwa.js').read_text(encoding='utf-8')
+        self.assertIn('pwa.js', oggi)
+        self.assertIn('radar-edilizio.html', pwa)
+        self.assertIn('radar-edilizio-f1', pwa)
+
 
 if __name__ == '__main__':
     unittest.main()
