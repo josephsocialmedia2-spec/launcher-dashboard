@@ -14,7 +14,7 @@
     {"comune":"Avigliana","url":"https://www.comune.avigliana.to.it/it-it/amministrazione/documenti-dati","enabled":true,"verified":true},
     {"comune":"Almese","url":"https://comune.almese.to.it/servizio/permesso-di-costruire/","enabled":true,"verified":true},
     {"comune":"Rubiana","url":"https://comune.rubiana.to.it/Servizi?ID=101282","enabled":true,"verified":true},
-    {"comune":"Villar Dora","url":"https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=vllr250&RicCro=1","enabled":true,"verified":true,"mode":"document_links"},
+    {"comune":"Villar Dora","url":"https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=vllrdr250&RicCro=1","enabled":true,"verified":true,"mode":"document_links"},
     {"comune":"Caprie","url":"https://www.comune.caprie.to.it/it-it/amministrazione/modulistica","enabled":true,"verified":true},
     {"comune":"Condove","url":"https://comune.condove.to.it/it-it/amministrazione/documenti-dati","enabled":true,"verified":true},
     {"comune":"Chiusa di San Michele","url":"https://www.comune.chiusadisanmichele.to.it/it-it/servizi/catasto-e-urbanistica","enabled":true,"verified":true},
