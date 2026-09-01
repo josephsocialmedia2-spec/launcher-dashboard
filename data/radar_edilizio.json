@@ -4,7 +4,7 @@
     "generated_at": "2026-09-01T09:30:00+02:00",
     "status": "IN_POPOLAMENTO",
     "privacy": "Solo recapiti professionali/aziendali pubblici; nessun recapito personale di proprietari privati.",
-    "last_automatic_scan_utc": "2026-09-01T17:18:51.481925+00:00",
+    "last_automatic_scan_utc": "2026-09-01T17:25:49.869695+00:00",
     "last_scan_new_records": 0,
     "scanner_version": 4,
     "history_seed_verified_at": "2026-09-01",
@@ -14,6 +14,27 @@
     "max_radius_km": 20.0
   },
   "opportunities": [
+    {
+      "id": "AUTO-F96AA5BA4D",
+      "comune": "Gravere",
+      "km_from_susa": 3.2,
+      "date": "2026-09-01",
+      "atto": "DETERMINA SERVIZIO TECNICO N° 81/50 del 29/05/26 Oggetto: CIG BBDC265A6F. AFFIDAMENTO DIRETTO AI SENSI DELL'ART. 50 COMMA 1 LETT. B) DEL D. LGS. 36/2023 A FAURE",
+      "tipo": "Atto edilizio da analizzare",
+      "indirizzo": "DA APPROFONDIRE",
+      "catasto": "",
+      "descrizione": "DETERMINA SERVIZIO TECNICO N° 81/50 del 29/05/26 Oggetto: CIG BBDC265A6F. AFFIDAMENTO DIRETTO AI SENSI DELL'ART. 50 COMMA 1 LETT. B) DEL D. LGS. 36/2023 A FAURE SCAVI SRL PER LA FORNITURA DI STABILIZZATO PER LA MANUTENZIONE STRAORDINARIA DELLA STRADA DEL DEVEYS.",
+      "societa": "",
+      "professionista": "",
+      "priorita": "MEDIA",
+      "stato": "DA APPROFONDIRE",
+      "azione": "APRI FONTE → TROVA INDIRIZZO → TROVA TECNICO/IMPRESA → QUALIFICA PER ACQUISIZIONE",
+      "source_url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Dettaglio.aspx?Pub=3511&RicCro=1&CE=grvr1245",
+      "source_page": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=grvr1245&RicCro=1",
+      "verified": false,
+      "origin": "BASELINE_SELLER_RADAR_20KM",
+      "seller_signal": "RADAR_EDILIZIO"
+    },
     {
       "id": "HIST-05A863584A",
       "comune": "Pragelato",
@@ -461,27 +482,6 @@
       "source_page": "",
       "verified": false,
       "origin": "BACKLOG_STORICO"
-    },
-    {
-      "id": "AUTO-F96AA5BA4D",
-      "comune": "Gravere",
-      "km_from_susa": 3.2,
-      "date": "2026-09-01",
-      "atto": "DETERMINA SERVIZIO TECNICO N° 81/50 del 29/05/26 Oggetto: CIG BBDC265A6F. AFFIDAMENTO DIRETTO AI SENSI DELL'ART. 50 COMMA 1 LETT. B) DEL D. LGS. 36/2023 A FAURE",
-      "tipo": "Atto edilizio da analizzare",
-      "indirizzo": "DA APPROFONDIRE",
-      "catasto": "",
-      "descrizione": "DETERMINA SERVIZIO TECNICO N° 81/50 del 29/05/26 Oggetto: CIG BBDC265A6F. AFFIDAMENTO DIRETTO AI SENSI DELL'ART. 50 COMMA 1 LETT. B) DEL D. LGS. 36/2023 A FAURE SCAVI SRL PER LA FORNITURA DI STABILIZZATO PER LA MANUTENZIONE STRAORDINARIA DELLA STRADA DEL DEVEYS.",
-      "societa": "",
-      "professionista": "",
-      "priorita": "MEDIA",
-      "stato": "DA APPROFONDIRE",
-      "azione": "APRI FONTE → TROVA INDIRIZZO → TROVA TECNICO/IMPRESA → QUALIFICA PER ACQUISIZIONE",
-      "source_url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Dettaglio.aspx?Pub=3511&RicCro=1&CE=grvr1245",
-      "source_page": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=grvr1245&RicCro=1",
-      "verified": false,
-      "origin": "BASELINE_SELLER_RADAR_20KM",
-      "seller_signal": "RADAR_EDILIZIO"
     }
   ],
   "contacts": [

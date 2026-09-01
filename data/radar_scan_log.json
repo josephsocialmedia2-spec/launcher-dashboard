@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-09-01T17:18:51.481925+00:00",
+  "started_at": "2026-09-01T17:25:49.869695+00:00",
   "scanner_version": 4,
   "geography": {
     "center": "Susa",
@@ -32,11 +32,11 @@
       "comune": "Meana di Susa",
       "km_from_susa": 1.9,
       "url": "https://www.halleyweb.com/c001149/mc/mc_p_ricerca.php?servizio=",
-      "status": "OK",
+      "status": "ERROR",
       "links": 0,
       "new": 0,
-      "pages_checked": 3,
-      "http_status": 200
+      "pages_checked": 0,
+      "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
     },
     {
       "comune": "Gravere",
@@ -119,8 +119,12 @@
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 4,
-      "http_status": 200
+      "pages_checked": 2,
+      "http_status": 200,
+      "warnings": [
+        "https://halleyweb.com/c001076/mc/mc_matri_gridev_messi.php?x=&servizio=&bck=: ConnectionError",
+        "https://www.halleyweb.com/c001076/mc/mc_gridev_messi.php?x=&servizio=&bck=: ConnectionError"
+      ]
     },
     {
       "comune": "Moncenisio",
@@ -188,6 +192,6 @@
   ],
   "new_records": 0,
   "baseline_imported": 0,
-  "errors": 0,
-  "finished_at": "2026-09-01T17:19:51.049045+00:00"
+  "errors": 1,
+  "finished_at": "2026-09-01T17:27:06.818366+00:00"
 }
