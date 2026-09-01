@@ -1,0 +1,41 @@
+name: Patch Seller Radar Edilizio UI
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/patch_seller_radar_edilizio_ui.py'
+      - '.github/workflows/patch-seller-radar-edilizio-ui.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Applica patch
+        run: python scripts/patch_seller_radar_edilizio_ui.py
+      - name: Verifica sintassi JS inline
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html=Path('seller-radar-unico.html').read_text(encoding='utf-8')
+          assert "data.filter(r=>/RADAR_EDILIZIO/" in html
+          assert "r.EDILIZIO=true" in html
+          scripts=re.findall(r'<script>(.*?)</script>',html,re.S|re.I)
+          Path('/tmp/seller-inline.js').write_text('\n'.join(scripts),encoding='utf-8')
+          PY
+          node --check /tmp/seller-inline.js
+      - name: Salva patch
+        run: |
+          git config user.name 'f1-seller-ui-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add seller-radar-unico.html
+          git diff --cached --quiet && exit 0
+          git commit -m 'seller radar: mostra conteggio edilizio reale'
+          git pull --rebase origin main
+          git push origin main
