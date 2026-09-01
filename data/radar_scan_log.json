@@ -1,6 +1,6 @@
 {
-  "started_at": "2026-09-01T07:46:37.071191+00:00",
-  "scanner_version": 2,
+  "started_at": "2026-09-01T09:58:09.729916+00:00",
+  "scanner_version": 3,
   "rebaseline": false,
   "sources": [
     {
@@ -16,14 +16,14 @@
       "comune": "Sant’Ambrogio di Torino",
       "url": "https://www.comune.santambrogioditorino.to.it/Menu?IDDettaglio=198281",
       "status": "OK",
-      "links": 28,
+      "links": 91,
       "new": 0,
       "pages_checked": 1,
       "http_status": 200
     },
     {
       "comune": "Avigliana",
-      "url": "https://www.comune.avigliana.to.it/it-it/servizi/catasto-e-urbanistica",
+      "url": "https://www.comune.avigliana.to.it/it-it/amministrazione/documenti-dati",
       "status": "OK",
       "links": 0,
       "new": 0,
@@ -50,11 +50,11 @@
     },
     {
       "comune": "Villar Dora",
-      "url": "https://www.comune.villardora.to.it/",
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=vllrdr250&RicCro=1",
       "status": "OK",
-      "links": 0,
+      "links": 1,
       "new": 0,
-      "pages_checked": 3,
+      "pages_checked": 1,
       "http_status": 200
     },
     {
@@ -68,7 +68,7 @@
     },
     {
       "comune": "Condove",
-      "url": "https://www.comune.condove.to.it/it-it/servizi/catasto-e-urbanistica/permesso-di-costruire-pdc-67-46575-1-36700a8b84702d6dac7b1febcfcdcdf8",
+      "url": "https://comune.condove.to.it/it-it/amministrazione/documenti-dati",
       "status": "OK",
       "links": 0,
       "new": 0,
@@ -86,24 +86,21 @@
     },
     {
       "comune": "Vaie",
-      "url": "https://www.comune.vaie.to.it/",
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=vaie164&RicCro=1",
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 3,
+      "pages_checked": 1,
       "http_status": 200
     },
     {
       "comune": "San Didero",
-      "url": "https://www.comune.sandidero.to.it/",
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=snddr1352&RicCro=1",
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 2,
-      "http_status": 200,
-      "warnings": [
-        "http://www.alboinrete.it/sdidero: ConnectTimeout"
-      ]
+      "pages_checked": 1,
+      "http_status": 200
     },
     {
       "comune": "Borgone Susa",
@@ -116,33 +113,34 @@
     },
     {
       "comune": "Bussoleno",
-      "url": "https://www.comune.bussoleno.to.it/",
+      "url": "https://www.comune.bussoleno.to.it/it-it/albo-pretorio",
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 3,
-      "http_status": 200
+      "pages_checked": 1,
+      "http_status": 200,
+      "warnings": [
+        "https://albo.studiok.it/bussoleno/albo/: ConnectTimeout",
+        "https://frontcsinivola.apkappa.it/cmsbussoleno/portale/albopretorio/albopretorioconsultazione.aspx?P=400: SSLError"
+      ]
     },
     {
       "comune": "Chianocco",
-      "url": "https://www.comune.chianocco.to.it/Servizi/Diritti-di-Segreteria-per-pratiche-edilizie",
-      "status": "OK",
+      "url": "https://www.halleyweb.com/c001076/mc/mc_gridev_messi.php?x=&servizio=&bck=",
+      "status": "ERROR",
       "links": 0,
       "new": 0,
-      "pages_checked": 3,
-      "http_status": 200
+      "pages_checked": 0,
+      "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
     },
     {
       "comune": "Mompantero",
-      "url": "https://www.comune.mompantero.to.it/",
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=mmpntr1336&RicCro=1",
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 2,
-      "http_status": 200,
-      "warnings": [
-        "http://www.alboinrete.it/mompantero: ConnectTimeout"
-      ]
+      "pages_checked": 1,
+      "http_status": 200
     },
     {
       "comune": "San Giorio di Susa",
@@ -155,7 +153,7 @@
     },
     {
       "comune": "Villar Focchiardo",
-      "url": "https://www.comune.villarfocchiardo.to.it/Amministrazione/Uffici/Lavori-pubblici-manutenzione-patrimonio-e-demanio-comunale",
+      "url": "https://www.comune.villarfocchiardo.to.it/Amministrazione/Documenti-e-dati/Documenti-albo-pretorio",
       "status": "OK",
       "links": 0,
       "new": 0,
@@ -164,7 +162,7 @@
     },
     {
       "comune": "Venaus",
-      "url": "https://www.comune.venaus.to.it/it-it/servizi/catasto-e-urbanistica/sportello-unico-per-l-edilizia-sue-645-16-1-7bd5106f985cd97764ff24524c4b1530",
+      "url": "https://www.comune.venaus.to.it/it-it/amministrazione/documenti-dati",
       "status": "OK",
       "links": 0,
       "new": 0,
@@ -173,7 +171,7 @@
     },
     {
       "comune": "Giaglione",
-      "url": "https://www.comune.giaglione.to.it/",
+      "url": "https://www.comune.giaglione.to.it/it-it/amministrazione/documenti-dati",
       "status": "OK",
       "links": 0,
       "new": 0,
@@ -182,11 +180,11 @@
     },
     {
       "comune": "Gravere",
-      "url": "https://www.comune.gravere.to.it/",
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=grvr1245&RicCro=1",
       "status": "OK",
-      "links": 0,
+      "links": 1,
       "new": 0,
-      "pages_checked": 3,
+      "pages_checked": 1,
       "http_status": 200
     },
     {
@@ -218,11 +216,11 @@
     },
     {
       "comune": "Sauze d’Oulx",
-      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=szdlx254&Tipo=10",
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=szdlx254&RicCro=1",
       "status": "OK",
-      "links": 1,
+      "links": 6,
       "new": 0,
-      "pages_checked": 2,
+      "pages_checked": 1,
       "http_status": 200
     },
     {
@@ -236,61 +234,64 @@
     },
     {
       "comune": "Claviere",
-      "url": "https://www.comune.claviere.to.it/",
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=clvr1226&RicCro=1",
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 3,
+      "pages_checked": 1,
       "http_status": 200
     },
     {
       "comune": "Novalesa",
-      "url": "https://www.comune.novalesa.to.it/",
+      "url": "https://www.comune.novalesa.to.it/Amministrazione/Documenti-e-dati/Documenti-albo-pretorio",
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 3,
+      "pages_checked": 2,
       "http_status": 200
     },
     {
       "comune": "Moncenisio",
-      "url": "https://www.comune.moncenisio.to.it/",
+      "url": "https://comune.moncenisio.to.it/servizio/albo-pretorio/",
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 3,
-      "http_status": 200
+      "pages_checked": 2,
+      "http_status": 200,
+      "warnings": [
+        "https://siciportal.apkappa.it/comuni/moncenisio/: ConnectTimeout"
+      ]
     },
     {
       "comune": "Pragelato",
-      "url": "https://www.comune.pragelato.to.it/",
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=prglt1223&RicCro=1",
       "status": "OK",
-      "links": 0,
+      "links": 7,
       "new": 0,
-      "pages_checked": 3,
+      "pages_checked": 1,
       "http_status": 200
     },
     {
       "comune": "Bardonecchia",
       "url": "https://comune.bardonecchia.to.it/servizio/permesso-di-costruire/",
       "status": "OK",
-      "links": 4,
+      "links": 5,
       "new": 0,
       "pages_checked": 3,
       "http_status": 200
     },
     {
       "comune": "Chiomonte",
-      "url": "https://www.comune.chiomonte.to.it/",
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=chmnt1123&RicCro=1",
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 3,
+      "pages_checked": 1,
       "http_status": 200
     },
     {
       "comune": "Alpignano",
-      "url": "https://www.comune.alpignano.to.it/",
+      "url": "https://www.comune.alpignano.to.it/it-it/amministrazione/documenti-dati",
       "status": "OK",
       "links": 0,
       "new": 0,
@@ -308,6 +309,6 @@
     }
   ],
   "new_records": 0,
-  "errors": 0,
-  "finished_at": "2026-09-01T07:48:26.598329+00:00"
+  "errors": 1,
+  "finished_at": "2026-09-01T09:59:31.173123+00:00"
 }
