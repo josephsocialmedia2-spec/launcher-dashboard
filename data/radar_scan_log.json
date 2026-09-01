@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-09-01T17:00:07.361619+00:00",
+  "started_at": "2026-09-01T17:05:26.943717+00:00",
   "scanner_version": 3,
   "rebaseline": false,
   "sources": [
@@ -50,9 +50,9 @@
     },
     {
       "comune": "Villar Dora",
-      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=vllrdr250&RicCro=1",
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=vllr250&RicCro=1",
       "status": "OK",
-      "links": 1,
+      "links": 0,
       "new": 0,
       "pages_checked": 1,
       "http_status": 200
@@ -126,12 +126,16 @@
     },
     {
       "comune": "Chianocco",
-      "url": "https://www.halleyweb.com/c001076/zf/index.php/atti-amministrativi/determine",
-      "status": "ERROR",
+      "url": "https://www.comune.chianocco.to.it/Amministrazione/Documenti-e-dati/Documenti-albo-pretorio",
+      "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 0,
-      "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
+      "pages_checked": 1,
+      "http_status": 200,
+      "warnings": [
+        "https://halleyweb.com/c001076/mc/mc_matri_gridev_messi.php?x=&servizio=&bck=: ConnectionError",
+        "https://www.halleyweb.com/c001076/mc/mc_gridev_messi.php?x=&servizio=&bck=: ConnectionError"
+      ]
     },
     {
       "comune": "Mompantero",
@@ -309,6 +313,6 @@
     }
   ],
   "new_records": 0,
-  "errors": 1,
-  "finished_at": "2026-09-01T17:01:38.951748+00:00"
+  "errors": 0,
+  "finished_at": "2026-09-01T17:07:11.368297+00:00"
 }
