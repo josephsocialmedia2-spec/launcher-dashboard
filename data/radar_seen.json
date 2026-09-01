@@ -1,5 +1,6 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
+  "geography_logic": "SELLER_RADAR_SUSA_20KM",
   "initialized_sources": [
     "Almese|https://comune.almese.to.it/servizio/permesso-di-costruire/",
     "Alpignano|https://www.comune.alpignano.to.it/",
@@ -8,6 +9,7 @@
     "Avigliana|https://www.comune.avigliana.to.it/it-it/servizi/catasto-e-urbanistica",
     "Bardonecchia|https://comune.bardonecchia.to.it/servizio/permesso-di-costruire/",
     "Borgone Susa|https://www.comune.borgonesusa.to.it/servizi_ai_cittadini/permesso-di-costruire-pdc/",
+    "Bruzolo|https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Home.aspx?Ce=brzl1354",
     "Bussoleno|https://www.comune.bussoleno.to.it/",
     "Bussoleno|https://www.comune.bussoleno.to.it/it-it/albo-pretorio",
     "Caprie|https://www.comune.caprie.to.it/it-it/amministrazione/modulistica",
@@ -27,6 +29,8 @@
     "Giaglione|https://www.comune.giaglione.to.it/it-it/amministrazione/documenti-dati",
     "Gravere|https://www.comune.gravere.to.it/",
     "Gravere|https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=grvr1245&RicCro=1",
+    "Mattie|https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Home.aspx?CE=mtt1617",
+    "Meana di Susa|https://www.halleyweb.com/c001149/mc/mc_p_ricerca.php?servizio=",
     "Mompantero|https://www.comune.mompantero.to.it/",
     "Mompantero|https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=mmpntr1336&RicCro=1",
     "Moncenisio|https://comune.moncenisio.to.it/servizio/albo-pretorio/",

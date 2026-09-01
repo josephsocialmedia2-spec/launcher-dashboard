@@ -1,10 +1,16 @@
 {
-  "started_at": "2026-09-01T17:05:26.943717+00:00",
-  "scanner_version": 3,
+  "started_at": "2026-09-01T17:18:51.481925+00:00",
+  "scanner_version": 4,
+  "geography": {
+    "center": "Susa",
+    "max_radius_km": 20.0,
+    "logic": "SELLER_RADAR_SUSA_20KM"
+  },
   "rebaseline": false,
   "sources": [
     {
       "comune": "Susa",
+      "km_from_susa": 0.0,
       "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=ss090&RicCro=1",
       "status": "OK",
       "links": 0,
@@ -13,132 +19,8 @@
       "http_status": 200
     },
     {
-      "comune": "Sant’Ambrogio di Torino",
-      "url": "https://www.comune.santambrogioditorino.to.it/Menu?IDDettaglio=198281",
-      "status": "OK",
-      "links": 91,
-      "new": 0,
-      "pages_checked": 1,
-      "http_status": 200
-    },
-    {
-      "comune": "Avigliana",
-      "url": "https://www.comune.avigliana.to.it/it-it/amministrazione/documenti-dati",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 3,
-      "http_status": 200
-    },
-    {
-      "comune": "Almese",
-      "url": "https://comune.almese.to.it/servizio/permesso-di-costruire/",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 3,
-      "http_status": 200
-    },
-    {
-      "comune": "Rubiana",
-      "url": "https://comune.rubiana.to.it/Servizi?ID=101282",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 3,
-      "http_status": 200
-    },
-    {
-      "comune": "Villar Dora",
-      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=vllr250&RicCro=1",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 1,
-      "http_status": 200
-    },
-    {
-      "comune": "Caprie",
-      "url": "https://www.comune.caprie.to.it/it-it/amministrazione/modulistica",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 2,
-      "http_status": 200
-    },
-    {
-      "comune": "Condove",
-      "url": "https://comune.condove.to.it/it-it/amministrazione/documenti-dati",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 3,
-      "http_status": 200
-    },
-    {
-      "comune": "Chiusa di San Michele",
-      "url": "https://www.comune.chiusadisanmichele.to.it/it-it/servizi/catasto-e-urbanistica",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 3,
-      "http_status": 200
-    },
-    {
-      "comune": "Vaie",
-      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=vaie164&RicCro=1",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 1,
-      "http_status": 200
-    },
-    {
-      "comune": "San Didero",
-      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=snddr1352&RicCro=1",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 1,
-      "http_status": 200
-    },
-    {
-      "comune": "Borgone Susa",
-      "url": "https://www.comune.borgonesusa.to.it/servizi_ai_cittadini/permesso-di-costruire-pdc/",
-      "status": "OK",
-      "links": 10,
-      "new": 0,
-      "pages_checked": 1,
-      "http_status": 200
-    },
-    {
-      "comune": "Bussoleno",
-      "url": "https://www.comune.bussoleno.to.it/it-it/albo-pretorio",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 1,
-      "http_status": 200,
-      "warnings": [
-        "https://albo.studiok.it/bussoleno/albo/: ConnectTimeout",
-        "https://frontcsinivola.apkappa.it/cmsbussoleno/portale/albopretorio/albopretorioconsultazione.aspx?P=400: SSLError"
-      ]
-    },
-    {
-      "comune": "Chianocco",
-      "url": "https://www.comune.chianocco.to.it/Amministrazione/Documenti-e-dati/Documenti-albo-pretorio",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 1,
-      "http_status": 200,
-      "warnings": [
-        "https://halleyweb.com/c001076/mc/mc_matri_gridev_messi.php?x=&servizio=&bck=: ConnectionError",
-        "https://www.halleyweb.com/c001076/mc/mc_gridev_messi.php?x=&servizio=&bck=: ConnectionError"
-      ]
-    },
-    {
       "comune": "Mompantero",
+      "km_from_susa": 1.4,
       "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=mmpntr1336&RicCro=1",
       "status": "OK",
       "links": 0,
@@ -147,35 +29,9 @@
       "http_status": 200
     },
     {
-      "comune": "San Giorio di Susa",
-      "url": "https://www.comune.sangioriodisusa.to.it/Servizi?ID=145680",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 3,
-      "http_status": 200
-    },
-    {
-      "comune": "Villar Focchiardo",
-      "url": "https://www.comune.villarfocchiardo.to.it/Amministrazione/Documenti-e-dati/Documenti-albo-pretorio",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 3,
-      "http_status": 200
-    },
-    {
-      "comune": "Venaus",
-      "url": "https://www.comune.venaus.to.it/it-it/amministrazione/documenti-dati",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 3,
-      "http_status": 200
-    },
-    {
-      "comune": "Giaglione",
-      "url": "https://www.comune.giaglione.to.it/it-it/amministrazione/documenti-dati",
+      "comune": "Meana di Susa",
+      "km_from_susa": 1.9,
+      "url": "https://www.halleyweb.com/c001149/mc/mc_p_ricerca.php?servizio=",
       "status": "OK",
       "links": 0,
       "new": 0,
@@ -184,6 +40,7 @@
     },
     {
       "comune": "Gravere",
+      "km_from_susa": 3.2,
       "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=grvr1245&RicCro=1",
       "status": "OK",
       "links": 1,
@@ -192,8 +49,9 @@
       "http_status": 200
     },
     {
-      "comune": "Exilles",
-      "url": "https://comune.exilles.to.it/argomento/accesso-allinformazione/",
+      "comune": "Giaglione",
+      "km_from_susa": 3.5,
+      "url": "https://www.comune.giaglione.to.it/it-it/amministrazione/documenti-dati",
       "status": "OK",
       "links": 0,
       "new": 0,
@@ -201,8 +59,9 @@
       "http_status": 200
     },
     {
-      "comune": "Salbertrand",
-      "url": "https://comune.salbertrand.to.it/argomento/accesso-allinformazione/",
+      "comune": "Venaus",
+      "km_from_susa": 4.3,
+      "url": "https://www.comune.venaus.to.it/it-it/amministrazione/documenti-dati",
       "status": "OK",
       "links": 0,
       "new": 0,
@@ -210,82 +69,18 @@
       "http_status": 200
     },
     {
-      "comune": "Oulx",
-      "url": "https://comune.oulx.to.it/servizio/permesso-di-costruire/",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 2,
-      "http_status": 200
-    },
-    {
-      "comune": "Sauze d’Oulx",
-      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=szdlx254&RicCro=1",
-      "status": "OK",
-      "links": 6,
-      "new": 0,
-      "pages_checked": 1,
-      "http_status": 200
-    },
-    {
-      "comune": "Cesana Torinese",
-      "url": "https://hosting.pa-online.it/001074/su_procedimento/permesso-di-costruire/fattispecie/0",
+      "comune": "Mattie",
+      "km_from_susa": 5.2,
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Home.aspx?CE=mtt1617",
       "status": "OK",
       "links": 0,
       "new": 0,
       "pages_checked": 1,
-      "http_status": 200
-    },
-    {
-      "comune": "Claviere",
-      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=clvr1226&RicCro=1",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 1,
-      "http_status": 200
-    },
-    {
-      "comune": "Novalesa",
-      "url": "https://www.comune.novalesa.to.it/Amministrazione/Documenti-e-dati/Documenti-albo-pretorio",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 2,
-      "http_status": 200
-    },
-    {
-      "comune": "Moncenisio",
-      "url": "https://comune.moncenisio.to.it/servizio/albo-pretorio/",
-      "status": "OK",
-      "links": 0,
-      "new": 0,
-      "pages_checked": 2,
-      "http_status": 200,
-      "warnings": [
-        "https://siciportal.apkappa.it/comuni/moncenisio/: ConnectTimeout"
-      ]
-    },
-    {
-      "comune": "Pragelato",
-      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=prglt1223&RicCro=1",
-      "status": "OK",
-      "links": 7,
-      "new": 0,
-      "pages_checked": 1,
-      "http_status": 200
-    },
-    {
-      "comune": "Bardonecchia",
-      "url": "https://comune.bardonecchia.to.it/servizio/permesso-di-costruire/",
-      "status": "OK",
-      "links": 5,
-      "new": 0,
-      "pages_checked": 3,
       "http_status": 200
     },
     {
       "comune": "Chiomonte",
+      "km_from_susa": 5.8,
       "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=chmnt1123&RicCro=1",
       "status": "OK",
       "links": 0,
@@ -294,8 +89,56 @@
       "http_status": 200
     },
     {
-      "comune": "Alpignano",
-      "url": "https://www.comune.alpignano.to.it/it-it/amministrazione/documenti-dati",
+      "comune": "Novalesa",
+      "km_from_susa": 6.8,
+      "url": "https://www.comune.novalesa.to.it/Amministrazione/Documenti-e-dati/Documenti-albo-pretorio",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "pages_checked": 2,
+      "http_status": 200
+    },
+    {
+      "comune": "Bussoleno",
+      "km_from_susa": 7.2,
+      "url": "https://www.comune.bussoleno.to.it/it-it/albo-pretorio",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "pages_checked": 2,
+      "http_status": 200,
+      "warnings": [
+        "https://albo.studiok.it/bussoleno/albo/: ConnectTimeout",
+        "https://frontcsinivola.apkappa.it/cmsbussoleno/portale/albopretorio/albopretorioconsultazione.aspx?P=400: SSLError"
+      ]
+    },
+    {
+      "comune": "Chianocco",
+      "km_from_susa": 9.1,
+      "url": "https://www.comune.chianocco.to.it/Amministrazione/Documenti-e-dati/Documenti-albo-pretorio",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "pages_checked": 4,
+      "http_status": 200
+    },
+    {
+      "comune": "Moncenisio",
+      "km_from_susa": 9.2,
+      "url": "https://comune.moncenisio.to.it/servizio/albo-pretorio/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "pages_checked": 3,
+      "http_status": 200,
+      "warnings": [
+        "https://siciportal.apkappa.it/comuni/moncenisio/: ConnectTimeout"
+      ]
+    },
+    {
+      "comune": "San Giorio di Susa",
+      "km_from_susa": 9.8,
+      "url": "https://www.comune.sangioriodisusa.to.it/Servizi?ID=145680",
       "status": "OK",
       "links": 0,
       "new": 0,
@@ -303,16 +146,48 @@
       "http_status": 200
     },
     {
-      "comune": "Casellette",
-      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=csltt155&RicCro=1",
+      "comune": "Exilles",
+      "km_from_susa": 10.8,
+      "url": "https://comune.exilles.to.it/argomento/accesso-allinformazione/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "pages_checked": 3,
+      "http_status": 200
+    },
+    {
+      "comune": "Bruzolo",
+      "km_from_susa": 11.3,
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Home.aspx?Ce=brzl1354",
       "status": "OK",
       "links": 0,
       "new": 0,
       "pages_checked": 1,
       "http_status": 200
+    },
+    {
+      "comune": "San Didero",
+      "km_from_susa": 12.4,
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=snddr1352&RicCro=1",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "pages_checked": 1,
+      "http_status": 200
+    },
+    {
+      "comune": "Salbertrand",
+      "km_from_susa": 15.3,
+      "url": "https://comune.salbertrand.to.it/argomento/accesso-allinformazione/",
+      "status": "OK",
+      "links": 0,
+      "new": 0,
+      "pages_checked": 3,
+      "http_status": 200
     }
   ],
   "new_records": 0,
+  "baseline_imported": 0,
   "errors": 0,
-  "finished_at": "2026-09-01T17:07:11.368297+00:00"
+  "finished_at": "2026-09-01T17:19:51.049045+00:00"
 }

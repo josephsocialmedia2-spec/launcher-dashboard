@@ -4,11 +4,14 @@
     "generated_at": "2026-09-01T09:30:00+02:00",
     "status": "IN_POPOLAMENTO",
     "privacy": "Solo recapiti professionali/aziendali pubblici; nessun recapito personale di proprietari privati.",
-    "last_automatic_scan_utc": "2026-09-01T17:05:26.943717+00:00",
+    "last_automatic_scan_utc": "2026-09-01T17:18:51.481925+00:00",
     "last_scan_new_records": 0,
-    "scanner_version": 3,
+    "scanner_version": 4,
     "history_seed_verified_at": "2026-09-01",
-    "backlog_promoted_to_seller_radar": true
+    "backlog_promoted_to_seller_radar": true,
+    "geography_logic": "SELLER_RADAR_SUSA_20KM",
+    "center": "Susa",
+    "max_radius_km": 20.0
   },
   "opportunities": [
     {
@@ -384,6 +387,25 @@
       "origin": "BACKLOG_STORICO"
     },
     {
+      "id": "HIST-361E844C96",
+      "comune": "Susa",
+      "date": "2026-02-18",
+      "atto": "Ordinanza cantiere collegata a PDC 1234/2024 - Via Francesco Rolando 6",
+      "tipo": "Cantiere / permesso di costruire collegato",
+      "indirizzo": "DA APPROFONDIRE",
+      "catasto": "",
+      "descrizione": "Ordinanza cantiere collegata a PDC 1234/2024 - Via Francesco Rolando 6 · Cantiere / permesso di costruire collegato. Segnale storico/pubblico da aprire, qualificare e collegare a tecnico, impresa e cantiere.",
+      "societa": "",
+      "professionista": "",
+      "priorita": "MEDIA",
+      "stato": "DA APPROFONDIRE",
+      "azione": "APRIRE ATTO / VERIFICARE INDIRIZZO / CERCARE TECNICO E IMPRESA / INSERIRE CONTATTO PROFESSIONALE",
+      "source_url": "",
+      "source_page": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/DettaglioFile.aspx?D=true&Documento=38842-14747-ss090",
+      "verified": false,
+      "origin": "BACKLOG_STORICO"
+    },
+    {
       "id": "HIST-902C37C824",
       "comune": "Sant’Ambrogio di Torino",
       "date": "2026-01-23",
@@ -439,6 +461,27 @@
       "source_page": "",
       "verified": false,
       "origin": "BACKLOG_STORICO"
+    },
+    {
+      "id": "AUTO-F96AA5BA4D",
+      "comune": "Gravere",
+      "km_from_susa": 3.2,
+      "date": "2026-09-01",
+      "atto": "DETERMINA SERVIZIO TECNICO N° 81/50 del 29/05/26 Oggetto: CIG BBDC265A6F. AFFIDAMENTO DIRETTO AI SENSI DELL'ART. 50 COMMA 1 LETT. B) DEL D. LGS. 36/2023 A FAURE",
+      "tipo": "Atto edilizio da analizzare",
+      "indirizzo": "DA APPROFONDIRE",
+      "catasto": "",
+      "descrizione": "DETERMINA SERVIZIO TECNICO N° 81/50 del 29/05/26 Oggetto: CIG BBDC265A6F. AFFIDAMENTO DIRETTO AI SENSI DELL'ART. 50 COMMA 1 LETT. B) DEL D. LGS. 36/2023 A FAURE SCAVI SRL PER LA FORNITURA DI STABILIZZATO PER LA MANUTENZIONE STRAORDINARIA DELLA STRADA DEL DEVEYS.",
+      "societa": "",
+      "professionista": "",
+      "priorita": "MEDIA",
+      "stato": "DA APPROFONDIRE",
+      "azione": "APRI FONTE → TROVA INDIRIZZO → TROVA TECNICO/IMPRESA → QUALIFICA PER ACQUISIZIONE",
+      "source_url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Dettaglio.aspx?Pub=3511&RicCro=1&CE=grvr1245",
+      "source_page": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=grvr1245&RicCro=1",
+      "verified": false,
+      "origin": "BASELINE_SELLER_RADAR_20KM",
+      "seller_signal": "RADAR_EDILIZIO"
     }
   ],
   "contacts": [
@@ -642,6 +685,15 @@
       "atto": "PDC in sanatoria 61/2024",
       "classe": "Sanatoria",
       "stato": "DA ANALIZZARE"
+    },
+    {
+      "comune": "Susa",
+      "date": "2026-02-18",
+      "atto": "Ordinanza cantiere collegata a PDC 1234/2024 - Via Francesco Rolando 6",
+      "classe": "Cantiere / permesso di costruire collegato",
+      "stato": "ANALIZZATO PARZIALE",
+      "source_url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/DettaglioFile.aspx?D=true&Documento=38842-14747-ss090",
+      "note": "Atto pubblico relativo a lavori presso Via Francesco Rolando 6 con richiamo alla pratica edilizia/Permesso di Costruire 1234/2024. Da approfondire il permesso originario e i riferimenti professionali del cantiere."
     },
     {
       "comune": "Sant’Ambrogio di Torino",
