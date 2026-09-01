@@ -1,8 +1,8 @@
-name: F1 Radar Edilizio Daily
+name: F1 Radar Edilizio Continuous
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 6 * * *'
+    - cron: '15 * * * *'
   push:
     branches: [ main ]
     paths:
@@ -12,12 +12,16 @@ on:
       - 'data/radar_history_seed.json'
       - 'tests/test_radar_edilizio.py'
       - 'radar-edilizio.html'
+      - 'seller-radar-unico.html'
       - 'oggi.html'
       - 'pwa.js'
       - 'sw.js'
       - '.github/workflows/radar-edilizio-daily.yml'
 permissions:
   contents: write
+concurrency:
+  group: f1-radar-edilizio-continuous
+  cancel-in-progress: false
 jobs:
   scan:
     runs-on: ubuntu-latest
@@ -42,12 +46,15 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import re
-          html=Path('radar-edilizio.html').read_text(encoding='utf-8')
-          scripts=re.findall(r'<script>(.*?)</script>', html, re.S|re.I)
-          assert scripts, 'inline radar script not found'
-          Path('/tmp/radar-inline.js').write_text('\n'.join(scripts), encoding='utf-8')
+          for name in ('radar-edilizio.html','seller-radar-unico.html'):
+              html=Path(name).read_text(encoding='utf-8')
+              scripts=re.findall(r'<script>(.*?)</script>', html, re.S|re.I)
+              assert scripts, f'inline script not found: {name}'
+              out='/tmp/'+name.replace('.html','.js')
+              Path(out).write_text('\n'.join(scripts), encoding='utf-8')
           PY
-          node --check /tmp/radar-inline.js
+          node --check /tmp/radar-edilizio.js
+          node --check /tmp/seller-radar-unico.js
       - name: Public GitHub Pages smoke test
         run: |
           BASE='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
@@ -57,7 +64,9 @@ jobs:
           python -m json.tool /tmp/radar.json >/dev/null
           curl --fail --location --retry 5 --retry-delay 5 "$BASE/oggi.html" -o /tmp/oggi.html
           grep -q 'OGGI COSA FACCIO' /tmp/oggi.html
-      - name: Daily scan
+          curl --fail --location --retry 5 --retry-delay 5 "$BASE/seller-radar-unico.html" -o /tmp/seller.html
+          grep -q 'SELLER RADAR' /tmp/seller.html
+      - name: Continuous scan
         run: python scripts/radar_edilizio_scan.py
       - name: Second pass deduplication test
         run: |
