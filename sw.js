@@ -1,6 +1,8 @@
-const CACHE='f1-operativo-v20260831-susa-km-order-1';
+const CACHE='f1-operativo-v20260901-radar-edilizio-1';
 const STATIC=[
   './oggi.html',
+  './radar-edilizio.html',
+  './data/radar_edilizio.json',
   './giro-acquisizione.html',
   './telefonate-oggi.html',
   './directory-radar-mobile.html',
