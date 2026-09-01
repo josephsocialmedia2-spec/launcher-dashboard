@@ -2,7 +2,7 @@ name: F1 Radar Edilizio Continuous
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 * * * *'
+    - cron: '*/15 * * * *'
   push:
     branches: [ main ]
     paths:
