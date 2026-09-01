@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-09-01T16:54:49.189766+00:00",
+  "started_at": "2026-09-01T17:00:07.361619+00:00",
   "scanner_version": 3,
   "rebaseline": false,
   "sources": [
@@ -126,7 +126,7 @@
     },
     {
       "comune": "Chianocco",
-      "url": "https://www.halleyweb.com/c001076/mc/mc_gridev_messi.php?x=&servizio=&bck=",
+      "url": "https://www.halleyweb.com/c001076/zf/index.php/atti-amministrativi/determine",
       "status": "ERROR",
       "links": 0,
       "new": 0,
@@ -310,5 +310,5 @@
   ],
   "new_records": 0,
   "errors": 1,
-  "finished_at": "2026-09-01T16:56:31.405247+00:00"
+  "finished_at": "2026-09-01T17:01:38.951748+00:00"
 }
