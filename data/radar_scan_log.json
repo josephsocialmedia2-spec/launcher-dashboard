@@ -1,13 +1,13 @@
 {
-  "started_at": "2026-09-01T07:33:20.730393+00:00",
+  "started_at": "2026-09-01T07:37:30.075360+00:00",
   "sources": [
     {
       "comune": "Susa",
-      "url": "https://www.cittadisusa.it/",
-      "status": "ERROR",
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=ss090&RicCro=1",
+      "status": "OK",
       "links": 0,
       "new": 0,
-      "error": "ConnectionError: ('Connection aborted.', ConnectionResetError(104, 'Connection reset by peer'))"
+      "http_status": 200
     },
     {
       "comune": "Sant’Ambrogio di Torino",
@@ -259,14 +259,14 @@
     },
     {
       "comune": "Casellette",
-      "url": "https://www.comune.casellette.to.it/",
-      "status": "ERROR",
+      "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=csltt155&RicCro=1",
+      "status": "OK",
       "links": 0,
       "new": 0,
-      "error": "ConnectionError: HTTPSConnectionPool(host='www.comune.casellette.to.it', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='www.comune.casellette.to.it', port=443): Failed to resolve 'www.comune.casellette.to.it' ([Errno -2] Name or service not known)\"))"
+      "http_status": 200
     }
   ],
   "new_records": 0,
-  "errors": 2,
-  "finished_at": "2026-09-01T07:33:47.134863+00:00"
+  "errors": 0,
+  "finished_at": "2026-09-01T07:37:56.296480+00:00"
 }
