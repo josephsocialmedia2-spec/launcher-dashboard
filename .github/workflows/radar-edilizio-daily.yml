@@ -30,6 +30,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -88,8 +92,19 @@ jobs:
         run: |
           git config user.name 'f1-radar-bot'
           git config user.email 'actions@users.noreply.github.com'
-          git add data/radar_edilizio.json data/radar_seen.json data/radar_scan_log.json || true
-          git diff --cached --quiet && exit 0
-          git commit -m 'Radar edilizio: aggiornamento automatico'
-          git pull --rebase origin main
-          git push origin main
+          cp data/radar_edilizio.json /tmp/radar_edilizio.json
+          cp data/radar_seen.json /tmp/radar_seen.json
+          cp data/radar_scan_log.json /tmp/radar_scan_log.json
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            cp /tmp/radar_edilizio.json data/radar_edilizio.json
+            cp /tmp/radar_seen.json data/radar_seen.json
+            cp /tmp/radar_scan_log.json data/radar_scan_log.json
+            git add data/radar_edilizio.json data/radar_seen.json data/radar_scan_log.json
+            if git diff --cached --quiet; then exit 0; fi
+            git commit -m 'Radar edilizio: aggiornamento automatico'
+            if git push origin HEAD:main; then exit 0; fi
+          done
+          echo 'Push failed after 3 safe retries'
+          exit 1
