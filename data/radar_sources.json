@@ -36,7 +36,7 @@
   "sources": [
     {"comune":"Susa","km_from_susa":0.0,"url":"https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=ss090&RicCro=1","enabled":true,"verified":true,"mode":"document_links"},
     {"comune":"Mompantero","km_from_susa":1.4,"url":"https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=mmpntr1336&RicCro=1","enabled":true,"verified":true,"mode":"document_links"},
-    {"comune":"Meana di Susa","km_from_susa":1.9,"url":"https://www.halleyweb.com/c001149/mc/mc_p_ricerca.php?servizio=","enabled":true,"verified":true,"mode":"document_links"},
+    {"comune":"Meana di Susa","km_from_susa":1.9,"url":"https://www.comune.meanadisusa.to.it/it-it/amministrazione/documenti-albo-pretorio","enabled":true,"verified":true},
     {"comune":"Gravere","km_from_susa":3.2,"url":"https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=grvr1245&RicCro=1","enabled":true,"verified":true,"mode":"document_links"},
     {"comune":"Giaglione","km_from_susa":3.5,"url":"https://www.comune.giaglione.to.it/it-it/amministrazione/documenti-dati","enabled":true,"verified":true},
     {"comune":"Venaus","km_from_susa":4.3,"url":"https://www.comune.venaus.to.it/it-it/amministrazione/documenti-dati","enabled":true,"verified":true},
