@@ -1,5 +1,5 @@
 {
-  "verified_at": "2026-09-01",
+  "verified_at": "2026-09-02",
   "geography_logic": "SELLER_RADAR_SUSA_20KM",
   "records": [
     {
@@ -10,6 +10,15 @@
       "stato": "ANALIZZATO PARZIALE",
       "source_url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/DettaglioFile.aspx?D=true&Documento=38842-14747-ss090",
       "note": "Atto pubblico relativo a lavori presso Via Francesco Rolando 6 con richiamo alla pratica edilizia/Permesso di Costruire 1234/2024. Da approfondire il permesso originario e i riferimenti professionali del cantiere."
+    },
+    {
+      "comune": "Salbertrand",
+      "date": "2026-04-07",
+      "atto": "Delibera di Consiglio n. 1/2026 - permesso di costruire in deroga",
+      "classe": "Permesso di costruire in deroga / opportunità territoriale",
+      "stato": "ANALIZZATO PARZIALE",
+      "source_url": "https://comune.salbertrand.to.it/novita/consiglio-comunale-del-7-aprile-2026-ore-20-30-ordine-del-giorno/",
+      "note": "Struttura prefabbricata su terreno demaniale, foglio 17 particella 543. Dichiarazione di pubblico interesse per permesso di costruire in deroga ai sensi dell'art. 14 DPR 380/2001. Segnale da qualificare per soggetto attuatore, tecnico e impresa; usare solo recapiti professionali pubblici."
     }
   ]
 }
