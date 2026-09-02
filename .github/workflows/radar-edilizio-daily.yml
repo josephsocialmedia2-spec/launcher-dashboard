@@ -1,8 +1,8 @@
-name: F1 Radar Edilizio Continuous
+name: F1 Radar Edilizio Weekly
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '15 7 * * 3'
   push:
     branches: [ main ]
     paths:
@@ -20,7 +20,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: f1-radar-edilizio-continuous
+  group: f1-radar-edilizio-weekly
   cancel-in-progress: false
 jobs:
   scan:
@@ -70,7 +70,7 @@ jobs:
           grep -q 'OGGI COSA FACCIO' /tmp/oggi.html
           curl --fail --location --retry 5 --retry-delay 5 "$BASE/seller-radar-unico.html" -o /tmp/seller.html
           grep -q 'SELLER RADAR' /tmp/seller.html
-      - name: Continuous scan
+      - name: Weekly scan
         run: python scripts/radar_edilizio_scan.py
       - name: Second pass deduplication test
         run: |
