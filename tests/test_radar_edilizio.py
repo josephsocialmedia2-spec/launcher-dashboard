@@ -63,6 +63,11 @@ class RadarTests(unittest.TestCase):
         self.assertEqual(seed['records'][0]['comune'], 'Susa')
         self.assertIn('PDC 1234/2024', seed['records'][0]['atto'])
 
+    def test_today_manual_history_contains_salbertrand(self):
+        seed = json.loads((ROOT / 'data/radar_history_seed.json').read_text(encoding='utf-8'))
+        keys = {(x.get('comune'), x.get('atto')) for x in seed.get('records', [])}
+        self.assertIn(('Salbertrand', 'Delibera di Consiglio n. 1/2026 - permesso di costruire in deroga'), keys)
+
     def test_history_seed_is_present_after_merge(self):
         db = json.loads((ROOT / 'data/radar_edilizio.json').read_text(encoding='utf-8'))
         keys = {(x.get('comune'), x.get('atto')) for x in db.get('backlog', [])}
@@ -96,11 +101,11 @@ class RadarTests(unittest.TestCase):
         self.assertIn('<=20', html.replace(' ', ''))
         self.assertIn('source_page', html)
 
-    def test_continuous_schedule(self):
+    def test_weekly_schedule(self):
         workflow = (ROOT / '.github/workflows/radar-edilizio-daily.yml').read_text(encoding='utf-8')
-        self.assertIn("cron: '*/15 * * * *'", workflow)
+        self.assertIn("cron: '15 7 * * 3'", workflow)
         self.assertIn('seller-radar-unico.html', workflow)
-        self.assertIn('F1 Radar Edilizio Continuous', workflow)
+        self.assertIn('F1 Radar Edilizio Weekly', workflow)
 
     def test_oggi_integration_hook(self):
         oggi = (ROOT / 'oggi.html').read_text(encoding='utf-8')
