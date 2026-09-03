@@ -1,12 +1,19 @@
 {
-  "version": 3,
+  "version": 4,
   "canonical_entrypoint": "oggi.html",
+  "canonical_sources": {
+    "seller_repository": "https://github.com/josephsocialmedia2-spec/immobili-in-zona",
+    "seller_radar": "https://josephsocialmedia2-spec.github.io/immobili-in-zona/",
+    "market_intelligence": "https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/market_intelligence.html",
+    "appointment_brief": "https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/appointment_brief.html",
+    "giro_data": "https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/data/giro_acquisizione.csv"
+  },
   "territory": {
     "center": "Susa",
     "radius_km": 20,
     "rule": "Tutti i Radar e le liste operative del primo ufficio sono governati dal perimetro Susa 20 km."
   },
-  "rule": "OGGI COSA FACCIO è l'unica cabina di regia; F1 Campagne Telefoniche Guidate è l'unico punto da cui si eseguono e si registrano le telefonate.",
+  "rule": "OGGI COSA FACCIO è l'unica cabina di regia; Seller Radar/Market Intelligence/Brief Appuntamento vengono letti dal repository immobili-in-zona; F1 Campagne Telefoniche Guidate è l'unico punto da cui si eseguono e si registrano le telefonate.",
   "operational_views": [
     {"id":"giro","label":"Giro Acquisizione","path":"giro-acquisizione.html"},
     {"id":"call-station","label":"F1 Campagne Telefoniche Guidate","path":"telefonate-oggi.html","local_pc":"http://127.0.0.1:8766/","role":"UNICO_PUNTO_CHIAMATE","engine":"call-campaign-engine.js","campaign_config":"call-campaigns.json","intent_examples":"call-intent-examples.json"},
@@ -32,10 +39,10 @@
     "compliance": "Nessun bypass di login/CAPTCHA o aree riservate; verifica fonte pubblica, pertinenza e RPO/privacy prima del contatto."
   },
   "radar_and_intelligence": [
-    {"id":"seller-radar","label":"Seller Radar unico","path":"seller-radar-unico.html","source":"seller_radar_auto/data/giro_acquisizione.csv","territory":"Susa 20 km"},
-    {"id":"seller-segnalati","label":"Seller Segnalati","path":"seller-segnalati.html","role":"archivio segnali"},
-    {"id":"market-intelligence","label":"Market Intelligence","path":"market-intelligence.html"},
-    {"id":"brief","label":"Brief appuntamento","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/appointment_brief.html"}
+    {"id":"seller-radar","label":"Seller Radar · fonte canonica","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/","repository":"https://github.com/josephsocialmedia2-spec/immobili-in-zona","source":"seller_radar_auto/data/giro_acquisizione.csv","territory":"Susa 20 km"},
+    {"id":"market-intelligence","label":"Market Intelligence","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/market_intelligence.html","repository":"https://github.com/josephsocialmedia2-spec/immobili-in-zona"},
+    {"id":"brief","label":"Brief appuntamento","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/appointment_brief.html","repository":"https://github.com/josephsocialmedia2-spec/immobili-in-zona","trigger":["APPOINTMENTS","APPOINTMENT","VALUATION"]},
+    {"id":"seller-segnalati","label":"Seller Segnalati","path":"seller-segnalati.html","role":"archivio segnali"}
   ],
   "scheduled_views": [
     {"id":"monday","label":"Organizer del lunedi","path":"organizer-lunedi.html"},
@@ -51,6 +58,7 @@
   ],
   "legacy_redirects": [
     {"id":"radar-operativo-statico","path":"radar-operativo.html","redirect_to":"oggi.html#radar"},
-    {"id":"seller-radar-legacy","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar/","redirect_to":"oggi.html"}
+    {"id":"seller-radar-legacy","path":"seller-radar-unico.html","redirect_to":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/"},
+    {"id":"market-intelligence-legacy","path":"market-intelligence.html","redirect_to":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/market_intelligence.html"}
   ]
 }
