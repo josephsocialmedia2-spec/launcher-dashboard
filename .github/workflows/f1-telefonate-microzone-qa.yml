@@ -1,0 +1,45 @@
+name: F1 Telefonate Microzone QA
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "telefonate-oggi.html"
+      - ".github/workflows/f1-telefonate-microzone-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verifica struttura quadrato e flusso
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('telefonate-oggi.html')
+          s=p.read_text(encoding='utf-8')
+          required=[
+            'TELEFONATE · QUADRATI DI MICROZONA',
+            'microzone_targets.csv',
+            'SEGNALE · VIA CENTRALE',
+            'VIA 1','VIA 2','VIA 3','VIA 4',
+            'Directory Radar','SEGNA RPO OK','APPUNTAMENTO','NON INTERESSATO',
+            'GOOGLE MICROZONA','PAGINEGIALLE'
+          ]
+          missing=[x for x in required if x not in s]
+          if missing:
+              raise SystemExit('FAIL elementi mancanti: '+', '.join(missing))
+          if s.count('streetbox') < 6:
+              raise SystemExit('FAIL quadrato non presente')
+          scripts=re.findall(r'<script>(.*?)</script>', s, flags=re.S|re.I)
+          Path('/tmp/telefonate-inline.js').write_text('\n'.join(scripts), encoding='utf-8')
+          print('PASS struttura microzona')
+          PY
+          node --check /tmp/telefonate-inline.js
+          echo "PASS JavaScript telefonate microzona"
