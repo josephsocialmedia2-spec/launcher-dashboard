@@ -1,23 +1,34 @@
 {
-  "version": 2,
+  "version": 3,
   "canonical_entrypoint": "oggi.html",
   "territory": {
     "center": "Susa",
     "radius_km": 20,
     "rule": "Tutti i Radar e le liste operative del primo ufficio sono governati dal perimetro Susa 20 km."
   },
-  "rule": "OGGI COSA FACCIO e l'unica cabina di regia; F1 Centrale Telefonate Guidate e l'unico punto da cui partono le telefonate.",
+  "rule": "OGGI COSA FACCIO è l'unica cabina di regia; F1 Campagne Telefoniche Guidate è l'unico punto da cui si eseguono e si registrano le telefonate.",
   "operational_views": [
     {"id":"giro","label":"Giro Acquisizione","path":"giro-acquisizione.html"},
-    {"id":"call-station","label":"F1 Centrale Telefonate Guidate","path":"telefonate-oggi.html","local_pc":"http://127.0.0.1:8766/","local_mobile":"http://f1-radar.local:8766/","role":"UNICO_PUNTO_CHIAMATE"},
+    {"id":"call-station","label":"F1 Campagne Telefoniche Guidate","path":"telefonate-oggi.html","local_pc":"http://127.0.0.1:8766/","role":"UNICO_PUNTO_CHIAMATE","engine":"call-campaign-engine.js","campaign_config":"call-campaigns.json","intent_examples":"call-intent-examples.json"},
     {"id":"contatti","label":"Incrocio Giro / Contatti","path":"incrocio-giro-contatti.html","role":"ALIMENTAZIONE_TECNICA"},
     {"id":"crm","label":"CRM","path":"crm.html","entry_rule":"SOLO_DOPO_ESITO_UTILE"}
   ],
+  "telephone_campaigns": {
+    "start_rule": "La campagna F1 proprietari parte dal punto 8 e prosegue come macchina a stati.",
+    "flow": ["tipo immobile", "motivazione", "immobile", "tempi", "problema", "decisori", "appuntamento"],
+    "special_intents": ["POSSIBILE_CAMBIO", "NON_VENDE", "ORIGINE_NUMERO", "VALORE_CASA", "ALTRA_AGENZIA", "RICHIAMATA", "APPUNTAMENTO", "STOP_CONTATTO"],
+    "operator_controls": ["INTERVENGO IO", "RIPRENDI IA", "ASCOLTA RISPOSTA", "ANALIZZA E VAI AVANTI", "LEGGI FRASE"],
+    "outcomes": ["APPOINTMENT", "VALUATION", "POSSIBLE_SALE", "CALLBACK", "FOLLOWUP", "NO_ANSWER", "NOT_INTERESTED", "DO_NOT_CONTACT"],
+    "crm_rule": "Entrano nel CRM solo appuntamento, valutazione, possibile vendita, richiamo o follow-up concordato. Gli altri esiti restano nello storico chiamate.",
+    "do_not_contact_rule": "DO_NOT_CONTACT resta registrato come esclusione e viene tolto dalla coda senza cancellare la traccia.",
+    "learning_rule": "Le correzioni manuali dell'intento salvano la frase reale in call_intent_feedback per perfezionare il classificatore sulle risposte reali.",
+    "cloud_collections": ["call_events", "call_exclusions", "call_intent_feedback"]
+  },
   "prospect_pipeline": {
     "classification": "PROSPECT_NON_CRM",
     "sources": ["Seller Radar AUTO", "microzone", "directory pubbliche", "siti professionali/pubblici", "attivita commerciali", "imprese e professionisti", "annunci con contatto esplicito"],
     "fields": ["comune", "nome/attivita", "categoria", "telefono pubblico", "email pubblica", "motivo contatto", "segnale Radar", "fonte", "score"],
-    "privacy": "Telefoni, email, esiti e lista unificata restano sul PC e non sono pubblicati su GitHub.",
+    "privacy": "I prospect pre-chiamata restano nella coda locale e non diventano contatti CRM prima di un esito utile.",
     "compliance": "Nessun bypass di login/CAPTCHA o aree riservate; verifica fonte pubblica, pertinenza e RPO/privacy prima del contatto."
   },
   "radar_and_intelligence": [
@@ -31,8 +42,8 @@
     {"id":"groups","label":"Gruppi social F1","path":"gruppi-social-f1.html"}
   ],
   "infrastructure": [
-    {"id":"mobile","label":"F1 Mobile Ready","path":"oggi.html","role":"PWA / interfaccia smartphone"},
-    {"id":"local-call-server","label":"Server locale Centrale Telefonate","path":"windows_valle_susa/f1_mobile_server.py","port":8766},
+    {"id":"mobile","label":"F1 OS","path":"oggi.html","role":"PWA / interfaccia smartphone e PC"},
+    {"id":"local-call-server","label":"Alimentazione tecnica Centrale Telefonate","path":"windows_valle_susa/f1_mobile_server.py","port":8766},
     {"id":"app","label":"Gestione app","path":"gestione-app.html"},
     {"id":"cloud","label":"Setup cloud","path":"setup-cloud.html"},
     {"id":"cache","label":"Reset cache","path":"reset-cache.html"},
@@ -40,7 +51,6 @@
   ],
   "legacy_redirects": [
     {"id":"radar-operativo-statico","path":"radar-operativo.html","redirect_to":"oggi.html#radar"},
-    {"id":"seller-radar-legacy","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar/","redirect_to":"oggi.html"},
-    {"id":"telefonate-oggi-legacy-logic","path":"telefonate-oggi.html","redirect_role":"BRIDGE_TO_LOCAL_CENTRALE"}
+    {"id":"seller-radar-legacy","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar/","redirect_to":"oggi.html"}
   ]
 }
