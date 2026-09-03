@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Verifica struttura quadrato e flusso
+      - name: Verifica Pagina 1 -> Pagina 2 e quadrato del segnale
         shell: bash
         run: |
           set -euo pipefail
@@ -25,12 +25,17 @@ jobs:
           p=Path('telefonate-oggi.html')
           s=p.read_text(encoding='utf-8')
           required=[
-            'TELEFONATE · QUADRATI DI MICROZONA',
+            'PAGINA 2',
+            'TELEFONATE · QUADRATO DEL SEGNALE',
+            'URLSearchParams',
             'microzone_targets.csv',
+            'osm_microzone_cache',
+            'dynamicZone',
+            'focusSelected',
             'SEGNALE · VIA CENTRALE',
             'VIA 1','VIA 2','VIA 3','VIA 4',
             'Directory Radar','SEGNA RPO OK','APPUNTAMENTO','NON INTERESSATO',
-            'GOOGLE MICROZONA','PAGINEGIALLE'
+            'GOOGLE 5 VIE','PAGINEGIALLE','TORNA AL MASTER'
           ]
           missing=[x for x in required if x not in s]
           if missing:
@@ -38,8 +43,30 @@ jobs:
           if s.count('streetbox') < 6:
               raise SystemExit('FAIL quadrato non presente')
           scripts=re.findall(r'<script>(.*?)</script>', s, flags=re.S|re.I)
+          if not scripts:
+              raise SystemExit('FAIL JavaScript inline assente')
           Path('/tmp/telefonate-inline.js').write_text('\n'.join(scripts), encoding='utf-8')
-          print('PASS struttura microzona')
+          print('PASS struttura Pagina 2 e quadrato microzona')
           PY
           node --check /tmp/telefonate-inline.js
-          echo "PASS JavaScript telefonate microzona"
+          echo "PASS JavaScript Pagina 2"
+
+      - name: Verifica esempio Almese Via Drubiaglio
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json, urllib.request, unicodedata, re
+          url='https://raw.githubusercontent.com/josephsocialmedia2-spec/immobili-in-zona/main/seller_radar_auto/data/osm_microzone_cache/almese.json'
+          req=urllib.request.Request(url,headers={'User-Agent':'F1-Microzone-QA/1.0'})
+          with urllib.request.urlopen(req,timeout=30) as r:
+              roads=json.loads(r.read().decode('utf-8'))
+          def norm(s):
+              s=unicodedata.normalize('NFKD',str(s or ''))
+              s=''.join(c for c in s if not unicodedata.combining(c)).lower()
+              return re.sub(r'[^a-z0-9 ]+',' ',s).strip()
+          names={norm(x.get('name')) for x in roads}
+          if 'via drubiaglio' not in names:
+              raise SystemExit('FAIL fixture reale: Via Drubiaglio non presente nella cache Almese')
+          print('PASS fixture reale | Almese · Via Drubiaglio disponibile per quadrato dinamico')
+          PY
