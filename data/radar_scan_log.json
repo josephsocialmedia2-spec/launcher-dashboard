@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-09-02T12:08:07.409628+00:00",
+  "started_at": "2026-09-03T13:24:44.055587+00:00",
   "scanner_version": 4,
   "geography": {
     "center": "Susa",
@@ -86,7 +86,7 @@
       "km_from_susa": 5.8,
       "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=chmnt1123&RicCro=1",
       "status": "OK",
-      "links": 0,
+      "links": 1,
       "new": 0,
       "pages_checked": 1,
       "http_status": 200
@@ -196,5 +196,5 @@
   "new_records": 0,
   "baseline_imported": 0,
   "errors": 0,
-  "finished_at": "2026-09-02T12:09:24.875235+00:00"
+  "finished_at": "2026-09-03T13:26:01.592287+00:00"
 }
