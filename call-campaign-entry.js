@@ -10,10 +10,12 @@
     const q=(()=>{try{return JSON.parse(localStorage.getItem('f1CallCampaignQueue')||'[]')}catch(e){return[]}})();
     const existing=q.find(x=>key(x.phone)===key(phone)&&!x.done);
     if(existing){F1CallCampaign.selectProspect(existing.id);done=true;clearInterval(timer);return}
+    let source=(p.get('source')||'').trim();
+    if(source.toUpperCase()==='CRM F1')source='';
     document.querySelector('#pName').value=p.get('name')||'';
     document.querySelector('#pPhone').value=phone;
     document.querySelector('#pCity').value=p.get('city')||'';
-    document.querySelector('#pSource').value=p.get('source')||'CRM F1';
+    document.querySelector('#pSource').value=source;
     document.querySelector('#pReason').value=p.get('reason')||'Richiamo / campagna F1';
     document.querySelector('#addProspect').click();
     done=true;clearInterval(timer);
