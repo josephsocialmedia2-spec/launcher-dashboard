@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "default_campaign": "F1_SELLER_P8",
+  "campaigns": [
+    {
+      "id": "F1_SELLER_P8",
+      "label": "F1 · Proprietari · percorso dal punto 8",
+      "objective": "Capire situazione reale, motivazione, immobile, tempi, problema, decisori e arrivare a richiamo, valutazione o appuntamento solo quando esiste un interesse concreto.",
+      "start_state": "P8_TIPO_IMMOBILE",
+      "states": {
+        "P8_TIPO_IMMOBILE": {
+          "number": 8,
+          "title": "TIPO DI IMMOBILE",
+          "prompt": "Mi conferma se parliamo di un appartamento signorile oppure di una villa?",
+          "capture": "property_type",
+          "next": "MOTIVAZIONE"
+        },
+        "MOTIVAZIONE": {
+          "title": "MOTIVAZIONE",
+          "prompt": "Per capire se posso esserle utile: cosa dovrebbe succedere perché lei prendesse davvero in considerazione un cambio casa o una vendita?",
+          "capture": "motivation",
+          "next": "IMMOBILE"
+        },
+        "IMMOBILE": {
+          "title": "IMMOBILE",
+          "prompt": "Mi descrive in poche parole l'immobile: zona, dimensione e la caratteristica che ritiene più importante?",
+          "capture": "property_notes",
+          "next": "TEMPI"
+        },
+        "TEMPI": {
+          "title": "TEMPI",
+          "prompt": "Se decidesse di muoversi, in che tempi pensa che potrebbe farlo?",
+          "capture": "timing",
+          "next": "PROBLEMA"
+        },
+        "PROBLEMA": {
+          "title": "PROBLEMA PRINCIPALE",
+          "prompt": "Qual è oggi il dubbio o il problema principale che la frena?",
+          "capture": "problem",
+          "next": "DECISORI"
+        },
+        "DECISORI": {
+          "title": "CHI DECIDE",
+          "prompt": "Oltre a lei, chi deve essere coinvolto quando si prende una decisione su questo immobile?",
+          "capture": "decision_makers",
+          "next": "APPUNTAMENTO"
+        },
+        "APPUNTAMENTO": {
+          "title": "APPUNTAMENTO",
+          "prompt": "A questo punto ha senso fare un incontro breve e concreto: verifichiamo immobile, dati e possibilità, poi decide lei senza impegno. Quale giorno le è più comodo?",
+          "capture": "appointment_request",
+          "next": "COMPLETE_APPOINTMENT"
+        },
+        "VALUTAZIONE": {
+          "title": "VALORE DELL'IMMOBILE",
+          "prompt": "Per darle un valore serio devo verificare immobile, microzona e comparabili. Possiamo fissare una valutazione senza impegno: quale giorno le è più comodo?",
+          "capture": "appointment_request",
+          "next": "COMPLETE_VALUATION"
+        },
+        "ALTRA_AGENZIA": {
+          "title": "ALTRA AGENZIA",
+          "prompt": "Perfetto, non voglio interferire. Mi basta capire una cosa: ha già un incarico firmato oppure sta soltanto valutando più agenzie?",
+          "capture": "agency_status",
+          "next": "COMPLETE_FOLLOWUP"
+        },
+        "RICHIAMATA": {
+          "title": "PROGRAMMA RICHIAMO",
+          "prompt": "Va bene. Mi dica giorno e fascia oraria in cui preferisce essere richiamato e lo registro.",
+          "capture": "callback_request",
+          "next": "COMPLETE_CALLBACK"
+        },
+        "COMPLETE_APPOINTMENT": {"title":"CHIUDI","terminal":"APPOINTMENT"},
+        "COMPLETE_VALUATION": {"title":"CHIUDI","terminal":"VALUATION"},
+        "COMPLETE_CALLBACK": {"title":"CHIUDI","terminal":"CALLBACK"},
+        "COMPLETE_FOLLOWUP": {"title":"CHIUDI","terminal":"FOLLOWUP"}
+      }
+    }
+  ]
+}
