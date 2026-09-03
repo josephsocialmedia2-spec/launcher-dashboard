@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "intents": {
+    "POSSIBILE_CAMBIO": ["forse cambierei casa", "potrei cambiare", "se trovassi quella giusta", "sto pensando di spostarmi"],
+    "NON_VENDE": ["non vendo", "non voglio vendere", "non mi interessa vendere", "non ci penso proprio"],
+    "ORIGINE_NUMERO": ["dove ha preso il numero", "come avete il mio numero", "chi vi ha dato il numero", "da dove arriva il numero"],
+    "VALORE_CASA": ["quanto vale", "quanto può valere", "che valore ha", "quanto potrei prendere"],
+    "ALTRA_AGENZIA": ["ho già un'agenzia", "sono già con un'agenzia", "ho già dato incarico", "sto parlando con un'altra agenzia"],
+    "RICHIAMATA": ["mi richiami", "richiami più tardi", "non posso parlare", "mi chiami domani", "mi richiami un altro giorno"],
+    "STOP_CONTATTO": ["non chiamatemi più", "cancellate il numero", "non voglio essere ricontattato", "non contattatemi"],
+    "APPUNTAMENTO": ["va bene incontriamoci", "fissiamo", "possiamo vederci", "facciamo un appuntamento"]
+  },
+  "learning_rule": "Gli esempi iniziali servono solo come base. Quando l'operatore corregge un intento, la frase reale viene salvata come feedback per perfezionare il classificatore."
+}
