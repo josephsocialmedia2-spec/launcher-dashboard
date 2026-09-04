@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<title>F1 · Fase 2 Costruzione Pubblico</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{--bg:#07111f;--p:#0d1b2d;--p2:#101f33;--line:#29415e;--txt:#f5f8fc;--mut:#afc0d5;--fb:#1877f2;--g:#6ee7a8;--gold:#f4c95d;--red:#ff8585}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#06101c,#091728);color:var(--txt);font-family:Arial,Helvetica,sans-serif}.w{max-width:1240px;margin:auto;padding:18px 14px 90px}.ey{font-size:10px;font-weight:900;letter-spacing:.16em;color:#8ec1ff}h1{margin:6px 0 5px;font-size:clamp(28px,6vw,48px)}h2{margin:0 0 8px;font-size:19px}h3{margin:0 0 6px;font-size:15px}.lead,.small{color:var(--mut);font-size:12px;line-height:1.5}.hero,.panel,.person,.group{background:var(--p);border:1px solid var(--line);border-radius:17px}.hero{padding:20px;background:radial-gradient(circle at 85% 0,rgba(24,119,242,.24),transparent 34%),var(--p)}.flow{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}.step{padding:7px 9px;border:1px solid #3b5d83;border-radius:999px;color:#cfe3ff;font-size:9px;font-weight:900}.stats{display:grid;grid-template-columns:repeat(7,minmax(95px,1fr));gap:8px;margin:13px 0}.stat{padding:11px;background:var(--p2);border:1px solid var(--line);border-radius:12px;text-align:center;font-size:9px;color:var(--mut)}.stat b{display:block;color:#fff;font-size:22px;margin-bottom:2px}.modules{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}.module{display:block;padding:14px;border-radius:14px;background:linear-gradient(145deg,#0d2e57,#123f78);border:1px solid #2f6fbd;color:#fff;text-decoration:none}.module i{font-size:20px;margin-bottom:10px}.module p{margin:0;color:#d6e6fb;font-size:11px;line-height:1.4}.panel{padding:16px;margin:13px 0}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.field{width:100%;padding:10px;border-radius:9px;border:1px solid var(--line);background:#091522;color:#fff;font:inherit}.full{grid-column:1/-1}.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 10px;border:0;border-radius:9px;background:var(--fb);color:#fff;text-decoration:none;font-size:10px;font-weight:900;cursor:pointer}.btn.alt{background:#17304d;border:1px solid #385979}.btn.good{background:#0b7b68}.btn.gold{background:#705b1d}.btn.red{background:#7f1d1d}.actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.badge{display:inline-block;padding:5px 7px;border-radius:999px;border:1px solid #486c97;color:#b9d5ff;font-size:9px;font-weight:900}.badge.good{color:#8ff0bc;border-color:#326c50}.badge.gold{color:#f4c95d;border-color:#6d5922}.badge.red{color:#ff9e9e;border-color:#784040}.person,.group{padding:12px;margin:8px 0;background:var(--p2)}.row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.name{font-weight:900;font-size:15px}.meta{margin-top:4px;color:var(--mut);font-size:10px;line-height:1.45}.empty{padding:18px;text-align:center;color:var(--mut);font-size:11px}.notice{padding:11px 12px;border-left:3px solid var(--fb);background:#0c1a2c;border-radius:8px;font-size:11px;line-height:1.5;color:#cfe0f4}.kpi-note{color:#8ff0bc;font-size:10px;font-weight:900}.foot{position:fixed;left:0;right:0;bottom:0;background:#07111ff4;border-top:1px solid var(--line);padding:8px}.footin{max-width:1200px;margin:auto;display:flex;justify-content:center;gap:7px;flex-wrap:wrap}.foot a{padding:9px;border-radius:8px;background:#17304d;color:#fff;text-decoration:none;font-size:10px;font-weight:900}
+@media(max-width:900px){.stats{grid-template-columns:repeat(4,1fr)}.modules{grid-template-columns:repeat(2,1fr)}}@media(max-width:620px){.stats,.modules,.grid{grid-template-columns:1fr 1fr}.full{grid-column:1/-1}.actions .btn{flex:1}.row{display:block}}@media(max-width:430px){.stats,.modules,.grid{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
+</head>
+<body>
+<main class="w">
+<section class="hero">
+<div class="ey">F1 IMMOBILIARE · FACEBOOK · FASE 2</div>
+<h1>COSTRUZIONE DEL PUBBLICO</h1>
+<p class="lead">La crescita del pubblico viene lavorata insieme alla distribuzione: amicizie pertinenti, inviti alla Pagina, condivisione dal profilo e gruppi coerenti. Nessun invio indiscriminato.</p>
+<div class="flow"><span class="step">NETWORK RADAR</span><span class="step">→ AMICIZIA ACCETTATA</span><span class="step">→ INVITO PAGINA</span><span class="step">→ CONDIVISIONE</span><span class="step">→ GRUPPI PERTINENTI</span><span class="step">→ CRM / RISULTATI</span></div>
+</section>
+
+<div class="stats">
+<div class="stat"><b id="radarToday">0</b>amicizie oggi</div>
+<div class="stat"><b id="acceptedCount">0</b>amici pertinenti</div>
+<div class="stat"><b id="toInviteCount">0</b>da invitare</div>
+<div class="stat"><b id="invitedCount">0</b>invitati</div>
+<div class="stat"><b id="followersCount">0</b>segue Pagina</div>
+<div class="stat"><b id="groupsReadyCount">0</b>gruppi utilizzabili</div>
+<div class="stat"><b id="leadCount">0</b>lead+</div>
+</div>
+
+<nav class="modules">
+<a class="module" href="#amicizie"><i class="fa-solid fa-user-group"></i><h3>10 · Amicizie pertinenti</h3><p>Legge gli amici accettati dal Network Radar e prepara gli inviti alla Pagina.</p></a>
+<a class="module" href="#inviti"><i class="fa-solid fa-user-plus"></i><h3>10 · Invita alla Pagina</h3><p>DA INVITARE → INVITATO → SEGUE PAGINA. Invio finale manuale su Facebook.</p></a>
+<a class="module" href="#condivisione"><i class="fa-solid fa-share-nodes"></i><h3>11 · Condividi la Pagina</h3><p>Testo pronto, apertura Pagina e registrazione della condivisione dal profilo personale.</p></a>
+<a class="module" href="#gruppi"><i class="fa-solid fa-people-group"></i><h3>12 · Gruppi pertinenti</h3><p>Regole, pubblicazione come Pagina, ultima pubblicazione e prossimo contenuto coerente.</p></a>
+</nav>
+
+<section class="panel" id="impostazioni">
+<div class="top"><div><h2>Pagina Facebook F1</h2><div class="small">Salva una volta il link della Pagina. Non viene pubblicato automaticamente nulla.</div></div><span class="badge">CONFIGURAZIONE LOCALE</span></div>
+<div class="grid" style="margin-top:10px"><input class="field full" id="pageUrl" placeholder="URL Pagina Facebook F1"><button class="btn" onclick="savePageUrl()">SALVA LINK PAGINA</button><button class="btn alt" onclick="openPage()">APRI PAGINA</button></div>
+</section>
+
+<section class="panel" id="amicizie">
+<div class="top"><div><h2>PASSO 10 · Amici pertinenti dal Network Radar</h2><div class="small">Entrano qui solo persone con amicizia già accettata nel Radar. Non vengono invitate automaticamente alla Pagina.</div></div><div class="actions" style="margin-top:0"><a class="btn" href="facebook-network-radar.html">APRI NETWORK RADAR</a><button class="btn alt" onclick="importAccepted()">AGGIORNA LISTA</button></div></div>
+<div id="acceptedList"></div>
+</section>
+
+<section class="panel" id="inviti">
+<div class="top"><div><h2>PASSO 10 · Invita gli amici pertinenti</h2><div class="small">Usa questa coda per decidere chi invitare realmente. L'azione “Invia inviti” resta dentro Facebook.</div></div><span class="kpi-note">NO INVITI MASSIVI</span></div>
+<div class="notice">Procedura: apri la Pagina → Opzioni → Invita amici → Cambia profilo se necessario → seleziona solo persone pertinenti → Invia inviti. Poi registra qui l'esito.</div>
+<h3 style="margin-top:14px">Aggiungi anche un amico già esistente</h3>
+<div class="grid"><input class="field" id="manualName" placeholder="Nome"><input class="field" id="manualProfile" placeholder="URL profilo Facebook"><input class="field full" id="manualReason" placeholder="Perché è pertinente: territorio / interesse / relazione"><button class="btn full" onclick="addManualInvite()">AGGIUNGI DA INVITARE</button></div>
+<div id="inviteList"></div>
+</section>
+
+<section class="panel" id="condivisione">
+<div class="top"><div><h2>PASSO 11 · Condividi la Pagina dal profilo personale</h2><div class="small">Il sistema prepara e registra; la pubblicazione finale resta manuale.</div></div><span id="lastShareBadge" class="badge">MAI REGISTRATA</span></div>
+<textarea class="field" id="shareText" rows="5" style="margin-top:10px">Su F1 Immobiliare condividiamo immobili, valutazioni e aggiornamenti utili per chi vive o cerca casa in Valle di Susa. Se ti interessa il mercato immobiliare locale, puoi seguire la Pagina.</textarea>
+<div class="actions"><button class="btn" onclick="copyShareText()">COPIA TESTO</button><button class="btn alt" onclick="openPage()">APRI PAGINA</button><button class="btn good" onclick="markShared()">HO CONDIVISO LA PAGINA</button></div>
+<div id="shareHistory"></div>
+</section>
+
+<section class="panel" id="gruppi">
+<div class="top"><div><h2>PASSO 12 · Utilizza gruppi pertinenti</h2><div class="small">Vengono importati solo i gruppi in cui risulti già iscritto. Prima di distribuire un contenuto registra regolamento e possibilità di pubblicare come Pagina.</div></div><div class="actions" style="margin-top:0"><a class="btn" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/groups.html">APRI GROUPS RADAR</a><button class="btn alt" onclick="loadGroups()">AGGIORNA GRUPPI</button></div></div>
+<div class="notice">Regola operativa: non pubblicare lo stesso contenuto ovunque. Usa solo gruppi coerenti con territorio e contenuto, verifica il regolamento e adatta il testo prima della pubblicazione.</div>
+<div class="grid" style="margin-top:10px"><input class="field full" id="campaignContent" placeholder="Contenuto/campagna in lavorazione: titolo, URL o breve descrizione"><button class="btn full" onclick="saveCampaign()">SALVA CONTENUTO IN LAVORAZIONE</button></div>
+<div id="groupsList"></div>
+</section>
+
+<section class="panel">
+<div class="top"><div><h2>Misurazione</h2><div class="small">Il risultato utile non è il numero di inviti: è il passaggio verso risposte, lead, appuntamenti, valutazioni, incarichi e vendite già registrato nel Network Radar/CRM.</div></div><div class="actions" style="margin-top:0"><a class="btn" href="crm.html">APRI CRM</a><button class="btn alt" onclick="exportData()">BACKUP FASE 2</button></div></div>
+</section>
+</main>
+
+<div class="foot"><div class="footin"><a href="index.html">GESTIONALE</a><a href="facebook-network-radar.html">AMICIZIE</a><a href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/groups.html">GRUPPI</a><a href="crm.html">CRM</a></div></div>
+<script>
+const STORE='f1FacebookAudienceGrowthV1',RADAR='f1FacebookNetworkRadarV1',DAILY='f1FacebookNetworkDailyV4',GROUP_STATUS='f1FacebookGroupStatusV1';
+const ACCEPTED_STAGES=new Set(['AMICIZIA ACCETTATA','MESSAGGIO PREPARATO','RISPOSTA','LEAD','APPUNTAMENTO','VALUTAZIONE','INCARICO','VENDUTO']);
+const LEAD_STAGES=new Set(['LEAD','APPUNTAMENTO','VALUTAZIONE','INCARICO','VENDUTO']);
+let groupsCache=[];
+function safe(k,d){try{const v=JSON.parse(localStorage.getItem(k)||'null');return v??d}catch(e){return d}}
+function day(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Rome'}).format(new Date())}
+function now(){return new Date().toISOString()}
+function esc(v){return String(v??'').replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]))}
+function state(){const s=safe(STORE,{});return{pageUrl:s.pageUrl||'',invites:Array.isArray(s.invites)?s.invites:[],shares:Array.isArray(s.shares)?s.shares:[],groups:s.groups&&typeof s.groups==='object'?s.groups:{},campaign:s.campaign||''}}
+function saveState(s){localStorage.setItem(STORE,JSON.stringify(s));renderAll()}
+function radar(){const a=safe(RADAR,[]);return Array.isArray(a)?a:[]}
+function acceptedRadar(){return radar().filter(r=>r&&ACCEPTED_STAGES.has(r.status))}
+function invitationForRadar(id,s){return s.invites.find(x=>x.radarId===id)}
+function importAccepted(){const s=state();const ids=new Set(s.invites.map(x=>x.radarId).filter(Boolean));for(const r of acceptedRadar()){if(ids.has(r.id))continue;s.invites.push({id:'inv-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),radarId:r.id,name:r.name||'Contatto Radar',profile:r.profile||'',reason:[r.zone,r.signal,r.group].filter(Boolean).join(' · '),status:'DA INVITARE',createdAt:now(),updatedAt:now()});ids.add(r.id)}saveState(s)}
+function savePageUrl(){const s=state();s.pageUrl=document.getElementById('pageUrl').value.trim();saveState(s)}
+function openPage(){const u=state().pageUrl;if(!u){alert('Inserisci prima il link della Pagina Facebook F1.');return}window.open(u,'_blank','noopener')}
+function addManualInvite(){const name=document.getElementById('manualName').value.trim(),profile=document.getElementById('manualProfile').value.trim(),reason=document.getElementById('manualReason').value.trim();if(!name){alert('Inserisci il nome.');return}const s=state();s.invites.unshift({id:'inv-'+Date.now(),radarId:'',name,profile,reason,status:'DA INVITARE',createdAt:now(),updatedAt:now()});saveState(s);document.getElementById('manualName').value='';document.getElementById('manualProfile').value='';document.getElementById('manualReason').value=''}
+function setInvite(id,status){const s=state(),x=s.invites.find(i=>i.id===id);if(!x)return;x.status=status;x.updatedAt=now();if(status==='INVITATO')x.invitedAt=now();if(status==='SEGUE PAGINA')x.followedAt=now();saveState(s)}
+function removeInvite(id){const s=state();s.invites=s.invites.filter(x=>x.id!==id);saveState(s)}
+function copyShareText(){navigator.clipboard.writeText(document.getElementById('shareText').value).then(()=>alert('Testo copiato.'))}
+function markShared(){const s=state();s.shares.unshift({at:now(),text:document.getElementById('shareText').value});s.shares=s.shares.slice(0,30);saveState(s)}
+function saveCampaign(){const s=state();s.campaign=document.getElementById('campaignContent').value.trim();saveState(s)}
+function updateGroup(id,field,value){const s=state();s.groups[id]={...(s.groups[id]||{}),[field]:value,updatedAt:now()};saveState(s)}
+function markGroupPosted(id){const s=state();s.groups[id]={...(s.groups[id]||{}),lastPostAt:now(),updatedAt:now()};saveState(s)}
+function groupMeta(id){return state().groups[id]||{}}
+async function loadGroups(){try{const saved=safe(GROUP_STATUS,{}),res=await fetch('/open-social-scheduler/growth/groups.json?ts='+Date.now(),{cache:'no-store'});if(!res.ok)throw new Error('HTTP '+res.status);const data=await res.json(),rows=Array.isArray(data)?data:(Array.isArray(data.groups)?data.groups:[]);groupsCache=rows.map(g=>({...g,status:saved[g.id]||g.status})).filter(g=>g.status==='MEMBER'||g.status==='POST_READY');renderGroups();renderStats()}catch(e){document.getElementById('groupsList').innerHTML='<div class="empty">Impossibile caricare i gruppi in questo momento.</div>'}}
+function renderAccepted(){const s=state(),rows=acceptedRadar();document.getElementById('acceptedList').innerHTML=rows.length?rows.map(r=>{const inv=invitationForRadar(r.id,s);return `<article class="person"><div class="row"><div><div class="name">${esc(r.name||'Contatto Radar')}</div><div class="meta">${esc(r.zone||'zona da verificare')} · ${esc(r.signal||'segnale')} · stato Radar: ${esc(r.status)}</div></div><span class="badge ${inv&&inv.status==='SEGUE PAGINA'?'good':inv&&inv.status==='INVITATO'?'gold':''}">${esc(inv?inv.status:'NON ANCORA IN CODA')}</span></div><div class="actions">${r.profile?`<a class="btn alt" target="_blank" rel="noopener" href="${esc(r.profile)}">APRI PROFILO</a>`:''}${!inv?`<button class="btn" onclick="importAccepted()">PORTA AGLI INVITI</button>`:''}</div></article>`}).join(''):'<div class="empty">Nessuna amicizia accettata nel Network Radar.</div>'}
+function renderInvites(){const rows=state().invites.slice().sort((a,b)=>String(b.updatedAt||'').localeCompare(String(a.updatedAt||'')));document.getElementById('inviteList').innerHTML=rows.length?rows.map(x=>`<article class="person"><div class="row"><div><div class="name">${esc(x.name)}</div><div class="meta">${esc(x.reason||'pertinenza da specificare')}</div></div><span class="badge ${x.status==='SEGUE PAGINA'?'good':x.status==='INVITATO'?'gold':x.status==='SCARTATO'?'red':''}">${esc(x.status)}</span></div><div class="actions">${x.profile?`<a class="btn alt" target="_blank" rel="noopener" href="${esc(x.profile)}">PROFILO</a>`:''}<button class="btn" onclick="setInvite('${esc(x.id)}','INVITATO')">HO INVIATO INVITO</button><button class="btn good" onclick="setInvite('${esc(x.id)}','SEGUE PAGINA')">SEGUE LA PAGINA</button><button class="btn red" onclick="setInvite('${esc(x.id)}','SCARTATO')">SCARTA</button><button class="btn alt" onclick="removeInvite('${esc(x.id)}')">ELIMINA</button></div></article>`).join(''):'<div class="empty">Nessun amico in coda. Aggiorna dal Network Radar o aggiungine uno manualmente.</div>'}
+function renderShares(){const rows=state().shares;const badge=document.getElementById('lastShareBadge');if(rows[0]){const d=new Date(rows[0].at);badge.textContent='ULTIMA '+d.toLocaleDateString('it-IT');badge.className='badge good'}else{badge.textContent='MAI REGISTRATA';badge.className='badge'}document.getElementById('shareHistory').innerHTML=rows.length?`<div class="small" style="margin-top:10px">Ultime condivisioni: ${rows.slice(0,5).map(x=>new Date(x.at).toLocaleDateString('it-IT')).join(' · ')}</div>`:''}
+function renderGroups(){const s=state(),box=document.getElementById('groupsList');box.innerHTML=groupsCache.length?groupsCache.map(g=>{const m=s.groups[g.id]||{},usable=m.rules==='SI'&&(m.pagePosting==='SI'||m.pagePosting==='NO');return `<article class="group"><div class="row"><div><div class="name">${esc(g.name)}</div><div class="meta">${esc(g.territory||'territorio')} · ${esc(g.status)} · ${m.lastPostAt?'ultima pubblicazione '+new Date(m.lastPostAt).toLocaleDateString('it-IT'):'mai pubblicato registrato'}</div></div><span class="badge ${usable?'good':''}">${usable?'VERIFICATO':'DA VERIFICARE'}</span></div><div class="grid" style="margin-top:9px"><select class="field" onchange="updateGroup('${esc(g.id)}','kind',this.value)"><option value="">TIPO GRUPPO</option><option ${m.kind==='LOCALE'?'selected':''}>LOCALE</option><option ${m.kind==='TERRITORIALE'?'selected':''}>TERRITORIALE</option><option ${m.kind==='SETTORE'?'selected':''}>SETTORE</option></select><select class="field" onchange="updateGroup('${esc(g.id)}','rules',this.value)"><option value="">REGOLAMENTO?</option><option value="SI" ${m.rules==='SI'?'selected':''}>PUBBLICAZIONE CONSENTITA</option><option value="NO" ${m.rules==='NO'?'selected':''}>NON CONSENTITA</option></select><select class="field" onchange="updateGroup('${esc(g.id)}','pagePosting',this.value)"><option value="">COME PAGINA?</option><option value="SI" ${m.pagePosting==='SI'?'selected':''}>PAGINA PUÒ PUBBLICARE</option><option value="NO" ${m.pagePosting==='NO'?'selected':''}>SOLO PROFILO</option></select><input class="field" value="${esc(m.nextContent||'')}" placeholder="Adattamento / prossimo contenuto" onchange="updateGroup('${esc(g.id)}','nextContent',this.value)"></div><div class="actions"><a class="btn alt" target="_blank" rel="noopener" href="${esc(g.url)}">APRI GRUPPO</a><button class="btn good" onclick="markGroupPosted('${esc(g.id)}')">PUBBLICATO OGGI</button></div></article>`}).join(''):'<div class="empty">Nessun gruppo con stato ISCRITTO. Gestiscili prima nel Groups Radar.</div>'}
+function renderStats(){const s=state(),r=radar(),daily=safe(DAILY,{}),sent=daily.date===day()&&Array.isArray(daily.sent)?daily.sent.length:0,accepted=acceptedRadar().length,toInvite=s.invites.filter(x=>x.status==='DA INVITARE').length,invited=s.invites.filter(x=>x.status==='INVITATO').length,followers=s.invites.filter(x=>x.status==='SEGUE PAGINA').length,leads=r.filter(x=>LEAD_STAGES.has(x.status)).length,ready=groupsCache.filter(g=>{const m=s.groups[g.id]||{};return m.rules==='SI'&&(m.pagePosting==='SI'||m.pagePosting==='NO')}).length;document.getElementById('radarToday').textContent=sent;document.getElementById('acceptedCount').textContent=accepted;document.getElementById('toInviteCount').textContent=toInvite;document.getElementById('invitedCount').textContent=invited;document.getElementById('followersCount').textContent=followers;document.getElementById('groupsReadyCount').textContent=ready;document.getElementById('leadCount').textContent=leads}
+function renderAll(){const s=state();document.getElementById('pageUrl').value=s.pageUrl;document.getElementById('campaignContent').value=s.campaign;renderAccepted();renderInvites();renderShares();renderGroups();renderStats()}
+function exportData(){const payload={exportedAt:now(),audience:state(),radarSummary:{accepted:acceptedRadar().length,leads:radar().filter(x=>LEAD_STAGES.has(x.status)).length},groups:groupsCache.map(g=>({id:g.id,name:g.name,territory:g.territory,status:g.status,meta:groupMeta(g.id)}))};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='f1-facebook-fase2-'+day()+'.json';a.click();URL.revokeObjectURL(a.href)}
+window.addEventListener('storage',()=>{renderAll();loadGroups()});window.addEventListener('pageshow',()=>{importAccepted();loadGroups()});
+renderAll();importAccepted();loadGroups();
+</script>
+</body>
+</html>
