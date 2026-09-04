@@ -11,6 +11,7 @@
 .w{max-width:1100px;margin:auto;padding:18px 12px 90px}.ey{color:var(--g);font-size:10px;font-weight:900;letter-spacing:.15em}
 h1{font-size:clamp(28px,7vw,46px);margin:5px 0}.lead,.small{color:var(--mut);font-size:12px;line-height:1.5}
 .rule{padding:13px;border:1px solid #35513d;border-radius:14px;background:#0c160f;margin:14px 0}.rule b{color:var(--g)}
+.source{padding:13px;border:1px solid #31564a;border-radius:14px;background:#0d1812;margin:12px 0;display:none}.source.show{display:block}.source strong{color:var(--g)}
 .health{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;border:1px solid #35513d;background:#0c160f;color:var(--g);font-size:10px;font-weight:900}
 .health.bad{color:#ff8b8b;border-color:#693131;background:#381c1c}.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:12px 0}
 .stat{background:var(--p);border:1px solid var(--line);border-radius:13px;padding:11px;text-align:center;font-size:10px}.stat b{display:block;color:var(--g);font-size:22px}
@@ -33,6 +34,7 @@ h1{font-size:clamp(28px,7vw,46px);margin:5px 0}.lead,.small{color:var(--mut);fon
 <div id="health" class="health">CONTROLLO...</div>
 <p class="lead">Ogni giorno il Radar prepara la <b>TOP 10</b> usando segnali immobiliari, territorio, recenza, qualità della fonte e conversioni reali registrate nel CRM F1.</p>
 <div class="rule"><b>CRM COLLEGATO:</b> quando un contatto passa a RISPOSTA, LEAD, APPUNTAMENTO, VALUTAZIONE, INCARICO o VENDUTO viene creato/aggiornato nel CRM. Le modifiche fatte nel CRM tornano nel Radar e alimentano lo scoring.</div>
+<div id="sourceBox" class="source"><strong>SORGENTE FACEBOOK:</strong> <span id="sourceName"></span><div class="small" id="sourceTerritory"></div><div class="actions"><a id="sourceLink" class="btn alt" target="_blank" rel="noopener">APRI GRUPPO</a><a id="sourcePostLink" class="btn" target="_blank" rel="noopener" style="display:none">APRI POST</a><a class="btn alt" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/groups.html">TORNA AI GRUPPI</a></div></div>
 
 <div class="stats">
 <div class="stat"><b id="total">0</b>candidati</div>
@@ -73,6 +75,8 @@ h1{font-size:clamp(28px,7vw,46px);margin:5px 0}.lead,.small{color:var(--mut);fon
 <script src="supabase-sync.js"></script>
 <script>
 const KEY='f1FacebookNetworkRadarV1',DAILY='f1FacebookNetworkDailyV4',CRM='f1CRMContacts',MAX=10;
+const params=new URLSearchParams(location.search);
+const groupContext={name:params.get('group')||'',url:params.get('group_url')||'',territory:params.get('territory')||'',id:params.get('group_id')||'',source:params.get('source')||'',prefillName:params.get('prefill_name')||'',prefillNote:params.get('prefill_note')||'',prefillSignal:params.get('prefill_signal')||'',postUrl:params.get('post_url')||''};
 const SIGNAL_POINTS={'VUOLE VENDERE':40,'CHIEDE VALUTAZIONE':40,'IMMOBILE EREDITATO':35,'TRASFERIMENTO':25,'CERCA CASA':20,'ALTRO SEGNALE':5};
 const TERRITORY_TIERS=[
  {points:30,places:['sant antonino di susa','sant antonino','vaie','san valeriano','villar focchiardo','borgone susa','borgone di susa','condove','chiusa di san michele','caprie']},
@@ -95,7 +99,7 @@ function crmContacts(){const a=safe(CRM,[]);return Array.isArray(a)?a:[]}
 function saveCRM(a){localStorage.setItem(CRM,JSON.stringify(a))}
 function daily(){let d=safe(DAILY,{});return d.date===day()?{date:d.date,queue:Array.isArray(d.queue)?d.queue:[],sent:Array.isArray(d.sent)?d.sent:[]}:{date:day(),queue:[],sent:[]}}
 function saveDaily(d){localStorage.setItem(DAILY,JSON.stringify(d))}
-function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[m]))}
+function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function norm(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim()}
 function id(){return 'fb-'+Date.now()+'-'+Math.random().toString(36).slice(2,7)}
 function metaMarker(r){const m={id:r.id,signal:r.signal||'',group:r.group||'',profile:r.profile||''};return '[F1NR:'+encodeURIComponent(JSON.stringify(m))+']'}
@@ -115,7 +119,7 @@ function territoryData(r){
 }
 function commercialPenalty(r){const t=norm(`${r.name||''} ${r.note||''}`),hit=COMMERCIAL_PATTERNS.find(x=>t.includes(x));return hit?{score:-100,label:`profilo commerciale: ${hit}`,excluded:true}:{score:0,label:'',excluded:false}}
 function recencyData(r){const ms=Date.now()-new Date(r.created||0).getTime();if(!Number.isFinite(ms)||ms<0)return{score:0,label:'recenza n/d'};const d=ms/86400000;if(d<=1)return{score:20,label:'ultime 24h'};if(d<=3)return{score:15,label:'2–3 giorni'};if(d<=7)return{score:10,label:'4–7 giorni'};if(d<=14)return{score:5,label:'8–14 giorni'};return{score:0,label:'oltre 14 giorni'}}
-function sourceData(r){let s=0,w=[];if(r.post){s+=12;w.push('post specifico')}if(r.group){s+=3;w.push('gruppo/fonte')}if((r.note||'').trim().length>=45){s+=2;w.push('contesto dettagliato')}return{score:Math.min(15,s),label:w.join(' + ')||'fonte debole'}}
+function sourceData(r){let s=0,w=[];if(r.post){s+=12;w.push('post specifico')}if(r.groupUrl||r.group){s+=3;w.push('gruppo/fonte')}if((r.note||'').trim().length>=45){s+=2;w.push('contesto dettagliato')}return{score:Math.min(15,s),label:w.join(' + ')||'fonte debole'}}
 function territoryBucket(r){const t=territoryData(r);return t.score>0?t.label:''}
 function learningData(r,all){
  const history=[...all.filter(h=>CONVERSION_VALUE[h.status]!==undefined),...crmHistory()];
@@ -140,10 +144,22 @@ function scoreCandidate(r,all=load()){
 function isEligible(r,all=load()){return !!r.profile&&!TERMINAL.includes(r.status)&&!scoreCandidate(r,all).excluded}
 function rankedCandidates(all=load(),skip=[]){return all.filter(r=>!skip.includes(r.id)&&isEligible(r,all)).map(r=>({r,s:scoreCandidate(r,all)})).sort((a,b)=>b.s.score-a.s.score||new Date(b.r.created||0)-new Date(a.r.created||0))}
 
+function applyGroupContext(){
+ if(!groupContext.name&&!groupContext.url&&!groupContext.territory&&!groupContext.prefillName&&!groupContext.prefillNote&&!groupContext.postUrl)return;
+ sourceBox.classList.add('show');sourceName.textContent=groupContext.name||'Segnale Facebook';sourceTerritory.textContent=groupContext.territory||'';
+ if(groupContext.url){sourceLink.href=groupContext.url;sourceLink.style.display='inline-flex'}else sourceLink.style.display='none';
+ if(groupContext.postUrl){sourcePostLink.href=groupContext.postUrl;sourcePostLink.style.display='inline-flex'}else sourcePostLink.style.display='none';
+ if(groupContext.prefillName&&!name.value)name.value=groupContext.prefillName;
+ if(groupContext.territory&&!zone.value)zone.value=groupContext.territory;
+ if(groupContext.postUrl&&!post.value)post.value=groupContext.postUrl;
+ if(groupContext.name&&!group.value)group.value=groupContext.name;
+ if(groupContext.prefillNote&&!note.value)note.value=groupContext.prefillNote;
+ if(groupContext.prefillSignal&&[...signal.options].some(o=>o.value===groupContext.prefillSignal))signal.value=groupContext.prefillSignal;
+}
 function addCandidate(){
  const n=name.value.trim(),p=profile.value.trim(),po=post.value.trim();if(!n||(!p&&!po)){alert('Inserisci nome e URL profilo o post.');return}
- const a=load();a.unshift({id:id(),name:n,zone:zone.value.trim(),profile:p,post:po,signal:signal.value,group:group.value.trim(),note:note.value.trim(),status:'DA VALUTARE',created:new Date().toISOString(),friendAt:'',acceptedAt:'',messageAt:'',stageAt:''});
- save(a);[name,profile,post,note].forEach(x=>x.value='');zone.value='';group.value='';prepareDailyQueue(false)
+ const a=load();a.unshift({id:id(),name:n,zone:zone.value.trim(),profile:p,post:po,signal:signal.value,group:group.value.trim(),groupUrl:groupContext.url||'',groupId:groupContext.id||'',source:groupContext.source||'facebook',note:note.value.trim(),status:'DA VALUTARE',created:new Date().toISOString(),friendAt:'',acceptedAt:'',messageAt:'',stageAt:''});
+ save(a);[name,profile,post,note].forEach(x=>x.value='');if(!groupContext.territory)zone.value='';if(!groupContext.name)group.value='';applyGroupContext();prepareDailyQueue(false)
 }
 function update(id,patch){const a=load(),i=a.findIndex(x=>x.id===id);if(i<0)return;a[i]={...a[i],...patch};save(a)}
 function prepareDailyQueue(force=false){
@@ -191,12 +207,12 @@ function render(){
  const qpos=new Map(d.queue.map((id,i)=>[id,i]));scored.sort((a1,b1)=>{const qa=qpos.has(a1.r.id),qb=qpos.has(b1.r.id);if(qa&&qb)return qpos.get(a1.r.id)-qpos.get(b1.r.id);if(qa)return-1;if(qb)return 1;if(a1.s.excluded!==b1.s.excluded)return a1.s.excluded?1:-1;return b1.s.score-a1.s.score});
  list.innerHTML=scored.length?scored.map(({r,s})=>{
    const isToday=d.queue.includes(r.id),linked=crm.some(c=>extractMeta(c.note)?.id===r.id),scoreBadge=s.excluded?'<span class="badge bad">ESCLUSO</span>':`<span class="badge score">SCORE ${s.score}</span>`;
-   return`<article class="person ${isToday?'today':''} ${s.excluded?'excluded':''}"><div class="top"><div><div class="name">${esc(r.name)}</div><div class="meta">${esc(r.zone||'Zona da verificare')} · ${esc(r.group||'Fonte Facebook')}<br>${esc(r.note||'')}</div><span class="signal">${esc(r.signal)}</span></div><div>${isToday?'<span class="badge today">TOP OGGI</span> ':''}${scoreBadge} ${linked?'<span class="badge">CRM</span> ':''}<span class="badge">${esc(r.status)}</span></div></div><div class="why">${esc(s.reasons.join(' · '))}</div><div class="actions">${r.post?`<a class="btn alt" target="_blank" rel="noopener" href="${esc(r.post)}">APRI POST</a>`:''}${r.profile?`<a class="btn alt" target="_blank" rel="noopener" href="${esc(r.profile)}">APRI PROFILO</a>`:''}<button class="btn gold" onclick="markFriend('${r.id}')">HO INVIATO AMICIZIA</button><button class="btn alt" onclick="markAccepted('${r.id}')">ACCETTATA</button><button class="btn" onclick="copyMsg('${r.id}',true)">COPIA + APRI MESSENGER</button><button class="btn alt" onclick="markStage('${r.id}','RISPOSTA')">HA RISPOSTO</button><button class="btn" onclick="markStage('${r.id}','LEAD')">LEAD</button><button class="btn alt" onclick="markStage('${r.id}','APPUNTAMENTO')">APPUNTAMENTO</button><button class="btn alt" onclick="markStage('${r.id}','VALUTAZIONE')">VALUTAZIONE</button><button class="btn alt" onclick="markStage('${r.id}','INCARICO')">INCARICO</button><button class="btn" onclick="markStage('${r.id}','VENDUTO')">VENDUTO</button><button class="btn red" onclick="markStage('${r.id}','NON INTERESSATO')">NON INTERESSATO</button><button class="btn red" onclick="removeOne('${r.id}')">SCARTA</button></div><div class="msg">${esc(message(r))}</div></article>`
+   return`<article class="person ${isToday?'today':''} ${s.excluded?'excluded':''}"><div class="top"><div><div class="name">${esc(r.name)}</div><div class="meta">${esc(r.zone||'Zona da verificare')} · ${esc(r.group||'Fonte Facebook')}<br>${esc(r.note||'')}</div><span class="signal">${esc(r.signal)}</span></div><div>${isToday?'<span class="badge today">TOP OGGI</span> ':''}${scoreBadge} ${linked?'<span class="badge">CRM</span> ':''}<span class="badge">${esc(r.status)}</span></div></div><div class="why">${esc(s.reasons.join(' · '))}</div><div class="actions">${r.groupUrl?`<a class="btn alt" target="_blank" rel="noopener" href="${esc(r.groupUrl)}">APRI GRUPPO</a>`:''}${r.post?`<a class="btn alt" target="_blank" rel="noopener" href="${esc(r.post)}">APRI POST</a>`:''}${r.profile?`<a class="btn alt" target="_blank" rel="noopener" href="${esc(r.profile)}">APRI PROFILO</a>`:''}<button class="btn gold" onclick="markFriend('${r.id}')">HO INVIATO AMICIZIA</button><button class="btn alt" onclick="markAccepted('${r.id}')">ACCETTATA</button><button class="btn" onclick="copyMsg('${r.id}',true)">COPIA + APRI MESSENGER</button><button class="btn alt" onclick="markStage('${r.id}','RISPOSTA')">HA RISPOSTO</button><button class="btn" onclick="markStage('${r.id}','LEAD')">LEAD</button><button class="btn alt" onclick="markStage('${r.id}','APPUNTAMENTO')">APPUNTAMENTO</button><button class="btn alt" onclick="markStage('${r.id}','VALUTAZIONE')">VALUTAZIONE</button><button class="btn alt" onclick="markStage('${r.id}','INCARICO')">INCARICO</button><button class="btn" onclick="markStage('${r.id}','VENDUTO')">VENDUTO</button><button class="btn red" onclick="markStage('${r.id}','NON INTERESSATO')">NON INTERESSATO</button><button class="btn red" onclick="removeOne('${r.id}')">SCARTA</button></div><div class="msg">${esc(message(r))}</div></article>`
  }).join(''):'<p class="small">Nessun candidato.</p>'
 }
 function exportData(){const a=load(),ranking=rankedCandidates(a).map(x=>({id:x.r.id,name:x.r.name,score:x.s.score,reasons:x.s.reasons})),b=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),daily:daily(),ranking,crmHistory:crmHistory(),records:a},null,2)],{type:'application/json'}),el=document.createElement('a');el.href=URL.createObjectURL(b);el.download='F1_facebook_network_'+day()+'.json';el.click();setTimeout(()=>URL.revokeObjectURL(el.href),1000)}
 function runSelfTest(){let ok=true;try{const demo={id:'x',profile:'https://facebook.com/test',signal:'VUOLE VENDERE',zone:'Condove',note:'privato vuole vendere casa',status:'DA VALUTARE',created:new Date().toISOString()};ok=scoreCandidate(demo,[]).score>=90&&STAGE_TO_CRM.VENDUTO==='Venduto'&&CRM_TO_STAGE.Valutazione==='VALUTAZIONE'}catch(e){ok=false}health.textContent=ok?'AUTOTEST OK':'ERRORE AUTOTEST';health.classList.toggle('bad',!ok)}
 window.addEventListener('storage',e=>{if([CRM,KEY].includes(e.key)){syncFromCRM();render()}});
-syncFromCRM();prepareDailyQueue(false);runSelfTest();syncCRMCloud();setInterval(syncCRMCloud,60000);
+applyGroupContext();syncFromCRM();prepareDailyQueue(false);runSelfTest();syncCRMCloud();setInterval(syncCRMCloud,60000);
 </script>
 </body></html>
