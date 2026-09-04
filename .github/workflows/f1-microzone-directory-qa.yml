@@ -5,6 +5,8 @@ on:
   push:
     paths:
       - "windows-bridge/f1_microzone_directory.py"
+      - "windows-bridge/f1_microzone_directory_v2.py"
+      - "windows-bridge/f1_microzone_directory_v3.py"
       - "windows-bridge/INSTALLA_MOTORE_MICROZONA.bat"
       - ".github/workflows/f1-microzone-directory-qa.yml"
 
@@ -16,5 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Python syntax
-        run: python -m py_compile windows-bridge/f1_microzone_directory.py
+      - name: Python syntax V1/V2/V3
+        run: |
+          python -m py_compile windows-bridge/f1_microzone_directory.py
+          python -m py_compile windows-bridge/f1_microzone_directory_v2.py
+          python -m py_compile windows-bridge/f1_microzone_directory_v3.py
+      - name: Installer must deploy V3
+        shell: bash
+        run: |
+          grep -q 'f1_microzone_directory_v3.py' windows-bridge/INSTALLA_MOTORE_MICROZONA.bat
+          ! grep -q 'set "URL=.*f1_microzone_directory.py"' windows-bridge/INSTALLA_MOTORE_MICROZONA.bat
