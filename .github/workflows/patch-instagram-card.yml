@@ -1,0 +1,40 @@
+name: Patch Instagram card
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-instagram-card.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Add Instagram card if missing
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          if 'instagram-crescita.html' in s:
+              print('Instagram card already present')
+              raise SystemExit(0)
+          anchor='<a class="card facebook-card" href="facebook-ottimizzazione.html"><span class="status">FASE 3</span><div class="icon"><i class="fa-solid fa-chart-simple"></i></div><h3>Ottimizzazione Pagina Facebook</h3><p>Shops, Insights e pubblicità: verifica Commerce, KPI periodici e campagne misurate su lead, appuntamenti, valutazioni e incarichi.</p><span class="go">APRI FASE 3 →</span></a>'
+          card='\n<a class="card facebook-card" href="instagram-crescita.html"><span class="status">INSTAGRAM</span><div class="icon"><i class="fa-brands fa-instagram"></i></div><h3>Instagram Growth & Lead</h3><p>Account pertinenti, interazioni, follow, DM, collaborazioni locali, Insights e conversioni collegate al CRM.</p><span class="go">APRI INSTAGRAM →</span></a>'
+          if anchor not in s:
+              raise SystemExit('Anchor Fase 3 non trovato: nessuna modifica')
+          p.write_text(s.replace(anchor,anchor+card,1),encoding='utf-8')
+      - name: Commit dashboard
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name 'f1-dashboard-bot'
+          git config user.email 'f1-dashboard-bot@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Add Instagram Growth card to dashboard'
+          git pull --rebase origin main
+          git push origin HEAD:main
