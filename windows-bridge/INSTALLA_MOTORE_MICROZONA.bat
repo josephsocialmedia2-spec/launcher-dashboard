@@ -4,9 +4,9 @@ chcp 65001 >nul
 title F1 - Installa Motore Microzone
 
 set "BASE=%USERPROFILE%\Documents\F1_Directory_Microzone"
-set "SCRIPT=%BASE%\f1_microzone_directory.py"
+set "SCRIPT=%BASE%\f1_microzone_directory_v3.py"
 set "RUN=%BASE%\AVVIA_MOTORE.cmd"
-set "URL=https://raw.githubusercontent.com/josephsocialmedia2-spec/launcher-dashboard/main/windows-bridge/f1_microzone_directory.py"
+set "URL=https://raw.githubusercontent.com/josephsocialmedia2-spec/launcher-dashboard/main/windows-bridge/f1_microzone_directory_v3.py"
 
 mkdir "%BASE%" 2>nul
 mkdir "%BASE%\data" 2>nul
@@ -31,7 +31,7 @@ echo [2/5] Installo dipendenze...
 py -m pip install --disable-pip-version-check --upgrade selenium openpyxl
 if errorlevel 1 goto :error
 
-echo [3/5] Scarico il motore aggiornato...
+echo [3/5] Scarico il motore V3 aggiornato...
 powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -UseBasicParsing '%URL%' -OutFile '%SCRIPT%'"
 if errorlevel 1 goto :error
 
@@ -46,13 +46,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "$ws=New-Object -ComObjec
 powershell -NoProfile -ExecutionPolicy Bypass -Command "$ws=New-Object -ComObject WScript.Shell;$d=[Environment]::GetFolderPath('Desktop');$s=$ws.CreateShortcut((Join-Path $d 'F1 - Apri Lista Telefonate.lnk'));$s.TargetPath='%BASE%\LISTA_MATTINO.html';$s.WorkingDirectory='%BASE%';$s.IconLocation='shell32.dll,220';$s.Save()"
 
 echo [5/5] Programmo esecuzione giornaliera alle 04:30...
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$a=New-ScheduledTaskAction -Execute 'cmd.exe' -Argument '/c ""%RUN%""';$t=New-ScheduledTaskTrigger -Daily -At 4:30AM;$s=New-ScheduledTaskSettingsSet -StartWhenAvailable -WakeToRun -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries;Register-ScheduledTask -TaskName 'F1 Motore Microzone' -Action $a -Trigger $t -Settings $s -Description 'Aggiorna vie e numeri pubblici per le microzone F1 e genera LISTA_MATTINO.html' -Force | Out-Null"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$a=New-ScheduledTaskAction -Execute 'cmd.exe' -Argument '/c ""%RUN%""';$t=New-ScheduledTaskTrigger -Daily -At 4:30AM;$s=New-ScheduledTaskSettingsSet -StartWhenAvailable -WakeToRun -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries;Register-ScheduledTask -TaskName 'F1 Motore Microzone' -Action $a -Trigger $t -Settings $s -Description 'Aggiorna Seller Signal, via centrale, fino a 4 vie vicine e contatti pubblici; genera LISTA_MATTINO.html' -Force | Out-Null"
 if errorlevel 1 (
   echo ATTENZIONE: pianificazione automatica non riuscita. Il collegamento Desktop funziona comunque.
 )
 
 echo.
 echo INSTALLAZIONE COMPLETATA.
+echo Motore: F1 Microzone V3.
 echo Cartella: %BASE%
 echo Avvio automatico previsto: 04:30, con recupero se il PC era spento.
 echo Ora eseguo un primo aggiornamento.
