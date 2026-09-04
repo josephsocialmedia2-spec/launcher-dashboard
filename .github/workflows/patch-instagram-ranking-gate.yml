@@ -1,0 +1,45 @@
+name: Patch Instagram ranking gate links
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-instagram-ranking-gate.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Add ranking gate links
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          idx=Path('index.html')
+          s=idx.read_text(encoding='utf-8')
+          card='<a class="card facebook-card" href="instagram-ranking.html"><span class="status">FEED GATE</span><div class="icon"><i class="fa-solid fa-ranking-star"></i></div><h3>Instagram Feed Ranking Gate</h3><p>Direttive Feed complete: pertinenza, skip, tempo, caroselli, Direct share, profilo, 3/10 secondi, audio, salvataggi e feedback negativo.</p><span class="go">VERIFICA CONTENUTO →</span></a>'
+          anchor='<a class="card facebook-card" href="instagram-crescita.html"><span class="status">INSTAGRAM</span><div class="icon"><i class="fa-brands fa-instagram"></i></div><h3>Instagram Growth & Lead</h3><p>Account pertinenti, interazioni, follow, DM, collaborazioni locali, Insights e conversioni collegate al CRM.</p><span class="go">APRI INSTAGRAM →</span></a>'
+          if 'href="instagram-ranking.html"' not in s:
+              if anchor not in s: raise SystemExit('Instagram card anchor not found in index.html')
+              s=s.replace(anchor,anchor+'\n'+card,1)
+              idx.write_text(s,encoding='utf-8')
+
+          ig=Path('instagram-crescita.html')
+          t=ig.read_text(encoding='utf-8')
+          module='<a class="module" href="instagram-ranking.html"><i class="fa-solid fa-ranking-star"></i><h3>Feed Ranking Gate</h3><p>Applica tutte le direttive Feed al contenuto prima della pubblicazione, senza inventare un punteggio Meta.</p></a>'
+          marker='</nav>\n<section class="panel" id="radar">'
+          if 'Feed Ranking Gate' not in t:
+              if marker not in t: raise SystemExit('Instagram nav marker not found')
+              t=t.replace(marker,module+'</nav>\n<section class="panel" id="radar">',1)
+              ig.write_text(t,encoding='utf-8')
+          PY
+      - name: Commit links
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html instagram-crescita.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Link Instagram ranking gate from dashboard and growth workspace"
+          git push origin main
