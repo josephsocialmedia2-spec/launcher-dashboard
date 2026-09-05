@@ -66,6 +66,17 @@ if 'payload = {"engine_version": ENGINE_VERSION,' not in s:
         'payload = {"territorial_rule": "FASCIA_CONTINUA",',
         'payload = {"engine_version": ENGINE_VERSION, "territorial_rule": "FASCIA_CONTINUA",'
     )
+
+# Invalid/placeholder addresses are terminal and must never occupy the recurring queue.
+needle = 'def enrich_signal(signal):\n    geo = geocode(signal["comune"], signal["indirizzo"])'
+replacement = 'def enrich_signal(signal):\n    if not str(signal.get("indirizzo") or "").strip() or "DA VERIFICARE" in str(signal.get("indirizzo") or "").upper():\n        signal["enrichment_status"] = "SKIPPED_NO_ADDRESS"\n        return signal\n    geo = geocode(signal["comune"], signal["indirizzo"])'
+if needle in s:
+    s = s.replace(needle, replacement)
+
+s = s.replace(
+    '    candidates = [s for s in signals if s["enrichment_status"] != "ENRICHED"]\n    candidates.sort(key=lambda s: (s.get("territorial_rank", 9999), -int(float(s["score"] or 0)), not s["is_new"]))',
+    '    candidates = [s for s in signals if s.get("enrichment_status") in {"PENDING", "ERROR"}]\n    candidates.sort(key=lambda s: (s.get("enrichment_status") == "ERROR", s.get("territorial_rank", 9999), -int(float(s["score"] or 0)), not s["is_new"]))'
+)
 p.write_text(s, encoding='utf-8')
 
 # 2) Fix strict territorial ordering + WhatsApp prefill
@@ -94,6 +105,8 @@ phone = (ROOT / 'telefonate-oggi.html').read_text(encoding='utf-8')
 assert 'ENGINE_VERSION = "2"' in engine
 assert 'SCUOLA_CULTURA' in engine
 assert 'amenity in {"restaurant", "cafe", "bar"' in engine
+assert 'SKIPPED_NO_ADDRESS' in engine
+assert 'in {"PENDING", "ERROR"}' in engine
 assert 'territorial_rank-b.territorial_rank || Number(b.score||0)-Number(a.score||0)' in view
 assert 'WHATSAPP OPERATIVO' in view and 'WHATSAPP OPERATIVO' in phone
 print('PASS repair script')
