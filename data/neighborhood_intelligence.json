@@ -1,0 +1,8 @@
+{
+  "generated_at": null,
+  "source": "https://raw.githubusercontent.com/josephsocialmedia2-spec/immobili-in-zona/main/seller_radar_auto/data/giro_acquisizione_oggi.csv",
+  "radius_m": 500,
+  "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.",
+  "signals_count": 0,
+  "signals": []
+}
