@@ -35,7 +35,8 @@ jobs:
             'SEGNALE · VIA CENTRALE',
             'VIA 1','VIA 2','VIA 3','VIA 4',
             'Directory Radar','SEGNA RPO OK','APPUNTAMENTO','NON INTERESSATO',
-            'GOOGLE 5 VIE','PAGINEGIALLE','TORNA AL MASTER'
+            'GOOGLE 5 VIE','PAGINEGIALLE','TORNA AL MASTER',
+            'TERRITORIAL_ROUTE','WHATSAPP OPERATIVO'
           ]
           missing=[x for x in required if x not in s]
           if missing:
@@ -46,7 +47,7 @@ jobs:
           if not scripts:
               raise SystemExit('FAIL JavaScript inline assente')
           Path('/tmp/telefonate-inline.js').write_text('\n'.join(scripts), encoding='utf-8')
-          print('PASS struttura Pagina 2 e quadrato microzona')
+          print('PASS struttura Pagina 2, quadrato microzona e flusso territoriale')
           PY
           node --check /tmp/telefonate-inline.js
           echo "PASS JavaScript Pagina 2"
@@ -70,3 +71,4 @@ jobs:
               raise SystemExit('FAIL fixture reale: Via Drubiaglio non presente nella cache Almese')
           print('PASS fixture reale | Almese · Via Drubiaglio disponibile per quadrato dinamico')
           PY
+# final-qa-2026-09-05
