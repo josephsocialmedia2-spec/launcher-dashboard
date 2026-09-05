@@ -1,0 +1,27 @@
+name: Fix Territorial Apostrophes
+on:
+  push:
+    paths:
+      - '.github/workflows/fix-territorial-apostrophes.yml'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('scripts/neighborhood_intelligence.py')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('name.lower().replace("’", "\\\\\'")', 'name.lower().replace("’", "\'")')
+          s=s.replace('str(comune or "").strip().lower().replace("’", "\\\\\'")', 'str(comune or "").strip().lower().replace("’", "\'")')
+          p.write_text(s, encoding='utf-8')
+          PY
+          git config user.name "f1-territorial-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add scripts/neighborhood_intelligence.py
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Normalize territorial route apostrophes"
+          git push
