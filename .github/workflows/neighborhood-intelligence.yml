@@ -2,6 +2,9 @@ name: F1 Neighborhood Intelligence
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/neighborhood-intelligence.yml'
   schedule:
     - cron: '17 * * * *'
 
