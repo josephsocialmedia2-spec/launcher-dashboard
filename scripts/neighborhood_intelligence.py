@@ -33,6 +33,13 @@ UA = "F1-Neighborhood-Intelligence/1.0 (public-business-context)"
 RADIUS = int(os.getenv("F1_NEIGHBORHOOD_RADIUS", "500"))
 MAX_ENRICH = int(os.getenv("F1_NEIGHBORHOOD_MAX_ENRICH", "12"))
 
+TERRITORIAL_ROUTE = ['Susa', 'Bussoleno', 'Chianocco', 'San Giorio di Susa', 'Bruzolo', 'San Didero', 'Villar Focchiardo', 'Borgone Susa', 'Sant’Antonino di Susa', 'Vaie', 'Condove', 'Chiusa di San Michele', 'Caprie', 'Sant’Ambrogio di Torino', 'Villar Dora', 'Almese']
+TERRITORIAL_INDEX = {name.lower().replace("’", "\'"): i for i, name in enumerate(TERRITORIAL_ROUTE)}
+
+def territorial_rank(comune):
+    key = str(comune or "").strip().lower().replace("’", "\'")
+    return TERRITORIAL_INDEX.get(key, 9999)
+
 def now_iso():
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
@@ -166,15 +173,16 @@ def main():
         comune = (row.get("COMUNE") or "").strip(); indirizzo = (row.get("DOVE_ANDRE") or "").strip()
         if not comune or not indirizzo: continue
         sid = stable_id(row); first_seen = seen_map.get(sid) or stamp; seen_map[sid] = first_seen; prev = old_by_id.get(sid, {})
-        signals.append({"signal_id": sid, "first_seen": first_seen, "is_new": first_seen == stamp, "comune": comune, "indirizzo": indirizzo, "immobile": (row.get("COSA_CERCO") or "").strip(), "prezzo": (row.get("PREZZO") or "").strip(), "fonte": (row.get("FONTE") or "").strip(), "seller_signal": (row.get("SELLER_SIGNAL") or "").strip(), "priorita": (row.get("PRIORITA") or "").strip(), "score": (row.get("SCORE") or "").strip(), "url_annuncio": (row.get("URL") or "").strip(), "queries": queries(comune, indirizzo), "enrichment_status": prev.get("enrichment_status","PENDING"), "geocode": prev.get("geocode"), "radius_m": prev.get("radius_m", RADIUS), "context": prev.get("context", {}), "public_entities": prev.get("public_entities", []), "enriched_at": prev.get("enriched_at")})
+        signals.append({"signal_id": sid, "first_seen": first_seen, "is_new": first_seen == stamp, "territorial_rank": territorial_rank(comune), "territorial_route": TERRITORIAL_ROUTE, "comune": comune, "indirizzo": indirizzo, "immobile": (row.get("COSA_CERCO") or "").strip(), "prezzo": (row.get("PREZZO") or "").strip(), "fonte": (row.get("FONTE") or "").strip(), "seller_signal": (row.get("SELLER_SIGNAL") or "").strip(), "priorita": (row.get("PRIORITA") or "").strip(), "score": (row.get("SCORE") or "").strip(), "url_annuncio": (row.get("URL") or "").strip(), "queries": queries(comune, indirizzo), "enrichment_status": prev.get("enrichment_status","PENDING"), "geocode": prev.get("geocode"), "radius_m": prev.get("radius_m", RADIUS), "context": prev.get("context", {}), "public_entities": prev.get("public_entities", []), "enriched_at": prev.get("enriched_at")})
     candidates = [s for s in signals if s["enrichment_status"] != "ENRICHED"]
-    candidates.sort(key=lambda s: (not s["is_new"], -int(float(s["score"] or 0))))
+    candidates.sort(key=lambda s: (s.get("territorial_rank", 9999), -int(float(s["score"] or 0)), not s["is_new"]))
     for s in candidates[:MAX_ENRICH]:
         try: enrich_signal(s)
         except Exception as exc:
             s["enrichment_status"] = "ERROR"; s["enrichment_error"] = str(exc)[:300]
         time.sleep(0.5)
-    payload = {"generated_at": stamp, "source": GIRO_URL, "radius_m": RADIUS, "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.", "signals_count": len(signals), "signals": signals}
+    signals.sort(key=lambda s: (s.get("territorial_rank", 9999), -int(float(s.get("score") or 0)), not s.get("is_new")))
+    payload = {"territorial_rule": "FASCIA_CONTINUA", "territorial_route": TERRITORIAL_ROUTE, "generated_at": stamp, "source": GIRO_URL, "radius_m": RADIUS, "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.", "signals_count": len(signals), "signals": signals}
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     SEEN.write_text(json.dumps({"updated_at": stamp, "seen": seen_map}, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Neighborhood Intelligence: {len(signals)} segnali, {sum(s['enrichment_status']=='ENRICHED' for s in signals)} arricchiti.")
