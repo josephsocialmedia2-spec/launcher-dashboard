@@ -1,0 +1,65 @@
+name: Apply Territorial Continuity Rule
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-territorial-continuity-rule.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch territorial ordering
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          route = [
+              'Susa','Bussoleno','Chianocco','San Giorio di Susa','Bruzolo','San Didero',
+              'Villar Focchiardo','Borgone Susa','Sant’Antonino di Susa','Vaie','Condove',
+              'Chiusa di San Michele','Caprie','Sant’Ambrogio di Torino','Villar Dora','Almese'
+          ]
+
+          p = Path('scripts/neighborhood_intelligence.py')
+          s = p.read_text(encoding='utf-8')
+          marker = 'MAX_ENRICH = int(os.getenv("F1_NEIGHBORHOOD_MAX_ENRICH", "12"))\n'
+          block = marker + '\nTERRITORIAL_ROUTE = ' + repr(route) + '\nTERRITORIAL_INDEX = {name.lower().replace("’", "\\\'"): i for i, name in enumerate(TERRITORIAL_ROUTE)}\n\ndef territorial_rank(comune):\n    key = str(comune or "").strip().lower().replace("’", "\\\'")\n    return TERRITORIAL_INDEX.get(key, 9999)\n'
+          if 'TERRITORIAL_ROUTE =' not in s:
+              s = s.replace(marker, block)
+          old = '        signals.append({"signal_id": sid, "first_seen": first_seen, "is_new": first_seen == stamp, "comune": comune, "indirizzo": indirizzo, "immobile": (row.get("COSA_CERCO") or "").strip(), "prezzo": (row.get("PREZZO") or "").strip(), "fonte": (row.get("FONTE") or "").strip(), "seller_signal": (row.get("SELLER_SIGNAL") or "").strip(), "priorita": (row.get("PRIORITA") or "").strip(), "score": (row.get("SCORE") or "").strip(), "url_annuncio": (row.get("URL") or "").strip(), "queries": queries(comune, indirizzo), "enrichment_status": prev.get("enrichment_status","PENDING"), "geocode": prev.get("geocode"), "radius_m": prev.get("radius_m", RADIUS), "context": prev.get("context", {}), "public_entities": prev.get("public_entities", []), "enriched_at": prev.get("enriched_at")})'
+          new = '        signals.append({"signal_id": sid, "first_seen": first_seen, "is_new": first_seen == stamp, "territorial_rank": territorial_rank(comune), "territorial_route": TERRITORIAL_ROUTE, "comune": comune, "indirizzo": indirizzo, "immobile": (row.get("COSA_CERCO") or "").strip(), "prezzo": (row.get("PREZZO") or "").strip(), "fonte": (row.get("FONTE") or "").strip(), "seller_signal": (row.get("SELLER_SIGNAL") or "").strip(), "priorita": (row.get("PRIORITA") or "").strip(), "score": (row.get("SCORE") or "").strip(), "url_annuncio": (row.get("URL") or "").strip(), "queries": queries(comune, indirizzo), "enrichment_status": prev.get("enrichment_status","PENDING"), "geocode": prev.get("geocode"), "radius_m": prev.get("radius_m", RADIUS), "context": prev.get("context", {}), "public_entities": prev.get("public_entities", []), "enriched_at": prev.get("enriched_at")})'
+          s = s.replace(old, new)
+          s = s.replace('    candidates.sort(key=lambda s: (not s["is_new"], -int(float(s["score"] or 0))))', '    candidates.sort(key=lambda s: (s.get("territorial_rank", 9999), -int(float(s["score"] or 0)), not s["is_new"]))')
+          s = s.replace('    payload = {"generated_at": stamp,', '    signals.sort(key=lambda s: (s.get("territorial_rank", 9999), -int(float(s.get("score") or 0)), not s.get("is_new")))\n    payload = {"territorial_rule": "FASCIA_CONTINUA", "territorial_route": TERRITORIAL_ROUTE, "generated_at": stamp,')
+          p.write_text(s, encoding='utf-8')
+
+          p = Path('neighborhood-intelligence.html')
+          s = p.read_text(encoding='utf-8')
+          if 'const TERRITORIAL_ROUTE=' not in s:
+              s = s.replace("const ENR='data/neighborhood_intelligence.json';", "const ENR='data/neighborhood_intelligence.json';\nconst TERRITORIAL_ROUTE=" + repr(route).replace("'", '"') + ";\nconst territorialRank=c=>{let n=String(c||'').toLowerCase().replace(/’/g,\"'\");let i=TERRITORIAL_ROUTE.map(x=>x.toLowerCase().replace(/’/g,\"'\")).indexOf(n);return i<0?9999:i};")
+          s = s.replace("<p class=\"lead\">Ogni segnale corrente del Seller Radar genera una scheda.", "<p class=\"lead\"><b>REGOLA TERRITORIALE:</b> acquisizione a fascia continua: Susa → Bussoleno → Chianocco → San Giorio di Susa → Bruzolo → San Didero → Villar Focchiardo → Borgone Susa → Sant’Antonino di Susa → Vaie → Condove → Chiusa di San Michele → Caprie → Sant’Ambrogio di Torino → Villar Dora → Almese.<br><br>Ogni segnale corrente del Seller Radar genera una scheda.")
+          s = s.replace("rows=g.filter(r=>r.COMUNE&&r.DOVE_ANDRE).map(r=>{", "rows=g.filter(r=>r.COMUNE&&r.DOVE_ANDRE).map(r=>{")
+          s = s.replace("search:[r.COMUNE,r.DOVE_ANDRE,r.COSA_CERCO,r.FONTE].join(' ').toLowerCase()}});let towns=", "search:[r.COMUNE,r.DOVE_ANDRE,r.COSA_CERCO,r.FONTE].join(' ').toLowerCase(),territorial_rank:territorialRank(r.COMUNE)}}).sort((a,b)=>a.territorial_rank-b.territorial_rank-(Number(b.score||0)-Number(a.score||0)));let towns=")
+          p.write_text(s, encoding='utf-8')
+
+          p = Path('telefonate-oggi.html')
+          s = p.read_text(encoding='utf-8')
+          if 'TERRITORIAL_ROUTE=' not in s:
+              s = s.replace("const CRM='f1CRMContacts',RPO='f1RpoApproved';let zones=[],contacts=[];", "const CRM='f1CRMContacts',RPO='f1RpoApproved';let zones=[],contacts=[];const TERRITORIAL_ROUTE=" + repr(route).replace("'", '"') + ";const territorialRank=c=>{let n=String(c||'').toLowerCase().replace(/’/g,\"'\");let i=TERRITORIAL_ROUTE.map(x=>x.toLowerCase().replace(/’/g,\"'\")).indexOf(n);return i<0?9999:i};")
+          s = s.replace("}).sort((a,b)=>a.comune.localeCompare(b.comune,'it')||a.target.localeCompare(b.target,'it'))}", "}).sort((a,b)=>territorialRank(a.comune)-territorialRank(b.comune)||a.target.localeCompare(b.target,'it'))}")
+          s = s.replace("<div class=\"rule\"><b>FLUSSO:</b>", "<div class=\"rule\"><b>REGOLA TERRITORIALE:</b> fascia continua Susa → Bussoleno → Chianocco → San Giorio di Susa → Bruzolo → San Didero → Villar Focchiardo → Borgone Susa → Sant’Antonino di Susa → Vaie → Condove → Chiusa di San Michele → Caprie → Sant’Ambrogio di Torino → Villar Dora → Almese. I comuni fuori fascia non interrompono questa sequenza.<br><br><b>FLUSSO:</b>")
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit patches
+        run: |
+          git config user.name "f1-territorial-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add scripts/neighborhood_intelligence.py neighborhood-intelligence.html telefonate-oggi.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Enforce continuous territorial acquisition route"
+          git push
