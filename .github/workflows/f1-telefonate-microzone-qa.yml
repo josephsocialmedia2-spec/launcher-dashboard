@@ -71,4 +71,4 @@ jobs:
               raise SystemExit('FAIL fixture reale: Via Drubiaglio non presente nella cache Almese')
           print('PASS fixture reale | Almese · Via Drubiaglio disponibile per quadrato dinamico')
           PY
-# final-qa-2026-09-05
+# final-qa-rerun-js-fixed
