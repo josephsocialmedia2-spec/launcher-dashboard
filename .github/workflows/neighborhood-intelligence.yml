@@ -1,0 +1,44 @@
+name: F1 Neighborhood Intelligence
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: f1-neighborhood-intelligence
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build neighborhood intelligence
+        env:
+          F1_NEIGHBORHOOD_RADIUS: '500'
+          F1_NEIGHBORHOOD_MAX_ENRICH: '12'
+        run: python scripts/neighborhood_intelligence.py
+
+      - name: Commit refreshed data
+        run: |
+          if git diff --quiet -- data/neighborhood_intelligence.json data/neighborhood_seen.json; then
+            echo "No changes"
+            exit 0
+          fi
+          git config user.name "f1-neighborhood-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/neighborhood_intelligence.json data/neighborhood_seen.json
+          git commit -m "Refresh neighborhood intelligence"
+          git push
