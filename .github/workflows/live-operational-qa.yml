@@ -1,0 +1,43 @@
+name: F1 Live Operational QA
+
+on:
+  push:
+    paths:
+      - '.github/workflows/live-operational-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Verify deployed pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          N='https://josephsocialmedia2-spec.github.io/launcher-dashboard/neighborhood-intelligence.html'
+          T='https://josephsocialmedia2-spec.github.io/launcher-dashboard/telefonate-oggi.html'
+          ok=0
+          for i in $(seq 1 60); do
+            echo "Live check $i/60"
+            if curl -fsSL --max-time 20 "$N?qa=$RANDOM" -o /tmp/n.html \
+              && curl -fsSL --max-time 20 "$T?qa=$RANDOM" -o /tmp/t.html \
+              && grep -q 'REGOLA TERRITORIALE' /tmp/n.html \
+              && grep -q 'WHATSAPP OPERATIVO' /tmp/n.html \
+              && grep -q 'territorial_rank-b.territorial_rank || Number(b.score||0)-Number(a.score||0)' /tmp/n.html \
+              && grep -q 'TELEFONATE · QUADRATO DEL SEGNALE' /tmp/t.html \
+              && grep -q 'TERRITORIAL_ROUTE' /tmp/t.html \
+              && grep -q 'WHATSAPP OPERATIVO' /tmp/t.html \
+              && ! grep -q '\\nconst NI_DATA=' /tmp/t.html; then
+                ok=1
+                break
+            fi
+            sleep 5
+          done
+          test "$ok" = 1
+          grep -q '393713708294?text=F1%20Neighborhood%20Intelligence%20operativo' /tmp/n.html
+          grep -q '393713708294?text=F1%20Neighborhood%20Intelligence%20operativo' /tmp/t.html
+          echo 'PASS live deployment and WhatsApp prefill'
