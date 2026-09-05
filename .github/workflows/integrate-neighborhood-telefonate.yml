@@ -1,0 +1,42 @@
+name: Integrate Neighborhood into Telefonate
+
+on:
+  push:
+    paths:
+      - '.github/workflows/integrate-neighborhood-telefonate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch telefonate-oggi
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('telefonate-oggi.html')
+          s=p.read_text(encoding='utf-8')
+          if 'id="neighborhoodPanel"' in s:
+              print('Already integrated')
+              raise SystemExit(0)
+          css='''\n.neighborhood{margin:15px 0;padding:15px;border:1px solid #31523b;background:#0b150e;border-radius:16px}.neighborhood h2{margin:0 0 5px;font-size:20px}.ni-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}.ni-kpi{background:#101a12;border:1px solid #29392d;border-radius:10px;padding:9px;font-size:10px;color:var(--mut)}.ni-kpi b{display:block;color:var(--g);font-size:18px;margin-top:3px}.ni-entities{display:grid;gap:7px;margin-top:10px}.ni-entity{border:1px solid #27332b;background:#0c110d;border-radius:10px;padding:9px}.ni-entity b{font-size:13px}.ni-entity small{display:block;color:var(--mut);line-height:1.45;margin-top:3px}.ni-badge{display:inline-block;padding:4px 7px;border-radius:999px;background:#17251b;color:var(--g);font-size:9px;font-weight:900;margin:3px 4px 3px 0}.ni-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}.ni-note{font-size:10px;color:var(--mut);line-height:1.5}.ni-error{color:#ffb1b1}.ni-all{margin-top:10px;padding-top:10px;border-top:1px solid #27332b}.ni-all summary{cursor:pointer;color:var(--gold);font-weight:900;font-size:11px}@media(max-width:750px){.ni-grid{grid-template-columns:1fr 1fr}}\n'''
+          s=s.replace('</style>',css+'</style>',1)
+          panel='''\n<section id="neighborhoodPanel" class="neighborhood"><div class="town">NEIGHBORHOOD INTELLIGENCE · SEGNALE → CONTESTO</div><h2>VICINATO E TERRITORIO</h2><div class="ni-note">Per ogni segnale: Comune + Indirizzo → contesto residenziale aggregato → attività/enti/professionisti pubblici → telefono/email/sito pubblici → animali/agricoltura/rete territoriale. Il quadrato delle 5 vie resta attivo sotto.</div><div id="niStatus" class="status">Caricamento intelligence territoriale...</div><div id="niContent"></div><div class="ni-links"><a class="btn alt" href="neighborhood-intelligence.html">APRI VISTA COMPLETA</a></div></section>\n'''
+          marker='<div id="status" class="status">Caricamento microzone e contatti...</div>'
+          s=s.replace(marker,panel+marker,1)
+          js=r'''\n<script>\nconst NI_DATA='data/neighborhood_intelligence.json';\nfunction niEsc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}\nfunction niNorm(v){return String(v||'').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/[^a-z0-9 ]+/g,' ').replace(/\\s+/g,' ').trim()}\nfunction niPhone(v){return String(v||'').replace(/[^0-9+]/g,'')}\nfunction niEntity(e){let p=niPhone(e.phone_public),mail=e.email_public||'',web=e.website||'';return `<article class="ni-entity"><span class="ni-badge">${niEsc(e.category||'ATTIVITÀ')}</span><b>${niEsc(e.name||'Attività/ente')}</b><small>${niEsc(e.address||'')}</small><div class="ni-links">${p?`<a class="btn alt" href="tel:${niEsc(p)}">${niEsc(p)}</a>`:''}${mail?`<a class="btn alt" href="mailto:${niEsc(mail)}">EMAIL</a>`:''}${web?`<a class="btn alt" target="_blank" rel="noopener" href="${niEsc(web)}">SITO</a>`:''}</div></article>`}\nfunction niRenderSignal(s,compact=false){let ctx=s.context||{},ents=s.public_entities||[],cats={};ents.forEach(e=>cats[e.category]=(cats[e.category]||0)+1);let catBadges=Object.entries(cats).map(([k,v])=>`<span class="ni-badge">${niEsc(k)} ${v}</span>`).join('');let qs=s.queries||{};return `<div class="ni-grid"><div class="ni-kpi">COMUNE<b>${niEsc(s.comune)}</b></div><div class="ni-kpi">INDIRIZZO<b>${niEsc(s.indirizzo)}</b></div><div class="ni-kpi">EDIFICI RESIDENZIALI OSM / ${niEsc(s.radius_m||500)}m<b>${niEsc(ctx.residential_buildings_osm??'—')}</b></div><div class="ni-kpi">ATTIVITÀ / ENTI PUBBLICI<b>${niEsc(ctx.public_entities_count??ents.length??0)}</b></div></div><div>${catBadges||'<span class="ni-badge">ARRICCHIMENTO '+niEsc(s.enrichment_status||'PENDING')+'</span>'}</div><div class="ni-links">${s.url_annuncio?`<a class="btn alt" target="_blank" rel="noopener" href="${niEsc(s.url_annuncio)}">ANNUNCIO</a>`:''}${qs.google_maps?`<a class="btn alt" target="_blank" rel="noopener" href="${niEsc(qs.google_maps)}">MAPS</a>`:''}${qs.attivita_vicine?`<a class="btn alt" target="_blank" rel="noopener" href="${niEsc(qs.attivita_vicine)}">ATTIVITÀ VICINE</a>`:''}${qs.territorio?`<a class="btn alt" target="_blank" rel="noopener" href="${niEsc(qs.territorio)}">LEGAMI TERRITORIO</a>`:''}${qs.animali_agricoltura?`<a class="btn alt" target="_blank" rel="noopener" href="${niEsc(qs.animali_agricoltura)}">ANIMALI / AGRICOLTURA</a>`:''}</div>${ents.length?`<div class="ni-entities">${ents.slice(0,compact?4:12).map(niEntity).join('')}</div>`:`<div class="empty">Nessuna attività/ente ancora arricchito per questo segnale. Il segnale resta comunque in lista.</div>`}` }\nasync function loadNeighborhood(){let st=document.getElementById('niStatus'),box=document.getElementById('niContent');try{let r=await fetch(NI_DATA+'?v='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);let d=await r.json(),signals=d.signals||[];let selected=null;if(typeof SELECTED!=='undefined'&&SELECTED.comune&&SELECTED.indirizzo){selected=signals.find(s=>niNorm(s.comune)===niNorm(SELECTED.comune)&&(niNorm(s.indirizzo)===niNorm(SELECTED.indirizzo)||niNorm(s.indirizzo).includes(niNorm(SELECTED.indirizzo))||niNorm(SELECTED.indirizzo).includes(niNorm(s.indirizzo))))}st.textContent=`${signals.length} segnali monitorati · aggiornamento ${d.generated_at?new Date(d.generated_at).toLocaleString('it-IT'):'in attesa del primo ciclo'}.`;if(selected){box.innerHTML=niRenderSignal(selected,false)}else{let newest=[...signals].sort((a,b)=>(b.is_new===true)-(a.is_new===true)||Number(b.score||0)-Number(a.score||0));box.innerHTML=newest.length?`<div class="ni-note"><b>Lista automatica segnali:</b> nuovi ingressi e segnali correnti del Radar. Se apri Telefonate Oggi da un singolo record MASTER, qui viene mostrata la scheda corrispondente.</div><div class="ni-all"><details open><summary>${newest.length} SEGNALI PRESENTI</summary>${newest.slice(0,30).map(s=>`<div style="margin:10px 0;padding:10px;border-top:1px solid #27332b">${s.is_new?'<span class="ni-badge">NUOVO</span>':''}<b>${niEsc(s.comune)} · ${niEsc(s.indirizzo)}</b>${niRenderSignal(s,true)}</div>`).join('')}</details></div>`:'<div class="empty">Il primo ciclo di Neighborhood Intelligence deve ancora popolare i segnali.</div>'}}catch(e){st.innerHTML='<span class="ni-error">Intelligence territoriale non disponibile: '+niEsc(e.message)+'</span>';box.innerHTML='<div class="empty">Il quadrato microzona e Telefonate Oggi continuano a funzionare normalmente.</div>'}}\nloadNeighborhood();\n</script>\n'''
+          s=s.replace('</body>',js+'</body>',1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit integration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add telefonate-oggi.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Integrate neighborhood intelligence into Telefonate Oggi"
+          git push
