@@ -1,0 +1,36 @@
+name: Patch Telefonate References
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-telefonate-references.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply references patch
+        run: python scripts/patch_telefonate_references.py
+      - name: Validate inline JavaScript
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('telefonate-oggi.html').read_text(encoding='utf-8')
+          assert 'RIFERIMENTI CON RECAPITO' in s
+          scripts=re.findall(r'<script>(.*?)</script>',s,flags=re.S|re.I)
+          Path('/tmp/telefonate.js').write_text('\n'.join(scripts),encoding='utf-8')
+          PY
+          node --check /tmp/telefonate.js
+      - name: Commit patch
+        run: |
+          git config user.name "f1-telefonate-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add telefonate-oggi.html
+          git commit -m "Show useful public references in Telefonate Oggi"
+          git push
