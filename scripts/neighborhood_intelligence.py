@@ -166,6 +166,9 @@ def public_entity(element):
     return {"name": name or "Attività/ente senza nome OSM", "category": classify(tags), "address": " ".join(x for x in [street, house, city] if x).strip(), "phone_public": phone, "email_public": email, "website": website, "osm_id": element.get("id"), "osm_type": element.get("type"), "source": "OpenStreetMap"}
 
 def enrich_signal(signal):
+    if not str(signal.get("indirizzo") or "").strip() or "DA VERIFICARE" in str(signal.get("indirizzo") or "").upper():
+        signal["enrichment_status"] = "SKIPPED_NO_ADDRESS"
+        return signal
     geo = geocode(signal["comune"], signal["indirizzo"])
     if not geo:
         signal["enrichment_status"] = "GEOCODE_NOT_FOUND"; return signal
@@ -197,8 +200,8 @@ def main():
         if not comune or not indirizzo: continue
         sid = stable_id(row); first_seen = seen_map.get(sid) or stamp; seen_map[sid] = first_seen; prev = old_by_id.get(sid, {})
         signals.append({"signal_id": sid, "first_seen": first_seen, "is_new": first_seen == stamp, "territorial_rank": territorial_rank(comune), "territorial_route": TERRITORIAL_ROUTE, "comune": comune, "indirizzo": indirizzo, "immobile": (row.get("COSA_CERCO") or "").strip(), "prezzo": (row.get("PREZZO") or "").strip(), "fonte": (row.get("FONTE") or "").strip(), "seller_signal": (row.get("SELLER_SIGNAL") or "").strip(), "priorita": (row.get("PRIORITA") or "").strip(), "score": (row.get("SCORE") or "").strip(), "url_annuncio": (row.get("URL") or "").strip(), "queries": queries(comune, indirizzo), "engine_version": ENGINE_VERSION, "enrichment_status": (prev.get("enrichment_status","PENDING") if prev.get("engine_version") == ENGINE_VERSION else "PENDING"), "geocode": prev.get("geocode"), "radius_m": prev.get("radius_m", RADIUS), "context": prev.get("context", {}), "public_entities": prev.get("public_entities", []), "enriched_at": prev.get("enriched_at")})
-    candidates = [s for s in signals if s["enrichment_status"] != "ENRICHED"]
-    candidates.sort(key=lambda s: (s.get("territorial_rank", 9999), -int(float(s["score"] or 0)), not s["is_new"]))
+    candidates = [s for s in signals if s.get("enrichment_status") in {"PENDING", "ERROR"}]
+    candidates.sort(key=lambda s: (s.get("enrichment_status") == "ERROR", s.get("territorial_rank", 9999), -int(float(s["score"] or 0)), not s["is_new"]))
     for s in candidates[:MAX_ENRICH]:
         try: enrich_signal(s)
         except Exception as exc:

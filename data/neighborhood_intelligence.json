@@ -19,7 +19,7 @@
     "Villar Dora",
     "Almese"
   ],
-  "generated_at": "2026-09-05T08:57:55+00:00",
+  "generated_at": "2026-09-05T09:00:38+00:00",
   "source": "https://raw.githubusercontent.com/josephsocialmedia2-spec/immobili-in-zona/main/seller_radar_auto/data/giro_acquisizione_oggi.csv",
   "radius_m": 500,
   "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.",
@@ -3361,8 +3361,7 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null,
-      "enrichment_error": "HTTP Error 429: Too Many Requests"
+      "enriched_at": null
     },
     {
       "signal_id": "SIG-D83090D001DC77",
@@ -6829,12 +6828,13 @@
         "dork_contesto": "https://www.google.com/search?q=%22corso+Susa+155%22+%22Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "ERROR",
       "geocode": null,
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 504: Gateway Timeout"
     },
     {
       "signal_id": "SIG-EBE6C719B0F382",
@@ -6879,7 +6879,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -6929,7 +6929,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -6979,7 +6979,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -7029,7 +7029,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22Via+San+Lorenzo+2%22+%22Bussoleno%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "ERROR",
       "geocode": {
         "lat": 45.1417008,
         "lon": 7.1516431,
@@ -7232,7 +7232,8 @@
           "source": "OpenStreetMap"
         }
       ],
-      "enriched_at": "2026-09-05T08:32:11+00:00"
+      "enriched_at": "2026-09-05T08:32:11+00:00",
+      "enrichment_error": "HTTP Error 504: Gateway Timeout"
     },
     {
       "signal_id": "SIG-BB46A718C9744F",
@@ -7277,7 +7278,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Bussoleno%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -7327,7 +7328,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Bussoleno%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -7377,7 +7378,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Bussoleno%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -7427,7 +7428,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Torino+Mattie.+Buono+stato%22+%22Bussoleno%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "GEOCODE_NOT_FOUND",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -7477,12 +7478,474 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+bussoleno+21%22+%22Bussoleno%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1378947,
+        "lon": 7.1481424,
+        "display_name": "21, Via Walter Fontan, Prapontin, Bussoleno, Torino, Piemonte, 10053, Italia",
+        "osm_type": "node",
+        "osm_id": 11373136206
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 45,
+        "public_entities_count": 41,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Ambulatorio veterinario Dr. Zerbola M. Vittoria",
+          "category": "AGRICOLTURA_ANIMALI",
+          "address": "Piazza Quattro Novembre 5a Bussoleno",
+          "phone_public": "+39 330 531 161",
+          "email_public": "",
+          "website": "",
+          "osm_id": 11381204389,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Agrivalle",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5195955721,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Carrefour Express",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 11381177515,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Erboristeria L'Erbavoglio",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7380236460,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Forno di Giuliano",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 2431084858,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella di Sant'Antonio",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 374476034,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Chiesa Battista",
+          "category": "RETE_TERRITORIALE",
+          "address": "Strada Torino 11 Bussoleno",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 328635957,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Municipio di Bussoleno",
+          "category": "RETE_TERRITORIALE",
+          "address": "Piazza Camillo Benso Conte di Cavour 1 Bussoleno",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 374690471,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Santa Maria Assunta",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 374476033,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bar Ferraris",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5167650450,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Caffè Portici",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 4829391258,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il Golosone",
+          "category": "RISTORAZIONE",
+          "address": "Via Walter Fontan 2 Bussoleno",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 10593992188,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Città del Sole",
+          "category": "RISTORAZIONE",
+          "address": "Via Walter Fontan Bussoleno",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5167650449,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Credenza - Osteria Popolare Bussoleno",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529133,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Mangia Mangia",
+          "category": "RISTORAZIONE",
+          "address": "Via Traforo 16",
+          "phone_public": "+39 329 393 0327",
+          "email_public": "",
+          "website": "https://www.pizzeriamangiamangia.com/",
+          "osm_id": 12029431200,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Occhio di Horus",
+          "category": "RISTORAZIONE",
+          "address": "Via Traforo 59 Bussoleno",
+          "phone_public": "+39 349 8157565",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9725002061,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Pizzeria Peccati di gola",
+          "category": "RISTORAZIONE",
+          "address": "Via Traforo 27",
+          "phone_public": "+39 0122 640642",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12029347064,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Garassino S.N.C. di Ternavasio Dott.ssa Elisabetta e C.",
+          "category": "SALUTE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7380268624,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Roveri",
+          "category": "SALUTE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7380268413,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SCUOLA_CULTURA",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1946040476,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Scuola superiore Norberto Rosa",
+          "category": "SCUOLA_CULTURA",
+          "address": "Piazza Cavalieri di Vittorio Veneto 5 Bussoleno",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1227331177,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cuore di Panna",
+          "category": "SERVIZI",
+          "address": "Via Traforo 12b Bussoleno",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 6782380141,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Intesa Sanpaolo",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1946042914,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Mercato di Bussoleno",
+          "category": "SERVIZI",
+          "address": "Piazza Cavalieri di Vittorio Veneto Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 13428381918,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Piazza C. L. N.",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 328635956,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Polivalente di Bussoleno",
+          "category": "SERVIZI",
+          "address": "Via Walter Fontan Bussoleno",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5167826135,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Poste Italiane",
+          "category": "SERVIZI",
+          "address": "Piazza Cavalieri di Vittorio Veneto 3 Bussoleno",
+          "phone_public": "+39 0122 642731",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1914498253,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "UniCredit Bank",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1946043488,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Western Union",
+          "category": "SERVIZI",
+          "address": "Via Traforo 18 Bussoleno",
+          "phone_public": "+39 0122 49223",
+          "email_public": "",
+          "website": "https://location.westernunion.com/global-services/find-locations/it/torino/bussoleno/c12b1c7f2396979fcdb4a4f53acbac63",
+          "osm_id": 13206827423,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Giardini comunali Lord Baden Powell",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 374484825,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bussoleno - Un'identità da scoprire",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529112,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Casa Aschieri",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529132,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il Falconiere",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529118,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il Mulino",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529126,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il Ponte di Dora",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529113,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Cinta Muraria",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529117,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Porta Superiore o di Francia",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529119,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Locanda della Croce Bianca",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529123,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Mulino Varesio",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529124,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Progetto Arte Aperta",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529115,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Val Susa Turismo",
+          "category": "TURISMO",
+          "address": "Via Carlo Trattenero 15 Bussoleno",
+          "phone_public": "+39 0122 642833",
+          "email_public": "vallesusa.turismo@umvs.it",
+          "website": "https://www.valdisusaturismo.it",
+          "osm_id": 8476880508,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-05T09:01:11+00:00"
     },
     {
       "signal_id": "SIG-B63E73445A015D",
@@ -7527,12 +7990,34 @@
         "dork_contesto": "https://www.google.com/search?q=%22Strada+Monginevro+28%22+%22Bussoleno%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1346664,
+        "lon": 7.1375808,
+        "display_name": "Strada Provinciale 24 del Monginevro, Santa Petronilla, Foresto, Bussoleno, Torino, Piemonte, 10053, Italia",
+        "osm_type": "way",
+        "osm_id": 323297187
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 0,
+        "public_entities_count": 1,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 428793568,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-05T09:01:17+00:00"
     },
     {
       "signal_id": "SIG-0214226B09486F",
@@ -7577,12 +8062,13 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+bussoleno+26%22+%22Bussoleno%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "ERROR",
       "geocode": null,
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 504: Gateway Timeout"
     },
     {
       "signal_id": "SIG-1E964102010369",
