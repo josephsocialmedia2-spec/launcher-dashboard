@@ -19,7 +19,7 @@
     "Villar Dora",
     "Almese"
   ],
-  "generated_at": "2026-09-05T13:53:01+00:00",
+  "generated_at": "2026-09-05T16:50:57+00:00",
   "source": "https://raw.githubusercontent.com/josephsocialmedia2-spec/immobili-in-zona/main/seller_radar_auto/data/giro_acquisizione_oggi.csv",
   "radius_m": 500,
   "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.",
@@ -12301,8 +12301,7 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null,
-      "enrichment_error": "HTTP Error 429: Too Many Requests"
+      "enriched_at": null
     },
     {
       "signal_id": "SIG-C31225A3804B9F",
@@ -12347,12 +12346,177 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Chiesali%22+%22Villar+Focchiardo%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1129956,
+        "lon": 7.2366514,
+        "display_name": "Via Chiesali, Comba, Villar Focchiardo, Torino, Piemonte, Italia",
+        "osm_type": "way",
+        "osm_id": 101244109
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 104,
+        "public_entities_count": 14,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Little Ranch",
+          "category": "AGRICOLTURA_ANIMALI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 163696997,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bisaschi Carrozzeria",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12086291933,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "BricoCenter",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1227881925,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "L. G.",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1227880909,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "r.m.",
+          "category": "COMMERCIO",
+          "address": "Via Giaconera",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1718356837,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Unieuro",
+          "category": "COMMERCIO",
+          "address": "Via Nazionale Villar Focchiardo",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1227883482,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "TecnoG.com di Giannarzia Francesco",
+          "category": "INDUSTRIA_ARTIGIANATO",
+          "address": "",
+          "phone_public": "+39 339 2482809",
+          "email_public": "tecnog.com@gmail.com",
+          "website": "",
+          "osm_id": 5690667369,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Rocco",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 421597444,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Betulla",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 738067299,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Giaconera",
+          "category": "RISTORAZIONE",
+          "address": "Via Antica di Francia 1 Villar Focchiardo",
+          "phone_public": "",
+          "email_public": "",
+          "website": "http://www.lagiaconera.it/",
+          "osm_id": 323229699,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Punto sosta e ristoro",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1796293121,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Piazza Donatori di Sangue",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 102593124,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Poste Italiane",
+          "category": "SERVIZI",
+          "address": "Via di Mezzo 2 Villar Focchiardo",
+          "phone_public": "+39 011 9645010",
+          "email_public": "",
+          "website": "",
+          "osm_id": 738077446,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1124104257,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-05T16:51:11+00:00"
     },
     {
       "signal_id": "SIG-C83CBF3F2BBD5F",
@@ -12397,7 +12561,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Villar+Focchiardo%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -12447,7 +12611,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Villar+Focchiardo%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -12497,7 +12661,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Villar+Focchiardo%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -12547,12 +12711,89 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Condove+86%22+%22Borgone+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1141378,
+        "lon": 7.2676051,
+        "display_name": "Via Condove, San Valeriano, Borgone Susa, Torino, Piemonte, 10055, Italia",
+        "osm_type": "way",
+        "osm_id": 1117235771
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 97,
+        "public_entities_count": 6,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Cappella di San Valeriano",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 444318984,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella romanica di San Valeriano",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 85191357,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La bottega di San Valeriano",
+          "category": "RISTORAZIONE",
+          "address": "Via S.S. 24 16 Borgone Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 190434286,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 987941114,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Campetto calcio bimbi",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1203955678,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Parco giochi San Valeriano",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "Via Ponte Dora",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1043478527,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-05T16:51:24+00:00"
     },
     {
       "signal_id": "SIG-BDDAA46B977B3D",
@@ -12597,7 +12838,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Borgone+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -12647,7 +12888,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Borgone+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -12697,7 +12938,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Augusto+Abegg+Borgone+Susa.+Ottimo%22+%22Borgone+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "GEOCODE_NOT_FOUND",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -12747,7 +12988,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+A.+Abegg+18%22+%22Borgone+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "GEOCODE_NOT_FOUND",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -12797,12 +13038,89 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Augusto+Abegg+41%22+%22Borgone+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1246495,
+        "lon": 7.2270018,
+        "display_name": "Via Augusto Abegg, Achit, Borgone Susa, Torino, Piemonte, Italia",
+        "osm_type": "way",
+        "osm_id": 342865917
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 31,
+        "public_entities_count": 6,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Officina di Lai Giorgio",
+          "category": "COMMERCIO",
+          "address": "Via Abegg",
+          "phone_public": "+39 339 100 7837",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12145657548,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Service Cars Borgone",
+          "category": "COMMERCIO",
+          "address": "Via Augusto Abegg 63 Borgone Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 329560761,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Birrificio Lis d'Oc",
+          "category": "INDUSTRIA_ARTIGIANATO",
+          "address": "Via dei Vernetti 14 Borgone Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "http://www.laboratoriovalsusa.it/azienda/birrificio-lis-doc",
+          "osm_id": 4791453749,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella Bordiglione",
+          "category": "RETE_TERRITORIALE",
+          "address": "Via Mario Tacca Borgone Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1362358139,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 8066328155,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Eni",
+          "category": "SERVIZI",
+          "address": "Via Augusto Abegg 84 Borgone Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 563578617,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-05T16:51:33+00:00"
     },
     {
       "signal_id": "SIG-74588A36B6F977",
@@ -12847,7 +13165,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22frazione+Chiampano+Borgone+Susa%22+%22Borgone+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "GEOCODE_NOT_FOUND",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -12897,12 +13215,13 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Felice+Falco+6%22+%22Borgone+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "ERROR",
       "geocode": null,
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 429: Too Many Requests"
     },
     {
       "signal_id": "SIG-042752E2A3129C",
