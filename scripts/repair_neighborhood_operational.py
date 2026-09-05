@@ -93,6 +93,15 @@ p.write_text(s, encoding='utf-8')
 
 p = ROOT / 'telefonate-oggi.html'
 s = p.read_text(encoding='utf-8')
+# The first integration wrote line separators as literal backslash+n sequences.
+# Convert only the Neighborhood JS block, leaving regex escapes intact.
+start_marker = r'\nconst NI_DATA='
+end_marker = r'\nloadNeighborhood();\n'
+if start_marker in s:
+    start = s.index(start_marker)
+    end = s.index(end_marker, start) + len(end_marker)
+    block = s[start:end].replace(r'\n', '\n')
+    s = s[:start] + block + s[end:]
 wa = '<a href="https://wa.me/393713708294?text=F1%20Neighborhood%20Intelligence%20operativo" target="_blank" rel="noopener">WHATSAPP OPERATIVO</a>'
 if 'WHATSAPP OPERATIVO' not in s:
     s = s.replace('<a href="crm.html">CRM</a>', '<a href="crm.html">CRM</a>' + wa)
@@ -108,5 +117,7 @@ assert 'amenity in {"restaurant", "cafe", "bar"' in engine
 assert 'SKIPPED_NO_ADDRESS' in engine
 assert 'in {"PENDING", "ERROR"}' in engine
 assert 'territorial_rank-b.territorial_rank || Number(b.score||0)-Number(a.score||0)' in view
+assert r'\nconst NI_DATA=' not in phone
+assert 'const NI_DATA=' in phone
 assert 'WHATSAPP OPERATIVO' in view and 'WHATSAPP OPERATIVO' in phone
 print('PASS repair script')
