@@ -19,7 +19,7 @@
     "Villar Dora",
     "Almese"
   ],
-  "generated_at": "2026-09-05T10:40:06+00:00",
+  "generated_at": "2026-09-05T13:53:01+00:00",
   "source": "https://raw.githubusercontent.com/josephsocialmedia2-spec/immobili-in-zona/main/seller_radar_auto/data/giro_acquisizione_oggi.csv",
   "radius_m": 500,
   "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.",
@@ -10637,8 +10637,7 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null,
-      "enrichment_error": "HTTP Error 429: Too Many Requests"
+      "enriched_at": null
     },
     {
       "signal_id": "SIG-08AD9808D7161B",
@@ -10688,8 +10687,7 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null,
-      "enrichment_error": "HTTP Error 429: Too Many Requests"
+      "enriched_at": null
     },
     {
       "signal_id": "SIG-0F1DE182307CD9",
@@ -10954,8 +10952,7 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null,
-      "enrichment_error": "HTTP Error 429: Too Many Requests"
+      "enriched_at": null
     },
     {
       "signal_id": "SIG-302EFB2EDA3846",
@@ -11254,7 +11251,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22San+Giorio+di+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -11304,7 +11301,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Bruzolo%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -11354,7 +11351,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Bruzolo%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -11404,7 +11401,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+A.Abegg+1%22+%22San+Didero%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "GEOCODE_NOT_FOUND",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -11454,12 +11451,144 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Augusto+Abegg+5b%22+%22San+Didero%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1312845,
+        "lon": 7.2147309,
+        "display_name": "Via Augusto Abegg, Leitera Inferiore, San Didero, Torino, Piemonte, Italia",
+        "osm_type": "way",
+        "osm_id": 60804232
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 33,
+        "public_entities_count": 11,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Acciaierie Beltrame",
+          "category": "INDUSTRIA_ARTIGIANATO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 120209285,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Comune di San Didero",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12088068051,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Municipio di San Didero",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 375256941,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Desiderio",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 198756523,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Peccati di Gola",
+          "category": "RISTORAZIONE",
+          "address": "Via Augusto Abegg 16 San Didero",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 2582123656,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 987939885,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Punto acqua SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "https://www.smatorino.it/punti-acqua/",
+          "osm_id": 13602622889,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Q8 Easy",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5851840922,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Casa Didé",
+          "category": "TURISMO",
+          "address": "Via Augusto Abegg 16 San Didero",
+          "phone_public": "+39 011 9637044",
+          "email_public": "",
+          "website": "https://casadide.it",
+          "osm_id": 8464357434,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Casaforte di San Didero",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 375763484,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Didero",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3049394233,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-05T13:53:07+00:00"
     },
     {
       "signal_id": "SIG-BC0CC68C8CC31F",
@@ -11504,7 +11633,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+A.+Abegg+38%22+%22San+Didero%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "GEOCODE_NOT_FOUND",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -11554,12 +11683,133 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Braida+9%22+%22San+Didero%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1344191,
+        "lon": 7.2124639,
+        "display_name": "9, Via Braida, Leitera Inferiore, San Didero, Torino, Piemonte, 10050, Italia",
+        "osm_type": "node",
+        "osm_id": 12088067913
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 60,
+        "public_entities_count": 10,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Acciaierie Beltrame",
+          "category": "INDUSTRIA_ARTIGIANATO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 120209285,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Comune di San Didero",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12088068051,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Municipio di San Didero",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 375256941,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Desiderio",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 198756523,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Peccati di Gola",
+          "category": "RISTORAZIONE",
+          "address": "Via Augusto Abegg 16 San Didero",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 2582123656,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 987939885,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Punto acqua SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "https://www.smatorino.it/punti-acqua/",
+          "osm_id": 13602622889,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Casa Didé",
+          "category": "TURISMO",
+          "address": "Via Augusto Abegg 16 San Didero",
+          "phone_public": "+39 011 9637044",
+          "email_public": "",
+          "website": "https://casadide.it",
+          "osm_id": 8464357434,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Casaforte di San Didero",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 375763484,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Didero",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3049394233,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-05T13:53:14+00:00"
     },
     {
       "signal_id": "SIG-2F6FEEF292E152",
@@ -11604,12 +11854,122 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Braida+18%22+%22San+Didero%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.134358,
+        "lon": 7.2106136,
+        "display_name": "18, Via Braida, Leitera Inferiore, San Didero, Torino, Piemonte, 10050, Italia",
+        "osm_type": "node",
+        "osm_id": 12088067858
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 59,
+        "public_entities_count": 9,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Acciaierie Beltrame",
+          "category": "INDUSTRIA_ARTIGIANATO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 120209285,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Comune di San Didero",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12088068051,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Municipio di San Didero",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 375256941,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Peccati di Gola",
+          "category": "RISTORAZIONE",
+          "address": "Via Augusto Abegg 16 San Didero",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 2582123656,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 987939885,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Punto acqua SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "https://www.smatorino.it/punti-acqua/",
+          "osm_id": 13602622889,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Casa Didé",
+          "category": "TURISMO",
+          "address": "Via Augusto Abegg 16 San Didero",
+          "phone_public": "+39 011 9637044",
+          "email_public": "",
+          "website": "https://casadide.it",
+          "osm_id": 8464357434,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Casaforte di San Didero",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 375763484,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Didero",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3049394233,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-05T13:53:26+00:00"
     },
     {
       "signal_id": "SIG-7162AF606F9AC7",
@@ -11654,7 +12014,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Braida.+Nuovo%22+%22San+Didero%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "GEOCODE_NOT_FOUND",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -11704,7 +12064,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22San+Didero%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -11754,12 +12114,144 @@
         "dork_contesto": "https://www.google.com/search?q=%22Via+Preinera+a+Villar+Focchiardo%22+%22Villar+Focchiardo%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1074647,
+        "lon": 7.224397,
+        "display_name": "Via Preinera, Preinera, Villar Focchiardo, Torino, Piemonte, Italia",
+        "osm_type": "way",
+        "osm_id": 95974419
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 59,
+        "public_entities_count": 11,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Cappella delle Vigne",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 106050247,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella di Loreto",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1165473066,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella di Sant'Anna",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1154226889,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Municipio di Villar Focchiardo",
+          "category": "RETE_TERRITORIALE",
+          "address": "Via Conti Carroccio",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1208881460,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Santi Cosma e Damiano",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 427363682,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Scuola Primaria Villar Focchiardo",
+          "category": "SCUOLA_CULTURA",
+          "address": "Via Cappella delle vigne 3 Villar Focchiardo",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 106050246,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 750687102,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Filarmonica di Villar Focchiardo",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12823250204,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Squadra AIB e PC di Villar Focchiardo",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12823250202,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Centro Polivalente",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 106358588,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Palestra",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 106763533,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-05T13:53:32+00:00"
     },
     {
       "signal_id": "SIG-BB3013EAC9904E",
@@ -11804,12 +12296,13 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Copotti+2%22+%22Villar+Focchiardo%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "ERROR",
       "geocode": null,
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 429: Too Many Requests"
     },
     {
       "signal_id": "SIG-C31225A3804B9F",
@@ -13636,56 +14129,6 @@
       "enriched_at": null
     },
     {
-      "signal_id": "SIG-651837B3591BB7",
-      "first_seen": "2026-09-05T10:40:06+00:00",
-      "is_new": true,
-      "territorial_rank": 8,
-      "territorial_route": [
-        "Susa",
-        "Bussoleno",
-        "Chianocco",
-        "San Giorio di Susa",
-        "Bruzolo",
-        "San Didero",
-        "Villar Focchiardo",
-        "Borgone Susa",
-        "Sant’Antonino di Susa",
-        "Vaie",
-        "Condove",
-        "Chiusa di San Michele",
-        "Caprie",
-        "Sant’Ambrogio di Torino",
-        "Villar Dora",
-        "Almese"
-      ],
-      "comune": "Sant'Antonino di Susa",
-      "indirizzo": "via aurelia 22",
-      "immobile": "Vendita Appartamento Sant'Antonino di Susa. Bilocale in via aurelia 22",
-      "prezzo": "PREZZO DA VERIFICARE",
-      "fonte": "Immobiliare.it",
-      "seller_signal": "NON_DETERMINATO",
-      "priorita": "BASSA",
-      "score": "15",
-      "url_annuncio": "https://www.immobiliare.it/annunci/129047602/",
-      "queries": {
-        "google": "https://www.google.com/search?q=via+aurelia+22%2C+Sant%27Antonino+di+Susa%2C+Italia",
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=via+aurelia+22%2C+Sant%27Antonino+di+Susa%2C+Italia",
-        "attivita_vicine": "https://www.google.com/search?q=attivit%C3%A0+aziende+negozi+servizi+vicino+%22via+aurelia+22%22+%22Sant%27Antonino+di+Susa%22",
-        "pagine_gialle": "https://www.google.com/search?q=site%3Apaginegialle.it+%22via+aurelia+22%22+%22Sant%27Antonino+di+Susa%22",
-        "pagine_bianche": "https://www.google.com/search?q=site%3Apaginebianche.it+%22via+aurelia+22%22+%22Sant%27Antonino+di+Susa%22",
-        "territorio": "https://www.google.com/search?q=%22via+aurelia+22%22+%22Sant%27Antonino+di+Susa%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
-        "animali_agricoltura": "https://www.google.com/search?q=%22via+aurelia+22%22+%22Sant%27Antonino+di+Susa%22+allevamento+stalla+canile+azienda+agricola+animali",
-        "dork_contesto": "https://www.google.com/search?q=%22via+aurelia+22%22+%22Sant%27Antonino+di+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
-      },
-      "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
-      "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
-    },
-    {
       "signal_id": "SIG-ECAB4543B17C84",
       "first_seen": "2026-09-05T08:31:53+00:00",
       "is_new": false,
@@ -14176,6 +14619,56 @@
         "territorio": "https://www.google.com/search?q=%22via+Maisonetta%22+%22Sant%27Antonino+di+Susa%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
         "animali_agricoltura": "https://www.google.com/search?q=%22via+Maisonetta%22+%22Sant%27Antonino+di+Susa%22+allevamento+stalla+canile+azienda+agricola+animali",
         "dork_contesto": "https://www.google.com/search?q=%22via+Maisonetta%22+%22Sant%27Antonino+di+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
+      },
+      "engine_version": "2",
+      "enrichment_status": "PENDING",
+      "geocode": null,
+      "radius_m": 500,
+      "context": {},
+      "public_entities": [],
+      "enriched_at": null
+    },
+    {
+      "signal_id": "SIG-651837B3591BB7",
+      "first_seen": "2026-09-05T10:40:06+00:00",
+      "is_new": false,
+      "territorial_rank": 8,
+      "territorial_route": [
+        "Susa",
+        "Bussoleno",
+        "Chianocco",
+        "San Giorio di Susa",
+        "Bruzolo",
+        "San Didero",
+        "Villar Focchiardo",
+        "Borgone Susa",
+        "Sant’Antonino di Susa",
+        "Vaie",
+        "Condove",
+        "Chiusa di San Michele",
+        "Caprie",
+        "Sant’Ambrogio di Torino",
+        "Villar Dora",
+        "Almese"
+      ],
+      "comune": "Sant'Antonino di Susa",
+      "indirizzo": "via aurelia 22",
+      "immobile": "Vendita Appartamento Sant'Antonino di Susa. Bilocale in via aurelia 22",
+      "prezzo": "PREZZO DA VERIFICARE",
+      "fonte": "Immobiliare.it",
+      "seller_signal": "NON_DETERMINATO",
+      "priorita": "BASSA",
+      "score": "15",
+      "url_annuncio": "https://www.immobiliare.it/annunci/129047602/",
+      "queries": {
+        "google": "https://www.google.com/search?q=via+aurelia+22%2C+Sant%27Antonino+di+Susa%2C+Italia",
+        "google_maps": "https://www.google.com/maps/search/?api=1&query=via+aurelia+22%2C+Sant%27Antonino+di+Susa%2C+Italia",
+        "attivita_vicine": "https://www.google.com/search?q=attivit%C3%A0+aziende+negozi+servizi+vicino+%22via+aurelia+22%22+%22Sant%27Antonino+di+Susa%22",
+        "pagine_gialle": "https://www.google.com/search?q=site%3Apaginegialle.it+%22via+aurelia+22%22+%22Sant%27Antonino+di+Susa%22",
+        "pagine_bianche": "https://www.google.com/search?q=site%3Apaginebianche.it+%22via+aurelia+22%22+%22Sant%27Antonino+di+Susa%22",
+        "territorio": "https://www.google.com/search?q=%22via+aurelia+22%22+%22Sant%27Antonino+di+Susa%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
+        "animali_agricoltura": "https://www.google.com/search?q=%22via+aurelia+22%22+%22Sant%27Antonino+di+Susa%22+allevamento+stalla+canile+azienda+agricola+animali",
+        "dork_contesto": "https://www.google.com/search?q=%22via+aurelia+22%22+%22Sant%27Antonino+di+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
       "enrichment_status": "PENDING",
@@ -15809,106 +16302,6 @@
       "enriched_at": null
     },
     {
-      "signal_id": "SIG-EB6957ED0AF1CB",
-      "first_seen": "2026-09-05T10:40:06+00:00",
-      "is_new": true,
-      "territorial_rank": 9999,
-      "territorial_route": [
-        "Susa",
-        "Bussoleno",
-        "Chianocco",
-        "San Giorio di Susa",
-        "Bruzolo",
-        "San Didero",
-        "Villar Focchiardo",
-        "Borgone Susa",
-        "Sant’Antonino di Susa",
-        "Vaie",
-        "Condove",
-        "Chiusa di San Michele",
-        "Caprie",
-        "Sant’Ambrogio di Torino",
-        "Villar Dora",
-        "Almese"
-      ],
-      "comune": "Moncenisio",
-      "indirizzo": "Via Moncenisio, 12",
-      "immobile": "Villetta bifamiliare in vendita in Via Moncenisio, 12, Avigliana",
-      "prezzo": "PREZZO DA VERIFICARE",
-      "fonte": "Idealista",
-      "seller_signal": "NON_DETERMINATO",
-      "priorita": "BASSA",
-      "score": "30",
-      "url_annuncio": "https://www.idealista.it/immobile/36733558/",
-      "queries": {
-        "google": "https://www.google.com/search?q=Via+Moncenisio%2C+12%2C+Moncenisio%2C+Italia",
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=Via+Moncenisio%2C+12%2C+Moncenisio%2C+Italia",
-        "attivita_vicine": "https://www.google.com/search?q=attivit%C3%A0+aziende+negozi+servizi+vicino+%22Via+Moncenisio%2C+12%22+%22Moncenisio%22",
-        "pagine_gialle": "https://www.google.com/search?q=site%3Apaginegialle.it+%22Via+Moncenisio%2C+12%22+%22Moncenisio%22",
-        "pagine_bianche": "https://www.google.com/search?q=site%3Apaginebianche.it+%22Via+Moncenisio%2C+12%22+%22Moncenisio%22",
-        "territorio": "https://www.google.com/search?q=%22Via+Moncenisio%2C+12%22+%22Moncenisio%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
-        "animali_agricoltura": "https://www.google.com/search?q=%22Via+Moncenisio%2C+12%22+%22Moncenisio%22+allevamento+stalla+canile+azienda+agricola+animali",
-        "dork_contesto": "https://www.google.com/search?q=%22Via+Moncenisio%2C+12%22+%22Moncenisio%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
-      },
-      "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
-      "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
-    },
-    {
-      "signal_id": "SIG-F53E2450EE9E00",
-      "first_seen": "2026-09-05T10:40:06+00:00",
-      "is_new": true,
-      "territorial_rank": 9999,
-      "territorial_route": [
-        "Susa",
-        "Bussoleno",
-        "Chianocco",
-        "San Giorio di Susa",
-        "Bruzolo",
-        "San Didero",
-        "Villar Focchiardo",
-        "Borgone Susa",
-        "Sant’Antonino di Susa",
-        "Vaie",
-        "Condove",
-        "Chiusa di San Michele",
-        "Caprie",
-        "Sant’Ambrogio di Torino",
-        "Villar Dora",
-        "Almese"
-      ],
-      "comune": "Salbertrand",
-      "indirizzo": "INDIRIZZO DA VERIFICARE",
-      "immobile": "Quanto vale una casa a Salbertrand (TO) — prezzi al m² 2° semestre 2025",
-      "prezzo": "PREZZO DA VERIFICARE",
-      "fonte": "Mercato residenziale",
-      "seller_signal": "NON_DETERMINATO",
-      "priorita": "BASSA",
-      "score": "30",
-      "url_annuncio": "https://tuttocalcolo.it/valore-immobili/to/salbertrand",
-      "queries": {
-        "google": "https://www.google.com/search?q=INDIRIZZO+DA+VERIFICARE%2C+Salbertrand%2C+Italia",
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=INDIRIZZO+DA+VERIFICARE%2C+Salbertrand%2C+Italia",
-        "attivita_vicine": "https://www.google.com/search?q=attivit%C3%A0+aziende+negozi+servizi+vicino+%22INDIRIZZO+DA+VERIFICARE%22+%22Salbertrand%22",
-        "pagine_gialle": "https://www.google.com/search?q=site%3Apaginegialle.it+%22INDIRIZZO+DA+VERIFICARE%22+%22Salbertrand%22",
-        "pagine_bianche": "https://www.google.com/search?q=site%3Apaginebianche.it+%22INDIRIZZO+DA+VERIFICARE%22+%22Salbertrand%22",
-        "territorio": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Salbertrand%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
-        "animali_agricoltura": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Salbertrand%22+allevamento+stalla+canile+azienda+agricola+animali",
-        "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Salbertrand%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
-      },
-      "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
-      "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
-    },
-    {
       "signal_id": "SIG-2754EEACE7C7BE",
       "first_seen": "2026-09-05T08:31:53+00:00",
       "is_new": false,
@@ -16309,6 +16702,56 @@
       "enriched_at": null
     },
     {
+      "signal_id": "SIG-EB6957ED0AF1CB",
+      "first_seen": "2026-09-05T10:40:06+00:00",
+      "is_new": false,
+      "territorial_rank": 9999,
+      "territorial_route": [
+        "Susa",
+        "Bussoleno",
+        "Chianocco",
+        "San Giorio di Susa",
+        "Bruzolo",
+        "San Didero",
+        "Villar Focchiardo",
+        "Borgone Susa",
+        "Sant’Antonino di Susa",
+        "Vaie",
+        "Condove",
+        "Chiusa di San Michele",
+        "Caprie",
+        "Sant’Ambrogio di Torino",
+        "Villar Dora",
+        "Almese"
+      ],
+      "comune": "Moncenisio",
+      "indirizzo": "Via Moncenisio, 12",
+      "immobile": "Villetta bifamiliare in vendita in Via Moncenisio, 12, Avigliana",
+      "prezzo": "PREZZO DA VERIFICARE",
+      "fonte": "Idealista",
+      "seller_signal": "NON_DETERMINATO",
+      "priorita": "BASSA",
+      "score": "30",
+      "url_annuncio": "https://www.idealista.it/immobile/36733558/",
+      "queries": {
+        "google": "https://www.google.com/search?q=Via+Moncenisio%2C+12%2C+Moncenisio%2C+Italia",
+        "google_maps": "https://www.google.com/maps/search/?api=1&query=Via+Moncenisio%2C+12%2C+Moncenisio%2C+Italia",
+        "attivita_vicine": "https://www.google.com/search?q=attivit%C3%A0+aziende+negozi+servizi+vicino+%22Via+Moncenisio%2C+12%22+%22Moncenisio%22",
+        "pagine_gialle": "https://www.google.com/search?q=site%3Apaginegialle.it+%22Via+Moncenisio%2C+12%22+%22Moncenisio%22",
+        "pagine_bianche": "https://www.google.com/search?q=site%3Apaginebianche.it+%22Via+Moncenisio%2C+12%22+%22Moncenisio%22",
+        "territorio": "https://www.google.com/search?q=%22Via+Moncenisio%2C+12%22+%22Moncenisio%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
+        "animali_agricoltura": "https://www.google.com/search?q=%22Via+Moncenisio%2C+12%22+%22Moncenisio%22+allevamento+stalla+canile+azienda+agricola+animali",
+        "dork_contesto": "https://www.google.com/search?q=%22Via+Moncenisio%2C+12%22+%22Moncenisio%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
+      },
+      "engine_version": "2",
+      "enrichment_status": "PENDING",
+      "geocode": null,
+      "radius_m": 500,
+      "context": {},
+      "public_entities": [],
+      "enriched_at": null
+    },
+    {
       "signal_id": "SIG-B2A534744F5741",
       "first_seen": "2026-09-05T08:31:53+00:00",
       "is_new": false,
@@ -16399,6 +16842,56 @@
         "territorio": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Meana+di+Susa%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
         "animali_agricoltura": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Meana+di+Susa%22+allevamento+stalla+canile+azienda+agricola+animali",
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Meana+di+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
+      },
+      "engine_version": "2",
+      "enrichment_status": "PENDING",
+      "geocode": null,
+      "radius_m": 500,
+      "context": {},
+      "public_entities": [],
+      "enriched_at": null
+    },
+    {
+      "signal_id": "SIG-F53E2450EE9E00",
+      "first_seen": "2026-09-05T10:40:06+00:00",
+      "is_new": false,
+      "territorial_rank": 9999,
+      "territorial_route": [
+        "Susa",
+        "Bussoleno",
+        "Chianocco",
+        "San Giorio di Susa",
+        "Bruzolo",
+        "San Didero",
+        "Villar Focchiardo",
+        "Borgone Susa",
+        "Sant’Antonino di Susa",
+        "Vaie",
+        "Condove",
+        "Chiusa di San Michele",
+        "Caprie",
+        "Sant’Ambrogio di Torino",
+        "Villar Dora",
+        "Almese"
+      ],
+      "comune": "Salbertrand",
+      "indirizzo": "INDIRIZZO DA VERIFICARE",
+      "immobile": "Quanto vale una casa a Salbertrand (TO) — prezzi al m² 2° semestre 2025",
+      "prezzo": "PREZZO DA VERIFICARE",
+      "fonte": "Mercato residenziale",
+      "seller_signal": "NON_DETERMINATO",
+      "priorita": "BASSA",
+      "score": "30",
+      "url_annuncio": "https://tuttocalcolo.it/valore-immobili/to/salbertrand",
+      "queries": {
+        "google": "https://www.google.com/search?q=INDIRIZZO+DA+VERIFICARE%2C+Salbertrand%2C+Italia",
+        "google_maps": "https://www.google.com/maps/search/?api=1&query=INDIRIZZO+DA+VERIFICARE%2C+Salbertrand%2C+Italia",
+        "attivita_vicine": "https://www.google.com/search?q=attivit%C3%A0+aziende+negozi+servizi+vicino+%22INDIRIZZO+DA+VERIFICARE%22+%22Salbertrand%22",
+        "pagine_gialle": "https://www.google.com/search?q=site%3Apaginegialle.it+%22INDIRIZZO+DA+VERIFICARE%22+%22Salbertrand%22",
+        "pagine_bianche": "https://www.google.com/search?q=site%3Apaginebianche.it+%22INDIRIZZO+DA+VERIFICARE%22+%22Salbertrand%22",
+        "territorio": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Salbertrand%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
+        "animali_agricoltura": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Salbertrand%22+allevamento+stalla+canile+azienda+agricola+animali",
+        "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Salbertrand%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
       "enrichment_status": "PENDING",
