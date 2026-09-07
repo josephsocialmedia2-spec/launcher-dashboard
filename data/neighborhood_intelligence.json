@@ -19,7 +19,7 @@
     "Villar Dora",
     "Almese"
   ],
-  "generated_at": "2026-09-07T16:29:56+00:00",
+  "generated_at": "2026-09-07T16:48:03+00:00",
   "source": "https://raw.githubusercontent.com/josephsocialmedia2-spec/immobili-in-zona/main/seller_radar_auto/data/giro_acquisizione_oggi.csv",
   "radius_m": 500,
   "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.",
@@ -216,56 +216,6 @@
         "territorio": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Susa%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
         "animali_agricoltura": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Susa%22+allevamento+stalla+canile+azienda+agricola+animali",
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
-      },
-      "engine_version": "2",
-      "enrichment_status": "GEOCODE_NOT_FOUND",
-      "geocode": null,
-      "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
-    },
-    {
-      "signal_id": "SIG-6CBDC21DFF4F3E",
-      "first_seen": "2026-09-07T16:29:56+00:00",
-      "is_new": true,
-      "territorial_rank": 0,
-      "territorial_route": [
-        "Susa",
-        "Bussoleno",
-        "Chianocco",
-        "San Giorio di Susa",
-        "Bruzolo",
-        "San Didero",
-        "Villar Focchiardo",
-        "Borgone Susa",
-        "Sant’Antonino di Susa",
-        "Vaie",
-        "Condove",
-        "Chiusa di San Michele",
-        "Caprie",
-        "Sant’Ambrogio di Torino",
-        "Villar Dora",
-        "Almese"
-      ],
-      "comune": "Susa",
-      "indirizzo": "via Traverse. Buono",
-      "immobile": "Vendita Appartamento Meana di Susa. Trilocale in via Traverse. Buono",
-      "prezzo": "PREZZO DA VERIFICARE",
-      "fonte": "Immobiliare.it",
-      "seller_signal": "NON_DETERMINATO",
-      "priorita": "BASSA",
-      "score": "15",
-      "url_annuncio": "https://www.immobiliare.it/annunci/120783960/",
-      "queries": {
-        "google": "https://www.google.com/search?q=via+Traverse.+Buono%2C+Susa%2C+Italia",
-        "google_maps": "https://www.google.com/maps/search/?api=1&query=via+Traverse.+Buono%2C+Susa%2C+Italia",
-        "attivita_vicine": "https://www.google.com/search?q=attivit%C3%A0+aziende+negozi+servizi+vicino+%22via+Traverse.+Buono%22+%22Susa%22",
-        "pagine_gialle": "https://www.google.com/search?q=site%3Apaginegialle.it+%22via+Traverse.+Buono%22+%22Susa%22",
-        "pagine_bianche": "https://www.google.com/search?q=site%3Apaginebianche.it+%22via+Traverse.+Buono%22+%22Susa%22",
-        "territorio": "https://www.google.com/search?q=%22via+Traverse.+Buono%22+%22Susa%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
-        "animali_agricoltura": "https://www.google.com/search?q=%22via+Traverse.+Buono%22+%22Susa%22+allevamento+stalla+canile+azienda+agricola+animali",
-        "dork_contesto": "https://www.google.com/search?q=%22via+Traverse.+Buono%22+%22Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
       "enrichment_status": "GEOCODE_NOT_FOUND",
@@ -1292,12 +1242,111 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Susa+13%22+%22Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1280702,
+        "lon": 7.0433642,
+        "display_name": "Via Susa, Colfacero, Gravere, Torino, Piemonte, 10059, Italia",
+        "osm_type": "way",
+        "osm_id": 520862322
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 51,
+        "public_entities_count": 8,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Il Bosco",
+          "category": "COMMERCIO",
+          "address": "Via Montegrappa 23 Susa",
+          "phone_public": "+39 0122 622890",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9122773854,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella della Consolata",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 267303453,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Saturnino",
+          "category": "RETE_TERRITORIALE",
+          "address": "Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 289954601,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Circolo Amici della Montagna",
+          "category": "RISTORAZIONE",
+          "address": "Borgata Arnodera Gravere",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9778592733,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Excalibur",
+          "category": "RISTORAZIONE",
+          "address": "Via Montegrappa 25 Susa",
+          "phone_public": "+39 347 1521730",
+          "email_public": "",
+          "website": "",
+          "osm_id": 267303455,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 6923999397,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Marchetta",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 521085137,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Arnodera - Colle Montabone",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 679994076,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T16:48:24+00:00"
     },
     {
       "signal_id": "SIG-AEC0594F80D28D",
@@ -3348,6 +3397,56 @@
       "enriched_at": null
     },
     {
+      "signal_id": "SIG-6CBDC21DFF4F3E",
+      "first_seen": "2026-09-07T16:29:56+00:00",
+      "is_new": false,
+      "territorial_rank": 0,
+      "territorial_route": [
+        "Susa",
+        "Bussoleno",
+        "Chianocco",
+        "San Giorio di Susa",
+        "Bruzolo",
+        "San Didero",
+        "Villar Focchiardo",
+        "Borgone Susa",
+        "Sant’Antonino di Susa",
+        "Vaie",
+        "Condove",
+        "Chiusa di San Michele",
+        "Caprie",
+        "Sant’Ambrogio di Torino",
+        "Villar Dora",
+        "Almese"
+      ],
+      "comune": "Susa",
+      "indirizzo": "via Traverse. Buono",
+      "immobile": "Vendita Appartamento Meana di Susa. Trilocale in via Traverse. Buono",
+      "prezzo": "PREZZO DA VERIFICARE",
+      "fonte": "Immobiliare.it",
+      "seller_signal": "NON_DETERMINATO",
+      "priorita": "BASSA",
+      "score": "15",
+      "url_annuncio": "https://www.immobiliare.it/annunci/120783960/",
+      "queries": {
+        "google": "https://www.google.com/search?q=via+Traverse.+Buono%2C+Susa%2C+Italia",
+        "google_maps": "https://www.google.com/maps/search/?api=1&query=via+Traverse.+Buono%2C+Susa%2C+Italia",
+        "attivita_vicine": "https://www.google.com/search?q=attivit%C3%A0+aziende+negozi+servizi+vicino+%22via+Traverse.+Buono%22+%22Susa%22",
+        "pagine_gialle": "https://www.google.com/search?q=site%3Apaginegialle.it+%22via+Traverse.+Buono%22+%22Susa%22",
+        "pagine_bianche": "https://www.google.com/search?q=site%3Apaginebianche.it+%22via+Traverse.+Buono%22+%22Susa%22",
+        "territorio": "https://www.google.com/search?q=%22via+Traverse.+Buono%22+%22Susa%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
+        "animali_agricoltura": "https://www.google.com/search?q=%22via+Traverse.+Buono%22+%22Susa%22+allevamento+stalla+canile+azienda+agricola+animali",
+        "dork_contesto": "https://www.google.com/search?q=%22via+Traverse.+Buono%22+%22Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
+      },
+      "engine_version": "2",
+      "enrichment_status": "GEOCODE_NOT_FOUND",
+      "geocode": null,
+      "radius_m": 500,
+      "context": {},
+      "public_entities": [],
+      "enriched_at": null
+    },
+    {
       "signal_id": "SIG-CAC4A7F4041FF5",
       "first_seen": "2026-09-05T08:31:53+00:00",
       "is_new": false,
@@ -5201,7 +5300,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22Via+San+Lorenzo+2%22+%22Bussoleno%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
+      "enrichment_status": "ENRICHED",
       "geocode": {
         "lat": 45.1417008,
         "lon": 7.1516431,
@@ -5404,7 +5503,7 @@
           "source": "OpenStreetMap"
         }
       ],
-      "enriched_at": "2026-09-05T08:32:11+00:00"
+      "enriched_at": "2026-09-07T16:48:32+00:00"
     },
     {
       "signal_id": "SIG-8C80AB06D94DB9",
@@ -6083,12 +6182,364 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+bussoleno+26%22+%22Bussoleno%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.137304,
+        "lon": 7.1424089,
+        "display_name": "26, Via Carlo Trattenero, Santa Petronilla, Foresto, Bussoleno, Torino, Piemonte, 10053, Italia",
+        "osm_type": "node",
+        "osm_id": 12621504953
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 55,
+        "public_entities_count": 31,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Ambulatorio veterinario Dr. Zerbola M. Vittoria",
+          "category": "AGRICOLTURA_ANIMALI",
+          "address": "Piazza Quattro Novembre 5a Bussoleno",
+          "phone_public": "+39 330 531 161",
+          "email_public": "",
+          "website": "",
+          "osm_id": 11381204389,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Agrivalle",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5195955721,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Carrefour Express",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "https://www.carrefour.it/punti-vendita/carrefour-express-bussoleno-via-traforo-21-1139.html",
+          "osm_id": 11381177515,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Erboristeria L'Erbavoglio",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7380236460,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Forno di Giuliano",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 2431084858,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Santa Maria Assunta",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 374476033,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Caffè Portici",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 4829391258,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il Golosone",
+          "category": "RISTORAZIONE",
+          "address": "Via Walter Fontan 2 Bussoleno",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 10593992188,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Città del Sole",
+          "category": "RISTORAZIONE",
+          "address": "Via Walter Fontan Bussoleno",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5167650449,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Credenza - Osteria Popolare Bussoleno",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529133,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Mangia Mangia",
+          "category": "RISTORAZIONE",
+          "address": "Via Traforo 16",
+          "phone_public": "+39 329 393 0327",
+          "email_public": "",
+          "website": "https://www.pizzeriamangiamangia.com/",
+          "osm_id": 12029431200,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Pizzeria Peccati di gola",
+          "category": "RISTORAZIONE",
+          "address": "Via Traforo 27",
+          "phone_public": "+39 0122 640642",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12029347064,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Garassino S.N.C. di Ternavasio Dott.ssa Elisabetta e C.",
+          "category": "SALUTE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7380268624,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Roveri",
+          "category": "SALUTE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7380268413,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SCUOLA_CULTURA",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1946042913,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Carabinieri Nucleo Forestale",
+          "category": "SERVIZI",
+          "address": "Via Guido Olmo 4 Bussoleno",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3428438072,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cuore di Panna",
+          "category": "SERVIZI",
+          "address": "Via Traforo 12b Bussoleno",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 6782380141,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "UniCredit Bank",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1946043488,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Western Union",
+          "category": "SERVIZI",
+          "address": "Via Traforo 18 Bussoleno",
+          "phone_public": "+39 0122 49223",
+          "email_public": "",
+          "website": "https://location.westernunion.com/global-services/find-locations/it/torino/bussoleno/c12b1c7f2396979fcdb4a4f53acbac63",
+          "osm_id": 13206827423,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Giardini comunali Lord Baden Powell",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 374484825,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bussoleno - Un'identità da scoprire",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529112,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Casa Aschieri",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529132,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il Falconiere",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529118,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il Mulino",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529126,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il Ponte di Dora",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529113,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Cinta Muraria",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529117,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Porta Superiore o di Francia",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529119,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Locanda della Croce Bianca",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529123,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Mulino Varesio",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529124,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Progetto Arte Aperta",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12500529115,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Val Susa Turismo",
+          "category": "TURISMO",
+          "address": "Via Carlo Trattenero 15 Bussoleno",
+          "phone_public": "+39 0122 642833",
+          "email_public": "vallesusa.turismo@umvs.it",
+          "website": "https://www.valdisusaturismo.it",
+          "osm_id": 8476880508,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T16:48:38+00:00"
     },
     {
       "signal_id": "SIG-1E964102010369",
@@ -6794,7 +7245,7 @@
     {
       "signal_id": "SIG-E0C6CDB0521879",
       "first_seen": "2026-09-07T16:29:56+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 3,
       "territorial_route": [
         "Susa",
@@ -7044,7 +7495,7 @@
       "context": {},
       "public_entities": [],
       "enriched_at": null,
-      "enrichment_error": "HTTP Error 504: Gateway Timeout"
+      "enrichment_error": "HTTP Error 429: Too Many Requests"
     },
     {
       "signal_id": "SIG-C1510B11145E65",
@@ -13850,7 +14301,7 @@
     {
       "signal_id": "SIG-C89F58B254BBED",
       "first_seen": "2026-09-07T16:29:56+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 8,
       "territorial_route": [
         "Susa",
@@ -22325,8 +22776,7 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null,
-      "enrichment_error": "HTTP Error 429: Too Many Requests"
+      "enriched_at": null
     },
     {
       "signal_id": "SIG-A00A9C58E72021",
@@ -22721,7 +23171,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Venaus%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -22771,7 +23221,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Meana+di+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -22871,12 +23321,89 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Salbertrand%22+%22Salbertrand%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.0874465,
+        "lon": 6.8950603,
+        "display_name": "Via Salbertrand, Eclause, Salbertrand, Torino, Piemonte, Italia",
+        "osm_type": "way",
+        "osm_id": 66101013
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 1,
+        "public_entities_count": 6,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Cappella di San Pancrazio",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 760147516,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cantina Alpina",
+          "category": "RISTORAZIONE",
+          "address": "Via Chabrieres 2 Salbertrand",
+          "phone_public": "+39 0122 854536",
+          "email_public": "info@cantinaalpina.it",
+          "website": "https://www.cantinaalpina.it/",
+          "osm_id": 6597169045,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5103690147,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Club Alpino Italiano",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9169447702,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Eclause",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12852728565,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "ICLAUSA",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12853625791,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T16:48:14+00:00"
     },
     {
       "signal_id": "SIG-0508A068309225",
@@ -22921,7 +23448,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22Via+Novalesa.+Ville+in+vendita+a+Via+Novalesa%22+%22Novalesa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "GEOCODE_NOT_FOUND",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -22971,7 +23498,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+moncenisio.+Buono+stato%22+%22Moncenisio%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "GEOCODE_NOT_FOUND",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -23021,7 +23548,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Giaglione%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -23071,7 +23598,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Giaglione%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -23121,7 +23648,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Novalesa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
