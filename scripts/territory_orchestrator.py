@@ -11,6 +11,8 @@ CONFIG = ROOT / "config" / "territory.json"
 SOURCE = ROOT / "data" / "neighborhood_intelligence.json"
 OUT = ROOT / "data" / "territory_operations.json"
 
+EXCLUDED_COMUNI = {"susa"}
+
 
 def norm(value: str) -> str:
     return str(value or "").strip().lower().replace("’", "'")
@@ -26,9 +28,10 @@ def score(signal: dict) -> float:
 def main() -> None:
     cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
     src = json.loads(SOURCE.read_text(encoding="utf-8"))
-    signals = list(src.get("signals") or [])
+    all_signals = list(src.get("signals") or [])
+    signals = [s for s in all_signals if norm(s.get("comune")) not in EXCLUDED_COMUNI]
 
-    primary = cfg["primary_route"]
+    primary = [x for x in cfg["primary_route"] if norm(x) not in EXCLUDED_COMUNI]
     primary_index = {norm(x): i for i, x in enumerate(primary)}
     left = {norm(x) for x in cfg["sinistra"]}
     right = {norm(x) for x in cfg["destra"]}
@@ -72,12 +75,14 @@ def main() -> None:
 
     communes.sort(key=lambda c: (c["primary_rank"], c["side"], norm(c["comune"])))
 
+    excluded_count = len(all_signals) - len(signals)
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "source_generated_at": src.get("generated_at"),
         "policy": cfg["policy"],
         "reference_hub": cfg["reference_hub"],
         "primary_route": primary,
+        "excluded_comuni": ["Susa"],
         "configured_comuni": {
             "sinistra": cfg["sinistra"],
             "destra": cfg["destra"],
@@ -85,6 +90,7 @@ def main() -> None:
         },
         "summary": {
             "signals_total": len(signals),
+            "signals_excluded": excluded_count,
             "communes_with_signals": len(grouped),
             "enriched_total": sum(1 for s in signals if s.get("enrichment_status") == "ENRICHED"),
             "new_total": sum(1 for s in signals if s.get("is_new")),
@@ -94,7 +100,8 @@ def main() -> None:
     }
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print(
-        f"Territory Orchestrator: {payload['summary']['signals_total']} segnali, "
+        f"Territory Orchestrator: {payload['summary']['signals_total']} segnali operativi, "
+        f"{payload['summary']['signals_excluded']} esclusi, "
         f"{payload['summary']['communes_with_signals']} comuni, "
         f"{payload['summary']['public_contacts_total']} riferimenti pubblici."
     )
