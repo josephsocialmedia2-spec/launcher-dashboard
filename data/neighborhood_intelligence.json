@@ -19,7 +19,7 @@
     "Villar Dora",
     "Almese"
   ],
-  "generated_at": "2026-09-07T16:48:03+00:00",
+  "generated_at": "2026-09-07T17:00:26+00:00",
   "source": "https://raw.githubusercontent.com/josephsocialmedia2-spec/immobili-in-zona/main/seller_radar_auto/data/giro_acquisizione_oggi.csv",
   "radius_m": 500,
   "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.",
@@ -7495,7 +7495,7 @@
       "context": {},
       "public_entities": [],
       "enriched_at": null,
-      "enrichment_error": "HTTP Error 429: Too Many Requests"
+      "enrichment_error": "HTTP Error 504: Gateway Timeout"
     },
     {
       "signal_id": "SIG-C1510B11145E65",
@@ -8295,7 +8295,8 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 504: Gateway Timeout"
     },
     {
       "signal_id": "SIG-9887B18134E626",
@@ -8782,12 +8783,45 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Susa+5%22+%22San+Giorio+di+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1199061,
+        "lon": 7.2088144,
+        "display_name": "Via Susa, Malpasso, San Giorio di Susa, Torino, Piemonte, Italia",
+        "osm_type": "way",
+        "osm_id": 668564866
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 27,
+        "public_entities_count": 2,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "VERSINO s.n.c.",
+          "category": "INDUSTRIA_ARTIGIANATO",
+          "address": "B.ta Malpasso 3 San Giorio di Susa",
+          "phone_public": "+39 0122 49660",
+          "email_public": "versinopietre@gmail.com",
+          "website": "https://www.versinopietre.it/",
+          "osm_id": 13706449364,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3300988920,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T17:00:58+00:00"
     },
     {
       "signal_id": "SIG-5DEF3A8464E8BD",
@@ -11220,12 +11254,111 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Copotti+2%22+%22Villar+Focchiardo%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1113565,
+        "lon": 7.2425094,
+        "display_name": "Via Copotti, Truna, Villar Focchiardo, Torino, Piemonte, Italia",
+        "osm_type": "way",
+        "osm_id": 60353518
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 13,
+        "public_entities_count": 8,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Little Ranch",
+          "category": "AGRICOLTURA_ANIMALI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 163696997,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1181634639,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "BricoCenter",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1227881925,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "L. G.",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1227880909,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Unieuro",
+          "category": "COMMERCIO",
+          "address": "Via Nazionale Villar Focchiardo",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1227883482,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Tomassone & Castagneri",
+          "category": "INDUSTRIA_ARTIGIANATO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12533791724,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bar dei Prati",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1111959515,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Farmacia ValSusa",
+          "category": "SALUTE",
+          "address": "Via Nazionale 25 Villar Focchiardo",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 734328200,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T17:01:11+00:00"
     },
     {
       "signal_id": "SIG-C31225A3804B9F",
@@ -12332,7 +12465,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Guido+Bobba+46%22+%22Borgone+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
+      "enrichment_status": "ENRICHED",
       "geocode": {
         "lat": 45.1213544,
         "lon": 7.2411022,
@@ -12403,6 +12536,17 @@
           "source": "OpenStreetMap"
         },
         {
+          "name": "Municipio di Borgone Susa",
+          "category": "RETE_TERRITORIALE",
+          "address": "Piazza Montabone 1 Borgone Susa",
+          "phone_public": "+39 011 9646562",
+          "email_public": "lavoripubblici@comune.borgonesusa.to.it",
+          "website": "https://www.comune.borgonesusa.to.it/",
+          "osm_id": 342865911,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
           "name": "San Rocco",
           "category": "RETE_TERRITORIALE",
           "address": "Via Quattro Novembre Borgone Susa",
@@ -12447,17 +12591,6 @@
           "source": "OpenStreetMap"
         },
         {
-          "name": "Giardinetto",
-          "category": "RISTORAZIONE",
-          "address": "Via Florio Benvenuto",
-          "phone_public": "",
-          "email_public": "",
-          "website": "",
-          "osm_id": 1203944458,
-          "osm_type": "way",
-          "source": "OpenStreetMap"
-        },
-        {
           "name": "Lumière Cafè",
           "category": "RISTORAZIONE",
           "address": "Via Augusto Abegg 32 Borgone Susa",
@@ -12469,19 +12602,8 @@
           "source": "OpenStreetMap"
         },
         {
-          "name": "Municipio di Borgone Susa",
-          "category": "RISTORAZIONE",
-          "address": "Piazza Montabone 1 Borgone Susa",
-          "phone_public": "+39 011 9646562",
-          "email_public": "lavoripubblici@comune.borgonesusa.to.it",
-          "website": "https://www.comune.borgonesusa.to.it/",
-          "osm_id": 342865911,
-          "osm_type": "way",
-          "source": "OpenStreetMap"
-        },
-        {
           "name": "Scuola secondaria di 1° grado",
-          "category": "SCUOLA",
+          "category": "SCUOLA_CULTURA",
           "address": "Via Tarro Boiro 2 Borgone Susa",
           "phone_public": "+390119646374",
           "email_public": "",
@@ -12656,6 +12778,17 @@
           "source": "OpenStreetMap"
         },
         {
+          "name": "Giardinetto",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "Via Florio Benvenuto",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1203944458,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
           "name": "Palestra comunale",
           "category": "SPORT_TEMPO_LIBERO",
           "address": "Via Guido Bobba 41",
@@ -12711,7 +12844,7 @@
           "source": "OpenStreetMap"
         }
       ],
-      "enriched_at": "2026-09-05T08:32:32+00:00"
+      "enriched_at": "2026-09-07T17:01:24+00:00"
     },
     {
       "signal_id": "SIG-921C9C7ADCD86A",
@@ -13357,12 +13490,419 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Tarro+Boiro+5%22+%22Borgone+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.120947,
+        "lon": 7.2379771,
+        "display_name": "Via Tarro Boiro, Costa, Borgone Susa, Torino, Piemonte, Italia",
+        "osm_type": "way",
+        "osm_id": 96611715
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 130,
+        "public_entities_count": 36,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Cascina Roland",
+          "category": "AGRICOLTURA_ANIMALI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 363967592,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "AlexLab",
+          "category": "COMMERCIO",
+          "address": "Via Augusto Abegg 40",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 10892886405,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Coluccio Manuela",
+          "category": "COMMERCIO",
+          "address": "3 Borgone Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 11159097003,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Lineaeffe arredamenti",
+          "category": "COMMERCIO",
+          "address": "Via Augusto Abegg Borgone Susa",
+          "phone_public": "+39 011 964 61 80",
+          "email_public": "",
+          "website": "https://www.arredamentilineaeffe.it/",
+          "osm_id": 3364505824,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Falegnameria Ghiro",
+          "category": "INDUSTRIA_ARTIGIANATO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12093034588,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Chiesa Parrocchiale di San Nicola",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 99377036,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Municipio di Borgone Susa",
+          "category": "RETE_TERRITORIALE",
+          "address": "Piazza Montabone 1 Borgone Susa",
+          "phone_public": "+39 011 9646562",
+          "email_public": "lavoripubblici@comune.borgonesusa.to.it",
+          "website": "https://www.comune.borgonesusa.to.it/",
+          "osm_id": 342865911,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Rocco",
+          "category": "RETE_TERRITORIALE",
+          "address": "Via Quattro Novembre Borgone Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1218454922,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bar Gelateria Penna",
+          "category": "RISTORAZIONE",
+          "address": "Via Augusto Abegg 1a Borgone Susa",
+          "phone_public": "+39 011 964 5085",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3364499800,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bar Italia",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3648728580,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bar Roxy",
+          "category": "RISTORAZIONE",
+          "address": "Via Augusto Abegg 15 Borgone Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3376599194,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cascina Roland",
+          "category": "RISTORAZIONE",
+          "address": "Via Antica di Francia 11 Villar Focchiardo",
+          "phone_public": "+39 011 19323183",
+          "email_public": "info@cascinaroland.com",
+          "website": "http://www.cascinaroland.com/",
+          "osm_id": 160675677,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Giaconera",
+          "category": "RISTORAZIONE",
+          "address": "Via Antica di Francia 1 Villar Focchiardo",
+          "phone_public": "",
+          "email_public": "",
+          "website": "http://www.lagiaconera.it/",
+          "osm_id": 323229699,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Lumière Cafè",
+          "category": "RISTORAZIONE",
+          "address": "Via Augusto Abegg 32 Borgone Susa",
+          "phone_public": "+39 349 419 3274",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3376595695,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Rossi S.N.C. di Rossi Paolo e Silvia",
+          "category": "SALUTE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7380305430,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Scuola secondaria di 1° grado",
+          "category": "SCUOLA_CULTURA",
+          "address": "Via Tarro Boiro 2 Borgone Susa",
+          "phone_public": "+390119646374",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3364525714,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Arma dei Carabinieri",
+          "category": "SERVIZI",
+          "address": "Via Tarro Boiro 24 Borgone Susa",
+          "phone_public": "+39 011 9645003",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1124101996,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1115887192,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "Via Tarro Boiro 2 Borgone Susa",
+          "phone_public": "+39 011 964 58 91",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1124101671,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Azienda Agricola Gusti e Sapori dal Marghè",
+          "category": "SERVIZI",
+          "address": "Via Giaconera 33 Villar Focchiardo",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9240982477,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "comune Borgone Susa",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 11159077845,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Ideal",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1263157045,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il gelato di Giulia",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 10892886505,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Intesa Sanpaolo",
+          "category": "SERVIZI",
+          "address": "Via Augusto Abegg 11 Borgone Susa",
+          "phone_public": "+39 011 9646546",
+          "email_public": "",
+          "website": "https://www.intesasanpaolo.com/",
+          "osm_id": 3376599928,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Parcheggio della stazione",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 310941050,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Parcheggio Valentino",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 585461392,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Poste Italiane",
+          "category": "SERVIZI",
+          "address": "Piazza Montabone 3 Borgone Susa",
+          "phone_public": "+39 011 9645020",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3376603756,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Punto acqua SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 13888035254,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bocciodromo",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1229942371,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "campo calcio a 5",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1229941448,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Giardinetto",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "Via Florio Benvenuto",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1203944458,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Palestra comunale",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "Via Guido Bobba 41",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1229941286,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "parco giochi bimbi",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1229942807,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Parco giochi della chiesa",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1043478701,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "\"Il Castlass\"",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12488375536,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Club Alpino Italiano",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 11673340497,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T17:01:30+00:00"
     },
     {
       "signal_id": "SIG-3E83887EDC2386",
@@ -13412,7 +13952,8 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 429: Too Many Requests"
     },
     {
       "signal_id": "SIG-8C0750B7D3796A",
@@ -13766,7 +14307,8 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 504: Gateway Timeout"
     },
     {
       "signal_id": "SIG-128E7F3D94C9D9",
@@ -14391,12 +14933,342 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Giuseppe%22+%22Sant%27Antonino+di+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1066261,
+        "lon": 7.274805,
+        "display_name": "Via Giuseppe Verdi, Maisonetta, Sant'Antonino di Susa, Torino, Piemonte, 10055, Italia",
+        "osm_type": "way",
+        "osm_id": 250122232
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 294,
+        "public_entities_count": 29,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Adesso Si",
+          "category": "COMMERCIO",
+          "address": "Via Torino 92",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12137813686,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Animali Vanitosi",
+          "category": "COMMERCIO",
+          "address": "Via Torino 64 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12137829183,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Ekom",
+          "category": "COMMERCIO",
+          "address": "Via Moncenisio 91 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1334924235,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Luisella & Paola acconciature",
+          "category": "COMMERCIO",
+          "address": "Via Torino 84 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12137829129,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Pasticceria Corrado",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12137829200,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Profumo di The",
+          "category": "COMMERCIO",
+          "address": "Via Torino 74 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12137829199,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Chiesa Battista",
+          "category": "RETE_TERRITORIALE",
+          "address": "Via Torino 256 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 328640203,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Chiesa di Sant'Antonino Martire",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 328640204,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Municipio di Sant'Antonino di Susa",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 961555681,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Rocco",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 375112706,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Sant'Antonio",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 403723202,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bar...botto",
+          "category": "RISTORAZIONE",
+          "address": "Via Torino 80 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 10991687925,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Caffetteria Trattoria Cavallino Rosso",
+          "category": "RISTORAZIONE",
+          "address": "Piazza della Pace 1a",
+          "phone_public": "+39 011 9640916",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5139587917,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Gran Central Café",
+          "category": "RISTORAZIONE",
+          "address": "Via Roma 41 Sant'Antonino di Susa",
+          "phone_public": "+39 011 536621",
+          "email_public": "",
+          "website": "http://www.grancentralcafe.it/",
+          "osm_id": 3733568683,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Horas",
+          "category": "RISTORAZIONE",
+          "address": "Via Torino 82 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 10991687926,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Cooperativa",
+          "category": "RISTORAZIONE",
+          "address": "Piazza don Oreste Cantore 15 Sant'Antonino di Susa",
+          "phone_public": "+39 3518838556",
+          "email_public": "info@trattorialacooperativa.it",
+          "website": "https://www.trattorialacooperativa.it",
+          "osm_id": 12887424922,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Sharm El Sheikh",
+          "category": "RISTORAZIONE",
+          "address": "Via Torino 76a Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9127089965,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Farmacia Sant'Antonino",
+          "category": "SALUTE",
+          "address": "Via Moncenisio 137 Sant'Antonino di Susa",
+          "phone_public": "+39 011 9649043",
+          "email_public": "",
+          "website": "",
+          "osm_id": 8460912761,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3590412411,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Esso",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3297515007,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Intesa Sanpaolo",
+          "category": "SERVIZI",
+          "address": "Via Augusto Abegg 11",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1744246608,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Poste Italiane",
+          "category": "SERVIZI",
+          "address": "Via Augusto Abegg 22",
+          "phone_public": "+39 011 9640863",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1334925714,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Punto acqua SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "https://www.smatorino.it/punti-acqua/",
+          "osm_id": 13602477692,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Telecom",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12137829242,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "UniCredit Bank",
+          "category": "SERVIZI",
+          "address": "Via Torino 53",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1744262320,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bocciodromo coperto",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 522536369,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Giardini Mahatma Gandhi",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 528989718,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Palazetto dello Sport di Sant'Antonino di Susa",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "Piazza della Pace Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 368939562,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Parco Robert Baden Powell",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1311269837,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T17:02:18+00:00"
     },
     {
       "signal_id": "SIG-D475FBF58435BE",
@@ -14800,12 +15672,155 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Medagli+38%22+%22Sant%27Antonino+di+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1101666,
+        "lon": 7.2776503,
+        "display_name": "Via Medagli, Maisonetta, Sant'Antonino di Susa, Torino, Piemonte, 10055, Italia",
+        "osm_type": "way",
+        "osm_id": 1311803457
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 183,
+        "public_entities_count": 12,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Chiesa Battista",
+          "category": "RETE_TERRITORIALE",
+          "address": "Via Torino 256 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 328640203,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Chiesa di Sant'Antonino Martire",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 328640204,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Municipio di Sant'Antonino di Susa",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 961555681,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Sant'Antonio",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 403723202,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Gran Central Café",
+          "category": "RISTORAZIONE",
+          "address": "Via Roma 41 Sant'Antonino di Susa",
+          "phone_public": "+39 011 536621",
+          "email_public": "",
+          "website": "http://www.grancentralcafe.it/",
+          "osm_id": 3733568683,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Cooperativa",
+          "category": "RISTORAZIONE",
+          "address": "Piazza don Oreste Cantore 15 Sant'Antonino di Susa",
+          "phone_public": "+39 3518838556",
+          "email_public": "info@trattorialacooperativa.it",
+          "website": "https://www.trattorialacooperativa.it",
+          "osm_id": 12887424922,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Farmacia Sant'Antonino",
+          "category": "SALUTE",
+          "address": "Via Moncenisio 137 Sant'Antonino di Susa",
+          "phone_public": "+39 011 9649043",
+          "email_public": "",
+          "website": "",
+          "osm_id": 8460912761,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3590412411,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Eni",
+          "category": "SERVIZI",
+          "address": "Via Moncenisio 162 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 226993142,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Esso",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3297515007,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bocciodromo coperto",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 522536369,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Giardini Mahatma Gandhi",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 528989718,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T17:02:25+00:00"
     },
     {
       "signal_id": "SIG-07D57584B0C42A",
@@ -15423,12 +16438,331 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Moncenisio%22+%22Sant%27Antonino+di+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1086315,
+        "lon": 7.2747553,
+        "display_name": "Via Moncenisio, Maisonetta, Sant'Antonino di Susa, Torino, Piemonte, 10055, Italia",
+        "osm_type": "way",
+        "osm_id": 1078763056
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 276,
+        "public_entities_count": 28,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Adesso Si",
+          "category": "COMMERCIO",
+          "address": "Via Torino 92",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12137813686,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Ekom",
+          "category": "COMMERCIO",
+          "address": "Via Moncenisio 91 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1334924235,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Luisella & Paola acconciature",
+          "category": "COMMERCIO",
+          "address": "Via Torino 84 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12137829129,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Pasticceria Corrado",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12137829200,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Profumo di The",
+          "category": "COMMERCIO",
+          "address": "Via Torino 74 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12137829199,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Chiesa Battista",
+          "category": "RETE_TERRITORIALE",
+          "address": "Via Torino 256 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 328640203,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Chiesa di Sant'Antonino Martire",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 328640204,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Municipio di Sant'Antonino di Susa",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 961555681,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Rocco",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 375112706,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Sant'Antonio",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 403723202,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bar...botto",
+          "category": "RISTORAZIONE",
+          "address": "Via Torino 80 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 10991687925,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Caffetteria Trattoria Cavallino Rosso",
+          "category": "RISTORAZIONE",
+          "address": "Piazza della Pace 1a",
+          "phone_public": "+39 011 9640916",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5139587917,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Gran Central Café",
+          "category": "RISTORAZIONE",
+          "address": "Via Roma 41 Sant'Antonino di Susa",
+          "phone_public": "+39 011 536621",
+          "email_public": "",
+          "website": "http://www.grancentralcafe.it/",
+          "osm_id": 3733568683,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Horas",
+          "category": "RISTORAZIONE",
+          "address": "Via Torino 82 Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 10991687926,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Cooperativa",
+          "category": "RISTORAZIONE",
+          "address": "Piazza don Oreste Cantore 15 Sant'Antonino di Susa",
+          "phone_public": "+39 3518838556",
+          "email_public": "info@trattorialacooperativa.it",
+          "website": "https://www.trattorialacooperativa.it",
+          "osm_id": 12887424922,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Sharm El Sheikh",
+          "category": "RISTORAZIONE",
+          "address": "Via Torino 76a Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9127089965,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Farmacia Sant'Antonino",
+          "category": "SALUTE",
+          "address": "Via Moncenisio 137 Sant'Antonino di Susa",
+          "phone_public": "+39 011 9649043",
+          "email_public": "",
+          "website": "",
+          "osm_id": 8460912761,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3590412411,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Esso",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3297515007,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Intesa Sanpaolo",
+          "category": "SERVIZI",
+          "address": "Via Augusto Abegg 11",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1744246608,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Poste Italiane",
+          "category": "SERVIZI",
+          "address": "Via Augusto Abegg 22",
+          "phone_public": "+39 011 9640863",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1334925714,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Punto acqua SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "https://www.smatorino.it/punti-acqua/",
+          "osm_id": 13602477692,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Telecom",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12137829242,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "UniCredit Bank",
+          "category": "SERVIZI",
+          "address": "Via Torino 53",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1744262320,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bocciodromo coperto",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 522536369,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Giardini Mahatma Gandhi",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 528989718,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Palazetto dello Sport di Sant'Antonino di Susa",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "Piazza della Pace Sant'Antonino di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 368939562,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Parco Robert Baden Powell",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1311269837,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T17:02:33+00:00"
     },
     {
       "signal_id": "SIG-945FAD9D10DCD6",
@@ -16864,7 +18198,8 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 429: Too Many Requests"
     },
     {
       "signal_id": "SIG-B8EE6AFBE3D499",
