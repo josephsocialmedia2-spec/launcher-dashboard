@@ -52,9 +52,12 @@ jobs:
           assert len(cfg['destra']) == 24
           assert out['configured_comuni']['total'] == 40
           assert out['policy'] == 'FASCIA_CONTINUA'
+          assert out['excluded_policy'] == 'ALL_FUORI_LISTA'
           assert out['summary']['signals_total'] >= 1
           assert out['communes']
-          print('PASS territorial architecture')
+          assert all(c.get('side') in {'SINISTRA','DESTRA'} for c in out['communes'])
+          assert not any(c.get('side') == 'FUORI_LISTA' for c in out['communes'])
+          print('PASS territorial architecture | FUORI_LISTA=0')
           PY
 
       - name: Commit refreshed data
