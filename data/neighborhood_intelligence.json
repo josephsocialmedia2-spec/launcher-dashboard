@@ -19,7 +19,7 @@
     "Villar Dora",
     "Almese"
   ],
-  "generated_at": "2026-09-07T17:00:26+00:00",
+  "generated_at": "2026-09-07T20:36:39+00:00",
   "source": "https://raw.githubusercontent.com/josephsocialmedia2-spec/immobili-in-zona/main/seller_radar_auto/data/giro_acquisizione_oggi.csv",
   "radius_m": 500,
   "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.",
@@ -7489,13 +7489,166 @@
         "dork_contesto": "https://www.google.com/search?q=%22Via+Susa%2C+2%22+%22San+Giorio+di+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1295386,
+        "lon": 7.1730137,
+        "display_name": "2, Via Susa, La Balma, San Giorio di Susa, Torino, Piemonte, 10050, Italia",
+        "osm_type": "node",
+        "osm_id": 13395620900
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null,
-      "enrichment_error": "HTTP Error 504: Gateway Timeout"
+      "context": {
+        "residential_buildings_osm": 68,
+        "public_entities_count": 13,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "COMMERCIO",
+          "address": "Piazza Giordano Velino 9 San Giorio di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3156998291,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Compro Qui",
+          "category": "COMMERCIO",
+          "address": "Piazza Giordano Velino 13 San Giorio di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3157020993,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella di San Lorenzo",
+          "category": "RETE_TERRITORIALE",
+          "address": "Piazza della Chiesa San Giorio di Susa",
+          "phone_public": "+39 0122 622640",
+          "email_public": "museo@centroculturalediocesano.it",
+          "website": "https://www.centroculturalediocesano.it/",
+          "osm_id": 310289390,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella di San Sebastiano",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 424590106,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Chiesa Parrocchiale di San Giorgio",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 290326296,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Municipio di San Giorio di Susa",
+          "category": "RETE_TERRITORIALE",
+          "address": "Piazza Giordano Velino San Giorio di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 310282853,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Rocco",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 960196441,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Antica Trattoria Castel Nuovo",
+          "category": "RISTORAZIONE",
+          "address": "Via Walter Fontan 21 San Giorio di Susa",
+          "phone_public": "+39 0122 48555",
+          "email_public": "",
+          "website": "",
+          "osm_id": 310289391,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "BarCollo",
+          "category": "RISTORAZIONE",
+          "address": "Via Carlo Carli 96 San Giorio di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3156998299,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Feudo San Giorio",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 13429483805,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Giorgio Pincetti Enrico",
+          "category": "SALUTE",
+          "address": "Piazza Giordano Velino 11 San Giorio di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3156998279,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Punto acqua SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "https://www.smatorino.it/punti-acqua/",
+          "osm_id": 13602622893,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Ufficio Postale",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9580220792,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T20:36:43+00:00"
     },
     {
       "signal_id": "SIG-C1510B11145E65",
@@ -8290,13 +8443,166 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Combattenti%22+%22San+Giorio+di+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1292662,
+        "lon": 7.176513,
+        "display_name": "Via Combattenti, Rivetto, San Giorio di Susa, Torino, Piemonte, 10053, Italia",
+        "osm_type": "way",
+        "osm_id": 1293852147
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null,
-      "enrichment_error": "HTTP Error 504: Gateway Timeout"
+      "context": {
+        "residential_buildings_osm": 91,
+        "public_entities_count": 13,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "COMMERCIO",
+          "address": "Piazza Giordano Velino 9 San Giorio di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3156998291,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Compro Qui",
+          "category": "COMMERCIO",
+          "address": "Piazza Giordano Velino 13 San Giorio di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3157020993,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella di San Lorenzo",
+          "category": "RETE_TERRITORIALE",
+          "address": "Piazza della Chiesa San Giorio di Susa",
+          "phone_public": "+39 0122 622640",
+          "email_public": "museo@centroculturalediocesano.it",
+          "website": "https://www.centroculturalediocesano.it/",
+          "osm_id": 310289390,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella di San Sebastiano",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 424590106,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Chiesa Parrocchiale di San Giorgio",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 290326296,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Municipio di San Giorio di Susa",
+          "category": "RETE_TERRITORIALE",
+          "address": "Piazza Giordano Velino San Giorio di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 310282853,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Rocco",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 960196441,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Antica Trattoria Castel Nuovo",
+          "category": "RISTORAZIONE",
+          "address": "Via Walter Fontan 21 San Giorio di Susa",
+          "phone_public": "+39 0122 48555",
+          "email_public": "",
+          "website": "",
+          "osm_id": 310289391,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "BarCollo",
+          "category": "RISTORAZIONE",
+          "address": "Via Carlo Carli 96 San Giorio di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3156998299,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Feudo San Giorio",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 13429483805,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Giorgio Pincetti Enrico",
+          "category": "SALUTE",
+          "address": "Piazza Giordano Velino 11 San Giorio di Susa",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3156998279,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Punto acqua SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "https://www.smatorino.it/punti-acqua/",
+          "osm_id": 13602622893,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Ufficio Postale",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9580220792,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T20:36:49+00:00"
     },
     {
       "signal_id": "SIG-9887B18134E626",
@@ -13953,7 +14259,7 @@
       "context": {},
       "public_entities": [],
       "enriched_at": null,
-      "enrichment_error": "HTTP Error 429: Too Many Requests"
+      "enrichment_error": "HTTP Error 504: Gateway Timeout"
     },
     {
       "signal_id": "SIG-8C0750B7D3796A",
@@ -14308,7 +14614,7 @@
       "context": {},
       "public_entities": [],
       "enriched_at": null,
-      "enrichment_error": "HTTP Error 504: Gateway Timeout"
+      "enrichment_error": "HTTP Error 429: Too Many Requests"
     },
     {
       "signal_id": "SIG-128E7F3D94C9D9",
@@ -18294,12 +18600,67 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Torino+23%22+%22Vaie%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1062247,
+        "lon": 7.2981103,
+        "display_name": "Via Torino, Vaie, Torino, Piemonte, 10055, Italia",
+        "osm_type": "way",
+        "osm_id": 352504936
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 10,
+        "public_entities_count": 4,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "BMA",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9312515431,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Soralamà",
+          "category": "RISTORAZIONE",
+          "address": "Via Nazionale 14 Vaie",
+          "phone_public": "+39 011 9631977",
+          "email_public": "",
+          "website": "https://www.soralama.it/",
+          "osm_id": 281251031,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3582812052,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Orme ASD",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 99021950,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T20:37:34+00:00"
     },
     {
       "signal_id": "SIG-794A3E697083F4",
@@ -19486,12 +19847,89 @@
         "dork_contesto": "https://www.google.com/search?q=%22Via+Salbertrand+74%22+%22Salbertrand%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.0874465,
+        "lon": 6.8950603,
+        "display_name": "Via Salbertrand, Eclause, Salbertrand, Torino, Piemonte, Italia",
+        "osm_type": "way",
+        "osm_id": 66101013
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 1,
+        "public_entities_count": 6,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Cappella di San Pancrazio",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 760147516,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cantina Alpina",
+          "category": "RISTORAZIONE",
+          "address": "Via Chabrieres 2 Salbertrand",
+          "phone_public": "+39 0122 854536",
+          "email_public": "info@cantinaalpina.it",
+          "website": "https://www.cantinaalpina.it/",
+          "osm_id": 6597169045,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5103690147,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Club Alpino Italiano",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9169447702,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Eclause",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12852728565,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "ICLAUSA",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12853625791,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T20:37:49+00:00"
     },
     {
       "signal_id": "SIG-169B539F6C6280",
@@ -21153,12 +21591,100 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Soubeyrand+10%22+%22Chiomonte%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1043786,
+        "lon": 6.9926998,
+        "display_name": "10, Via Soubeyrand, Frais, Chiomonte, Torino, Piemonte, 10050, Italia",
+        "osm_type": "node",
+        "osm_id": 10840420902
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 35,
+        "public_entities_count": 7,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "San Bartolomeo",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 430222931,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Albergo Belvedere",
+          "category": "RISTORAZIONE",
+          "address": "Via Argueil 1 Frazione Frais - Chiomonte",
+          "phone_public": "+39 0122 655226",
+          "email_public": "",
+          "website": "",
+          "osm_id": 2368355469,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Capannina",
+          "category": "RISTORAZIONE",
+          "address": "Via Partigiani Monte Assietta 18 Chiomonte",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 4068274702,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Locanda Assietta",
+          "category": "RISTORAZIONE",
+          "address": "Piazza Olimpiadi Invernali 2006 Chiomonte",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1672718658,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Primo Sole",
+          "category": "RISTORAZIONE",
+          "address": "Via Valets 2 Chiomonte",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1672718691,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 2419098630,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Regione Piemonte",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9963848453,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T20:37:55+00:00"
     },
     {
       "signal_id": "SIG-01C79A8A3235D6",
@@ -21468,12 +21994,155 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+exilles+84%22+%22Exilles%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.0994566,
+        "lon": 6.931893,
+        "display_name": "Via Alpini, Rif, Exilles, Torino, Piemonte, Italia",
+        "osm_type": "way",
+        "osm_id": 38553123
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 1,
+        "public_entities_count": 12,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Comune di Exilles",
+          "category": "RETE_TERRITORIALE",
+          "address": "Via Finanze 2",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 781763909,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Pietro Apostolo",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 44491334,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cafè Il Forte",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 13076038168,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Corte dei Mangioni",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 13076038164,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Quadriglia",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 13076038165,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Osteria degli Archibugi",
+          "category": "RISTORAZIONE",
+          "address": "Frazione Plantï 3 Exilles",
+          "phone_public": "+39 0122 58199",
+          "email_public": "info@osteriadegliarchibugi.it",
+          "website": "",
+          "osm_id": 3195342915,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 456403831,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Punto acqua SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "https://www.smatorino.it/punti-acqua/",
+          "osm_id": 13602621686,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Falesia dei Lupi - Settore Scuola",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "Exilles",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 14058633105,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Albergo del Forte",
+          "category": "TURISMO",
+          "address": "Frazione Plantï 3 Exilles",
+          "phone_public": "+39 0122 58199",
+          "email_public": "info@osteriadegliarchibugi.it",
+          "website": "",
+          "osm_id": 313535540,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La corte",
+          "category": "TURISMO",
+          "address": "Via Alpini 1 Exilles",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 6687610581,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Terzo Paradiso",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12754393709,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-07T20:38:07+00:00"
     },
     {
       "signal_id": "SIG-2641521DB21C55",
@@ -23531,7 +24200,8 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 429: Too Many Requests"
     },
     {
       "signal_id": "SIG-068BA070E456D5",
@@ -23631,7 +24301,8 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 429: Too Many Requests"
     },
     {
       "signal_id": "SIG-33003F2B876936",
@@ -24111,7 +24782,8 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "<urlopen error [Errno 101] Network is unreachable>"
     },
     {
       "signal_id": "SIG-A00A9C58E72021",
