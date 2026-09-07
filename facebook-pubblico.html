@@ -84,7 +84,7 @@ let groupsCache=[];
 function safe(k,d){try{const v=JSON.parse(localStorage.getItem(k)||'null');return v??d}catch(e){return d}}
 function day(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Rome'}).format(new Date())}
 function now(){return new Date().toISOString()}
-function esc(v){return String(v??'').replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[s]))}
+function esc(v){return String(v??'').replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]))}
 function state(){const s=safe(STORE,{});return{pageUrl:s.pageUrl||'',invites:Array.isArray(s.invites)?s.invites:[],shares:Array.isArray(s.shares)?s.shares:[],groups:s.groups&&typeof s.groups==='object'?s.groups:{},campaign:s.campaign||''}}
 function saveState(s){localStorage.setItem(STORE,JSON.stringify(s));renderAll()}
 function radar(){const a=safe(RADAR,[]);return Array.isArray(a)?a:[]}
