@@ -64,8 +64,8 @@
 </section>
 
 <section class="panel" id="gruppi">
-<div class="top"><div><h2>PASSO 12 · Utilizza gruppi pertinenti</h2><div class="small">Vengono importati solo i gruppi in cui risulti già iscritto. Prima di distribuire un contenuto registra regolamento e possibilità di pubblicare come Pagina.</div></div><div class="actions" style="margin-top:0"><a class="btn" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/groups.html">APRI GROUPS RADAR</a><button class="btn alt" onclick="loadGroups()">AGGIORNA GRUPPI</button></div></div>
-<div class="notice">Regola operativa: non pubblicare lo stesso contenuto ovunque. Usa solo gruppi coerenti con territorio e contenuto, verifica il regolamento e adatta il testo prima della pubblicazione.</div>
+<div class="top"><div><h2>PASSO 12 · Utilizza gruppi pertinenti</h2><div class="small">Usa solo gruppi realmente pertinenti al territorio operativo F1 centrato su Villar Dora. Prima di distribuire un contenuto registra regolamento, pertinenza territoriale e possibilità di pubblicare come Pagina.</div></div><div class="actions" style="margin-top:0"><span class="badge good">CENTRO · VILLAR DORA</span><a class="btn" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/groups.html">APRI GROUPS RADAR</a><button class="btn alt" onclick="loadGroups()">AGGIORNA GRUPPI</button></div></div>
+<div class="notice">Regola operativa F1: usa solo gruppi coerenti con Villar Dora e con i comuni del territorio F1. Verifica sempre regolamento, pertinenza territoriale e possibilità di pubblicare come Pagina oppure solo da profilo personale. Adatta il contenuto al singolo gruppo e non duplicare lo stesso post indiscriminatamente. Sant’Ambrogio di Torino resta escluso dalle attività di acquisizione.</div>
 <div class="grid" style="margin-top:10px"><input class="field full" id="campaignContent" placeholder="Contenuto/campagna in lavorazione: titolo, URL o breve descrizione"><button class="btn full" onclick="saveCampaign()">SALVA CONTENUTO IN LAVORAZIONE</button></div>
 <div id="groupsList"></div>
 </section>
@@ -84,7 +84,7 @@ let groupsCache=[];
 function safe(k,d){try{const v=JSON.parse(localStorage.getItem(k)||'null');return v??d}catch(e){return d}}
 function day(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Rome'}).format(new Date())}
 function now(){return new Date().toISOString()}
-function esc(v){return String(v??'').replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]))}
+function esc(v){return String(v??'').replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[s]))}
 function state(){const s=safe(STORE,{});return{pageUrl:s.pageUrl||'',invites:Array.isArray(s.invites)?s.invites:[],shares:Array.isArray(s.shares)?s.shares:[],groups:s.groups&&typeof s.groups==='object'?s.groups:{},campaign:s.campaign||''}}
 function saveState(s){localStorage.setItem(STORE,JSON.stringify(s));renderAll()}
 function radar(){const a=safe(RADAR,[]);return Array.isArray(a)?a:[]}
