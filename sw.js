@@ -1,4 +1,4 @@
-const CACHE='f1-operativo-v20260901-radar-susa20-2';
+const CACHE='f1-operativo-v20260908-pwa-cache-fix';
 const STATIC=[
   './oggi.html',
   './radar-edilizio.html',
@@ -6,11 +6,9 @@ const STATIC=[
   './giro-acquisizione.html',
   './telefonate-oggi.html',
   './directory-radar-mobile.html',
-  './incrocio-giro-contatti.html',
   './crm.html',
   './seller-radar-unico.html',
   './seller-segnalati.html',
-  './market-intelligence.html',
   './organizer-lunedi.html',
   './gruppi-social-f1.html',
   './gestione-app.html',
