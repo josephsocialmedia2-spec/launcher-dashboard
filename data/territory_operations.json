@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-07T20:40:25+00:00",
-  "source_generated_at": "2026-09-07T20:36:39+00:00",
+  "generated_at": "2026-09-07T23:33:09+00:00",
+  "source_generated_at": "2026-09-07T23:32:02+00:00",
   "policy": "FASCIA_CONTINUA",
   "reference_hub": "Villar Dora",
   "primary_route": [
@@ -86,9 +86,9 @@
     "signals_excluded": 75,
     "communes_with_signals": 8,
     "excluded_communes_count": 13,
-    "enriched_total": 49,
+    "enriched_total": 52,
     "new_total": 0,
-    "public_contacts_total": 132
+    "public_contacts_total": 137
   },
   "communes": [
     {
@@ -5350,9 +5350,9 @@
       "primary_rank": 5,
       "signals_count": 21,
       "new_signals": 0,
-      "enriched_signals": 10,
-      "pending_signals": 2,
-      "public_contacts_count": 37,
+      "enriched_signals": 12,
+      "pending_signals": 0,
+      "public_contacts_count": 39,
       "signals": [
         {
           "signal_id": "SIG-BDDAA46B977B3D",
@@ -7124,13 +7124,100 @@
             "dork_contesto": "https://www.google.com/search?q=%22via+Montenero+13%22+%22Borgone+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "ERROR",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.1154529,
+            "lon": 7.2707188,
+            "display_name": "Via Montenero, Molere di Borgone, Borgone Susa, Torino, Piemonte, 10055, Italia",
+            "osm_type": "way",
+            "osm_id": 692649082
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null,
-          "enrichment_error": "HTTP Error 504: Gateway Timeout"
+          "context": {
+            "residential_buildings_osm": 96,
+            "public_entities_count": 7,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "Cappella di San Valeriano",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 444318984,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Cappella romanica di San Valeriano",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 85191357,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "La bottega di San Valeriano",
+              "category": "RISTORAZIONE",
+              "address": "Via S.S. 24 16 Borgone Susa",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 190434286,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 987941114,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Campetto calcio bimbi",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1203955678,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Masso Molere G.C.G.",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1003264100,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Parco giochi San Valeriano",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "Via Ponte Dora",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1043478527,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-07T23:32:12+00:00"
         },
         {
           "signal_id": "SIG-53114557A90CEF",
@@ -7175,13 +7262,177 @@
             "dork_contesto": "https://www.google.com/search?q=%22via+dei+Grav%C3%A8+4%22+%22Borgone+Susa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "ERROR",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.1188701,
+            "lon": 7.2444227,
+            "display_name": "Via dei Gravè, Costa, Borgone Susa, Torino, Piemonte, 10055, Italia",
+            "osm_type": "way",
+            "osm_id": 427569791
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null,
-          "enrichment_error": "HTTP Error 429: Too Many Requests"
+          "context": {
+            "residential_buildings_osm": 58,
+            "public_entities_count": 14,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "Falegnameria Ghiro",
+              "category": "INDUSTRIA_ARTIGIANATO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12093034588,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Chiesa Parrocchiale di San Nicola",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 99377036,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Bar Gelateria Penna",
+              "category": "RISTORAZIONE",
+              "address": "Via Augusto Abegg 1a Borgone Susa",
+              "phone_public": "+39 011 964 5085",
+              "email_public": "",
+              "website": "",
+              "osm_id": 3364499800,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "ACSEL",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 11272206401,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Arma dei Carabinieri",
+              "category": "SERVIZI",
+              "address": "Via Tarro Boiro 24 Borgone Susa",
+              "phone_public": "+39 011 9645003",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1124101996,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 3366470446,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Ideal",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1263157045,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Parcheggio del Cimitero",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 585181664,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Punto acqua SMAT",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 13888035254,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Bocciodromo",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1229942371,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "campo calcio a 5",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1229941448,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Palestra comunale",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "Via Guido Bobba 41",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1229941286,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "parco giochi bimbi",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1229942807,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Parco giochi della chiesa",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1043478701,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-07T23:32:18+00:00"
         },
         {
           "signal_id": "SIG-54EAEAD553DA7B",
@@ -11214,9 +11465,9 @@
       "primary_rank": 7,
       "signals_count": 8,
       "new_signals": 0,
-      "enriched_signals": 5,
-      "pending_signals": 1,
-      "public_contacts_count": 9,
+      "enriched_signals": 6,
+      "pending_signals": 0,
+      "public_contacts_count": 12,
       "signals": [
         {
           "signal_id": "SIG-F6B8579B4378DD",
@@ -11642,13 +11893,188 @@
             "dork_contesto": "https://www.google.com/search?q=%22Via+Peirolero+28%22+%22Vaie%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "ERROR",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.1044396,
+            "lon": 7.2850824,
+            "display_name": "Via Peirolero, Vaie, Torino, Piemonte, 10055, Italia",
+            "osm_type": "way",
+            "osm_id": 228759176
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null,
-          "enrichment_error": "HTTP Error 429: Too Many Requests"
+          "context": {
+            "residential_buildings_osm": 110,
+            "public_entities_count": 15,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "COMMERCIO",
+              "address": "Via Primo Maggio 13 Vaie",
+              "phone_public": "+393420074357",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9959093614,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Il Forno",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 5647342516,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Mercatò",
+              "category": "COMMERCIO",
+              "address": "Via Martiri della Libertà 50 Vaie",
+              "phone_public": "+39 011 9640830",
+              "email_public": "",
+              "website": "https://www.mymercato.it/punti-vendita/piemonte/mercato-vaie",
+              "osm_id": 265446643,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Municipio di Vaie",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 352512446,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Santa Margherita",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 429066743,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Santuario di San Pancrazio",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 813223258,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Locanda del Priore",
+              "category": "RISTORAZIONE",
+              "address": "Piazza del Priore 1",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 11984881904,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Trattoria - Caffè Nalu's",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 5647342517,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Farmacia Padre Pio di Neopharma S.N.C. Della Dott.ssa Chiellino Carlotta & C.",
+              "category": "SALUTE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1183462333,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 5647342514,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Eni",
+              "category": "SERVIZI",
+              "address": "Via Moncenisio 162 Sant'Antonino di Susa",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 226993142,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Fontana della Cappella",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 5647343431,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Fontana sorgenti di Vaie",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4419150772,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Museo Laboratorio della Preistoria",
+              "category": "TURISMO",
+              "address": "Via San Pancrazio 4 Vaie",
+              "phone_public": "+39 339 8274420",
+              "email_public": "info@museopreistoriavaie.it",
+              "website": "https://www.museopreistoriavaie.it/it/home",
+              "osm_id": 6433756035,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Museo Laboratorio della Preistoria",
+              "category": "TURISMO",
+              "address": "Via San Pancrazio 4 Vaie",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1284089892,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-07T23:32:23+00:00"
         },
         {
           "signal_id": "SIG-25F02BACB62720",
