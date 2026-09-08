@@ -19,7 +19,7 @@
     "Villar Dora",
     "Almese"
   ],
-  "generated_at": "2026-09-08T08:49:21+00:00",
+  "generated_at": "2026-09-08T09:45:22+00:00",
   "source": "https://raw.githubusercontent.com/josephsocialmedia2-spec/immobili-in-zona/main/seller_radar_auto/data/giro_acquisizione_oggi.csv",
   "radius_m": 500,
   "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.",
@@ -13617,12 +13617,254 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Torino%22+%22Chiusa+di+San+Michele%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1084528,
+        "lon": 7.3151509,
+        "display_name": "Via Torino, Ponte Rosso, Chiusa di San Michele, Torino, Piemonte, 10055, Italia",
+        "osm_type": "way",
+        "osm_id": 45894578
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 47,
+        "public_entities_count": 21,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Autoriparazioni Loviso",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 598388402,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Carrozzeria Marchesini",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 598388397,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cose di Casa",
+          "category": "COMMERCIO",
+          "address": "Via Susa 99 Chiusa di San Michele",
+          "phone_public": "+39 011 9632581",
+          "email_public": "cosedicasadiblandino@libero.it",
+          "website": "http://www.cosedicasadiblandino.com",
+          "osm_id": 3770207929,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Country Shop",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5163375515,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "GFC",
+          "category": "COMMERCIO",
+          "address": "Via Susa 89 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5163375516,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Glass DOC Chiusa San Michele",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5611302685,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Mongioj",
+          "category": "COMMERCIO",
+          "address": "Via Susa 85 Chiusa di San Michele",
+          "phone_public": "+39 011 9643807",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3770207894,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Motorcity",
+          "category": "COMMERCIO",
+          "address": "Via Susa 95 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3770207908,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "RPR Ceramiche",
+          "category": "COMMERCIO",
+          "address": "Via Susa 30 Chiusa di San Michele",
+          "phone_public": "+39 011 9644856",
+          "email_public": "",
+          "website": "http://www.rprceramiche.com/",
+          "osm_id": 3770227836,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "SAG Italia",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3770227831,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Serramenti DGA",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9193123105,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Silvia Atelier",
+          "category": "COMMERCIO",
+          "address": "Via Susa 38 A Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "http://www.abitidasposasilvia.com/",
+          "osm_id": 3773073215,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Susa Marmi",
+          "category": "COMMERCIO",
+          "address": "Via Susa 87 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3770207903,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "4 punto zero",
+          "category": "RISTORAZIONE",
+          "address": "Via Susa 107 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7243169272,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Buondì",
+          "category": "RISTORAZIONE",
+          "address": "Via Susa 63 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3770227818,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Caffè Chantilly",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7439180531,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "L'Abituè",
+          "category": "RISTORAZIONE",
+          "address": "Via Condove 4 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3784307825,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Sfinge",
+          "category": "RISTORAZIONE",
+          "address": "Via Susa 73 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5163375514,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Farmacia San Michele",
+          "category": "SALUTE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9193123104,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1519973928,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Stazione",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 8613263916,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-08T09:45:27+00:00"
     },
     {
       "signal_id": "SIG-B4C283AD3AF2F2",
@@ -13667,7 +13909,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22vicolo+G.+Pietro+Riva+13%22+%22Chiusa+di+San+Michele%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "GEOCODE_NOT_FOUND",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -13717,12 +13959,320 @@
         "dork_contesto": "https://www.google.com/search?q=%22vicolo+Nuovo%22+%22Chiusa+di+San+Michele%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1022955,
+        "lon": 7.3265113,
+        "display_name": "Vicolo Nuovo, Chiusa di San Michele, Torino, Piemonte, 10055, Italia",
+        "osm_type": "way",
+        "osm_id": 373448752
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 386,
+        "public_entities_count": 27,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "COMMERCIO",
+          "address": "Via Roma 14 Chiusa di San Michele",
+          "phone_public": "+39 011 9644577",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3771486046,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Crai",
+          "category": "COMMERCIO",
+          "address": "Via Susa 37 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 373620987,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Foto Studio Ottica Video Terry",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7274441325,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il Borgo della Chiusa",
+          "category": "COMMERCIO",
+          "address": "Via Susa 21 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "ilborgodellachiusa@libero.it",
+          "website": "",
+          "osm_id": 5647520182,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il Brutto Anatroccolo",
+          "category": "COMMERCIO",
+          "address": "Via Ferruccio Cantore 23 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3790045721,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il pettine di Cinzia",
+          "category": "COMMERCIO",
+          "address": "Via Torino 16 B Chiusa di San Michele",
+          "phone_public": "+39 011 9643041",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3770894554,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Panificio Cantore",
+          "category": "COMMERCIO",
+          "address": "Via Otto Maggio 2 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3773073208,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella dell'Immacolata Concezione",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 373726300,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella della Madonna della Neve",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 374404582,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Municipio di Chiusa Di San Michele",
+          "category": "RETE_TERRITORIALE",
+          "address": "Piazza Bruno Bauchiero 2 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "http://www.comune.chiusadisanmichele.to.it",
+          "osm_id": 330027654,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Pietro Apostolo",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 105876754,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Santa Croce",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 372978330,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Angel",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3371509988,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SALUTE",
+          "address": "Via Ex Combattenti 25 Chiusa di San Michele",
+          "phone_public": "+39 011 9643336",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3773073197,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Carlo Maritano",
+          "category": "SALUTE",
+          "address": "Via Roma 1 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3773073198,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Maura De Andreis",
+          "category": "SALUTE",
+          "address": "Via Roma 1 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7274441318,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Biblioteca comunale Bruno Caccia",
+          "category": "SCUOLA_CULTURA",
+          "address": "Via Ferruccio Cantore 14 Chiusa di San Michele",
+          "phone_public": "+39 329 3174870",
+          "email_public": "biblioteca@comune.chiusadisanmichele.to.it",
+          "website": "",
+          "osm_id": 8724187995,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Scuola primaria Sandro Pertini",
+          "category": "SCUOLA_CULTURA",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 373869159,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1219140486,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Banca Sella",
+          "category": "SERVIZI",
+          "address": "Via Ferruccio Cantore 4 Chiusa di San Michele",
+          "phone_public": "+39 011 9643332",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3369862907,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Banca Sella",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3769226350,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "BiciGrill San Michele",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 8475680853,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Punto acqua SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "https://www.smatorino.it/punti-acqua/",
+          "osm_id": 13602477688,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 11378535812,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Parco Don Oreste Cantore",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 962226202,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Area camper Chiusa di San Michele",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1444397380,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Grotta dei Franchi",
+          "category": "TURISMO",
+          "address": "Via Roma 20 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "lagrottadeifranchi@tiscali.it",
+          "website": "http://lagrottadeifranchi.it/",
+          "osm_id": 3771486054,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-08T09:45:36+00:00"
     },
     {
       "signal_id": "SIG-1B9A4C9E65F177",
@@ -13767,7 +14317,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Generale%22+%22Chiusa+di+San+Michele%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "GEOCODE_NOT_FOUND",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -13817,12 +14367,13 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Susa+63%22+%22Chiusa+di+San+Michele%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "ERROR",
       "geocode": null,
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 504: Gateway Timeout"
     },
     {
       "signal_id": "SIG-DEF151EADFE1AC",
@@ -13867,12 +14418,13 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Susa+95%22+%22Chiusa+di+San+Michele%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "ERROR",
       "geocode": null,
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 504: Gateway Timeout"
     },
     {
       "signal_id": "SIG-146F8ADE843870",
@@ -13917,12 +14469,243 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Susa+12%22+%22Chiusa+di+San+Michele%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1060417,
+        "lon": 7.3226724,
+        "display_name": "12, Via Susa, Ponte Rosso, Chiusa di San Michele, Torino, Piemonte, 10050, Italia",
+        "osm_type": "node",
+        "osm_id": 5647536798
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 188,
+        "public_entities_count": 20,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Bottega della Carne",
+          "category": "COMMERCIO",
+          "address": "Via Susa 37 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3770612736,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Crai",
+          "category": "COMMERCIO",
+          "address": "Via Susa 37 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 373620987,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Foto Studio Ottica Video Terry",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7274441325,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il Borgo della Chiusa",
+          "category": "COMMERCIO",
+          "address": "Via Susa 21 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "ilborgodellachiusa@libero.it",
+          "website": "",
+          "osm_id": 5647520182,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il pettine di Cinzia",
+          "category": "COMMERCIO",
+          "address": "Via Torino 16 B Chiusa di San Michele",
+          "phone_public": "+39 011 9643041",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3770894554,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Panificio Cantore",
+          "category": "COMMERCIO",
+          "address": "Via Otto Maggio 2 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3773073208,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "RPR Ceramiche",
+          "category": "COMMERCIO",
+          "address": "Via Susa 30 Chiusa di San Michele",
+          "phone_public": "+39 011 9644856",
+          "email_public": "",
+          "website": "http://www.rprceramiche.com/",
+          "osm_id": 3770227836,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "SAG Italia",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3770227831,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Serramenti DGA",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9193123105,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Silvia Atelier",
+          "category": "COMMERCIO",
+          "address": "Via Susa 38 A Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "http://www.abitidasposasilvia.com/",
+          "osm_id": 3773073215,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella della Madonna della Neve",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 374404582,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Buondì",
+          "category": "RISTORAZIONE",
+          "address": "Via Susa 63 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3770227818,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Sfinge",
+          "category": "RISTORAZIONE",
+          "address": "Via Susa 73 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5163375514,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Trattoria Montefiori",
+          "category": "RISTORAZIONE",
+          "address": "Via Susa 47 Chiusa di San Michele",
+          "phone_public": "+39 011 9644270",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3371509992,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Farmacia San Michele",
+          "category": "SALUTE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9193123104,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Scuola primaria Sandro Pertini",
+          "category": "SCUOLA_CULTURA",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 373869159,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3369862387,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Punto acqua SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "https://www.smatorino.it/punti-acqua/",
+          "osm_id": 13602477688,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 11378535812,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Parco Don Oreste Cantore",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 962226202,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-08T09:46:09+00:00"
     },
     {
       "signal_id": "SIG-F6B865655D4B62",
@@ -13967,12 +14750,13 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Roma+67%22+%22Chiusa+di+San+Michele%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "ERROR",
       "geocode": null,
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 429: Too Many Requests"
     },
     {
       "signal_id": "SIG-F47E62FE057C31",
@@ -14017,12 +14801,331 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Ex%22+%22Chiusa+di+San+Michele%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1045312,
+        "lon": 7.3277257,
+        "display_name": "Via Ex Combattenti, Chiusa di San Michele, Torino, Piemonte, 10055, Italia",
+        "osm_type": "way",
+        "osm_id": 374404589
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 385,
+        "public_entities_count": 28,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "COMMERCIO",
+          "address": "Via Roma 14 Chiusa di San Michele",
+          "phone_public": "+39 011 9644577",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3771486046,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bottega della Carne",
+          "category": "COMMERCIO",
+          "address": "Via Susa 37 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3770612736,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Crai",
+          "category": "COMMERCIO",
+          "address": "Via Susa 37 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 373620987,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Foto Studio Ottica Video Terry",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7274441325,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il Borgo della Chiusa",
+          "category": "COMMERCIO",
+          "address": "Via Susa 21 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "ilborgodellachiusa@libero.it",
+          "website": "",
+          "osm_id": 5647520182,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il Brutto Anatroccolo",
+          "category": "COMMERCIO",
+          "address": "Via Ferruccio Cantore 23 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3790045721,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il pettine di Cinzia",
+          "category": "COMMERCIO",
+          "address": "Via Torino 16 B Chiusa di San Michele",
+          "phone_public": "+39 011 9643041",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3770894554,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Panificio Cantore",
+          "category": "COMMERCIO",
+          "address": "Via Otto Maggio 2 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3773073208,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella dell'Immacolata Concezione",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 373726300,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Municipio di Chiusa Di San Michele",
+          "category": "RETE_TERRITORIALE",
+          "address": "Piazza Bruno Bauchiero 2 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "http://www.comune.chiusadisanmichele.to.it",
+          "osm_id": 330027654,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Pietro Apostolo",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 105876754,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Santa Croce",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 372978330,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Angel",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3371509988,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Charlie",
+          "category": "RISTORAZIONE",
+          "address": "Via Torino 34 Chiusa di San Michele",
+          "phone_public": "+39 011 9644939",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3371509987,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SALUTE",
+          "address": "Via Ex Combattenti 25 Chiusa di San Michele",
+          "phone_public": "+39 011 9643336",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3773073197,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Carlo Maritano",
+          "category": "SALUTE",
+          "address": "Via Roma 1 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3773073198,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Maura De Andreis",
+          "category": "SALUTE",
+          "address": "Via Roma 1 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7274441318,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Biblioteca comunale Bruno Caccia",
+          "category": "SCUOLA_CULTURA",
+          "address": "Via Ferruccio Cantore 14 Chiusa di San Michele",
+          "phone_public": "+39 329 3174870",
+          "email_public": "biblioteca@comune.chiusadisanmichele.to.it",
+          "website": "",
+          "osm_id": 8724187995,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Scuola primaria Sandro Pertini",
+          "category": "SCUOLA_CULTURA",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 373869159,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1219140486,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Banca Sella",
+          "category": "SERVIZI",
+          "address": "Via Ferruccio Cantore 4 Chiusa di San Michele",
+          "phone_public": "+39 011 9643332",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3369862907,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Banca Sella",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3769226350,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "BiciGrill San Michele",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 8475680853,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Punto acqua SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "https://www.smatorino.it/punti-acqua/",
+          "osm_id": 13602477688,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 11378535812,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Parco Don Oreste Cantore",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 962226202,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Area camper Chiusa di San Michele",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1444397380,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Grotta dei Franchi",
+          "category": "TURISMO",
+          "address": "Via Roma 20 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "lagrottadeifranchi@tiscali.it",
+          "website": "http://lagrottadeifranchi.it/",
+          "osm_id": 3771486054,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-08T09:46:31+00:00"
     },
     {
       "signal_id": "SIG-133E9E00F3F95A",
@@ -14067,12 +15170,144 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Torino+34%22+%22Chiusa+di+San+Michele%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1051952,
+        "lon": 7.3323296,
+        "display_name": "Charlie, 34, Via Torino, Chiusa di San Michele, Torino, Piemonte, 10050, Italia",
+        "osm_type": "node",
+        "osm_id": 3371509987
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 127,
+        "public_entities_count": 11,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Il pettine di Cinzia",
+          "category": "COMMERCIO",
+          "address": "Via Torino 16 B Chiusa di San Michele",
+          "phone_public": "+39 011 9643041",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3770894554,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Pneus Pio",
+          "category": "COMMERCIO",
+          "address": "Via Torino 60 Chiusa di San Michele",
+          "phone_public": "",
+          "email_public": "info@pneuspio.it",
+          "website": "http://www.pneuspio.it/",
+          "osm_id": 3770581108,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Pole Position",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3770581109,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella dell'Immacolata Concezione",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 373726300,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Angel",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3371509988,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Charlie",
+          "category": "RISTORAZIONE",
+          "address": "Via Torino 34 Chiusa di San Michele",
+          "phone_public": "+39 011 9644939",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3371509987,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SALUTE",
+          "address": "Via Ex Combattenti 25 Chiusa di San Michele",
+          "phone_public": "+39 011 9643336",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3773073197,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "BiciGrill San Michele",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 8475680853,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "SocoGas Chiusa San Michele",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 227973808,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Area camper Chiusa di San Michele",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1444397380,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 2489109592,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-08T09:46:47+00:00"
     },
     {
       "signal_id": "SIG-E53B4D2D577619",
@@ -14117,7 +15352,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22Borgata+Basinatto+22%22+%22Chiusa+di+San+Michele%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "GEOCODE_NOT_FOUND",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -14167,12 +15402,13 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Susa+31%22+%22Chiusa+di+San+Michele%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "ERROR",
       "geocode": null,
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 429: Too Many Requests"
     },
     {
       "signal_id": "SIG-CA9443334B0DBF",
