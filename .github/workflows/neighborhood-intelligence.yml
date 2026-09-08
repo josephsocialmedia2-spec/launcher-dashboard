@@ -48,30 +48,31 @@ jobs:
           from pathlib import Path
           cfg=json.loads(Path('config/territory.json').read_text(encoding='utf-8'))
           out=json.loads(Path('data/territory_operations.json').read_text(encoding='utf-8'))
-          assert len(cfg['sinistra']) == 16
-          assert len(cfg['destra']) == 24
-          assert out['configured_comuni']['total'] == 40
-          assert out['policy'] == 'FASCIA_CONTINUA'
+          assert cfg['reference_hub'] == 'Villar Dora'
+          assert out['reference_hub'] == 'Villar Dora'
+          assert out['policy'] == 'CENTRO_RADIALE'
+          assert out['ordering'] == 'DISTANZA_LINEA_ARIA_DA_VILLAR_DORA'
           assert out['excluded_policy'] == 'ALL_FUORI_LISTA'
           assert out['summary']['signals_total'] >= 1
           assert out['communes']
+          assert any(c.get('is_hub') and c.get('comune') == 'Villar Dora' for c in out['communes'])
           assert all(c.get('side') in {'SINISTRA','DESTRA'} for c in out['communes'])
           assert not any(c.get('side') == 'FUORI_LISTA' for c in out['communes'])
-          print('PASS territorial architecture | FUORI_LISTA=0')
+          print('PASS radial architecture | hub=Villar Dora | FUORI_LISTA=0')
           PY
 
       - name: Commit refreshed data
         run: |
-          if git diff --quiet -- data/neighborhood_intelligence.json data/neighborhood_seen.json data/territory_operations.json; then
+          if git diff --quiet -- data/neighborhood_intelligence.json data/neighborhood_seen.json data/territory_operations.json data/territory_geocache.json; then
             echo "No changes"
             exit 0
           fi
           git config user.name "f1-neighborhood-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/neighborhood_intelligence.json data/neighborhood_seen.json data/territory_operations.json
-          git commit -m "Refresh neighborhood and territorial intelligence"
+          git add data/neighborhood_intelligence.json data/neighborhood_seen.json data/territory_operations.json data/territory_geocache.json
+          git commit -m "Refresh neighborhood and radial territory intelligence"
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
 
-# source-refresh: 2026-09-08
+# source-refresh: 2026-09-08 radial
