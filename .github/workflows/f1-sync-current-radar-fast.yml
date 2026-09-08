@@ -17,7 +17,7 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,8 +40,12 @@ jobs:
           t=json.loads(Path('data/territory_operations.json').read_text(encoding='utf-8'))
           assert n['signals_count'] > 0
           assert t['summary']['signals_total'] > 0
+          assert t['reference_hub'] == 'Villar Dora'
+          assert t['policy'] == 'CENTRO_RADIALE'
+          assert t['ordering'] == 'DISTANZA_LINEA_ARIA_DA_VILLAR_DORA'
+          assert any(c.get('is_hub') and c.get('comune') == 'Villar Dora' for c in t['communes'])
           assert not any(c.get('side') == 'FUORI_LISTA' for c in t['communes'])
-          print('PASS FAST LAUNCHER SYNC', n['generated_at'], t['generated_at'])
+          print('PASS FAST RADIAL SYNC', n['generated_at'], t['generated_at'])
           PY
 
       - name: Publish current launcher data
@@ -50,12 +54,12 @@ jobs:
           set -euo pipefail
           git config user.name 'f1-neighborhood-bot'
           git config user.email 'actions@users.noreply.github.com'
-          git add data/neighborhood_intelligence.json data/neighborhood_seen.json data/territory_operations.json
+          git add data/neighborhood_intelligence.json data/neighborhood_seen.json data/territory_operations.json data/territory_geocache.json
           if git diff --cached --quiet; then
             echo 'No changes'
             exit 0
           fi
-          git commit -m 'Refresh launcher from current Seller Radar'
+          git commit -m 'Refresh launcher from Villar Dora radial model'
           for attempt in 1 2 3; do
             if git push origin HEAD:main; then exit 0; fi
             git fetch origin main
@@ -63,3 +67,5 @@ jobs:
             sleep $((attempt * 2))
           done
           exit 1
+
+# radial-refresh: 2026-09-08
