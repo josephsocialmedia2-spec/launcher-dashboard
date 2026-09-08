@@ -16,7 +16,7 @@ permissions:
 
 concurrency:
   group: f1-neighborhood-intelligence
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   update:
@@ -73,3 +73,5 @@ jobs:
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
+
+# source-refresh: 2026-09-08
