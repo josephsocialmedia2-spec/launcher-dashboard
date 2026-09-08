@@ -19,7 +19,7 @@
     "Villar Dora",
     "Almese"
   ],
-  "generated_at": "2026-09-07T23:32:02+00:00",
+  "generated_at": "2026-09-08T04:43:13+00:00",
   "source": "https://raw.githubusercontent.com/josephsocialmedia2-spec/immobili-in-zona/main/seller_radar_auto/data/giro_acquisizione_oggi.csv",
   "radius_m": 500,
   "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.",
@@ -24621,13 +24621,89 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+SALBERTRAND%2C+81%22+%22Salbertrand%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.0874465,
+        "lon": 6.8950603,
+        "display_name": "Via Salbertrand, Eclause, Salbertrand, Torino, Piemonte, Italia",
+        "osm_type": "way",
+        "osm_id": 66101013
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null,
-      "enrichment_error": "HTTP Error 429: Too Many Requests"
+      "context": {
+        "residential_buildings_osm": 1,
+        "public_entities_count": 6,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Cappella di San Pancrazio",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 760147516,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cantina Alpina",
+          "category": "RISTORAZIONE",
+          "address": "Via Chabrieres 2 Salbertrand",
+          "phone_public": "+39 0122 854536",
+          "email_public": "info@cantinaalpina.it",
+          "website": "https://www.cantinaalpina.it/",
+          "osm_id": 6597169045,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5103690147,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Club Alpino Italiano",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 9169447702,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Eclause",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12852728565,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "ICLAUSA",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12853625791,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-08T04:43:19+00:00"
     },
     {
       "signal_id": "SIG-068BA070E456D5",
@@ -25879,13 +25955,100 @@
         "dork_contesto": "https://www.google.com/search?q=%22Via+Exilles%2C+70%22+%22Exilles%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "ERROR",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.0969673,
+        "lon": 6.9287764,
+        "display_name": "Via Assietta, San Colombano, Exilles, Torino, Piemonte, Italia",
+        "osm_type": "way",
+        "osm_id": 39859236
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null,
-      "enrichment_error": "HTTP Error 429: Too Many Requests"
+      "context": {
+        "residential_buildings_osm": 3,
+        "public_entities_count": 7,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Comune di Exilles",
+          "category": "RETE_TERRITORIALE",
+          "address": "Via Finanze 2",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 781763909,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Pietro Apostolo",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 44491334,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cafè Il Forte",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 13076038168,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Corte dei Mangioni",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 13076038164,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "La Quadriglia",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 13076038165,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 477959841,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Punto acqua SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "https://www.smatorino.it/punti-acqua/",
+          "osm_id": 13602621686,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-08T04:43:24+00:00"
     },
     {
       "signal_id": "SIG-26042A8EC012B3",
