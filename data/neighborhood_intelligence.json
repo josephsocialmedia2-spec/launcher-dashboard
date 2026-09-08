@@ -19,7 +19,7 @@
     "Villar Dora",
     "Almese"
   ],
-  "generated_at": "2026-09-08T08:27:15+00:00",
+  "generated_at": "2026-09-08T08:28:07+00:00",
   "source": "https://raw.githubusercontent.com/josephsocialmedia2-spec/immobili-in-zona/main/seller_radar_auto/data/giro_acquisizione_oggi.csv",
   "radius_m": 500,
   "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.",
@@ -12493,7 +12493,7 @@
     {
       "signal_id": "SIG-D15C72D8001624",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 10,
       "territorial_route": [
         "Susa",
@@ -12543,7 +12543,7 @@
     {
       "signal_id": "SIG-9ADA4102881D40",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 10,
       "territorial_route": [
         "Susa",
@@ -13077,7 +13077,7 @@
     {
       "signal_id": "SIG-63FD7C15DCFBE9",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 10,
       "territorial_route": [
         "Susa",
@@ -13127,7 +13127,7 @@
     {
       "signal_id": "SIG-E717E4FDAF6B55",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 10,
       "territorial_route": [
         "Susa",
@@ -13177,7 +13177,7 @@
     {
       "signal_id": "SIG-88095E0B123F32",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 10,
       "territorial_route": [
         "Susa",
@@ -13227,7 +13227,7 @@
     {
       "signal_id": "SIG-7D4E0AE001AC0D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 10,
       "territorial_route": [
         "Susa",
@@ -13277,7 +13277,7 @@
     {
       "signal_id": "SIG-B76E7619D81321",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 10,
       "territorial_route": [
         "Susa",
@@ -13327,7 +13327,7 @@
     {
       "signal_id": "SIG-F043F91566B3B9",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 10,
       "territorial_route": [
         "Susa",
@@ -13372,13 +13372,12 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null,
-      "enrichment_error": "HTTP Error 504: Gateway Timeout"
+      "enriched_at": null
     },
     {
       "signal_id": "SIG-E7F20C5E06823A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 10,
       "territorial_route": [
         "Susa",
@@ -13428,7 +13427,7 @@
     {
       "signal_id": "SIG-AD54AA5C47A2D5",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 10,
       "territorial_route": [
         "Susa",
@@ -13478,7 +13477,7 @@
     {
       "signal_id": "SIG-E159BEE2E2BD9B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 10,
       "territorial_route": [
         "Susa",
@@ -13528,7 +13527,7 @@
     {
       "signal_id": "SIG-EA7F2F00017D57",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 10,
       "territorial_route": [
         "Susa",
@@ -13578,7 +13577,7 @@
     {
       "signal_id": "SIG-ADD35F7243D28E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -13628,7 +13627,7 @@
     {
       "signal_id": "SIG-B4C283AD3AF2F2",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -13678,7 +13677,7 @@
     {
       "signal_id": "SIG-1F8B44789A5DF2",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -13728,7 +13727,7 @@
     {
       "signal_id": "SIG-1B9A4C9E65F177",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -13778,7 +13777,7 @@
     {
       "signal_id": "SIG-0897D51FBA9BA4",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -13828,7 +13827,7 @@
     {
       "signal_id": "SIG-DEF151EADFE1AC",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -13878,7 +13877,7 @@
     {
       "signal_id": "SIG-146F8ADE843870",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -13928,7 +13927,7 @@
     {
       "signal_id": "SIG-F6B865655D4B62",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -13978,7 +13977,7 @@
     {
       "signal_id": "SIG-F47E62FE057C31",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -14028,7 +14027,7 @@
     {
       "signal_id": "SIG-133E9E00F3F95A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -14078,7 +14077,7 @@
     {
       "signal_id": "SIG-E53B4D2D577619",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -14128,7 +14127,7 @@
     {
       "signal_id": "SIG-C0F2AD311BB8DA",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -14178,7 +14177,7 @@
     {
       "signal_id": "SIG-CA9443334B0DBF",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -14228,7 +14227,7 @@
     {
       "signal_id": "SIG-79E68DE0EE982B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -14278,7 +14277,7 @@
     {
       "signal_id": "SIG-32E376E4D478D1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 11,
       "territorial_route": [
         "Susa",
@@ -14328,7 +14327,7 @@
     {
       "signal_id": "SIG-6524E39CA04D0F",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 12,
       "territorial_route": [
         "Susa",
@@ -14378,7 +14377,7 @@
     {
       "signal_id": "SIG-7F75F19C405F87",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 12,
       "territorial_route": [
         "Susa",
@@ -14428,7 +14427,7 @@
     {
       "signal_id": "SIG-87ED17B5BADCD1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 12,
       "territorial_route": [
         "Susa",
@@ -14478,7 +14477,7 @@
     {
       "signal_id": "SIG-4A4B3875C0267A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 12,
       "territorial_route": [
         "Susa",
@@ -14528,7 +14527,7 @@
     {
       "signal_id": "SIG-4DF16B1CFF5073",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 12,
       "territorial_route": [
         "Susa",
@@ -14578,7 +14577,7 @@
     {
       "signal_id": "SIG-E5E298D40795E6",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 12,
       "territorial_route": [
         "Susa",
@@ -14628,7 +14627,7 @@
     {
       "signal_id": "SIG-89509FFDD85D83",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 12,
       "territorial_route": [
         "Susa",
@@ -14678,7 +14677,7 @@
     {
       "signal_id": "SIG-B1F80CE343C472",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 12,
       "territorial_route": [
         "Susa",
@@ -14728,7 +14727,7 @@
     {
       "signal_id": "SIG-098DAF7DF71561",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 12,
       "territorial_route": [
         "Susa",
@@ -14778,7 +14777,7 @@
     {
       "signal_id": "SIG-87E8DECE12598A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 14,
       "territorial_route": [
         "Susa",
@@ -14828,7 +14827,7 @@
     {
       "signal_id": "SIG-EA30F2BC08F864",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 14,
       "territorial_route": [
         "Susa",
@@ -14878,7 +14877,7 @@
     {
       "signal_id": "SIG-781CEE7825B28B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 14,
       "territorial_route": [
         "Susa",
@@ -14928,7 +14927,7 @@
     {
       "signal_id": "SIG-2FBCF0024F7972",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 14,
       "territorial_route": [
         "Susa",
@@ -14978,7 +14977,7 @@
     {
       "signal_id": "SIG-0182CDC079E191",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 14,
       "territorial_route": [
         "Susa",
@@ -15028,7 +15027,7 @@
     {
       "signal_id": "SIG-F5D4652BEB2D39",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 15,
       "territorial_route": [
         "Susa",
@@ -15078,7 +15077,7 @@
     {
       "signal_id": "SIG-456B4CD9DA2F1C",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 15,
       "territorial_route": [
         "Susa",
@@ -15128,7 +15127,7 @@
     {
       "signal_id": "SIG-6C39EAE2893493",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 15,
       "territorial_route": [
         "Susa",
@@ -15178,7 +15177,7 @@
     {
       "signal_id": "SIG-243C030B448079",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 15,
       "territorial_route": [
         "Susa",
@@ -15228,7 +15227,7 @@
     {
       "signal_id": "SIG-DFB8935ECBA639",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 15,
       "territorial_route": [
         "Susa",
@@ -15278,7 +15277,7 @@
     {
       "signal_id": "SIG-2EDB80863E1C2A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 15,
       "territorial_route": [
         "Susa",
@@ -15328,7 +15327,7 @@
     {
       "signal_id": "SIG-BE2AD8DF5BFBD9",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 15,
       "territorial_route": [
         "Susa",
@@ -15378,7 +15377,7 @@
     {
       "signal_id": "SIG-F36D62E3E30346",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 15,
       "territorial_route": [
         "Susa",
@@ -15428,7 +15427,7 @@
     {
       "signal_id": "SIG-4EBE00028EB194",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 15,
       "territorial_route": [
         "Susa",
@@ -15478,7 +15477,7 @@
     {
       "signal_id": "SIG-1C805CD74FB4FB",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 15,
       "territorial_route": [
         "Susa",
@@ -15528,7 +15527,7 @@
     {
       "signal_id": "SIG-575FD04766DB2C",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 15,
       "territorial_route": [
         "Susa",
@@ -15578,7 +15577,7 @@
     {
       "signal_id": "SIG-158BF9D8D4C34A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 15,
       "territorial_route": [
         "Susa",
@@ -15628,7 +15627,7 @@
     {
       "signal_id": "SIG-4BE4F983FB3F98",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -15678,7 +15677,7 @@
     {
       "signal_id": "SIG-64108CDFD523F1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -15728,7 +15727,7 @@
     {
       "signal_id": "SIG-FBBBF184E65D1D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -15778,7 +15777,7 @@
     {
       "signal_id": "SIG-95383ACFB1F866",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -15828,7 +15827,7 @@
     {
       "signal_id": "SIG-88275B2FBFDC81",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -15878,7 +15877,7 @@
     {
       "signal_id": "SIG-750B07B9FACE20",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -15928,7 +15927,7 @@
     {
       "signal_id": "SIG-4190966398FB8D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -15978,7 +15977,7 @@
     {
       "signal_id": "SIG-D617EF8E693B66",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16028,7 +16027,7 @@
     {
       "signal_id": "SIG-3C5693396F97B0",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16078,7 +16077,7 @@
     {
       "signal_id": "SIG-118305E49F9B83",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16128,7 +16127,7 @@
     {
       "signal_id": "SIG-8D71E3466095D0",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16178,7 +16177,7 @@
     {
       "signal_id": "SIG-F2933629C1C679",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16228,7 +16227,7 @@
     {
       "signal_id": "SIG-498A2E0E0FF2BF",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16278,7 +16277,7 @@
     {
       "signal_id": "SIG-691C9751800131",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16328,7 +16327,7 @@
     {
       "signal_id": "SIG-0696EC2F322A6C",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16378,7 +16377,7 @@
     {
       "signal_id": "SIG-5FD1640D089D9D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16428,7 +16427,7 @@
     {
       "signal_id": "SIG-F6C0957928DFE4",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16478,7 +16477,7 @@
     {
       "signal_id": "SIG-B93B579303D110",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16528,7 +16527,7 @@
     {
       "signal_id": "SIG-632510F4A14E8E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16578,7 +16577,7 @@
     {
       "signal_id": "SIG-283B5BE323F1C7",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16628,7 +16627,7 @@
     {
       "signal_id": "SIG-D7B75618049C91",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16678,7 +16677,7 @@
     {
       "signal_id": "SIG-34C1D6C6D0732A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16728,7 +16727,7 @@
     {
       "signal_id": "SIG-150258049B8213",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16778,7 +16777,7 @@
     {
       "signal_id": "SIG-D95B55BE295D00",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16828,7 +16827,7 @@
     {
       "signal_id": "SIG-6DE8A20917F3D6",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16878,7 +16877,7 @@
     {
       "signal_id": "SIG-B6F85CDA4EC460",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16928,7 +16927,7 @@
     {
       "signal_id": "SIG-19AA9BF734021E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -16978,7 +16977,7 @@
     {
       "signal_id": "SIG-C09C5D2E5A09CF",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17028,7 +17027,7 @@
     {
       "signal_id": "SIG-6E4E9EFF73FDD5",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17078,7 +17077,7 @@
     {
       "signal_id": "SIG-73FE5A4128411A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17128,7 +17127,7 @@
     {
       "signal_id": "SIG-6A1BA346F16690",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17178,7 +17177,7 @@
     {
       "signal_id": "SIG-CAF0BB5EC02F3A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17228,7 +17227,7 @@
     {
       "signal_id": "SIG-AAAF6B5B54BE4C",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17278,7 +17277,7 @@
     {
       "signal_id": "SIG-E5B634F243D0EA",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17328,7 +17327,7 @@
     {
       "signal_id": "SIG-F511BA04ED40BD",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17378,7 +17377,7 @@
     {
       "signal_id": "SIG-399687742AE77F",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17428,7 +17427,7 @@
     {
       "signal_id": "SIG-D243C0FB66B0A7",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17478,7 +17477,7 @@
     {
       "signal_id": "SIG-44B2A934A144FB",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17528,7 +17527,7 @@
     {
       "signal_id": "SIG-D60DC09329924D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17578,7 +17577,7 @@
     {
       "signal_id": "SIG-C637F3AA9E2EA6",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17628,7 +17627,7 @@
     {
       "signal_id": "SIG-9285ED0AFB0B24",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17678,7 +17677,7 @@
     {
       "signal_id": "SIG-AE269C76663859",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17728,7 +17727,7 @@
     {
       "signal_id": "SIG-C774BD2C689A1A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17778,7 +17777,7 @@
     {
       "signal_id": "SIG-DC8AF4D3497768",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17828,7 +17827,7 @@
     {
       "signal_id": "SIG-C63EAA6A8F7564",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17878,7 +17877,7 @@
     {
       "signal_id": "SIG-D94891E7E4ED1B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17928,7 +17927,7 @@
     {
       "signal_id": "SIG-3F29A0497C59E5",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -17978,7 +17977,7 @@
     {
       "signal_id": "SIG-20D8ED6711B9CB",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18028,7 +18027,7 @@
     {
       "signal_id": "SIG-94655E5BC2F975",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18078,7 +18077,7 @@
     {
       "signal_id": "SIG-08EB16C47E1752",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18128,7 +18127,7 @@
     {
       "signal_id": "SIG-31C8DD62A5F738",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18178,7 +18177,7 @@
     {
       "signal_id": "SIG-C1EBFFA8C7E539",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18228,7 +18227,7 @@
     {
       "signal_id": "SIG-8A85A9181B3E52",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18278,7 +18277,7 @@
     {
       "signal_id": "SIG-26F17C58D9B12E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18328,7 +18327,7 @@
     {
       "signal_id": "SIG-DEA4EF23698DF3",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18378,7 +18377,7 @@
     {
       "signal_id": "SIG-5BA8C43E5DCE2B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18428,7 +18427,7 @@
     {
       "signal_id": "SIG-D7E7DBB030EA24",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18478,7 +18477,7 @@
     {
       "signal_id": "SIG-5A218ACC8A6E7B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18528,7 +18527,7 @@
     {
       "signal_id": "SIG-55353B1DC6F213",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18578,7 +18577,7 @@
     {
       "signal_id": "SIG-954313AD135F8A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18628,7 +18627,7 @@
     {
       "signal_id": "SIG-876912E38B1488",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18678,7 +18677,7 @@
     {
       "signal_id": "SIG-1BAFF00A9ECC50",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18728,7 +18727,7 @@
     {
       "signal_id": "SIG-8CD0F2091F0363",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18778,7 +18777,7 @@
     {
       "signal_id": "SIG-7630C94D20792E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18828,7 +18827,7 @@
     {
       "signal_id": "SIG-FC112785D174E1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18878,7 +18877,7 @@
     {
       "signal_id": "SIG-4A2677D76A0BBD",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18928,7 +18927,7 @@
     {
       "signal_id": "SIG-317B43B603E9B7",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -18978,7 +18977,7 @@
     {
       "signal_id": "SIG-76C058F73AFA65",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19028,7 +19027,7 @@
     {
       "signal_id": "SIG-1125FCFF50098D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19078,7 +19077,7 @@
     {
       "signal_id": "SIG-9CF63178ED1206",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19128,7 +19127,7 @@
     {
       "signal_id": "SIG-BCD2CD270EBBEB",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19178,7 +19177,7 @@
     {
       "signal_id": "SIG-A310E9913F03D8",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19228,7 +19227,7 @@
     {
       "signal_id": "SIG-49DD47DCFE1B78",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19278,7 +19277,7 @@
     {
       "signal_id": "SIG-EA1BD575526150",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19328,7 +19327,7 @@
     {
       "signal_id": "SIG-EDD210C0E33EC3",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19378,7 +19377,7 @@
     {
       "signal_id": "SIG-89C339E3829781",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19428,7 +19427,7 @@
     {
       "signal_id": "SIG-47B71D0B53D3A3",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19478,7 +19477,7 @@
     {
       "signal_id": "SIG-30F7C97850989E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19528,7 +19527,7 @@
     {
       "signal_id": "SIG-83CC9D4DDB9F0E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19578,7 +19577,7 @@
     {
       "signal_id": "SIG-0F5191F98CBC5E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19628,7 +19627,7 @@
     {
       "signal_id": "SIG-2C6905D0BF353B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19678,7 +19677,7 @@
     {
       "signal_id": "SIG-41B3FB5580CE85",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19728,7 +19727,7 @@
     {
       "signal_id": "SIG-68C2D17C4AC59D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19778,7 +19777,7 @@
     {
       "signal_id": "SIG-8121DEE96092F4",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19828,7 +19827,7 @@
     {
       "signal_id": "SIG-575757D893647D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19878,7 +19877,7 @@
     {
       "signal_id": "SIG-DF3C426BF8B362",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19928,7 +19927,7 @@
     {
       "signal_id": "SIG-CE806FAF95D2DD",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -19978,7 +19977,7 @@
     {
       "signal_id": "SIG-BA2CACD2644C5D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20028,7 +20027,7 @@
     {
       "signal_id": "SIG-0554557A59D574",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20078,7 +20077,7 @@
     {
       "signal_id": "SIG-6B9D18CBD62F9C",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20128,7 +20127,7 @@
     {
       "signal_id": "SIG-272DE7CEF8A5E8",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20178,7 +20177,7 @@
     {
       "signal_id": "SIG-C43D3E3103CD4E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20228,7 +20227,7 @@
     {
       "signal_id": "SIG-444C267109FFDA",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20278,7 +20277,7 @@
     {
       "signal_id": "SIG-A2E09209ED1E65",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20328,7 +20327,7 @@
     {
       "signal_id": "SIG-9A02904051745C",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20378,7 +20377,7 @@
     {
       "signal_id": "SIG-41358F6F5BD993",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20428,7 +20427,7 @@
     {
       "signal_id": "SIG-4A1D234CDC9DF3",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20478,7 +20477,7 @@
     {
       "signal_id": "SIG-18CAB805290134",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20528,7 +20527,7 @@
     {
       "signal_id": "SIG-C9C13BBB645DB6",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20578,7 +20577,7 @@
     {
       "signal_id": "SIG-A64BDBA551470F",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20628,7 +20627,7 @@
     {
       "signal_id": "SIG-6BA9E9B3E705B4",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20678,7 +20677,7 @@
     {
       "signal_id": "SIG-738E1BC2B22919",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20728,7 +20727,7 @@
     {
       "signal_id": "SIG-DE157F8A96B080",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20778,7 +20777,7 @@
     {
       "signal_id": "SIG-499F1D124353FF",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20828,7 +20827,7 @@
     {
       "signal_id": "SIG-EDE66286DB7835",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20878,7 +20877,7 @@
     {
       "signal_id": "SIG-18AA6CFE92E276",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20928,7 +20927,7 @@
     {
       "signal_id": "SIG-606340EBAF5366",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -20978,7 +20977,7 @@
     {
       "signal_id": "SIG-64B1DE1C1B5139",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21028,7 +21027,7 @@
     {
       "signal_id": "SIG-294EE9705C4EAA",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21078,7 +21077,7 @@
     {
       "signal_id": "SIG-D03FA04BB58FBF",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21128,7 +21127,7 @@
     {
       "signal_id": "SIG-3466C6818948C9",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21178,7 +21177,7 @@
     {
       "signal_id": "SIG-ED880B14496271",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21228,7 +21227,7 @@
     {
       "signal_id": "SIG-EF9AD59C678EC4",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21278,7 +21277,7 @@
     {
       "signal_id": "SIG-143FD10DFC7E8C",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21328,7 +21327,7 @@
     {
       "signal_id": "SIG-B2DE8C0C41E7B4",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21378,7 +21377,7 @@
     {
       "signal_id": "SIG-E755FF76C6DF79",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21428,7 +21427,7 @@
     {
       "signal_id": "SIG-DE022F75A2B5C6",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21478,7 +21477,7 @@
     {
       "signal_id": "SIG-7E0EFC5250C40E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21528,7 +21527,7 @@
     {
       "signal_id": "SIG-7518BFB0172A34",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21578,7 +21577,7 @@
     {
       "signal_id": "SIG-4B9CF77EF28519",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21628,7 +21627,7 @@
     {
       "signal_id": "SIG-D21FD38581386E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21678,7 +21677,7 @@
     {
       "signal_id": "SIG-A69DF2F67614D4",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21728,7 +21727,7 @@
     {
       "signal_id": "SIG-C55F9FE7E99C2F",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21778,7 +21777,7 @@
     {
       "signal_id": "SIG-CE2CB496A751C3",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21828,7 +21827,7 @@
     {
       "signal_id": "SIG-51D62A7DAFAF0D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21878,7 +21877,7 @@
     {
       "signal_id": "SIG-E289C2AB5ED4A9",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21928,7 +21927,7 @@
     {
       "signal_id": "SIG-97D5EF5588FA4F",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -21978,7 +21977,7 @@
     {
       "signal_id": "SIG-5C48C51878396B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22028,7 +22027,7 @@
     {
       "signal_id": "SIG-D4CABE48CD7D1F",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22078,7 +22077,7 @@
     {
       "signal_id": "SIG-067DA632184FA0",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22128,7 +22127,7 @@
     {
       "signal_id": "SIG-F5B24A02FF491E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22178,7 +22177,7 @@
     {
       "signal_id": "SIG-C02F7975DAF634",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22228,7 +22227,7 @@
     {
       "signal_id": "SIG-D9E52308D04C7A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22278,7 +22277,7 @@
     {
       "signal_id": "SIG-F56B1BBE65686A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22328,7 +22327,7 @@
     {
       "signal_id": "SIG-3C1311ADB44B8A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22378,7 +22377,7 @@
     {
       "signal_id": "SIG-700B60CB12126D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22428,7 +22427,7 @@
     {
       "signal_id": "SIG-1B4741C38CA8E6",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22478,7 +22477,7 @@
     {
       "signal_id": "SIG-7750B66527178B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22528,7 +22527,7 @@
     {
       "signal_id": "SIG-E8FC6E2CD02B95",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22578,7 +22577,7 @@
     {
       "signal_id": "SIG-7E60E5BABE2220",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22628,7 +22627,7 @@
     {
       "signal_id": "SIG-9DCF66F5679BB1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22678,7 +22677,7 @@
     {
       "signal_id": "SIG-27E7C60B38EA1E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22728,7 +22727,7 @@
     {
       "signal_id": "SIG-4D76130DACD042",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22778,7 +22777,7 @@
     {
       "signal_id": "SIG-65958A43714872",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22828,7 +22827,7 @@
     {
       "signal_id": "SIG-EA0A834C0EC8E9",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22878,7 +22877,7 @@
     {
       "signal_id": "SIG-5DF402AB3B1A01",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22928,7 +22927,7 @@
     {
       "signal_id": "SIG-BD23467778C26C",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -22978,7 +22977,7 @@
     {
       "signal_id": "SIG-3D8302373E1BEB",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23028,7 +23027,7 @@
     {
       "signal_id": "SIG-A8FE9978856078",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23078,7 +23077,7 @@
     {
       "signal_id": "SIG-4B99423967E40D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23128,7 +23127,7 @@
     {
       "signal_id": "SIG-A05D755682903B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23178,7 +23177,7 @@
     {
       "signal_id": "SIG-EBAF50ACF8ABC3",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23228,7 +23227,7 @@
     {
       "signal_id": "SIG-135309FC324B24",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23278,7 +23277,7 @@
     {
       "signal_id": "SIG-E3A2B7C35D433B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23328,7 +23327,7 @@
     {
       "signal_id": "SIG-CE7025A4F66079",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23378,7 +23377,7 @@
     {
       "signal_id": "SIG-D55C610DC60907",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23428,7 +23427,7 @@
     {
       "signal_id": "SIG-C783E9585A92C6",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23478,7 +23477,7 @@
     {
       "signal_id": "SIG-DF3D366AE06D1E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23528,7 +23527,7 @@
     {
       "signal_id": "SIG-AC86450116D730",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23578,7 +23577,7 @@
     {
       "signal_id": "SIG-5284BC14F191EB",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23628,7 +23627,7 @@
     {
       "signal_id": "SIG-831C590AD8831F",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23678,7 +23677,7 @@
     {
       "signal_id": "SIG-7E21347D681746",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23728,7 +23727,7 @@
     {
       "signal_id": "SIG-512E43968F8608",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23778,7 +23777,7 @@
     {
       "signal_id": "SIG-387B9232777257",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23828,7 +23827,7 @@
     {
       "signal_id": "SIG-5DD7B07D396E8E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23878,7 +23877,7 @@
     {
       "signal_id": "SIG-35D35904702F84",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23928,7 +23927,7 @@
     {
       "signal_id": "SIG-1EF1F59C912E0F",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -23978,7 +23977,7 @@
     {
       "signal_id": "SIG-59015FF45A4017",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24028,7 +24027,7 @@
     {
       "signal_id": "SIG-60471A2399CB89",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24078,7 +24077,7 @@
     {
       "signal_id": "SIG-3FFA13C8103689",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24128,7 +24127,7 @@
     {
       "signal_id": "SIG-227DB6536C2D44",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24178,7 +24177,7 @@
     {
       "signal_id": "SIG-1165863950DFE7",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24228,7 +24227,7 @@
     {
       "signal_id": "SIG-3967DD4F45EB86",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24278,7 +24277,7 @@
     {
       "signal_id": "SIG-F85E8F831BF9B5",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24328,7 +24327,7 @@
     {
       "signal_id": "SIG-4CB9258FAD7465",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24378,7 +24377,7 @@
     {
       "signal_id": "SIG-85873948A12A3D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24428,7 +24427,7 @@
     {
       "signal_id": "SIG-90B0E5EF162F7E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24478,7 +24477,7 @@
     {
       "signal_id": "SIG-E74A065173ACC5",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24528,7 +24527,7 @@
     {
       "signal_id": "SIG-355C04F423BCA9",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24578,7 +24577,7 @@
     {
       "signal_id": "SIG-4762E7A116A951",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24628,7 +24627,7 @@
     {
       "signal_id": "SIG-1D6D64BF57A95A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24678,7 +24677,7 @@
     {
       "signal_id": "SIG-41561123F884D7",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24728,7 +24727,7 @@
     {
       "signal_id": "SIG-6E36AFD02E8FA1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24778,7 +24777,7 @@
     {
       "signal_id": "SIG-F04F55571F09A7",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24828,7 +24827,7 @@
     {
       "signal_id": "SIG-65E804914C34B9",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24878,7 +24877,7 @@
     {
       "signal_id": "SIG-8B408DB67A5044",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24928,7 +24927,7 @@
     {
       "signal_id": "SIG-21E267185D4AB3",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -24978,7 +24977,7 @@
     {
       "signal_id": "SIG-CFBE3E56B88144",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25028,7 +25027,7 @@
     {
       "signal_id": "SIG-8F42BF31B1DD24",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25078,7 +25077,7 @@
     {
       "signal_id": "SIG-76758C07B556D3",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25128,7 +25127,7 @@
     {
       "signal_id": "SIG-3E0AC311E37F74",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25178,7 +25177,7 @@
     {
       "signal_id": "SIG-EF3231EDFABA2F",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25228,7 +25227,7 @@
     {
       "signal_id": "SIG-DA2123F5EA19D1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25278,7 +25277,7 @@
     {
       "signal_id": "SIG-74F6CDC3EC5B02",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25328,7 +25327,7 @@
     {
       "signal_id": "SIG-7451D65B402D9F",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25378,7 +25377,7 @@
     {
       "signal_id": "SIG-96D99B60F4DB69",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25428,7 +25427,7 @@
     {
       "signal_id": "SIG-9151C5F1FAFF69",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25478,7 +25477,7 @@
     {
       "signal_id": "SIG-D33F387F8D83FC",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25528,7 +25527,7 @@
     {
       "signal_id": "SIG-8068C7BE4C0938",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25578,7 +25577,7 @@
     {
       "signal_id": "SIG-DBCAD2E432BFEC",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25628,7 +25627,7 @@
     {
       "signal_id": "SIG-CEA6895ABEA810",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25678,7 +25677,7 @@
     {
       "signal_id": "SIG-2BD20F6314D65C",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25728,7 +25727,7 @@
     {
       "signal_id": "SIG-86A2739EBB7113",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25778,7 +25777,7 @@
     {
       "signal_id": "SIG-7DADD7A49E7473",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25828,7 +25827,7 @@
     {
       "signal_id": "SIG-F59C7D9B2D4AAB",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25878,7 +25877,7 @@
     {
       "signal_id": "SIG-76D8E718A5BF90",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25928,7 +25927,7 @@
     {
       "signal_id": "SIG-8814655961806C",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -25978,7 +25977,7 @@
     {
       "signal_id": "SIG-68C1044F783157",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26028,7 +26027,7 @@
     {
       "signal_id": "SIG-B4353A0162956D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26078,7 +26077,7 @@
     {
       "signal_id": "SIG-6566D55D556BB0",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26128,7 +26127,7 @@
     {
       "signal_id": "SIG-A1C68046640AFA",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26178,7 +26177,7 @@
     {
       "signal_id": "SIG-96F3C1C1DDFCA3",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26228,7 +26227,7 @@
     {
       "signal_id": "SIG-2AA56176AC1849",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26278,7 +26277,7 @@
     {
       "signal_id": "SIG-0C39A557F8F8CD",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26328,7 +26327,7 @@
     {
       "signal_id": "SIG-5C1789C9876400",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26378,7 +26377,7 @@
     {
       "signal_id": "SIG-4384C85A4FF1A1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26428,7 +26427,7 @@
     {
       "signal_id": "SIG-6312F9E4171BB1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26478,7 +26477,7 @@
     {
       "signal_id": "SIG-FC79E28C464ED1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26528,7 +26527,7 @@
     {
       "signal_id": "SIG-625126C26753B0",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26578,7 +26577,7 @@
     {
       "signal_id": "SIG-47AFA2E12DF219",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26628,7 +26627,7 @@
     {
       "signal_id": "SIG-0E65C9C94FF8D6",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26678,7 +26677,7 @@
     {
       "signal_id": "SIG-45D0A837898B16",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26728,7 +26727,7 @@
     {
       "signal_id": "SIG-1B158871A7AE98",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26778,7 +26777,7 @@
     {
       "signal_id": "SIG-3A7345D1C5018D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26828,7 +26827,7 @@
     {
       "signal_id": "SIG-1A33C83409B097",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26878,7 +26877,7 @@
     {
       "signal_id": "SIG-65C3397E365115",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26928,7 +26927,7 @@
     {
       "signal_id": "SIG-5287583DC43050",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -26978,7 +26977,7 @@
     {
       "signal_id": "SIG-95B51BAAA0C484",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27028,7 +27027,7 @@
     {
       "signal_id": "SIG-8D71D4BE3E9E40",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27078,7 +27077,7 @@
     {
       "signal_id": "SIG-14AA8D82075506",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27128,7 +27127,7 @@
     {
       "signal_id": "SIG-F30DC0822DFDF1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27178,7 +27177,7 @@
     {
       "signal_id": "SIG-A4CB63DA8F6780",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27228,7 +27227,7 @@
     {
       "signal_id": "SIG-D9A9A51CDB07D6",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27278,7 +27277,7 @@
     {
       "signal_id": "SIG-E928D27976D52B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27328,7 +27327,7 @@
     {
       "signal_id": "SIG-E69C7942A5EC63",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27378,7 +27377,7 @@
     {
       "signal_id": "SIG-0181A9B9452415",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27428,7 +27427,7 @@
     {
       "signal_id": "SIG-A06CFF86C9D6B3",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27478,7 +27477,7 @@
     {
       "signal_id": "SIG-AA03CC8455B6A7",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27528,7 +27527,7 @@
     {
       "signal_id": "SIG-BC77D63F81249D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27578,7 +27577,7 @@
     {
       "signal_id": "SIG-F056CF411DED17",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27628,7 +27627,7 @@
     {
       "signal_id": "SIG-2855419C730D7A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27678,7 +27677,7 @@
     {
       "signal_id": "SIG-1B41A641D29648",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27728,7 +27727,7 @@
     {
       "signal_id": "SIG-E23B1B0AF48737",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27778,7 +27777,7 @@
     {
       "signal_id": "SIG-8B7A464F319A8D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27828,7 +27827,7 @@
     {
       "signal_id": "SIG-3F8D8553FA9AD7",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27878,7 +27877,7 @@
     {
       "signal_id": "SIG-CA0E915F7CE607",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27928,7 +27927,7 @@
     {
       "signal_id": "SIG-C193DBEDD0FDCF",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -27978,7 +27977,7 @@
     {
       "signal_id": "SIG-B7235AA2A864DB",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28028,7 +28027,7 @@
     {
       "signal_id": "SIG-6E90A1A6EB8044",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28078,7 +28077,7 @@
     {
       "signal_id": "SIG-BC1372217DD228",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28128,7 +28127,7 @@
     {
       "signal_id": "SIG-CD16B70D5BAFAC",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28178,7 +28177,7 @@
     {
       "signal_id": "SIG-F965E8994FBCFF",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28228,7 +28227,7 @@
     {
       "signal_id": "SIG-0B2024B004A44B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28278,7 +28277,7 @@
     {
       "signal_id": "SIG-E2BA934E493E89",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28328,7 +28327,7 @@
     {
       "signal_id": "SIG-F77C4FE0565882",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28378,7 +28377,7 @@
     {
       "signal_id": "SIG-1AAFFB5E7F5C94",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28428,7 +28427,7 @@
     {
       "signal_id": "SIG-06790E02E217C1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28478,7 +28477,7 @@
     {
       "signal_id": "SIG-592534F7964833",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28528,7 +28527,7 @@
     {
       "signal_id": "SIG-CC4652751154E1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28578,7 +28577,7 @@
     {
       "signal_id": "SIG-C2ECE86F48B271",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28628,7 +28627,7 @@
     {
       "signal_id": "SIG-93ED7EF5825F20",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28678,7 +28677,7 @@
     {
       "signal_id": "SIG-738A1D00BF4E32",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28728,7 +28727,7 @@
     {
       "signal_id": "SIG-1E3022EED09040",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28778,7 +28777,7 @@
     {
       "signal_id": "SIG-D9C3F8BAE7BAA8",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28828,7 +28827,7 @@
     {
       "signal_id": "SIG-AB3B7F0A8421A7",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28878,7 +28877,7 @@
     {
       "signal_id": "SIG-306EF8E2CDE740",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28928,7 +28927,7 @@
     {
       "signal_id": "SIG-C5D16E16ED4B66",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -28978,7 +28977,7 @@
     {
       "signal_id": "SIG-BECA6B472D2B77",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29028,7 +29027,7 @@
     {
       "signal_id": "SIG-0F698D7F9F7AEC",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29078,7 +29077,7 @@
     {
       "signal_id": "SIG-7EDE1CDF46C439",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29128,7 +29127,7 @@
     {
       "signal_id": "SIG-1AB5A370A858D3",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29178,7 +29177,7 @@
     {
       "signal_id": "SIG-8A50FA8AD39C5A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29228,7 +29227,7 @@
     {
       "signal_id": "SIG-79E2AA01F8208C",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29278,7 +29277,7 @@
     {
       "signal_id": "SIG-B01684E5F239D6",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29328,7 +29327,7 @@
     {
       "signal_id": "SIG-0162EF6DB8F87B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29378,7 +29377,7 @@
     {
       "signal_id": "SIG-8A6AB93493766B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29428,7 +29427,7 @@
     {
       "signal_id": "SIG-65C46D8048E995",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29478,7 +29477,7 @@
     {
       "signal_id": "SIG-7A0BF9C4FD6146",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29528,7 +29527,7 @@
     {
       "signal_id": "SIG-D73FBB5AF45919",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29578,7 +29577,7 @@
     {
       "signal_id": "SIG-936DFC3508E78A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29628,7 +29627,7 @@
     {
       "signal_id": "SIG-DCC81B817F382B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29678,7 +29677,7 @@
     {
       "signal_id": "SIG-334F36BE2C1C6C",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29728,7 +29727,7 @@
     {
       "signal_id": "SIG-5964380FEE69B0",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29778,7 +29777,7 @@
     {
       "signal_id": "SIG-97E1B9681FBB8E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29828,7 +29827,7 @@
     {
       "signal_id": "SIG-2588BF6F3D78AF",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29878,7 +29877,7 @@
     {
       "signal_id": "SIG-E9EF137187DC52",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29928,7 +29927,7 @@
     {
       "signal_id": "SIG-2B7A2B69D5BE71",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -29978,7 +29977,7 @@
     {
       "signal_id": "SIG-7AD78D9AF4946C",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30028,7 +30027,7 @@
     {
       "signal_id": "SIG-A70F59A60C7BA3",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30078,7 +30077,7 @@
     {
       "signal_id": "SIG-D22BD7F09A87D4",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30128,7 +30127,7 @@
     {
       "signal_id": "SIG-3BA71DB0879646",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30178,7 +30177,7 @@
     {
       "signal_id": "SIG-F832FB0CFD80B4",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30228,7 +30227,7 @@
     {
       "signal_id": "SIG-2F6A83C9E55133",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30278,7 +30277,7 @@
     {
       "signal_id": "SIG-FF7400A907DBD6",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30328,7 +30327,7 @@
     {
       "signal_id": "SIG-1E9ADBAD0D9344",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30378,7 +30377,7 @@
     {
       "signal_id": "SIG-145441794D614B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30428,7 +30427,7 @@
     {
       "signal_id": "SIG-4705CE3DF90C4E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30478,7 +30477,7 @@
     {
       "signal_id": "SIG-2E7FED3C0A7BA9",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30528,7 +30527,7 @@
     {
       "signal_id": "SIG-81F494F8B36A8A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30578,7 +30577,7 @@
     {
       "signal_id": "SIG-6DFBEFBEE75537",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30628,7 +30627,7 @@
     {
       "signal_id": "SIG-6AAAC2CF03C4D4",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30678,7 +30677,7 @@
     {
       "signal_id": "SIG-CA16317F091A48",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30728,7 +30727,7 @@
     {
       "signal_id": "SIG-22440B49E39041",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30778,7 +30777,7 @@
     {
       "signal_id": "SIG-B4D7E7337B6D64",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30828,7 +30827,7 @@
     {
       "signal_id": "SIG-208FD5207C260A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30878,7 +30877,7 @@
     {
       "signal_id": "SIG-8AA161ACDD685C",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30928,7 +30927,7 @@
     {
       "signal_id": "SIG-9E39BE9B95516D",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -30978,7 +30977,7 @@
     {
       "signal_id": "SIG-D65D34BF97AFA4",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31028,7 +31027,7 @@
     {
       "signal_id": "SIG-461EC051C19ABB",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31078,7 +31077,7 @@
     {
       "signal_id": "SIG-ACF36612A45CBF",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31128,7 +31127,7 @@
     {
       "signal_id": "SIG-D3E6802536A752",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31178,7 +31177,7 @@
     {
       "signal_id": "SIG-96933B991ACA58",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31228,7 +31227,7 @@
     {
       "signal_id": "SIG-5424337C1C6FC7",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31278,7 +31277,7 @@
     {
       "signal_id": "SIG-31F233A445D1E2",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31328,7 +31327,7 @@
     {
       "signal_id": "SIG-051FEE9A56F29E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31378,7 +31377,7 @@
     {
       "signal_id": "SIG-A14C77BFD8F29B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31428,7 +31427,7 @@
     {
       "signal_id": "SIG-0A9004809C036A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31478,7 +31477,7 @@
     {
       "signal_id": "SIG-8EB1D93E5260A1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31528,7 +31527,7 @@
     {
       "signal_id": "SIG-7EA1923A8EEC15",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31578,7 +31577,7 @@
     {
       "signal_id": "SIG-E598AC010F78B5",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31628,7 +31627,7 @@
     {
       "signal_id": "SIG-4C3776B56741DE",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31678,7 +31677,7 @@
     {
       "signal_id": "SIG-F73575970EA2F7",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31728,7 +31727,7 @@
     {
       "signal_id": "SIG-52F3F4E8D86E35",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31778,7 +31777,7 @@
     {
       "signal_id": "SIG-41970C4D9DA140",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31828,7 +31827,7 @@
     {
       "signal_id": "SIG-29D8D82EEAEAFD",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31878,7 +31877,7 @@
     {
       "signal_id": "SIG-EA660B9C92A7A1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31928,7 +31927,7 @@
     {
       "signal_id": "SIG-5DB247248EB593",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -31978,7 +31977,7 @@
     {
       "signal_id": "SIG-B217FC120CF0DA",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32028,7 +32027,7 @@
     {
       "signal_id": "SIG-5AD35FD439905F",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32078,7 +32077,7 @@
     {
       "signal_id": "SIG-CC9A0E4FC5494B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32128,7 +32127,7 @@
     {
       "signal_id": "SIG-AA0A1CEB8DF88B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32178,7 +32177,7 @@
     {
       "signal_id": "SIG-31AA4EEE8CBD6B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32228,7 +32227,7 @@
     {
       "signal_id": "SIG-CF7308754B90AA",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32278,7 +32277,7 @@
     {
       "signal_id": "SIG-246263B0E3C54B",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32328,7 +32327,7 @@
     {
       "signal_id": "SIG-476F995E97C4E1",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32378,7 +32377,7 @@
     {
       "signal_id": "SIG-7DF8F0D5D05D9E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32428,7 +32427,7 @@
     {
       "signal_id": "SIG-91E15D10FF09F4",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32478,7 +32477,7 @@
     {
       "signal_id": "SIG-F86CB6EF6C2F25",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32528,7 +32527,7 @@
     {
       "signal_id": "SIG-FA59750CFF3422",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32578,7 +32577,7 @@
     {
       "signal_id": "SIG-AE626FC617CDCB",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32628,7 +32627,7 @@
     {
       "signal_id": "SIG-D6997D03F0704E",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32678,7 +32677,7 @@
     {
       "signal_id": "SIG-3BA57098F71F2A",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
@@ -32728,7 +32727,7 @@
     {
       "signal_id": "SIG-4C601B05DF705F",
       "first_seen": "2026-09-08T08:27:15+00:00",
-      "is_new": true,
+      "is_new": false,
       "territorial_rank": 9999,
       "territorial_route": [
         "Susa",
