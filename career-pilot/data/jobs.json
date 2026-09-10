@@ -1,1 +1,13 @@
-{"updated_at":null,"stats":{"sources":0,"detail_pages":0,"errors":0,"found":0,"new":0,"profile_configured":false,"generated_pdfs":0},"jobs":[]}
+{
+  "updated_at": "2026-09-10T19:14:55+00:00",
+  "stats": {
+    "sources": 15,
+    "detail_pages": 142,
+    "errors": 0,
+    "found": 0,
+    "new": 0,
+    "profile_configured": false,
+    "generated_pdfs": 0
+  },
+  "jobs": []
+}
