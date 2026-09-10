@@ -1,0 +1,30 @@
+{
+  "name": "CareerPilot Retail",
+  "timezone": "Europe/Rome",
+  "min_score_for_cv": 55,
+  "freshness_days": 21,
+  "max_detail_pages_per_source": 35,
+  "request_timeout_seconds": 20,
+  "request_delay_seconds": 0.5,
+  "target_locations": ["Avigliana", "Sant'Ambrogio di Torino", "Almese", "Villar Dora", "Condove", "Caprie", "Borgone Susa", "Vaie", "Chiusa di San Michele", "Rivoli", "Alpignano", "Collegno", "Grugliasco", "Rosta", "Buttigliera Alta", "Torino", "Valle di Susa"],
+  "role_terms": ["addetto vendite", "addetta vendite", "addetto vendita", "addetta vendita", "cassiere", "cassiera", "scaffalista", "rifornimento scaffali", "addetto rifornimento", "addetto supermercato", "addetto punto vendita", "store assistant", "sales assistant", "addetto reparto", "addetto banco", "ricevimento merci", "magazziniere", "operatore di filiale", "assistant store manager", "vice responsabile", "allievo responsabile", "gastronomia", "ortofrutta", "panetteria"],
+  "priority_terms": ["part-time", "part time", "tempo indeterminato", "categorie protette", "legge 68/99", "l.68/99", "collocamento mirato", "torino", "valle di susa"],
+  "sources": [
+    {"company":"Lidl", "career_url":"https://lavoro.lidl.it/", "domains":["lavoro.lidl.it"]},
+    {"company":"ALDI", "career_url":"https://carriera.aldi.it/", "domains":["carriera.aldi.it"]},
+    {"company":"Esselunga", "career_url":"https://esselungajob.it/", "domains":["esselungajob.it"]},
+    {"company":"Eurospin", "career_url":"https://www.eurospin.it/lavora-con-noi/", "domains":["eurospin.it"]},
+    {"company":"PENNY", "career_url":"https://www.penny.it/lavora-con-noi", "domains":["penny.it"]},
+    {"company":"MD", "career_url":"https://www.mdspa.it/lavora-con-noi/", "domains":["mdspa.it"]},
+    {"company":"Bennet", "career_url":"https://www.bennet.com/workwithus", "domains":["bennet.com"]},
+    {"company":"Carrefour", "career_url":"https://lavoraconnoi.carrefour.it/", "domains":["lavoraconnoi.carrefour.it"]},
+    {"company":"Nova Coop", "career_url":"https://novacoop.intervieweb.it/it/career", "domains":["novacoop.intervieweb.it","novacoop.it"]},
+    {"company":"Mercatò / Dimar", "career_url":"https://dimar.intervieweb.it/it/career", "domains":["dimar.intervieweb.it","dimar.it"]},
+    {"company":"Conad", "career_url":"https://www.conad.it/lavora-con-noi", "domains":["conad.it"]},
+    {"company":"Coop", "career_url":"https://www.e-coop.it/lavora-con-noi", "domains":["e-coop.it"]},
+    {"company":"Pam Panorama", "career_url":"https://www.pampanorama.it/lavora-con-noi", "domains":["pampanorama.it"]},
+    {"company":"Unes", "career_url":"https://www.unes.it/lavora-con-noi/", "domains":["unes.it"]},
+    {"company":"Tigros", "career_url":"https://www.tigros.it/lavora-con-noi", "domains":["tigros.it"]}
+  ],
+  "secondary_domains": ["it.indeed.com", "linkedin.com/jobs", "infojobs.it", "adecco.it", "randstad.it", "manpower.it", "gigroup.it"]
+}

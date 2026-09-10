@@ -1,0 +1,11 @@
+{
+  "name": "Nome Cognome",
+  "phone": "+39 ...",
+  "email": "email@example.com",
+  "area": "Torino e provincia",
+  "summary": "Profilo professionale sintetico e concreto.",
+  "skills": ["Assistenza alla clientela", "Vendita e supporto al cliente", "Rifornimento e sistemazione merce", "Organizzazione del punto vendita", "Ricevimento e movimentazione merci", "Lavoro in team"],
+  "experiences": [{"title": "Ruolo", "company": "Azienda", "dates": "2023 - 2024", "domains": ["retail", "customer_service"], "bullets": ["Attività svolta e responsabilità concreta."]}],
+  "education": ["Titolo di studio o corso pertinente"],
+  "additional": []
+}

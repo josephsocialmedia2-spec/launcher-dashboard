@@ -1,0 +1,58 @@
+name: CareerPilot Retail Radar
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '2/5 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: career-pilot-radar
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: career-pilot/requirements.txt
+      - name: Installa dipendenze
+        run: pip install -r career-pilot/requirements.txt
+      - name: Scansiona offerte e prepara i CV standard
+        env:
+          CAREERPILOT_PROFILE_B64: ${{ secrets.CAREERPILOT_PROFILE_B64 }}
+          CAREERPILOT_PROFILE_JSON: ${{ secrets.CAREERPILOT_PROFILE_JSON }}
+          WA_TOKEN: ${{ secrets.WA_TOKEN }}
+          WA_PHONE_NUMBER_ID: ${{ secrets.WA_PHONE_NUMBER_ID }}
+          WA_TO: ${{ secrets.WA_TO }}
+          WA_GRAPH_VERSION: ${{ secrets.WA_GRAPH_VERSION }}
+        run: python career-pilot/engine/radar.py
+      - name: Conserva PDF del run
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: career-pilot-cv-${{ github.run_number }}
+          path: career-pilot/artifacts/*.pdf
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Aggiorna dashboard
+        run: |
+          git config user.name "CareerPilot Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add career-pilot/data/jobs.json career-pilot/data/seen_jobs.json
+          if git diff --cached --quiet; then
+            echo "Nessun aggiornamento da pubblicare"
+          else
+            git commit -m "CareerPilot: aggiorna offerte"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
