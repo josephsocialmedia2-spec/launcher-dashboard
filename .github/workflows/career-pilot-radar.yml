@@ -2,6 +2,10 @@ name: CareerPilot Retail Radar
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'career-pilot/**'
+      - '.github/workflows/career-pilot-radar.yml'
   schedule:
     - cron: '2/5 * * * *'
 
