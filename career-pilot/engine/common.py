@@ -4,14 +4,42 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parents[1]
 CONFIG_PATH = BASE / "config.json"
+EXTENSIONS_PATH = BASE / "search_extensions.json"
 DATA_DIR = BASE / "data"
 ARTIFACT_DIR = BASE / "artifacts"
 
+def _merge_unique(base, extra):
+    out = []
+    seen = set()
+    for item in [*(base or []), *(extra or [])]:
+        key = str(item).strip().lower()
+        if key and key not in seen:
+            seen.add(key)
+            out.append(item)
+    return out
+
 def load_json(path: Path, default):
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        data = json.loads(path.read_text(encoding="utf-8"))
     except Exception:
         return default
+
+    try:
+        if path.resolve() == CONFIG_PATH.resolve() and EXTENSIONS_PATH.exists() and isinstance(data, dict):
+            ext = json.loads(EXTENSIONS_PATH.read_text(encoding="utf-8"))
+            if isinstance(ext, dict):
+                for key, value in ext.items():
+                    if isinstance(value, list):
+                        data[key] = _merge_unique(data.get(key, []), value)
+                    elif isinstance(value, dict):
+                        current = data.get(key, {}) if isinstance(data.get(key), dict) else {}
+                        data[key] = {**current, **value}
+                    else:
+                        data[key] = value
+    except Exception as e:
+        print("[WARN] search_extensions.json non applicato:", e)
+
+    return data
 
 def clean(text: str) -> str:
     text = html.unescape(text or "")
