@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-11T19:46:53+00:00",
-  "source_generated_at": "2026-09-11T19:45:35+00:00",
+  "generated_at": "2026-09-11T22:39:22+00:00",
+  "source_generated_at": "2026-09-11T22:37:44+00:00",
   "policy": "CENTRO_RADIALE",
   "reference_hub": "Villar Dora",
   "ordering": "DISTANZA_LINEA_ARIA_DA_VILLAR_DORA",
@@ -67,9 +67,9 @@
     "communes_with_signals": 39,
     "configured_communes": 41,
     "excluded_communes_count": 0,
-    "enriched_total": 99,
-    "new_total": 16,
-    "public_contacts_total": 356
+    "enriched_total": 105,
+    "new_total": 0,
+    "public_contacts_total": 377
   },
   "communes": [
     {
@@ -1805,7 +1805,7 @@
         "display_name": "Avigliana, Torino, Piemonte, 10051, Italia"
       },
       "signals_count": 22,
-      "new_signals": 2,
+      "new_signals": 0,
       "enriched_signals": 4,
       "pending_signals": 17,
       "public_contacts_count": 16,
@@ -2204,7 +2204,7 @@
         {
           "signal_id": "SIG-5DAE0696493ECE",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -2254,7 +2254,7 @@
         {
           "signal_id": "SIG-D929F67E8BC169",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -6171,7 +6171,7 @@
         "display_name": "Condove, Torino, Piemonte, 10055, Italia"
       },
       "signals_count": 14,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 1,
       "pending_signals": 2,
       "public_contacts_count": 3,
@@ -6179,7 +6179,7 @@
         {
           "signal_id": "SIG-581B389A4BE4D1",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 10,
           "territorial_route": [
             "Susa",
@@ -6224,8 +6224,7 @@
           "radius_m": 500,
           "context": {},
           "public_entities": [],
-          "enriched_at": null,
-          "enrichment_error": "HTTP Error 429: Too Many Requests"
+          "enriched_at": null
         },
         {
           "signal_id": "SIG-D15C72D8001624",
@@ -11863,15 +11862,15 @@
         "display_name": "Giaveno, Torino, Piemonte, 10094, Italia"
       },
       "signals_count": 17,
-      "new_signals": 2,
+      "new_signals": 0,
       "enriched_signals": 1,
-      "pending_signals": 16,
+      "pending_signals": 14,
       "public_contacts_count": 3,
       "signals": [
         {
           "signal_id": "SIG-378D762CB62866",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -11911,7 +11910,7 @@
             "dork_contesto": "https://www.google.com/search?q=%22Borgata+Prafieul+Giaveno.+Buono+stato%22+%22Giaveno%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
+          "enrichment_status": "GEOCODE_NOT_FOUND",
           "geocode": null,
           "radius_m": 500,
           "context": {},
@@ -11921,7 +11920,7 @@
         {
           "signal_id": "SIG-5064868685EAE3",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -11961,7 +11960,7 @@
             "dork_contesto": "https://www.google.com/search?q=%22Borgata+Ughettera+13%22+%22Giaveno%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
+          "enrichment_status": "GEOCODE_NOT_FOUND",
           "geocode": null,
           "radius_m": 500,
           "context": {},
@@ -12964,7 +12963,7 @@
         "display_name": "Sant'Antonino di Susa, Torino, Piemonte, Italia"
       },
       "signals_count": 24,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 14,
       "pending_signals": 2,
       "public_contacts_count": 42,
@@ -12972,7 +12971,7 @@
         {
           "signal_id": "SIG-C4AB465712A14A",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 8,
           "territorial_route": [
             "Susa",
@@ -17137,8 +17136,8 @@
       },
       "signals_count": 12,
       "new_signals": 0,
-      "enriched_signals": 0,
-      "pending_signals": 10,
+      "enriched_signals": 1,
+      "pending_signals": 9,
       "public_contacts_count": 0,
       "signals": [
         {
@@ -17184,12 +17183,34 @@
             "dork_contesto": "https://www.google.com/search?q=%22via+Coazze+343%22+%22Coazze%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.0085731,
+            "lon": 11.0978127,
+            "display_name": "Via Coazze, Coazze, Villa Poma, Borgo Mantovano, Mantova, Lombardia, 46036, Italia",
+            "osm_type": "way",
+            "osm_id": 75731392
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
+          "context": {
+            "residential_buildings_osm": 0,
+            "public_entities_count": 1,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "AGRICOLTURA_ANIMALI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 40763168,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-11T22:37:56+00:00"
         },
         {
           "signal_id": "SIG-64B1DE1C1B5139",
@@ -18176,7 +18197,7 @@
         "display_name": "Givoletto, Unione Montana di Comuni delle Valli di Lanzo, Ceronda e Casternone, Torino, Piemonte, Italia"
       },
       "signals_count": 15,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 1,
       "pending_signals": 13,
       "public_contacts_count": 0,
@@ -18234,7 +18255,7 @@
         {
           "signal_id": "SIG-2D88DA1E3452E1",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -18274,12 +18295,13 @@
             "dork_contesto": "https://www.google.com/search?q=%22via+Don+Rolle+12%22+%22Givoletto%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
+          "enrichment_status": "ERROR",
           "geocode": null,
           "radius_m": 500,
           "context": {},
           "public_entities": [],
-          "enriched_at": null
+          "enriched_at": null,
+          "enrichment_error": "HTTP Error 429: Too Many Requests"
         },
         {
           "signal_id": "SIG-A310E9913F03D8",
@@ -18979,7 +19001,7 @@
         "display_name": "Borgone Susa, Torino, Piemonte, Italia"
       },
       "signals_count": 27,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 13,
       "pending_signals": 2,
       "public_contacts_count": 57,
@@ -18987,7 +19009,7 @@
         {
           "signal_id": "SIG-FD7B7D9AF7D36E",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 7,
           "territorial_route": [
             "Susa",
@@ -24454,10 +24476,10 @@
         "display_name": "Rivoli, Torino, Piemonte, 10098, Italia"
       },
       "signals_count": 43,
-      "new_signals": 1,
-      "enriched_signals": 5,
-      "pending_signals": 33,
-      "public_contacts_count": 46,
+      "new_signals": 0,
+      "enriched_signals": 6,
+      "pending_signals": 32,
+      "public_contacts_count": 56,
       "signals": [
         {
           "signal_id": "SIG-60CC169AC43AED",
@@ -24502,12 +24524,1673 @@
             "dork_contesto": "https://www.google.com/search?q=%22via+san+rocco+7%22+%22Rivoli%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.0699447,
+            "lon": 7.5152502,
+            "display_name": "Via San Rocco, Tetti Neirotti, Rivoli, Torino, Piemonte, 10098, Italia",
+            "osm_type": "way",
+            "osm_id": 695039157
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
+          "context": {
+            "residential_buildings_osm": 487,
+            "public_entities_count": 231,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "Al guardaroba di...",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583041459,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Alberghina studio ottico",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10293499332,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Alessia Hair Lab Extension",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 13564486618,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Alice's Land giochi educativi",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10293530893,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Amo Outdoor",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9910573832,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Aramaico",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12158145618,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Arte Bianca 2000",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2950508518,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Artuso Oreficeria",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10235894672,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Audionova",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9873908677,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Barbertown",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583048524,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Beauty Star",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300250652,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "BeMa tutto per capelli, viso, corpo e unghie",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 7385362602,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Bertana",
+              "category": "COMMERCIO",
+              "address": "Via Fratelli Piol 45a Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 8203158085,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Bikeway",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12582899786,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Blendon barber shop",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10293474966,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Blues",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300214327,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Bottega Verde",
+              "category": "COMMERCIO",
+              "address": "Via Giovanni Giolitti 1 Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10235834194,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Calzedonia",
+              "category": "COMMERCIO",
+              "address": "Via Fratelli Piol 45 Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300238233,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Cartoleria negro",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583093615,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Centro stampa graficore Rivoli",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10293507924,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Commisso gastronomia con tavoli",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2727273815,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Cover point",
+              "category": "COMMERCIO",
+              "address": "Via Fratelli Piol 21 Rivoli",
+              "phone_public": "+39 393 5834663",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12158192586,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Crai",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2940599611,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Creo porte",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10293486490,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Cuir Calzature",
+              "category": "COMMERCIO",
+              "address": "Via Fratelli Piol 57a Rivoli",
+              "phone_public": "+39 011 958 1534",
+              "email_public": "info@cuir.it",
+              "website": "https://www.cuir.it/",
+              "osm_id": 6569432786,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Dg Office",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300175025,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Donalisio",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 3181775393,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Dosaggio Zero bistrot con enoteca",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300222159,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Emporio creativo",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2949666450,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Emporio del pane",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10100730017,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Fashion Blu abbigliamento",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300255624,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Fashion Dog",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2950409187,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Femus calzature",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9833684461,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Firme in tasca uomo",
+              "category": "COMMERCIO",
+              "address": "Via Fratelli Piol 22 A Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 5264659583,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Fish&Cobi",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9910573861,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Franchini Gioielli",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9910573830,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Gaia",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 7008371087,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Glitter",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12158074044,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Graziella",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10671052307,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Igi&co",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300172799,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Il Barbiere di Rivoli",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 7008344284,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Il chiosco",
+              "category": "COMMERCIO",
+              "address": "Via Capra 14 Rivoli",
+              "phone_public": "3478445925",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2948358017,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Il glicine",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10315010792,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Il negozietto cosmesi e bijoux",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12158185646,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Ingrid fiori",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583034765,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Intimissimi",
+              "category": "COMMERCIO",
+              "address": "Via Fratelli Piol 57 Rivoli",
+              "phone_public": "+39 0119533395",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9320651926,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Intimissimi Uomo",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300200243,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Intimo e Altro",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2727272288,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Intimo Rivoli",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300226859,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Kasanova",
+              "category": "COMMERCIO",
+              "address": "Via Fratelli Piol 36a Rivoli",
+              "phone_public": "+39110465809",
+              "email_public": "rivoli@kasanova.it",
+              "website": "https://www.kasanova.com/it/stores/kasanova-rivoli-via-f-lli-piol-36",
+              "osm_id": 8203158090,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "L'arte del decoupage di Adele",
+              "category": "COMMERCIO",
+              "address": "Via Arnaud 6 Rivoli",
+              "phone_public": "+39 3394325433",
+              "email_public": "",
+              "website": "http://www.decoupageadele.it/",
+              "osm_id": 4225918518,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "L'orto bio frutta",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10293473384,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "La bellezia acconciature",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10293468406,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "La bottega senza glutine",
+              "category": "COMMERCIO",
+              "address": "Piazza San Rocco",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4590593863,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "La Dea",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300239287,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "La Frutteria di Gaido",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583009869,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "La Mimosa fiori e piante",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300258872,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Le api di Giulia",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583039704,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Le Disque",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12158137392,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Le Fornarine",
+              "category": "COMMERCIO",
+              "address": "Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2727271797,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Librerie Ubik",
+              "category": "COMMERCIO",
+              "address": "Via Fratelli Piol 37d Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2940602732,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Love Shop 24",
+              "category": "COMMERCIO",
+              "address": "Vicolo Maritano 1a Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 8249781967,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Macelleria del Corso",
+              "category": "COMMERCIO",
+              "address": "Corso Susa 32e",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9873908670,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Make fashion great again",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12582904920,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Mari",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2948716196,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Maschio Latino",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10315012820,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Matilda J",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300236578,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Morisco",
+              "category": "COMMERCIO",
+              "address": "Viale Partigiani d'Italia 36a Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 8151065333,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Nalù",
+              "category": "COMMERCIO",
+              "address": "Via Santa Croce 1a Rivoli",
+              "phone_public": "+39 380 183 5529",
+              "email_public": "",
+              "website": "https://nalustore.it/",
+              "osm_id": 13092050243,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "NAT",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300233210,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Natur House",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9873908669,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Negozio leggero la spesa alla spina",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583071333,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Nine tails",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300229276,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Non solo mollica",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2747513300,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Original Marines",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300225101,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Ortopedia Gallina",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12158215684,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Ottica Q-Q",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583052132,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Ottica Savino",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300247515,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Ottica Ximenes",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300221898,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "OVS",
+              "category": "COMMERCIO",
+              "address": "Corso Francia 1s Rivoli",
+              "phone_public": "+39110609737",
+              "email_public": "8895f@ovs.it",
+              "website": "https://www.ovs.it/it/it/stores/italia/piemonte/torino/ovs-rivoli",
+              "osm_id": 9910573833,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Panassi",
+              "category": "COMMERCIO",
+              "address": "Piazza Giuseppe Garibaldi 3a Rivoli",
+              "phone_public": "+39 011 9536691",
+              "email_public": "rivoli@panassilibrerie.it",
+              "website": "https://www.panassilibrerie.it/",
+              "osm_id": 2940599538,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Panificio",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2948360700,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Pastepartout",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4237676449,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Pasticceria Dalmasso",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10293493737,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Pasticceria pasticcini e dintorni",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2727272473,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Pastificio del Monferrato",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300150949,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Pastificio San Paolo",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 7385391260,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Perrero home & interior",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12582912651,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Pescheria gastronomia",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4225941438,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Pescheria Maestra",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300250330,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Petalo rosso",
+              "category": "COMMERCIO",
+              "address": "Via Fratelli Piol 31 Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 8203158098,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "PiùMe",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583053638,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Presto fresco",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4214374741,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Pret-A-Bebè",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9910573860,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Primigi Store",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300253002,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Puff store",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12158074053,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Quintino e Giovanni ottici",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300209788,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Regis viaggi",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10293487223,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Restagno moda capelli",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583054208,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Robe di Kappa",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300238396,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Sadart ceramiche parquet arredobagno",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583053601,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Sesia",
+              "category": "COMMERCIO",
+              "address": "Via Avigliana Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 288762738,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Seta beauty clinic",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12158178783,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Sisley",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300222158,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Sistemi di chiusura",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300216935,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Skin...",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583055400,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Spa per capelli",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 7008370725,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Tabacchi",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10293493647,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Tempur",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583088390,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "TIM",
+              "category": "COMMERCIO",
+              "address": "Corso Susa 2d Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 8291717755,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Triangolo",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 7008365099,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Tutto capsule",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10315016651,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "United Colors of Benetton",
+              "category": "COMMERCIO",
+              "address": "Via Fratelli Piol 39 Rivoli",
+              "phone_public": "+39 011 958 7243",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300229277,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Vialescarpe",
+              "category": "COMMERCIO",
+              "address": "Via Fratelli Piol 14b Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2949092433,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Vino sfuso enoteca",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583106672,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Vodafone",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300205886,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Wonder emotion concepts",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2951402110,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Ël forn ëd Rivulè",
+              "category": "COMMERCIO",
+              "address": "Corso Francia 2b Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2950412363,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "DePoliPomi studio fotografico",
+              "category": "INDUSTRIA_ARTIGIANATO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10293479315,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Forme d'arte",
+              "category": "INDUSTRIA_ARTIGIANATO",
+              "address": "Piazza Giuseppe Garibaldi 1c Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4225927815,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Imparalarte",
+              "category": "INDUSTRIA_ARTIGIANATO",
+              "address": "Via Rombò 22a Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4225922926,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Beato Neirotti",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 291673258,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Chiesa Collegiata Alta di Santa Maria della Stella",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 288784228,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Chiesa di San Martino",
+              "category": "RETE_TERRITORIALE",
+              "address": "Via San Martino Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 288741852,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Chiesa di San Rocco",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 288786304,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Chiesa di Santa Croce",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 291427223,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Chiesa Santa Maria della Stella",
+              "category": "RETE_TERRITORIALE",
+              "address": "Via Fratelli Piol 44 Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 290506623,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Oratorio",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 288789250,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "San Lorenzo",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 291519708,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Alexander ristorante pizzeria",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2949110166,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Ary Café",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4789503965,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Birreria Vineria J. Sax",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9910573831,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Bistrot del Castello",
+              "category": "RISTORAZIONE",
+              "address": "Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2940241333,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Caffetteria tabacchi ricevitoria",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2928862502,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Caffè Blanco",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 3169680944,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Consueto Di Furnari Marco",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 3120702280,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Crunchy Chicken",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12583106389,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Da Pecchia",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2948344254,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Dolce Gusto",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 7008356417,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Donburi house",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9873908671,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Fradiavolo",
+              "category": "RISTORAZIONE",
+              "address": "Piazza Martiri della Libertà 16/B Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300211878,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Il Sole",
+              "category": "RISTORAZIONE",
+              "address": "Piazza San Rocco",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4590593814,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "King Japan Sushi",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9910573828,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "L'Arrocco",
+              "category": "RISTORAZIONE",
+              "address": "Piazza San Rocco Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2940217736,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "L'ora giusta",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2950418766,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "La Corona",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4249950201,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "La Piada di una volta",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 7008354733,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "La Piola di via Piol",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10300268609,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "La Tavernetta",
+              "category": "RISTORAZIONE",
+              "address": "Piazza Carlo Bollani 4a Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2928865201,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Linko",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12158166961,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-11T22:37:50+00:00"
         },
         {
           "signal_id": "SIG-63E6037D24A59A",
@@ -26921,56 +28604,6 @@
           "enriched_at": null
         },
         {
-          "signal_id": "SIG-5D00E7C01AC3E7",
-          "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
-          "territorial_rank": 9999,
-          "territorial_route": [
-            "Susa",
-            "Bussoleno",
-            "Chianocco",
-            "San Giorio di Susa",
-            "Bruzolo",
-            "San Didero",
-            "Villar Focchiardo",
-            "Borgone Susa",
-            "Sant’Antonino di Susa",
-            "Vaie",
-            "Condove",
-            "Chiusa di San Michele",
-            "Caprie",
-            "Sant’Ambrogio di Torino",
-            "Villar Dora",
-            "Almese"
-          ],
-          "comune": "Rivoli",
-          "indirizzo": "corso Francia 217",
-          "immobile": "Vendita Appartamento Rivoli. Trilocale in corso Francia 217. Ottimo",
-          "prezzo": "PREZZO DA VERIFICARE",
-          "fonte": "Immobiliare.it",
-          "seller_signal": "NON_DETERMINATO",
-          "priorita": "BASSA",
-          "score": "15",
-          "url_annuncio": "https://www.immobiliare.it/annunci/131911816/",
-          "queries": {
-            "google": "https://www.google.com/search?q=corso+Francia+217%2C+Rivoli%2C+Italia",
-            "google_maps": "https://www.google.com/maps/search/?api=1&query=corso+Francia+217%2C+Rivoli%2C+Italia",
-            "attivita_vicine": "https://www.google.com/search?q=attivit%C3%A0+aziende+negozi+servizi+vicino+%22corso+Francia+217%22+%22Rivoli%22",
-            "pagine_gialle": "https://www.google.com/search?q=site%3Apaginegialle.it+%22corso+Francia+217%22+%22Rivoli%22",
-            "pagine_bianche": "https://www.google.com/search?q=site%3Apaginebianche.it+%22corso+Francia+217%22+%22Rivoli%22",
-            "territorio": "https://www.google.com/search?q=%22corso+Francia+217%22+%22Rivoli%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
-            "animali_agricoltura": "https://www.google.com/search?q=%22corso+Francia+217%22+%22Rivoli%22+allevamento+stalla+canile+azienda+agricola+animali",
-            "dork_contesto": "https://www.google.com/search?q=%22corso+Francia+217%22+%22Rivoli%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
-          },
-          "engine_version": "2",
-          "enrichment_status": "PENDING",
-          "geocode": null,
-          "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
-        },
-        {
           "signal_id": "SIG-06790E02E217C1",
           "first_seen": "2026-09-08T08:27:15+00:00",
           "is_new": false,
@@ -27853,6 +29486,56 @@
             }
           ],
           "enriched_at": "2026-09-11T01:09:15+00:00"
+        },
+        {
+          "signal_id": "SIG-5D00E7C01AC3E7",
+          "first_seen": "2026-09-11T19:45:35+00:00",
+          "is_new": false,
+          "territorial_rank": 9999,
+          "territorial_route": [
+            "Susa",
+            "Bussoleno",
+            "Chianocco",
+            "San Giorio di Susa",
+            "Bruzolo",
+            "San Didero",
+            "Villar Focchiardo",
+            "Borgone Susa",
+            "Sant’Antonino di Susa",
+            "Vaie",
+            "Condove",
+            "Chiusa di San Michele",
+            "Caprie",
+            "Sant’Ambrogio di Torino",
+            "Villar Dora",
+            "Almese"
+          ],
+          "comune": "Rivoli",
+          "indirizzo": "corso Francia 217",
+          "immobile": "Vendita Appartamento Rivoli. Trilocale in corso Francia 217. Ottimo",
+          "prezzo": "PREZZO DA VERIFICARE",
+          "fonte": "Immobiliare.it",
+          "seller_signal": "NON_DETERMINATO",
+          "priorita": "BASSA",
+          "score": "15",
+          "url_annuncio": "https://www.immobiliare.it/annunci/131911816/",
+          "queries": {
+            "google": "https://www.google.com/search?q=corso+Francia+217%2C+Rivoli%2C+Italia",
+            "google_maps": "https://www.google.com/maps/search/?api=1&query=corso+Francia+217%2C+Rivoli%2C+Italia",
+            "attivita_vicine": "https://www.google.com/search?q=attivit%C3%A0+aziende+negozi+servizi+vicino+%22corso+Francia+217%22+%22Rivoli%22",
+            "pagine_gialle": "https://www.google.com/search?q=site%3Apaginegialle.it+%22corso+Francia+217%22+%22Rivoli%22",
+            "pagine_bianche": "https://www.google.com/search?q=site%3Apaginebianche.it+%22corso+Francia+217%22+%22Rivoli%22",
+            "territorio": "https://www.google.com/search?q=%22corso+Francia+217%22+%22Rivoli%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
+            "animali_agricoltura": "https://www.google.com/search?q=%22corso+Francia+217%22+%22Rivoli%22+allevamento+stalla+canile+azienda+agricola+animali",
+            "dork_contesto": "https://www.google.com/search?q=%22corso+Francia+217%22+%22Rivoli%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
+          },
+          "engine_version": "2",
+          "enrichment_status": "PENDING",
+          "geocode": null,
+          "radius_m": 500,
+          "context": {},
+          "public_entities": [],
+          "enriched_at": null
         },
         {
           "signal_id": "SIG-6EEDB48AE5B394",
@@ -31305,9 +32988,9 @@
         "display_name": "Bruino, Torino, Piemonte, Italia"
       },
       "signals_count": 20,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 3,
-      "pending_signals": 13,
+      "pending_signals": 12,
       "public_contacts_count": 9,
       "signals": [
         {
@@ -31710,7 +33393,7 @@
         {
           "signal_id": "SIG-00AB526DA0A564",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -31750,7 +33433,7 @@
             "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Bruino%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
+          "enrichment_status": "SKIPPED_NO_ADDRESS",
           "geocode": null,
           "radius_m": 500,
           "context": {},
@@ -33150,7 +34833,7 @@
         "display_name": "Villar Focchiardo, Torino, Piemonte, Italia"
       },
       "signals_count": 7,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 4,
       "pending_signals": 0,
       "public_contacts_count": 25,
@@ -33158,7 +34841,7 @@
         {
           "signal_id": "SIG-3B28A9013CB3CB",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 6,
           "territorial_route": [
             "Susa",
@@ -35451,12 +37134,13 @@
             "dork_contesto": "https://www.google.com/search?q=%22Via+Pianezza%2C+82%22+%22Pianezza%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
+          "enrichment_status": "ERROR",
           "geocode": null,
           "radius_m": 500,
           "context": {},
           "public_entities": [],
-          "enriched_at": null
+          "enriched_at": null,
+          "enrichment_error": "HTTP Error 429: Too Many Requests"
         },
         {
           "signal_id": "SIG-4B3A89F3DA89EF",
@@ -35501,12 +37185,13 @@
             "dork_contesto": "https://www.google.com/search?q=%22Via+Caduti%2C+195%22+%22Pianezza%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
+          "enrichment_status": "ERROR",
           "geocode": null,
           "radius_m": 500,
           "context": {},
           "public_entities": [],
-          "enriched_at": null
+          "enriched_at": null,
+          "enrichment_error": "HTTP Error 429: Too Many Requests"
         },
         {
           "signal_id": "SIG-208FD5207C260A",
@@ -38238,7 +39923,7 @@
         "display_name": "San Didero, Torino, Piemonte, Italia"
       },
       "signals_count": 8,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 4,
       "pending_signals": 0,
       "public_contacts_count": 8,
@@ -38246,7 +39931,7 @@
         {
           "signal_id": "SIG-87CCE4FF846678",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 5,
           "territorial_route": [
             "Susa",
@@ -41092,10 +42777,10 @@
         "display_name": "Collegno, Torino, Piemonte, Italia"
       },
       "signals_count": 27,
-      "new_signals": 2,
-      "enriched_signals": 0,
-      "pending_signals": 24,
-      "public_contacts_count": 0,
+      "new_signals": 0,
+      "enriched_signals": 1,
+      "pending_signals": 23,
+      "public_contacts_count": 1,
       "signals": [
         {
           "signal_id": "SIG-AA536B320F26C8",
@@ -41200,7 +42885,7 @@
         {
           "signal_id": "SIG-047E08A574F34D",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -41240,12 +42925,232 @@
             "dork_contesto": "https://www.google.com/search?q=%22via+Sacra+San+Michele%22+%22Collegno%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.0795309,
+            "lon": 7.5628988,
+            "display_name": "Via Sacra San Michele, Terracorta, Leumann, Collegno, Torino, Piemonte, 10093, Italia",
+            "osm_type": "way",
+            "osm_id": 121963170
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
+          "context": {
+            "residential_buildings_osm": 30,
+            "public_entities_count": 19,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "centro commerciale Di Vittorio",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 170264867,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Chiesa di Gesù Maestro",
+              "category": "RETE_TERRITORIALE",
+              "address": "Via Francesco Ferrucci 29 Collegno",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 439155510,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Bar Hollywood",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12369657834,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Antica Certosa",
+              "category": "SALUTE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 7385808384,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Scuola dell'infanzia G. Capuozzo",
+              "category": "SCUOLA_CULTURA",
+              "address": "Via Salbertrand 25 Collegno",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 823263302,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Scuola Elementare \"Don Milani\"",
+              "category": "SCUOLA_CULTURA",
+              "address": "Piazza Pablo Neruda 9 Collegno",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 439158733,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 639634728,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Chronos Cooperativa Sociale",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "coopchronos.it",
+              "osm_id": 1430214946,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Parcheggio Palasport",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 88810279,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "3 T Trattamenti Termici",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "Via Vajont 77 Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10107896214,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Meccanica Grasso S.r.l.",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "Via Vajont 88 Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10107660446,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Samep Tools",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "Via Vajont 78 Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10107896498,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Taurus Sages Srl",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "Via Vajont 83 Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10107893360,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "ASD Pro Collegno Collegnese",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 439002444,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Giardino dell'amicizia Collegno - Sarajevo",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 439155509,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Giardino Fabrizio De Andrè",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 192459581,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Palacollegno",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "Via Antica di Rivoli 21 Collegno",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 78179920,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Palazzetto \"Don Milani\"",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "Via Roma 61 Collegno",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 439006015,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Piscina comunale Bendini",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 368437815,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-11T22:39:05+00:00"
         },
         {
           "signal_id": "SIG-51D62A7DAFAF0D",
@@ -41450,7 +43355,7 @@
         {
           "signal_id": "SIG-366ED03900E380",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -43677,9 +45582,9 @@
       },
       "signals_count": 30,
       "new_signals": 0,
-      "enriched_signals": 2,
-      "pending_signals": 24,
-      "public_contacts_count": 17,
+      "enriched_signals": 3,
+      "pending_signals": 23,
+      "public_contacts_count": 20,
       "signals": [
         {
           "signal_id": "SIG-E4C349EEE86DE4",
@@ -43774,12 +45679,210 @@
             "dork_contesto": "https://www.google.com/search?q=%22via+Giuseppe+Di%22+%22Grugliasco%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.0585299,
+            "lon": 7.6201752,
+            "display_name": "Via Giuseppe Di Vittorio, Borgata Lesna (Grugliasco), Grugliasco, Torino, Piemonte, 10142, Italia",
+            "osm_type": "way",
+            "osm_id": 130443664
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
+          "context": {
+            "residential_buildings_osm": 198,
+            "public_entities_count": 17,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "Comoglio",
+              "category": "COMMERCIO",
+              "address": "Via Challant 41bis",
+              "phone_public": "+39 011 707 1562",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12598017801,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "NCA Le Gru",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 94586598,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Nuovo complesso aziendale Le Gru",
+              "category": "COMMERCIO",
+              "address": "Via Crea 10 Grugliasco",
+              "phone_public": "+39 011 770 9657",
+              "email_public": "",
+              "website": "",
+              "osm_id": 779853520,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Pane e Caffè",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9037277651,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Lesna di Brizio Rfalletti di Castellazzo Dr. Antonio",
+              "category": "SALUTE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 7385981427,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "ENAIP Piemonte - CSF Grugliasco",
+              "category": "SCUOLA_CULTURA",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 865449657,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 7940000024,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Circolo Bloom",
+              "category": "SERVIZI",
+              "address": "Via Challant 13",
+              "phone_public": "",
+              "email_public": "",
+              "website": "https://www.circolobloom.org/",
+              "osm_id": 4160817565,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Eni Plenitude",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1380236860,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Parcheggio Area Blu",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 103409685,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Parcheggio Area Gialla",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 39541435,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Parcheggio Area Rossa",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 83196486,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Polizia Di Stato - Quinto Reparto Mobile",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 83676853,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Giardini Aurelio Ceresa",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 865449655,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Giardino delle bambine e dei bambini di tutto il mondo",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1281995798,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Lesna",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 82295505,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Palestra Levi Lesna",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1382427122,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-11T22:38:01+00:00"
         },
         {
           "signal_id": "SIG-D03FA04BB58FBF",
@@ -49258,10 +51361,10 @@
         "display_name": "Beinasco, Torino, Piemonte, 10092, Italia"
       },
       "signals_count": 19,
-      "new_signals": 2,
-      "enriched_signals": 4,
-      "pending_signals": 13,
-      "public_contacts_count": 14,
+      "new_signals": 0,
+      "enriched_signals": 6,
+      "pending_signals": 11,
+      "public_contacts_count": 21,
       "signals": [
         {
           "signal_id": "SIG-8D6471018A259C",
@@ -49977,7 +52080,7 @@
         {
           "signal_id": "SIG-4B0D5D30271260",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -50017,17 +52120,292 @@
             "dork_contesto": "https://www.google.com/search?q=%22via+Danilo+Dolci+7%22+%22Beinasco%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.0243872,
+            "lon": 7.5835712,
+            "display_name": "Via Danilo Dolci, Borgo Melano, Beinasco, Torino, Piemonte, 10092, Italia",
+            "osm_type": "way",
+            "osm_id": 141206293
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
+          "context": {
+            "residential_buildings_osm": 44,
+            "public_entities_count": 24,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "Ambulatorio della Piazza",
+              "category": "AGRICOLTURA_ANIMALI",
+              "address": "",
+              "phone_public": "+39 0113972150",
+              "email_public": "",
+              "website": "",
+              "osm_id": 11420419241,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "ASD Campo Base",
+              "category": "AGRICOLTURA_ANIMALI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1334256716,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Arcaplanet",
+              "category": "COMMERCIO",
+              "address": "Viale del Risorgimento",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12252267003,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Banco Fresco",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 612620315,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Russo",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 11434894626,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Municipio",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1972209,
+              "osm_type": "relation",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Caffè Cavour",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "+39 0113490642",
+              "email_public": "",
+              "website": "",
+              "osm_id": 11420419240,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Il rosso di sera",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "+39 011 349 9005",
+              "email_public": "info@ilrossodisera.com",
+              "website": "https://ilrossodisera.com/",
+              "osm_id": 11434894637,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "L'angolo partenopeo",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1611678047,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Roadhouse",
+              "category": "RISTORAZIONE",
+              "address": "Via Otto Marzo",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12252267002,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Borghesio S.N.C. Delle Dr.Sse Giovanna Borghesio e Stefania Sacchi",
+              "category": "SALUTE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 7384801640,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 877146729,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Distributore SMAT",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1936488046,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Ecocentro",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 261353577,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Economy Beinasco",
+              "category": "SERVIZI",
+              "address": "Beinasco",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9332345447,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Nido d'Infanzia \"Franco Garelli\"",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1293103325,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Parcheggio Via Dolci",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 107188548,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Poste Italiane",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 102261264,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "RSA Edmondo De Amicis",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "https://www.casadiriposopiu.it/casa-di-riposo/piemonte/beinasco,edmondo-de-amicis/",
+              "osm_id": 1510318460,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "SMAT",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1937316550,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "TotalErg",
+              "category": "SERVIZI",
+              "address": "Via San Luigi 9 Beinasco",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 227749742,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Giardino Consolata",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 828141179,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Centro Culturale Bruno Zevi",
+              "category": "TURISMO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1334574319,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "San Luigi",
+              "category": "TURISMO",
+              "address": "Via San Luigi 5",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 96621472,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-11T22:39:00+00:00"
         },
         {
           "signal_id": "SIG-BA47C0C1C7BE59",
           "first_seen": "2026-09-11T19:45:35+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -50067,12 +52445,133 @@
             "dork_contesto": "https://www.google.com/search?q=%22Strada+Torino+90%22+%22Beinasco%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.0286767,
+            "lon": 7.6035571,
+            "display_name": "Strada Torino, Fornaci, Beinasco, Torino, Piemonte, 10092, Italia",
+            "osm_type": "way",
+            "osm_id": 40031088
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
+          "context": {
+            "residential_buildings_osm": 7,
+            "public_entities_count": 10,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "Bike Lab",
+              "category": "COMMERCIO",
+              "address": "Via Venezia 11 Beinasco",
+              "phone_public": "+39 011 207 1376",
+              "email_public": "bikelabtorino@gmail.com",
+              "website": "https://www.bikelabtorino.com/",
+              "osm_id": 6817639103,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Flora Folies",
+              "category": "COMMERCIO",
+              "address": "Strada Torino 100 Beinasco",
+              "phone_public": "+39 3703146480",
+              "email_public": "",
+              "website": "https://www.fioriatorino.it/",
+              "osm_id": 9214956796,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Stellantis Mirafiori",
+              "category": "INDUSTRIA_ARTIGIANATO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2045972,
+              "osm_type": "relation",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Cappella di San Giovanni Battista",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 386903182,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Banco BPM",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "+39 011 397 2532",
+              "email_public": "filiale.01093@bancobpm.it",
+              "website": "http://www.bpn.it",
+              "osm_id": 1158111514,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Comune di Torino",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1539416984,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "A.S.D. Dream Academy",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "Via San Giacomo 8 Beinasco",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 6354053216,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1158073206,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Giardino comunale",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 363281145,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Serao",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "Viale delle Fornaci 4 Beinasco",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 991864437,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-11T22:38:39+00:00"
         },
         {
           "signal_id": "SIG-F41F77E891B8F0",
