@@ -1,1 +1,582 @@
-{}
+{
+  "31bdc3d45fbdc5b748dfe2b2": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://lavoro.lidl.it"
+  },
+  "33877a9aab1521727d1ceecc": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://lavoro.lidl.it/life-at-lidl/processo-di-selezione"
+  },
+  "3b21fe2afe48e21f909941eb": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://lavoro.lidl.it/life-at-lidl/processo-di-selezione/lidl-on-tour"
+  },
+  "67ec3297964dedf8278a4d5f": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://lavoro.lidl.it/life-at-lidl/processo-di-selezione/open-recruiting-day"
+  },
+  "af1085d562936fa4aee4019e": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://lavoro.lidl.it/life-at-lidl/formazione-e-opportunita-di-carriera"
+  },
+  "34bb344ef4917357124af5ea": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://lavoro.lidl.it/life-at-lidl/formazione-e-opportunita-di-carriera/onboarding"
+  },
+  "f2ec39d2a8a6aed4c67c3658": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://lavoro.lidl.it/life-at-lidl/formazione-e-opportunita-di-carriera/formazione-continua"
+  },
+  "f5b9c9d36f0307749fce4469": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://lavoro.lidl.it/life-at-lidl/formazione-e-opportunita-di-carriera/crescita-interna"
+  },
+  "1ff15704a72031563b2e49bd": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://lavoro.lidl.it/life-at-lidl/formazione-e-opportunita-di-carriera/global-mobility"
+  },
+  "9fd6bad02f8cb70a00ebb0ce": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://lavoro.lidl.it/punti-vendita/assistant-store-manager"
+  },
+  "1328b4354f1408230f455079": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://lavoro.lidl.it/lavoro-formazione/neodiplomati/lidl-2-your-career"
+  },
+  "8da593b3f018e4879fbdc8e0": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://lavoro.lidl.it/lavoro-formazione/lavorare-durante-gli-studi"
+  },
+  "01934dea07935b7a842f73cc": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/jobalert"
+  },
+  "a19424e2f830aa9fbbb193b6": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/che-posizione-cerchi/sviluppo-immobiliare/impiegato-sviluppo-immobiliare"
+  },
+  "369db88ab242522bb7401614": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/che-posizione-cerchi/logistica/magazziniere-specializzato"
+  },
+  "a4da402505a332506ea51062": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/che-posizione-cerchi/logistica/impiegato-logistico"
+  },
+  "71a5edd38118887171abbd82": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/che-posizione-cerchi/logistica/aiuto-magazziniere"
+  },
+  "8463d078acaf24994330ab61": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/che-posizione-cerchi/supply-chain/impiegato-amministrazione-supply-chain"
+  },
+  "14ca904233316368cb697cf2": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/che-posizione-cerchi/supply-chain/impiegato-gestione-ordini"
+  },
+  "e1b9e8342b0f4481f10c1679": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/che-posizione-cerchi/punto-vendita"
+  },
+  "57278424e224c1a40dfc3b22": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/che-posizione-cerchi/punto-vendita/operatore-di-filiale"
+  },
+  "33b5b7b2566839f36dfe3f15": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/che-posizione-cerchi/punto-vendita/store-manager-assistant"
+  },
+  "2ce1748cc91cf44981df19f1": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/la-tua-candidatura/processo-di-selezione"
+  },
+  "a047de0268ed9629695bac81": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/posizioni-aperte"
+  },
+  "0fa9e4d4730a6e56a805a4bd": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/eventi-recruiting-aldi"
+  },
+  "8ca81e02feaced77685472d6": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/che-posizione-cerchi/uffici"
+  },
+  "e3761254c0afc3f324bd45f4": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/job/1375475533"
+  },
+  "1cf0feed5a527e16fa448741": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/job/1405692033"
+  },
+  "a1e0435644704e3d1e8e1709": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/job/1428686333"
+  },
+  "18bbbaa2e34040ea83db2191": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/job/1425301433"
+  },
+  "0d2365fadb1973bcbd0cf12c": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/job/1402171133"
+  },
+  "9b6f111439fbb3013e0cbf5f": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/job/1376075633"
+  },
+  "b2028c31a5d07c6a4162eb7a": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/job/1293270301"
+  },
+  "644f12ca5aa8a426d0f5782d": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/job/1406564933"
+  },
+  "19530880d1874a08e0a5e661": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/job/1369019933"
+  },
+  "1c065f211a2c0f303b4a53e4": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/eventi-recruiting-aldi/recruiting-day-logistica-landriano"
+  },
+  "da930a851fd9b6ccc71590f1": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/job/1432251733"
+  },
+  "3bdcd058707d2d82f0d4cbf9": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/che-posizione-cerchi"
+  },
+  "fb54a75d2045b96cfbc0c813": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://carriera.aldi.it/offerte-di-lavoro-categorie-protette"
+  },
+  "01e7d6e7683b570aba0a0ad9": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it"
+  },
+  "c03e1fec154ee7da1958c62a": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Risultati_Ricerca/4414201"
+  },
+  "a21c587e716e37b0a80cf50f": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Allievo-Responsabile-Emilia-Romagna/4423101"
+  },
+  "2a1126b9bed63bdefa8ca5b3": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Allievo-Responsabile-Lazio/4423201"
+  },
+  "184075c18dd5115c0a740abc": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Allievo-Responsabile-Liguria/4423301"
+  },
+  "506969ebda622ece293dafbe": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Allievo-Responsabile-Lombardia/4413701"
+  },
+  "3d9c1ab725a2131dc45a5fba": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Allievo-Responsabile-Piemonte/4423401"
+  },
+  "cea38cc9e0d651c6730e174a": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Allievo-Responsabile-Toscana/4423501"
+  },
+  "33772e728aa16ce1ec72e75e": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Allievo-Responsabile-Veneto/4423601"
+  },
+  "7e7c60382a3bc010efe29933": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Allievo-Responsabile-Trentino-Alto-Adige/9118001"
+  },
+  "0fef06c2c3ce0e4cf7658292": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-alla-Vendita-Emilia-Romagna/4423701"
+  },
+  "c02b3afed7c2767f174b20ac": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-alla-Vendita-Lazio/4423901"
+  },
+  "706240e09c3ae4ed0dacdc6a": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-alla-Vendita-Liguria/4423801"
+  },
+  "4ddb10f6ac867863b796d24e": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-alla-Vendita-Lombardia/4413601"
+  },
+  "4a79c7911219b1b89ba84ca4": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-alla-Vendita-Piemonte/4424001"
+  },
+  "47661d4e8dff139eda682605": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-alla-Vendita-Toscana/4424101"
+  },
+  "ababd8265b11bfd2d284ae49": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-alla-Vendita-Veneto/4424201"
+  },
+  "77a9909636b79c3c61f43391": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-alla-Vendita-Trentino-Alto-Adige/9118101"
+  },
+  "0df95bac2eecbf4f9caf2a3b": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Farmacista-Emilia-Romagna/4418501"
+  },
+  "881bc021b9ccab0d039c7334": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Farmacista-Lazio/4418601"
+  },
+  "1f015be8aaec60ac8d3cb728": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Farmacista-Liguria/4418701"
+  },
+  "9eb87f6fdfd7d66918f21273": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Farmacista-Lombardia/4418401"
+  },
+  "935e6f970082fdeb55906c9f": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Farmacista-Piemonte/4418801"
+  },
+  "0d89a2813ce5cc0306a834b9": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Farmacista-Veneto/4418901"
+  },
+  "e4c8a6ff8ab7d6bd403d191f": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Farmacista-Toscana/4419001"
+  },
+  "dc200c9054a843ef687388b3": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-al-Servizio-Sorveglianza-Lazio/4419201"
+  },
+  "2cca8efad0c91afdf9fa769b": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-al-Servizio-Sorveglianza-Liguria/4419301"
+  },
+  "9093d7ef509a728ec0fd5a32": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-al-Servizio-Sorveglianza-Emilia-Romagna/4419101"
+  },
+  "ed17054e6dc112d7a885bb2b": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-al-Servizio-Sorveglianza-Lombardia/4419401"
+  },
+  "01560b99400f548c46292c40": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-al-Servizio-Sorveglianza-Piemonte/4419501"
+  },
+  "3c70a2d8a7a6b4623d476b04": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-al-Servizio-Sorveglianza-Toscana/4419601"
+  },
+  "427a81748292e1c4819b0b04": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Addetto-al-Servizio-Sorveglianza-Veneto/4419701"
+  },
+  "4fd7365a7eaaeafd92f723ad": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Allievo-Responsabile-eb-beauty-store-Emilia-Romagna/5503901"
+  },
+  "bfa786c3ea120d22c9661610": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Allievo-Responsabile-eb-beauty-store-Lazio/5503401"
+  },
+  "cac0990824633b6e19a826fe": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Allievo-Responsabile-eb-beauty-store-Liguria/5503501"
+  },
+  "946588e8e350bc66a782b73d": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://esselungajob.it/go/Allievo-Responsabile-eb-beauty-store-Lombardia/5504001"
+  },
+  "bd4112cbdb9d31c8ea509d63": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://www.mdspa.it/lavora-con-noi"
+  },
+  "5c0484cec102f8e93900f4c8": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://www.mdspa.it/lavora-con-noi/addetto-alle-operazioni-ausiliarie-alla-vendita"
+  },
+  "d9213511967a8cc959bc95f3": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://www.mdspa.it/lavora-con-noi/addetto-alle-vendite-reparto-ortofrutta"
+  },
+  "5d85a964f858b77041083e7e": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://www.mdspa.it/lavora-con-noi/addetto-alle-vendite-reparto-pane"
+  },
+  "fcf2e19eee14c7ff3c4895df": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://www.mdspa.it/lavora-con-noi/addetto-alle-vendite-reparto-no-food"
+  },
+  "e8303441d9b03c1d16f968d1": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://www.mdspa.it/lavora-con-noi/manager-di-zona"
+  },
+  "9bd5e5342413f716bbc6cbb3": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://www.mdspa.it/lavora-con-noi/category-manager-ortofrutta"
+  },
+  "8550e5460850047f51b3694e": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://www.mdspa.it/lavora-con-noi/addetto-alla-logistica-ricevimento-merci"
+  },
+  "16d4d4b93a55fe4824cdbbdc": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://lavoraconnoi.carrefour.it/privacy-policy"
+  },
+  "c153fb99267a5c18d806598c": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/it/career"
+  },
+  "411698a84f24d493cf336539": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/addettoa-vendita-collegno-149669/it"
+  },
+  "f5e265be7daffff797bd7952": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/addettoa-vendita-gravellona-139325/it"
+  },
+  "b87ea7045e6993bd0e7253e4": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/addettoa-vendite-appartenente-categorie-protette-pinerolo-144993/it"
+  },
+  "fd49e46d1e360d3191aeb3ca": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/addettoa-vendite-appartenente-categorie-protettenovara-146382/it"
+  },
+  "0647a3ff11c207ef1ff1f77c": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/capo-reparto-iper-cuorgne-148455/it"
+  },
+  "417f9f4bf356872cd4b8b9a2": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/capo-reparto-deperibili-ipercoop-crevoladossola-vco-138831/it"
+  },
+  "041d00d130a5edf94ce557f7": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/capo-reparto-iper-131378/it"
+  },
+  "16774ccf8ac429dd7d139133": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/capo-reparto-libero-servizio-iper-borgomanero-143457/it"
+  },
+  "ebc898c475c64a26b1f1b73c": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/capo-reparto-libero-servizio-galliate-149724/it"
+  },
+  "b6557bece1d8dab99a9466f3": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/capo-reparto-macelleria-area-novarese-119375/it"
+  },
+  "e8b7e4c6a24daa7f8e28cd93": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/farmacista-responsabile-di-reparto-27421/it"
+  },
+  "20a43ed2e71f42d56594f17b": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/farmacista-responsabile-di-reparto-biella-134717/it"
+  },
+  "37fefa5d8ed8809104fc39a6": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/farmacista-responsabile-di-reparto-chieri-65841/it"
+  },
+  "57347dd608c72151c04091ef": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/farmacista-responsabile-coop-ivrea-to-139707/it"
+  },
+  "9e9046c8cd1d71413eeba3ca": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://novacoop.intervieweb.it/jobs/farmacista-collaboratore-luino-va-27424/it"
+  },
+  "7dfc13e49a32ee542cbfffd3": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/it/career"
+  },
+  "d086d69a99309799075f37ad": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-al-bar-zona-alba-719857/it"
+  },
+  "22c22be33e44faa44f79471f": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-alle-operazioni-ausiliarie-alla-vendita-per-cassa-e-caricamento-scaffali-zona-carignano-718420/it"
+  },
+  "c48f8ef760b6890b4db73572": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-alle-operazioni-ausiliarie-alla-vendita-per-cassa-e-caricamento-scaffali-zona-carru-717978/it"
+  },
+  "bc6214d6d7ce1aed880dbe41": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-alle-operazioni-ausiliarie-alla-vendita-per-cassa-e-caricamento-scaffali-zona-casale-monferrato-718407/it"
+  },
+  "e23ba5619471b1fa03a6ccd5": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-alle-operazioni-ausiliarie-alla-vendita-per-cassa-e-caricamento-scaffali-zona-cherasco-717972/it"
+  },
+  "01f4130a83cf1fb9ed986ca4": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-alle-operazioni-ausiliarie-alla-vendita-per-cassa-e-caricamento-scaffali-zona-la-loggia-718419/it"
+  },
+  "4e7a7aa71979f47ce8aa2fd5": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-alle-operazioni-ausiliarie-alla-vendita-per-cassa-e-caricamento-scaffali-zona-mondovi-719500/it"
+  },
+  "0398ad12873adaa09158f2e7": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-alle-operazioni-ausiliarie-alla-vendita-per-cassa-e-caricamento-scaffali-zona-vinovo-718417/it"
+  },
+  "9f477ef20cff53b99acc6ecb": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-alle-operazioni-ausiliarie-alla-vendita-per-il-banco-gastronomia-zona-cuneo-718869/it"
+  },
+  "c0599762340aaa11bdd085a0": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-alle-operazioni-ausiliarie-alla-vendita-per-il-banco-gastronomiamacelleria-zona-carru-717967/it"
+  },
+  "3b36e39d5e6d7329cabc87c1": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-alle-operazioni-ausiliarie-alla-vendita-per-il-banco-gastronomiamacelleriaortofruttapanetteria-zona-canelli-719395/it"
+  },
+  "869af61bb021b3bcfcae1ec5": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-alle-operazioni-ausiliarie-alla-vendita-per-il-banco-gastronomiamacelleriaortofruttapanetteria-zona-carignano-718416/it"
+  },
+  "6a9645e1fa34ff6a2d540c28": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-alle-operazioni-ausiliarie-alla-vendita-per-il-banco-gastronomiamacelleriaortofruttapanetteria-zona-casale-monferrato-718409/it"
+  },
+  "5c519dd1060c429f27611183": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-alle-operazioni-ausiliarie-alla-vendita-per-il-banco-gastronomiamacelleriaortofruttapanetteria-zona-castagnole-delle-lanze-719390/it"
+  },
+  "05283a3ecb7328051bff4a70": {
+    "first_seen": "2026-09-11T12:37:15+00:00",
+    "last_seen": "2026-09-11T12:37:15+00:00",
+    "url": "https://dimar.intervieweb.it/jobs/addettao-alle-operazioni-ausiliarie-alla-vendita-per-il-banco-gastronomiamacelleriaortofruttapanetteria-zona-cherasco-717969/it"
+  }
+}
