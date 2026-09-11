@@ -19,7 +19,7 @@
     "Villar Dora",
     "Almese"
   ],
-  "generated_at": "2026-09-11T01:08:41+00:00",
+  "generated_at": "2026-09-11T06:03:40+00:00",
   "source": "https://raw.githubusercontent.com/josephsocialmedia2-spec/immobili-in-zona/main/seller_radar_auto/data/giro_acquisizione_oggi.csv",
   "radius_m": 500,
   "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.",
@@ -27029,8 +27029,7 @@
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null,
-      "enrichment_error": "HTTP Error 429: Too Many Requests"
+      "enriched_at": null
     },
     {
       "signal_id": "SIG-A5DB96A920B054",
@@ -27197,12 +27196,133 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+vignati+14%22+%22San+Gillio%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1429814,
+        "lon": 7.5330569,
+        "display_name": "Via Contessa Caterina Vignati, San Gillio, Torino, Piemonte, 10044, Italia",
+        "osm_type": "way",
+        "osm_id": 377107119
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 168,
+        "public_entities_count": 10,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Chiesa di Sant'Egidio Abate",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1290886202,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Municipio di San Gillio",
+          "category": "RETE_TERRITORIALE",
+          "address": "Via Musinè 32 San Gillio",
+          "phone_public": "+39 011 9840030",
+          "email_public": "segreteria@comune.sangillio.to.it",
+          "website": "http://www.comune.sangillio.to.it",
+          "osm_id": 1290886225,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Rocco",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1424260284,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Sebastiano",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1424260285,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Antoniana",
+          "category": "SALUTE",
+          "address": "Viale Balbo 3 San Gillio",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 7329316721,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3804691262,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Casa dell'Immacolata",
+          "category": "SERVIZI",
+          "address": "Viale Balbo 1 San Gillio",
+          "phone_public": "+39 011 98440 970",
+          "email_public": "info@rsa.casaimmacolata.it",
+          "website": "https://www.casaimmacolata.it/",
+          "osm_id": 1290886218,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Casa della Salute",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 13100595464,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "D.L. Carwash & Tyre S.R.L.",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 5851831307,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "SMAT",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 13090774551,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-11T06:03:44+00:00"
     },
     {
       "signal_id": "SIG-EF4B8E3454B633",
@@ -28020,7 +28140,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Val+della+Torre%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -28070,7 +28190,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Alpignano%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -28120,12 +28240,166 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+Torelle+12%22+%22Alpignano%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.1104367,
+        "lon": 7.5174758,
+        "display_name": "Via Torelle, Alpignano, Torino, Piemonte, 10091, Italia",
+        "osm_type": "way",
+        "osm_id": 433222580
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 65,
+        "public_entities_count": 13,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Dott. Benà",
+          "category": "AGRICOLTURA_ANIMALI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3929699993,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bruno Moto",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 2986528200,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Elettrauto Merenda",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 294514087,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Eta Beta",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 294514328,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Immagini",
+          "category": "COMMERCIO",
+          "address": "Via Val della Torre 70 Alpignano",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 4375428853,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Panetteria da Franco",
+          "category": "COMMERCIO",
+          "address": "Via Val della Torre 72 Alpignano",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 4375428852,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "I.C.L.A.",
+          "category": "INDUSTRIA_ARTIGIANATO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 348022983,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "SS Annunziata",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 294514234,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3048873353,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Il Caminetto",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3114631706,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Roxy Bar",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3135060091,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Farmacia Futura",
+          "category": "SALUTE",
+          "address": "Via Val della Torre 131 Alpignano",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 4244300213,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Parlapà",
+          "category": "TURISMO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 294761521,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-11T06:03:50+00:00"
     },
     {
       "signal_id": "SIG-B93B579303D110",
@@ -28170,12 +28444,331 @@
         "dork_contesto": "https://www.google.com/search?q=%22Via+Piossasco+30%22+%22Bruino%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.0201183,
+        "lon": 7.4686991,
+        "display_name": "Via Piossasco, Tetti Griglio, Bruino, Torino, Piemonte, 10040, Italia",
+        "osm_type": "way",
+        "osm_id": 49354051
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 169,
+        "public_entities_count": 28,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Area Cani",
+          "category": "AGRICOLTURA_ANIMALI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1210141977,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Ciclofficina 34",
+          "category": "COMMERCIO",
+          "address": "Via Piossasco 34 Bruino",
+          "phone_public": "+39 333 5935446",
+          "email_public": "",
+          "website": "",
+          "osm_id": 8021601003,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Dal Fornaio",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12043578543,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Ekom",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 380419233,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Lavanderia La Giuliana",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 13277125381,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Libreria Belleville",
+          "category": "COMMERCIO",
+          "address": "Via Roma 39",
+          "phone_public": "+39 340 547 1568",
+          "email_public": "libreriabelleville@gmail.com",
+          "website": "",
+          "osm_id": 12850826801,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Macelleria Raiola",
+          "category": "COMMERCIO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12043578542,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Villarpasta",
+          "category": "COMMERCIO",
+          "address": "Via Roma Bruino",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 13016347926,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella di San Rocco",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1308036603,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Centro giovani",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1210141985,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Centro Polivalente \"Palainsieme\"",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1210141984,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Comune di Bruino",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 3147016820,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "San Martino",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 696360766,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Al Molo 19",
+          "category": "RISTORAZIONE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12043578544,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Farmacia Comunale 20",
+          "category": "SALUTE",
+          "address": "Via Sangone 7 Bruino",
+          "phone_public": "+39 011 19788627",
+          "email_public": "farmacia20@asmvenaria.it",
+          "website": "http://www.farmacieasm.it/bruino/",
+          "osm_id": 6879259549,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Rolando",
+          "category": "SALUTE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1388254322,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Biblioteca Comunale di Bruino",
+          "category": "SCUOLA_CULTURA",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1210141981,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 607965207,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Bagni Pubblici di Piazza della pace",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1210141979,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Fontanella per Cani",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 11210947393,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Imàkara",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12043578545,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Piazza Municipio",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 936733328,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Teatro \"Sandro Pertini\"",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1210141982,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Ufficio Postale di Bruino",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 601623268,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "UniCredit Bank",
+          "category": "SERVIZI",
+          "address": "Bruino",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 12043578546,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Palestra scuole medie",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1210141983,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Parco del castello",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 309372311,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Parco Valverde",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 840197407,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-11T06:03:56+00:00"
     },
     {
       "signal_id": "SIG-04A4F973BD4D1E",
@@ -28220,7 +28813,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22frazione+Bessen+Alto%2C+Sauze+di+Cesana+Sauze+di+Cesana+165%22+%22Buttigliera+Alta%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "GEOCODE_NOT_FOUND",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -28270,7 +28863,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22San+Gillio%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -28320,7 +28913,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Villarbasse%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -28370,7 +28963,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Coazze%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -28420,7 +29013,7 @@
         "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Grugliasco%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "SKIPPED_NO_ADDRESS",
       "geocode": null,
       "radius_m": 500,
       "context": {},
@@ -28520,12 +29113,133 @@
         "dork_contesto": "https://www.google.com/search?q=%22Strada+Torino+90%22+%22Beinasco%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
-      "geocode": null,
+      "enrichment_status": "ENRICHED",
+      "geocode": {
+        "lat": 45.0286767,
+        "lon": 7.6035571,
+        "display_name": "Strada Torino, Fornaci, Beinasco, Torino, Piemonte, 10092, Italia",
+        "osm_type": "way",
+        "osm_id": 40031088
+      },
       "radius_m": 500,
-      "context": {},
-      "public_entities": [],
-      "enriched_at": null
+      "context": {
+        "residential_buildings_osm": 7,
+        "public_entities_count": 10,
+        "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+      },
+      "public_entities": [
+        {
+          "name": "Bike Lab",
+          "category": "COMMERCIO",
+          "address": "Via Venezia 11 Beinasco",
+          "phone_public": "+39 011 207 1376",
+          "email_public": "bikelabtorino@gmail.com",
+          "website": "https://www.bikelabtorino.com/",
+          "osm_id": 6817639103,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Flora Folies",
+          "category": "COMMERCIO",
+          "address": "Strada Torino 100 Beinasco",
+          "phone_public": "+39 3703146480",
+          "email_public": "",
+          "website": "https://www.fioriatorino.it/",
+          "osm_id": 9214956796,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Stellantis Mirafiori",
+          "category": "INDUSTRIA_ARTIGIANATO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 2045972,
+          "osm_type": "relation",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Cappella di San Giovanni Battista",
+          "category": "RETE_TERRITORIALE",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 386903182,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Banco BPM",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "+39 011 397 2532",
+          "email_public": "filiale.01093@bancobpm.it",
+          "website": "http://www.bpn.it",
+          "osm_id": 1158111514,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Comune di Torino",
+          "category": "SERVIZI",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1539416984,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "A.S.D. Dream Academy",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "Via San Giacomo 8 Beinasco",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 6354053216,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Attività/ente senza nome OSM",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 1158073206,
+          "osm_type": "node",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Giardino comunale",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 363281145,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        },
+        {
+          "name": "Serao",
+          "category": "SPORT_TEMPO_LIBERO",
+          "address": "Viale delle Fornaci 4 Beinasco",
+          "phone_public": "",
+          "email_public": "",
+          "website": "",
+          "osm_id": 991864437,
+          "osm_type": "way",
+          "source": "OpenStreetMap"
+        }
+      ],
+      "enriched_at": "2026-09-11T06:04:15+00:00"
     },
     {
       "signal_id": "SIG-41561123F884D7",
@@ -28570,12 +29284,13 @@
         "dork_contesto": "https://www.google.com/search?q=%22via+VOLVERA+37%22+%22Bruino%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
       },
       "engine_version": "2",
-      "enrichment_status": "PENDING",
+      "enrichment_status": "ERROR",
       "geocode": null,
       "radius_m": 500,
       "context": {},
       "public_entities": [],
-      "enriched_at": null
+      "enriched_at": null,
+      "enrichment_error": "HTTP Error 429: Too Many Requests"
     },
     {
       "signal_id": "SIG-3466C6818948C9",
