@@ -7,7 +7,10 @@ on:
       - 'career-pilot/**'
       - '.github/workflows/career-pilot-radar.yml'
   schedule:
-    - cron: '2/5 * * * *'
+    # GitHub cron usa UTC. Le due finestre coprono ora solare/legale italiana;
+    # il gate qui sotto esegue davvero il radar solo quando a Roma sono le 05:00.
+    - cron: '0 3 * * *'
+    - cron: '0 4 * * *'
 
 permissions:
   contents: write
@@ -19,19 +22,38 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 45
     steps:
+      - name: Verifica orario italiano
+        id: time_gate
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ] || [ "$(TZ=Europe/Rome date +%H)" = "05" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "CareerPilot autorizzato: esecuzione immediata/manuale oppure ore 05:00 Europe/Rome."
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Trigger UTC di compensazione ignorato: a Roma non sono le 05:00."
+          fi
+
       - uses: actions/checkout@v4
+        if: steps.time_gate.outputs.run == 'true'
         with:
           fetch-depth: 0
+
       - uses: actions/setup-python@v5
+        if: steps.time_gate.outputs.run == 'true'
         with:
           python-version: '3.12'
           cache: 'pip'
           cache-dependency-path: career-pilot/requirements.txt
+
       - name: Installa dipendenze
+        if: steps.time_gate.outputs.run == 'true'
         run: pip install -r career-pilot/requirements.txt
+
       - name: Scansiona offerte e prepara i CV standard
+        if: steps.time_gate.outputs.run == 'true'
         env:
           CAREERPILOT_PROFILE_B64: ${{ secrets.CAREERPILOT_PROFILE_B64 }}
           CAREERPILOT_PROFILE_JSON: ${{ secrets.CAREERPILOT_PROFILE_JSON }}
@@ -40,15 +62,18 @@ jobs:
           WA_TO: ${{ secrets.WA_TO }}
           WA_GRAPH_VERSION: ${{ secrets.WA_GRAPH_VERSION }}
         run: python career-pilot/engine/radar.py
+
       - name: Conserva PDF del run
-        if: always()
+        if: always() && steps.time_gate.outputs.run == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: career-pilot-cv-${{ github.run_number }}
           path: career-pilot/artifacts/*.pdf
           if-no-files-found: ignore
           retention-days: 14
+
       - name: Aggiorna dashboard
+        if: steps.time_gate.outputs.run == 'true'
         run: |
           git config user.name "CareerPilot Bot"
           git config user.email "actions@users.noreply.github.com"
