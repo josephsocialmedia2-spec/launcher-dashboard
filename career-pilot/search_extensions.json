@@ -1,4 +1,38 @@
 {
+  "search_area": {
+    "center": "Avigliana, Piemonte",
+    "radius_km": 35
+  },
+  "indeed_area_pages": 5,
+  "notification_hour": 8,
+  "known_gdo_companies": [
+    "Lidl",
+    "Esselunga",
+    "Eurospin",
+    "ALDI",
+    "MD",
+    "Conad",
+    "Coop",
+    "Nova Coop",
+    "Ipercoop",
+    "Carrefour",
+    "Bennet",
+    "Pam",
+    "Pam Panorama",
+    "Despar",
+    "Eurospar",
+    "Interspar",
+    "Famila",
+    "Unes",
+    "Tigros",
+    "Mercatò",
+    "Dimar",
+    "Prestofresco",
+    "Gulliver",
+    "CRAI",
+    "PENNY",
+    "Iper"
+  ],
   "priority_terms": [
     "categoria protetta",
     "categorie protette",
@@ -49,7 +83,16 @@
     "centralino categorie protette GDO",
     "data entry categorie protette GDO",
     "ufficio categorie protette GDO",
-    "sede centrale categorie protette GDO"
+    "sede centrale categorie protette GDO",
+    "impiegato",
+    "impiegata",
+    "amministrativo",
+    "amministrativa",
+    "back office",
+    "customer service",
+    "data entry",
+    "addetto ufficio",
+    "addetta ufficio"
   ],
   "sector_terms": [
     "categorie protette supermercato",
