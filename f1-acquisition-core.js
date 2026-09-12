@@ -96,3 +96,31 @@ window.extractComposition=function(text,fallback){
   return render2(ORDER.filter(k=>m[k]).map(k=>({sigla:k,qty:m[k]})));
 };
 })();
+
+(function(){
+'use strict';
+const pathname=location.pathname.toLowerCase();
+const IS_SELLER=/seller-radar-unico\.html$/.test(pathname),IS_COMPETITOR=/competitor-intelligence\.html$/.test(pathname);
+if(!IS_SELLER&&!IS_COMPETITOR)return;
+const text=(el,sel)=>String(el.querySelector(sel)?.textContent||'').trim();
+const clean=v=>String(v||'').replace(/\s+/g,' ').trim();
+const nprice=v=>{const n=String(v||'').replace(/[^0-9]/g,'');return n?String(Number(n)):''};
+function splitVia(value){const s=clean(value);const m=s.match(/^(.*?)[,\s]+(\d+[A-Za-z]?)$/);return m?{via:m[1].trim(),civico:m[2]}:{via:s,civico:''}}
+function baths(value){const m=String(value||'').match(/(?:\bBAGNI\b|\bB\b)\s*[:=]\s*(\d+)|\b(\d+)\s+bagni\b/i);return m?String(m[1]||m[2]||''):''}
+function addressUrl(data){const p=new URLSearchParams();for(const k of ['comune','via','civico','prezzo','tipologia','bagni','dettagli','raw']){const v=clean(data[k]);if(v)p.set(k,v.slice(0,k==='raw'?700:450))}return 'address-intelligence.html?'+p.toString()}
+function sellerData(card,index){
+  let t={};try{if(typeof AREA!=='undefined'&&Array.isArray(AREA))t=AREA[index]||{}}catch(_){t={}}
+  const addressText=text(card,'.address'),parts=addressText.split(',').map(clean).filter(Boolean),fallbackComune=parts.length>1?parts.pop():'',fallbackVia=parts.join(', '),street=splitVia(t.via||fallbackVia),title=text(card,'.listingTitle'),price=t.prezzo||text(card,'.price'),composition=t.composta||t.composizione||'',source=t.source||text(card,'.source');
+  return {comune:t.comune||fallbackComune,via:street.via,civico:street.civico,prezzo:nprice(price),tipologia:t.tipologia||t.tipo||'',bagni:baths(composition),dettagli:[composition,source,t.reason||t.lead_reason||'',t.source_url||''].filter(Boolean).join(' | '),raw:[title,addressText,text(card,'.price'),composition,source].filter(Boolean).join(' | ')};
+}
+function competitorData(card){
+  const cardTitle=text(card,'.title'),meta=text(card,'.meta'),metaParts=meta.split(' · ').map(clean),titleParts=cardTitle.split(/\s+—\s+/),fallbackComune=titleParts.shift()||'',fallbackVia=titleParts.join(' — ');let r=null;
+  try{if(typeof ROWS!=='undefined'&&Array.isArray(ROWS))r=ROWS.find(x=>{const c=clean(x.comune),v=clean(x.via),tp=clean(x.tipologia),po=clean(x.latest&&x.latest.portal);return (!c||cardTitle.includes(c))&&(!v||cardTitle.includes(v))&&(!tp||meta.includes(tp))&&(!po||meta.includes(po))})||null}catch(_){r=null}
+  const latest=r&&r.latest||{},street=splitVia(r&&r.via||fallbackVia),details=[latest.surface_mq?latest.surface_mq+' mq':'',latest.portal||metaParts[1]||'',r&&r.marketCategory||'',r&&r.signal||'',latest.source_url||''].filter(Boolean).join(' | '),raw=[cardTitle,meta,details].filter(Boolean).join(' | ');
+  return {comune:r&&r.comune||fallbackComune,via:street.via,civico:street.civico,prezzo:nprice(latest.asking_price||''),tipologia:r&&r.tipologia||metaParts[0]||'',bagni:baths(JSON.stringify(latest.evidence||{})),dettagli:details,raw};
+}
+function addButton(card,data){const actions=card.querySelector('.actions');if(!actions||actions.querySelector('.f1-address-btn'))return;const a=document.createElement('a');a.className='btn alt f1-address-btn';a.target='_blank';a.rel='noopener';a.href=addressUrl(data);a.textContent='ANALIZZA INDIRIZZO';actions.appendChild(a)}
+function patch(){const list=document.getElementById('list');if(!list)return;if(IS_SELLER)[...list.querySelectorAll('.listing')].forEach((card,i)=>addButton(card,sellerData(card,i)));else [...list.querySelectorAll('.item')].forEach(card=>addButton(card,competitorData(card)))}
+function start(){const list=document.getElementById('list');if(!list)return;patch();new MutationObserver(()=>patch()).observe(list,{childList:true,subtree:true})}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
