@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'oggi.html'
+      - 'index.html'
       - 'crm.html'
       - 'setup-cloud.html'
       - 'supabase-config.js'
@@ -65,7 +66,56 @@ jobs:
           for file in "${banned[@]}"; do
             test ! -e ".github/workflows/$file" || { echo "Legacy workflow must remain archived: $file"; exit 1; }
           done
-          echo "PASS legacy workflows archived"
+          test ! -e playwright.v25.config.js || { echo 'stale playwright.v25.config.js must remain removed'; exit 1; }
+          echo "PASS legacy workflows/config archived"
+      - name: Canonical local link integrity
+        run: |
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import urlparse
+
+          pages = [
+              'oggi.html','index.html','crm.html','setup-cloud.html','seller-radar-unico.html',
+              'giro-acquisizione.html','telefonate-oggi.html','competitor-intelligence.html',
+              'social-seller-radar.html','territory-control.html','neighborhood-intelligence.html',
+              'radar-edilizio.html'
+          ]
+          banned_refs = {
+              'incrocio-giro-contatti.html','market-intelligence.html','acquisitore-pro/index.html',
+              'windows_valle_susa/f1_mobile_server.py'
+          }
+
+          class LinkParser(HTMLParser):
+              def __init__(self):
+                  super().__init__(); self.links=[]
+              def handle_starttag(self, tag, attrs):
+                  for k,v in attrs:
+                      if k in {'href','src'} and v: self.links.append(v)
+
+          failures=[]
+          for page in pages:
+              p=Path(page)
+              if not p.exists():
+                  failures.append(f'{page}: missing canonical page')
+                  continue
+              parser=LinkParser(); parser.feed(p.read_text(encoding='utf-8'))
+              for raw in parser.links:
+                  clean=raw.split('#',1)[0].split('?',1)[0]
+                  if not clean or clean.startswith(('http://','https://','mailto:','tel:','javascript:','data:','#','//')):
+                      continue
+                  clean=clean.lstrip('./')
+                  if clean in banned_refs:
+                      failures.append(f'{page}: banned legacy ref {clean}')
+                  if clean.endswith(('.html','.js','.json','.css','.webmanifest','.py')) and not Path(clean).exists():
+                      failures.append(f'{page}: missing local target {clean}')
+          canonical_text='\n'.join(Path(p).read_text(encoding='utf-8') for p in ['oggi.html','index.html','system-registry.json','README.md'] if Path(p).exists())
+          if 'f1-os-mobile.html' in canonical_text:
+              failures.append('legacy f1-os-mobile.html must not be referenced by canonical navigation/docs')
+          if failures:
+              raise SystemExit('\n'.join(failures))
+          print('PASS canonical local links and legacy reference guard')
+          PY
 
   javascript:
     runs-on: ubuntu-latest
@@ -86,7 +136,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import re, subprocess
-          pages=['oggi.html','crm.html','setup-cloud.html','seller-radar-unico.html','giro-acquisizione.html','telefonate-oggi.html','competitor-intelligence.html','social-seller-radar.html']
+          pages=['oggi.html','index.html','crm.html','setup-cloud.html','seller-radar-unico.html','giro-acquisizione.html','telefonate-oggi.html','competitor-intelligence.html','social-seller-radar.html']
           for name in pages:
               html=Path(name).read_text(encoding='utf-8')
               inline=re.findall(r'<script>(.*?)</script>',html,re.S|re.I)
