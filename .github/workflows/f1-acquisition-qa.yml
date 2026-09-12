@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - 'oggi.html'
+      - 'crm.html'
+      - 'setup-cloud.html'
+      - 'supabase-config.js'
+      - 'supabase-sync.js'
       - 'seller-radar-unico.html'
       - 'giro-acquisizione.html'
       - 'telefonate-oggi.html'
@@ -54,12 +58,14 @@ jobs:
         run: |
           node --check f1-acquisition-core.js
           node --check f1-acquisition-data.js
+          node --check supabase-config.js
+          node --check supabase-sync.js
           node --check pwa.js
           node --check sw.js
           python - <<'PY'
           from pathlib import Path
           import re, subprocess
-          pages=['oggi.html','seller-radar-unico.html','giro-acquisizione.html','telefonate-oggi.html','competitor-intelligence.html','social-seller-radar.html']
+          pages=['oggi.html','crm.html','setup-cloud.html','seller-radar-unico.html','giro-acquisizione.html','telefonate-oggi.html','competitor-intelligence.html','social-seller-radar.html']
           for name in pages:
               html=Path(name).read_text(encoding='utf-8')
               inline=re.findall(r'<script>(.*?)</script>',html,re.S|re.I)
@@ -81,5 +87,5 @@ jobs:
         run: |
           npm install
           npx playwright install --with-deps chromium
-      - name: Command Center smoke tests
+      - name: Command Center and CRM smoke tests
         run: npm run test:acquisition
