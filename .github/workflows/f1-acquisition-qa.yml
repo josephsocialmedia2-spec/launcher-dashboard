@@ -20,11 +20,12 @@ on:
       - 'config/**'
       - 'scripts/**'
       - 'tests/**'
+      - 'docs/**'
       - 'pwa.js'
       - 'sw.js'
       - 'package.json'
       - 'playwright.config.js'
-      - '.github/workflows/f1-acquisition-*.yml'
+      - '.github/workflows/**'
   workflow_dispatch:
 
 permissions:
@@ -46,6 +47,25 @@ jobs:
           python -m json.tool config/territory.json >/dev/null
           python -m json.tool config/acquisition-engine.json >/dev/null
           python -m json.tool system-registry.json >/dev/null
+      - name: Legacy workflow guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          banned=(
+            apply-territorial-continuity-rule.yml
+            fix-territorial-apostrophes.yml
+            fix-territorial-apostrophes-v2.yml
+            integrate-neighborhood-telefonate.yml
+            patch-instagram-card.yml
+            patch-instagram-ranking-gate.yml
+            patch-seller-radar-edilizio-ui.yml
+            patch-telefonate-references.yml
+            repair-neighborhood-operational.yml
+          )
+          for file in "${banned[@]}"; do
+            test ! -e ".github/workflows/$file" || { echo "Legacy workflow must remain archived: $file"; exit 1; }
+          done
+          echo "PASS legacy workflows archived"
 
   javascript:
     runs-on: ubuntu-latest
