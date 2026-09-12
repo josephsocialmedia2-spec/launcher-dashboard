@@ -48,7 +48,7 @@ test('Supabase config contains no duplicated territory list', async ({ request }
   const res = await responseOk(request, '/supabase-config.js');
   const js = await res.text();
   expect(js).not.toContain('F1_TERRITORIES_2026');
-  expect(js).not.toContain('Villar Dora","Chianocco');
+  expect(js).not.toContain('Villar Dora\",\"Chianocco');
   expect(js).toContain("./config/territory.json");
 });
 
@@ -114,6 +114,30 @@ test('Telefonate view keeps CALL task blocked until CRM contact eligibility is v
   await expect(card.getByText(/BLOCCATO · RPO DA_VERIFICARE/)).toBeVisible();
   await expect(card.getByRole('link', { name: 'APRI CENTRALE PC' })).toHaveCount(0);
   await expect(card.getByRole('link', { name: 'VERIFICA LEAD / RPO' })).toBeVisible();
+});
+
+test('Core4 creates a due VERIFY task only from an explicit next action date when contact is not eligible', async ({ page }) => {
+  await page.addInitScript(() => {
+    const now = new Date().toISOString();
+    localStorage.setItem('f1AcquisitionLeadsV1', JSON.stringify([{
+      lead_id:'qa-core4-due',pillar:2,source_type:'PAST_CLIENT',source:'QA',created_at:now,first_seen:now,last_seen:now,
+      nome:'QA',cognome:'CORE4',telefono:'390000000002',email:'',comune:'Villar Dora',via:'',civico:'',zona:'',immobile_id:'',
+      competitor_agency:'',lead_reason:'PAST_CLIENT',lead_score:70,confidence:'HIGH',status:'DA_RICONTATTARE',last_contact:'',
+      next_action:'Ricontatta cliente passato',next_action_date:'2000-01-01',assigned_to:'',notes:'QA Core4 due',privacy_basis:'QA',
+      do_not_contact:false,rpo_status:'DA_VERIFICARE',created_by:'qa',updated_at:now,deleted:false
+    }]));
+    localStorage.setItem('f1AcquisitionTasksV1', '[]');
+  });
+  await page.goto('/oggi.html');
+  await expect.poll(async () => page.evaluate(() => {
+    const tasks = JSON.parse(localStorage.getItem('f1AcquisitionTasksV1') || '[]');
+    return tasks.find(t => t.lead_id === 'qa-core4-due') || null;
+  })).toMatchObject({
+    lead_id:'qa-core4-due',
+    task_type:'VERIFY',
+    status:'OPEN',
+    metadata:{origin:'CORE4_DUE',core_category:'PAST_CLIENT',contact_gate:'RPO_OR_CONTACT_CHECK'}
+  });
 });
 
 test('mobile command center remains usable', async ({ page }) => {
