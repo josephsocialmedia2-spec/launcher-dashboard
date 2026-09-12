@@ -58,6 +58,22 @@ SOURCE
 
 `competitor-intelligence.html` usa lo storico immobiliare autenticato quando disponibile e degrada sul feed pubblico non sensibile.
 
+## Address Intelligence
+
+`address-intelligence.html` è il workspace di ricerca territoriale per una scheda immobiliare incompleta.
+
+Il modulo:
+
+- normalizza Comune, prezzo, tipologia e sigle come `BAGNI:3`;
+- genera ricerche coordinate su Google, Bing, DuckDuckGo, Google Maps, OpenStreetMap e principali portali immobiliari;
+- separa ricerca immobile, indirizzo candidato, attività commerciali, social territoriali e fonti urbanistiche;
+- organizza la microzona nei raggi operativi 100 / 250 / 500 / 1000 metri;
+- registra evidenze con fonte, URL, stato di verifica e soli contatti business pubblici;
+- calcola un `F1 STREET SCORE` basato sui dati effettivamente disponibili e sulle evidenze verificate;
+- esporta le evidenze in CSV e genera una sintesi operativa.
+
+La workspace usa `localStorage` solo come cache di lavoro. Non sostituisce Supabase e non deve essere usata per costruire un database di residenti o numeri privati.
+
 ## Pipeline pubblica giornaliera
 
 `scripts/acquisition_daily.py` genera `data/acquisition-public.json` attraverso `.github/workflows/f1-acquisition-daily.yml`.
