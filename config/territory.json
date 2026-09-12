@@ -1,9 +1,28 @@
 {
-  "version": 2,
+  "version": 3,
   "reference_hub": "Villar Dora",
-  "policy": "CENTRO_RADIALE",
-  "description": "Il territorio operativo parte da Villar Dora. I comuni sono ordinati per distanza in linea d'aria dal centro e raggruppati in anelli progressivi. I segnali dentro ogni comune sono ordinati per score e novita.",
+  "policy": "CENTRO_RADIALE_SINISTRA_DESTRA",
+  "description": "Seller Radar e tutti i moduli territoriali partono da Villar Dora come centro unico. I comuni sono gestiti per fasce radiali progressive e sempre separati per lato SINISTRA e DESTRA. Nessun modulo deve ricostruire liste territoriali autonome.",
   "distance_bands_km": [0, 8, 15, 25, 999],
+  "ring_labels": ["CENTRO", "ANELLO_1_0_8_KM", "ANELLO_2_8_15_KM", "ANELLO_3_15_25_KM", "ANELLO_4_OLTRE_25_KM"],
+  "side_rule": "Ogni comune diverso da Villar Dora deve essere trattato con il lato configurato: SINISTRA oppure DESTRA.",
+  "mandatory_rules": {
+    "hub": "Villar Dora",
+    "radial_view_required": true,
+    "left_right_required": true,
+    "all_modules_use_this_config": true,
+    "all_market_observations_to_crm": true,
+    "competitor_listing_monitoring_required": true,
+    "private_listing_monitoring_required": true,
+    "expired_candidate_monitoring_required": true
+  },
+  "market_coverage": {
+    "mode": "MANDATORY_FULL_COVERAGE_OF_CONFIGURED_SOURCES",
+    "rule": "Per ogni comune del territorio il sistema deve controllare tutte le fonti configurate e registrare ogni annuncio osservato. Se una fonte non e tecnicamente accessibile, la copertura deve risultare INCOMPLETA e non puo essere dichiarata completa.",
+    "crm_required": true,
+    "categories": ["COMPETITOR_LISTING", "FSBO", "FSBO_CANDIDATE", "EXPIRED_CANDIDATE", "EXPIRED_VERIFIED"],
+    "evidence_rule": "INCARICO_SCADUTO/EXPIRED_VERIFIED solo con evidenza esplicita. Annuncio non piu rilevato, ritirato, ripubblicato o con cambio agenzia resta EXPIRED_CANDIDATE finche non verificato."
+  },
   "sinistra": [
     "Villar Dora",
     "Chianocco",
