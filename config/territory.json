@@ -1,11 +1,10 @@
 {
-  "version": 2,
+  "version": 3,
   "reference_hub": "Villar Dora",
-  "policy": "CENTRO_RADIALE",
-  "description": "Il territorio operativo parte da Villar Dora. I comuni sono ordinati per distanza in linea d'aria dal centro e raggruppati in anelli progressivi. I segnali dentro ogni comune sono ordinati per score e novita.",
+  "policy": "CENTRO_RADIALE_SINISTRA_DESTRA",
+  "description": "Villar Dora è il centro operativo del Seller Radar. Tutti gli altri comuni sono classificati obbligatoriamente per lato SINISTRA o DESTRA e ordinati per distanza in linea d'aria dal centro, con anelli progressivi.",
   "distance_bands_km": [0, 8, 15, 25, 999],
   "sinistra": [
-    "Villar Dora",
     "Chianocco",
     "Bruzolo",
     "San Didero",
