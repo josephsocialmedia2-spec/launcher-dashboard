@@ -9,7 +9,8 @@ Per ogni segnale presente in giro_acquisizione_oggi.csv:
 - arricchisce progressivamente la microzona con OpenStreetMap/Overpass;
 - raccoglie solo recapiti pubblici di attività/enti/professionisti;
 - non raccoglie nomi, email o cellulari di residenti privati;
-- mantiene lo storico e riconosce i nuovi segnali.
+- mantiene lo storico e riconosce i nuovi segnali;
+- usa config/territory.json come unica fonte territoriale.
 
 Output:
 - data/neighborhood_intelligence.json
@@ -19,6 +20,8 @@ from __future__ import annotations
 import csv, hashlib, io, json, os, time, urllib.parse, urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
+
+from territory_config import allowed_set, communes as configured_communes, load_territory, norm as territory_norm, rank_map
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -32,17 +35,21 @@ OVERPASS = "https://overpass-api.de/api/interpreter"
 UA = "F1-Neighborhood-Intelligence/1.0 (public-business-context)"
 RADIUS = int(os.getenv("F1_NEIGHBORHOOD_RADIUS", "500"))
 MAX_ENRICH = int(os.getenv("F1_NEIGHBORHOOD_MAX_ENRICH", "12"))
-ENGINE_VERSION = "2"
+ENGINE_VERSION = "3"
 
-TERRITORIAL_ROUTE = ['Susa', 'Bussoleno', 'Chianocco', 'San Giorio di Susa', 'Bruzolo', 'San Didero', 'Villar Focchiardo', 'Borgone Susa', 'Sant’Antonino di Susa', 'Vaie', 'Condove', 'Chiusa di San Michele', 'Caprie', 'Sant’Ambrogio di Torino', 'Villar Dora', 'Almese']
-TERRITORIAL_INDEX = {name.lower().replace("’", "\'"): i for i, name in enumerate(TERRITORIAL_ROUTE)}
+TERRITORY = load_territory()
+TERRITORIAL_ROUTE = configured_communes(TERRITORY)
+TERRITORIAL_INDEX = rank_map(TERRITORY)
+ALLOWED_COMMUNES = allowed_set(TERRITORY)
+
 
 def territorial_rank(comune):
-    key = str(comune or "").strip().lower().replace("’", "\'")
-    return TERRITORIAL_INDEX.get(key, 9999)
+    return TERRITORIAL_INDEX.get(territory_norm(comune), 9999)
+
 
 def now_iso():
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
 
 def fetch_text(url, data=None, timeout=45):
     headers = {"User-Agent": UA, "Accept": "*/*"}
@@ -50,11 +57,13 @@ def fetch_text(url, data=None, timeout=45):
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return r.read().decode("utf-8-sig", errors="replace")
 
+
 def load_json(path, default):
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except Exception:
         return default
+
 
 def stable_id(row):
     seed = (row.get("URL") or "").strip()
@@ -62,11 +71,14 @@ def stable_id(row):
         seed = "|".join([row.get("COMUNE","").strip(), row.get("DOVE_ANDRE","").strip(), row.get("COSA_CERCO","").strip()])
     return "SIG-" + hashlib.sha1(seed.encode("utf-8", errors="ignore")).hexdigest()[:14].upper()
 
+
 def qurl(query):
     return "https://www.google.com/search?q=" + urllib.parse.quote_plus(query)
 
+
 def mapurl(address):
     return "https://www.google.com/maps/search/?api=1&query=" + urllib.parse.quote_plus(address)
+
 
 def queries(comune, indirizzo):
     target = f"{indirizzo}, {comune}, Italia".strip(", ")
@@ -82,6 +94,7 @@ def queries(comune, indirizzo):
         "dork_contesto": qurl(f'{exact} (azienda OR associazione OR negozio OR ristorante OR officina OR agriturismo)'),
     }
 
+
 def geocode(comune, indirizzo):
     params = urllib.parse.urlencode({"q": f"{indirizzo}, {comune}, Italia", "format": "jsonv2", "limit": 1, "countrycodes": "it", "addressdetails": 1})
     data = json.loads(fetch_text(NOMINATIM + "?" + params))
@@ -89,6 +102,7 @@ def geocode(comune, indirizzo):
         return None
     x = data[0]
     return {"lat": float(x["lat"]), "lon": float(x["lon"]), "display_name": x.get("display_name",""), "osm_type": x.get("osm_type",""), "osm_id": x.get("osm_id")}
+
 
 def overpass(lat, lon):
     r = RADIUS
@@ -111,12 +125,14 @@ out tags center;'''
     payload = urllib.parse.urlencode({"data": query}).encode("utf-8")
     return json.loads(fetch_text(OVERPASS, data=payload, timeout=55)).get("elements", [])
 
+
 def first(tags, *keys):
     for k in keys:
         v = str(tags.get(k,"") or "").strip()
         if v:
             return v
     return ""
+
 
 def classify(tags):
     amenity = str(tags.get("amenity", "") or "").lower()
@@ -154,6 +170,7 @@ def classify(tags):
         return "SERVIZI"
     return "ALTRO"
 
+
 def public_entity(element):
     tags = element.get("tags") or {}
     if tags.get("building") in {"house","residential","apartments","detached","semidetached_house"} and not any(k in tags for k in ("amenity","shop","office","craft","tourism","leisure","healthcare","industrial","animal")):
@@ -164,6 +181,7 @@ def public_entity(element):
     website = first(tags, "contact:website", "website", "url")
     street = first(tags, "addr:street"); house = first(tags, "addr:housenumber"); city = first(tags, "addr:city")
     return {"name": name or "Attività/ente senza nome OSM", "category": classify(tags), "address": " ".join(x for x in [street, house, city] if x).strip(), "phone_public": phone, "email_public": email, "website": website, "osm_id": element.get("id"), "osm_type": element.get("type"), "source": "OpenStreetMap"}
+
 
 def enrich_signal(signal):
     if not str(signal.get("indirizzo") or "").strip() or "DA VERIFICARE" in str(signal.get("indirizzo") or "").upper():
@@ -190,6 +208,7 @@ def enrich_signal(signal):
     signal["enrichment_status"] = "ENRICHED"; signal["enriched_at"] = now_iso()
     return signal
 
+
 def main():
     rows = list(csv.DictReader(io.StringIO(fetch_text(GIRO_URL))))
     old = load_json(OUT, {"signals":[]}); old_by_id = {x.get("signal_id"): x for x in old.get("signals",[]) if x.get("signal_id")}
@@ -198,6 +217,7 @@ def main():
     for row in rows:
         comune = (row.get("COMUNE") or "").strip(); indirizzo = (row.get("DOVE_ANDRE") or "").strip()
         if not comune or not indirizzo: continue
+        if territory_norm(comune) not in ALLOWED_COMMUNES: continue
         sid = stable_id(row); first_seen = seen_map.get(sid) or stamp; seen_map[sid] = first_seen; prev = old_by_id.get(sid, {})
         signals.append({"signal_id": sid, "first_seen": first_seen, "is_new": first_seen == stamp, "territorial_rank": territorial_rank(comune), "territorial_route": TERRITORIAL_ROUTE, "comune": comune, "indirizzo": indirizzo, "immobile": (row.get("COSA_CERCO") or "").strip(), "prezzo": (row.get("PREZZO") or "").strip(), "fonte": (row.get("FONTE") or "").strip(), "seller_signal": (row.get("SELLER_SIGNAL") or "").strip(), "priorita": (row.get("PRIORITA") or "").strip(), "score": (row.get("SCORE") or "").strip(), "url_annuncio": (row.get("URL") or "").strip(), "queries": queries(comune, indirizzo), "engine_version": ENGINE_VERSION, "enrichment_status": (prev.get("enrichment_status","PENDING") if prev.get("engine_version") == ENGINE_VERSION else "PENDING"), "geocode": prev.get("geocode"), "radius_m": prev.get("radius_m", RADIUS), "context": prev.get("context", {}), "public_entities": prev.get("public_entities", []), "enriched_at": prev.get("enriched_at")})
     candidates = [s for s in signals if s.get("enrichment_status") in {"PENDING", "ERROR"}]
@@ -208,10 +228,23 @@ def main():
             s["enrichment_status"] = "ERROR"; s["enrichment_error"] = str(exc)[:300]
         time.sleep(0.5)
     signals.sort(key=lambda s: (s.get("territorial_rank", 9999), -int(float(s.get("score") or 0)), not s.get("is_new")))
-    payload = {"engine_version": ENGINE_VERSION, "territorial_rule": "FASCIA_CONTINUA", "territorial_route": TERRITORIAL_ROUTE, "generated_at": stamp, "source": GIRO_URL, "radius_m": RADIUS, "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.", "signals_count": len(signals), "signals": signals}
+    payload = {
+        "engine_version": ENGINE_VERSION,
+        "territory_version": TERRITORY.get("version"),
+        "territorial_rule": TERRITORY.get("policy"),
+        "reference_hub": TERRITORY.get("reference_hub"),
+        "territorial_route": TERRITORIAL_ROUTE,
+        "generated_at": stamp,
+        "source": GIRO_URL,
+        "radius_m": RADIUS,
+        "privacy": "Residenti: solo dati aggregati. Recapiti: solo attività/enti/professionisti pubblici.",
+        "signals_count": len(signals),
+        "signals": signals,
+    }
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     SEEN.write_text(json.dumps({"updated_at": stamp, "seen": seen_map}, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"Neighborhood Intelligence: {len(signals)} segnali, {sum(s['enrichment_status']=='ENRICHED' for s in signals)} arricchiti.")
+    print(f"Neighborhood Intelligence: hub={TERRITORY.get('reference_hub')}; {len(signals)} segnali; {sum(s['enrichment_status']=='ENRICHED' for s in signals)} arricchiti.")
+
 
 if __name__ == "__main__":
     main()
