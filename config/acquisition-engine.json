@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "name": "F1 Acquisition Engine — 5 Pillars",
   "canonical_entrypoint": "oggi.html",
   "territory_config": "config/territory.json",
@@ -8,21 +8,35 @@
     "public_feed": "data/acquisition-public.json",
     "offline_cache": "localStorage"
   },
+  "mandatory_operating_directive": {
+    "territory_hub": "Villar Dora",
+    "territory_mode": "CENTRO_RADIALE_SINISTRA_DESTRA",
+    "all_observed_listings_must_be_registered_in_crm": true,
+    "competitor_listings_must_be_monitored": true,
+    "private_listings_must_be_monitored": true,
+    "expired_and_possible_expired_must_be_monitored": true,
+    "no_unregistered_market_signal": true,
+    "coverage_rule": "Ogni annuncio osservato da una fonte configurata nel territorio canonico deve avere un immobile, una osservazione storica e una scheda CRM collegata."
+  },
+  "market_crm_categories": ["COMPETITOR_LISTING","FSBO","FSBO_CANDIDATE","EXPIRED_CANDIDATE","EXPIRED_VERIFIED"],
   "pillars": [
-    {"id":1,"key":"SELLER_PROSPECTING","label":"Seller Prospecting","description":"FSBO, candidati/scaduti da verificare, Just Listed, Just Sold e segnali seller."},
+    {"id":1,"key":"SELLER_PROSPECTING","label":"Seller Prospecting","description":"Concorrenza, FSBO/privati, candidati scaduti/scaduti verificati e segnali seller, tutti registrati nel CRM."},
     {"id":2,"key":"DATABASE_REFERRAL","label":"Database & Referral","description":"Clienti passati, COI, referral agenti/professionisti, reactivation, REO e network professionale."},
     {"id":3,"key":"FARMING","label":"Farming territoriale","description":"Microzone, porta a porta, direct mail, Open House, cartelli e attività territoriali."},
     {"id":4,"key":"PARTNERSHIP_CHANNELS","label":"Partnership & Channels","description":"Fornitori, telemarketer autorizzati, internet lead, media offline e nuove costruzioni."},
     {"id":5,"key":"CORE_BUSINESS","label":"Core Business Priority","description":"Priorità quotidiana a clienti passati, COI, scaduti/possibili scaduti e FSBO."}
   ],
   "core4":["PAST_CLIENT","COI","EXPIRED_OR_POSSIBLE_EXPIRED","FSBO"],
-  "lead_statuses":["DA_ANALIZZARE","DA_VERIFICARE","DA_CONTATTARE","CONTATTATO","RICHIAMO","APPUNTAMENTO","VALUTAZIONE","INCARICO","NON_INTERESSATO","NON_CONTATTARE","SCARTATO","ACQUISITO","PERSO","DA_RICONTATTARE"],
+  "lead_statuses":["DA_ANALIZZARE","MONITORAGGIO_CONCORRENZA","DA_VERIFICARE","DA_CONTATTARE","CONTATTATO","RICHIAMO","APPUNTAMENTO","VALUTAZIONE","INCARICO","NON_INTERESSATO","NON_CONTATTARE","SCARTATO","ACQUISITO","PERSO","DA_RICONTATTARE"],
   "task_statuses":["OPEN","IN_PROGRESS","DONE","CANCELLED","BLOCKED"],
-  "task_types":["CALL","FIELD","FOLLOW_UP","VERIFY","REFERRAL","CAMPAIGN","REVIEW"],
-  "events":["PROPERTY_FIRST_SEEN","PROPERTY_PRICE_CHANGED","PROPERTY_AGENCY_CHANGED","PROPERTY_NOT_SEEN","PROPERTY_RELISTED","FSBO_CANDIDATE_FOUND","FSBO_FOUND","SOCIAL_SELLER_FOUND","JUST_LISTED","JUST_SOLD","PAST_CLIENT_DUE","COI_DUE","REFERRAL_RECEIVED","OPEN_HOUSE_LEAD","DIRECT_MAIL_RESPONSE","WEBSITE_LEAD","CALLBACK_DUE"],
+  "task_types":["CALL","FIELD","FOLLOW_UP","VERIFY","REFERRAL","CAMPAIGN","REVIEW","MONITOR"],
+  "events":["PROPERTY_FIRST_SEEN","COMPETITOR_LISTING_FOUND","PROPERTY_PRICE_CHANGED","PROPERTY_AGENCY_CHANGED","PROPERTY_NOT_SEEN","PROPERTY_RELISTED","EXPIRED_CANDIDATE_FOUND","EXPIRED_VERIFIED","FSBO_CANDIDATE_FOUND","FSBO_FOUND","SOCIAL_SELLER_FOUND","JUST_LISTED","JUST_SOLD","PAST_CLIENT_DUE","COI_DUE","REFERRAL_RECEIVED","OPEN_HOUSE_LEAD","DIRECT_MAIL_RESPONSE","WEBSITE_LEAD","CALLBACK_DUE"],
   "event_task_defaults": {
+    "COMPETITOR_LISTING_FOUND":"MONITOR",
     "FSBO_CANDIDATE_FOUND":"VERIFY",
     "FSBO_FOUND":"CALL",
+    "EXPIRED_CANDIDATE_FOUND":"VERIFY",
+    "EXPIRED_VERIFIED":"VERIFY",
     "SOCIAL_SELLER_FOUND":"VERIFY",
     "PROPERTY_AGENCY_CHANGED":"VERIFY",
     "PROPERTY_NOT_SEEN":"VERIFY",
@@ -38,15 +52,17 @@
     "CALLBACK_DUE":"CALL"
   },
   "scoring": {
-    "FSBO_NEW":25,"NO_AGENCIES":15,"OBSERVED_OVER_120_DAYS":15,"OBSERVED_OVER_150_DAYS":20,"PRICE_DROP":10,"MULTIPLE_PRICE_DROPS":15,"AGENCY_CHANGE":15,"RELISTED":10,"PAST_CLIENT":20,"REFERRAL":25,"OVERDUE_CALLBACK":15,"INBOUND_LEAD":20
+    "FSBO_NEW":25,"NO_AGENCIES":15,"OBSERVED_OVER_120_DAYS":15,"OBSERVED_OVER_150_DAYS":20,"PRICE_DROP":10,"MULTIPLE_PRICE_DROPS":15,"AGENCY_CHANGE":15,"RELISTED":10,"PAST_CLIENT":20,"REFERRAL":25,"OVERDUE_CALLBACK":15,"INBOUND_LEAD":20,"COMPETITOR_LISTING":5,"EXPIRED_CANDIDATE":20
   },
   "confidence_labels":["LOW","MEDIUM","HIGH","VERIFIED"],
   "classification_rules": {
-    "fsbo_candidate":"INDIZIO_PRIVATO or other weak seller hints generate VERIFY, not CALL, until evidence is sufficient.",
-    "expired":"Use INCARICO_SCADUTO only with explicit evidence; otherwise POSSIBILE_SCADUTO, RITIRATO_DAL_MERCATO, NON_PIU_RILEVATO, CAMBIO_AGENZIA or DA_VERIFICARE.",
-    "sold":"Never infer VENDUTO only from disappearance. Default disappearance state is NON_PIU_RILEVATO until verified.",
-    "ownership":"Never infer a named owner only from address, street, civic number or nearby directory contact.",
-    "contact":"A CALL task never bypasses do_not_contact, RPO or other applicable contact checks."
+    "competitor":"Ogni annuncio di agenzia osservato nel territorio deve essere registrato nel CRM come COMPETITOR_LISTING e mantenere storico fonte/prezzo/stato.",
+    "fsbo_candidate":"INDIZIO_PRIVATO o altri indizi deboli generano FSBO_CANDIDATE + VERIFY, non CALL, finché l'evidenza non è sufficiente.",
+    "expired":"Usare EXPIRED_VERIFIED/INCARICO_SCADUTO solo con evidenza esplicita; annuncio non più rilevato, ritirato, ripubblicato o con cambio agenzia resta EXPIRED_CANDIDATE/DA_VERIFICARE.",
+    "sold":"Non inferire VENDUTO dalla sola scomparsa dell'annuncio. Stato predefinito: NON_PIU_RILEVATO/DA_VERIFICARE.",
+    "ownership":"Non inferire il proprietario da indirizzo, via, civico o contatti vicini.",
+    "crm":"Nessun annuncio o segnale di mercato osservato nel territorio può restare fuori dal CRM.",
+    "contact":"Un task CALL non bypassa do_not_contact, RPO o altri controlli applicabili."
   },
   "public_feed_allowlist":["id","pillar","source_type","source","source_url","created_at","first_seen","last_seen","comune","via","civico","zona","property_id","competitor_agency","lead_reason","lead_score","confidence","status","next_action","next_action_date"]
 }
