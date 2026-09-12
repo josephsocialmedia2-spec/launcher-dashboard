@@ -1,0 +1,85 @@
+name: F1 Acquisition Engine QA
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'oggi.html'
+      - 'seller-radar-unico.html'
+      - 'giro-acquisizione.html'
+      - 'telefonate-oggi.html'
+      - 'competitor-intelligence.html'
+      - 'social-seller-radar.html'
+      - 'f1-acquisition-*.js'
+      - 'config/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'supabase-schema.sql'
+      - 'pwa.js'
+      - 'sw.js'
+      - 'package.json'
+      - 'playwright.config.js'
+      - '.github/workflows/f1-acquisition-*.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile and unit test
+        run: |
+          python -m py_compile scripts/territory_config.py scripts/neighborhood_intelligence.py scripts/territory_orchestrator.py scripts/acquisition_daily.py
+          python -m unittest tests/test_acquisition_daily.py -v
+          python -m json.tool config/territory.json >/dev/null
+          python -m json.tool config/acquisition-engine.json >/dev/null
+          python -m json.tool system-registry.json >/dev/null
+
+  javascript:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: |
+          node --check f1-acquisition-core.js
+          node --check f1-acquisition-data.js
+          node --check pwa.js
+          node --check sw.js
+          python - <<'PY'
+          from pathlib import Path
+          import re, subprocess
+          pages=['oggi.html','seller-radar-unico.html','giro-acquisizione.html','telefonate-oggi.html','competitor-intelligence.html','social-seller-radar.html']
+          for name in pages:
+              html=Path(name).read_text(encoding='utf-8')
+              inline=re.findall(r'<script>(.*?)</script>',html,re.S|re.I)
+              out=Path('/tmp')/(name.replace('.html','.inline.js'))
+              out.write_text('\n'.join(inline),encoding='utf-8')
+              if inline:
+                  subprocess.run(['node','--check',str(out)],check=True)
+          PY
+
+  playwright:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install QA dependencies
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+      - name: Command Center smoke tests
+        run: npm run test:acquisition
