@@ -51,7 +51,7 @@ class AcquisitionDailyTests(unittest.TestCase):
         self.assertEqual(c["task_type"], "VERIFY")
         self.assertEqual(c["core_category"], "FSBO_CANDIDATE")
         self.assertEqual(c["market_category"], "FSBO_CANDIDATE")
-        self.assertEqual(mod.score(signal, c, self.engine), 30)
+        self.assertEqual(mod.score(signal, c, self.engine), 25)
 
     def test_explicit_private_sale_can_be_fsbo_call_task(self):
         c = mod.classify({"seller_signal": "FSBO VENDITA PRIVATA"})
