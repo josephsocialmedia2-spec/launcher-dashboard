@@ -11,7 +11,7 @@ test('command center loads canonical 5 Pillars architecture', async ({ page, req
   await expect(page.getByRole('heading', { name: 'F1 ACQUISITION COMMAND CENTER' })).toBeVisible();
   await expect(page.getByText('CORE 4 · PRIORITÀ MASSIMA')).toBeVisible();
   await expect(page.getByText('I 5 PILASTRI')).toBeVisible();
-  await expect(page.getByText('COMPETITOR INTELLIGENCE')).toBeVisible();
+  await expect(page.getByText('COMPETITOR INTELLIGENCE', { exact: true })).toBeVisible();
   await expect(page.getByText('Cosa devo fare adesso')).toBeVisible();
 
   const territory = await (await responseOk(request, '/config/territory.json')).json();
