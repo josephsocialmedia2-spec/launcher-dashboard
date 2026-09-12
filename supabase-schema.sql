@@ -1,8 +1,14 @@
 create extension if not exists pgcrypto;
 
 -- ============================================================================
--- LEGACY COMPATIBILITY: CONTATTI CRM
+-- F1 ACQUISITION ENGINE — CANONICAL SUPABASE SCHEMA
+-- Supabase is the private operational source of truth.
+-- Public GitHub JSON must never contain unnecessary PII.
 -- ============================================================================
+
+-- --------------------------------------------------------------------------
+-- Legacy compatibility: contacts / field visits
+-- --------------------------------------------------------------------------
 create table if not exists public.contacts (
   id text primary key,
   user_id uuid default auth.uid(),
@@ -20,7 +26,8 @@ create table if not exists public.contacts (
 );
 alter table public.contacts add column if not exists user_id uuid default auth.uid();
 alter table public.contacts enable row level security;
-
+revoke all on table public.contacts from anon, authenticated;
+grant select, insert, update, delete on table public.contacts to authenticated;
 drop policy if exists "f1 contacts anon read" on public.contacts;
 drop policy if exists "f1 contacts anon insert" on public.contacts;
 drop policy if exists "f1 contacts anon update" on public.contacts;
@@ -28,23 +35,14 @@ drop policy if exists "f1 contacts user read" on public.contacts;
 drop policy if exists "f1 contacts user insert" on public.contacts;
 drop policy if exists "f1 contacts user update" on public.contacts;
 drop policy if exists "f1 contacts user delete" on public.contacts;
-
-create policy "f1 contacts user read" on public.contacts
-for select to authenticated using (auth.uid() = user_id);
-create policy "f1 contacts user insert" on public.contacts
-for insert to authenticated with check (auth.uid() = user_id);
-create policy "f1 contacts user update" on public.contacts
-for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
-create policy "f1 contacts user delete" on public.contacts
-for delete to authenticated using (auth.uid() = user_id);
-
+create policy "f1 contacts user read" on public.contacts for select to authenticated using ((select auth.uid()) = user_id);
+create policy "f1 contacts user insert" on public.contacts for insert to authenticated with check ((select auth.uid()) = user_id);
+create policy "f1 contacts user update" on public.contacts for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+create policy "f1 contacts user delete" on public.contacts for delete to authenticated using ((select auth.uid()) = user_id);
 create index if not exists contacts_updated_at_idx on public.contacts(updated_at desc);
 create index if not exists contacts_phone_idx on public.contacts(phone);
 create index if not exists contacts_user_idx on public.contacts(user_id);
 
--- ============================================================================
--- LEGACY COMPATIBILITY: ATTIVITA' SUL TERRITORIO
--- ============================================================================
 create table if not exists public.field_visits (
   id text primary key,
   user_id uuid default auth.uid(),
@@ -57,26 +55,21 @@ create table if not exists public.field_visits (
   deleted boolean not null default false
 );
 alter table public.field_visits enable row level security;
-
+revoke all on table public.field_visits from anon, authenticated;
+grant select, insert, update, delete on table public.field_visits to authenticated;
 drop policy if exists "f1 visits user read" on public.field_visits;
 drop policy if exists "f1 visits user insert" on public.field_visits;
 drop policy if exists "f1 visits user update" on public.field_visits;
 drop policy if exists "f1 visits user delete" on public.field_visits;
-create policy "f1 visits user read" on public.field_visits
-for select to authenticated using (auth.uid() = user_id);
-create policy "f1 visits user insert" on public.field_visits
-for insert to authenticated with check (auth.uid() = user_id);
-create policy "f1 visits user update" on public.field_visits
-for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
-create policy "f1 visits user delete" on public.field_visits
-for delete to authenticated using (auth.uid() = user_id);
+create policy "f1 visits user read" on public.field_visits for select to authenticated using ((select auth.uid()) = user_id);
+create policy "f1 visits user insert" on public.field_visits for insert to authenticated with check ((select auth.uid()) = user_id);
+create policy "f1 visits user update" on public.field_visits for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+create policy "f1 visits user delete" on public.field_visits for delete to authenticated using ((select auth.uid()) = user_id);
 create index if not exists field_visits_user_date_idx on public.field_visits(user_id,visit_date desc);
 
--- ============================================================================
--- F1 ACQUISITION ENGINE — 5 PILLARS
--- Supabase = source of truth. Public GitHub JSON must never contain unnecessary PII.
--- ============================================================================
-
+-- --------------------------------------------------------------------------
+-- Acquisition entities
+-- --------------------------------------------------------------------------
 create table if not exists public.leads (
   lead_id text primary key,
   user_id uuid not null default auth.uid(),
@@ -313,12 +306,11 @@ create table if not exists public.social_signals (
   updated_at timestamptz not null default now()
 );
 
--- ============================================================================
--- RLS
--- ============================================================================
+-- --------------------------------------------------------------------------
+-- Least-privilege Data API grants + RLS ownership policies
+-- --------------------------------------------------------------------------
 do $$
-declare
-  t text;
+declare t text;
 begin
   foreach t in array array[
     'leads','properties','sources','agencies','property_observations',
@@ -327,32 +319,39 @@ begin
   ]
   loop
     execute format('alter table public.%I enable row level security', t);
+    execute format('revoke all on table public.%I from anon, authenticated', t);
+    execute format('grant select, insert, update, delete on table public.%I to authenticated', t);
     execute format('drop policy if exists "f1 %s user read" on public.%I', t, t);
     execute format('drop policy if exists "f1 %s user insert" on public.%I', t, t);
     execute format('drop policy if exists "f1 %s user update" on public.%I', t, t);
     execute format('drop policy if exists "f1 %s user delete" on public.%I', t, t);
-    execute format('create policy "f1 %s user read" on public.%I for select to authenticated using (auth.uid() = user_id)', t, t);
-    execute format('create policy "f1 %s user insert" on public.%I for insert to authenticated with check (auth.uid() = user_id)', t, t);
-    execute format('create policy "f1 %s user update" on public.%I for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id)', t, t);
-    execute format('create policy "f1 %s user delete" on public.%I for delete to authenticated using (auth.uid() = user_id)', t, t);
+    execute format('create policy "f1 %s user read" on public.%I for select to authenticated using ((select auth.uid()) = user_id)', t, t);
+    execute format('create policy "f1 %s user insert" on public.%I for insert to authenticated with check ((select auth.uid()) = user_id)', t, t);
+    execute format('create policy "f1 %s user update" on public.%I for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id)', t, t);
+    execute format('create policy "f1 %s user delete" on public.%I for delete to authenticated using ((select auth.uid()) = user_id)', t, t);
   end loop;
 end $$;
 
--- ============================================================================
--- INDEXES
--- ============================================================================
+-- --------------------------------------------------------------------------
+-- Indexes
+-- --------------------------------------------------------------------------
 create index if not exists leads_user_status_idx on public.leads(user_id,status,next_action_date);
 create index if not exists leads_user_pillar_idx on public.leads(user_id,pillar,lead_score desc);
 create index if not exists leads_location_idx on public.leads(user_id,comune,via);
 create index if not exists properties_location_idx on public.properties(user_id,comune,via,civico);
 create index if not exists properties_last_seen_idx on public.properties(user_id,last_seen desc);
+create index if not exists sources_user_idx on public.sources(user_id,source_type);
+create index if not exists agencies_user_name_idx on public.agencies(user_id,name);
 create index if not exists property_obs_property_idx on public.property_observations(user_id,property_id,observed_at desc);
 create index if not exists property_obs_source_idx on public.property_observations(user_id,source_url);
+create unique index if not exists property_obs_user_source_unique on public.property_observations(user_id,source_url) where source_url <> '';
 create index if not exists property_agency_property_idx on public.property_agency_history(user_id,property_id,first_seen,last_seen);
 create index if not exists events_type_time_idx on public.events(user_id,event_type,occurred_at desc);
 create index if not exists events_property_idx on public.events(user_id,property_id,occurred_at desc);
 create index if not exists tasks_due_idx on public.tasks(user_id,status,due_date,priority desc);
 create index if not exists tasks_type_idx on public.tasks(user_id,task_type,status,priority desc);
 create index if not exists interactions_lead_idx on public.interactions(user_id,lead_id,occurred_at desc);
+create index if not exists referrals_user_status_idx on public.referrals(user_id,status,received_at desc);
 create index if not exists campaigns_type_status_idx on public.campaigns(user_id,campaign_type,status);
+create index if not exists territories_user_active_idx on public.territories(user_id,active,created_at desc);
 create index if not exists social_signals_status_idx on public.social_signals(user_id,status,created_at desc);
