@@ -61,3 +61,38 @@ function installMarketCrmOptions(){const el=document.getElementById('fType');if(
 installMarketCrmOptions();
 window.F1AcquisitionCore={CONFIG_URL,TERRITORY_URL,PUBLIC_FEED_URL,TASK_CACHE_KEY,LEAD_CACHE_KEY,norm,todayRome,nowIso,fetchJson,loadConfig,territoryCommunes,territorySet,inTerritory,territorySide,territoryRank,territoryDirective,clampScore,scoreOpportunity,classifySignal,coreCategory,marketCategory,contactEligible,localTasks,localLeads,saveLocalTasks,saveLocalLeads,mergeTasks,taskIdentity,taskIsOpen,isDue,loadPublicFeed,funnelFromLeads,installMarketCrmOptions};
 })();
+
+(function(){
+'use strict';
+if(!/seller-radar-unico\.html$/i.test(location.pathname))return;
+const LEG={S:['soggiorno','soggiorni'],K:['cucina separata','cucine separate'],AK:['angolo cottura','angoli cottura'],C:['camera','camere'],CM:['camera matrimoniale','camere matrimoniali'],CS:['camera singola/cameretta','camere singole/camerette'],B:['bagno','bagni'],WC:['servizio igienico','servizi igienici'],I:['ingresso','ingressi'],DIS:['disimpegno','disimpegni'],RIP:['ripostiglio','ripostigli'],BAL:['balcone','balconi'],TERR:['terrazzo','terrazzi'],CANT:['cantina','cantine'],BOX:['box/autorimessa','box/autorimesse'],PA:['posto auto','posti auto'],GIARD:['giardino','giardini']};
+const ORDER=['S','K','AK','C','CM','CS','B','WC','I','DIS','RIP','BAL','TERR','CANT','BOX','PA','GIARD'];
+const W={un:1,uno:1,una:1,due:2,tre:3,quattro:4,cinque:5,sei:6,sette:7,otto:8,nove:9,dieci:10};
+const norm2=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
+const strip=v=>String(v||'').replace(/^\s*[-#]+\s*/,'').replace(/\*\*/g,'').replace(/__+/g,'').trim();
+const rows=t=>String(t||'').split(/\r?\n/).map(strip).filter(Boolean);
+function value(t,labels){const a=rows(t),w=(Array.isArray(labels)?labels:[labels]).map(norm2);for(let i=0;i<a.length;i++)if(w.includes(norm2(a[i])))for(let j=i+1;j<Math.min(a.length,i+5);j++){const v=a[j];if(v&&!w.includes(norm2(v)))return v}return''}
+function has(t,labels){const a=rows(t).map(norm2),w=(Array.isArray(labels)?labels:[labels]).map(norm2);return w.some(x=>a.includes(x))}
+const no=v=>/^(no|assente|assenti|nessuno|nessuna|non presente|non presenti)$/.test(norm2(v));
+function q(v){const s=norm2(v);return /^\d+$/.test(s)?Number(s):(W[s]||0)}
+function countLine(t,words){const alts=words.map(x=>norm2(x).replace(/\s+/g,'[ \\t]+')).join('|'),re=new RegExp('\\b(\\d+|un|uno|una|due|tre|quattro|cinque|sei|sette|otto|nove|dieci)[ \\t]+(?:'+alts+')\\b','i');for(const line of rows(t)){const m=norm2(line).match(re);if(m)return q(m[1])}return 0}
+function fieldCount(t,labels){if(!has(t,labels))return null;const v=value(t,labels);if(no(v))return 0;const m=String(v).match(/\d+/);if(m)return Number(m[0]);return v?1:0}
+function codes(input){const out=[],bad=[],seen=new Set(),re=/\b([A-Z]{1,5})\s*[:=X]\s*(\d+)\b/g;let m,s=String(input||'').toUpperCase();while((m=re.exec(s))){const k=m[1],n=Number(m[2]),tok=k+':'+n;if(seen.has(tok))continue;seen.add(tok);if(LEG[k])out.push({sigla:k,qty:n});else bad.push(tok)}return{out,bad}}
+function render2(items,bad=[]){items=[...items].sort((a,b)=>ORDER.indexOf(a.sigla)-ORDER.indexOf(b.sigla));const c=items.map(x=>x.sigla+':'+x.qty),h=items.map(x=>x.qty+' '+(x.qty===1?LEG[x.sigla][0]:LEG[x.sigla][1]));if(bad.length){c.push(...bad);h.push('SIGLA NON RICONOSCIUTA: '+bad.join(', '))}return c.length?c.join(' | ')+' → '+h.join(', '):''}
+window.extractComposition=function(text,fallback){
+  let p=codes(text);if(!p.out.length&&!p.bad.length&&fallback)p=codes(fallback);if(p.out.length||p.bad.length)return render2(p.out,p.bad);
+  const t=String(text||''),flat=norm2(t),m={};const set=(k,n)=>{n=Number(n)||0;if(n)m[k]=Math.max(m[k]||0,n)};
+  const cams=fieldCount(t,['camere da letto','camere']),baths=fieldCount(t,['bagni','bagno']);if(baths>0)set('B',baths);
+  const kitchen=has(t,['cucina'])?value(t,['cucina']):'';if(kitchen&&!no(kitchen)){if(norm2(kitchen).includes('angolo cottura'))set('AK',1);else set('K',1)}
+  let cm=countLine(t,['camere matrimoniali','camera matrimoniale']);if(!cm&&/\bcamera matrimoniale\b/.test(flat))cm=1;
+  let cs=Math.max(countLine(t,['camerette','cameretta']),countLine(t,['camere singole','camera singola']));if(!cs&&(/\bcameretta\b/.test(flat)||/\bcamera singola\b/.test(flat)))cs=1;
+  if(cm)set('CM',cm);if(cs)set('CS',cs);if(cams>0){const rest=cams-(cm+cs);if(cm+cs===0)set('C',cams);else if(rest>0)set('C',rest)}
+  let s=countLine(t,['soggiorni','soggiorno']);if(!s&&/\bsoggiorno\b/.test(flat))s=1;if(s)set('S',s);
+  if(/\bingresso\b/.test(flat))set('I',Math.max(1,countLine(t,['ingressi','ingresso'])));if(/\bdisimpegno\b/.test(flat))set('DIS',Math.max(1,countLine(t,['disimpegni','disimpegno'])));if(/\bripostiglio\b/.test(flat))set('RIP',Math.max(1,countLine(t,['ripostigli','ripostiglio'])));
+  for(const [sigla,labels,words] of [['BAL',['balcone','balconi'],['balconi','balcone']],['TERR',['terrazzo','terrazzi'],['terrazzi','terrazzo']]]){const f=fieldCount(t,labels),desc=countLine(t,words);if(f!==null){if(f>0)set(sigla,Math.max(f,desc||0))}else if(desc)set(sigla,desc)}
+  const cant=fieldCount(t,['cantina','cantine']);if(cant!==null){if(cant>0)set('CANT',cant)}else{const x=countLine(t,['cantine','cantina']);if(x)set('CANT',x)}
+  const giard=fieldCount(t,['giardino','giardini']);if(giard!==null){if(giard>0)set('GIARD',giard)}else{let x=countLine(t,['giardini','giardino']);if(!x&&/\bgiardino\b/.test(flat))x=1;if(x)set('GIARD',x)}
+  const boxLabels=['box, posti auto','box posti auto','box'],boxHas=has(t,boxLabels),bv=boxHas?value(t,boxLabels):'';if(boxHas&&!no(bv)){const first=(String(bv).match(/\d+/)||[])[0];if(/box|garage|autorimessa/i.test(bv))set('BOX',Number(first||1));else if(/posti? auto/i.test(bv))set('PA',Number(first||1))}else if(!boxHas){let bx=countLine(t,['box','garage','autorimesse','autorimessa']);if(!bx&&/\b(autorimessa|garage|box privato|box in garage)\b/.test(flat))bx=1;if(bx)set('BOX',bx);const pa=countLine(t,['posti auto','posto auto']);if(pa)set('PA',pa)}
+  return render2(ORDER.filter(k=>m[k]).map(k=>({sigla:k,qty:m[k]})));
+};
+})();
