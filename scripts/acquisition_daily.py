@@ -3,10 +3,11 @@
 """F1 Acquisition Engine — public daily task generator.
 
 Canonical directives:
-- Villar Dora is the single radial hub.
+- Villar Dora is the single radial hub for canonical territory configuration.
 - Every commune is resolved through config/territory.json and tagged CENTRO/SINISTRA/DESTRA.
 - Market observations are classified as competitor/private/expired candidate without inventing certainty.
-- Private CRM data stays in Supabase; this file only publishes a privacy-safe operational feed.
+- Every observed market signal becomes a privacy-safe public Seller Radar record/task.
+- Private CRM data stays in Supabase; this file never publishes private contact details.
 """
 from __future__ import annotations
 
@@ -90,11 +91,9 @@ def classify(signal: dict) -> dict:
         flags.append("EXPIRED_CANDIDATE")
     elif expired_candidate:
         if "cambio agenz" in hay:
-            event = "PROPERTY_AGENCY_CHANGED"
-            flags.append("AGENCY_CHANGE")
+            event = "PROPERTY_AGENCY_CHANGED"; flags.append("AGENCY_CHANGE")
         elif re.search(r"ripubblic|relist", hay):
-            event = "PROPERTY_RELISTED"
-            flags.append("RELISTED")
+            event = "PROPERTY_RELISTED"; flags.append("RELISTED")
         else:
             event = "EXPIRED_CANDIDATE_FOUND"
         task, reason, core, market = "VERIFY", "Possibile scaduto / stato incarico da verificare", "EXPIRED_OR_POSSIBLE_EXPIRED", "EXPIRED_CANDIDATE"
@@ -132,11 +131,14 @@ def event_and_task(signal: dict, engine: dict, territory: dict, today: str) -> t
     indirizzo = str(signal.get("indirizzo") or "").strip()
     source_url = str(signal.get("url_annuncio") or "").strip()
     source = str(signal.get("fonte") or "Seller Radar F1").strip()
+    immobile = str(signal.get("immobile") or "").strip()
+    prezzo = str(signal.get("prezzo") or "").strip()
     confidence = "HIGH" if source_url else "MEDIUM"
     side = territory_side(comune, territory)
     event = {
         "event_id": event_id, "event_type": c["event_type"], "pillar": 1, "property_id": property_id,
         "source": source, "source_url": source_url, "comune": comune, "via": indirizzo,
+        "immobile": immobile, "prezzo": prezzo,
         "territory_side": side, "market_category": c["market_category"], "confidence": confidence,
         "occurred_at": str(signal.get("first_seen") or signal.get("enriched_at") or ""),
         "evidence_rule": "Non inferire FSBO verificato, VENDUTO, INCARICO_SCADUTO o proprietà personale senza evidenza sufficiente."
@@ -146,6 +148,7 @@ def event_and_task(signal: dict, engine: dict, territory: dict, today: str) -> t
         "task_type": c["task_type"], "reason": c["reason"], "priority": priority, "due_date": today,
         "assigned_to": "", "status": "OPEN", "created_at": str(signal.get("first_seen") or datetime.now(tz=ZoneInfo("Europe/Rome")).isoformat()),
         "completed_at": "", "outcome": "", "source": source, "source_url": source_url, "comune": comune, "via": indirizzo,
+        "immobile": immobile, "prezzo": prezzo,
         "civico": "", "zona": "", "lead_reason": c["reason"], "confidence": confidence,
         "core_category": c["core_category"], "market_category": c["market_category"], "territory_side": side,
         "seller_signal": str(signal.get("seller_signal") or "").strip(), "is_new": bool(signal.get("is_new")),
@@ -186,7 +189,7 @@ def build_payload(territory: dict, engine: dict, neighborhood: dict) -> dict:
         "relisted": sum(e.get("event_type") == "PROPERTY_RELISTED" for e in events),
     }
     payload = {
-        "version": 3, "generated_at": now.isoformat(), "territory_version": territory.get("version"),
+        "version": 4, "generated_at": now.isoformat(), "territory_version": territory.get("version"),
         "reference_hub": territory.get("reference_hub"), "territory_policy": territory.get("policy"),
         "territory_sides": {"sinistra": territory.get("sinistra") or [], "destra": territory.get("destra") or []},
         "market_coverage": territory.get("market_coverage") or {},
