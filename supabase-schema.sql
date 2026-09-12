@@ -6,9 +6,6 @@ create extension if not exists pgcrypto;
 -- Public GitHub JSON must never contain unnecessary PII.
 -- ============================================================================
 
--- --------------------------------------------------------------------------
--- Legacy compatibility: contacts / field visits
--- --------------------------------------------------------------------------
 create table if not exists public.contacts (
   id text primary key,
   user_id uuid default auth.uid(),
@@ -67,9 +64,6 @@ create policy "f1 visits user update" on public.field_visits for update to authe
 create policy "f1 visits user delete" on public.field_visits for delete to authenticated using ((select auth.uid()) = user_id);
 create index if not exists field_visits_user_date_idx on public.field_visits(user_id,visit_date desc);
 
--- --------------------------------------------------------------------------
--- Acquisition entities
--- --------------------------------------------------------------------------
 create table if not exists public.leads (
   lead_id text primary key,
   user_id uuid not null default auth.uid(),
@@ -306,17 +300,10 @@ create table if not exists public.social_signals (
   updated_at timestamptz not null default now()
 );
 
--- --------------------------------------------------------------------------
--- Least-privilege Data API grants + RLS ownership policies
--- --------------------------------------------------------------------------
 do $$
 declare t text;
 begin
-  foreach t in array array[
-    'leads','properties','sources','agencies','property_observations',
-    'property_agency_history','events','tasks','interactions','referrals',
-    'campaigns','territories','social_signals'
-  ]
+  foreach t in array array['leads','properties','sources','agencies','property_observations','property_agency_history','events','tasks','interactions','referrals','campaigns','territories','social_signals']
   loop
     execute format('alter table public.%I enable row level security', t);
     execute format('revoke all on table public.%I from anon, authenticated', t);
@@ -332,9 +319,6 @@ begin
   end loop;
 end $$;
 
--- --------------------------------------------------------------------------
--- Indexes
--- --------------------------------------------------------------------------
 create index if not exists leads_user_status_idx on public.leads(user_id,status,next_action_date);
 create index if not exists leads_user_pillar_idx on public.leads(user_id,pillar,lead_score desc);
 create index if not exists leads_location_idx on public.leads(user_id,comune,via);
@@ -344,7 +328,8 @@ create index if not exists sources_user_idx on public.sources(user_id,source_typ
 create index if not exists agencies_user_name_idx on public.agencies(user_id,name);
 create index if not exists property_obs_property_idx on public.property_observations(user_id,property_id,observed_at desc);
 create index if not exists property_obs_source_idx on public.property_observations(user_id,source_url);
-create unique index if not exists property_obs_user_source_unique on public.property_observations(user_id,source_url) where source_url <> '';
+drop index if exists public.property_obs_user_source_unique;
+create index if not exists property_obs_user_source_time_idx on public.property_observations(user_id,source_url,observed_at desc);
 create index if not exists property_agency_property_idx on public.property_agency_history(user_id,property_id,first_seen,last_seen);
 create index if not exists events_type_time_idx on public.events(user_id,event_type,occurred_at desc);
 create index if not exists events_property_idx on public.events(user_id,property_id,occurred_at desc);
