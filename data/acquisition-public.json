@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "generated_at": null,
+  "territory_version": null,
+  "reference_hub": "Villar Dora",
+  "privacy": "Feed pubblico non sensibile. Nessun telefono, email o nominativo privato.",
+  "summary": {
+    "signals": 0,
+    "tasks": 0,
+    "fsbo": 0,
+    "possible_expired": 0,
+    "price_changes": 0,
+    "agency_changes": 0,
+    "relisted": 0
+  },
+  "events": [],
+  "tasks": []
+}

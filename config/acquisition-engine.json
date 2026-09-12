@@ -1,0 +1,52 @@
+{
+  "version": 2,
+  "name": "F1 Acquisition Engine — 5 Pillars",
+  "canonical_entrypoint": "oggi.html",
+  "territory_config": "config/territory.json",
+  "source_of_truth": {
+    "operational_database": "SUPABASE",
+    "public_feed": "data/acquisition-public.json",
+    "offline_cache": "localStorage"
+  },
+  "pillars": [
+    {"id":1,"key":"SELLER_PROSPECTING","label":"Seller Prospecting","description":"FSBO, candidati/scaduti da verificare, Just Listed, Just Sold e segnali seller."},
+    {"id":2,"key":"DATABASE_REFERRAL","label":"Database & Referral","description":"Clienti passati, COI, referral agenti/professionisti, reactivation, REO e network professionale."},
+    {"id":3,"key":"FARMING","label":"Farming territoriale","description":"Microzone, porta a porta, direct mail, Open House, cartelli e attività territoriali."},
+    {"id":4,"key":"PARTNERSHIP_CHANNELS","label":"Partnership & Channels","description":"Fornitori, telemarketer autorizzati, internet lead, media offline e nuove costruzioni."},
+    {"id":5,"key":"CORE_BUSINESS","label":"Core Business Priority","description":"Priorità quotidiana a clienti passati, COI, scaduti/possibili scaduti e FSBO."}
+  ],
+  "core4":["PAST_CLIENT","COI","EXPIRED_OR_POSSIBLE_EXPIRED","FSBO"],
+  "lead_statuses":["DA_ANALIZZARE","DA_VERIFICARE","DA_CONTATTARE","CONTATTATO","RICHIAMO","APPUNTAMENTO","VALUTAZIONE","INCARICO","NON_INTERESSATO","NON_CONTATTARE","SCARTATO","ACQUISITO","PERSO","DA_RICONTATTARE"],
+  "task_statuses":["OPEN","IN_PROGRESS","DONE","CANCELLED","BLOCKED"],
+  "task_types":["CALL","FIELD","FOLLOW_UP","VERIFY","REFERRAL","CAMPAIGN","REVIEW"],
+  "events":["PROPERTY_FIRST_SEEN","PROPERTY_PRICE_CHANGED","PROPERTY_AGENCY_CHANGED","PROPERTY_NOT_SEEN","PROPERTY_RELISTED","FSBO_CANDIDATE_FOUND","FSBO_FOUND","SOCIAL_SELLER_FOUND","JUST_LISTED","JUST_SOLD","PAST_CLIENT_DUE","COI_DUE","REFERRAL_RECEIVED","OPEN_HOUSE_LEAD","DIRECT_MAIL_RESPONSE","WEBSITE_LEAD","CALLBACK_DUE"],
+  "event_task_defaults": {
+    "FSBO_CANDIDATE_FOUND":"VERIFY",
+    "FSBO_FOUND":"CALL",
+    "SOCIAL_SELLER_FOUND":"VERIFY",
+    "PROPERTY_AGENCY_CHANGED":"VERIFY",
+    "PROPERTY_NOT_SEEN":"VERIFY",
+    "PROPERTY_RELISTED":"VERIFY",
+    "JUST_LISTED":"FIELD",
+    "JUST_SOLD":"FIELD",
+    "PAST_CLIENT_DUE":"CALL",
+    "COI_DUE":"CALL",
+    "REFERRAL_RECEIVED":"FOLLOW_UP",
+    "OPEN_HOUSE_LEAD":"FOLLOW_UP",
+    "DIRECT_MAIL_RESPONSE":"FOLLOW_UP",
+    "WEBSITE_LEAD":"CALL",
+    "CALLBACK_DUE":"CALL"
+  },
+  "scoring": {
+    "FSBO_NEW":25,"NO_AGENCIES":15,"OBSERVED_OVER_120_DAYS":15,"OBSERVED_OVER_150_DAYS":20,"PRICE_DROP":10,"MULTIPLE_PRICE_DROPS":15,"AGENCY_CHANGE":15,"RELISTED":10,"PAST_CLIENT":20,"REFERRAL":25,"OVERDUE_CALLBACK":15,"INBOUND_LEAD":20
+  },
+  "confidence_labels":["LOW","MEDIUM","HIGH","VERIFIED"],
+  "classification_rules": {
+    "fsbo_candidate":"INDIZIO_PRIVATO or other weak seller hints generate VERIFY, not CALL, until evidence is sufficient.",
+    "expired":"Use INCARICO_SCADUTO only with explicit evidence; otherwise POSSIBILE_SCADUTO, RITIRATO_DAL_MERCATO, NON_PIU_RILEVATO, CAMBIO_AGENZIA or DA_VERIFICARE.",
+    "sold":"Never infer VENDUTO only from disappearance. Default disappearance state is NON_PIU_RILEVATO until verified.",
+    "ownership":"Never infer a named owner only from address, street, civic number or nearby directory contact.",
+    "contact":"A CALL task never bypasses do_not_contact, RPO or other applicable contact checks."
+  },
+  "public_feed_allowlist":["id","pillar","source_type","source","source_url","created_at","first_seen","last_seen","comune","via","civico","zona","property_id","competitor_agency","lead_reason","lead_score","confidence","status","next_action","next_action_date"]
+}

@@ -1,0 +1,110 @@
+name: F1 Acquisition Engine Daily
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 07:25 Europe/Rome: dual UTC window handles CET/CEST; gate below selects local 07:xx.
+    - cron: '25 5 * * *'
+    - cron: '25 6 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'config/territory.json'
+      - 'config/acquisition-engine.json'
+      - 'data/neighborhood_intelligence.json'
+      - 'scripts/acquisition_daily.py'
+      - 'tests/test_acquisition_daily.py'
+      - '.github/workflows/f1-acquisition-daily.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: f1-acquisition-daily
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Gate 07 Europe/Rome
+        id: gate
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$(TZ=Europe/Rome date +%H)" = "07" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.run == 'true'
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        if: steps.gate.outputs.run == 'true'
+        with:
+          python-version: '3.12'
+
+      - name: Validate acquisition engine
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          python -m unittest tests/test_acquisition_daily.py -v
+          python -m py_compile scripts/acquisition_daily.py
+
+      - name: Generate privacy-safe daily feed
+        if: steps.gate.outputs.run == 'true'
+        run: python scripts/acquisition_daily.py
+
+      - name: Validate generated JSON
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          python -m json.tool data/acquisition-public.json >/dev/null
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=json.loads(Path('data/acquisition-public.json').read_text(encoding='utf-8'))
+          assert p['reference_hub']
+          assert isinstance(p.get('tasks'), list)
+          assert isinstance(p.get('events'), list)
+          forbidden={'telefono','phone','email','nome','cognome','public_entities','phone_public','email_public'}
+          def walk(x):
+              if isinstance(x,dict):
+                  for k,v in x.items():
+                      assert k.lower() not in forbidden, f'forbidden public field: {k}'
+                      walk(v)
+              elif isinstance(x,list):
+                  for v in x: walk(v)
+          walk(p)
+          print('PASS public acquisition feed', p['reference_hub'], len(p['tasks']))
+          PY
+
+      - name: Publish feed
+        if: steps.gate.outputs.run == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'f1-acquisition-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add data/acquisition-public.json
+          if git diff --cached --quiet; then
+            echo 'No acquisition feed changes'
+            exit 0
+          fi
+          cp data/acquisition-public.json /tmp/acquisition-public.json
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            cp /tmp/acquisition-public.json data/acquisition-public.json
+            git add data/acquisition-public.json
+            git commit -m 'Refresh F1 Acquisition Engine daily feed'
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt * 2))
+          done
+          exit 1

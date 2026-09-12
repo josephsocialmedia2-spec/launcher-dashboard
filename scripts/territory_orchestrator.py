@@ -10,15 +10,12 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
+from territory_config import allowed_set, communes as territory_communes, load_territory, norm
+
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / "config" / "territory.json"
 SOURCE = ROOT / "data" / "neighborhood_intelligence.json"
 OUT = ROOT / "data" / "territory_operations.json"
 GEO_CACHE = ROOT / "data" / "territory_geocache.json"
-
-
-def norm(value: str) -> str:
-    return str(value or "").strip().lower().replace("’", "'")
 
 
 def score(signal: dict) -> float:
@@ -45,7 +42,7 @@ def geocode(comune: str, cache: dict) -> dict | None:
     q = urllib.parse.urlencode({"q": f"{comune}, Torino, Piemonte, Italia", "format": "jsonv2", "limit": 1, "countrycodes": "it"})
     req = urllib.request.Request(
         "https://nominatim.openstreetmap.org/search?" + q,
-        headers={"User-Agent": "F1Immobiliare-Territory/2.0 (public geocoding cache)"},
+        headers={"User-Agent": "F1Immobiliare-Territory/3.0 (public geocoding cache)"},
     )
     try:
         with urllib.request.urlopen(req, timeout=20) as response:
@@ -70,30 +67,34 @@ def haversine_km(a: dict | None, b: dict | None) -> float | None:
     return 6371.0088 * 2 * math.asin(math.sqrt(h))
 
 
-def band_for(distance: float | None, hub: bool = False) -> tuple[int, str]:
+def band_for(distance: float | None, bands: list[float], hub: bool = False) -> tuple[int, str]:
     if hub:
         return 0, "CENTRO"
     if distance is None:
         return 99, "DISTANZA_DA_VERIFICARE"
-    if distance <= 8:
-        return 1, "ANELLO_1_0_8_KM"
-    if distance <= 15:
-        return 2, "ANELLO_2_8_15_KM"
-    if distance <= 25:
-        return 3, "ANELLO_3_15_25_KM"
-    return 4, "ANELLO_4_25_PLUS_KM"
+    finite = [float(x) for x in bands if float(x) < 999]
+    if len(finite) < 4:
+        finite = [0, 8, 15, 25]
+    upper = finite[1:]
+    previous = 0.0
+    for idx, limit in enumerate(upper, start=1):
+        if distance <= limit:
+            return idx, f"ANELLO_{idx}_{int(previous)}_{int(limit)}_KM"
+        previous = limit
+    return len(upper) + 1, f"ANELLO_{len(upper)+1}_{int(previous)}_PLUS_KM"
 
 
 def main() -> None:
-    cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
+    cfg = load_territory()
     src = json.loads(SOURCE.read_text(encoding="utf-8"))
     all_signals = list(src.get("signals") or [])
 
     left = {norm(x) for x in cfg["sinistra"]}
     right = {norm(x) for x in cfg["destra"]}
-    configured = list(dict.fromkeys(cfg["sinistra"] + cfg["destra"]))
-    allowed = left | right
-    hub_name = cfg.get("reference_hub") or "Villar Dora"
+    configured = territory_communes(cfg)
+    allowed = allowed_set(cfg)
+    hub_name = cfg["reference_hub"]
+    bands = cfg.get("distance_bands_km", [0, 8, 15, 25, 999])
 
     signals = [s for s in all_signals if norm(s.get("comune")) in allowed]
     grouped: dict[str, list[dict]] = defaultdict(list)
@@ -108,11 +109,14 @@ def main() -> None:
         nk = norm(comune)
         items = list(grouped.get(nk, []))
         items.sort(key=lambda s: (-score(s), not bool(s.get("is_new")), s.get("signal_id") or ""))
-        side = "SINISTRA" if nk in left else "DESTRA"
+        if nk == norm(hub_name):
+            side = "SINISTRA" if nk in left else "DESTRA" if nk in right else "CENTRO"
+        else:
+            side = "SINISTRA" if nk in left else "DESTRA" if nk in right else "CENTRO"
         geo = geocode(comune, geo_cache)
         distance = haversine_km(hub_geo, geo)
         is_hub = nk == norm(hub_name)
-        band_rank, band = band_for(distance, is_hub)
+        band_rank, band = band_for(distance, bands, is_hub)
         enriched = sum(1 for s in items if s.get("enrichment_status") == "ENRICHED")
         pending = sum(1 for s in items if s.get("enrichment_status") in {"PENDING", "ERROR"})
         contacts = sum(
@@ -146,10 +150,11 @@ def main() -> None:
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "source_generated_at": src.get("generated_at"),
+        "territory_version": cfg.get("version"),
         "policy": cfg["policy"],
         "reference_hub": hub_name,
-        "ordering": "DISTANZA_LINEA_ARIA_DA_VILLAR_DORA",
-        "distance_bands_km": cfg.get("distance_bands_km", [0, 8, 15, 25, 999]),
+        "ordering": "DISTANZA_LINEA_ARIA_DAL_REFERENCE_HUB",
+        "distance_bands_km": bands,
         "excluded_policy": "ALL_FUORI_LISTA",
         "excluded_communes": excluded_communes,
         "configured_comuni": {
@@ -171,7 +176,7 @@ def main() -> None:
     }
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print(
-        f"Territory Orchestrator RADIALE: centro={hub_name}; {len(communes)} comuni configurati; "
+        f"Territory Orchestrator: centro={hub_name}; {len(communes)} comuni configurati; "
         f"{payload['summary']['signals_total']} segnali; {payload['summary']['communes_with_signals']} comuni con segnali."
     )
 

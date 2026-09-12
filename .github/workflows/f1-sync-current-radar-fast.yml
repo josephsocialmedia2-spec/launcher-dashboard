@@ -6,6 +6,10 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/f1-sync-current-radar-fast.yml'
+      - 'scripts/territory_config.py'
+      - 'scripts/neighborhood_intelligence.py'
+      - 'scripts/territory_orchestrator.py'
+      - 'config/territory.json'
 
 permissions:
   contents: write
@@ -33,19 +37,23 @@ jobs:
 
       - name: Validate current output
         run: |
+          python -m py_compile scripts/territory_config.py scripts/neighborhood_intelligence.py scripts/territory_orchestrator.py
           python - <<'PY'
           import json
           from pathlib import Path
+          cfg=json.loads(Path('config/territory.json').read_text(encoding='utf-8'))
           n=json.loads(Path('data/neighborhood_intelligence.json').read_text(encoding='utf-8'))
           t=json.loads(Path('data/territory_operations.json').read_text(encoding='utf-8'))
+          hub=cfg['reference_hub']
           assert n['signals_count'] > 0
           assert t['summary']['signals_total'] > 0
-          assert t['reference_hub'] == 'Villar Dora'
-          assert t['policy'] == 'CENTRO_RADIALE'
-          assert t['ordering'] == 'DISTANZA_LINEA_ARIA_DA_VILLAR_DORA'
-          assert any(c.get('is_hub') and c.get('comune') == 'Villar Dora' for c in t['communes'])
+          assert n['reference_hub'] == hub
+          assert t['reference_hub'] == hub
+          assert t['policy'] == cfg['policy']
+          assert t['ordering'] == 'DISTANZA_LINEA_ARIA_DAL_REFERENCE_HUB'
+          assert any(c.get('is_hub') and c.get('comune') == hub for c in t['communes'])
           assert not any(c.get('side') == 'FUORI_LISTA' for c in t['communes'])
-          print('PASS FAST RADIAL SYNC', n['generated_at'], t['generated_at'])
+          print('PASS FAST TERRITORY SYNC', hub, n['generated_at'], t['generated_at'])
           PY
 
       - name: Publish current launcher data
@@ -59,7 +67,7 @@ jobs:
             echo 'No changes'
             exit 0
           fi
-          git commit -m 'Refresh launcher from Villar Dora radial model'
+          git commit -m 'Refresh launcher from configured territory model'
           for attempt in 1 2 3; do
             if git push origin HEAD:main; then exit 0; fi
             git fetch origin main
@@ -67,5 +75,3 @@ jobs:
             sleep $((attempt * 2))
           done
           exit 1
-
-# radial-refresh: 2026-09-08

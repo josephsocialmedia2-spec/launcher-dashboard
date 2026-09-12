@@ -1,0 +1,175 @@
+name: F1 Acquisition Engine QA
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'oggi.html'
+      - 'index.html'
+      - 'crm.html'
+      - 'setup-cloud.html'
+      - 'reset-cache.html'
+      - 'manifest.webmanifest'
+      - 'supabase-config.js'
+      - 'supabase-sync.js'
+      - 'supabase-schema.sql'
+      - 'supabase-migrations/**'
+      - 'seller-radar-unico.html'
+      - 'giro-acquisizione.html'
+      - 'telefonate-oggi.html'
+      - 'competitor-intelligence.html'
+      - 'social-seller-radar.html'
+      - 'f1-acquisition-*.js'
+      - 'config/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'docs/**'
+      - 'pwa.js'
+      - 'sw.js'
+      - 'package.json'
+      - 'playwright.config.js'
+      - '.github/workflows/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile and unit test
+        run: |
+          python -m py_compile scripts/territory_config.py scripts/neighborhood_intelligence.py scripts/territory_orchestrator.py scripts/acquisition_daily.py
+          python -m unittest tests/test_acquisition_daily.py -v
+          python -m json.tool config/territory.json >/dev/null
+          python -m json.tool config/acquisition-engine.json >/dev/null
+          python -m json.tool system-registry.json >/dev/null
+          python -m json.tool manifest.webmanifest >/dev/null
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          m=json.loads(Path('manifest.webmanifest').read_text(encoding='utf-8'))
+          assert m.get('start_url') == './oggi.html'
+          assert m.get('id') == './oggi.html'
+          reset=Path('reset-cache.html').read_text(encoding='utf-8')
+          assert './oggi.html' in reset
+          assert './index.html' not in reset
+          print('PASS PWA canonical entrypoint')
+          PY
+      - name: Legacy workflow guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          banned=(
+            apply-territorial-continuity-rule.yml
+            fix-territorial-apostrophes.yml
+            fix-territorial-apostrophes-v2.yml
+            integrate-neighborhood-telefonate.yml
+            patch-instagram-card.yml
+            patch-instagram-ranking-gate.yml
+            patch-seller-radar-edilizio-ui.yml
+            patch-telefonate-references.yml
+            repair-neighborhood-operational.yml
+          )
+          for file in "${banned[@]}"; do
+            test ! -e ".github/workflows/$file" || { echo "Legacy workflow must remain archived: $file"; exit 1; }
+          done
+          test ! -e playwright.v25.config.js || { echo 'stale playwright.v25.config.js must remain removed'; exit 1; }
+          echo "PASS legacy workflows/config archived"
+      - name: Canonical local link integrity
+        run: |
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+
+          pages = [
+              'oggi.html','index.html','crm.html','setup-cloud.html','reset-cache.html','seller-radar-unico.html',
+              'giro-acquisizione.html','telefonate-oggi.html','competitor-intelligence.html',
+              'social-seller-radar.html','territory-control.html','neighborhood-intelligence.html',
+              'radar-edilizio.html'
+          ]
+          banned_refs = {
+              'incrocio-giro-contatti.html','market-intelligence.html','acquisitore-pro/index.html',
+              'windows_valle_susa/f1_mobile_server.py'
+          }
+
+          class LinkParser(HTMLParser):
+              def __init__(self):
+                  super().__init__(); self.links=[]
+              def handle_starttag(self, tag, attrs):
+                  for k,v in attrs:
+                      if k in {'href','src'} and v: self.links.append(v)
+
+          failures=[]
+          for page in pages:
+              p=Path(page)
+              if not p.exists():
+                  failures.append(f'{page}: missing canonical page')
+                  continue
+              parser=LinkParser(); parser.feed(p.read_text(encoding='utf-8'))
+              for raw in parser.links:
+                  clean=raw.split('#',1)[0].split('?',1)[0]
+                  if not clean or clean.startswith(('http://','https://','mailto:','tel:','javascript:','data:','#','//')):
+                      continue
+                  clean=clean.lstrip('./')
+                  if clean in banned_refs:
+                      failures.append(f'{page}: banned legacy ref {clean}')
+                  if clean.endswith(('.html','.js','.json','.css','.webmanifest','.py')) and not Path(clean).exists():
+                      failures.append(f'{page}: missing local target {clean}')
+          canonical_text='\n'.join(Path(p).read_text(encoding='utf-8') for p in ['oggi.html','index.html','system-registry.json','README.md'] if Path(p).exists())
+          if 'f1-os-mobile.html' in canonical_text:
+              failures.append('legacy f1-os-mobile.html must not be referenced by canonical navigation/docs')
+          if failures:
+              raise SystemExit('\n'.join(failures))
+          print('PASS canonical local links and legacy reference guard')
+          PY
+
+  javascript:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: |
+          node --check f1-acquisition-core.js
+          node --check f1-acquisition-data.js
+          node --check supabase-config.js
+          node --check supabase-sync.js
+          node --check pwa.js
+          node --check sw.js
+          python - <<'PY'
+          from pathlib import Path
+          import re, subprocess
+          pages=['oggi.html','index.html','crm.html','setup-cloud.html','reset-cache.html','seller-radar-unico.html','giro-acquisizione.html','telefonate-oggi.html','competitor-intelligence.html','social-seller-radar.html']
+          for name in pages:
+              html=Path(name).read_text(encoding='utf-8')
+              inline=re.findall(r'<script>(.*?)</script>',html,re.S|re.I)
+              out=Path('/tmp')/(name.replace('.html','.inline.js'))
+              out.write_text('\n'.join(inline),encoding='utf-8')
+              if inline:
+                  subprocess.run(['node','--check',str(out)],check=True)
+          PY
+
+  playwright:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install QA dependencies
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+      - name: Command Center and CRM smoke tests
+        run: npm run test:acquisition

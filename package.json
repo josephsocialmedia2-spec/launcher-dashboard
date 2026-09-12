@@ -2,7 +2,9 @@
   "name": "launcher-dashboard-qa",
   "private": true,
   "scripts": {
-    "test:acq": "playwright test tests/acquisitore-pro-v24.spec.js"
+    "test": "playwright test tests/acquisition-command-center.spec.js",
+    "test:acquisition": "playwright test tests/acquisition-command-center.spec.js",
+    "test:daily": "python3 -m unittest tests/test_acquisition_daily.py -v"
   },
   "devDependencies": {
     "@playwright/test": "1.55.0"

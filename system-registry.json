@@ -1,46 +1,108 @@
 {
-  "version": 2,
+  "version": 3,
+  "architecture": "F1_ACQUISITION_ENGINE_5_PILLARS",
   "canonical_entrypoint": "oggi.html",
+  "acquisition_config": "config/acquisition-engine.json",
   "territory": {
-    "center": "Susa",
-    "radius_km": 20,
-    "rule": "Tutti i Radar e le liste operative del primo ufficio sono governati dal perimetro Susa 20 km."
+    "config": "config/territory.json",
+    "rule": "config/territory.json è l'unica fonte territoriale. Nessuna vista operativa deve mantenere liste comuni hard-coded."
   },
-  "rule": "OGGI COSA FACCIO e l'unica cabina di regia; F1 Centrale Telefonate Guidate e l'unico punto da cui partono le telefonate.",
+  "source_of_truth": {
+    "operational_database": "Supabase",
+    "public_non_sensitive_feed": "data/acquisition-public.json",
+    "offline_cache": "localStorage"
+  },
+  "rule": "oggi.html è l'unica cabina di regia Acquisition; index.html è archivio/strumenti; Telefonate e Giro sono viste specializzate della task queue.",
   "operational_views": [
-    {"id":"giro","label":"Giro Acquisizione","path":"giro-acquisizione.html"},
-    {"id":"call-station","label":"F1 Centrale Telefonate Guidate","path":"telefonate-oggi.html","local_pc":"http://127.0.0.1:8766/","local_mobile":"http://f1-radar.local:8766/","role":"UNICO_PUNTO_CHIAMATE"},
-    {"id":"contatti","label":"Incrocio Giro / Contatti","path":"incrocio-giro-contatti.html","role":"ALIMENTAZIONE_TECNICA"},
-    {"id":"crm","label":"CRM","path":"crm.html","entry_rule":"SOLO_DOPO_ESITO_UTILE"}
+    {
+      "id": "command-center",
+      "label": "F1 Acquisition Command Center",
+      "path": "oggi.html",
+      "role": "UNICA_CABINA_GIORNALIERA"
+    },
+    {
+      "id": "giro",
+      "label": "Giro Acquisizione",
+      "path": "giro-acquisizione.html",
+      "role": "TASK_VIEW_FIELD"
+    },
+    {
+      "id": "call-station",
+      "label": "F1 Centrale Telefonate Guidate",
+      "path": "telefonate-oggi.html",
+      "local_pc": "http://127.0.0.1:8766/",
+      "local_mobile": "http://f1-radar.local:8766/",
+      "role": "TASK_VIEW_CALL"
+    },
+    {
+      "id": "crm",
+      "label": "CRM Acquisition",
+      "path": "crm.html",
+      "role": "LEAD_INTERACTION_OUTCOME"
+    }
+  ],
+  "pillars": [
+    {"id": 1, "key": "SELLER_PROSPECTING", "label": "Seller Prospecting"},
+    {"id": 2, "key": "DATABASE_REFERRAL", "label": "Database & Referral"},
+    {"id": 3, "key": "FARMING", "label": "Farming territoriale"},
+    {"id": 4, "key": "PARTNERSHIP_CHANNELS", "label": "Partnership & Channels"},
+    {"id": 5, "key": "CORE_BUSINESS", "label": "Core Business Priority"}
+  ],
+  "core4": [
+    "PAST_CLIENT",
+    "COI",
+    "EXPIRED_OR_POSSIBLE_EXPIRED",
+    "FSBO"
+  ],
+  "acquisition_engines": [
+    {"id":"seller-radar","label":"Seller Radar","path":"seller-radar-unico.html","pillar":1,"status":"ACTIVE"},
+    {"id":"seller-signals","label":"Seller Segnalati","path":"seller-segnalati.html","pillar":1,"status":"ACTIVE"},
+    {"id":"neighborhood","label":"Neighborhood Intelligence","path":"neighborhood-intelligence.html","pillar":3,"status":"ACTIVE"},
+    {"id":"territory","label":"Territory Control","path":"territory-control.html","pillar":3,"status":"ACTIVE"},
+    {"id":"development","label":"Radar Edilizio","path":"radar-edilizio.html","pillar":4,"status":"ACTIVE"},
+    {"id":"competitor","label":"Competitor Property Intelligence","path":"competitor-intelligence.html","pillar":1,"status":"PLANNED"},
+    {"id":"social-seller","label":"Social Seller Radar","path":"social-seller-radar.html","pillar":1,"status":"PLANNED"}
   ],
   "prospect_pipeline": {
-    "classification": "PROSPECT_NON_CRM",
-    "sources": ["Seller Radar AUTO", "microzone", "directory pubbliche", "siti professionali/pubblici", "attivita commerciali", "imprese e professionisti", "annunci con contatto esplicito"],
-    "fields": ["comune", "nome/attivita", "categoria", "telefono pubblico", "email pubblica", "motivo contatto", "segnale Radar", "fonte", "score"],
-    "privacy": "Telefoni, email, esiti e lista unificata restano sul PC e non sono pubblicati su GitHub.",
-    "compliance": "Nessun bypass di login/CAPTCHA o aree riservate; verifica fonte pubblica, pertinenza e RPO/privacy prima del contatto."
+    "classification": "PROSPECT_TO_EVENT_TO_TASK_TO_CRM",
+    "public_sources": [
+      "Seller Radar AUTO",
+      "fonti pubbliche immobiliari",
+      "microzone",
+      "directory pubbliche di attività/professionisti",
+      "siti professionali/pubblici",
+      "segnali social pubblici accessibili legittimamente"
+    ],
+    "privacy": "Dati personali non necessari non devono essere pubblicati su GitHub. Telefono, email e dati CRM privati appartengono al datastore autenticato o locale autorizzato.",
+    "compliance": "Nessun bypass di login/CAPTCHA/aree riservate; nessuna inferenza automatica di proprietà; VENDUTO e INCARICO_SCADUTO richiedono evidenza verificabile."
   },
-  "radar_and_intelligence": [
-    {"id":"seller-radar","label":"Seller Radar unico","path":"seller-radar-unico.html","source":"seller_radar_auto/data/giro_acquisizione.csv","territory":"Susa 20 km"},
-    {"id":"seller-segnalati","label":"Seller Segnalati","path":"seller-segnalati.html","role":"archivio segnali"},
-    {"id":"market-intelligence","label":"Market Intelligence","path":"market-intelligence.html"},
-    {"id":"brief","label":"Brief appuntamento","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/appointment_brief.html"}
-  ],
-  "scheduled_views": [
-    {"id":"monday","label":"Organizer del lunedi","path":"organizer-lunedi.html"},
-    {"id":"groups","label":"Gruppi social F1","path":"gruppi-social-f1.html"}
-  ],
+  "property_marketing_engine": {
+    "separate_from_acquisition": true,
+    "views": [
+      "facebook-network-radar.html",
+      "facebook-pubblico.html",
+      "facebook-ottimizzazione.html",
+      "instagram-crescita.html",
+      "instagram-ranking.html",
+      "gruppi-social-f1.html"
+    ],
+    "rule": "Facebook/Instagram promuovono immobili, community, buyer lead, Open House, Just Listed/Just Sold; eventuali seller lead entrano nel CRM Acquisition con source FACEBOOK o INSTAGRAM."
+  },
   "infrastructure": [
     {"id":"mobile","label":"F1 Mobile Ready","path":"oggi.html","role":"PWA / interfaccia smartphone"},
-    {"id":"local-call-server","label":"Server locale Centrale Telefonate","path":"windows_valle_susa/f1_mobile_server.py","port":8766},
-    {"id":"app","label":"Gestione app","path":"gestione-app.html"},
     {"id":"cloud","label":"Setup cloud","path":"setup-cloud.html"},
+    {"id":"app","label":"Gestione app","path":"gestione-app.html"},
     {"id":"cache","label":"Reset cache","path":"reset-cache.html"},
-    {"id":"full-launcher","label":"Gestionale completo / archivio","path":"index.html"}
+    {"id":"archive","label":"Archivio / strumenti","path":"index.html"}
   ],
+  "data_pipeline": {
+    "public_daily_script": "scripts/acquisition_daily.py",
+    "public_daily_workflow": ".github/workflows/f1-acquisition-daily.yml",
+    "public_feed": "data/acquisition-public.json",
+    "property_history_rule": "append observations/events; never erase prior price/agency observations"
+  },
   "legacy_redirects": [
-    {"id":"radar-operativo-statico","path":"radar-operativo.html","redirect_to":"oggi.html#radar"},
-    {"id":"seller-radar-legacy","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar/","redirect_to":"oggi.html"},
-    {"id":"telefonate-oggi-legacy-logic","path":"telefonate-oggi.html","redirect_role":"BRIDGE_TO_LOCAL_CENTRALE"}
+    {"id":"radar-operativo-statico","path":"radar-operativo.html","redirect_to":"oggi.html#competitor"},
+    {"id":"seller-radar-legacy","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar/","redirect_to":"oggi.html"}
   ]
 }
