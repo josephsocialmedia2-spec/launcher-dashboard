@@ -38,12 +38,19 @@ class AcquisitionDailyTests(unittest.TestCase):
         self.assertIn(mod.norm("Almese"), allowed)
         self.assertNotIn(mod.norm("Susa"), allowed)
 
-    def test_fsbo_no_agencies_scoring(self):
+    def test_private_hint_is_candidate_verify_not_call(self):
         signal = {"seller_signal": "PRIVATO NO AGENZIE", "score": 5}
         c = mod.classify(signal)
-        self.assertEqual(c["event_type"], "FSBO_FOUND")
-        self.assertEqual(c["core_category"], "FSBO")
+        self.assertEqual(c["event_type"], "FSBO_CANDIDATE_FOUND")
+        self.assertEqual(c["task_type"], "VERIFY")
+        self.assertEqual(c["core_category"], "FSBO_CANDIDATE")
         self.assertEqual(mod.score(signal, c, self.engine), 40)
+
+    def test_explicit_private_sale_can_be_fsbo_call_task(self):
+        c = mod.classify({"seller_signal": "FSBO VENDITA PRIVATA"})
+        self.assertEqual(c["event_type"], "FSBO_FOUND")
+        self.assertEqual(c["task_type"], "CALL")
+        self.assertEqual(c["core_category"], "FSBO")
 
     def test_disappearance_is_not_sold_or_certain_expired(self):
         c = mod.classify({"seller_signal": "NON PIÙ RILEVATO"})
@@ -77,6 +84,8 @@ class AcquisitionDailyTests(unittest.TestCase):
         payload = mod.build_payload(self.territory, self.engine, neighborhood)
         self.assertEqual(len(payload["tasks"]), 1)
         self.assertEqual(payload["tasks"][0]["comune"], "Villar Dora")
+        self.assertEqual(payload["tasks"][0]["task_type"], "VERIFY")
+        self.assertEqual(payload["events"][0]["event_type"], "FSBO_CANDIDATE_FOUND")
         mod.assert_public_safe(payload)
 
         forbidden = {
