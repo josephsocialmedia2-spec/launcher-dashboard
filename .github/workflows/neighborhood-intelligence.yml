@@ -7,6 +7,7 @@ on:
       - '.github/workflows/neighborhood-intelligence.yml'
       - 'scripts/neighborhood_intelligence.py'
       - 'scripts/territory_orchestrator.py'
+      - 'scripts/territory_config.py'
       - 'config/territory.json'
   schedule:
     - cron: '17 * * * *'
@@ -42,23 +43,25 @@ jobs:
 
       - name: Validate operational outputs
         run: |
-          python -m py_compile scripts/neighborhood_intelligence.py scripts/territory_orchestrator.py
+          python -m py_compile scripts/territory_config.py scripts/neighborhood_intelligence.py scripts/territory_orchestrator.py
           python - <<'PY'
           import json
           from pathlib import Path
           cfg=json.loads(Path('config/territory.json').read_text(encoding='utf-8'))
+          n=json.loads(Path('data/neighborhood_intelligence.json').read_text(encoding='utf-8'))
           out=json.loads(Path('data/territory_operations.json').read_text(encoding='utf-8'))
-          assert cfg['reference_hub'] == 'Villar Dora'
-          assert out['reference_hub'] == 'Villar Dora'
-          assert out['policy'] == 'CENTRO_RADIALE'
-          assert out['ordering'] == 'DISTANZA_LINEA_ARIA_DA_VILLAR_DORA'
+          hub=cfg['reference_hub']
+          assert n['reference_hub'] == hub
+          assert out['reference_hub'] == hub
+          assert out['policy'] == cfg['policy']
+          assert out['ordering'] == 'DISTANZA_LINEA_ARIA_DAL_REFERENCE_HUB'
           assert out['excluded_policy'] == 'ALL_FUORI_LISTA'
           assert out['summary']['signals_total'] >= 1
           assert out['communes']
-          assert any(c.get('is_hub') and c.get('comune') == 'Villar Dora' for c in out['communes'])
-          assert all(c.get('side') in {'SINISTRA','DESTRA'} for c in out['communes'])
+          assert any(c.get('is_hub') and c.get('comune') == hub for c in out['communes'])
+          assert all(c.get('side') in {'SINISTRA','DESTRA','CENTRO'} for c in out['communes'])
           assert not any(c.get('side') == 'FUORI_LISTA' for c in out['communes'])
-          print('PASS radial architecture | hub=Villar Dora | FUORI_LISTA=0')
+          print('PASS territory architecture | hub=',hub,'| FUORI_LISTA=0')
           PY
 
       - name: Commit refreshed data
@@ -70,9 +73,7 @@ jobs:
           git config user.name "f1-neighborhood-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/neighborhood_intelligence.json data/neighborhood_seen.json data/territory_operations.json data/territory_geocache.json
-          git commit -m "Refresh neighborhood and radial territory intelligence"
+          git commit -m "Refresh neighborhood and configured territory intelligence"
           git fetch origin main
           git rebase origin/main
           git push origin HEAD:main
-
-# source-refresh: 2026-09-08 radial
