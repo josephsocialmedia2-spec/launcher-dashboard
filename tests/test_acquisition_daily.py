@@ -13,9 +13,9 @@ SPEC.loader.exec_module(mod)
 class AcquisitionDailyTests(unittest.TestCase):
     def setUp(self):
         self.territory = {
-            "version": 2,
+            "version": 3,
             "reference_hub": "Villar Dora",
-            "policy": "CENTRO_RADIALE",
+            "policy": "CENTRO_RADIALE_SINISTRA_DESTRA",
             "sinistra": ["Condove"],
             "destra": ["Almese"],
         }
@@ -31,12 +31,16 @@ class AcquisitionDailyTests(unittest.TestCase):
             },
         }
 
-    def test_territory_is_single_source(self):
+    def test_territory_is_single_source_and_has_radial_sides(self):
         allowed = mod.allowed_communes(self.territory)
         self.assertIn(mod.norm("Villar Dora"), allowed)
         self.assertIn(mod.norm("Condove"), allowed)
         self.assertIn(mod.norm("Almese"), allowed)
         self.assertNotIn(mod.norm("Susa"), allowed)
+        self.assertEqual(mod.territory_side(self.territory, "Villar Dora"), "CENTRO")
+        self.assertEqual(mod.territory_side(self.territory, "Condove"), "SINISTRA")
+        self.assertEqual(mod.territory_side(self.territory, "Almese"), "DESTRA")
+        self.assertEqual(mod.territory_side(self.territory, "Susa"), "FUORI_LISTA")
 
     def test_private_hint_is_candidate_verify_not_call(self):
         signal = {"seller_signal": "PRIVATO NO AGENZIE", "score": 5}
@@ -44,6 +48,7 @@ class AcquisitionDailyTests(unittest.TestCase):
         self.assertEqual(c["event_type"], "FSBO_CANDIDATE_FOUND")
         self.assertEqual(c["task_type"], "VERIFY")
         self.assertEqual(c["core_category"], "FSBO_CANDIDATE")
+        self.assertEqual(c["acquisition_stream"], "PRIVATI")
         self.assertEqual(mod.score(signal, c, self.engine), 40)
 
     def test_explicit_private_sale_can_be_fsbo_call_task(self):
@@ -51,14 +56,23 @@ class AcquisitionDailyTests(unittest.TestCase):
         self.assertEqual(c["event_type"], "FSBO_FOUND")
         self.assertEqual(c["task_type"], "CALL")
         self.assertEqual(c["core_category"], "FSBO")
+        self.assertEqual(c["acquisition_stream"], "PRIVATI")
 
-    def test_disappearance_is_not_sold_or_certain_expired(self):
-        c = mod.classify({"seller_signal": "NON PIÙ RILEVATO"})
-        self.assertEqual(c["event_type"], "PROPERTY_NOT_SEEN")
-        self.assertNotIn("VENDUTO", c["reason"].upper())
-        self.assertNotEqual(c["reason"].upper(), "INCARICO SCADUTO")
+    def test_explicit_expired_is_distinguished_from_possible_expired(self):
+        certain = mod.classify({"seller_signal": "INCARICO SCADUTO evidenza esplicita"})
+        possible = mod.classify({"seller_signal": "NON PIÙ RILEVATO"})
+        self.assertEqual(certain["event_type"], "LISTING_EXPIRED_CONFIRMED")
+        self.assertEqual(certain["acquisition_stream"], "INCARICHI_SCADUTI")
+        self.assertEqual(possible["event_type"], "PROPERTY_NOT_SEEN")
+        self.assertEqual(possible["acquisition_stream"], "INCARICHI_SCADUTI")
+        self.assertNotEqual(possible["reason"].upper(), "INCARICO SCADUTO")
 
-    def test_public_payload_filters_outside_territory_and_pii(self):
+    def test_competitor_listing_is_mandatory_crm_stream(self):
+        c = mod.classify({"seller_signal": "INDIZIO_AGENZIA", "fonte": "Agenzia locale"})
+        self.assertEqual(c["acquisition_stream"], "CONCORRENZA")
+        self.assertEqual(c["task_type"], "VERIFY")
+
+    def test_public_payload_filters_outside_territory_and_marks_crm_required(self):
         neighborhood = {
             "signals": [
                 {
@@ -69,6 +83,7 @@ class AcquisitionDailyTests(unittest.TestCase):
                     "score": "50",
                     "url_annuncio": "https://example.test/a",
                     "fonte": "Test",
+                    "territorial_rank": 0,
                 },
                 {
                     "signal_id": "SIG-2",
@@ -83,9 +98,14 @@ class AcquisitionDailyTests(unittest.TestCase):
         }
         payload = mod.build_payload(self.territory, self.engine, neighborhood)
         self.assertEqual(len(payload["tasks"]), 1)
-        self.assertEqual(payload["tasks"][0]["comune"], "Villar Dora")
-        self.assertEqual(payload["tasks"][0]["task_type"], "VERIFY")
+        task = payload["tasks"][0]
+        self.assertEqual(task["comune"], "Villar Dora")
+        self.assertEqual(task["task_type"], "VERIFY")
+        self.assertEqual(task["territory_side"], "CENTRO")
+        self.assertTrue(task["crm_required"])
+        self.assertEqual(task["acquisition_stream"], "PRIVATI")
         self.assertEqual(payload["events"][0]["event_type"], "FSBO_CANDIDATE_FOUND")
+        self.assertEqual(payload["version"], 3)
         mod.assert_public_safe(payload)
 
         forbidden = {

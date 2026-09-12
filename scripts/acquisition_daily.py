@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 """F1 Acquisition Engine — public daily task generator.
 
-Reads existing non-sensitive Seller/Neighborhood signals and produces a compact,
-privacy-safe task/event feed for GitHub Pages. Private CRM data belongs in Supabase
-and is intentionally not read or written by this script.
+Reads non-sensitive Seller/Neighborhood signals and produces a compact,
+privacy-safe task/event feed for GitHub Pages. The feed carries only operational
+metadata. When an authenticated operator opens the Command Center, relevant
+signals are reconciled into the private Supabase CRM by f1-acquisition-data.js.
 """
 from __future__ import annotations
 
@@ -61,42 +62,58 @@ def stable_property_id(signal: dict) -> str:
     return "PROP-" + hashlib.sha1(seed.encode("utf-8", errors="ignore")).hexdigest()[:16].upper()
 
 
+def territory_side(territory: dict, comune: object) -> str:
+    key = norm(comune)
+    if key == norm(territory.get("reference_hub")):
+        return "CENTRO"
+    if key in {norm(x) for x in territory.get("sinistra") or []}:
+        return "SINISTRA"
+    if key in {norm(x) for x in territory.get("destra") or []}:
+        return "DESTRA"
+    return "FUORI_LISTA"
+
+
 def classify(signal: dict) -> dict:
-    hay = norm(" ".join(str(signal.get(k) or "") for k in ("seller_signal", "priorita", "immobile")))
+    hay = norm(" ".join(str(signal.get(k) or "") for k in ("seller_signal", "priorita", "immobile", "fonte")))
     event = "PROPERTY_FIRST_SEEN"
     task = "VERIFY"
-    reason = "Segnale immobiliare da verificare"
+    reason = "Annuncio della concorrenza / segnale mercato da registrare e verificare"
     core = ""
+    stream = "CONCORRENZA"
     flags: list[str] = []
 
     explicit_fsbo = re.search(r"\bfsbo\b|vendita privata|trattativa privata", hay)
     private_candidate = re.search(r"indizio privat|(^|\s)privato(\s|$)|no agenzi|no intermediari", hay)
+    explicit_expired = re.search(r"incarico scaduto|mandato scaduto|contratto scaduto", hay)
 
     if explicit_fsbo:
-        event, task, reason, core = "FSBO_FOUND", "CALL", "FSBO / vendita privata con evidenza esplicita", "FSBO"
+        event, task, reason, core, stream = "FSBO_FOUND", "CALL", "FSBO / vendita privata con evidenza esplicita", "FSBO", "PRIVATI"
         flags.append("FSBO_NEW")
         if re.search(r"no agenzi|no intermediari", hay):
             flags.append("NO_AGENCIES")
     elif private_candidate:
-        event, task, reason, core = "FSBO_CANDIDATE_FOUND", "VERIFY", "Indizio di vendita privata da verificare", "FSBO_CANDIDATE"
+        event, task, reason, core, stream = "FSBO_CANDIDATE_FOUND", "VERIFY", "Indizio di vendita privata da verificare", "FSBO_CANDIDATE", "PRIVATI"
         flags.append("FSBO_NEW")
         if re.search(r"no agenzi|no intermediari", hay):
             flags.append("NO_AGENCIES")
+    elif explicit_expired:
+        event, task, reason, core, stream = "LISTING_EXPIRED_CONFIRMED", "VERIFY", "Incarico scaduto con evidenza esplicita: verificare contattabilità", "EXPIRED_OR_POSSIBLE_EXPIRED", "INCARICHI_SCADUTI"
+        flags.append("EXPIRED_CONFIRMED")
     elif "cambio agenz" in hay:
-        event, task, reason, core = "PROPERTY_AGENCY_CHANGED", "VERIFY", "Cambio agenzia rilevato", "EXPIRED_OR_POSSIBLE_EXPIRED"
+        event, task, reason, core, stream = "PROPERTY_AGENCY_CHANGED", "VERIFY", "Cambio agenzia rilevato: possibile opportunità, non prova di scadenza", "EXPIRED_OR_POSSIBLE_EXPIRED", "INCARICHI_SCADUTI"
         flags.append("AGENCY_CHANGE")
     elif re.search(r"ripubblic|relist", hay):
-        event, task, reason, core = "PROPERTY_RELISTED", "VERIFY", "Immobile ripubblicato", "EXPIRED_OR_POSSIBLE_EXPIRED"
+        event, task, reason, core, stream = "PROPERTY_RELISTED", "VERIFY", "Immobile ripubblicato: verificare storia incarico", "EXPIRED_OR_POSSIBLE_EXPIRED", "INCARICHI_SCADUTI"
         flags.append("RELISTED")
+    elif re.search(r"invendut|possibile scadut|ritirat|non piu rilevat|annuncio rimosso", hay):
+        event, task, reason, core, stream = "PROPERTY_NOT_SEEN", "VERIFY", "Possibile scaduto / stato da verificare; annuncio scomparso non equivale a scaduto", "EXPIRED_OR_POSSIBLE_EXPIRED", "INCARICHI_SCADUTI"
     elif re.search(r"ribasso|price", hay):
-        event, task, reason = "PROPERTY_PRICE_CHANGED", "VERIFY", "Variazione prezzo rilevata"
+        event, task, reason, stream = "PROPERTY_PRICE_CHANGED", "VERIFY", "Variazione prezzo della concorrenza rilevata", "CONCORRENZA"
         flags.append("PRICE_DROP")
         if re.search(r"multiplo|piu ribassi|multiple", hay):
             flags.append("MULTIPLE_PRICE_DROPS")
-    elif re.search(r"invendut|possibile scadut|ritirat|non piu rilevat", hay):
-        event, task, reason, core = "PROPERTY_NOT_SEEN", "VERIFY", "Possibile scaduto / stato da verificare", "EXPIRED_OR_POSSIBLE_EXPIRED"
 
-    return {"pillar": 1, "event_type": event, "task_type": task, "reason": reason, "core_category": core, "flags": flags}
+    return {"pillar": 1, "event_type": event, "task_type": task, "reason": reason, "core_category": core, "acquisition_stream": stream, "flags": flags}
 
 
 def score(signal: dict, classification: dict, engine: dict) -> int:
@@ -123,6 +140,8 @@ def event_and_task(signal: dict, engine: dict, territory: dict, today: str) -> t
     source_url = str(signal.get("url_annuncio") or "").strip()
     source = str(signal.get("fonte") or "Seller Radar F1").strip()
     confidence = "HIGH" if source_url else "MEDIUM"
+    side = territory_side(territory, comune)
+    radial_rank = safe_int(signal.get("territorial_rank"), 9999)
     event = {
         "event_id": event_id,
         "event_type": c["event_type"],
@@ -133,6 +152,9 @@ def event_and_task(signal: dict, engine: dict, territory: dict, today: str) -> t
         "comune": comune,
         "via": indirizzo,
         "confidence": confidence,
+        "acquisition_stream": c["acquisition_stream"],
+        "territory_side": side,
+        "radial_rank": radial_rank,
         "occurred_at": str(signal.get("first_seen") or signal.get("enriched_at") or ""),
         "evidence_rule": "Non inferire FSBO verificato, VENDUTO, INCARICO_SCADUTO o proprietà personale senza evidenza sufficiente.",
     }
@@ -160,9 +182,13 @@ def event_and_task(signal: dict, engine: dict, territory: dict, today: str) -> t
         "lead_reason": c["reason"],
         "confidence": confidence,
         "core_category": c["core_category"],
+        "acquisition_stream": c["acquisition_stream"],
         "seller_signal": str(signal.get("seller_signal") or "").strip(),
         "is_new": bool(signal.get("is_new")),
         "territory_hub": territory.get("reference_hub", ""),
+        "territory_side": side,
+        "radial_rank": radial_rank,
+        "crm_required": True,
         "updated_at": datetime.now(tz=ZoneInfo("Europe/Rome")).isoformat(),
     }
     return event, task
@@ -193,7 +219,7 @@ def build_payload(territory: dict, engine: dict, neighborhood: dict) -> dict:
 
     events = list({e["event_id"]: e for e in events}.values())
     tasks = list({t["task_id"]: t for t in tasks}.values())
-    tasks.sort(key=lambda x: (-safe_int(x.get("priority")), x.get("comune", ""), x.get("via", "")))
+    tasks.sort(key=lambda x: (safe_int(x.get("radial_rank"),9999), -safe_int(x.get("priority")), x.get("comune", ""), x.get("via", "")))
 
     summary = {
         "signals": len(events),
@@ -204,14 +230,19 @@ def build_payload(territory: dict, engine: dict, neighborhood: dict) -> dict:
         "price_changes": sum(e.get("event_type") == "PROPERTY_PRICE_CHANGED" for e in events),
         "agency_changes": sum(e.get("event_type") == "PROPERTY_AGENCY_CHANGED" for e in events),
         "relisted": sum(e.get("event_type") == "PROPERTY_RELISTED" for e in events),
+        "competitor": sum(t.get("acquisition_stream") == "CONCORRENZA" for t in tasks),
+        "private": sum(t.get("acquisition_stream") == "PRIVATI" for t in tasks),
+        "expired_stream": sum(t.get("acquisition_stream") == "INCARICHI_SCADUTI" for t in tasks),
+        "crm_required": sum(bool(t.get("crm_required")) for t in tasks),
     }
     payload = {
-        "version": 2,
+        "version": 3,
         "generated_at": now.isoformat(),
         "territory_version": territory.get("version"),
         "reference_hub": territory.get("reference_hub"),
         "territory_policy": territory.get("policy"),
         "privacy": "Feed pubblico non sensibile. Nessun telefono, email, nominativo privato o contatto di residente.",
+        "crm_policy": "Ogni task dei flussi CONCORRENZA, PRIVATI e INCARICHI_SCADUTI deve essere riconciliato nel CRM privato quando la sessione Cloud è autenticata.",
         "summary": summary,
         "events": events,
         "tasks": tasks,
@@ -230,7 +261,7 @@ def main():
         raise SystemExit("config/acquisition-engine.json non valido: pillars mancanti")
     payload = build_payload(territory, engine, neighborhood)
     OUT_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    print("F1 Acquisition Daily:",f"hub={payload['reference_hub']}",f"events={len(payload['events'])}",f"tasks={len(payload['tasks'])}")
+    print("F1 Acquisition Daily:", f"hub={payload['reference_hub']}", f"events={len(payload['events'])}", f"tasks={len(payload['tasks'])}")
 
 
 if __name__ == "__main__":
