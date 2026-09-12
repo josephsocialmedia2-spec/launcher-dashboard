@@ -27,7 +27,9 @@ async function rest(path,opt={}){
 }
 
 function normalizeTask(row){
+  row=row||{};
   return {
+    ...row,
     task_id:row.task_id||row.id||'',
     lead_id:row.lead_id||'',
     property_id:row.property_id||'',
@@ -48,7 +50,9 @@ function normalizeTask(row){
 }
 
 function normalizeLead(row){
+  row=row||{};
   return {
+    ...row,
     lead_id:row.lead_id||row.id||'', pillar:Number(row.pillar)||1,
     source_type:row.source_type||'',source:row.source||'',source_url:row.source_url||'',
     created_at:row.created_at||'',first_seen:row.first_seen||'',last_seen:row.last_seen||'',
