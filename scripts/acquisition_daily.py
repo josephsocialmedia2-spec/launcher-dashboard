@@ -69,8 +69,16 @@ def classify(signal: dict) -> dict:
     core = ""
     flags: list[str] = []
 
-    if re.search(r"fsbo|privat|no agenzi|no intermediari|trattativa privata", hay):
-        event, task, reason, core = "FSBO_FOUND", "CALL", "FSBO / vendita privata", "FSBO"
+    explicit_fsbo = re.search(r"\bfsbo\b|vendita privata|trattativa privata", hay)
+    private_candidate = re.search(r"indizio privat|(^|\s)privato(\s|$)|no agenzi|no intermediari", hay)
+
+    if explicit_fsbo:
+        event, task, reason, core = "FSBO_FOUND", "CALL", "FSBO / vendita privata con evidenza esplicita", "FSBO"
+        flags.append("FSBO_NEW")
+        if re.search(r"no agenzi|no intermediari", hay):
+            flags.append("NO_AGENCIES")
+    elif private_candidate:
+        event, task, reason, core = "FSBO_CANDIDATE_FOUND", "VERIFY", "Indizio di vendita privata da verificare", "FSBO_CANDIDATE"
         flags.append("FSBO_NEW")
         if re.search(r"no agenzi|no intermediari", hay):
             flags.append("NO_AGENCIES")
@@ -86,7 +94,6 @@ def classify(signal: dict) -> dict:
         if re.search(r"multiplo|piu ribassi|multiple", hay):
             flags.append("MULTIPLE_PRICE_DROPS")
     elif re.search(r"invendut|possibile scadut|ritirat|non piu rilevat", hay):
-        # Never promote disappearance/age to INCARICO_SCADUTO without explicit evidence.
         event, task, reason, core = "PROPERTY_NOT_SEEN", "VERIFY", "Possibile scaduto / stato da verificare", "EXPIRED_OR_POSSIBLE_EXPIRED"
 
     return {"pillar": 1, "event_type": event, "task_type": task, "reason": reason, "core_category": core, "flags": flags}
@@ -127,7 +134,7 @@ def event_and_task(signal: dict, engine: dict, territory: dict, today: str) -> t
         "via": indirizzo,
         "confidence": confidence,
         "occurred_at": str(signal.get("first_seen") or signal.get("enriched_at") or ""),
-        "evidence_rule": "Non inferire VENDUTO, INCARICO_SCADUTO o proprietà personale senza evidenza esplicita.",
+        "evidence_rule": "Non inferire FSBO verificato, VENDUTO, INCARICO_SCADUTO o proprietà personale senza evidenza sufficiente.",
     }
     task = {
         "task_id": task_id,
@@ -184,7 +191,6 @@ def build_payload(territory: dict, engine: dict, neighborhood: dict) -> dict:
         events.append(event)
         tasks.append(task)
 
-    # Stable dedupe by generated UUID.
     events = list({e["event_id"]: e for e in events}.values())
     tasks = list({t["task_id"]: t for t in tasks}.values())
     tasks.sort(key=lambda x: (-safe_int(x.get("priority")), x.get("comune", ""), x.get("via", "")))
@@ -193,13 +199,14 @@ def build_payload(territory: dict, engine: dict, neighborhood: dict) -> dict:
         "signals": len(events),
         "tasks": len(tasks),
         "fsbo": sum(t.get("core_category") == "FSBO" for t in tasks),
+        "fsbo_candidates": sum(t.get("core_category") == "FSBO_CANDIDATE" for t in tasks),
         "possible_expired": sum(t.get("core_category") == "EXPIRED_OR_POSSIBLE_EXPIRED" for t in tasks),
         "price_changes": sum(e.get("event_type") == "PROPERTY_PRICE_CHANGED" for e in events),
         "agency_changes": sum(e.get("event_type") == "PROPERTY_AGENCY_CHANGED" for e in events),
         "relisted": sum(e.get("event_type") == "PROPERTY_RELISTED" for e in events),
     }
     payload = {
-        "version": 1,
+        "version": 2,
         "generated_at": now.isoformat(),
         "territory_version": territory.get("version"),
         "reference_hub": territory.get("reference_hub"),
@@ -223,12 +230,7 @@ def main():
         raise SystemExit("config/acquisition-engine.json non valido: pillars mancanti")
     payload = build_payload(territory, engine, neighborhood)
     OUT_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(
-        "F1 Acquisition Daily:",
-        f"hub={payload['reference_hub']}",
-        f"events={len(payload['events'])}",
-        f"tasks={len(payload['tasks'])}",
-    )
+    print("F1 Acquisition Daily:",f"hub={payload['reference_hub']}",f"events={len(payload['events'])}",f"tasks={len(payload['tasks'])}")
 
 
 if __name__ == "__main__":
