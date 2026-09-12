@@ -30,22 +30,22 @@ body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt
 .bottomSheet{position:fixed;left:0;right:0;bottom:0;background:#071009f8;border-top:2px solid var(--g);z-index:100;padding:8px 10px 10px;box-shadow:0 -10px 40px #0009}
 .sheetTop{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:7px}
 .sheetTitle{font-size:12px;font-weight:900;color:var(--g)}
-.sheetWrap{overflow:auto;max-height:265px;border:1px solid #35513d;border-radius:10px}
+.sheetWrap{overflow:auto;max-height:55vh;border:1px solid #35513d;border-radius:10px;scrollbar-gutter:stable both-edges;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 table{border-collapse:collapse;width:100%;min-width:2450px;background:#0d130e}
 th,td{border-right:1px solid #2b372e;border-bottom:1px solid #2b372e;padding:8px 9px;text-align:left;font-size:10px;white-space:nowrap}
 th{position:sticky;top:0;background:#152018;color:var(--g);z-index:2;font-size:9px}
 td{color:#e8eee9}
 .status,.days{color:var(--g);font-weight:900}
-.sheetBtn,.editBtn,.saveBtn,.cancelBtn,.deleteBtn{padding:7px 9px;border-radius:8px;font-size:9px;font-weight:900;cursor:pointer}
+.sheetBtn,.editBtn,.saveBtn,.cancelBtn,.deleteBtn,.copyBtn{padding:7px 9px;border-radius:8px;font-size:9px;font-weight:900;cursor:pointer}
 .sheetBtn{background:#182019;border:1px solid #35513d;color:#fff}
-.editBtn{background:#182019;border:1px solid var(--blue);color:var(--blue)}
+.copyBtn{background:#122417;border:1px solid var(--g);color:var(--g)}.editBtn{background:#182019;border:1px solid var(--blue);color:var(--blue)}
 .saveBtn{background:var(--g);border:1px solid var(--g);color:#07100a}
 .cancelBtn{background:#241616;border:1px solid #6b3434;color:#ffb0b0}
 .deleteBtn{background:#2a1010;border:1px solid #8b3333;color:#ff9b9b}
 .rowInput,.rowSelect{width:100%;min-width:100px;background:#07100a;color:#fff;border:1px solid #35513d;border-radius:6px;padding:6px;font-size:10px}
 .notesCell .rowInput{min-width:240px}
 .compostaCell .rowInput{min-width:320px}
-.actionCell{min-width:220px}
+.copyHead,.copyCell{position:sticky;left:0;background:#152018;z-index:5;min-width:92px}.copyCell{background:#0d130e;z-index:3}.actionCell{min-width:220px}
 @media(max-width:800px){.listingTop{display:block}.price{margin-top:8px}.communeSelect{font-size:17px}.wrap{padding-bottom:355px}}
 </style>
 <script defer src="f1-acquisition-core.js"></script>
@@ -65,7 +65,7 @@ td{color:#e8eee9}
   <div class="sheetWrap">
     <table id="contactsTable">
       <thead><tr>
-        <th>DATA ANNUNCIO</th><th>IN VENDITA DA</th><th>COMUNE</th><th>NOME</th><th>COGNOME</th><th>VIA</th><th>CIVICO</th>
+        <th class="copyHead">COPIA RIGA</th><th>DATA ANNUNCIO</th><th>IN VENDITA DA</th><th>COMUNE</th><th>NOME</th><th>COGNOME</th><th>VIA</th><th>CIVICO</th>
         <th>PREZZO</th><th>TIPOLOGIA</th><th>COMPOSTA</th><th>TELEFONO</th><th>EMAIL</th><th>FACEBOOK</th><th>INSTAGRAM</th>
         <th>TIKTOK</th><th>YOUTUBE</th><th>FONTE</th><th>NOTE</th><th>STATO</th><th>AZIONI</th>
       </tr></thead>
@@ -239,22 +239,35 @@ function addRow(){addContact({comune:$('workCommune').value||'',stato:'DA LAVORA
 
 function renderContacts(){
   const a=contacts();
-  $('contactBody').innerHTML=a.map((r,i)=>`<tr data-i="${i}">${F.map(f=>`<td class="${f==='note'?'notesCell ':''}${f==='composta'?'compostaCell ':''}${f==='stato'?'status ':''}${f==='in_vendita_da'?'days':''}">${esc(r[f]||'—')}</td>`).join('')}<td class="actionCell"><button class="editBtn" onclick="editRow(this)">MODIFICA</button> <button class="deleteBtn" onclick="deleteRow(this)">ELIMINA</button></td></tr>`).join('');
+  $('contactBody').innerHTML=a.map((r,i)=>`<tr data-i="${i}"><td class="copyCell"><button class="copyBtn" onclick="copyRow(this)">COPIA RIGA</button></td>${F.map(f=>`<td class="${f==='note'?'notesCell ':''}${f==='composta'?'compostaCell ':''}${f==='stato'?'status ':''}${f==='in_vendita_da'?'days':''}">${esc(r[f]||'—')}</td>`).join('')}<td class="actionCell"><button class="editBtn" onclick="editRow(this)">MODIFICA</button> <button class="deleteBtn" onclick="deleteRow(this)">ELIMINA</button></td></tr>`).join('');
+}
+async function copyRow(btn){
+  const row=btn.closest('tr'),i=+row.dataset.i,r=contacts()[i];
+  if(!r)return;
+  const text=F.map(f=>r[f]||'').join('\t');
+  try{
+    await navigator.clipboard.writeText(text);
+  }catch(e){
+    const ta=document.createElement('textarea');
+    ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();
+  }
+  const old=btn.textContent;btn.textContent='COPIATA';setTimeout(()=>btn.textContent=old,1200);
 }
 function editRow(btn){
   const row=btn.closest('tr'),i=+row.dataset.i,a=contacts(),r=a[i];
   F.forEach((f,j)=>{
-    if(f==='in_vendita_da'){row.cells[j].innerHTML=`<input class="rowInput" value="${esc(daysSince(r.data_annuncio))}" readonly>`;return}
-    row.cells[j].innerHTML=f==='stato'
+    if(f==='in_vendita_da'){row.cells[j+1].innerHTML=`<input class="rowInput" value="${esc(daysSince(r.data_annuncio))}" readonly>`;return}
+    row.cells[j+1].innerHTML=f==='stato'
       ?`<select class="rowSelect"><option>DA LAVORARE</option><option>VERIFICATO</option><option>CONTATTATO</option><option>DA RICHIAMARE</option><option>ARCHIVIATO</option></select>`
       :`<input class="rowInput" value="${esc(r[f]||'')}">`;
-    if(f==='stato')row.cells[j].querySelector('select').value=r[f]||'DA LAVORARE';
+    if(f==='stato')row.cells[j+1].querySelector('select').value=r[f]||'DA LAVORARE';
   });
-  row.cells[F.length].innerHTML='<button class="saveBtn" onclick="saveRow(this)">SALVA</button> <button class="cancelBtn" onclick="renderContacts()">ANNULLA</button> <button class="deleteBtn" onclick="deleteRow(this)">ELIMINA</button>';
+  row.cells[F.length+1].innerHTML='<button class="saveBtn" onclick="saveRow(this)">SALVA</button> <button class="cancelBtn" onclick="renderContacts()">ANNULLA</button> <button class="deleteBtn" onclick="deleteRow(this)">ELIMINA</button>';
 }
 function saveRow(btn){
   const row=btn.closest('tr'),i=+row.dataset.i,a=contacts();
-  F.forEach((f,j)=>{if(f!=='in_vendita_da')a[i][f]=row.cells[j].querySelector('input,select').value.trim()});
+  F.forEach((f,j)=>{if(f!=='in_vendita_da')a[i][f]=row.cells[j+1].querySelector('input,select').value.trim()});
   a[i].in_vendita_da=daysSince(a[i].data_annuncio);
   saveContacts(a);
 }
