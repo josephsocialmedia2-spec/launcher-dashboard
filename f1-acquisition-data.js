@@ -28,7 +28,9 @@ async function rest(path,opt={}){
 
 function normalizeTask(row){
   row=row||{};
+  const meta=row.metadata&&typeof row.metadata==='object'?row.metadata:{};
   return {
+    ...meta,
     ...row,
     task_id:row.task_id||row.id||'',
     lead_id:row.lead_id||'',
@@ -44,8 +46,23 @@ function normalizeTask(row){
     created_at:row.created_at||new Date().toISOString(),
     completed_at:row.completed_at||'',
     outcome:row.outcome||'',
-    metadata:row.metadata||{},
+    metadata:meta,
     updated_at:row.updated_at||row.created_at||new Date().toISOString()
+  };
+}
+
+function taskCloudRow(task){
+  const row=normalizeTask(task);
+  const metadata={...(row.metadata||{})};
+  for(const key of ['source','source_url','comune','via','civico','zona','lead_reason','confidence','core_category','seller_signal','is_new','territory_hub']){
+    if(row[key]!==undefined&&row[key]!==null&&row[key]!=='')metadata[key]=row[key];
+  }
+  return {
+    task_id:row.task_id||crypto.randomUUID(),lead_id:row.lead_id||'',property_id:row.property_id||'',
+    event_id:row.event_id||null,pillar:Number(row.pillar)||1,task_type:row.task_type||'REVIEW',reason:row.reason||'',
+    priority:Number(row.priority)||0,due_date:row.due_date||null,assigned_to:row.assigned_to||'',status:row.status||'OPEN',
+    created_at:row.created_at||new Date().toISOString(),completed_at:row.completed_at||null,outcome:row.outcome||'',
+    metadata,updated_at:row.updated_at||new Date().toISOString()
   };
 }
 
@@ -66,6 +83,19 @@ function normalizeLead(row){
   };
 }
 
+function leadCloudRow(lead){
+  const r=normalizeLead(lead);
+  return {
+    lead_id:r.lead_id||crypto.randomUUID(),pillar:r.pillar,source_type:r.source_type,source:r.source,source_url:r.source_url,
+    created_at:r.created_at||new Date().toISOString(),first_seen:r.first_seen||null,last_seen:r.last_seen||null,
+    nome:r.nome,cognome:r.cognome,azienda:r.azienda,telefono:r.telefono,email:r.email,comune:r.comune,via:r.via,civico:r.civico,zona:r.zona,
+    immobile_id:r.immobile_id,competitor_agency:r.competitor_agency,lead_reason:r.lead_reason,lead_score:r.lead_score,confidence:r.confidence,
+    status:r.status,last_contact:r.last_contact||null,next_action:r.next_action,next_action_date:r.next_action_date||null,assigned_to:r.assigned_to,
+    notes:r.notes,privacy_basis:r.privacy_basis,do_not_contact:r.do_not_contact,rpo_status:r.rpo_status,created_by:r.created_by||'',
+    updated_at:r.updated_at||new Date().toISOString(),deleted:!!r.deleted
+  };
+}
+
 async function pullTasks(){
   if(!cloudReady())return Core().localTasks();
   const rows=await rest('tasks?select=*&order=priority.desc,due_date.asc');
@@ -78,7 +108,7 @@ async function upsertTask(task){
   const row=normalizeTask({...task,task_id:task.task_id||crypto.randomUUID(),updated_at:new Date().toISOString()});
   const local=Core().mergeTasks(Core().localTasks(),[row]);
   Core().saveLocalTasks(local);
-  if(cloudReady()) await rest('tasks?on_conflict=task_id',{method:'POST',body:JSON.stringify([row]),prefer:'resolution=merge-duplicates,return=representation'});
+  if(cloudReady()) await rest('tasks?on_conflict=task_id',{method:'POST',body:JSON.stringify([taskCloudRow(row)]),prefer:'resolution=merge-duplicates,return=representation'});
   return row;
 }
 
@@ -107,7 +137,7 @@ async function upsertLead(lead){
   const row=normalizeLead({...lead,lead_id:lead.lead_id||crypto.randomUUID(),updated_at:new Date().toISOString()});
   const map=new Map(Core().localLeads().map(x=>[String(x.lead_id),x]));map.set(String(row.lead_id),row);
   Core().saveLocalLeads([...map.values()]);
-  if(cloudReady())await rest('leads?on_conflict=lead_id',{method:'POST',body:JSON.stringify([row]),prefer:'resolution=merge-duplicates,return=representation'});
+  if(cloudReady())await rest('leads?on_conflict=lead_id',{method:'POST',body:JSON.stringify([leadCloudRow(row)]),prefer:'resolution=merge-duplicates,return=representation'});
   return row;
 }
 
@@ -120,5 +150,5 @@ async function loadDashboardData(){
   return {cfg,feed,tasks:mergedTasks,leads,cloud:cloudReady()};
 }
 
-window.F1AcquisitionData={cloudReady,rest,pullTasks,upsertTask,setTaskStatus,pullLeads,upsertLead,loadDashboardData,normalizeTask,normalizeLead};
+window.F1AcquisitionData={cloudReady,rest,pullTasks,upsertTask,setTaskStatus,pullLeads,upsertLead,loadDashboardData,normalizeTask,normalizeLead,taskCloudRow,leadCloudRow};
 })();
