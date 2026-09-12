@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-12T01:11:20+00:00",
-  "source_generated_at": "2026-09-12T01:10:18+00:00",
+  "generated_at": "2026-09-12T05:52:37+00:00",
+  "source_generated_at": "2026-09-12T05:51:43+00:00",
   "policy": "CENTRO_RADIALE",
   "reference_hub": "Villar Dora",
   "ordering": "DISTANZA_LINEA_ARIA_DA_VILLAR_DORA",
@@ -67,9 +67,9 @@
     "communes_with_signals": 39,
     "configured_communes": 41,
     "excluded_communes_count": 0,
-    "enriched_total": 105,
-    "new_total": 20,
-    "public_contacts_total": 383
+    "enriched_total": 111,
+    "new_total": 0,
+    "public_contacts_total": 406
   },
   "communes": [
     {
@@ -85,7 +85,7 @@
         "display_name": "Villar Dora, Torino, Piemonte, Italia"
       },
       "signals_count": 6,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 0,
       "pending_signals": 2,
       "public_contacts_count": 0,
@@ -93,7 +93,7 @@
         {
           "signal_id": "SIG-B78856C882EBF3",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 14,
           "territorial_route": [
             "Susa",
@@ -405,7 +405,7 @@
         "display_name": "Almese, Torino, Piemonte, Italia"
       },
       "signals_count": 9,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 4,
       "pending_signals": 2,
       "public_contacts_count": 9,
@@ -463,7 +463,7 @@
         {
           "signal_id": "SIG-554C33819635C8",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 15,
           "territorial_route": [
             "Susa",
@@ -1905,7 +1905,7 @@
         "display_name": "Avigliana, Torino, Piemonte, 10051, Italia"
       },
       "signals_count": 23,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 4,
       "pending_signals": 18,
       "public_contacts_count": 16,
@@ -3273,7 +3273,7 @@
         {
           "signal_id": "SIG-FCC972A3B6288A",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -6161,61 +6161,11 @@
         "display_name": "Condove, Torino, Piemonte, 10055, Italia"
       },
       "signals_count": 15,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 1,
       "pending_signals": 2,
       "public_contacts_count": 3,
       "signals": [
-        {
-          "signal_id": "SIG-EF881EBBD2ED56",
-          "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
-          "territorial_rank": 10,
-          "territorial_route": [
-            "Susa",
-            "Bussoleno",
-            "Chianocco",
-            "San Giorio di Susa",
-            "Bruzolo",
-            "San Didero",
-            "Villar Focchiardo",
-            "Borgone Susa",
-            "Sant’Antonino di Susa",
-            "Vaie",
-            "Condove",
-            "Chiusa di San Michele",
-            "Caprie",
-            "Sant’Ambrogio di Torino",
-            "Villar Dora",
-            "Almese"
-          ],
-          "comune": "Condove",
-          "indirizzo": "INDIRIZZO DA VERIFICARE",
-          "immobile": "Terratetto in Vendita, 4 Locali, 87 mq (Condove) - Condove",
-          "prezzo": "PREZZO DA VERIFICARE",
-          "fonte": "Mercato residenziale",
-          "seller_signal": "NON_DETERMINATO",
-          "priorita": "BASSA",
-          "score": "30",
-          "url_annuncio": "https://www.tuttoannunci.org/torino/case-appartamenti-in-vendita/terratetto-in-vendita-4-locali-87-mq-condove-torino--tipdan-idi90-ida4923740-idc204.aspx",
-          "queries": {
-            "google": "https://www.google.com/search?q=INDIRIZZO+DA+VERIFICARE%2C+Condove%2C+Italia",
-            "google_maps": "https://www.google.com/maps/search/?api=1&query=INDIRIZZO+DA+VERIFICARE%2C+Condove%2C+Italia",
-            "attivita_vicine": "https://www.google.com/search?q=attivit%C3%A0+aziende+negozi+servizi+vicino+%22INDIRIZZO+DA+VERIFICARE%22+%22Condove%22",
-            "pagine_gialle": "https://www.google.com/search?q=site%3Apaginegialle.it+%22INDIRIZZO+DA+VERIFICARE%22+%22Condove%22",
-            "pagine_bianche": "https://www.google.com/search?q=site%3Apaginebianche.it+%22INDIRIZZO+DA+VERIFICARE%22+%22Condove%22",
-            "territorio": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Condove%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
-            "animali_agricoltura": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Condove%22+allevamento+stalla+canile+azienda+agricola+animali",
-            "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Condove%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
-          },
-          "engine_version": "2",
-          "enrichment_status": "SKIPPED_NO_ADDRESS",
-          "geocode": null,
-          "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
-        },
         {
           "signal_id": "SIG-581B389A4BE4D1",
           "first_seen": "2026-09-11T19:45:35+00:00",
@@ -6260,6 +6210,56 @@
           },
           "engine_version": "2",
           "enrichment_status": "ERROR",
+          "geocode": null,
+          "radius_m": 500,
+          "context": {},
+          "public_entities": [],
+          "enriched_at": null
+        },
+        {
+          "signal_id": "SIG-EF881EBBD2ED56",
+          "first_seen": "2026-09-12T01:10:18+00:00",
+          "is_new": false,
+          "territorial_rank": 10,
+          "territorial_route": [
+            "Susa",
+            "Bussoleno",
+            "Chianocco",
+            "San Giorio di Susa",
+            "Bruzolo",
+            "San Didero",
+            "Villar Focchiardo",
+            "Borgone Susa",
+            "Sant’Antonino di Susa",
+            "Vaie",
+            "Condove",
+            "Chiusa di San Michele",
+            "Caprie",
+            "Sant’Ambrogio di Torino",
+            "Villar Dora",
+            "Almese"
+          ],
+          "comune": "Condove",
+          "indirizzo": "INDIRIZZO DA VERIFICARE",
+          "immobile": "Terratetto in Vendita, 4 Locali, 87 mq (Condove) - Condove",
+          "prezzo": "PREZZO DA VERIFICARE",
+          "fonte": "Mercato residenziale",
+          "seller_signal": "NON_DETERMINATO",
+          "priorita": "BASSA",
+          "score": "30",
+          "url_annuncio": "https://www.tuttoannunci.org/torino/case-appartamenti-in-vendita/terratetto-in-vendita-4-locali-87-mq-condove-torino--tipdan-idi90-ida4923740-idc204.aspx",
+          "queries": {
+            "google": "https://www.google.com/search?q=INDIRIZZO+DA+VERIFICARE%2C+Condove%2C+Italia",
+            "google_maps": "https://www.google.com/maps/search/?api=1&query=INDIRIZZO+DA+VERIFICARE%2C+Condove%2C+Italia",
+            "attivita_vicine": "https://www.google.com/search?q=attivit%C3%A0+aziende+negozi+servizi+vicino+%22INDIRIZZO+DA+VERIFICARE%22+%22Condove%22",
+            "pagine_gialle": "https://www.google.com/search?q=site%3Apaginegialle.it+%22INDIRIZZO+DA+VERIFICARE%22+%22Condove%22",
+            "pagine_bianche": "https://www.google.com/search?q=site%3Apaginebianche.it+%22INDIRIZZO+DA+VERIFICARE%22+%22Condove%22",
+            "territorio": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Condove%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
+            "animali_agricoltura": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Condove%22+allevamento+stalla+canile+azienda+agricola+animali",
+            "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Condove%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
+          },
+          "engine_version": "2",
+          "enrichment_status": "SKIPPED_NO_ADDRESS",
           "geocode": null,
           "radius_m": 500,
           "context": {},
@@ -9714,15 +9714,15 @@
         "display_name": "Reano, Torino, Piemonte, Italia"
       },
       "signals_count": 9,
-      "new_signals": 3,
-      "enriched_signals": 1,
-      "pending_signals": 8,
-      "public_contacts_count": 1,
+      "new_signals": 0,
+      "enriched_signals": 3,
+      "pending_signals": 6,
+      "public_contacts_count": 4,
       "signals": [
         {
           "signal_id": "SIG-DBEEAFB9636657",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -9838,7 +9838,7 @@
         {
           "signal_id": "SIG-86C33C22B57538",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -9878,17 +9878,83 @@
             "dork_contesto": "https://www.google.com/search?q=%22Via+Valgrana%2C+9%22+%22Reano%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.0584976,
+            "lon": 7.4284384,
+            "display_name": "Via Valgrana, Frazione Fiori, Reano, Torino, Piemonte, 10051, Italia",
+            "osm_type": "way",
+            "osm_id": 486509589
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
+          "context": {
+            "residential_buildings_osm": 64,
+            "public_entities_count": 5,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "Autoriparazioni Bergantin",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1260637571,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "SCUOLA_CULTURA",
+              "address": "Via Maria Vittoria 45 Reano",
+              "phone_public": "011 931 0180",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1512238757,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "TURISMO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 8475522204,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Club Alpino Italiano",
+              "category": "TURISMO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 8173951143,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Colletto Reano - Buttigliera",
+              "category": "TURISMO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12504291100,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-12T05:51:55+00:00"
         },
         {
           "signal_id": "SIG-ABDAF5BAEC7663",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -9928,12 +9994,254 @@
             "dork_contesto": "https://www.google.com/search?q=%22Via+Tetto%2C+15%22+%22Reano%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.050937,
+            "lon": 7.4252771,
+            "display_name": "Via Tetto, Frazione Benna, Reano, Torino, Piemonte, 10051, Italia",
+            "osm_type": "way",
+            "osm_id": 43994086
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
+          "context": {
+            "residential_buildings_osm": 214,
+            "public_entities_count": 21,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "Agnese Biagio",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1260635549,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Alimentari, frutta, verdura, pane",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 11764016681,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Autofficina di Torta",
+              "category": "COMMERCIO",
+              "address": "Vicolo Bessone 4 Reano (To)",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1267058569,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Autoriparazioni Bergantin",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1260637571,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Marcella Coppola Parrucchieri",
+              "category": "COMMERCIO",
+              "address": "Borgata Rivata 1 Reano (To)",
+              "phone_public": "+39 011 9310521",
+              "email_public": "",
+              "website": "",
+              "osm_id": 11764016697,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Chiesa di San Rocco",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 444715996,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Municipio di Reano",
+              "category": "RETE_TERRITORIALE",
+              "address": "Piazza XX Settembre 1 Reano",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1036475726,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Parrocchia di San Giorgio Martire",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 267011036,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Statua della Vergine Maria",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 11944437977,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Caffè della stazione di servizio Kerotris",
+              "category": "RISTORAZIONE",
+              "address": "Via Roma 6 Reano (To)",
+              "phone_public": "+39 011 9310093",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1267058575,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Il Principe",
+              "category": "RISTORAZIONE",
+              "address": "Via Principi della Cisterna 21 Reano (To)",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1267111102,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "in Piazza",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1036475728,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Ristorante Pizzeria Il Principe",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1458594539,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Farmacia San Lorenzo del Dott. Ambrosio Andrea",
+              "category": "SALUTE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 7380359731,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9536837026,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Moncuni Park",
+              "category": "SERVIZI",
+              "address": "Via della Parrocchia 8 Reano",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 265759794,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Punto acqua SMAT",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12987423655,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Fidas ADSP",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "Via Principi della Cisterna 20 Reano",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 11843398063,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Italiana Assicurazioni",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "Via della Parrocchia 2 Reano (To)",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 11764016696,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "San Rocco",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "Via Principi della Cisterna 20 Reano",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 11843398064,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Parco Giochi",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1266784192,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-12T05:51:50+00:00"
         },
         {
           "signal_id": "SIG-0B108660E98060",
@@ -13064,7 +13372,7 @@
         "display_name": "Sant'Antonino di Susa, Torino, Piemonte, Italia"
       },
       "signals_count": 26,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 16,
       "pending_signals": 2,
       "public_contacts_count": 54,
@@ -13072,7 +13380,7 @@
         {
           "signal_id": "SIG-C85FD30E3F0A69",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 8,
           "territorial_route": [
             "Susa",
@@ -17986,9 +18294,9 @@
       },
       "signals_count": 13,
       "new_signals": 0,
-      "enriched_signals": 1,
-      "pending_signals": 10,
-      "public_contacts_count": 0,
+      "enriched_signals": 2,
+      "pending_signals": 9,
+      "public_contacts_count": 5,
       "signals": [
         {
           "signal_id": "SIG-64B1DE1C1B5139",
@@ -18083,12 +18391,452 @@
             "dork_contesto": "https://www.google.com/search?q=%22Viale+Italia+61%22+%22Coazze%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.0525081,
+            "lon": 7.3013381,
+            "display_name": "Viale Italia 61, Ruadamonte, Coazze, Torino, Piemonte, 10094, Italia",
+            "osm_type": "way",
+            "osm_id": 42496274
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
+          "context": {
+            "residential_buildings_osm": 9,
+            "public_entities_count": 39,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "Abbigliamento",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4003489512,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Abbigliamento Tabacchi",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4004982350,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Alimentari Titti",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4001704094,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Autofficina",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4003517669,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Edicola-Giornali",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4003489418,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Fioraio",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4001704086,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Macelleria Molinatto",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4003517478,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "OstoreroGrafica",
+              "category": "COMMERCIO",
+              "address": "Via Cavour 13",
+              "phone_public": "+390119349181",
+              "email_public": "simona@ostorerografica.com",
+              "website": "https://www.ostorerografica.com/",
+              "osm_id": 4581533289,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Panetteria",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4003515681,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Parrucchiere",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4004025599,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Tabacchi 24h",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4001704087,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Fotografo",
+              "category": "INDUSTRIA_ARTIGIANATO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4004010265,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Chiesa del Santissimo Nome di Gesù",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 397712921,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Chiesa di Santa Maria del Pino",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 262171693,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Madonna del Castello",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1503420524,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Bar Caffe",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1503438340,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Bar Caffè",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1734994436,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Bar da Gas",
+              "category": "RISTORAZIONE",
+              "address": "Via Matteotti",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2297874131,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Casa Aleghe",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "https://www.aleghebirra.com/CasaAleghe.aspx",
+              "osm_id": 9929902433,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Cusinot",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "+39 011 934 0612",
+              "email_public": "",
+              "website": "",
+              "osm_id": 397379363,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "La Piazzetta",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2297883110,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Pizzeria Ortilla",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 397713490,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Farmacia Alloa",
+              "category": "SALUTE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4001704085,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Asilo nido",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 397379355,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2807008255,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Circolo Chalet",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4004988192,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "evolvo",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 13904865369,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Fontana della Varda",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1699826119,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Palafeste",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 397712905,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Piazza Cordero di Pamparato",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 123619300,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Poste Italiane",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4003489534,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Punto acqua SMAT",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12987227899,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Tamoil",
+              "category": "SERVIZI",
+              "address": "Via Matteotti 127 Coazze",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 228128241,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Unicredit Coazze",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4003489529,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Club Alpino Italiano - Sezione Coazze",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "Piazza Cordero di Pamparato 5 Coazze",
+              "phone_public": "+39 011 9340367",
+              "email_public": "coazze@cai.it",
+              "website": "https://www.caicoazze.com/",
+              "osm_id": 4003489426,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Parco Comunale",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 397322589,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Piazza della Vittoria",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 397379349,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Ecomuseo dell'Alta Val Sangone",
+              "category": "TURISMO",
+              "address": "Viale Italia 61 3 Coazze",
+              "phone_public": "+39 011 9349681",
+              "email_public": "turismo@comune.coazze.to.it",
+              "website": "https://ecomuseo.wixsite.com/altavalsangone",
+              "osm_id": 397713487,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Hotel Serenella",
+              "category": "TURISMO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4003517642,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-12T05:52:05+00:00"
         },
         {
           "signal_id": "SIG-BD23467778C26C",
@@ -23805,61 +24553,11 @@
         "display_name": "Alpignano, Torino, Piemonte, 10091, Italia"
       },
       "signals_count": 20,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 2,
-      "pending_signals": 16,
+      "pending_signals": 15,
       "public_contacts_count": 5,
       "signals": [
-        {
-          "signal_id": "SIG-AE7A0F7525BCC6",
-          "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
-          "territorial_rank": 9999,
-          "territorial_route": [
-            "Susa",
-            "Bussoleno",
-            "Chianocco",
-            "San Giorio di Susa",
-            "Bruzolo",
-            "San Didero",
-            "Villar Focchiardo",
-            "Borgone Susa",
-            "Sant’Antonino di Susa",
-            "Vaie",
-            "Condove",
-            "Chiusa di San Michele",
-            "Caprie",
-            "Sant’Ambrogio di Torino",
-            "Villar Dora",
-            "Almese"
-          ],
-          "comune": "Alpignano",
-          "indirizzo": "INDIRIZZO DA VERIFICARE",
-          "immobile": "Vendita Villa unifamiliare Alpignano. Ottimo stato, riscaldamento",
-          "prezzo": "PREZZO DA VERIFICARE",
-          "fonte": "Immobiliare.it",
-          "seller_signal": "NON_DETERMINATO",
-          "priorita": "BASSA",
-          "score": "30",
-          "url_annuncio": "https://www.immobiliare.it/annunci/132365022/",
-          "queries": {
-            "google": "https://www.google.com/search?q=INDIRIZZO+DA+VERIFICARE%2C+Alpignano%2C+Italia",
-            "google_maps": "https://www.google.com/maps/search/?api=1&query=INDIRIZZO+DA+VERIFICARE%2C+Alpignano%2C+Italia",
-            "attivita_vicine": "https://www.google.com/search?q=attivit%C3%A0+aziende+negozi+servizi+vicino+%22INDIRIZZO+DA+VERIFICARE%22+%22Alpignano%22",
-            "pagine_gialle": "https://www.google.com/search?q=site%3Apaginegialle.it+%22INDIRIZZO+DA+VERIFICARE%22+%22Alpignano%22",
-            "pagine_bianche": "https://www.google.com/search?q=site%3Apaginebianche.it+%22INDIRIZZO+DA+VERIFICARE%22+%22Alpignano%22",
-            "territorio": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Alpignano%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
-            "animali_agricoltura": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Alpignano%22+allevamento+stalla+canile+azienda+agricola+animali",
-            "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Alpignano%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
-          },
-          "engine_version": "2",
-          "enrichment_status": "PENDING",
-          "geocode": null,
-          "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
-        },
         {
           "signal_id": "SIG-6F1188A49CCE8A",
           "first_seen": "2026-09-11T11:27:16+00:00",
@@ -24355,6 +25053,56 @@
             }
           ],
           "enriched_at": "2026-09-10T22:38:02+00:00"
+        },
+        {
+          "signal_id": "SIG-AE7A0F7525BCC6",
+          "first_seen": "2026-09-12T01:10:18+00:00",
+          "is_new": false,
+          "territorial_rank": 9999,
+          "territorial_route": [
+            "Susa",
+            "Bussoleno",
+            "Chianocco",
+            "San Giorio di Susa",
+            "Bruzolo",
+            "San Didero",
+            "Villar Focchiardo",
+            "Borgone Susa",
+            "Sant’Antonino di Susa",
+            "Vaie",
+            "Condove",
+            "Chiusa di San Michele",
+            "Caprie",
+            "Sant’Ambrogio di Torino",
+            "Villar Dora",
+            "Almese"
+          ],
+          "comune": "Alpignano",
+          "indirizzo": "INDIRIZZO DA VERIFICARE",
+          "immobile": "Vendita Villa unifamiliare Alpignano. Ottimo stato, riscaldamento",
+          "prezzo": "PREZZO DA VERIFICARE",
+          "fonte": "Immobiliare.it",
+          "seller_signal": "NON_DETERMINATO",
+          "priorita": "BASSA",
+          "score": "30",
+          "url_annuncio": "https://www.immobiliare.it/annunci/132365022/",
+          "queries": {
+            "google": "https://www.google.com/search?q=INDIRIZZO+DA+VERIFICARE%2C+Alpignano%2C+Italia",
+            "google_maps": "https://www.google.com/maps/search/?api=1&query=INDIRIZZO+DA+VERIFICARE%2C+Alpignano%2C+Italia",
+            "attivita_vicine": "https://www.google.com/search?q=attivit%C3%A0+aziende+negozi+servizi+vicino+%22INDIRIZZO+DA+VERIFICARE%22+%22Alpignano%22",
+            "pagine_gialle": "https://www.google.com/search?q=site%3Apaginegialle.it+%22INDIRIZZO+DA+VERIFICARE%22+%22Alpignano%22",
+            "pagine_bianche": "https://www.google.com/search?q=site%3Apaginebianche.it+%22INDIRIZZO+DA+VERIFICARE%22+%22Alpignano%22",
+            "territorio": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Alpignano%22+associazione+proloco+parrocchia+azienda+agricola+eventi",
+            "animali_agricoltura": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Alpignano%22+allevamento+stalla+canile+azienda+agricola+animali",
+            "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Alpignano%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
+          },
+          "engine_version": "2",
+          "enrichment_status": "SKIPPED_NO_ADDRESS",
+          "geocode": null,
+          "radius_m": 500,
+          "context": {},
+          "public_entities": [],
+          "enriched_at": null
         },
         {
           "signal_id": "SIG-F6C0957928DFE4",
@@ -25376,9 +26124,9 @@
       },
       "signals_count": 41,
       "new_signals": 0,
-      "enriched_signals": 5,
-      "pending_signals": 31,
-      "public_contacts_count": 44,
+      "enriched_signals": 6,
+      "pending_signals": 30,
+      "public_contacts_count": 53,
       "signals": [
         {
           "signal_id": "SIG-143FD10DFC7E8C",
@@ -25523,12 +26271,430 @@
             "dork_contesto": "https://www.google.com/search?q=%22via+Cagliari+11%22+%22Rivoli%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.0677536,
+            "lon": 7.5562245,
+            "display_name": "Via Cagliari, Zona industriale di Rivoli, Cascine Vica, Tetti Neirotti, Rivoli, Torino, Piemonte, 10098, Italia",
+            "osm_type": "way",
+            "osm_id": 41427528
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
+          "context": {
+            "residential_buildings_osm": 33,
+            "public_entities_count": 37,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "Carrozzeria Cicos",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 13070716276,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Idee per Hobby",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 13638767597,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Lidl",
+              "category": "COMMERCIO",
+              "address": "Corso Francia 325 Collegno",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10827810174,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Mail Boxes Etc.",
+              "category": "COMMERCIO",
+              "address": "Corso Francia 238 bis Rivoli",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 13556105344,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Motorcity 2.0",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12684624219,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Pastificio Da Virgilio",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12071488934,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Profumo di pane",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12486404370,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Speed Queen",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "+39393515180",
+              "email_public": "lavanderia.giunta@gmail.com",
+              "website": "",
+              "osm_id": 13449809760,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Birrificio Leumann",
+              "category": "INDUSTRIA_ARTIGIANATO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1370579938,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Gilac",
+              "category": "INDUSTRIA_ARTIGIANATO",
+              "address": "",
+              "phone_public": "+39 011 9689254",
+              "email_public": "",
+              "website": "https://www.gilac.it/",
+              "osm_id": 1065784320,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Gesù il Buon Pastore",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 317970963,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Oratorio San Giovanni Bosco",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "http://www.donboscorivoli.it/",
+              "osm_id": 312859469,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Santa Elisabetta",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 317000765,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "El Born- Familiy&Friends",
+              "category": "RISTORAZIONE",
+              "address": "Via Genova 62 Rivoli",
+              "phone_public": "+39 0119315933",
+              "email_public": "",
+              "website": "https://www.elbornfamilyfriends.com/",
+              "osm_id": 1376131974,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "La Coccinella",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 9878468475,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "La Mole Bar",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12949319015,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Lo Spuntino",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4470992385,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Madison Cafè",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4474344895,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Storico",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 3191282121,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "中餐",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4545676189,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Farmacia Peirano",
+              "category": "SALUTE",
+              "address": "Piazza Primo Maggio 8 Grugliasco",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 7041431490,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Scuola dell'Infanzia \"Gianni Rodari\"",
+              "category": "SCUOLA_CULTURA",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "https://scuolaprimolevi.edu.it",
+              "osm_id": 5666289904,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Scuola Primaria \"Gianni Rodari\"",
+              "category": "SCUOLA_CULTURA",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "https://scuolaprimolevi.edu.it",
+              "osm_id": 300351402,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 3176442648,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Commissariato di Rivoli",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 289983517,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Cooperativa Lavoro e Solidarietà (Amiat S.p.a.)",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 13186139974,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Ecocentro",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 585607615,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Altea Green Power",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "Via Chivasso 15a Rivoli",
+              "phone_public": "+39 011 019 5120",
+              "email_public": "info@alteagreenpower.com",
+              "website": "https://www.alteagreenpower.it/",
+              "osm_id": 12121682669,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Caf CGN Rivoli",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "Via Pavia 11b Rivoli",
+              "phone_public": "+39 011 9575746",
+              "email_public": "",
+              "website": "https://www.caf-rivoli.com",
+              "osm_id": 9631068373,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Edison Next",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 13595476737,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "ERCOLE Mario Commercialista Studio ERCOLE",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "Via Pavia 11/b Rivoli",
+              "phone_public": "+39 0119575746",
+              "email_public": "studioercole@gmail.com",
+              "website": "https://www.studioercole.it",
+              "osm_id": 11153287091,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Flexlink",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12684628601,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Sodexo",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12684624386,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Tosoh Bioscience",
+              "category": "SERVIZI_PROFESSIONALI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12684601164,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Giardino Massimo D'Antona",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 300350628,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "La Mole Sport Academy",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 12850826545,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Villaggio Leumann Ovest",
+              "category": "TURISMO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 123552912,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-12T05:52:36+00:00"
         },
         {
           "signal_id": "SIG-0163F37E00666C",
@@ -34918,9 +36084,9 @@
         "display_name": "Pianezza, Torino, Piemonte, 10044, Italia"
       },
       "signals_count": 26,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 4,
-      "pending_signals": 20,
+      "pending_signals": 19,
       "public_contacts_count": 15,
       "signals": [
         {
@@ -36028,7 +37194,7 @@
         {
           "signal_id": "SIG-3F20E8CFAFAE27",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -36068,7 +37234,7 @@
             "dork_contesto": "https://www.google.com/search?q=%22viale+Aldo+Moro+35A%22+%22Pianezza%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
+          "enrichment_status": "GEOCODE_NOT_FOUND",
           "geocode": null,
           "radius_m": 500,
           "context": {},
@@ -37965,15 +39131,15 @@
         "display_name": "La Cassa, Unione Montana di Comuni delle Valli di Lanzo, Ceronda e Casternone, Torino, Piemonte, Italia"
       },
       "signals_count": 17,
-      "new_signals": 2,
+      "new_signals": 0,
       "enriched_signals": 0,
-      "pending_signals": 14,
+      "pending_signals": 13,
       "public_contacts_count": 0,
       "signals": [
         {
           "signal_id": "SIG-876CC774F10E9F",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -38023,7 +39189,7 @@
         {
           "signal_id": "SIG-F22DEF044E298B",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -38063,7 +39229,7 @@
             "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22La+Cassa%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
+          "enrichment_status": "SKIPPED_NO_ADDRESS",
           "geocode": null,
           "radius_m": 500,
           "context": {},
@@ -39798,15 +40964,15 @@
         "display_name": "Rivalta di Torino, Torino, Piemonte, Italia"
       },
       "signals_count": 9,
-      "new_signals": 3,
-      "enriched_signals": 2,
-      "pending_signals": 7,
-      "public_contacts_count": 2,
+      "new_signals": 0,
+      "enriched_signals": 3,
+      "pending_signals": 4,
+      "public_contacts_count": 5,
       "signals": [
         {
           "signal_id": "SIG-0ADA55E5FDF500",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -39846,7 +41012,7 @@
             "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Rivalta+di+Torino%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
+          "enrichment_status": "SKIPPED_NO_ADDRESS",
           "geocode": null,
           "radius_m": 500,
           "context": {},
@@ -39856,7 +41022,7 @@
         {
           "signal_id": "SIG-BDC93833DA5618",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -39896,7 +41062,7 @@
             "dork_contesto": "https://www.google.com/search?q=%22INDIRIZZO+DA+VERIFICARE%22+%22Rivalta+di+Torino%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
+          "enrichment_status": "SKIPPED_NO_ADDRESS",
           "geocode": null,
           "radius_m": 500,
           "context": {},
@@ -39906,7 +41072,7 @@
         {
           "signal_id": "SIG-DCC7787B0444CA",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -39946,12 +41112,133 @@
             "dork_contesto": "https://www.google.com/search?q=%22Via+Giaveno%2C+110%22+%22Rivalta+di+Torino%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.0106334,
+            "lon": 7.5156843,
+            "display_name": "Via Giaveno, Rivalta di Torino, Torino, Piemonte, 10043, Italia",
+            "osm_type": "way",
+            "osm_id": 79824195
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
+          "context": {
+            "residential_buildings_osm": 1,
+            "public_entities_count": 10,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "Autobox",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 189599609,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Carrefour",
+              "category": "COMMERCIO",
+              "address": "Via Giaveno 18 Rivalta di Torino",
+              "phone_public": "+39 011 9023 3200",
+              "email_public": "",
+              "website": "",
+              "osm_id": 189599594,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Centro gomme",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 189599608,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Mobilandia",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 189599595,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Piramid",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "+39 393 028 7829",
+              "email_public": "",
+              "website": "http://www.centropiramid.it/",
+              "osm_id": 189599596,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Pizza Fiorì",
+              "category": "RISTORAZIONE",
+              "address": "Via Fenestrelle Rivalta di Torino",
+              "phone_public": "+39 011 9005700",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2165874773,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 479116196,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Esso",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 227895528,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Mobil Express",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2001861441,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Momy Sport Village",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "Via Giaveno 55 Orbassano",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 748647558,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-12T05:52:00+00:00"
         },
         {
           "signal_id": "SIG-498A2E0E0FF2BF",
@@ -40892,7 +42179,7 @@
         "display_name": "Druento, Torino, Piemonte, Italia"
       },
       "signals_count": 15,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 2,
       "pending_signals": 11,
       "public_contacts_count": 12,
@@ -40900,7 +42187,7 @@
         {
           "signal_id": "SIG-0AC145C4A625DE",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -42322,7 +43609,7 @@
         "display_name": "Collegno, Torino, Piemonte, Italia"
       },
       "signals_count": 28,
-      "new_signals": 1,
+      "new_signals": 0,
       "enriched_signals": 1,
       "pending_signals": 23,
       "public_contacts_count": 1,
@@ -42330,7 +43617,7 @@
         {
           "signal_id": "SIG-E65A5F5939C966",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -45176,10 +46463,10 @@
         "display_name": "Grugliasco, Torino, Piemonte, Italia"
       },
       "signals_count": 31,
-      "new_signals": 1,
-      "enriched_signals": 4,
-      "pending_signals": 23,
-      "public_contacts_count": 27,
+      "new_signals": 0,
+      "enriched_signals": 5,
+      "pending_signals": 22,
+      "public_contacts_count": 30,
       "signals": [
         {
           "signal_id": "SIG-E4C349EEE86DE4",
@@ -45234,7 +46521,7 @@
         {
           "signal_id": "SIG-137F06352067EB",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -46409,12 +47696,13 @@
             "dork_contesto": "https://www.google.com/search?q=%22via+primo+levi+13%22+%22Grugliasco%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
+          "enrichment_status": "ERROR",
           "geocode": null,
           "radius_m": 500,
           "context": {},
           "public_entities": [],
-          "enriched_at": null
+          "enriched_at": null,
+          "enrichment_error": "HTTP Error 429: Too Many Requests"
         },
         {
           "signal_id": "SIG-D21FD38581386E",
@@ -46559,12 +47847,287 @@
             "dork_contesto": "https://www.google.com/search?q=%22corso+Canonico+Giuseppe+Allamano+34%22+%22Grugliasco%22+%28azienda+OR+associazione+OR+negozio+OR+ristorante+OR+officina+OR+agriturismo%29"
           },
           "engine_version": "2",
-          "enrichment_status": "PENDING",
-          "geocode": null,
+          "enrichment_status": "ENRICHED",
+          "geocode": {
+            "lat": 45.050834,
+            "lon": 7.6196447,
+            "display_name": "Corso Canonico Giuseppe Allamano, Circoscrizione 2, Grugliasco, Torino, Piemonte, 10142, Italia",
+            "osm_type": "way",
+            "osm_id": 966716884
+          },
           "radius_m": 500,
-          "context": {},
-          "public_entities": [],
-          "enriched_at": null
+          "context": {
+            "residential_buildings_osm": 95,
+            "public_entities_count": 24,
+            "note_residents": "Solo contesto aggregato: nessun nominativo o recapito di residente privato viene raccolto."
+          },
+          "public_entities": [
+            {
+              "name": "Decathlon",
+              "category": "COMMERCIO",
+              "address": "Corso canonico Giuseppe Allamano 143 Grugliasco",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4715010761,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Decathlon",
+              "category": "COMMERCIO",
+              "address": "Corso canonico Giuseppe Allamano 143 Grugliasco",
+              "phone_public": "+39 011 7070158",
+              "email_public": "",
+              "website": "https://www.decathlon.it/store-view/sport-shop-grugliasco-0070022400224",
+              "osm_id": 43271463,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Dpiù",
+              "category": "COMMERCIO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 87988974,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Torino Auto",
+              "category": "COMMERCIO",
+              "address": "Via Achille Grandi 8 Grugliasco",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2954044011,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Chiesa Parrocchiale del Santissimo Nome di Maria",
+              "category": "RETE_TERRITORIALE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 154838110,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Al Baretto",
+              "category": "RISTORAZIONE",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 10940423891,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Marsa Alam",
+              "category": "RISTORAZIONE",
+              "address": "Corso canonico Giuseppe Allamano 38c Torino",
+              "phone_public": "+39 011 3720262",
+              "email_public": "",
+              "website": "",
+              "osm_id": 5702866322,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Tommy e Terry",
+              "category": "RISTORAZIONE",
+              "address": "Via Achille Grandi 5",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2217328139,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Polo scolastico del Barocchio",
+              "category": "SCUOLA_CULTURA",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 635688071,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Attività/ente senza nome OSM",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 548627381,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "BlueTorino",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 4691906385,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Direzione Regionale Vigili del Fuoco Piemonte",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 307958867,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Distaccamento Grugliasco",
+              "category": "SERVIZI",
+              "address": "Corso canonico Giuseppe Allamano",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 287681360,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Esso",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 227948066,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "HUB Mobility Solutions",
+              "category": "SERVIZI",
+              "address": "via pininfarina 64/c Grugliasco",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 13930869984,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Parcheggio Area Rossa",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 83196486,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "PlanetWin",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 2912469273,
+              "osm_type": "node",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Polizia Di Stato - Quinto Reparto Mobile",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 83676853,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "TLC Regionale Vigili del Fuoco",
+              "category": "SERVIZI",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 694649389,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Giardino don Filippo Rinaldi",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 106400836,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Giardino Donatori di Organi",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 140447378,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Impianto Sportivo ASD Beppe Viola",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "Via Giovanni Palatucci 9 Torino",
+              "phone_public": "",
+              "email_public": "",
+              "website": "http://asdbeppeviola.it/",
+              "osm_id": 140427403,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Poligru - L'Oasi dello Sport",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 1314234299,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            },
+            {
+              "name": "Punto Sport",
+              "category": "SPORT_TEMPO_LIBERO",
+              "address": "Corso canonico Giuseppe Allamano 40/6 Torino",
+              "phone_public": "",
+              "email_public": "",
+              "website": "",
+              "osm_id": 755889752,
+              "osm_type": "way",
+              "source": "OpenStreetMap"
+            }
+          ],
+          "enriched_at": "2026-09-12T05:52:26+00:00"
         },
         {
           "signal_id": "SIG-F2933629C1C679",
@@ -51237,7 +52800,7 @@
         "display_name": "Beinasco, Torino, Piemonte, 10092, Italia"
       },
       "signals_count": 19,
-      "new_signals": 2,
+      "new_signals": 0,
       "enriched_signals": 5,
       "pending_signals": 12,
       "public_contacts_count": 18,
@@ -51295,7 +52858,7 @@
         {
           "signal_id": "SIG-9D5FF8CF812138",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
@@ -51340,8 +52903,7 @@
           "radius_m": 500,
           "context": {},
           "public_entities": [],
-          "enriched_at": null,
-          "enrichment_error": "HTTP Error 429: Too Many Requests"
+          "enriched_at": null
         },
         {
           "signal_id": "SIG-D243C0FB66B0A7",
@@ -52498,7 +54060,7 @@
         {
           "signal_id": "SIG-70A8FD8E7C63D6",
           "first_seen": "2026-09-12T01:10:18+00:00",
-          "is_new": true,
+          "is_new": false,
           "territorial_rank": 9999,
           "territorial_route": [
             "Susa",
