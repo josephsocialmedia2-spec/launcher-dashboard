@@ -21,6 +21,14 @@ def load_territory(path: Path = DEFAULT_PATH) -> dict:
         raise ValueError("territory.json: reference_hub mancante")
     if not isinstance(cfg.get("sinistra"), list) or not isinstance(cfg.get("destra"), list):
         raise ValueError("territory.json: sinistra/destra devono essere array")
+    hub = norm(cfg["reference_hub"])
+    left = [norm(x) for x in cfg["sinistra"]]
+    right = [norm(x) for x in cfg["destra"]]
+    if hub in left or hub in right:
+        raise ValueError("territory.json: il reference_hub deve restare CENTRO e non comparire nei lati")
+    overlap = set(left) & set(right)
+    if overlap:
+        raise ValueError("territory.json: comuni duplicati tra SINISTRA e DESTRA")
     return cfg
 
 
@@ -40,6 +48,17 @@ def communes(cfg: dict) -> list[str]:
 
 def allowed_set(cfg: dict) -> set[str]:
     return {norm(x) for x in communes(cfg)}
+
+
+def side_for(cfg: dict, comune: object) -> str:
+    key = norm(comune)
+    if key == norm(cfg.get("reference_hub")):
+        return "CENTRO"
+    if key in {norm(x) for x in cfg.get("sinistra") or []}:
+        return "SINISTRA"
+    if key in {norm(x) for x in cfg.get("destra") or []}:
+        return "DESTRA"
+    return "FUORI_LISTA"
 
 
 def rank_map(cfg: dict) -> dict[str, int]:
