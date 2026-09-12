@@ -1,9 +1,61 @@
 {
-  "version": 2,
+  "version": 4,
   "reference_hub": "Villar Dora",
-  "policy": "CENTRO_RADIALE",
-  "description": "Il territorio operativo parte da Villar Dora. I comuni sono ordinati per distanza in linea d'aria dal centro e raggruppati in anelli progressivi. I segnali dentro ogni comune sono ordinati per score e novita.",
+  "policy": "CENTRO_RADIALE_SINISTRA_DESTRA",
+  "description": "Villar Dora resta il riferimento territoriale canonico, ma Seller Radar deve accettare un Comune di lavoro dinamico. Dal Comune inserito costruisce automaticamente un'area di lavoro con estensione equivalente al corridoio operativo Condove ↔ Rivera di Almese e analizza tutti gli annunci disponibili nel perimetro, comprese frazioni e borgate.",
   "distance_bands_km": [0, 8, 15, 25, 999],
+  "ring_labels": ["CENTRO", "ANELLO_1_0_8_KM", "ANELLO_2_8_15_KM", "ANELLO_3_15_25_KM", "ANELLO_4_OLTRE_25_KM"],
+  "side_rule": "Ogni comune diverso da Villar Dora deve essere trattato con il lato configurato: SINISTRA oppure DESTRA.",
+  "seller_radar": {
+    "mode": "DYNAMIC_WORK_COMMUNE",
+    "input": "COMUNE_DI_LAVORO",
+    "reference_span": {
+      "endpoint_a": "Condove, TO, Italia",
+      "endpoint_b": "Rivera, Almese, TO, Italia",
+      "rule": "Il Comune inserito diventa il centro operativo. Il sistema applica attorno ad esso un'estensione equivalente alla distanza geografica tra Condove e Rivera di Almese, calcolata da coordinate geografiche, senza fissare manualmente un valore arbitrario."
+    },
+    "include_hamlets_and_localities": true,
+    "listing_scope": "ALL_OBSERVED_LISTINGS_IN_DYNAMIC_AREA",
+    "microzone": {
+      "shape": "SQUARE",
+      "half_side_m": 1000,
+      "rule": "Per ogni immobile geocodificato costruire un quadrato di microzona con estensione di 1 km dal punto immobile verso ogni lato e analizzare vie, attività e contesto presenti nel quadrato."
+    },
+    "street_intelligence": {
+      "enabled": true,
+      "street_by_street": true,
+      "search_engines": ["GOOGLE", "BING", "DUCKDUCKGO"],
+      "directory_queries": ["PAGINE_BIANCHE", "PAGINE_GIALLE"],
+      "crm_destination": false,
+      "purpose": "CONTEXT_DENSITY_AND_PUBLIC_INFO_ONLY",
+      "privacy_rule": "Non costruire profili di residenti. Conservare nel CRM solo dati relativi a immobili/annunci e lead leciti. I recapiti pubblici di attività, enti e professionisti restano intelligence separata; eventuali contatti telefonici devono rispettare le regole applicabili di contattabilità/RPO."
+    },
+    "nightly_precompute": {
+      "enabled": true,
+      "all_configured_communes": true,
+      "goal": "Ogni mattina un nuovo funzionario deve trovare già pre-elaborati annunci e contesto territoriale per il Comune che sceglie."
+    }
+  },
+  "mandatory_rules": {
+    "hub": "Villar Dora",
+    "radial_view_required": true,
+    "left_right_required": true,
+    "all_modules_use_this_config": true,
+    "all_market_observations_to_crm": true,
+    "competitor_listing_monitoring_required": true,
+    "private_listing_monitoring_required": true,
+    "expired_candidate_monitoring_required": true,
+    "dynamic_work_commune_required": true,
+    "microzone_square_1km_required": true,
+    "nightly_precompute_required": true
+  },
+  "market_coverage": {
+    "mode": "MANDATORY_FULL_COVERAGE_OF_CONFIGURED_SOURCES",
+    "rule": "Per ogni comune del territorio il sistema deve controllare tutte le fonti configurate e registrare ogni annuncio osservato. Se una fonte non e tecnicamente accessibile, la copertura deve risultare INCOMPLETA e non puo essere dichiarata completa.",
+    "crm_required": true,
+    "categories": ["COMPETITOR_LISTING", "FSBO", "FSBO_CANDIDATE", "EXPIRED_CANDIDATE", "EXPIRED_VERIFIED"],
+    "evidence_rule": "INCARICO_SCADUTO/EXPIRED_VERIFIED solo con evidenza esplicita. Annuncio non piu rilevato, ritirato, ripubblicato o con cambio agenzia resta EXPIRED_CANDIDATE finche non verificato."
+  },
   "sinistra": [
     "Villar Dora",
     "Chianocco",
