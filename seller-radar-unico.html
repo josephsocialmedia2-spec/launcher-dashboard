@@ -4,21 +4,102 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#070907">
 <title>F1 — Seller Radar</title>
 <style>
-:root{--p:#101510;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--blue:#74c8ff}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt);font-family:Arial,Helvetica,sans-serif}.wrap{max-width:1180px;margin:auto;padding:18px 12px 320px}.ey{color:var(--g);font-size:10px;font-weight:900;letter-spacing:.15em}.hero,.listing{background:var(--p);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}.hero{border:2px solid var(--g)}.hero h1{margin:0;font-size:clamp(30px,7vw,52px)}.communeSelect{margin-top:12px;width:100%;max-width:620px;background:#07100a;color:#fff;border:1px solid #35513d;border-radius:12px;padding:14px 15px;font-size:20px;font-weight:900}.meta{color:var(--mut);font-size:12px;line-height:1.5}.listingTop{display:flex;justify-content:space-between;gap:12px}.listingTitle{font-size:19px;font-weight:900;line-height:1.3}.source{color:var(--blue);font-size:11px;font-weight:900;margin-top:4px}.address{font-size:12px;margin-top:6px}.price{font-size:22px;font-weight:900;color:var(--g);white-space:nowrap}.actions,.streets{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 12px;border-radius:9px;background:var(--g);color:#07100a;text-decoration:none;border:0;font-size:10px;font-weight:900;cursor:pointer}.btn.alt{background:#182019;color:#fff;border:1px solid var(--line)}.micro{margin-top:10px;border-top:1px solid var(--line);padding-top:10px}.micro summary{cursor:pointer;color:var(--g);font-size:10px;font-weight:900}.street{font-size:9px;border:1px solid #405044;border-radius:999px;padding:4px 6px}.paste{width:100%;min-height:105px;background:#0b100c;color:#fff;border:1px solid var(--line);border-radius:10px;padding:9px;font-size:11px}.empty{color:var(--mut);padding:18px;text-align:center}.bottomSheet{position:fixed;left:0;right:0;bottom:0;background:#071009f8;border-top:2px solid var(--g);z-index:100;padding:8px 10px 10px;box-shadow:0 -10px 40px #0009}.sheetTop{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:7px}.sheetTitle{font-size:12px;font-weight:900;color:var(--g)}.sheetWrap{overflow:auto;max-height:255px;border:1px solid #35513d;border-radius:10px}table{border-collapse:collapse;width:100%;min-width:1850px;background:#0d130e}th,td{border-right:1px solid #2b372e;border-bottom:1px solid #2b372e;padding:8px 9px;text-align:left;font-size:10px;white-space:nowrap}th{position:sticky;top:0;background:#152018;color:var(--g);z-index:2;font-size:9px}td{color:#e8eee9}.status,.days{color:var(--g);font-weight:900}.sheetBtn,.editBtn,.saveBtn,.cancelBtn{padding:7px 9px;border-radius:8px;font-size:9px;font-weight:900;cursor:pointer}.sheetBtn{background:#182019;border:1px solid #35513d;color:#fff}.editBtn{background:#182019;border:1px solid var(--blue);color:var(--blue)}.saveBtn{background:var(--g);border:1px solid var(--g);color:#07100a}.cancelBtn{background:#241616;border:1px solid #6b3434;color:#ffb0b0}.rowInput,.rowSelect{width:100%;min-width:100px;background:#07100a;color:#fff;border:1px solid #35513d;border-radius:6px;padding:6px;font-size:10px}.notesCell .rowInput{min-width:240px}.actionCell{min-width:145px}@media(max-width:800px){.listingTop{display:block}.price{margin-top:8px}.communeSelect{font-size:17px}.wrap{padding-bottom:345px}}
+:root{--p:#101510;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--blue:#74c8ff;--red:#ff7979}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt);font-family:Arial,Helvetica,sans-serif}
+.wrap{max-width:1180px;margin:auto;padding:18px 12px 330px}
+.ey{color:var(--g);font-size:10px;font-weight:900;letter-spacing:.15em}
+.hero,.listing{background:var(--p);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}
+.hero{border:2px solid var(--g)}
+.hero h1{margin:0;font-size:clamp(30px,7vw,52px)}
+.communeSelect{margin-top:12px;width:100%;max-width:620px;background:#07100a;color:#fff;border:1px solid #35513d;border-radius:12px;padding:14px 15px;font-size:20px;font-weight:900}
+.meta{color:var(--mut);font-size:12px;line-height:1.5}
+.listingTop{display:flex;justify-content:space-between;gap:12px}
+.listingTitle{font-size:19px;font-weight:900;line-height:1.3}
+.source{color:var(--blue);font-size:11px;font-weight:900;margin-top:4px}
+.address{font-size:12px;margin-top:6px}
+.price{font-size:22px;font-weight:900;color:var(--g);white-space:nowrap}
+.actions,.streets{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 12px;border-radius:9px;background:var(--g);color:#07100a;text-decoration:none;border:0;font-size:10px;font-weight:900;cursor:pointer}
+.btn.alt{background:#182019;color:#fff;border:1px solid var(--line)}
+.micro{margin-top:10px;border-top:1px solid var(--line);padding-top:10px}
+.micro summary{cursor:pointer;color:var(--g);font-size:10px;font-weight:900}
+.street{font-size:9px;border:1px solid #405044;border-radius:999px;padding:4px 6px}
+.paste{width:100%;min-height:105px;background:#0b100c;color:#fff;border:1px solid var(--line);border-radius:10px;padding:9px;font-size:11px}
+.empty{color:var(--mut);padding:18px;text-align:center}
+.bottomSheet{position:fixed;left:0;right:0;bottom:0;background:#071009f8;border-top:2px solid var(--g);z-index:100;padding:8px 10px 10px;box-shadow:0 -10px 40px #0009}
+.sheetTop{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:7px}
+.sheetTitle{font-size:12px;font-weight:900;color:var(--g)}
+.sheetWrap{overflow:auto;max-height:265px;border:1px solid #35513d;border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:2450px;background:#0d130e}
+th,td{border-right:1px solid #2b372e;border-bottom:1px solid #2b372e;padding:8px 9px;text-align:left;font-size:10px;white-space:nowrap}
+th{position:sticky;top:0;background:#152018;color:var(--g);z-index:2;font-size:9px}
+td{color:#e8eee9}
+.status,.days{color:var(--g);font-weight:900}
+.sheetBtn,.editBtn,.saveBtn,.cancelBtn,.deleteBtn{padding:7px 9px;border-radius:8px;font-size:9px;font-weight:900;cursor:pointer}
+.sheetBtn{background:#182019;border:1px solid #35513d;color:#fff}
+.editBtn{background:#182019;border:1px solid var(--blue);color:var(--blue)}
+.saveBtn{background:var(--g);border:1px solid var(--g);color:#07100a}
+.cancelBtn{background:#241616;border:1px solid #6b3434;color:#ffb0b0}
+.deleteBtn{background:#2a1010;border:1px solid #8b3333;color:#ff9b9b}
+.rowInput,.rowSelect{width:100%;min-width:100px;background:#07100a;color:#fff;border:1px solid #35513d;border-radius:6px;padding:6px;font-size:10px}
+.notesCell .rowInput{min-width:240px}
+.compostaCell .rowInput{min-width:320px}
+.actionCell{min-width:220px}
+@media(max-width:800px){.listingTop{display:block}.price{margin-top:8px}.communeSelect{font-size:17px}.wrap{padding-bottom:355px}}
 </style>
 <script defer src="f1-acquisition-core.js"></script>
 </head>
-<body><main class="wrap">
+<body>
+<main class="wrap">
 <div class="ey">F1 IMMOBILIARE · SELLER RADAR</div>
 <section class="hero"><h1 id="heroTitle">IN VENDITA A</h1><select id="workCommune" class="communeSelect"></select><p class="meta" id="areaInfo">Caricamento…</p></section>
 <section id="list"><div class="empty">Caricamento annunci…</div></section>
 </main>
-<div class="bottomSheet"><div class="sheetTop"><div class="sheetTitle">ARCHIVIO CONTATTI TERRITORIALI · SEMPRE VISIBILE</div><div><button class="sheetBtn" onclick="addRow()">+ NUOVA RIGA</button><button class="sheetBtn" onclick="exportCsv()">ESPORTA EXCEL</button></div></div><div class="sheetWrap"><table id="contactsTable"><thead><tr><th>DATA ANNUNCIO</th><th>IN VENDITA DA</th><th>COMUNE</th><th>NOME</th><th>COGNOME</th><th>VIA</th><th>CIVICO</th><th>TELEFONO</th><th>EMAIL</th><th>FACEBOOK</th><th>INSTAGRAM</th><th>TIKTOK</th><th>YOUTUBE</th><th>FONTE</th><th>NOTE</th><th>STATO</th><th>AZIONI</th></tr></thead><tbody id="contactBody"></tbody></table></div></div>
+
+<div class="bottomSheet">
+  <div class="sheetTop">
+    <div class="sheetTitle">ARCHIVIO CONTATTI TERRITORIALI · SEMPRE VISIBILE</div>
+    <div><button class="sheetBtn" onclick="addRow()">+ NUOVA RIGA</button><button class="sheetBtn" onclick="exportCsv()">ESPORTA EXCEL</button></div>
+  </div>
+  <div class="sheetWrap">
+    <table id="contactsTable">
+      <thead><tr>
+        <th>DATA ANNUNCIO</th><th>IN VENDITA DA</th><th>COMUNE</th><th>NOME</th><th>COGNOME</th><th>VIA</th><th>CIVICO</th>
+        <th>PREZZO</th><th>TIPOLOGIA</th><th>COMPOSTA</th><th>TELEFONO</th><th>EMAIL</th><th>FACEBOOK</th><th>INSTAGRAM</th>
+        <th>TIKTOK</th><th>YOUTUBE</th><th>FONTE</th><th>NOTE</th><th>STATO</th><th>AZIONI</th>
+      </tr></thead>
+      <tbody id="contactBody"></tbody>
+    </table>
+  </div>
+</div>
+
 <script>
 const VIEW=(new URLSearchParams(location.search).get('view')||'vendita').toLowerCase();
 let ROWS=[],AREA=[],TERRITORY={},INTEL={signals:[],commune_cache:[]};
 const $=id=>document.getElementById(id),STORE='f1_territory_contacts_v1';
-const F=['data_annuncio','in_vendita_da','comune','nome','cognome','via','civico','telefono','email','facebook','instagram','tiktok','youtube','fonte','note','stato'];
+const F=['data_annuncio','in_vendita_da','comune','nome','cognome','via','civico','prezzo','tipologia','composta','telefono','email','facebook','instagram','tiktok','youtube','fonte','note','stato'];
+
+const COMPOSITION_LEGEND={
+  S:['soggiorno','soggiorni'],
+  K:['cucina separata','cucine separate'],
+  AK:['angolo cottura','angoli cottura'],
+  C:['camera','camere'],
+  CM:['camera matrimoniale','camere matrimoniali'],
+  CS:['camera singola/cameretta','camere singole/camerette'],
+  B:['bagno','bagni'],
+  WC:['servizio igienico','servizi igienici'],
+  I:['ingresso','ingressi'],
+  DIS:['disimpegno','disimpegni'],
+  RIP:['ripostiglio','ripostigli'],
+  BAL:['balcone','balconi'],
+  TERR:['terrazzo','terrazzi'],
+  CANT:['cantina','cantine'],
+  BOX:['box/autorimessa','box/autorimesse'],
+  PA:['posto auto','posti auto'],
+  GIARD:['giardino','giardini']
+};
+
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function norm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim()}
 function key(c,v){return norm(c)+'|'+norm(v)}
@@ -35,6 +116,7 @@ function directoryQuery(t){const comune=String(t.comune||'').trim(),via=String(t
 function directoryUrl(kind,t){const q=encodeURIComponent(directoryQuery(t));return kind==='pb'?'https://www.paginebianche.it/ricerca?qs=&dv='+q:'https://www.paginegialle.it/ricerca?qs=&dv='+q}
 function openDirectory(kind,encoded){const t=JSON.parse(decodeURIComponent(encoded));window.open(directoryUrl(kind,t),'_blank','noopener')}
 function applyArea(){const name=$('workCommune').value,center=findCenter(name),idx=intelIndex(),radius=Number(INTEL.reference_span&&INTEL.reference_span.distance_km)||0;let base=[];if(!center)base=ROWS.filter(r=>norm(r.comune)===norm(name));else base=ROWS.filter(r=>{const s=idx.get(key(r.comune,r.via));if(!s||!s.geocode)return norm(r.comune)===norm(name);return hav(center,s.geocode)<=radius});AREA=applyView(base);$('areaInfo').textContent=VIEW==='scaduti'?`${AREA.length} immobili scaduti / da verificare nell'area di ${name}.`:`${AREA.length} annunci in vendita nell'area di ${name}.`;render()}
+
 function dateFmt(d){return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear()}
 function parseDateString(s){const m=String(s||'').match(/\b(\d{1,2})[\/.\-](\d{1,2})[\/.\-](\d{2,4})\b/);if(!m)return null;let y=+m[3];if(y<100)y+=2000;const d=new Date(y,+m[2]-1,+m[1]);return isNaN(d)?null:d}
 function extractAnnouncementDate(text,fallback){const raw=String(text||''),n=norm(raw),today=new Date();today.setHours(0,0,0,0);let m=n.match(/(\d+)\s+giorn[oi]\s+fa/);if(m){const d=new Date(today);d.setDate(d.getDate()-Number(m[1]));return dateFmt(d)}m=n.match(/(\d+)\s+settiman[ae]\s+fa/);if(m){const d=new Date(today);d.setDate(d.getDate()-Number(m[1])*7);return dateFmt(d)}if(/\bieri\b/.test(n)){const d=new Date(today);d.setDate(d.getDate()-1);return dateFmt(d)}if(/\boggi\b/.test(n)&&/(pubblic|inser|annuncio)/.test(n))return dateFmt(today);const labelled=raw.match(/(?:data\s*annuncio|pubblicat[oa]\s*(?:il)?|inserit[oa]\s*(?:il)?|annuncio\s*del)\s*[:\-]?\s*(\d{1,2}[\/.\-]\d{1,2}[\/.\-]\d{2,4})/i);if(labelled){const d=parseDateString(labelled[1]);if(d)return dateFmt(d)}const generic=parseDateString(raw);if(generic)return dateFmt(generic);const f=parseDateString(fallback);return f?dateFmt(f):''}
@@ -44,18 +126,173 @@ function socialUrl(text,domain){const re=new RegExp('https?:\\/\\/(?:www\\.)?'+d
 function extractPhone(text){const m=String(text||'').match(/(?:\+39[\s.-]*)?(?:(?:0\d{1,3}|3\d{2})[\s.\/-]*)\d(?:[\s.\/-]*\d){5,8}/);return m?m[0].replace(/\s+/g,' ').trim():''}
 function extractEmail(text){const m=String(text||'').match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);return m?m[0]:''}
 function splitStreet(via){const s=String(via||'').trim();if(!validVia(s))return {via:'',civico:''};const m=s.match(/^(.*?)[,\s]+(\d+[A-Za-z]?)(?:\s|$)/);return m?{via:m[1].trim(),civico:m[2]}:{via:s,civico:''}}
-function parsePasted(text,ctx){const lines=String(text||'').split(/\n+/).map(x=>x.trim()).filter(Boolean),seen=[];for(const l of lines)if(!seen.some(x=>norm(x)===norm(l)))seen.push(l);const st=splitStreet(ctx.via),data=extractAnnouncementDate(text,ctx.data_annuncio||'');return {data_annuncio:data,in_vendita_da:daysSince(data),comune:ctx.comune||'',nome:labelled(text,'nome'),cognome:labelled(text,'cognome'),via:st.via,civico:st.civico||labelled(text,'civico'),telefono:extractPhone(text),email:extractEmail(text),facebook:socialUrl(text,'facebook.com'),instagram:socialUrl(text,'instagram.com'),tiktok:socialUrl(text,'tiktok.com'),youtube:socialUrl(text,'youtube.com'),fonte:ctx.source||labelled(text,'fonte')||'Dati incollati',note:seen.slice(0,5).join(' | '),stato:'DA LAVORARE'} }
+
+function extractPrice(text,fallback){
+  const raw=String(text||'');
+  const labelledPrice=raw.match(/(?:prezzo|richiesta|euro)\s*[:\-]?\s*€?\s*([0-9][0-9.\s]{2,})/i);
+  const euro=raw.match(/€\s*([0-9][0-9.\s]{2,})|([0-9][0-9.\s]{2,})\s*€/);
+  const candidate=(labelledPrice&&labelledPrice[1])||(euro&&(euro[1]||euro[2]))||fallback||'';
+  const n=numericPrice(candidate);
+  return n?new Intl.NumberFormat('it-IT',{maximumFractionDigits:0}).format(n)+' €':'';
+}
+
+function extractTipologia(text,fallback,title){
+  const direct=labelled(text,'tipologia')||labelled(text,'tipo immobile')||String(fallback||'').trim();
+  if(direct)return direct;
+  const hay=norm(String(text||'')+' '+String(title||''));
+  const types=[
+    ['casa indipendente','Casa indipendente'],['villa bifamiliare','Villa bifamiliare'],['villa','Villa'],
+    ['appartamento','Appartamento'],['quadrilocale','Quadrilocale'],['trilocale','Trilocale'],
+    ['bilocale','Bilocale'],['monolocale','Monolocale'],['attico','Attico'],['mansarda','Mansarda'],
+    ['rustico','Rustico'],['casale','Casale'],['terreno','Terreno'],['locale commerciale','Locale commerciale'],
+    ['negozio','Negozio'],['ufficio','Ufficio'],['box','Box'],['garage','Garage']
+  ];
+  for(const [needle,label] of types)if(hay.includes(needle))return label;
+  return '';
+}
+
+function parseCompositionCodes(input){
+  const text=String(input||'').toUpperCase();
+  const found=[],unknown=[];
+  const seen=new Set();
+  const re=/\b([A-Z]{1,5})\s*[:=X]\s*(\d+)\b/g;
+  let m;
+  while((m=re.exec(text))){
+    const sigla=m[1],qty=Number(m[2]);
+    const token=sigla+':'+qty;
+    if(seen.has(token))continue;
+    seen.add(token);
+    if(COMPOSITION_LEGEND[sigla])found.push({sigla,qty});
+    else unknown.push(token);
+  }
+  return {found,unknown};
+}
+function compositionText(parts){
+  const out=parts.found.map(({sigla,qty})=>{
+    const names=COMPOSITION_LEGEND[sigla];
+    return `${qty} ${qty===1?names[0]:names[1]}`;
+  });
+  if(parts.unknown.length)out.push('SIGLA NON RICONOSCIUTA: '+parts.unknown.join(', '));
+  return out.join(', ');
+}
+function extractComposition(text,fallback){
+  const raw=String(text||'');
+  const labelledComp=labelled(raw,'composta')||labelled(raw,'composizione')||labelled(raw,'composizione immobiliare');
+  const primary=labelledComp||raw;
+  let parsed=parseCompositionCodes(primary);
+  if(!parsed.found.length&&!parsed.unknown.length&&fallback)parsed=parseCompositionCodes(fallback);
+  if(parsed.found.length||parsed.unknown.length)return compositionText(parsed);
+  if(labelledComp)return labelledComp;
+  if(fallback)return String(fallback).trim();
+  return '';
+}
+
+function parsePasted(text,ctx){
+  const lines=String(text||'').split(/\n+/).map(x=>x.trim()).filter(Boolean),seen=[];
+  for(const l of lines)if(!seen.some(x=>norm(x)===norm(l)))seen.push(l);
+  const st=splitStreet(ctx.via),data=extractAnnouncementDate(text,ctx.data_annuncio||'');
+  return {
+    data_annuncio:data,
+    in_vendita_da:daysSince(data),
+    comune:ctx.comune||'',
+    nome:labelled(text,'nome'),
+    cognome:labelled(text,'cognome'),
+    via:st.via,
+    civico:st.civico||labelled(text,'civico'),
+    prezzo:extractPrice(text,ctx.prezzo||''),
+    tipologia:extractTipologia(text,ctx.tipologia||'',ctx.title||''),
+    composta:extractComposition(text,ctx.composta||''),
+    telefono:extractPhone(text),
+    email:extractEmail(text),
+    facebook:socialUrl(text,'facebook.com'),
+    instagram:socialUrl(text,'instagram.com'),
+    tiktok:socialUrl(text,'tiktok.com'),
+    youtube:socialUrl(text,'youtube.com'),
+    fonte:ctx.source||labelled(text,'fonte')||'Dati incollati',
+    note:seen.slice(0,5).join(' | '),
+    stato:'DA LAVORARE'
+  };
+}
 function cleanPaste(id,encoded){const ta=$(id),ctx=JSON.parse(decodeURIComponent(encoded)),row=parsePasted(ta.value,ctx);ta.value=row.note.replace(/ \| /g,'\n');addContact(row)}
-function render(){const idx=intelIndex();$('list').innerHTML=AREA.length?AREA.map((t,i)=>{const s=idx.get(key(t.comune,t.via)),streets=(s&&s.streets)||[],sourceUrl=String(t.source_url||''),title=t.immobile||`${t.via||'Immobile'} · ${t.comune||''}`,pid='paste_'+i,checkUrl=controlUrl(t),dirCtx=encodeURIComponent(JSON.stringify({comune:t.comune||'',via:t.via||''})),saveCtx=encodeURIComponent(JSON.stringify({comune:t.comune||'',via:t.via||'',source:t.source||'',data_annuncio:t.data_annuncio||t.first_seen||t.published_date||''}));return `<article class="listing"><div class="listingTop"><div><div class="ey">${i+1}/${AREA.length}</div><div class="source">${esc(t.source||'Fonte non indicata')}</div><div class="listingTitle">${esc(title)}</div><div class="address">${esc([t.via,t.comune].filter(Boolean).join(', '))}</div></div><div class="price">${esc(formatPrice(t.prezzo))}</div></div><div class="actions">${sourceUrl?`<a class="btn" target="_blank" rel="noopener" href="${esc(sourceUrl)}">APRI ANNUNCIO</a>`:''}<a class="btn alt" target="_blank" rel="noopener" href="${esc(checkUrl)}">CONTROLLA</a><button class="btn alt" onclick="openDirectory('pb','${dirCtx}')">PAGINE BIANCHE</button><button class="btn alt" onclick="openDirectory('pg','${dirCtx}')">PAGINE GIALLE</button></div><div class="meta">PAGINE BIANCHE / GIALLE: ${esc(directoryQuery(t))}</div>${s?`<details class="micro"><summary>VIE VICINE E DATI TERRITORIALI</summary><div class="streets">${streets.slice(0,40).map(v=>`<span class="street">${esc(v.street||v)}</span>`).join('')}</div><p class="meta">Incolla il testo trovato. Il sistema estrae solo i dati utili all'archivio e calcola automaticamente IN VENDITA DA.</p><textarea id="${pid}" class="paste" placeholder="CTRL+A → COPIA → INCOLLA QUI"></textarea><div class="actions"><button class="btn" onclick="cleanPaste('${pid}','${saveCtx}')">PULISCI + SALVA</button></div></details>`:''}</article>`}).join(''):`<div class="empty">${VIEW==='scaduti'?'Nessun immobile scaduto / da verificare nell’area selezionata.':'Nessun annuncio in vendita trovato nell’area selezionata.'}</div>`}
+
+function render(){
+  const idx=intelIndex();
+  $('list').innerHTML=AREA.length?AREA.map((t,i)=>{
+    const s=idx.get(key(t.comune,t.via)),streets=(s&&s.streets)||[],sourceUrl=String(t.source_url||''),
+      title=t.immobile||`${t.via||'Immobile'} · ${t.comune||''}`,pid='paste_'+i,checkUrl=controlUrl(t),
+      dirCtx=encodeURIComponent(JSON.stringify({comune:t.comune||'',via:t.via||''})),
+      saveCtx=encodeURIComponent(JSON.stringify({
+        comune:t.comune||'',via:t.via||'',source:t.source||'',
+        data_annuncio:t.data_annuncio||t.published_date||t.pubblicato_il||'',
+        prezzo:t.prezzo||'',tipologia:t.tipologia||t.tipo||'',title,
+        composta:t.composta||t.composizione||''
+      }));
+    return `<article class="listing"><div class="listingTop"><div><div class="ey">${i+1}/${AREA.length}</div><div class="source">${esc(t.source||'Fonte non indicata')}</div><div class="listingTitle">${esc(title)}</div><div class="address">${esc([t.via,t.comune].filter(Boolean).join(', '))}</div></div><div class="price">${esc(formatPrice(t.prezzo))}</div></div><div class="actions">${sourceUrl?`<a class="btn" target="_blank" rel="noopener" href="${esc(sourceUrl)}">APRI ANNUNCIO</a>`:''}<a class="btn alt" target="_blank" rel="noopener" href="${esc(checkUrl)}">CONTROLLA</a><button class="btn alt" onclick="openDirectory('pb','${dirCtx}')">PAGINE BIANCHE</button><button class="btn alt" onclick="openDirectory('pg','${dirCtx}')">PAGINE GIALLE</button></div><div class="meta">PAGINE BIANCHE / GIALLE: ${esc(directoryQuery(t))}</div>${s?`<details class="micro"><summary>VIE VICINE E DATI TERRITORIALI</summary><div class="streets">${streets.slice(0,40).map(v=>`<span class="street">${esc(v.street||v)}</span>`).join('')}</div><p class="meta">Incolla il testo trovato. Il sistema estrae data, prezzo, tipologia, composizione, recapiti e calcola automaticamente IN VENDITA DA.</p><textarea id="${pid}" class="paste" placeholder="CTRL+A → COPIA → INCOLLA QUI"></textarea><div class="actions"><button class="btn" onclick="cleanPaste('${pid}','${saveCtx}')">PULISCI + SALVA</button></div></details>`:''}</article>`;
+  }).join(''):`<div class="empty">${VIEW==='scaduti'?'Nessun immobile scaduto / da verificare nell’area selezionata.':'Nessun annuncio in vendita trovato nell’area selezionata.'}</div>`;
+}
+
 function normalizeRow(r){const x={};for(const f of F)x[f]=r&&r[f]?String(r[f]):'';x.in_vendita_da=daysSince(x.data_annuncio);return x}
 function contacts(){try{return (JSON.parse(localStorage.getItem(STORE)||'[]')||[]).map(normalizeRow)}catch{return[]}}
 function saveContacts(a){localStorage.setItem(STORE,JSON.stringify((a||[]).map(normalizeRow)));renderContacts()}
 function addContact(x){const a=contacts();a.unshift(normalizeRow(x));saveContacts(a)}
 function addRow(){addContact({comune:$('workCommune').value||'',stato:'DA LAVORARE'});setTimeout(()=>editRow(document.querySelector('#contactBody .editBtn')),50)}
-function renderContacts(){const a=contacts();$('contactBody').innerHTML=a.map((r,i)=>`<tr data-i="${i}">${F.map(f=>`<td class="${f==='note'?'notesCell ':''}${f==='stato'?'status ':''}${f==='in_vendita_da'?'days':''}">${esc(r[f]||'—')}</td>`).join('')}<td class="actionCell"><button class="editBtn" onclick="editRow(this)">MODIFICA</button></td></tr>`).join('')}
-function editRow(btn){const row=btn.closest('tr'),i=+row.dataset.i,a=contacts(),r=a[i];F.forEach((f,j)=>{if(f==='in_vendita_da'){row.cells[j].innerHTML=`<input class="rowInput" value="${esc(daysSince(r.data_annuncio))}" readonly>`;return}row.cells[j].innerHTML=f==='stato'?`<select class="rowSelect"><option>DA LAVORARE</option><option>VERIFICATO</option><option>CONTATTATO</option><option>DA RICHIAMARE</option><option>ARCHIVIATO</option></select>`:`<input class="rowInput" value="${esc(r[f]||'')}">`;if(f==='stato')row.cells[j].querySelector('select').value=r[f]||'DA LAVORARE'});row.cells[F.length].innerHTML='<button class="saveBtn" onclick="saveRow(this)">SALVA</button> <button class="cancelBtn" onclick="renderContacts()">ANNULLA</button>'}
-function saveRow(btn){const row=btn.closest('tr'),i=+row.dataset.i,a=contacts();F.forEach((f,j)=>{if(f!=='in_vendita_da')a[i][f]=row.cells[j].querySelector('input,select').value.trim()});a[i].in_vendita_da=daysSince(a[i].data_annuncio);saveContacts(a)}
-function exportCsv(){const a=contacts(),labels=['DATA ANNUNCIO','IN VENDITA DA','COMUNE','NOME','COGNOME','VIA','CIVICO','TELEFONO','EMAIL','FACEBOOK','INSTAGRAM','TIKTOK','YOUTUBE','FONTE','NOTE','STATO'],rows=[labels,...a.map(r=>F.map(f=>r[f]||''))],csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\n'),blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),u=URL.createObjectURL(blob),x=document.createElement('a');x.href=u;x.download='F1_Archivio_Contatti_Territoriali.csv';x.click();URL.revokeObjectURL(u)}
-async function load(){renderContacts();$('heroTitle').textContent=VIEW==='scaduti'?'SCADUTI A':'IN VENDITA A';try{const [cfg,feed,intel]=await Promise.all([F1AcquisitionCore.loadConfig(),F1AcquisitionCore.loadPublicFeed(),fetch('data/neighborhood_intelligence.json',{cache:'no-store'}).then(r=>r.json())]);TERRITORY=cfg.territory;ROWS=feed.tasks||[];INTEL=intel||INTEL;const names=[...(TERRITORY.sinistra||[]),...(TERRITORY.destra||[])];$('workCommune').innerHTML=[...new Set(names)].map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');$('workCommune').value=TERRITORY.reference_hub||names[0]||'';applyArea()}catch(e){$('list').innerHTML='<div class="empty">Seller Radar non disponibile: '+esc(e.message)+'</div>'}}
-$('workCommune').addEventListener('change',applyArea);window.addEventListener('load',load);
-</script></body></html>
+
+function renderContacts(){
+  const a=contacts();
+  $('contactBody').innerHTML=a.map((r,i)=>`<tr data-i="${i}">${F.map(f=>`<td class="${f==='note'?'notesCell ':''}${f==='composta'?'compostaCell ':''}${f==='stato'?'status ':''}${f==='in_vendita_da'?'days':''}">${esc(r[f]||'—')}</td>`).join('')}<td class="actionCell"><button class="editBtn" onclick="editRow(this)">MODIFICA</button> <button class="deleteBtn" onclick="deleteRow(this)">ELIMINA</button></td></tr>`).join('');
+}
+function editRow(btn){
+  const row=btn.closest('tr'),i=+row.dataset.i,a=contacts(),r=a[i];
+  F.forEach((f,j)=>{
+    if(f==='in_vendita_da'){row.cells[j].innerHTML=`<input class="rowInput" value="${esc(daysSince(r.data_annuncio))}" readonly>`;return}
+    row.cells[j].innerHTML=f==='stato'
+      ?`<select class="rowSelect"><option>DA LAVORARE</option><option>VERIFICATO</option><option>CONTATTATO</option><option>DA RICHIAMARE</option><option>ARCHIVIATO</option></select>`
+      :`<input class="rowInput" value="${esc(r[f]||'')}">`;
+    if(f==='stato')row.cells[j].querySelector('select').value=r[f]||'DA LAVORARE';
+  });
+  row.cells[F.length].innerHTML='<button class="saveBtn" onclick="saveRow(this)">SALVA</button> <button class="cancelBtn" onclick="renderContacts()">ANNULLA</button> <button class="deleteBtn" onclick="deleteRow(this)">ELIMINA</button>';
+}
+function saveRow(btn){
+  const row=btn.closest('tr'),i=+row.dataset.i,a=contacts();
+  F.forEach((f,j)=>{if(f!=='in_vendita_da')a[i][f]=row.cells[j].querySelector('input,select').value.trim()});
+  a[i].in_vendita_da=daysSince(a[i].data_annuncio);
+  saveContacts(a);
+}
+function deleteRow(btn){
+  const row=btn.closest('tr'),i=+row.dataset.i;
+  if(!window.confirm('Eliminare definitivamente questo record?'))return;
+  const a=contacts();
+  a.splice(i,1);
+  saveContacts(a);
+}
+function exportCsv(){
+  const a=contacts(),
+    labels=['DATA ANNUNCIO','IN VENDITA DA','COMUNE','NOME','COGNOME','VIA','CIVICO','PREZZO','TIPOLOGIA','COMPOSTA','TELEFONO','EMAIL','FACEBOOK','INSTAGRAM','TIKTOK','YOUTUBE','FONTE','NOTE','STATO'],
+    rows=[labels,...a.map(r=>F.map(f=>r[f]||''))],
+    csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(';')).join('\n'),
+    blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),u=URL.createObjectURL(blob),x=document.createElement('a');
+  x.href=u;x.download='F1_Archivio_Contatti_Territoriali.csv';x.click();URL.revokeObjectURL(u);
+}
+
+async function load(){
+  renderContacts();
+  $('heroTitle').textContent=VIEW==='scaduti'?'SCADUTI A':'IN VENDITA A';
+  try{
+    const [cfg,feed,intel]=await Promise.all([
+      F1AcquisitionCore.loadConfig(),
+      F1AcquisitionCore.loadPublicFeed(),
+      fetch('data/neighborhood_intelligence.json',{cache:'no-store'}).then(r=>r.json())
+    ]);
+    TERRITORY=cfg.territory;ROWS=feed.tasks||[];INTEL=intel||INTEL;
+    const names=[...(TERRITORY.sinistra||[]),...(TERRITORY.destra||[])];
+    $('workCommune').innerHTML=[...new Set(names)].map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+    $('workCommune').value=TERRITORY.reference_hub||names[0]||'';
+    applyArea();
+  }catch(e){
+    $('list').innerHTML='<div class="empty">Seller Radar non disponibile: '+esc(e.message)+'</div>';
+  }
+}
+$('workCommune').addEventListener('change',applyArea);
+window.addEventListener('load',load);
+</script>
+</body></html>
