@@ -78,9 +78,22 @@ class AcquisitionDailyTests(unittest.TestCase):
         self.assertEqual(len(payload["tasks"]), 1)
         self.assertEqual(payload["tasks"][0]["comune"], "Villar Dora")
         mod.assert_public_safe(payload)
-        dump = str(payload).lower()
-        self.assertNotIn("telefono", dump)
-        self.assertNotIn("email", dump)
+
+        forbidden = {
+            "telefono", "phone", "email", "nome", "cognome",
+            "phone_public", "email_public", "public_entities",
+        }
+
+        def assert_no_forbidden_keys(value):
+            if isinstance(value, dict):
+                for key, child in value.items():
+                    self.assertNotIn(key.lower(), forbidden)
+                    assert_no_forbidden_keys(child)
+            elif isinstance(value, list):
+                for child in value:
+                    assert_no_forbidden_keys(child)
+
+        assert_no_forbidden_keys(payload)
 
     def test_task_ids_are_stable(self):
         signal = {
