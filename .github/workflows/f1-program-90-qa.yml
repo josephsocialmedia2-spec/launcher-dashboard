@@ -6,6 +6,7 @@ on:
       - 'program-90.html'
       - 'program-90*.js'
       - 'tests/program-90.spec.js'
+      - 'tests/program-90-point7.spec.js'
       - 'tests/program-90-live.spec.js'
       - '.github/workflows/f1-program-90-qa.yml'
   workflow_dispatch:
@@ -26,15 +27,20 @@ jobs:
           node --check program-90.js
           node --check program-90-widget.js
           node --check tests/program-90.spec.js
+          node --check tests/program-90-point7.spec.js
           node --check tests/program-90-live.spec.js
           grep -q 'id="program90Widget"' index.html
           grep -q 'PROGRAMMA 90 GIORNI' program-90.html
           grep -q 'CHIUDI GIORNATA' program-90.html
           grep -q 'RIVEDI OBIETTIVI' program-90.html
+          grep -q 'id="noAppointmentPanel"' program-90.html
+          grep -q 'F1-006' program-90.html
+          grep -q 'F1-007' program-90.html
           grep -q "F1_90_DAY_PROGRAM" program-90.js
           grep -q "F1_90_DAY_DAY" program-90.js
           grep -q "F1_90_DAY_CLOSED" program-90.js
           grep -q "F1_90_GOAL_REVIEW" program-90.js
+          grep -q "F1_90_NO_APPOINTMENT_FSBO_EXPIRED" program-90.js
           ! grep -q 'localStorage' program-90.js
           ! grep -q 'localStorage' program-90-widget.js
       - name: Install browser QA
@@ -42,7 +48,7 @@ jobs:
           npm install
           npx playwright install --with-deps chromium
       - name: Full Program 90 day E2E
-        run: npx playwright test tests/program-90.spec.js --project=desktop-chromium
+        run: npx playwright test tests/program-90.spec.js tests/program-90-point7.spec.js --project=desktop-chromium
       - name: CRM unified regression
         run: npx playwright test tests/crm-full-e2e.spec.js tests/crm-excel-import.spec.js --project=desktop-chromium
       - name: Existing production modules regression
@@ -58,7 +64,9 @@ jobs:
               && curl -fsSL "$base/program-90.js?qa=$RANDOM" -o /tmp/p90js \
               && grep -q 'id="program90Widget"' /tmp/i \
               && grep -q 'CHIUDI GIORNATA' /tmp/p90 \
-              && grep -q 'F1_90_DAY_PROGRAM' /tmp/p90js; then
+              && grep -q 'id="noAppointmentPanel"' /tmp/p90 \
+              && grep -q 'F1_90_DAY_PROGRAM' /tmp/p90js \
+              && grep -q 'F1_90_NO_APPOINTMENT_FSBO_EXPIRED' /tmp/p90js; then
               deployed=1
               break
             fi
