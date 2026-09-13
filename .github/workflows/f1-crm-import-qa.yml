@@ -59,8 +59,18 @@ jobs:
           grep -q "anonKey: 'sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu'" supabase-config.js
           grep -q 'crm-auth-guard.js?v=20260913-auth2' crm.html
           grep -q 'f1-acquisition-data.js?v=20260913-auth2' crm.html
+          grep -q 'async function pullLeads(){requireCloud();' f1-acquisition-data.js
+          grep -q 'async function pullTasks(){requireCloud();' f1-acquisition-data.js
+          grep -q 'async function pullInteractions(){requireCloud();' f1-acquisition-data.js
+          grep -q 'privateData=cloud?await Promise.all' f1-acquisition-data.js
           if grep -q "url: localStorage.getItem('f1SupabaseUrl')" supabase-config.js; then
             echo 'Legacy browser backend override forbidden for canonical CRM'
+            exit 1
+          fi
+          if grep -q 'if(!cloudReady())return Core().localLeads()' f1-acquisition-data.js \
+            || grep -q 'if(!cloudReady())return Core().localTasks()' f1-acquisition-data.js \
+            || grep -q 'if(!cloudReady())return localInteractions()' f1-acquisition-data.js; then
+            echo 'Local CRM fallback is forbidden: Supabase must remain the only CRM source of truth'
             exit 1
           fi
           if grep -R -E 'service_role|sb_secret_|sk-[A-Za-z0-9_-]{20,}|OPENAI_API_KEY|api\.openai\.com' crm.html crm-auth-guard.js crm-import-app.js supabase-sync.js setup-cloud.html; then
@@ -114,6 +124,9 @@ jobs:
               && grep -q "url: 'https://nqnmlsmeiynxbdojeyjt.supabase.co'" /tmp/config.js \
               && grep -q 'ensureSession' /tmp/sync.js \
               && grep -q 'ACCESSO SUPABASE NEGATO' /tmp/data.js \
+              && grep -q 'async function pullLeads(){requireCloud();' /tmp/data.js \
+              && grep -q 'async function pullTasks(){requireCloud();' /tmp/data.js \
+              && grep -q 'async function pullInteractions(){requireCloud();' /tmp/data.js \
               && grep -q 'ACCEDI AL CRM' /tmp/setup.html; then ok=1; break; fi
             sleep 5
           done
