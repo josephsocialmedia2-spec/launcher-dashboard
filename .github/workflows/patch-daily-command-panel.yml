@@ -1,0 +1,33 @@
+name: Patch Daily Command Panel
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-daily-command-panel.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wire daily command panel
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          css='<link rel="stylesheet" href="daily-command-panel.css?v=20260913-daily1">\n'
+          js='<script src="daily-command-panel.js?v=20260913-daily1"></script>\n'
+          if 'daily-command-panel.css' not in s:
+              s=s.replace('</head>',css+'</head>',1)
+          if 'daily-command-panel.js' not in s:
+              s=s.replace('</body>',js+'</body>',1)
+          p.write_text(s)
+          PY
+          grep -q 'daily-command-panel.css' index.html
+          grep -q 'daily-command-panel.js' index.html
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Wire daily operational command panel into dashboard'
+          git push
