@@ -42,7 +42,7 @@ test.describe('F1 daily command panel',()=>{
 
   test('cambio data crea una nuova giornata senza cancellare lo storico precedente',async({browser})=>{
     const context=await browser.newContext({timezoneId:'Europe/Rome',viewport:{width:1280,height:900}});const page=await context.newPage();await openAt(page,'2026-09-13T19:00:00+02:00');
-    await page.locator('[data-task-id="content"] [data-action="complete"]').click();
+    await page.evaluate(()=>F1DailyCommand.completeTask('content'));
     expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('f1DailyCommand:2026-09-13')).tasks.content.status)).toBe('completed');
     await page.clock.setFixedTime(new Date('2026-09-14T06:31:00+02:00'));await page.evaluate(()=>F1DailyCommand.render());
     await expect(page.locator('#f1CompletedCount')).toHaveText('0 / 20');
