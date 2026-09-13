@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#070907">
+<title>F1 · Nuova Opportunità</title>
+<style>
+:root{--bg:#070907;--p:#101510;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--red:#ff6666;--blue:#74c8ff}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt);font-family:Arial,Helvetica,sans-serif}.wrap{max-width:1440px;margin:auto;padding:14px 14px 90px}.topbar{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px 0}.ey{font-size:10px;font-weight:900;letter-spacing:.14em;color:var(--g)}h1{margin:3px 0;font-size:clamp(26px,5vw,42px)}.mut{color:var(--mut);font-size:11px;line-height:1.5}.btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 13px;border-radius:9px;border:1px solid var(--line);background:#151c17;color:#fff;text-decoration:none;font-size:10px;font-weight:900;cursor:pointer}.btn.primary{background:var(--g);border-color:var(--g);color:#07100a}.btn.red{border-color:#673838;color:#ffb0b0;background:#281313}.btn:disabled{opacity:.35;cursor:not-allowed}.panel{background:var(--p);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}.creator{max-width:900px;margin:26px auto}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:9px}.c12{grid-column:span 12}.c6{grid-column:span 6}.c4{grid-column:span 4}.field label{display:block;color:var(--mut);font-size:9px;font-weight:900;letter-spacing:.08em;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;padding:11px;border-radius:9px;border:1px solid var(--line);background:#0b100c;color:#fff;font:inherit}.field textarea{min-height:90px;resize:vertical}.flow-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.context{font-weight:900;color:var(--g)}.steps{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin:10px 0}.flow-step{border:1px solid var(--line);border-radius:10px;background:#0d120e;color:#bbb;padding:9px 5px;font-size:8px;font-weight:900;cursor:pointer}.flow-step span{display:block;font-size:14px;color:#66726a;margin-bottom:3px}.flow-step.active{border-color:var(--g);color:#fff;background:#102016}.flow-step.active span,.flow-step.done span{color:var(--g)}.flow-step.done{border-color:#31563b}.workspace{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#050705}.workspace iframe{width:100%;height:68vh;min-height:560px;border:0;background:#fff}.controlbar{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:9px}.controlbar .mid{font-weight:900;font-size:12px;color:var(--g)}.resume{width:100%;margin-top:10px}.resume[hidden]{display:none}@media(max-width:900px){.steps{grid-template-columns:repeat(4,1fr)}.c6,.c4{grid-column:span 12}.workspace iframe{height:64vh;min-height:500px}.flow-head,.controlbar{align-items:flex-start;flex-direction:column}.controlbar .btn{width:100%}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<div class="topbar"><div><div class="ey">F1 IMMOBILIARE · PROCESSO OPERATIVO</div><h1>NUOVA OPPORTUNITÀ</h1><div class="mut">DASHBOARD → NUOVA OPPORTUNITÀ → RICERCA → RISULTATI → VERIFICA → CRM → CONTATTO → SCRIPT → ESITO → FOLLOW-UP</div></div><a class="btn" href="index.html">DASHBOARD</a></div>
+
+<section id="creator" class="panel creator">
+<h2>Avvia il processo</h2>
+<p class="mut">Inserisci solo i dati già disponibili. Il workspace li riutilizza nei passaggi successivi senza riscriverli.</p>
+<form id="opportunityForm">
+<div class="grid">
+<div class="field c4"><label>TIPO OPPORTUNITÀ</label><select id="opType"><option value="VENDITA">IMMOBILE IN VENDITA</option><option value="SCADUTO">SCADUTO / RITIRATO</option><option value="FSBO">PRIVATO / FSBO</option><option value="SEGNALAZIONE">SEGNALAZIONE</option><option value="ALTRO">ALTRO</option></select></div>
+<div class="field c4"><label>COMUNE</label><input id="opComune" required placeholder="Es. Villar Dora"></div>
+<div class="field c4"><label>VIA / ZONA</label><input id="opVia" placeholder="Es. Via Roma"></div>
+<div class="field c4"><label>CIVICO</label><input id="opCivico" placeholder="Es. 9"></div>
+<div class="field c4"><label>LINK / FONTE</label><input id="opSource" type="url" placeholder="https://..."></div>
+<div class="field c12"><label>NOTE INIZIALI</label><textarea id="opNote" placeholder="Informazioni già note, titolo annuncio, motivo dell'opportunità..."></textarea></div>
+</div>
+<div class="controlbar"><button class="btn primary" type="submit">AVVIA PROCESSO</button><a class="btn" href="centrale-risultati.html">APRI CENTRALE RISULTATI</a></div>
+</form>
+<button id="resumeBtn" class="btn resume" hidden></button>
+</section>
+
+<section id="workspace" hidden>
+<div class="panel">
+<div class="flow-head"><div><div class="ey">OPPORTUNITÀ ATTIVA</div><div id="activeContext" class="context"></div></div><button id="newOpportunityBtn" class="btn">+ NUOVA OPPORTUNITÀ</button></div>
+<div id="flowSteps" class="steps"></div>
+<div class="workspace"><iframe id="flowFrame" title="F1 workspace operativo"></iframe></div>
+<div class="controlbar"><button id="prevStep" class="btn">← PRECEDENTE</button><div id="stageTitle" class="mid"></div><button id="openFull" class="btn">APRI A SCHERMO INTERO</button><button id="nextStep" class="btn primary">SEGNA FATTO E AVANTI</button></div>
+</div>
+</section>
+</main>
+<script src="f1-operational-flow.js"></script>
+</body>
+</html>
