@@ -1,5 +1,5 @@
 name: F1 Program 90 Days QA
-# QA revision: advanced-load-sync
+# QA revision: advanced-day90-final
 on:
   push:
     paths:
@@ -49,8 +49,8 @@ jobs:
           grep -q 'CHIUDI GIORNATA' program-90.html
           grep -q 'RIVEDI OBIETTIVI' program-90.html
           grep -q 'id="noAppointmentPanel"' program-90.html
-          grep -q 'program-90-advanced.js' program-90.html
-          grep -q 'program-90-phase-widget.js' index.html
+          grep -q 'program-90-advanced.js?v=20260913-p90-adv2' program-90.html
+          grep -q 'program-90-phase-widget.js?v=20260913-p90-adv2' index.html
           grep -q 'roleplay-partners.js' script.html
           grep -q 'roleplay-realistic.js' script.html
           grep -q "F1_90_DAY_PROGRAM" program-90.js
@@ -65,7 +65,12 @@ jobs:
           grep -q "SECONDI 30 GIORNI" program-90-advanced.js
           grep -q "TERZI 30 GIORNI" program-90-advanced.js
           grep -q "CONTATTI REALI" program-90-advanced.js
+          grep -q "APPUNTAMENTI SETTIMANA" program-90-advanced.js
+          grep -q "baseline reale dei 90 giorni" program-90-advanced.js
           grep -q "F1_18_MONTH_PLAN" program-90-advanced.js
+          grep -q "render90();renderPeriod()" program-90-advanced.js
+          grep -q "p90ScriptToday" program-90-phase-widget.js
+          grep -q "p90ProsToday" program-90-phase-widget.js
           grep -q "PARTNER ROLE-PLAY" roleplay-partners.js
           grep -q "SIMULATORE ROLE-PLAY REALISTICO" roleplay-realistic.js
           ! grep -q 'localStorage' program-90.js
@@ -97,6 +102,8 @@ jobs:
               && curl -fsSL "$base/roleplay-partners.js?qa=$RANDOM" -o /tmp/rpp \
               && curl -fsSL "$base/roleplay-realistic.js?qa=$RANDOM" -o /tmp/rpr \
               && grep -q 'id="program90Widget"' /tmp/i \
+              && grep -q 'program-90-advanced.js?v=20260913-p90-adv2' /tmp/p90 \
+              && grep -q 'program-90-phase-widget.js?v=20260913-p90-adv2' /tmp/i \
               && grep -q 'CHIUDI GIORNATA' /tmp/p90 \
               && grep -q 'F1_90_DAY_ATTEMPT' /tmp/p90js \
               && grep -q 'operational_weekdays' /tmp/p90js \
@@ -105,7 +112,8 @@ jobs:
               && grep -q 'CONTRATTO_FIRMATO' /tmp/p90js \
               && grep -q 'GRANDE OBIETTIVO' /tmp/p90w \
               && grep -q 'F1_18_MONTH_PLAN' /tmp/p90a \
-              && grep -q 'p90PhaseSummary' /tmp/p90pw \
+              && grep -q 'APPUNTAMENTI SETTIMANA' /tmp/p90a \
+              && grep -q 'p90ScriptToday' /tmp/p90pw \
               && grep -q 'F1_ROLEPLAY_PARTNER_UPSERT' /tmp/rpp \
               && grep -q 'SIMULATORE ROLE-PLAY REALISTICO' /tmp/rpr; then
               deployed=1
