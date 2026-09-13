@@ -1,0 +1,30 @@
+name: Patch Program 90 Advanced Ready
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-program-90-advanced-ready.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Synchronize advanced module after core load
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('program-90-advanced.js')
+          s=p.read_text()
+          old="async function boot(){for(let i=0;i<100;i++){if(window.F190&&window.F1AcquisitionData&&S()?.campaigns){break}await new Promise(r=>setTimeout(r,100))}if(!window.F190||!window.F1AcquisitionData)return;installUi();render();setInterval(render,15000)}"
+          new="async function boot(){for(let i=0;i<150;i++){const cloud=$('cloudStatus')?.textContent||'';if(window.F190&&window.F1AcquisitionData&&cloud.includes('CRM UNIFICATO CONNESSO'))break;await new Promise(r=>setTimeout(r,100))}if(!window.F190||!window.F1AcquisitionData)return;installUi();render();setInterval(render,5000)}"
+          if old not in s:
+              raise SystemExit('boot marker not found')
+          p.write_text(s.replace(old,new,1))
+          PY
+          node --check program-90-advanced.js
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add program-90-advanced.js
+          git commit -m 'Wait for Program 90 core load before advanced render'
+          git push
