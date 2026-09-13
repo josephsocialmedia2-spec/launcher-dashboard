@@ -1,0 +1,35 @@
+name: F1 Relationship Test Patch
+
+on:
+  push:
+    paths:
+      - '.github/workflows/f1-relationship-test-patch.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix async referral assertion
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('tests/relationship-engine.spec.js')
+          s=p.read_text(encoding='utf-8')
+          old="    expect(db.referrals.filter(r=>r.outcome===`LEAD:${generated.lead_id}`).length).toBe(2);"
+          new="    await expect.poll(()=>db.referrals.filter(r=>r.outcome===`LEAD:${generated.lead_id}`).length).toBe(2);"
+          if old not in s:
+              raise SystemExit('assertion marker not found')
+          p.write_text(s.replace(old,new,1),encoding='utf-8')
+      - name: Commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'f1-dashboard-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add tests/relationship-engine.spec.js
+          git commit -m 'Fix referral dedupe QA timing'
+          git push
