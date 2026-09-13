@@ -21,14 +21,14 @@ jobs:
           node-version: '22'
       - name: Static validation
         run: |
-          set -e
-          for f in market-preview*.js tests/market-preview.spec.js; do node --check "$f"; done
-          grep -q 'id="marketPreviewWidget"' index.html
-          grep -q 'CONTROLLO DUPLICATI' market-preview.html
-          grep -q 'F1-006' script-data-2.js
-          grep -q 'F1-007' script-data-2.js
-          grep -q 'MARKET_PREVIEW_PRICE_CHANGED' market-preview-preview.js
-          grep -q 'M.appendEvent' market-preview-preview.js
+          set -ex
+          for f in market-preview*.js tests/market-preview.spec.js; do echo "CHECK $f"; node --check "$f"; done
+          echo CHECK_DASHBOARD && grep -q 'id="marketPreviewWidget"' index.html
+          echo CHECK_DUPLICATES && grep -q 'CONTROLLO DUPLICATI' market-preview.html
+          echo CHECK_F1_006 && grep -q 'F1-006' script-data-2.js
+          echo CHECK_F1_007 && grep -q 'F1-007' script-data-2.js
+          echo CHECK_PRICE_HISTORY && grep -q 'MARKET_PREVIEW_PRICE_CHANGED' market-preview-preview.js
+          echo CHECK_APPEND_HISTORY && grep -q 'M.appendEvent' market-preview-preview.js
       - name: Install browser QA
         run: |
           npm install
