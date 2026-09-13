@@ -52,7 +52,7 @@ test('desktop: OGGI, agenda, ricerca, scheda 360 e pipeline sono operative', asy
 
   await page.locator('#globalSearch').fill('Mario');
   await expect(page.locator('#searchResults')).toContainText('Mario Rossi');
-  await page.locator('.search-hit').filter({hasText:'Mario Rossi'}).click();
+  await page.locator('.search-hit[data-search-type="CONTATTO"]').filter({hasText:'Mario Rossi'}).click();
   await expect(page.locator('#mainBody')).toContainText('SCHEDA CONTATTO 360°');
   await expect(page.locator('#mainBody')).toContainText('PROPRIETARIO');
   await expect(page.locator('#mainBody')).toContainText('PARLATO');
