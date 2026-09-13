@@ -34,6 +34,19 @@ jobs:
           node --check just-listed-sold-widget.js
           node --check script-app.js
           node --check tests/just-listed-sold.spec.js
+          python3 - <<'PY'
+          from pathlib import Path
+          s=Path('just-listed-sold.js').read_text(encoding='utf-8')
+          if "$('#" in s:
+              raise SystemExit('Invalid # prefix in getElementById helper call')
+          for required in [
+              "$('saveProgramStart').onclick=saveProgramStart",
+              "$('saveOutcome').onclick=saveOutcome",
+              "$('convertReferral').onclick=convertReferral",
+          ]:
+              if required not in s:
+                  raise SystemExit('Missing JLS bootstrap handler: '+required)
+          PY
           grep -q '"id":"F1-004"' script-data-2.js
           grep -q '"id":"F1-005"' script-data-2.js
           grep -q 'AVVIA ROLE-PLAY JUST LISTED' script.html
