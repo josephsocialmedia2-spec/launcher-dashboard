@@ -1,0 +1,38 @@
+name: Patch Program 90 Day 90 Final
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-program-90-day90-final.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show completed Day 90 review before active-day panels
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('program-90-advanced.js')
+          s=p.read_text()
+          old="function render(){if(!$('advancedPhasesPanel'))return;renderPeriod();renderMindset();renderTraining();renderProspecting();renderFullKpis();renderFollowups();renderDatabase();renderWeakness();renderAccount();renderReflection();render90()}"
+          new="function render(){if(!$('advancedPhasesPanel'))return;render90();renderPeriod();renderMindset();renderTraining();renderProspecting();renderFullKpis();renderFollowups();renderDatabase();renderWeakness();renderAccount();renderReflection()}"
+          if old not in s:
+              raise SystemExit('advanced render marker missing')
+          p.write_text(s.replace(old,new,1))
+
+          p=Path('program-90.html')
+          s=p.read_text().replace('program-90-advanced.js?v=20260913-p90-adv1','program-90-advanced.js?v=20260913-p90-adv2')
+          p.write_text(s)
+
+          p=Path('index.html')
+          s=p.read_text().replace('program-90-phase-widget.js?v=20260913-p90-adv1','program-90-phase-widget.js?v=20260913-p90-adv2')
+          p.write_text(s)
+          PY
+          node --check program-90-advanced.js
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add program-90-advanced.js program-90.html index.html
+          git commit -m 'Show completed Day 90 review reliably'
+          git push
