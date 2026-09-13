@@ -1,0 +1,61 @@
+name: Patch Program 90 Phase 2 Phase 3 Final
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-program-90-phase2-phase3-final.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch advanced phase metrics and tests
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('program-90-advanced.js')
+          s=p.read_text()
+          old="if(['FSBO','EXPIRED_OR_POSSIBLE_EXPIRED'].includes(cat))groups.fsbo++;else if(['PAST_CLIENT','COI'].includes(cat))groups.database++;else if(/JUST_LISTED|JUST_SOLD|F1-004|F1-005/.test(meta))groups.jls++;else groups.other++"
+          new="if(/JUST_LISTED|JUST_SOLD|F1-004|F1-005/.test(meta))groups.jls++;else if(['FSBO','EXPIRED_OR_POSSIBLE_EXPIRED'].includes(cat))groups.fsbo++;else if(['PAST_CLIENT','COI'].includes(cat))groups.database++;else groups.other++"
+          if old not in s: raise SystemExit('prospecting group marker missing')
+          s=s.replace(old,new,1)
+          old="<div class=\"adv-card\"><b>${m.groups.jls} / 20</b><span>JUST LISTED / SOLD</span></div><div class=\"adv-card\"><b>${m.attempts}</b><span>CONTATTI TOTALI OGGI</span></div>"
+          new="<div class=\"adv-card\"><b>${m.groups.jls} / 20</b><span>JUST LISTED / SOLD</span></div><div class=\"adv-card\"><b>${m.attempts}</b><span>CONTATTI TOTALI OGGI</span></div><div class=\"adv-card\"><b>${m.fixed}</b><span>APPUNTAMENTI FISSATI</span></div><div class=\"adv-card\"><b>${periodResults(2).contracts.length}</b><span>CONTRATTI FIRMATI</span></div>"
+          if old not in s: raise SystemExit('phase2 cards marker missing')
+          s=s.replace(old,new,1)
+          marker='</section><section class="panel" id="advFollowPanel">'
+          insert='</section><section class="panel adv-phase3" id="advFullKpiPanel" hidden><div class="ey">FASE 3 · MONITORAGGIO QUOTIDIANO COMPLETO</div><h2>KPI reali di oggi</h2><div class="adv-grid" id="advFullKpis"></div></section><section class="panel" id="advFollowPanel">'
+          if marker not in s: raise SystemExit('full KPI UI marker missing')
+          s=s.replace(marker,insert,1)
+          fn="""function weeklyAppointmentCount(){const d=new Date(today()+'T12:00:00Z'),dow=d.getUTCDay(),mon=addDays(today(),-((dow+6)%7)),sun=addDays(mon,6);return(S()?.interactions||[]).filter(i=>i.lead_id&&dateKey(i.occurred_at)>=mon&&dateKey(i.occurred_at)<=sun&&resultKind(i)==='APPOINTMENT').length}\nfunction renderFullKpis(){const panel=$('advFullKpiPanel');if(!panel)return;const n=dayNo();panel.hidden=n<61;if(panel.hidden)return;const m=prospectMetrics(),base=window.F190?.metricsFor?.()||{},blocks=S()?.day?.metadata?.blocks||{},r=periodResults(3),weekAppts=weeklyAppointmentCount(),newLeads=(S()?.leads||[]).filter(l=>dateKey(l.created_at)===today()).length;$('advFullKpis').innerHTML=`<div class=\"adv-card\"><b>${(elapsed(blocks.script)/3600).toFixed(1)}h</b><span>ORE SCRIPT / ROLE-PLAY</span></div><div class=\"adv-card\"><b>${(elapsed(blocks.prospecting)/3600).toFixed(1)}h</b><span>ORE PROSPECTING</span></div><div class=\"adv-card\"><b>${m.real} / 30</b><span>CONTATTI REALI</span></div><div class=\"adv-card\"><b>${m.conversations}</b><span>CONVERSAZIONI</span></div><div class=\"adv-card\"><b>${base.followups||0}</b><span>FOLLOW-UP</span></div><div class=\"adv-card\"><b>${base.preview||0}</b><span>PREVIEW</span></div><div class=\"adv-card\"><b>${newLeads}</b><span>LEAD NUOVI</span></div><div class=\"adv-card\"><b>${m.fixed}</b><span>APPUNTAMENTI FISSATI</span></div><div class=\"adv-card\"><b>${base.appointments||0}</b><span>APPUNTAMENTI SVOLTI OGGI</span></div><div class=\"adv-card\"><b>${base.contracts||0}</b><span>CONTRATTI FIRMATI OGGI</span></div><div class=\"adv-card\"><b>${weekAppts} / 2</b><span>APPUNTAMENTI SETTIMANA</span></div><div class=\"adv-card\"><b>${r.appointments.length} / 8</b><span>APPUNTAMENTI 30 GIORNI</span></div>`}\n"""
+          marker='function renderFollowups(){'
+          if marker not in s: raise SystemExit('render followups marker missing')
+          s=s.replace(marker,fn+marker,1)
+          s=s.replace('renderProspecting();renderFollowups();','renderProspecting();renderFullKpis();renderFollowups();',1)
+          old="$('advAccountState').textContent=`Partner operativi: ${partners.length}/2 · controllo oggi: ${checks.length?'COMPLETATO':'DA FARE'} · nessuna condivisione automatica.`"
+          new="$('advAccountState').textContent=`Partner operativi: ${partners.length}/2 minimi · progressione consigliata 3–4 · controllo oggi: ${checks.length?'COMPLETATO':'DA FARE'} · nessuna condivisione automatica.`"
+          if old not in s: raise SystemExit('accountability state marker missing')
+          s=s.replace(old,new,1)
+          pattern=r"async function create18MonthPlan\(\)\{.*?\}\nfunction render90\(\)\{"
+          repl="""async function create18MonthPlan(){const p=(S()?.campaigns||[]).find(c=>c.campaign_type==='F1_18_MONTH_PLAN'&&c.metadata?.source_program==='F1_90_DAY_PROGRAM');if(p)return notice('Piano 18 mesi già creato.','ok');const snap=program90Snapshot(),monthlyAppointments=snap.appointments/3,monthlyContracts=snap.contracts/3,row={campaign_id:crypto.randomUUID(),campaign_type:'F1_18_MONTH_PLAN',property_id:'',territory_key:'18_MONTHS',name:'F1 PIANO SUCCESSIVO 18 MESI',status:'ACTIVE',starts_at:now(),ends_at:null,metadata:{source_program:'F1_90_DAY_PROGRAM',created_from_real_90_day_results:true,baseline_90:snap,monthly_baseline:{appointments:Number(monthlyAppointments.toFixed(2)),contracts:Number(monthlyContracts.toFixed(2))},initial_monthly_targets:{appointments:Number(monthlyAppointments.toFixed(2)),contracts:Number(monthlyContracts.toFixed(2))},target_status:'DA_REVISIONARE',method:'baseline reale dei 90 giorni; nessuna previsione automatica inventata'},created_at:now(),updated_at:now()},rows=await D().rest('campaigns?on_conflict=campaign_id',{method:'POST',body:JSON.stringify([row]),prefer:'resolution=merge-duplicates,return=representation'});S().campaigns.push(rows?.[0]||row);render90();notice('PIANO 18 MESI creato dalla baseline reale del Programma 90 Giorni.','ok')}\nfunction render90(){"""
+          s2,n=re.subn(pattern,repl,s,count=1,flags=re.S)
+          if n!=1: raise SystemExit('18 month function marker missing')
+          p.write_text(s2)
+
+          p=Path('tests/program-90-phases.spec.js')
+          s=p.read_text()
+          s=s.replace("await expect(page.locator('#advAccountPanel')).toBeVisible();await expect(page.locator('#advAccountState')).toContainText('2/2');", "await expect(page.locator('#advAccountPanel')).toBeVisible();await expect(page.locator('#advAccountState')).toContainText('2/2');await expect(page.locator('#advFullKpiPanel')).toBeVisible();await expect(page.locator('#advFullKpiPanel')).toContainText('30 / 30');await expect(page.locator('#advFullKpiPanel')).toContainText('APPUNTAMENTI SETTIMANA');")
+          old="await page.goto('/program-90.html');await expect.poll(()=>page.evaluate(()=>!!window.F190Advanced)).toBeTruthy();await expect(page.locator('#adv90Panel')).toBeVisible();"
+          new="await page.goto('/program-90.html');await ready(page);await expect(page.locator('#adv90Panel')).toBeVisible();"
+          if old not in s: raise SystemExit('day90 readiness marker missing')
+          p.write_text(s.replace(old,new,1))
+          PY
+          node --check program-90-advanced.js
+          node --check tests/program-90-phases.spec.js
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add program-90-advanced.js tests/program-90-phases.spec.js
+          git commit -m 'Finalize phase 2 and phase 3 Program 90 metrics'
+          git push
