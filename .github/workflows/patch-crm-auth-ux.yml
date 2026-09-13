@@ -1,0 +1,58 @@
+name: Patch CRM auth UX
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-crm-auth-ux.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Align authentication UX and opportunity bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p=Path('crm-unified-app.js')
+          s=p.read_text(encoding='utf-8')
+          old="SOLO LETTURA CACHE · LOGIN RICHIESTO"
+          if old not in s: raise SystemExit('legacy cloud label not found')
+          p.write_text(s.replace(old,'ACCESSO CRM RICHIESTO',1),encoding='utf-8')
+
+          p=Path('f1-opportunity-crm.js')
+          s=p.read_text(encoding='utf-8')
+          old="D().requireCloud();status('','CONTROLLO DUPLICATI…');"
+          new="D().requireCloud();if(window.F1Sync?.ensureSession&&!await window.F1Sync.ensureSession())throw Error('ACCESSO CRM RICHIESTO');status('','CONTROLLO DUPLICATI…');"
+          if old not in s: raise SystemExit('opportunity cloud gate not found')
+          p.write_text(s.replace(old,new,1),encoding='utf-8')
+
+          p=Path('f1-opportunity-crm-ui-v2.js')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace("load('supabase-config.js',", "load('supabase-config.js?v=20260913-auth2',")
+          s=s.replace("load('supabase-sync.js',", "load('supabase-sync.js?v=20260913-auth2',")
+          s=s.replace("load('f1-acquisition-data.js',", "load('f1-acquisition-data.js?v=20260913-auth2',")
+          s=s.replace('href="setup-cloud.html">ACCESSO CLOUD</a>','href="setup-cloud.html?return=nuova-opportunita.html%3Fresume%3D1">ACCEDI AL CRM</a>')
+          p.write_text(s,encoding='utf-8')
+          PY
+          node --check crm-unified-app.js
+          node --check f1-opportunity-crm.js
+          node --check f1-opportunity-crm-ui-v2.js
+          grep -q 'ACCESSO CRM RICHIESTO' crm-unified-app.js
+          grep -q 'ensureSession' f1-opportunity-crm.js
+          grep -q 'ACCEDI AL CRM' f1-opportunity-crm-ui-v2.js
+          if grep -q 'SOLO LETTURA CACHE' crm-unified-app.js; then exit 1; fi
+      - name: Commit patch
+        shell: bash
+        run: |
+          git config user.name 'f1-dashboard-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add crm-unified-app.js f1-opportunity-crm.js f1-opportunity-crm-ui-v2.js
+          git commit -m 'Align unified CRM authentication UX'
+          git push
