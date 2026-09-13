@@ -39,6 +39,14 @@ jobs:
           grep -q 'crm_import_log' crm-import-app.js
           grep -q 'parseDelimited' crm-import-app.js
           grep -q 'csvDelimiter' crm-import-app.js
+          grep -q 'function ensureCloud()' crm-import-app.js
+          grep -q 'function isCloudReady()' crm-import-app.js
+          if grep -q 'Data().requireCloud();' crm-import-app.js; then
+            echo 'Direct requireCloud compatibility call forbidden'
+            exit 1
+          fi
+          grep -q 'f1-acquisition-data.js?v=20260913-1147' crm.html
+          grep -q 'crm-import-app.js?v=20260913-1147' crm.html
           if grep -R -E 'sk-[A-Za-z0-9_-]{20,}|OPENAI_API_KEY|api\.openai\.com' crm.html crm-import-app.js; then
             echo 'Public OpenAI credential/API reference forbidden'
             exit 1
@@ -47,7 +55,7 @@ jobs:
         run: |
           npm install
           npx playwright install --with-deps chromium
-      - name: XLSX XLS CSV import E2E
+      - name: XLSX XLS CSV import E2E including cached adapter regression
         run: npx playwright test tests/crm-excel-import.spec.js --project=desktop-chromium
       - name: Live GitHub Pages smoke
         shell: bash
@@ -62,8 +70,11 @@ jobs:
               && grep -q 'CONFERMA E IMPORTA' /tmp/crm.html \
               && grep -q 'crm_import_log' /tmp/import.js \
               && grep -q 'NOME + COGNOME' /tmp/import.js \
-              && grep -q 'parseDelimited' /tmp/import.js; then ok=1; break; fi
+              && grep -q 'parseDelimited' /tmp/import.js \
+              && grep -q 'function ensureCloud()' /tmp/import.js \
+              && grep -q 'f1-acquisition-data.js?v=20260913-1147' /tmp/crm.html \
+              && grep -q 'crm-import-app.js?v=20260913-1147' /tmp/crm.html; then ok=1; break; fi
             sleep 5
           done
           test "$ok" = 1
-          echo 'PASS CRM Excel importer deployed'
+          echo 'PASS CRM Excel importer deployed with requireCloud compatibility'
