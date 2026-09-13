@@ -53,7 +53,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if git diff --quiet -- data/approval-queue.json; then
+          if [ -z "$(git status --porcelain -- data/approval-queue.json)" ]; then
             echo 'No queue changes'
             exit 0
           fi
