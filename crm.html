@@ -8,10 +8,10 @@
 </style>
 </head>
 <body>
-<header><div class="head"><div><div class="ey">F1 ACQUISITION ENGINE · CRM UNIFICATO</div><h1>LEAD · INTERAZIONI · TASK</h1><div id="cloudStatus" class="cloud">CLOUD: verifica...</div></div><div><a class="back" href="index.html">DASHBOARD</a> · <a class="back" href="setup-cloud.html">ACCESSO</a></div></div></header>
+<header><div class="head"><div><div class="ey">F1 ACQUISITION ENGINE · CRM UNIFICATO</div><h1>LEAD · INTERAZIONI · TASK</h1><div id="cloudStatus" class="cloud">CLOUD: verifica...</div></div><div><a class="back" href="index.html">DASHBOARD</a> · <a class="back" href="setup-cloud.html?return=crm.html">ACCESSO</a></div></div></header>
 <main class="wrap">
 <div class="stats"><div class="stat"><b id="sTot">0</b>Lead</div><div class="stat"><b id="sCore">0</b>Core 4</div><div class="stat"><b id="sDue">0</b>Task dovuti</div><div class="stat"><b id="sInteractions">0</b>Interazioni</div><div class="stat"><b id="sWon">0</b>Incarichi</div><div class="stat"><b id="sDnc">0</b>Non contattare</div></div>
-<p class="note" id="migrationNote"><b>CRM unico:</b> Supabase è la source of truth per Lead, Interazioni e Task. localStorage è solo cache di lettura/offline e non accetta nuovi record CRM. Eventuali vecchi contatti browser vengono migrati nel CRM unificato solo dopo autenticazione e verifica.</p>
+<p class="note" id="migrationNote"><b>CRM unico:</b> Supabase è l’unica source of truth per Lead, Interazioni e Task. Il browser non viene utilizzato come CRM alternativo. Le funzioni operative sono disponibili esclusivamente con sessione cloud verificata.</p>
 <div class="toolbar"><input id="q" placeholder="Cerca nome, telefono, comune, fonte, link, note..."><select id="statusFilter"><option value="">Tutti gli stati</option></select><select id="coreFilter"><option value="">Tutte le categorie</option><option value="CORE4">Solo Core 4</option><option value="DUE">Con task dovuti</option><option value="RPO">RPO da verificare</option></select><button class="btn excel" id="excelImportBtn">⬆ CARICA CONTATTI EXCEL</button><button class="btn primary" id="newBtn">+ NUOVO LEAD</button></div>
 <div id="list" class="list"><div class="empty">Caricamento CRM unificato…</div></div>
 </main>
@@ -37,5 +37,5 @@
 <h3>STORICO IMPORTAZIONI</h3><div class="tablewrap historywrap"><table><thead><tr><th>Data</th><th>File</th><th>Categoria</th><th>Righe</th><th>Nuovi</th><th>Aggiornati</th><th>Duplicati</th><th>Scartati</th></tr></thead><tbody id="importHistory"><tr><td colspan="8" class="meta">Nessun import registrato.</td></tr></tbody></table></div>
 </div></dialog>
 <dialog id="compareDlg"><div class="modalh"><b>CONFRONTA CONTATTO GIÀ PRESENTE</b><button class="btn" data-close="compareDlg">✕</button></div><div class="modalb"><div id="compareBody"></div></div></dialog>
-<script src="supabase-config.js"></script><script src="supabase-sync.js?v=20260913-auth1"></script><script src="f1-acquisition-core.js"></script><script src="f1-acquisition-data.js?v=20260913-1147"></script><script src="crm-unified-app.js"></script><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script src="crm-import-app.js?v=20260913-1147"></script>
+<script src="supabase-config.js?v=20260913-auth2"></script><script src="supabase-sync.js?v=20260913-auth2"></script><script src="f1-acquisition-core.js"></script><script src="f1-acquisition-data.js?v=20260913-auth2"></script><script src="crm-auth-guard.js?v=20260913-auth2"></script><script src="crm-unified-app.js?v=20260913-auth2"></script><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script src="crm-import-app.js?v=20260913-1147"></script>
 </body></html>
