@@ -1,5 +1,5 @@
 name: F1 Program 90 Days QA
-# QA revision: advanced-day90-final
+# QA revision: completed-view-final
 on:
   push:
     paths:
@@ -69,6 +69,7 @@ jobs:
           grep -q "baseline reale dei 90 giorni" program-90-advanced.js
           grep -q "F1_18_MONTH_PLAN" program-90-advanced.js
           grep -q "render90();renderPeriod()" program-90-advanced.js
+          grep -q "operational.hidden=false" program-90-advanced.js
           grep -q "p90ScriptToday" program-90-phase-widget.js
           grep -q "p90ProsToday" program-90-phase-widget.js
           grep -q "PARTNER ROLE-PLAY" roleplay-partners.js
@@ -113,6 +114,7 @@ jobs:
               && grep -q 'GRANDE OBIETTIVO' /tmp/p90w \
               && grep -q 'F1_18_MONTH_PLAN' /tmp/p90a \
               && grep -q 'APPUNTAMENTI SETTIMANA' /tmp/p90a \
+              && grep -q 'operational.hidden=false' /tmp/p90a \
               && grep -q 'p90ScriptToday' /tmp/p90pw \
               && grep -q 'F1_ROLEPLAY_PARTNER_UPSERT' /tmp/rpp \
               && grep -q 'SIMULATORE ROLE-PLAY REALISTICO' /tmp/rpr; then
