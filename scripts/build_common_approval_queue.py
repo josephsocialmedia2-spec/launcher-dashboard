@@ -25,7 +25,7 @@ def load_json(path, default):
 def fetch_json(relative, default):
     url = REMOTE_BASE + relative
     try:
-        req = urllib.request.Request(url, headers={'User-Agent': 'F1-Approval-Queue/1.0'})
+        req = urllib.request.Request(url, headers={'User-Agent': 'F1-Approval-Queue/2.0'})
         with urllib.request.urlopen(req, timeout=25) as r:
             return json.loads(r.read().decode('utf-8'))
     except Exception as e:
@@ -50,6 +50,7 @@ def add(out, seen, item):
     item.setdefault('status', 'DA_APPROVARE')
     item.setdefault('created_at', now_iso())
     item.setdefault('score', None)
+    item.setdefault('metadata', {})
     out.append(item)
 
 
@@ -83,6 +84,7 @@ def from_acquisition(out, seen):
             'preview_url': '',
             'created_at': t.get('created_at') or feed.get('generated_at') or now_iso(),
             'origin': 'data/acquisition-public.json',
+            'metadata': meta,
         })
 
 
@@ -92,7 +94,7 @@ def from_social_preview(out, seen):
         raw_status = str(e.get('status') or '').lower()
         if raw_status and raw_status not in {'awaiting_approval', 'ready', 'pending', 'draft'}:
             continue
-        eid = str(e.get('id') or '')
+        eid = str(e.get('id') or e.get('asset_name') or '')
         add(out, seen, {
             'approval_id': stable_id('social-content', eid),
             'task_id': stable_id('social-content', eid),
@@ -125,7 +127,7 @@ def from_groups(out, seen):
         status = str(g.get('status') or '').upper()
         if status != 'PENDING_APPROVAL':
             continue
-        gid = str(g.get('id') or '')
+        gid = str(g.get('id') or g.get('url') or g.get('name') or '')
         add(out, seen, {
             'approval_id': stable_id('facebook-group', gid),
             'task_id': stable_id('facebook-group', gid),
@@ -138,7 +140,7 @@ def from_groups(out, seen):
             'subject': g.get('name') or 'Gruppo Facebook',
             'result': g.get('snippet') or 'Nuovo gruppo territoriale rilevato',
             'action_proposed': 'APPROVA GRUPPO',
-            'score': None,
+            'score': g.get('score'),
             'source_url': g.get('url') or '',
             'preview_url': '',
             'created_at': g.get('discovered_at') or now_iso(),
@@ -149,6 +151,9 @@ def from_groups(out, seen):
 def from_signals(out, seen):
     data = fetch_json('growth/signals.json', {})
     for s in data.get('signals', []) or []:
+        status = str(s.get('status') or 'PENDING').upper()
+        if status not in {'NEW', 'TO_APPROVE', 'PENDING', 'PENDING_APPROVAL', 'QUALIFIED'}:
+            continue
         sid = s.get('id') or s.get('source_url') or (str(s.get('title') or '') + str(s.get('snippet') or ''))
         add(out, seen, {
             'approval_id': stable_id('facebook-signal', sid),
@@ -170,18 +175,74 @@ def from_signals(out, seen):
         })
 
 
+def from_social_optimization(out, seen):
+    data = fetch_json('publisher/content_analysis.json', {})
+    client = (data.get('clients') or {}).get('f1-immobiliare') or {}
+    analysis_status = str(client.get('analysis_status') or '').upper()
+    insights = client.get('insights') if isinstance(client.get('insights'), dict) else {}
+    insights_status = str(insights.get('status') or '').upper()
+    if analysis_status in {'OK', 'READY', 'COMPLETE'} and insights_status in {'OK', 'READY', 'AVAILABLE'}:
+        return
+    result = f"Analisi automatica: {analysis_status or 'DA VERIFICARE'}. Insights: {insights_status or 'DA VERIFICARE'}."
+    add(out, seen, {
+        'approval_id': stable_id('social-optimization', data.get('generated_at') or analysis_status + insights_status),
+        'module': 'SOCIAL_OPTIMIZATION',
+        'platform': 'FACEBOOK · INSTAGRAM',
+        'comune': '',
+        'type': 'KPI_REVIEW',
+        'subject': 'Ottimizzazione social · controllo KPI e Insights',
+        'result': result,
+        'action_proposed': 'APPROVA VERIFICA KPI',
+        'score': None,
+        'source_url': '',
+        'preview_url': '',
+        'created_at': data.get('generated_at') or now_iso(),
+        'origin': 'open-social-scheduler/publisher/content_analysis.json',
+        'metadata': {'analysis_status': analysis_status, 'insights_status': insights_status},
+    })
+
+
+def from_instagram_gate(out, seen):
+    data = fetch_json('publisher/gate_feedback.json', {})
+    for blocked in data.get('blocked', []) or []:
+        if isinstance(blocked, dict):
+            bid = blocked.get('id') or blocked.get('content_id') or json.dumps(blocked, sort_keys=True)
+            reason = blocked.get('reason') or blocked.get('message') or 'Contenuto bloccato dal Feed Ranking Gate'
+        else:
+            bid = str(blocked)
+            reason = 'Contenuto bloccato dal Feed Ranking Gate'
+        add(out, seen, {
+            'approval_id': stable_id('instagram-gate', bid),
+            'module': 'INSTAGRAM_GATE',
+            'platform': 'INSTAGRAM',
+            'comune': '',
+            'type': 'CONTENT_GATE',
+            'subject': f'Feed Gate · {bid}',
+            'result': reason,
+            'action_proposed': 'APPROVA REVISIONE CONTENUTO',
+            'score': None,
+            'source_url': '',
+            'preview_url': '',
+            'created_at': now_iso(),
+            'origin': 'open-social-scheduler/publisher/gate_feedback.json',
+            'metadata': {'gate_source': data.get('source') or '', 'gate_purpose': data.get('purpose') or ''},
+        })
+
+
 def main():
     items, seen = [], set()
     from_acquisition(items, seen)
     from_social_preview(items, seen)
     from_groups(items, seen)
     from_signals(items, seen)
+    from_social_optimization(items, seen)
+    from_instagram_gate(items, seen)
     items.sort(key=lambda x: (str(x.get('created_at') or ''), str(x.get('approval_id') or '')), reverse=True)
     payload = {
-        'version': 1,
+        'version': 2,
         'generated_at': now_iso(),
         'pipeline': 'F1_COMMON_APPROVAL_QUEUE',
-        'crm_target': 'F1 Acquisition CRM / Supabase tasks',
+        'crm_target': 'Supabase public.approval_queue',
         'items': items,
         'summary': {
             'total': len(items),
@@ -189,6 +250,8 @@ def main():
             'social_content': sum(1 for x in items if x['module'] == 'SOCIAL_CONTENT'),
             'facebook_groups': sum(1 for x in items if x['module'] == 'FACEBOOK_GROUPS'),
             'facebook_network': sum(1 for x in items if x['module'] == 'FACEBOOK_NETWORK'),
+            'social_optimization': sum(1 for x in items if x['module'] == 'SOCIAL_OPTIMIZATION'),
+            'instagram_gate': sum(1 for x in items if x['module'] == 'INSTAGRAM_GATE'),
         },
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
