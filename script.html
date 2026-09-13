@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Archivio Script F1 Immobiliare</title>
+<meta name="description" content="Archivio operativo dei copioni e script commerciali F1 Immobiliare.">
+<link rel="stylesheet" href="script.css">
+</head>
+<body id="top">
+<div class="top">
+  <div class="head"><div class="brand"><div class="ey">F1 IMMOBILIARE</div><h1>ARCHIVIO SCRIPT</h1></div><a class="back" href="index.html" aria-label="Torna alla dashboard">← <span>DASHBOARD</span></a></div>
+  <div class="toolbar"><input id="search" class="search" type="search" placeholder="Cerca script…" autocomplete="off" aria-label="Cerca script"><div class="toolbar-actions"><button class="btn" id="clearBtn" type="button">AZZERA</button><button class="btn primary" id="printAllBtn" type="button">STAMPA TUTTI</button></div></div>
+  <div class="filters-wrap"><div id="filters" class="filters"></div></div>
+</div>
+<div class="notice"><div class="notice-inner"><strong>Uso operativo:</strong> i placeholder come [NOME], [COMUNE], [INDIRIZZO], [PREZZO], [DATA] e [ORARIO] devono essere compilati esclusivamente con dati reali e verificati.</div></div>
+<div class="count" id="count"></div>
+<main class="archive" id="archive"></main>
+<div class="reader" id="reader" role="dialog" aria-modal="true" aria-label="Modalità lettura"><div class="reader-bar"><div class="reader-title" id="readerTitle"></div><button class="btn" id="readerCopy" type="button">COPIA</button><button class="btn red" id="readerClose" type="button">CHIUDI</button></div><div class="reader-content" id="readerContent"></div></div>
+<div class="toast" id="toast">Copiato</div>
+<script src="script-data-1.js"></script>
+<script src="script-data-2.js"></script>
+<script src="script-data-3.js"></script>
+<script src="script-data-4.js"></script>
+<script src="script-app.js"></script>
+</body>
+</html>
