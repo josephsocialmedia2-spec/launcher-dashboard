@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07100a">
+<title>F1 CRM Intelligence · Richieste Match Priorità</title>
+<style>
+:root{--bg:#060806;--p:#0f1511;--p2:#141c16;--line:#29342c;--txt:#f7faf8;--mut:#a7b2aa;--g:#39f28a;--gold:#f4c95d;--red:#ff7373;--blue:#5bc7ff}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#060806;color:var(--txt);font-family:Arial,Helvetica,sans-serif}button,input,select,textarea{font:inherit}.wrap{max-width:1500px;margin:auto;padding:16px 16px 90px}.top{position:sticky;top:0;z-index:20;background:#060806ee;backdrop-filter:blur(9px);display:flex;gap:12px;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.ey{color:var(--g);font-size:9px;font-weight:900;letter-spacing:.14em}h1{font-size:clamp(25px,4vw,42px);margin:4px 0}.mut{color:var(--mut);font-size:10px;line-height:1.5}.actions,.tabs{display:flex;gap:7px;flex-wrap:wrap}.button,button{border:1px solid var(--line);border-radius:9px;background:#151d17;color:#fff;padding:9px 11px;font-size:9px;font-weight:900;cursor:pointer;text-decoration:none}.primary{background:var(--g)!important;color:#06100a!important;border-color:var(--g)!important}.gold{color:var(--gold)!important}.tabs{margin:14px 0}.tabs button.active{border-color:var(--g);color:var(--g);background:#0e1c13}.status{min-height:20px;color:var(--mut);font-size:9px;font-weight:900}.status.ok{color:var(--g)}.status.err{color:var(--red)}.panel{border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,#0e1510,#111913);padding:14px;margin:10px 0}.panel h2{margin:4px 0 11px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.metric{border:1px solid var(--line);border-radius:12px;padding:11px;background:#101712}.metric b{display:block;color:var(--g);font-size:24px}.metric span{display:block;font-size:8px;font-weight:900;margin-top:5px}.list{display:grid;gap:7px}.row{display:grid;grid-template-columns:minmax(220px,1.2fr) repeat(3,minmax(100px,.6fr)) auto;gap:8px;align-items:center;border-top:1px solid #202a23;padding:10px 2px}.row:first-child{border-top:0}.row b{font-size:11px}.row span,.row small{font-size:8px;color:var(--mut)}.row .score{font-size:20px;color:var(--g);font-weight:900}.request-card{border:1px solid #28342c;border-radius:12px;padding:12px;background:#0c120e}.request-card header{display:flex;justify-content:space-between;gap:10px}.request-card h3{font-size:13px;margin:0}.chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}.chip{font-size:7px;font-weight:900;border:1px solid #35513d;border-radius:999px;padding:4px 6px;color:var(--g)}.match-layout{display:grid;grid-template-columns:340px minmax(0,1fr);gap:12px}.field{width:100%;background:#0a0f0b;color:#fff;border:1px solid #344139;border-radius:9px;padding:10px}.criteria{display:grid;gap:5px;margin-top:7px}.criterion{display:grid;grid-template-columns:80px 90px 1fr;gap:7px;align-items:center;border-top:1px solid #1d2720;padding:6px 0;font-size:8px}.criterion:first-child{border-top:0}.criterion .PASS{color:var(--g)}.criterion .WARN{color:var(--gold)}.criterion .FAIL{color:var(--red)}.criterion .UNKNOWN{color:var(--mut)}.coverage{font-size:8px;color:var(--blue)}dialog{width:min(96vw,900px);border:1px solid #344139;border-radius:16px;background:#0c120e;color:#fff;padding:0}.dlg-head{display:flex;justify-content:space-between;padding:13px 15px;border-bottom:1px solid var(--line)}.dlg-body{padding:14px}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.form .wide{grid-column:1/-1}.check{display:flex;gap:7px;align-items:center;border:1px solid #29342c;border-radius:9px;padding:9px}.empty{border:1px dashed #344139;border-radius:10px;color:var(--mut);font-size:10px;padding:18px;text-align:center}.priority-explain{display:none;margin-top:8px}.priority-card.open .priority-explain{display:grid}.badge{display:inline-flex;border-radius:999px;padding:4px 7px;font-size:7px;font-weight:900;border:1px solid #35513d;color:var(--g)}@media(max-width:950px){.grid{grid-template-columns:1fr 1fr}.match-layout{grid-template-columns:1fr}.row{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr 1fr}}@media(max-width:620px){.wrap{padding:10px 9px 80px}.top{align-items:flex-start}.top .actions{display:none}.grid{grid-template-columns:1fr 1fr}.row{grid-template-columns:1fr}.form{grid-template-columns:1fr}.criterion{grid-template-columns:68px 70px 1fr}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="top"><div><div class="ey">F1 IMMOBILIARE · CRM OS · P2</div><h1>INTELLIGENZA COMMERCIALE</h1><div class="mut">Richieste persistenti · matching spiegabile · Contact Priority Score deterministico</div></div><div class="actions"><a class="button" href="f1-crm-os.html">CRM OS</a><a class="button" href="crm.html">CRM CLASSICO</a><a class="button gold" href="f1-crm-map.html">MAPPA P2</a></div></header>
+  <div id="status" class="status">Connessione…</div>
+  <nav class="tabs"><button data-view="priority" class="active">PRIORITÀ</button><button data-view="requests">RICHIESTE</button><button data-view="matches">MATCH</button></nav>
+  <section class="grid" id="metrics"></section>
+  <section id="body"></section>
+</main>
+<dialog id="requestDlg">
+  <div class="dlg-head"><div><div class="ey">RICHIESTA IMMOBILIARE</div><b id="dlgTitle">NUOVA RICHIESTA</b></div><button type="button" id="dlgClose">CHIUDI</button></div>
+  <form id="requestForm" class="dlg-body">
+    <input id="requestId" type="hidden">
+    <div class="form">
+      <select class="field wide" id="leadId" required></select>
+      <input class="field" id="comune" placeholder="Comune">
+      <input class="field" id="zone" placeholder="Zone, separate da virgola">
+      <input class="field" id="tipologia" placeholder="Tipologia">
+      <input class="field" id="budgetMin" type="number" min="0" placeholder="Budget minimo">
+      <input class="field" id="budgetMax" type="number" min="0" placeholder="Budget massimo">
+      <input class="field" id="mqMin" type="number" min="0" placeholder="MQ minimi">
+      <input class="field" id="camere" type="number" min="0" placeholder="Camere">
+      <input class="field" id="bagni" type="number" min="0" placeholder="Bagni">
+      <input class="field" id="piano" placeholder="Piano">
+      <input class="field" id="statoImmobile" placeholder="Stato immobile">
+      <input class="field" id="mutuo" placeholder="Mutuo">
+      <input class="field" id="urgenza" placeholder="Urgenza">
+      <select class="field" id="requestStatus"><option>ACTIVE</option><option>PAUSED</option><option>FULFILLED</option><option>ARCHIVED</option></select>
+      <label class="check"><input id="ascensore" type="checkbox"> Ascensore</label>
+      <label class="check"><input id="box" type="checkbox"> Box</label>
+      <label class="check"><input id="postoAuto" type="checkbox"> Posto auto</label>
+      <label class="check"><input id="giardino" type="checkbox"> Giardino</label>
+      <label class="check"><input id="terrazzo" type="checkbox"> Terrazzo</label>
+      <textarea class="field wide" id="note" placeholder="Note"></textarea>
+    </div>
+    <p class="mut">I checkbox rappresentano requisiti richiesti. Per non richiedere esplicitamente un requisito, lascialo deselezionato e usa la scheda di modifica avanzata quando verrà introdotta la gestione tri-state.</p>
+    <div class="actions"><button type="submit" class="primary">SALVA RICHIESTA</button><button type="button" id="archiveRequest">ARCHIVIA</button></div>
+  </form>
+</dialog>
+<script src="supabase-config.js?v=20260913-auth2"></script>
+<script src="supabase-sync.js?v=20260913-auth2"></script>
+<script src="f1-staff-data.js?v=20260913-staff1"></script>
+<script src="f1-crm-intelligence.js?v=20260913-p2"></script>
+</body></html>
