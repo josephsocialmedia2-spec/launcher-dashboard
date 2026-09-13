@@ -14,27 +14,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Patch importer compatibility and cache bust
-        shell: python
+        shell: bash
         run: |
+          python - <<'PY'
           from pathlib import Path
-
           p=Path('crm-import-app.js')
           s=p.read_text(encoding='utf-8')
           marker="const $=id=>document.getElementById(id), Data=()=>window.F1AcquisitionData, Core=()=>window.F1AcquisitionCore;"
-          helper="""const $=id=>document.getElementById(id), Data=()=>window.F1AcquisitionData, Core=()=>window.F1AcquisitionCore;
-function isCloudReady(){
-  const d=Data();
-  if(typeof d?.cloudReady==='function')return !!d.cloudReady();
-  const cfg=window.F1_SUPABASE||{},sync=window.F1Sync;
-  return !!(sync&&typeof sync.ready==='function'&&sync.ready()&&cfg.url&&cfg.anonKey);
-}
-function ensureCloud(){
-  const d=Data();
-  if(!d)throw new Error('Modulo CRM UNIFICATO non disponibile: ricarica la pagina');
-  if(typeof d.requireCloud==='function'){d.requireCloud();return true;}
-  if(isCloudReady())return true;
-  throw new Error('CRM UNIFICATO non autenticato: accesso cloud richiesto');
-}"""
+          helper=(marker+"\n"
+            "function isCloudReady(){const d=Data();if(typeof d?.cloudReady==='function')return !!d.cloudReady();const cfg=window.F1_SUPABASE||{},sync=window.F1Sync;return !!(sync&&typeof sync.ready==='function'&&sync.ready()&&cfg.url&&cfg.anonKey)}\n"
+            "function ensureCloud(){const d=Data();if(!d)throw new Error('Modulo CRM UNIFICATO non disponibile: ricarica la pagina');if(typeof d.requireCloud==='function'){d.requireCloud();return true}if(isCloudReady())return true;throw new Error('CRM UNIFICATO non autenticato: accesso cloud richiesto')}"
+          )
           if marker not in s:
               raise SystemExit('Data/Core marker not found')
           if 'function ensureCloud()' not in s:
@@ -48,14 +38,14 @@ function ensureCloud(){
           x=x.replace('src="f1-acquisition-data.js"','src="f1-acquisition-data.js?v=20260913-1147"')
           x=x.replace('src="crm-import-app.js"','src="crm-import-app.js?v=20260913-1147"')
           h.write_text(x,encoding='utf-8')
-
+          PY
       - name: Verify patch
         shell: bash
         run: |
           set -euo pipefail
           node --check crm-import-app.js
           grep -q 'function ensureCloud()' crm-import-app.js
-          ! grep -q 'Data().requireCloud();' crm-import-app.js
+          if grep -q 'Data().requireCloud();' crm-import-app.js; then exit 1; fi
           grep -q 'f1-acquisition-data.js?v=20260913-1147' crm.html
           grep -q 'crm-import-app.js?v=20260913-1147' crm.html
       - name: Commit fix
