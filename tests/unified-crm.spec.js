@@ -6,7 +6,7 @@ for (const viewport of [{name:'desktop',width:1280,height:900},{name:'mobile',wi
     const db={leads:[],interactions:[],tasks:[]};
     await page.addInitScript(() => {
       sessionStorage.setItem('f1SupabaseSession', JSON.stringify({access_token:'qa-token',refresh_token:'qa-refresh',expires_at:Date.now()+3600000,user:{id:'qa-user'}}));
-      localStorage.removeItem('f1OperationalFlowV1');
+      if(window.top===window) localStorage.removeItem('f1OperationalFlowV1');
     });
     await page.route('https://nqnmlsmeiynxbdojeyjt.supabase.co/rest/v1/**', async route => {
       const req=route.request(),u=new URL(req.url()),table=u.pathname.split('/').pop(),method=req.method();
