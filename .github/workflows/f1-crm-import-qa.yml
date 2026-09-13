@@ -67,6 +67,22 @@ jobs:
             echo 'Public secret credential/API reference forbidden'
             exit 1
           fi
+      - name: Supabase HTTP and CORS preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://nqnmlsmeiynxbdojeyjt.supabase.co'
+          key='sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu'
+          origin='https://josephsocialmedia2-spec.github.io'
+          code=$(curl -sS --max-time 20 -o /tmp/auth-health.json -w '%{http_code}' "$base/auth/v1/health" -H "apikey: $key")
+          test "$code" = '200'
+          cors_code=$(curl -sS --max-time 20 -D /tmp/cors.headers -o /tmp/cors.body -w '%{http_code}' -X OPTIONS "$base/rest/v1/leads?select=lead_id&limit=1" \
+            -H "Origin: $origin" \
+            -H 'Access-Control-Request-Method: GET' \
+            -H 'Access-Control-Request-Headers: apikey,authorization')
+          case "$cors_code" in 200|204) ;; *) echo "Unexpected CORS HTTP $cors_code"; cat /tmp/cors.headers; exit 1;; esac
+          tr -d '\r' < /tmp/cors.headers | grep -Eqi '^access-control-allow-origin: (\*|https://josephsocialmedia2-spec\.github\.io)$'
+          echo "PASS Supabase HTTP health=$code CORS=$cors_code"
       - name: Install QA dependencies
         run: |
           npm install
