@@ -14,9 +14,69 @@ window.F1_TERRITORY_CONFIG_URL = './config/territory.json';
   if(!/\/crm\.html$/i.test(location.pathname)) return;
 
   const DEFAULT_PROVINCE='TO';
+  const SELLER_STORE='f1_territory_contacts_v1';
 
   function crmState(){
     try{return state}catch(_){return null}
+  }
+
+  function safeRows(key){
+    try{const v=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(v)?v:[]}catch(_){return[]}
+  }
+
+  function extractApprovalId(note){
+    const m=String(note||'').match(/\[CENTRALE:([^\]]+)\]/i);
+    return m?m[1].trim():'';
+  }
+
+  function extractLabel(note,label){
+    const re=new RegExp('(?:^|\\|)\\s*'+label+'\\s*:\\s*([^|]+)','i'),m=String(note||'').match(re);
+    return m?m[1].trim():'';
+  }
+
+  function sellerLeadId(row){
+    const approval=extractApprovalId(row.note);
+    if(approval)return 'seller-approved-'+approval.replace(/[^a-zA-Z0-9_-]/g,'').slice(0,80);
+    const seed=[row.comune,row.via,row.civico,row.fonte].filter(Boolean).join('-').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,90);
+    return seed?'seller-approved-'+seed:'';
+  }
+
+  function syncApprovedSellerRows(){
+    if(!window.F1AcquisitionCore)return 0;
+    const seller=safeRows(SELLER_STORE).filter(r=>/APPROVATO DA CENTRALE RISULTATI|\[CENTRALE:/i.test(String(r.note||'')));
+    if(!seller.length)return 0;
+    const leads=F1AcquisitionCore.localLeads(),byId=new Map(leads.map((l,i)=>[String(l.lead_id||''),i]));
+    let changed=0;
+    for(const row of seller){
+      const id=sellerLeadId(row);if(!id)continue;
+      const idx=byId.has(id)?byId.get(id):-1,now=new Date().toISOString();
+      const sourceUrl=extractLabel(row.note,'LINK ANNUNCIO');
+      const propertyId=extractLabel(row.note,'PROPERTY_ID');
+      if(idx>=0){
+        const old=leads[idx]||{},next={...old};
+        if(!next.comune&&row.comune)next.comune=row.comune;
+        if(!next.via&&row.via)next.via=row.via;
+        if(!next.civico&&row.civico)next.civico=row.civico;
+        if(!next.telefono&&row.telefono)next.telefono=row.telefono;
+        if(!next.email&&row.email)next.email=row.email;
+        if(!next.source_url&&sourceUrl)next.source_url=sourceUrl;
+        if(!next.immobile_id&&propertyId)next.immobile_id=propertyId;
+        if(!next.notes&&row.note)next.notes=row.note;
+        if(JSON.stringify(next)!==JSON.stringify(old)){next.updated_at=now;leads[idx]=next;changed++}
+        continue;
+      }
+      leads.push({
+        lead_id:id,pillar:1,source_type:'MARKET_SIGNAL',source:row.fonte||'SELLER_RADAR_APPROVATO',source_url:sourceUrl,
+        created_at:now,first_seen:'',last_seen:'',nome:row.nome||'',cognome:row.cognome||'',azienda:'',telefono:row.telefono||'',email:row.email||'',
+        comune:row.comune||'',via:row.via||'',civico:row.civico||'',zona:row.via||'',immobile_id:propertyId,competitor_agency:'',
+        lead_reason:'SELLER_RADAR_APPROVATO',lead_score:50,confidence:'MEDIUM',status:'DA_ANALIZZARE',last_contact:'',next_action:'',next_action_date:'',
+        assigned_to:'',notes:row.note||'',privacy_basis:'SELLER_RADAR_APPROVED_RECORD',do_not_contact:false,rpo_status:'DA_VERIFICARE',
+        created_by:'central_approval_bridge',updated_at:now,deleted:false
+      });
+      byId.set(id,leads.length-1);changed++;
+    }
+    if(changed)F1AcquisitionCore.saveLocalLeads(leads);
+    return changed;
   }
 
   function leadIdFromCard(card){
@@ -101,11 +161,18 @@ window.F1_TERRITORY_CONFIG_URL = './config/territory.json';
     });
   }
 
+  function refreshAfterImport(){
+    try{if(typeof reload==='function')reload();else patch()}catch(_){patch()}
+  }
+
   function start(){
     const list=document.getElementById('list');
     if(!list)return;
+    const imported=syncApprovedSellerRows();
+    if(imported)setTimeout(refreshAfterImport,0);
     patch();
     new MutationObserver(patch).observe(list,{childList:true,subtree:true});
+    window.addEventListener('storage',e=>{if(e.key===SELLER_STORE&&syncApprovedSellerRows())refreshAfterImport()});
   }
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
