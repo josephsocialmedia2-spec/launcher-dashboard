@@ -3,7 +3,7 @@ name: F1 Common Approval Queue
 on:
   workflow_dispatch:
   schedule:
-    - cron: '7 * * * *'
+    - cron: '*/15 * * * *'
   push:
     branches: [main]
     paths:
