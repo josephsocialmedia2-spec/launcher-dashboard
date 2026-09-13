@@ -1,0 +1,101 @@
+name: F1 Just Listed Just Sold QA
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'script.html'
+      - 'script-app.js'
+      - 'script-data-2.js'
+      - 'just-listed-sold.html'
+      - 'just-listed-sold.js'
+      - 'just-listed-sold-widget.js'
+      - 'f1-acquisition-data.js'
+      - 'f1-acquisition-core.js'
+      - 'supabase-sync.js'
+      - 'tests/just-listed-sold.spec.js'
+      - '.github/workflows/f1-just-listed-sold-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Static contract validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check just-listed-sold.js
+          node --check just-listed-sold-widget.js
+          node --check script-app.js
+          node --check tests/just-listed-sold.spec.js
+          grep -q '"id":"F1-004"' script-data-2.js
+          grep -q '"id":"F1-005"' script-data-2.js
+          grep -q 'AVVIA ROLE-PLAY JUST LISTED' script.html
+          grep -q 'AVVIA ROLE-PLAY JUST SOLD' script.html
+          grep -q 'JUST LISTED / JUST SOLD — CONTATTI DI OGGI' just-listed-sold.html
+          grep -q 'Obiettivo giornaliero: 10' just-listed-sold.html
+          grep -q "ORIGIN='JUST_LISTED_SOLD'" just-listed-sold.js
+          grep -q "status=mode==='JUST_SOLD'?'F1_VENDUTO':'F1_ACQUISITO'" just-listed-sold.js
+          grep -q 'F1_JUST_LISTED_CONFIRMED' just-listed-sold.js
+          grep -q 'F1_JUST_SOLD_CONFIRMED' just-listed-sold.js
+          grep -q "D().addInteraction" just-listed-sold.js
+          grep -q "D().upsertTask" just-listed-sold.js
+          grep -q "D().upsertLead" just-listed-sold.js
+          if grep -Eq 'localStorage|sessionStorage' just-listed-sold.js just-listed-sold-widget.js; then
+            echo 'JLS operational data must not use browser storage as CRM/progression source'
+            exit 1
+          fi
+          if grep -REq 'service_role|sb_secret_|sk-[A-Za-z0-9_-]{20,}|OPENAI_API_KEY|api\.openai\.com' just-listed-sold.html just-listed-sold.js just-listed-sold-widget.js; then
+            echo 'Public secret/API reference forbidden'
+            exit 1
+          fi
+      - name: Supabase HTTP and CORS preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://nqnmlsmeiynxbdojeyjt.supabase.co'
+          key='sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu'
+          origin='https://josephsocialmedia2-spec.github.io'
+          code=$(curl -sS --max-time 20 -o /tmp/health -w '%{http_code}' "$base/auth/v1/health" -H "apikey: $key")
+          test "$code" = '200'
+          for table in properties campaigns events leads interactions tasks referrals; do
+            cors=$(curl -sS --max-time 20 -D /tmp/cors -o /tmp/body -w '%{http_code}' -X OPTIONS "$base/rest/v1/$table?select=*&limit=1" -H "Origin: $origin" -H 'Access-Control-Request-Method: GET' -H 'Access-Control-Request-Headers: apikey,authorization')
+            case "$cors" in 200|204) ;; *) echo "$table CORS HTTP $cors"; exit 1;; esac
+            tr -d '\r' < /tmp/cors | grep -Eqi '^access-control-allow-origin: (\*|https://josephsocialmedia2-spec\.github\.io)$'
+          done
+      - name: Install QA dependencies
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+      - name: Week-two Just Listed Just Sold E2E
+        run: npx playwright test tests/just-listed-sold.spec.js --project=desktop-chromium
+      - name: Canonical CRM regression
+        run: npx playwright test tests/crm-full-e2e.spec.js tests/crm-excel-import.spec.js --project=desktop-chromium
+      - name: Live GitHub Pages smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
+          ok=0
+          for i in $(seq 1 60); do
+            if curl -fsSL --max-time 20 "$base/index.html?qa=$RANDOM" -o /tmp/index \
+              && curl -fsSL --max-time 20 "$base/script.html?qa=$RANDOM" -o /tmp/script \
+              && curl -fsSL --max-time 20 "$base/just-listed-sold.html?qa=$RANDOM" -o /tmp/jls \
+              && curl -fsSL --max-time 20 "$base/just-listed-sold.js?qa=$RANDOM" -o /tmp/jlsjs \
+              && grep -q 'id="jlsWidget"' /tmp/index \
+              && grep -q 'JUST LISTED / JUST SOLD: 0 / 10' /tmp/index \
+              && grep -q 'AVVIA ROLE-PLAY JUST LISTED' /tmp/script \
+              && grep -q 'AVVIA ROLE-PLAY JUST SOLD' /tmp/script \
+              && grep -q 'GATE IMMOBILE REALE' /tmp/jls \
+              && grep -q 'F1_JUST_LISTED_CONFIRMED' /tmp/jlsjs \
+              && grep -q 'F1_JUST_SOLD_CONFIRMED' /tmp/jlsjs; then ok=1; break; fi
+            sleep 5
+          done
+          test "$ok" = 1
+          echo 'PASS JLS week-two live deployment'
