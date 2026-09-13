@@ -1,0 +1,37 @@
+name: Patch Daily Command Fix
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-daily-command-fix.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix next task and date rollover
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('daily-command-panel.js')
+          s=p.read_text()
+          old="function activeIndex(now=new Date()){const m=nowMinutes(now);let idx=TASKS.findIndex(t=>m>=hmToMin(t.start)&&m<hmToMin(t.end));if(idx>=0)return idx;idx=TASKS.findIndex(t=>taskState(t.id).status!=='completed'&&m<hmToMin(t.start));if(idx>=0)return idx;return TASKS.findIndex(t=>taskState(t.id).status!=='completed')}"
+          new="function activeIndex(now=new Date()){const m=nowMinutes(now);let idx=TASKS.findIndex(t=>m>=hmToMin(t.start)&&m<hmToMin(t.end));if(idx>=0){if(taskState(TASKS[idx].id).status!=='completed')return idx;const after=TASKS.findIndex((t,i)=>i>idx&&taskState(t.id).status!=='completed');if(after>=0)return after}idx=TASKS.findIndex(t=>taskState(t.id).status!=='completed'&&m<hmToMin(t.start));if(idx>=0)return idx;return TASKS.findIndex(t=>taskState(t.id).status!=='completed')}"
+          if old not in s: raise SystemExit('activeIndex marker missing')
+          s=s.replace(old,new,1)
+          old="function render(focus=false){const now=new Date();renderHead(now);renderNext(now);renderList(now,focus);renderReport()}"
+          new="function render(focus=false){const now=new Date();if(state.date!==dateKey(now))state=loadState();renderHead(now);renderNext(now);renderList(now,focus);renderReport()}"
+          if old not in s: raise SystemExit('render marker missing')
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          p=Path('index.html')
+          s=p.read_text().replace('daily-command-panel.css?v=20260913-daily1','daily-command-panel.css?v=20260913-daily2').replace('daily-command-panel.js?v=20260913-daily1','daily-command-panel.js?v=20260913-daily2')
+          p.write_text(s)
+          PY
+          node --check daily-command-panel.js
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add daily-command-panel.js index.html
+          git commit -m 'Fix daily command next task and date rollover'
+          git push
