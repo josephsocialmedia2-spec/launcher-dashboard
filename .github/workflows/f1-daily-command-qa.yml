@@ -24,11 +24,13 @@ jobs:
           set -ex
           node --check daily-command-panel.js
           node --check tests/daily-command-panel.spec.js
-          grep -q 'daily-command-panel.css?v=20260913-daily2' index.html
-          grep -q 'daily-command-panel.js?v=20260913-daily2' index.html
+          grep -q 'daily-command-panel.css?v=20260913-daily3' index.html
+          grep -q 'daily-command-panel.js?v=20260913-daily3' index.html
           grep -q 'position:sticky' daily-command-panel.css
           grep -q 'grid-template-columns:minmax(0,72%)' daily-command-panel.css
           grep -q 'f1DailyCommand:' daily-command-panel.js
+          grep -q 'setInterval(tick,1000)' daily-command-panel.js
+          grep -q 'data-live-elapsed' daily-command-panel.js
           grep -q '06:30' daily-command-panel.js
           grep -q '20:00' daily-command-panel.js
           grep -q 'MARKET PREVIEW' daily-command-panel.js
@@ -57,10 +59,11 @@ jobs:
             if curl -fsSL "$base/index.html?qa=$RANDOM" -o /tmp/index \
               && curl -fsSL "$base/daily-command-panel.css?qa=$RANDOM" -o /tmp/dailycss \
               && curl -fsSL "$base/daily-command-panel.js?qa=$RANDOM" -o /tmp/dailyjs \
-              && grep -q 'daily-command-panel.css?v=20260913-daily2' /tmp/index \
-              && grep -q 'daily-command-panel.js?v=20260913-daily2' /tmp/index \
+              && grep -q 'daily-command-panel.css?v=20260913-daily3' /tmp/index \
+              && grep -q 'daily-command-panel.js?v=20260913-daily3' /tmp/index \
               && grep -q 'f1-command-panel' /tmp/dailycss \
-              && grep -q 'PROGRAMMA OPERATIVO DI OGGI' /tmp/dailyjs; then
+              && grep -q 'PROGRAMMA OPERATIVO DI OGGI' /tmp/dailyjs \
+              && grep -q 'setInterval(tick,1000)' /tmp/dailyjs; then
               deployed=1
               break
             fi
