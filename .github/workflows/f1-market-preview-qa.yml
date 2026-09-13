@@ -6,6 +6,7 @@ on:
       - 'market-preview.html'
       - 'market-preview*.js'
       - 'tests/market-preview.spec.js'
+      - 'tests/market-preview-live.spec.js'
       - '.github/workflows/f1-market-preview-qa.yml'
   workflow_dispatch:
 permissions:
@@ -22,13 +23,14 @@ jobs:
       - name: Static validation
         run: |
           set -ex
-          for f in market-preview*.js tests/market-preview.spec.js; do echo "CHECK $f"; node --check "$f"; done
+          for f in market-preview*.js tests/market-preview.spec.js tests/market-preview-live.spec.js; do echo "CHECK $f"; node --check "$f"; done
           echo CHECK_DASHBOARD && grep -q 'id="marketPreviewWidget"' index.html
           echo CHECK_DUPLICATES && grep -q 'CONTROLLO DUPLICATI' market-preview.html
           echo CHECK_F1_006 && grep -q 'F1-006' script-data-2.js
           echo CHECK_F1_007 && grep -q 'F1-007' script-data-3.js
           echo CHECK_PRICE_HISTORY && grep -q 'MARKET_PREVIEW_PRICE_CHANGED' market-preview-preview.js
           echo CHECK_APPEND_HISTORY && grep -q 'M.appendEvent' market-preview-preview.js
+          echo CHECK_PATCH_SYNC && grep -q 'S.props\[pi\]=saved;M.buildItems()' market-preview-preview.js
       - name: Install browser QA
         run: |
           npm install
@@ -41,8 +43,18 @@ jobs:
         run: |
           set -e
           base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
+          deployed=0
           for i in $(seq 1 60); do
-            if curl -fsSL "$base/index.html?qa=$RANDOM" -o /tmp/i && curl -fsSL "$base/market-preview.html?qa=$RANDOM" -o /tmp/m && grep -q 'id="marketPreviewWidget"' /tmp/i && grep -q 'CONTROLLO DUPLICATI' /tmp/m; then exit 0; fi
+            if curl -fsSL "$base/index.html?qa=$RANDOM" -o /tmp/i \
+              && curl -fsSL "$base/market-preview.html?qa=$RANDOM" -o /tmp/m \
+              && curl -fsSL "$base/market-preview-preview.js?qa=$RANDOM" -o /tmp/p \
+              && grep -q 'id="marketPreviewWidget"' /tmp/i \
+              && grep -q 'CONTROLLO DUPLICATI' /tmp/m \
+              && grep -q 'S.props\[pi\]=saved;M.buildItems()' /tmp/p; then
+              deployed=1
+              break
+            fi
             sleep 5
           done
-          exit 1
+          test "$deployed" = 1
+          npx playwright test tests/market-preview-live.spec.js --project=desktop-chromium
