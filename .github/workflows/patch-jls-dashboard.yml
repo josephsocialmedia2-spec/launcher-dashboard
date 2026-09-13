@@ -1,0 +1,48 @@
+name: Patch JLS dashboard
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-jls-dashboard.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add week-two KPI widget
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html');s=p.read_text(encoding='utf-8')
+          if 'id="jlsWidget"' not in s:
+            marker='</section>\n<section class="process">'
+            if marker not in s: raise SystemExit('dashboard insertion marker missing')
+            block='''</section>
+<section class="jls-widget" id="jlsWidget">
+  <div class="jls-top"><div><div class="ey">SETTIMANA 2+ · PROSPECTING TERRITORIALE</div><h2>JUST LISTED / JUST SOLD</h2><p id="jlsStage">Caricamento progressione…</p></div><a class="jls-open" href="just-listed-sold.html">APRI ATTIVITÀ →</a></div>
+  <div class="jls-progress-label" id="jlsProgressText">JUST LISTED / JUST SOLD: 0 / 10</div><div class="jls-progress"><div id="jlsProgressBar"></div></div>
+  <div class="jls-stats"><div><b id="jlsDone">0</b><span>CONTATTI EFFETTUATI</span></div><div><b id="jlsTalk">0</b><span>CONVERSAZIONI</span></div><div><b id="jlsReferral">0</b><span>SEGNALAZIONI</span></div><div><b id="jlsSeller">0</b><span>POTENZIALI VENDITORI</span></div><div><b id="jlsAppt">0</b><span>APPUNTAMENTI</span></div></div>
+  <p class="jls-rule">Il contatto conta solo dopo la registrazione dell’esito nel CRM UNIFICATO. Le campagne partono esclusivamente da immobili reali confermati come acquisiti o venduti.</p>
+</section>
+<section class="process">'''
+            s=s.replace(marker,block,1)
+          if '.jls-widget{' not in s:
+            css='''.jls-widget{border:2px solid #f4c95d;border-radius:18px;padding:18px;background:linear-gradient(145deg,#17140d,#211b0e);margin-bottom:24px}.jls-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.jls-widget h2{margin:4px 0 5px;font-size:24px}.jls-widget p{margin:0;color:#d6cfb2;font-size:11px;line-height:1.5}.jls-open{display:inline-flex;padding:11px 13px;border-radius:9px;background:#f4c95d;color:#171107;text-decoration:none;font-size:10px;font-weight:900;white-space:nowrap}.jls-progress-label{margin:12px 0 6px;color:#f4c95d;font-size:11px;font-weight:900}.jls-progress{height:12px;border:1px solid #66552a;border-radius:999px;background:#17150f;overflow:hidden}.jls-progress>div{height:100%;width:0;background:linear-gradient(90deg,#f4c95d,#39f28a);transition:.25s}.jls-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px}.jls-stats div{padding:9px;text-align:center;border:1px solid #40391f;border-radius:10px;background:#11130f}.jls-stats b{display:block;color:#39f28a;font-size:22px}.jls-stats span{display:block;color:#aeb7b0;font-size:7px;font-weight:900}.jls-rule{margin-top:10px!important}@media(max-width:700px){.jls-top{display:block}.jls-open{margin-top:10px;width:100%;justify-content:center}.jls-stats{grid-template-columns:1fr 1fr}.jls-stats div:last-child{grid-column:1/-1}}'''
+            s=s.replace('</style>',css+'\n</style>',1)
+          if 'just-listed-sold-widget.js' not in s:
+            s=s.replace('</body>','<script src="just-listed-sold-widget.js?v=20260913-w2"></script>\n</body>',1)
+          p.write_text(s,encoding='utf-8')
+          PY
+          grep -q 'id="jlsWidget"' index.html
+          grep -q 'JUST LISTED / JUST SOLD: 0 / 10' index.html
+          grep -q 'just-listed-sold-widget.js' index.html
+      - name: Commit dashboard integration
+        run: |
+          git config user.name 'f1-dashboard-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add index.html
+          git commit -m 'Add Just Listed Just Sold dashboard KPIs'
+          git push
