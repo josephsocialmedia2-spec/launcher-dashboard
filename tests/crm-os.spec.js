@@ -41,7 +41,8 @@ test.beforeEach(async ({ page }) => {
   await page.clock.install({ time: new Date('2026-09-13T10:00:00+02:00') });
 });
 
-test('desktop: OGGI, agenda, ricerca, scheda 360 e pipeline sono operative', async ({ page }) => {
+test('desktop: OGGI, agenda, ricerca, scheda 360 e pipeline sono operative', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name.includes('mobile'), 'desktop-only assertion');
   await mockCloud(page);
   await page.goto('/f1-crm-os.html');
   await expect(page.locator('#mainTitle')).toHaveText('OGGI');
@@ -63,7 +64,7 @@ test('desktop: OGGI, agenda, ricerca, scheda 360 e pipeline sono operative', asy
   await expect(page.locator('.kanban')).toContainText('Mario Rossi');
 });
 
-test('desktop: quick action blocca duplicato e offre le tre decisioni', async ({ page }) => {
+test('quick action blocca duplicato e offre le tre decisioni', async ({ page }) => {
   await mockCloud(page,true);
   await page.goto('/f1-crm-os.html');
   await page.locator('#quickOpen').click();
