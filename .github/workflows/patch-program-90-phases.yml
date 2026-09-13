@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Wire modules and QA
+      - name: Wire application modules
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -35,22 +35,9 @@ jobs:
           if tag not in s:
               s=s.replace('</body>',tag+'\n</body>')
           p.write_text(s)
-
-          p=Path('.github/workflows/f1-program-90-qa.yml')
-          s=p.read_text()
-          if "tests/program-90-phases.spec.js" not in s:
-              s=s.replace("      - 'tests/program-90-operational-days.spec.js'", "      - 'tests/program-90-operational-days.spec.js'\n      - 'tests/program-90-phases.spec.js'\n      - 'tests/roleplay-partners.spec.js'\n      - 'script.html'\n      - 'roleplay-*.js'")
-              s=s.replace("          node --check tests/program-90-operational-days.spec.js", "          node --check tests/program-90-operational-days.spec.js\n          node --check program-90-advanced.js\n          node --check program-90-phase-widget.js\n          node --check roleplay-partners.js\n          node --check roleplay-realistic.js\n          node --check tests/program-90-phases.spec.js\n          node --check tests/roleplay-partners.spec.js")
-              s=s.replace("          grep -q \"F1_90_NO_APPOINTMENT_FSBO_EXPIRED\" program-90.js", "          grep -q \"F1_90_NO_APPOINTMENT_FSBO_EXPIRED\" program-90.js\n          grep -q \"SECONDI 30 GIORNI\" program-90-advanced.js\n          grep -q \"TERZI 30 GIORNI\" program-90-advanced.js\n          grep -q \"30 CONTATTI\" program-90-advanced.js\n          grep -q \"F1_18_MONTH_PLAN\" program-90-advanced.js\n          grep -q \"PARTNER ROLE-PLAY\" roleplay-partners.js\n          grep -q \"SIMULATORE ROLE-PLAY REALISTICO\" roleplay-realistic.js\n          grep -q \"program-90-advanced.js\" program-90.html\n          grep -q \"program-90-phase-widget.js\" index.html\n          grep -q \"roleplay-partners.js\" script.html")
-              s=s.replace("          ! grep -q 'localStorage' program-90-widget.js", "          ! grep -q 'localStorage' program-90-widget.js\n          ! grep -q 'localStorage' program-90-advanced.js\n          ! grep -q 'localStorage' roleplay-partners.js")
-              s=s.replace("tests/program-90-operational-days.spec.js --project=desktop-chromium", "tests/program-90-operational-days.spec.js tests/program-90-phases.spec.js tests/roleplay-partners.spec.js --project=desktop-chromium")
-              s=s.replace("              && curl -fsSL \"$base/program-90-widget.js?qa=$RANDOM\" -o /tmp/p90w \\", "              && curl -fsSL \"$base/program-90-widget.js?qa=$RANDOM\" -o /tmp/p90w \\\n              && curl -fsSL \"$base/program-90-advanced.js?qa=$RANDOM\" -o /tmp/p90a \\\n              && curl -fsSL \"$base/program-90-phase-widget.js?qa=$RANDOM\" -o /tmp/p90pw \\\n              && curl -fsSL \"$base/roleplay-partners.js?qa=$RANDOM\" -o /tmp/rpp \\\n              && curl -fsSL \"$base/roleplay-realistic.js?qa=$RANDOM\" -o /tmp/rpr \\")
-              s=s.replace("              && grep -q 'GRANDE OBIETTIVO' /tmp/p90w; then", "              && grep -q 'GRANDE OBIETTIVO' /tmp/p90w \\\n              && grep -q 'F1_18_MONTH_PLAN' /tmp/p90a \\\n              && grep -q 'p90PhaseSummary' /tmp/p90pw \\\n              && grep -q 'F1_ROLEPLAY_PARTNER_UPSERT' /tmp/rpp \\\n              && grep -q 'SIMULATORE ROLE-PLAY REALISTICO' /tmp/rpr; then")
-          p.write_text(s)
           PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add program-90.html script.html index.html .github/workflows/f1-program-90-qa.yml
-          git rm .github/workflows/patch-program-90-phases.yml
-          git commit -m 'Integrate Program 90 days 31-90 progression'
+          git add program-90.html script.html index.html
+          git commit -m 'Wire Program 90 advanced phase modules'
           git push
