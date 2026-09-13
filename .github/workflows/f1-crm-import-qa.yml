@@ -37,6 +37,8 @@ jobs:
           grep -q 'CENTRO_INFLUENZA' crm-import-app.js
           grep -q 'NOME + COGNOME' crm-import-app.js
           grep -q 'crm_import_log' crm-import-app.js
+          grep -q 'parseDelimited' crm-import-app.js
+          grep -q 'csvDelimiter' crm-import-app.js
           if grep -R -E 'sk-[A-Za-z0-9_-]{20,}|OPENAI_API_KEY|api\.openai\.com' crm.html crm-import-app.js; then
             echo 'Public OpenAI credential/API reference forbidden'
             exit 1
@@ -59,7 +61,8 @@ jobs:
               && grep -q 'CARICA CONTATTI EXCEL' /tmp/crm.html \
               && grep -q 'CONFERMA E IMPORTA' /tmp/crm.html \
               && grep -q 'crm_import_log' /tmp/import.js \
-              && grep -q 'NOME + COGNOME' /tmp/import.js; then ok=1; break; fi
+              && grep -q 'NOME + COGNOME' /tmp/import.js \
+              && grep -q 'parseDelimited' /tmp/import.js; then ok=1; break; fi
             sleep 5
           done
           test "$ok" = 1
