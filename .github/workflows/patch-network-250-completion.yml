@@ -1,0 +1,66 @@
+name: Patch Network 250 Completion
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-network-250-completion.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Complete guided memory and dashboard requirements
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('network-reconstruction.html')
+          s=p.read_text()
+          s=s.replace('<div id="guidedState" class="muted" style="margin-top:9px">Modalità guidata non avviata.</div></section>', '<div id="guidedState" class="muted" style="margin-top:9px">Modalità guidata non avviata.</div></section><section class="panel guided" id="guidedQuestionPanel"><div class="ey">MODALITÀ GUIDATA · UNA PERSONA ALLA VOLTA</div><h2 id="guidedQuestion">Avvia la ricostruzione per ricevere la prima domanda.</h2><p class="muted">Scrivi un solo nominativo per risposta. Il sistema prepara la scheda persona e mantiene la fonte corrente; completerai soltanto i dati che conosci realmente.</p><div class="actions"><input id="guidedAnswer" style="max-width:520px" placeholder="Nome e cognome, una persona alla volta"><button id="guidedCapture" class="btn">REGISTRA NOMINATIVO → SCHEDA</button></div></section>',1)
+          old='<div class="kpi"><b id="kRemaining">250</b><span>FONTI DA LAVORARE</span></div><div class="kpi"><b id="kPeople">0</b><span>PERSONE UNICHE</span></div>'
+          new='<div class="kpi"><b id="kRemaining">250</b><span>FONTI DA LAVORARE</span></div><div class="kpi"><b id="kPeopleTotal">0</b><span>PERSONE TOTALI TROVATE</span></div><div class="kpi"><b id="kPeople">0</b><span>PERSONE UNICHE</span></div>'
+          if old not in s: raise SystemExit('KPI marker missing')
+          s=s.replace(old,new,1).replace('grid-template-columns:repeat(9,minmax(105px,1fr))','grid-template-columns:repeat(10,minmax(105px,1fr))',1)
+          marker='<div><label>Priorità</label><select id="priorityFilter"><option value="">TUTTE</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select></div>'
+          if marker not in s: raise SystemExit('priority filter marker missing')
+          s=s.replace(marker,marker+'<div><label>Ultimo contatto</label><select id="lastContactFilter"><option value="">QUALSIASI</option><option value="GT5">NON SENTO DA PIÙ DI 5 ANNI</option></select></div>',1)
+          p.write_text(s)
+
+          p=Path('network-reconstruction.js')
+          s=p.read_text()
+          old="function renderDashboard(){const done=state.progress.filter(p=>p.status==='COMPLETATA').length,worked=state.progress.filter(p=>p.status!=='DA CONTROLLARE').length,dup=state.progress.reduce((a,p)=>a+Number(p.duplicates||0),0),contacts=state.contacts.filter(c=>!c.deleted);$('kTotalSources').textContent=SOURCES().length;$('kCompleted').textContent=done;$('kRemaining').textContent=Math.max(0,SOURCES().length-done);$('kPeople').textContent=contacts.length;"
+          new="function renderDashboard(){const done=state.progress.filter(p=>p.status==='COMPLETATA').length,worked=state.progress.filter(p=>p.status!=='DA CONTROLLARE').length,dup=state.progress.reduce((a,p)=>a+Number(p.duplicates||0),0),totalFound=state.progress.reduce((a,p)=>a+Number(p.names_total||0),0),contacts=state.contacts.filter(c=>!c.deleted);$('kTotalSources').textContent=SOURCES().length;$('kCompleted').textContent=done;$('kRemaining').textContent=Math.max(0,SOURCES().length-done);$('kPeopleTotal').textContent=totalFound;$('kPeople').textContent=contacts.length;"
+          if old not in s: raise SystemExit('renderDashboard marker missing')
+          s=s.replace(old,new,1)
+          old="function renderGuided(){if(state.guide?.active){const s=source(state.guide.current_source_id);$('guidedState').textContent=`RICOSTRUZIONE ATTIVA · FONTE #${s.id} ${s.name} · PASSO ${state.guide.guided_step||'SOURCE'}`}else $('guidedState').textContent='Modalità guidata non avviata.'}"
+          new="function renderGuided(){if(state.guide?.active){const s=source(state.guide.current_source_id);$('guidedState').textContent=`RICOSTRUZIONE ATTIVA · FONTE #${s.id} ${s.name} · PASSO ${state.guide.guided_step||'SOURCE'}`;if($('guidedQuestion'))$('guidedQuestion').textContent=s.id>=201?`${s.name}: quale persona ti viene in mente? Scrivi un solo nominativo.`:`${s.name}: chi riconosci realmente nella tua rete? Scrivi una persona alla volta.`}else{$('guidedState').textContent='Modalità guidata non avviata.';if($('guidedQuestion'))$('guidedQuestion').textContent='Avvia la ricostruzione per ricevere la prima domanda.'}}"
+          if old not in s: raise SystemExit('renderGuided marker missing')
+          s=s.replace(old,new,1)
+          insert="""async function captureGuidedName(){const raw=clean($('guidedAnswer')?.value);if(!raw)return;const bits=raw.split(/\\s+/),nome=bits.shift()||'',cognome=bits.join(' ');showView('contactView');clearContact();$('fNome').value=nome;$('fCognome').value=cognome;$('fFonte').value=String(state.guide?.current_source_id||state.selectedSource);$('fCome').value=`Emerso durante ricostruzione rete · ${source(state.guide?.current_source_id||state.selectedSource).name}`;$('guidedAnswer').value='';if(state.guide?.active)await saveGuide({current_source_id:state.guide.current_source_id||state.selectedSource,guided_step:'CONTACT'});notice('contactNotice','Nominativo trasferito nella scheda. Completa solo i dati realmente disponibili.','ok')}\n"""
+          marker='function renderContacts(){'
+          if marker not in s: raise SystemExit('renderContacts marker missing')
+          s=s.replace(marker,insert+marker,1)
+          old="const q=low($('contactSearch').value),rel=low($('relationshipFilter').value),st=$('contactStatusFilter').value,pr=$('priorityFilter').value;const rows=state.contacts.filter(c=>{const sources=sourceNamesForContact(c.contact_id).join(' '),hay=low([c.nome,c.cognome,c.telefono,c.email,c.comune,c.professione,c.azienda,c.come_lo_conosco,c.stato_contatto,(c.tipo_rapporto||[]).join(' '),sources].join(' '));return(!q||hay.includes(q))&&(!rel||(c.tipo_rapporto||[]).some(x=>low(x).includes(rel)))&&(!st||c.stato_contatto===st)&&(!pr||c.priorita===pr)});"
+          new="const q=low($('contactSearch').value),rel=low($('relationshipFilter').value),st=$('contactStatusFilter').value,pr=$('priorityFilter').value,last=$('lastContactFilter')?.value||'',cutoff=new Date().getFullYear()-5;const rows=state.contacts.filter(c=>{const sources=sourceNamesForContact(c.contact_id).join(' '),hay=low([c.nome,c.cognome,c.telefono,c.email,c.comune,c.professione,c.azienda,c.come_lo_conosco,c.stato_contatto,(c.tipo_rapporto||[]).join(' '),sources].join(' ')),lastYear=Number(c.anno_ultimo_contatto)||Number(String(c.ultima_interazione||'').slice(0,4))||0,oldEnough=last!=='GT5'||(lastYear>0&&lastYear<cutoff);return(!q||hay.includes(q))&&(!rel||(c.tipo_rapporto||[]).some(x=>low(x).includes(rel)))&&(!st||c.stato_contatto===st)&&(!pr||c.priorita===pr)&&oldEnough});"
+          if old not in s: raise SystemExit('search marker missing')
+          s=s.replace(old,new,1)
+          old="['contactSearch','relationshipFilter','contactStatusFilter','priorityFilter'].forEach(id=>$(id).addEventListener('input',renderContacts));"
+          new="['contactSearch','relationshipFilter','contactStatusFilter','priorityFilter','lastContactFilter'].forEach(id=>$(id).addEventListener('input',renderContacts));"
+          if old not in s: raise SystemExit('bind filters marker missing')
+          s=s.replace(old,new,1)
+          old="$('startGuided').onclick=startGuided;$('resumeGuided').onclick=resumeGuided;"
+          new="$('startGuided').onclick=startGuided;$('resumeGuided').onclick=resumeGuided;$('guidedCapture').onclick=()=>captureGuidedName().catch(e=>notice('contactNotice',String(e.message||e),'err'));"
+          if old not in s: raise SystemExit('guided bind marker missing')
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
+          node --check network-reconstruction.js
+          grep -q 'kPeopleTotal' network-reconstruction.html
+          grep -q 'lastContactFilter' network-reconstruction.html
+          grep -q 'guidedQuestion' network-reconstruction.html
+          grep -q 'captureGuidedName' network-reconstruction.js
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add network-reconstruction.html network-reconstruction.js
+          git commit -m 'Complete Network 250 guided reconstruction requirements'
+          git push
