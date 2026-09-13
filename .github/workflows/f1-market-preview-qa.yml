@@ -26,7 +26,7 @@ jobs:
           echo CHECK_DASHBOARD && grep -q 'id="marketPreviewWidget"' index.html
           echo CHECK_DUPLICATES && grep -q 'CONTROLLO DUPLICATI' market-preview.html
           echo CHECK_F1_006 && grep -q 'F1-006' script-data-2.js
-          echo CHECK_F1_007 && grep -q 'F1-007' script-data-2.js
+          echo CHECK_F1_007 && grep -q 'F1-007' script-data-3.js
           echo CHECK_PRICE_HISTORY && grep -q 'MARKET_PREVIEW_PRICE_CHANGED' market-preview-preview.js
           echo CHECK_APPEND_HISTORY && grep -q 'M.appendEvent' market-preview-preview.js
       - name: Install browser QA
