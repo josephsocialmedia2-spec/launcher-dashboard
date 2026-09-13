@@ -1,0 +1,66 @@
+name: F1 CRM Excel Import QA
+
+on:
+  push:
+    paths:
+      - 'crm.html'
+      - 'crm-import-app.js'
+      - 'crm-unified-app.js'
+      - 'f1-acquisition-data.js'
+      - 'f1-acquisition-core.js'
+      - 'tests/crm-excel-import.spec.js'
+      - 'package.json'
+      - '.github/workflows/f1-crm-import-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Static importer validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check crm-import-app.js
+          node --check tests/crm-excel-import.spec.js
+          grep -q 'CARICA CONTATTI EXCEL' crm.html
+          grep -q 'CONFERMA E IMPORTA' crm.html
+          grep -q 'xlsx.full.min.js' crm.html
+          grep -q 'CENTRO_INFLUENZA' crm-import-app.js
+          grep -q 'NOME + COGNOME' crm-import-app.js
+          grep -q 'crm_import_log' crm-import-app.js
+          if grep -R -E 'sk-[A-Za-z0-9_-]{20,}|OPENAI_API_KEY|api\.openai\.com' crm.html crm-import-app.js; then
+            echo 'Public OpenAI credential/API reference forbidden'
+            exit 1
+          fi
+      - name: Install QA dependencies
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+      - name: XLSX XLS CSV import E2E
+        run: npx playwright test tests/crm-excel-import.spec.js --project=desktop-chromium
+      - name: Live GitHub Pages smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
+          ok=0
+          for i in $(seq 1 60); do
+            if curl -fsSL --max-time 20 "$base/crm.html?qa=$RANDOM" -o /tmp/crm.html \
+              && curl -fsSL --max-time 20 "$base/crm-import-app.js?qa=$RANDOM" -o /tmp/import.js \
+              && grep -q 'CARICA CONTATTI EXCEL' /tmp/crm.html \
+              && grep -q 'CONFERMA E IMPORTA' /tmp/crm.html \
+              && grep -q 'crm_import_log' /tmp/import.js \
+              && grep -q 'NOME + COGNOME' /tmp/import.js; then ok=1; break; fi
+            sleep 5
+          done
+          test "$ok" = 1
+          echo 'PASS CRM Excel importer deployed'
