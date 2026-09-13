@@ -22,17 +22,20 @@ jobs:
           if bad < 1:
               raise SystemExit('Expected bootstrap selector bug not found')
           s=s.replace("$('#", "$('")
+          required=[
+              "$('saveProgramStart').onclick=saveProgramStart",
+              "$('saveOutcome').onclick=saveOutcome",
+              "$('convertReferral').onclick=convertReferral",
+          ]
+          if "$('#" in s:
+              raise SystemExit('Invalid # prefix still present')
+          for item in required:
+              if item not in s:
+                  raise SystemExit('Expected handler missing: '+item)
           p.write_text(s,encoding='utf-8')
           print('fixed selectors:', bad)
           PY
           node --check just-listed-sold.js
-          if grep -Fq "$('#" just-listed-sold.js; then
-            echo 'Invalid # prefix still present in getElementById helper calls'
-            exit 1
-          fi
-          grep -Fq "$('saveProgramStart').onclick=saveProgramStart" just-listed-sold.js
-          grep -Fq "$('saveOutcome').onclick=saveOutcome" just-listed-sold.js
-          grep -Fq "$('convertReferral').onclick=convertReferral" just-listed-sold.js
       - name: Commit fix
         shell: bash
         run: |
