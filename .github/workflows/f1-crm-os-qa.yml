@@ -1,0 +1,73 @@
+name: F1 CRM OS QA
+
+on:
+  push:
+    paths:
+      - 'f1-crm-os.html'
+      - 'f1-crm-os.js'
+      - 'config/crm-os.json'
+      - 'tests/crm-os.spec.js'
+      - 'supabase-migrations/20260913_f1_crm_os_contact_roles.sql'
+      - '.github/workflows/f1-crm-os-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Static CRM OS contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check f1-crm-os.js
+          node --check tests/crm-os.spec.js
+          node -e "JSON.parse(require('fs').readFileSync('config/crm-os.json','utf8'))"
+          grep -q 'F1 CRM OS' f1-crm-os.html
+          grep -q 'AGENDA OPERATIVA' f1-crm-os.html
+          grep -q 'SCHEDA CONTATTO 360' f1-crm-os.js
+          grep -q 'POSSIBILE DUPLICATO' f1-crm-os.js
+          grep -q 'newContactProfile' config/crm-os.json
+          grep -q 'f1_contact_roles' supabase-migrations/20260913_f1_crm_os_contact_roles.sql
+          ! grep -q 'service_role' f1-crm-os.html
+          ! grep -q 'service_role' f1-crm-os.js
+          ! grep -q 'localStorage' f1-crm-os.html
+          ! grep -q 'localStorage' f1-crm-os.js
+          test -f crm.html
+          test -f oggi.html
+      - name: Install browser QA
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+      - name: CRM OS desktop QA
+        run: npx playwright test tests/crm-os.spec.js --project=desktop-chromium
+      - name: CRM OS mobile QA
+        run: npx playwright test tests/crm-os.spec.js --project=mobile-chromium
+      - name: Existing unified CRM regression
+        run: npx playwright test tests/unified-crm.spec.js --project=desktop-chromium
+      - name: Published GitHub Pages smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
+          ok=0
+          for i in $(seq 1 60); do
+            if curl -fsSL --max-time 20 "$base/f1-crm-os.html?qa=$RANDOM" -o /tmp/os.html \
+              && curl -fsSL --max-time 20 "$base/f1-crm-os.js?qa=$RANDOM" -o /tmp/os.js \
+              && curl -fsSL --max-time 20 "$base/config/crm-os.json?qa=$RANDOM" -o /tmp/os.json \
+              && curl -fsSL --max-time 20 "$base/crm.html?qa=$RANDOM" -o /tmp/crm.html \
+              && grep -q 'POSTAZIONE OPERATIVA' /tmp/os.html \
+              && grep -q 'POSSIBILE DUPLICATO' /tmp/os.js \
+              && grep -q 'newContactProfile' /tmp/os.json \
+              && grep -q 'CRM UNIFICATO' /tmp/crm.html; then ok=1; break; fi
+            sleep 5
+          done
+          test "$ok" = 1
+          echo 'PASS F1 CRM OS published with classic CRM fallback'
