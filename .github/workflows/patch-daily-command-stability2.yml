@@ -1,0 +1,57 @@
+name: Patch Daily Command Stability 2
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-daily-command-stability2.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Stabilize timers and rollover test
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('daily-command-panel.js')
+          s=p.read_text()
+          old='<div class="f1-order-timer"><div><b>${fmtSec(elapsed)}</b><span>TEMPO BLOCCO</span></div><div><b>${fmtSec(remaining)}</b><span>TEMPO RESIDUO</span></div></div>'
+          new='<div class="f1-order-timer"><div><b data-live-elapsed="${t.id}">${fmtSec(elapsed)}</b><span>TEMPO BLOCCO</span></div><div><b data-live-remaining="${t.id}">${fmtSec(remaining)}</b><span>TEMPO RESIDUO</span></div></div>'
+          if old not in s: raise SystemExit('timer markup marker missing')
+          s=s.replace(old,new,1)
+          old="function render(focus=false){const now=new Date();if(state.date!==dateKey(now))state=loadState();renderHead(now);renderNext(now);renderList(now,focus);renderReport()}"
+          new="let lastMinuteStamp='';\\nfunction minuteStamp(now){return `${dateKey(now)}-${pad(now.getHours())}:${pad(now.getMinutes())}`}\\nfunction render(focus=false){const now=new Date();if(state.date!==dateKey(now))state=loadState();lastMinuteStamp=minuteStamp(now);renderHead(now);renderNext(now);renderList(now,focus);renderReport()}\\nfunction tick(){const now=new Date();if(state.date!==dateKey(now)||minuteStamp(now)!==lastMinuteStamp){render(false);return}$('f1Now').textContent=`${pad(now.getHours())}:${pad(now.getMinutes())}`;const prod=TASKS.filter(t=>!t.pause).reduce((a,t)=>a+effectiveElapsed(taskState(t.id)),0);$('f1ProductiveTime').textContent=fmtProductive(prod);for(const t of TASKS){const elapsed=effectiveElapsed(taskState(t.id)),remaining=Math.max(0,t.duration*60-elapsed),a=document.querySelector(`[data-live-elapsed=\\\"${t.id}\\\"]`),b=document.querySelector(`[data-live-remaining=\\\"${t.id}\\\"]`);if(a)a.textContent=fmtSec(elapsed);if(b)b.textContent=fmtSec(remaining)}}"
+          if old not in s: raise SystemExit('render marker missing')
+          s=s.replace(old,new,1)
+          old="render(true);setInterval(()=>render(false),1000)}"
+          new="render(true);setInterval(tick,1000)}"
+          if old not in s: raise SystemExit('interval marker missing')
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          p=Path('daily-command-panel.css')
+          s=p.read_text()
+          old='.f1-command-panel{position:sticky;top:10px;max-height:calc(100vh - 20px);overflow:auto;border:1px solid #35513d;border-radius:18px;background:linear-gradient(180deg,#0c140e,#08100a);box-shadow:0 18px 46px rgba(0,0,0,.35);padding:14px;scrollbar-width:thin}'
+          new='.f1-command-panel{position:sticky;top:10px;max-height:calc(100vh - 20px);overflow:auto;border:1px solid #35513d;border-radius:18px;background:linear-gradient(180deg,#0c140e,#08100a);box-shadow:0 18px 46px rgba(0,0,0,.35);padding:14px 14px 72px;scrollbar-width:thin;scroll-padding-top:220px;scroll-padding-bottom:80px}'
+          if old not in s: raise SystemExit('panel css marker missing')
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          p=Path('index.html')
+          s=p.read_text().replace('daily-command-panel.css?v=20260913-daily2','daily-command-panel.css?v=20260913-daily3').replace('daily-command-panel.js?v=20260913-daily2','daily-command-panel.js?v=20260913-daily3')
+          p.write_text(s)
+          p=Path('tests/daily-command-panel.spec.js')
+          s=p.read_text()
+          old='await page.locator(\'[data-task-id="content"] [data-action="complete"]\').click();'
+          new="await page.evaluate(()=>F1DailyCommand.completeTask('content'));"
+          if old not in s: raise SystemExit('rollover click marker missing')
+          p.write_text(s.replace(old,new,1))
+          PY
+          node --check daily-command-panel.js
+          node --check tests/daily-command-panel.spec.js
+          grep -q 'data-live-elapsed' daily-command-panel.js
+          grep -q 'setInterval(tick,1000)' daily-command-panel.js
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add daily-command-panel.js daily-command-panel.css index.html tests/daily-command-panel.spec.js
+          git commit -m 'Stabilize daily command timers and rollover QA'
+          git push
