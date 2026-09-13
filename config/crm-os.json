@@ -1,0 +1,50 @@
+{
+  "version": "2026.09.13-p1",
+  "featureFlags": {
+    "newDashboard": true,
+    "newContactProfile": true,
+    "newMatchingEngine": false,
+    "newTerritoryMap": false,
+    "newOwnerControlRoom": true
+  },
+  "fallbacks": {
+    "crm": "crm.html",
+    "today": "oggi.html",
+    "ownerControlRoom": "titolare-funzionari.html"
+  },
+  "roles": [
+    "PROPRIETARIO",
+    "VENDITORE",
+    "ACQUIRENTE",
+    "LOCATORE",
+    "CONDUTTORE",
+    "PROSPECT",
+    "EX_CLIENTE",
+    "SEGNALATORE",
+    "CONTATTO_TERRITORIALE",
+    "CENTRO_INFLUENZA"
+  ],
+  "pipelines": {
+    "PROPRIETARIO": ["NUOVO","DA_CONTATTARE","CONTATTATO","DA_QUALIFICARE","QUALIFICATO","APPUNTAMENTO","VALUTAZIONE","FOLLOW_UP","INCARICO","NON_INTERESSATO","DA_RICONTATTARE"],
+    "VENDITORE": ["NUOVO","DA_CONTATTARE","CONTATTATO","DA_QUALIFICARE","QUALIFICATO","APPUNTAMENTO","VALUTAZIONE","FOLLOW_UP","INCARICO","NON_INTERESSATO","DA_RICONTATTARE"],
+    "ACQUIRENTE": ["NUOVO","CONTATTATO","QUALIFICATO","RICERCA_ATTIVA","MATCH","VISITA","INTERESSATO","PROPOSTA","TRATTATIVA","ACQUISTATO","ARCHIVIATO"],
+    "IMMOBILE": ["SEGNALAZIONE","PROSPECT","VALUTAZIONE","INCARICO","PREPARAZIONE","PUBBLICATO","VISITE","PROPOSTA","TRATTATIVA","VENDUTO","ARCHIVIATO"]
+  },
+  "priorityModel": {
+    "version": 1,
+    "max": 100,
+    "components": {
+      "daysSinceLastContact": 25,
+      "nextActionTiming": 25,
+      "leadScore": 20,
+      "overdueTasks": 15,
+      "pipelineStatus": 10,
+      "recentInterest": 5
+    },
+    "notYetStructured": ["motivazione", "valore_potenziale", "match_immobili"]
+  },
+  "agenda": {
+    "start": "06:30",
+    "end": "20:00"
+  }
+}
