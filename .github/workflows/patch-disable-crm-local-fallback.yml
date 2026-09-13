@@ -1,0 +1,50 @@
+name: Enforce Supabase-only CRM reads
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-disable-crm-local-fallback.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove local CRM fallback reads
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('f1-acquisition-data.js')
+          s=p.read_text(encoding='utf-8')
+          replacements={
+            "async function pullTasks(){if(!cloudReady())return Core().localTasks();":"async function pullTasks(){requireCloud();",
+            "async function pullLeads(){if(!cloudReady())return Core().localLeads();":"async function pullLeads(){requireCloud();",
+            "async function pullInteractions(){if(!cloudReady())return localInteractions();":"async function pullInteractions(){requireCloud();",
+          }
+          for old,new in replacements.items():
+            if old not in s: raise SystemExit(f'Expected fallback not found: {old}')
+            s=s.replace(old,new,1)
+          old="async function loadDashboardData(){const cfg=await Core().loadConfig();if(cloudReady())await syncTerritorySnapshot(cfg.territory).catch(()=>false);const [feed,tasks,leads]=await Promise.all([Core().loadPublicFeed(),pullTasks(),pullLeads()]),publicTasks=(feed.tasks||[]).map(normalizeTask);let mergedTasks=Core().mergeTasks(publicTasks,tasks);const core4Created=await ensureCore4DueTasks(leads,mergedTasks).catch(()=>[]);mergedTasks=Core().mergeTasks(mergedTasks,core4Created);return{cfg,feed,tasks:mergedTasks,leads,cloud:cloudReady()}}"
+          new="async function loadDashboardData(){const cfg=await Core().loadConfig();let cloud=cloudReady();if(cloud&&window.F1Sync?.ensureSession)cloud=await window.F1Sync.ensureSession().catch(()=>false);if(cloud)await syncTerritorySnapshot(cfg.territory).catch(()=>false);const feed=await Core().loadPublicFeed(),privateData=cloud?await Promise.all([pullTasks(),pullLeads()]):[[],[]],tasks=privateData[0],leads=privateData[1],publicTasks=(feed.tasks||[]).map(normalizeTask);let mergedTasks=Core().mergeTasks(publicTasks,tasks);const core4Created=cloud?await ensureCore4DueTasks(leads,mergedTasks).catch(()=>[]):[];mergedTasks=Core().mergeTasks(mergedTasks,core4Created);return{cfg,feed,tasks:mergedTasks,leads,cloud}}"
+          if old not in s: raise SystemExit('Dashboard loader block not found')
+          s=s.replace(old,new,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+          node --check f1-acquisition-data.js
+          if grep -q 'if(!cloudReady())return Core().localLeads()' f1-acquisition-data.js; then exit 1; fi
+          if grep -q 'if(!cloudReady())return Core().localTasks()' f1-acquisition-data.js; then exit 1; fi
+          if grep -q 'if(!cloudReady())return localInteractions()' f1-acquisition-data.js; then exit 1; fi
+          grep -q 'privateData=cloud?await Promise.all' f1-acquisition-data.js
+      - name: Commit adapter hardening
+        shell: bash
+        run: |
+          git config user.name 'f1-dashboard-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add f1-acquisition-data.js
+          git commit -m 'Remove local fallback from unified CRM data reads'
+          git push
