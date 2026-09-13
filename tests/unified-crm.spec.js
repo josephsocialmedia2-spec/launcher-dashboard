@@ -8,6 +8,10 @@ for (const viewport of [{name:'desktop',width:1280,height:900},{name:'mobile',wi
       sessionStorage.setItem('f1SupabaseSession', JSON.stringify({access_token:'qa-token',refresh_token:'qa-refresh',expires_at:Date.now()+3600000,user:{id:'qa-user'}}));
       if(window.top===window) localStorage.removeItem('f1OperationalFlowV1');
     });
+    await page.route('https://nqnmlsmeiynxbdojeyjt.supabase.co/auth/v1/user', async route => {
+      expect(route.request().headers().authorization||'').toContain('Bearer qa-token');
+      await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({id:'qa-user',role:'authenticated'})});
+    });
     await page.route('https://nqnmlsmeiynxbdojeyjt.supabase.co/rest/v1/**', async route => {
       const req=route.request(),u=new URL(req.url()),table=u.pathname.split('/').pop(),method=req.method();
       if(!db[table]) return route.fulfill({status:404,body:'[]'});
