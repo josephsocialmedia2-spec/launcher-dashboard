@@ -7,6 +7,7 @@ on:
       - 'program-90*.js'
       - 'tests/program-90.spec.js'
       - 'tests/program-90-point7.spec.js'
+      - 'tests/program-90-goals-reset.spec.js'
       - 'tests/program-90-live.spec.js'
       - '.github/workflows/f1-program-90-qa.yml'
   workflow_dispatch:
@@ -28,18 +29,19 @@ jobs:
           node --check program-90-widget.js
           node --check tests/program-90.spec.js
           node --check tests/program-90-point7.spec.js
+          node --check tests/program-90-goals-reset.spec.js
           node --check tests/program-90-live.spec.js
           grep -q 'id="program90Widget"' index.html
           grep -q 'PROGRAMMA 90 GIORNI' program-90.html
           grep -q 'CHIUDI GIORNATA' program-90.html
           grep -q 'RIVEDI OBIETTIVI' program-90.html
           grep -q 'id="noAppointmentPanel"' program-90.html
-          grep -q 'F1-006' program-90.html
-          grep -q 'F1-007' program-90.html
           grep -q "F1_90_DAY_PROGRAM" program-90.js
-          grep -q "F1_90_DAY_DAY" program-90.js
-          grep -q "F1_90_DAY_CLOSED" program-90.js
-          grep -q "F1_90_GOAL_REVIEW" program-90.js
+          grep -q "F1_90_DAY_ATTEMPT" program-90.js
+          grep -q "F1_90_ATTEMPT_RESET" program-90.js
+          grep -q "APPUNTAMENTO_SVOLTO" program-90.js
+          grep -q "CONTRATTO_FIRMATO" program-90.js
+          grep -q "GRANDE OBIETTIVO" program-90-widget.js
           grep -q "F1_90_NO_APPOINTMENT_FSBO_EXPIRED" program-90.js
           ! grep -q 'localStorage' program-90.js
           ! grep -q 'localStorage' program-90-widget.js
@@ -48,7 +50,7 @@ jobs:
           npm install
           npx playwright install --with-deps chromium
       - name: Full Program 90 day E2E
-        run: npx playwright test tests/program-90.spec.js tests/program-90-point7.spec.js --project=desktop-chromium
+        run: npx playwright test tests/program-90.spec.js tests/program-90-point7.spec.js tests/program-90-goals-reset.spec.js --project=desktop-chromium
       - name: CRM unified regression
         run: npx playwright test tests/crm-full-e2e.spec.js tests/crm-excel-import.spec.js --project=desktop-chromium
       - name: Existing production modules regression
@@ -62,11 +64,13 @@ jobs:
             if curl -fsSL "$base/index.html?qa=$RANDOM" -o /tmp/i \
               && curl -fsSL "$base/program-90.html?qa=$RANDOM" -o /tmp/p90 \
               && curl -fsSL "$base/program-90.js?qa=$RANDOM" -o /tmp/p90js \
+              && curl -fsSL "$base/program-90-widget.js?qa=$RANDOM" -o /tmp/p90w \
               && grep -q 'id="program90Widget"' /tmp/i \
               && grep -q 'CHIUDI GIORNATA' /tmp/p90 \
-              && grep -q 'id="noAppointmentPanel"' /tmp/p90 \
-              && grep -q 'F1_90_DAY_PROGRAM' /tmp/p90js \
-              && grep -q 'F1_90_NO_APPOINTMENT_FSBO_EXPIRED' /tmp/p90js; then
+              && grep -q 'F1_90_DAY_ATTEMPT' /tmp/p90js \
+              && grep -q 'APPUNTAMENTO_SVOLTO' /tmp/p90js \
+              && grep -q 'CONTRATTO_FIRMATO' /tmp/p90js \
+              && grep -q 'GRANDE OBIETTIVO' /tmp/p90w; then
               deployed=1
               break
             fi
