@@ -1,0 +1,71 @@
+name: F1 Unified CRM QA
+
+on:
+  push:
+    paths:
+      - 'crm.html'
+      - 'crm-unified-app.js'
+      - 'f1-acquisition-data.js'
+      - 'supabase-sync.js'
+      - 'f1-opportunity-crm.js'
+      - 'f1-opportunity-crm-ui.js'
+      - 'f1-opportunity-crm-ui-v2.js'
+      - 'f1-os-mobile.html'
+      - 'gestione-app.html'
+      - 'system-registry.json'
+      - 'tests/unified-crm.spec.js'
+      - '.github/workflows/f1-unified-crm-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Static CRM validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check f1-acquisition-data.js
+          node --check supabase-sync.js
+          node --check f1-opportunity-crm.js
+          node --check f1-opportunity-crm-ui-v2.js
+          node --check crm-unified-app.js
+          node --check tests/unified-crm.spec.js
+          grep -q 'F1 ACQUISITION ENGINE · CRM UNIFICATO' crm.html
+          grep -q 'LEAD · INTERAZIONI · TASK' crm.html
+          grep -q 'SALVA NEL CRM' f1-opportunity-crm-ui-v2.js
+          grep -q 'CRM legacy disattivato' supabase-sync.js
+          grep -q 'READ_ONLY_CACHE' system-registry.json
+          ! grep -q "f1OSStateV3" f1-os-mobile.html
+          ! grep -q "f1CRMContacts.*contatti" gestione-app.html
+      - name: Install browser QA
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+      - name: Lead Interaction Task and duplicate QA
+        run: npx playwright test tests/unified-crm.spec.js --project=desktop-chromium
+      - name: Live GitHub Pages smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
+          ok=0
+          for i in $(seq 1 60); do
+            if curl -fsSL --max-time 20 "$base/crm.html?qa=$RANDOM" -o /tmp/crm.html \
+              && curl -fsSL --max-time 20 "$base/f1-opportunity-crm.js?qa=$RANDOM" -o /tmp/opp.js \
+              && curl -fsSL --max-time 20 "$base/f1-os-mobile.html?qa=$RANDOM" -o /tmp/legacy.html \
+              && grep -q 'CRM UNIFICATO' /tmp/crm.html \
+              && grep -q 'OPPORTUNITA_GIA_PRESENTE' /tmp/opp.js \
+              && grep -q 'Modulo legacy disattivato' /tmp/legacy.html; then ok=1; break; fi
+            sleep 5
+          done
+          test "$ok" = 1
+          echo 'PASS unified CRM deployed'
