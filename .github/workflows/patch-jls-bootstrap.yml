@@ -1,0 +1,43 @@
+name: Patch JLS bootstrap IDs
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-jls-bootstrap.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fix getElementById calls
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('just-listed-sold.js')
+          s=p.read_text(encoding='utf-8')
+          bad=s.count("$('#")
+          if bad < 1:
+              raise SystemExit('Expected bootstrap selector bug not found')
+          s=s.replace("$('#", "$('")
+          p.write_text(s,encoding='utf-8')
+          print('fixed selectors:', bad)
+          PY
+          node --check just-listed-sold.js
+          if grep -Fq "$('#" just-listed-sold.js; then
+            echo 'Invalid # prefix still present in getElementById helper calls'
+            exit 1
+          fi
+          grep -Fq "$('saveProgramStart').onclick=saveProgramStart" just-listed-sold.js
+          grep -Fq "$('saveOutcome').onclick=saveOutcome" just-listed-sold.js
+          grep -Fq "$('convertReferral').onclick=convertReferral" just-listed-sold.js
+      - name: Commit fix
+        shell: bash
+        run: |
+          git config user.name 'f1-dashboard-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add just-listed-sold.js
+          git commit -m 'Fix Just Listed Sold bootstrap element IDs'
+          git push
