@@ -16,6 +16,7 @@ on:
       - 'f1-opportunity-crm-ui-v2.js'
       - 'tests/crm-excel-import.spec.js'
       - 'tests/cloud-auth.spec.js'
+      - 'tests/crm-full-e2e.spec.js'
       - 'tests/unified-crm.spec.js'
       - 'package.json'
       - '.github/workflows/f1-crm-import-qa.yml'
@@ -43,6 +44,7 @@ jobs:
           node --check f1-acquisition-data.js
           node --check tests/crm-excel-import.spec.js
           node --check tests/cloud-auth.spec.js
+          node --check tests/crm-full-e2e.spec.js
           node --check tests/unified-crm.spec.js
           grep -q 'CARICA CONTATTI EXCEL' crm.html
           grep -q 'CONFERMA E IMPORTA' crm.html
@@ -71,6 +73,8 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Supabase authentication and refresh persistence E2E
         run: npx playwright test tests/cloud-auth.spec.js --project=desktop-chromium
+      - name: Full authenticated CRM browser E2E
+        run: npx playwright test tests/crm-full-e2e.spec.js --project=desktop-chromium
       - name: Unified CRM opportunity graph and deduplication E2E
         run: npx playwright test tests/unified-crm.spec.js --project=desktop-chromium
       - name: Excel import into unified CRM E2E
