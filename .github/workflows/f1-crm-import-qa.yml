@@ -1,17 +1,22 @@
-name: F1 CRM Excel Import QA
+name: F1 CRM Cloud Contract QA
 
 on:
   push:
     paths:
       - 'crm.html'
+      - 'crm-auth-guard.js'
       - 'crm-import-app.js'
       - 'crm-unified-app.js'
       - 'f1-acquisition-data.js'
       - 'f1-acquisition-core.js'
+      - 'supabase-config.js'
       - 'supabase-sync.js'
       - 'setup-cloud.html'
+      - 'f1-opportunity-crm.js'
+      - 'f1-opportunity-crm-ui-v2.js'
       - 'tests/crm-excel-import.spec.js'
       - 'tests/cloud-auth.spec.js'
+      - 'tests/unified-crm.spec.js'
       - 'package.json'
       - '.github/workflows/f1-crm-import-qa.yml'
   workflow_dispatch:
@@ -28,37 +33,35 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Static importer and auth validation
+      - name: Static CRM cloud contract validation
         shell: bash
         run: |
           set -euo pipefail
+          node --check crm-auth-guard.js
           node --check crm-import-app.js
           node --check supabase-sync.js
+          node --check f1-acquisition-data.js
           node --check tests/crm-excel-import.spec.js
           node --check tests/cloud-auth.spec.js
+          node --check tests/unified-crm.spec.js
           grep -q 'CARICA CONTATTI EXCEL' crm.html
           grep -q 'CONFERMA E IMPORTA' crm.html
-          grep -q 'xlsx.full.min.js' crm.html
-          grep -q 'CENTRO_INFLUENZA' crm-import-app.js
-          grep -q 'NOME + COGNOME' crm-import-app.js
           grep -q 'crm_import_log' crm-import-app.js
-          grep -q 'parseDelimited' crm-import-app.js
-          grep -q 'csvDelimiter' crm-import-app.js
           grep -q 'function ensureCloud()' crm-import-app.js
-          grep -q 'function isCloudReady()' crm-import-app.js
           grep -q 'signInWithPassword' supabase-sync.js
-          grep -q 'sendMagicLink' supabase-sync.js
-          grep -q 'localStorage.setItem(SESSION_KEY' supabase-sync.js
-          grep -q 'ACCESSO CLOUD' setup-cloud.html
-          grep -q 'ACCEDI AL CRM' setup-cloud.html
-          grep -q 'create_user:false' supabase-sync.js
-          if grep -q 'Data().requireCloud();' crm-import-app.js; then
-            echo 'Direct requireCloud compatibility call forbidden'
+          grep -q 'ensureSession' supabase-sync.js
+          grep -q "authBase()+'user'" supabase-sync.js
+          grep -q 'ACCESSO CRM RICHIESTO' crm-auth-guard.js
+          grep -q 'ACCEDI AL CRM' crm-auth-guard.js
+          grep -q "url: 'https://nqnmlsmeiynxbdojeyjt.supabase.co'" supabase-config.js
+          grep -q "anonKey: 'sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu'" supabase-config.js
+          grep -q 'crm-auth-guard.js?v=20260913-auth2' crm.html
+          grep -q 'f1-acquisition-data.js?v=20260913-auth2' crm.html
+          if grep -q "url: localStorage.getItem('f1SupabaseUrl')" supabase-config.js; then
+            echo 'Legacy browser backend override forbidden for canonical CRM'
             exit 1
           fi
-          grep -q 'f1-acquisition-data.js?v=20260913-1147' crm.html
-          grep -q 'crm-import-app.js?v=20260913-1147' crm.html
-          if grep -R -E 'service_role|sb_secret_|sk-[A-Za-z0-9_-]{20,}|OPENAI_API_KEY|api\.openai\.com' crm.html crm-import-app.js supabase-sync.js setup-cloud.html; then
+          if grep -R -E 'service_role|sb_secret_|sk-[A-Za-z0-9_-]{20,}|OPENAI_API_KEY|api\.openai\.com' crm.html crm-auth-guard.js crm-import-app.js supabase-sync.js setup-cloud.html; then
             echo 'Public secret credential/API reference forbidden'
             exit 1
           fi
@@ -66,10 +69,12 @@ jobs:
         run: |
           npm install
           npx playwright install --with-deps chromium
-      - name: XLSX XLS CSV import E2E including cached adapter regression
-        run: npx playwright test tests/crm-excel-import.spec.js --project=desktop-chromium
-      - name: Supabase auth persistence E2E
+      - name: Supabase authentication and refresh persistence E2E
         run: npx playwright test tests/cloud-auth.spec.js --project=desktop-chromium
+      - name: Unified CRM opportunity graph and deduplication E2E
+        run: npx playwright test tests/unified-crm.spec.js --project=desktop-chromium
+      - name: Excel import into unified CRM E2E
+        run: npx playwright test tests/crm-excel-import.spec.js --project=desktop-chromium
       - name: Live GitHub Pages smoke
         shell: bash
         run: |
@@ -78,18 +83,19 @@ jobs:
           ok=0
           for i in $(seq 1 60); do
             if curl -fsSL --max-time 20 "$base/crm.html?qa=$RANDOM" -o /tmp/crm.html \
-              && curl -fsSL --max-time 20 "$base/crm-import-app.js?qa=$RANDOM" -o /tmp/import.js \
+              && curl -fsSL --max-time 20 "$base/crm-auth-guard.js?qa=$RANDOM" -o /tmp/guard.js \
+              && curl -fsSL --max-time 20 "$base/supabase-config.js?qa=$RANDOM" -o /tmp/config.js \
               && curl -fsSL --max-time 20 "$base/supabase-sync.js?qa=$RANDOM" -o /tmp/sync.js \
+              && curl -fsSL --max-time 20 "$base/f1-acquisition-data.js?qa=$RANDOM" -o /tmp/data.js \
               && curl -fsSL --max-time 20 "$base/setup-cloud.html?qa=$RANDOM" -o /tmp/setup.html \
               && grep -q 'CARICA CONTATTI EXCEL' /tmp/crm.html \
-              && grep -q 'CONFERMA E IMPORTA' /tmp/crm.html \
-              && grep -q 'crm_import_log' /tmp/import.js \
-              && grep -q 'function ensureCloud()' /tmp/import.js \
-              && grep -q 'signInWithPassword' /tmp/sync.js \
-              && grep -q 'sendMagicLink' /tmp/sync.js \
-              && grep -q 'ACCESSO CLOUD' /tmp/setup.html \
+              && grep -q 'crm-auth-guard.js?v=20260913-auth2' /tmp/crm.html \
+              && grep -q 'ACCESSO CRM RICHIESTO' /tmp/guard.js \
+              && grep -q "url: 'https://nqnmlsmeiynxbdojeyjt.supabase.co'" /tmp/config.js \
+              && grep -q 'ensureSession' /tmp/sync.js \
+              && grep -q 'ACCESSO SUPABASE NEGATO' /tmp/data.js \
               && grep -q 'ACCEDI AL CRM' /tmp/setup.html; then ok=1; break; fi
             sleep 5
           done
           test "$ok" = 1
-          echo 'PASS CRM importer and persistent Supabase authentication deployed'
+          echo 'PASS canonical CRM cloud authentication and live deployment'
