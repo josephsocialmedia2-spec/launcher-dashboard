@@ -1,0 +1,66 @@
+name: F1 Common Approval Queue
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '7 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'data/acquisition-public.json'
+      - 'scripts/build_common_approval_queue.py'
+      - '.github/workflows/common-approval-queue.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: f1-common-approval-queue
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Build common approval queue
+        run: python scripts/build_common_approval_queue.py
+
+      - name: Validate queue
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/approval-queue.json')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          assert d['pipeline']=='F1_COMMON_APPROVAL_QUEUE'
+          assert isinstance(d.get('items'), list)
+          ids=[x.get('approval_id') for x in d['items']]
+          assert all(ids)
+          assert len(ids)==len(set(ids))
+          print('PASS', d.get('summary', {}))
+          PY
+
+      - name: Persist refreshed queue on main
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- data/approval-queue.json; then
+            echo 'No queue changes'
+            exit 0
+          fi
+          git config user.name 'f1-approval-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add data/approval-queue.json
+          git commit -m 'Refresh common approval queue'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
