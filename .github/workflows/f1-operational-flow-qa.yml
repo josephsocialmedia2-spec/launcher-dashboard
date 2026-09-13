@@ -1,0 +1,74 @@
+name: F1 Operational Flow QA
+
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'nuova-opportunita.html'
+      - 'script-operativo.html'
+      - 'f1-operational-flow.js'
+      - '.github/workflows/f1-operational-flow-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Static validation
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check f1-operational-flow.js
+          test -f index.html
+          test -f nuova-opportunita.html
+          test -f script-operativo.html
+          grep -q 'DASHBOARD OPERATIVA' index.html
+          grep -q 'NUOVA OPPORTUNITÀ' index.html
+          grep -q 'RICERCA' nuova-opportunita.html
+          grep -q 'FOLLOW-UP' nuova-opportunita.html
+          grep -q 'seller-radar-unico.html' f1-operational-flow.js
+          grep -q 'centrale-risultati.html' f1-operational-flow.js
+          grep -q 'address-intelligence.html' f1-operational-flow.js
+          grep -q 'crm.html' f1-operational-flow.js
+          grep -q 'telefonate-oggi.html' f1-operational-flow.js
+          grep -q 'script-operativo.html' f1-operational-flow.js
+          grep -q 'oggi.html#tasks' f1-operational-flow.js
+      - name: Local HTTP smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8765 >/tmp/f1-http.log 2>&1 &
+          pid=$!
+          trap 'kill $pid || true' EXIT
+          sleep 1
+          curl -fsS http://127.0.0.1:8765/index.html | grep -q 'PARTI DA QUI'
+          curl -fsS http://127.0.0.1:8765/nuova-opportunita.html | grep -q 'flowFrame'
+          curl -fsS http://127.0.0.1:8765/script-operativo.html | grep -q 'Script suggerito'
+      - name: Live GitHub Pages smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
+          ok=0
+          for i in $(seq 1 60); do
+            echo "Live check $i/60"
+            if curl -fsSL --max-time 20 "$base/index.html?qa=$RANDOM" -o /tmp/index.html \
+              && curl -fsSL --max-time 20 "$base/nuova-opportunita.html?qa=$RANDOM" -o /tmp/op.html \
+              && curl -fsSL --max-time 20 "$base/script-operativo.html?qa=$RANDOM" -o /tmp/script.html \
+              && curl -fsSL --max-time 20 "$base/f1-operational-flow.js?qa=$RANDOM" -o /tmp/flow.js \
+              && grep -q 'DASHBOARD OPERATIVA' /tmp/index.html \
+              && grep -q 'flowFrame' /tmp/op.html \
+              && grep -q 'Script suggerito' /tmp/script.html \
+              && grep -q "const STEPS=" /tmp/flow.js; then
+              ok=1
+              break
+            fi
+            sleep 5
+          done
+          test "$ok" = 1
+          echo 'PASS operational flow deployed'
