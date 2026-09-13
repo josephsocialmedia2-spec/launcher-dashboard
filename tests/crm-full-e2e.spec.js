@@ -43,7 +43,9 @@ test('dashboard -> auth -> CRM -> lead/interactions/task -> refresh/reopen persi
   const context=await browser.newContext();
   await installBackend(context,db);
   const page=await context.newPage();
-  const pageErrors=[];page.on('pageerror',e=>pageErrors.push(String(e)));
+  const pageErrors=[],consoleErrors=[];
+  page.on('pageerror',e=>pageErrors.push(String(e)));
+  page.on('console',m=>{if(m.type()==='error'&&!/^Failed to load resource/i.test(m.text()))consoleErrors.push(m.text())});
 
   await page.goto('/index.html');
   await expect(page.locator('body')).toContainText('F1');
@@ -115,6 +117,8 @@ test('dashboard -> auth -> CRM -> lead/interactions/task -> refresh/reopen persi
 
   await page.close();
   const reopened=await context.newPage();
+  const reopenedErrors=[];
+  reopened.on('pageerror',e=>reopenedErrors.push(String(e)));
   await reopened.goto('/crm.html');
   await expect(reopened.locator('#cloudStatus')).toContainText('SUPABASE AUTENTICATO');
   await expect(reopened.locator('#list')).toContainText('QA');
@@ -124,5 +128,7 @@ test('dashboard -> auth -> CRM -> lead/interactions/task -> refresh/reopen persi
   expect(db.tasks.length).toBeGreaterThanOrEqual(1);
 
   expect(pageErrors).toEqual([]);
+  expect(consoleErrors).toEqual([]);
+  expect(reopenedErrors).toEqual([]);
   await context.close();
 });
