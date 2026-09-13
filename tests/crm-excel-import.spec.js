@@ -5,6 +5,7 @@ function lead(id,nome,cognome,telefono,email=''){return{lead_id:id,pillar:1,sour
 function book(file,rows,type){const ws=XLSX.utils.aoa_to_sheet(rows),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Contatti');XLSX.writeFile(wb,file,{bookType:type})}
 async function mapValue(page,header){const rows=page.locator('#importMapping tr');for(let i=0;i<await rows.count();i++){if((await rows.nth(i).locator('td').first().innerText()).trim()===header)return rows.nth(i).locator('select').inputValue()}return''}
 function previewRow(page,text){return page.locator('#importPreviewBody tr').filter({hasText:text}).first()}
+async function analyzeReady(page){await expect(page.locator('#importStatus')).toContainText('Analisi completata')}
 
 test('XLSX XLS CSV -> preview -> dedupe -> unified CRM',async({page})=>{
   const dir=fs.mkdtempSync(path.join(os.tmpdir(),'f1-crm-import-')),xlsx=path.join(dir,'test1.xlsx'),csv=path.join(dir,'test2.csv'),xls=path.join(dir,'test3.xls');
@@ -19,19 +20,19 @@ test('XLSX XLS CSV -> preview -> dedupe -> unified CRM',async({page})=>{
   await page.goto('/crm.html');await expect(page.locator('#excelImportBtn')).toBeVisible();await page.click('#excelImportBtn');
 
   // TEST 1 .xlsx standard + second import.
-  await page.setInputFiles('#importFile',xlsx);await page.selectOption('#importCategory','CENTRO_INFLUENZA');await page.check('#relationshipConfirm');await page.click('#analyzeImportBtn');
+  await page.setInputFiles('#importFile',xlsx);await page.selectOption('#importCategory','CENTRO_INFLUENZA');await page.check('#relationshipConfirm');await page.click('#analyzeImportBtn');await analyzeReady(page);
   await expect(page.locator('#impFound')).toHaveText('2');expect(await mapValue(page,'Telefono')).toBe('telefono');expect(await mapValue(page,'Email')).toBe('email');
   const start=db.leads.length;await page.click('#confirmImportBtn');await expect.poll(()=>db.leads.length).toBe(start+2);expect(db.leads.filter(x=>x.source_type==='COI').every(x=>x.rpo_status==='NON_APPLICABILE')).toBeTruthy();
-  await page.setInputFiles('#importFile',xlsx);await page.click('#analyzeImportBtn');await expect(page.locator('#impDup')).toHaveText('2');const after=db.leads.length;await page.click('#confirmImportBtn');await expect.poll(()=>db.crm_import_log.length).toBe(2);expect(db.leads.length).toBe(after);
+  await page.setInputFiles('#importFile',xlsx);await page.click('#analyzeImportBtn');await analyzeReady(page);await expect(page.locator('#impDup')).toHaveText('2');const after=db.leads.length;await page.click('#confirmImportBtn');await expect.poll(()=>db.crm_import_log.length).toBe(2);expect(db.leads.length).toBe(after);
 
   // TEST 2 .csv synonyms.
-  await page.setInputFiles('#importFile',csv);await page.selectOption('#importCategory','CLIENTI_PASSATI');await page.check('#relationshipConfirm');await page.click('#analyzeImportBtn');
-  expect(await mapValue(page,'Nominativo')).toBe('full_name');expect(await mapValue(page,'Cellulare')).toBe('telefono');expect(await mapValue(page,'Paese')).toBe('comune');expect(await mapValue(page,'Annotazioni')).toBe('note');
+  await page.setInputFiles('#importFile',csv);await page.selectOption('#importCategory','CLIENTI_PASSATI');await page.check('#relationshipConfirm');await page.click('#analyzeImportBtn');await analyzeReady(page);
+  await expect(page.locator('#impFound')).toHaveText('1');expect(await mapValue(page,'Nominativo')).toBe('full_name');expect(await mapValue(page,'Cellulare')).toBe('telefono');expect(await mapValue(page,'Paese')).toBe('comune');expect(await mapValue(page,'Annotazioni')).toBe('note');
   await page.click('#confirmImportBtn');await expect.poll(()=>db.leads.some(x=>x.nome==='Giulia'&&x.cognome==='Neri'&&x.source_type==='PAST_CLIENT')).toBeTruthy();
 
   // TEST 3 .xls disordered + duplicate + compare/update.
-  await page.setInputFiles('#importFile',xls);await page.selectOption('#importCategory','LEAD');await page.click('#analyzeImportBtn');expect(await mapValue(page,'Numero')).toBe('telefono');await expect(page.locator('#impDup')).toHaveText('1');
+  await page.setInputFiles('#importFile',xls);await page.selectOption('#importCategory','LEAD');await page.click('#analyzeImportBtn');await analyzeReady(page);await expect(page.locator('#impFound')).toHaveText('2');expect(await mapValue(page,'Numero')).toBe('telefono');await expect(page.locator('#impDup')).toHaveText('1');
   const mario=previewRow(page,'Mario Rossi');await expect(mario).toContainText('GIÀ PRESENTE');await mario.locator('.compare-btn').click();await expect(page.locator('#compareBody')).toContainText('mario.vecchio@example.test');await page.locator('#compareDlg [data-close="compareDlg"]').click();await mario.locator('.dup-action').selectOption('AGGIORNA');
   const before3=db.leads.length;await page.click('#confirmImportBtn');await expect.poll(()=>db.leads.find(x=>x.lead_id==='mario')?.email).toBe('mario.nuovo@example.test');expect(db.leads.length).toBe(before3+1);expect(db.leads.filter(x=>x.nome==='Mario'&&x.cognome==='Rossi').length).toBe(1);expect(db.interactions.some(x=>x.lead_id==='mario'&&x.outcome==='IMPORT_EXCEL_AGGIORNATO')).toBeTruthy();
-  await page.setInputFiles('#importFile',xls);await page.click('#analyzeImportBtn');await expect(page.locator('#impDup')).toHaveText('2');const finalCount=db.leads.length;await page.click('#confirmImportBtn');await expect.poll(()=>db.crm_import_log.length).toBe(5);expect(db.leads.length).toBe(finalCount);
+  await page.setInputFiles('#importFile',xls);await page.click('#analyzeImportBtn');await analyzeReady(page);await expect(page.locator('#impDup')).toHaveText('2');const finalCount=db.leads.length;await page.click('#confirmImportBtn');await expect.poll(()=>db.crm_import_log.length).toBe(5);expect(db.leads.length).toBe(finalCount);
 });
