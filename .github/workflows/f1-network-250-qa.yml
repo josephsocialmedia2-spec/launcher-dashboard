@@ -1,0 +1,81 @@
+name: F1 Network 250 QA
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'network-reconstruction.html'
+      - 'network-reconstruction.js'
+      - 'network-reconstruction-widget.js'
+      - 'network-250-sources.js'
+      - 'tests/network-reconstruction.spec.js'
+      - '.github/workflows/f1-network-250-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Static Network 250 contract
+        run: |
+          set -ex
+          node --check network-250-sources.js
+          node --check network-reconstruction.js
+          node --check network-reconstruction-widget.js
+          node --check tests/network-reconstruction.spec.js
+          node - <<'NODE'
+          global.window={};
+          require('./network-250-sources.js');
+          if(!Array.isArray(window.F1_NETWORK_250)||window.F1_NETWORK_250.length!==250) throw new Error('Catalogo Network 250 incompleto');
+          const ids=new Set(window.F1_NETWORK_250.map(x=>x.id));
+          if(ids.size!==250||Math.min(...ids)!==1||Math.max(...ids)!==250) throw new Error('ID fonti non validi');
+          NODE
+          grep -q 'id="network250Widget"' index.html
+          grep -q 'RICOSTRUZIONE RETE 250' index.html
+          grep -q 'network-reconstruction-widget.js' index.html
+          grep -q 'AVVIA RICOSTRUZIONE RETE' network-reconstruction.html
+          grep -q 'DA CONTROLLARE' network-reconstruction.html
+          grep -q 'NON DISPONIBILE' network-reconstruction.html
+          grep -q 'POTENZIALE VENDITORE' network-reconstruction.html
+          grep -q 'CONTATTO DA RIATTIVARE' network-reconstruction.html
+          grep -q 'network_contacts' network-reconstruction.js
+          grep -q 'network_contact_sources' network-reconstruction.js
+          grep -q 'network_source_progress' network-reconstruction.js
+          grep -q 'network_reconstruction_state' network-reconstruction.js
+          grep -q 'duplicateOf' network-reconstruction.js
+          ! grep -q 'localStorage' network-reconstruction.js
+      - name: Install browser QA
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+      - name: Network 250 E2E
+        run: npx playwright test tests/network-reconstruction.spec.js --project=desktop-chromium
+      - name: Existing dashboard regressions
+        run: npx playwright test tests/program-90-goals-reset.spec.js tests/market-preview.spec.js --project=desktop-chromium
+      - name: Published GitHub Pages smoke
+        run: |
+          set -e
+          base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
+          deployed=0
+          for i in $(seq 1 72); do
+            if curl -fsSL "$base/index.html?qa=$RANDOM" -o /tmp/index \
+              && curl -fsSL "$base/network-reconstruction.html?qa=$RANDOM" -o /tmp/net \
+              && curl -fsSL "$base/network-reconstruction.js?qa=$RANDOM" -o /tmp/netjs \
+              && curl -fsSL "$base/network-250-sources.js?qa=$RANDOM" -o /tmp/sources \
+              && curl -fsSL "$base/network-reconstruction-widget.js?qa=$RANDOM" -o /tmp/widget \
+              && grep -q 'id="network250Widget"' /tmp/index \
+              && grep -q 'AVVIA RICOSTRUZIONE RETE' /tmp/net \
+              && grep -q 'network_contacts' /tmp/netjs \
+              && grep -q 'F1_NETWORK_250' /tmp/sources \
+              && grep -q 'netSourcesDone' /tmp/widget; then
+              deployed=1
+              break
+            fi
+            sleep 5
+          done
+          test "$deployed" = 1
