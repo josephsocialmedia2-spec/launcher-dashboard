@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "architecture": "F1_ACQUISITION_ENGINE_5_PILLARS",
   "canonical_entrypoint": "oggi.html",
   "acquisition_config": "config/acquisition-engine.json",
@@ -9,51 +9,29 @@
   },
   "source_of_truth": {
     "operational_database": "Supabase",
+    "canonical_crm": "F1 ACQUISITION ENGINE · CRM UNIFICATO — LEAD · INTERAZIONI · TASK",
+    "crm_path": "crm.html",
+    "crm_tables": ["leads", "interactions", "tasks"],
     "public_non_sensitive_feed": "data/acquisition-public.json",
-    "offline_cache": "localStorage"
+    "offline_cache": "localStorage",
+    "offline_cache_mode": "READ_ONLY_CACHE",
+    "rule": "Nessun lead, interazione o task nuovo può essere salvato esclusivamente in localStorage. Le mutazioni CRM richiedono il datastore Supabase autenticato."
   },
-  "rule": "oggi.html è l'unica cabina di regia Acquisition; index.html è archivio/strumenti; Telefonate e Giro sono viste specializzate della task queue.",
+  "rule": "oggi.html è l'unica cabina di regia Acquisition; crm.html è l'unico CRM; Telefonate e Giro sono viste specializzate dei task e dei lead del CRM unificato.",
   "operational_views": [
-    {
-      "id": "command-center",
-      "label": "F1 Acquisition Command Center",
-      "path": "oggi.html",
-      "role": "UNICA_CABINA_GIORNALIERA"
-    },
-    {
-      "id": "giro",
-      "label": "Giro Acquisizione",
-      "path": "giro-acquisizione.html",
-      "role": "TASK_VIEW_FIELD"
-    },
-    {
-      "id": "call-station",
-      "label": "F1 Centrale Telefonate Guidate",
-      "path": "telefonate-oggi.html",
-      "local_pc": "http://127.0.0.1:8766/",
-      "local_mobile": "http://f1-radar.local:8766/",
-      "role": "TASK_VIEW_CALL"
-    },
-    {
-      "id": "crm",
-      "label": "CRM Acquisition",
-      "path": "crm.html",
-      "role": "LEAD_INTERACTION_OUTCOME"
-    }
+    {"id":"command-center","label":"F1 Acquisition Command Center","path":"oggi.html","role":"UNICA_CABINA_GIORNALIERA"},
+    {"id":"giro","label":"Giro Acquisizione","path":"giro-acquisizione.html","role":"TASK_VIEW_FIELD"},
+    {"id":"call-station","label":"F1 Centrale Telefonate Guidate","path":"telefonate-oggi.html","local_pc":"http://127.0.0.1:8766/","local_mobile":"http://f1-radar.local:8766/","role":"TASK_VIEW_CALL"},
+    {"id":"crm","label":"F1 ACQUISITION ENGINE · CRM UNIFICATO","path":"crm.html","role":"UNICO_CRM_LEAD_INTERACTION_TASK"}
   ],
   "pillars": [
-    {"id": 1, "key": "SELLER_PROSPECTING", "label": "Seller Prospecting"},
-    {"id": 2, "key": "DATABASE_REFERRAL", "label": "Database & Referral"},
-    {"id": 3, "key": "FARMING", "label": "Farming territoriale"},
-    {"id": 4, "key": "PARTNERSHIP_CHANNELS", "label": "Partnership & Channels"},
-    {"id": 5, "key": "CORE_BUSINESS", "label": "Core Business Priority"}
+    {"id":1,"key":"SELLER_PROSPECTING","label":"Seller Prospecting"},
+    {"id":2,"key":"DATABASE_REFERRAL","label":"Database & Referral"},
+    {"id":3,"key":"FARMING","label":"Farming territoriale"},
+    {"id":4,"key":"PARTNERSHIP_CHANNELS","label":"Partnership & Channels"},
+    {"id":5,"key":"CORE_BUSINESS","label":"Core Business Priority"}
   ],
-  "core4": [
-    "PAST_CLIENT",
-    "COI",
-    "EXPIRED_OR_POSSIBLE_EXPIRED",
-    "FSBO"
-  ],
+  "core4": ["PAST_CLIENT","COI","EXPIRED_OR_POSSIBLE_EXPIRED","FSBO"],
   "acquisition_engines": [
     {"id":"seller-radar","label":"Seller Radar","path":"seller-radar-unico.html","pillar":1,"status":"ACTIVE"},
     {"id":"seller-signals","label":"Seller Segnalati","path":"seller-segnalati.html","pillar":1,"status":"ACTIVE"},
@@ -64,29 +42,17 @@
     {"id":"social-seller","label":"Social Seller Radar","path":"social-seller-radar.html","pillar":1,"status":"PLANNED"}
   ],
   "prospect_pipeline": {
-    "classification": "PROSPECT_TO_EVENT_TO_TASK_TO_CRM",
-    "public_sources": [
-      "Seller Radar AUTO",
-      "fonti pubbliche immobiliari",
-      "microzone",
-      "directory pubbliche di attività/professionisti",
-      "siti professionali/pubblici",
-      "segnali social pubblici accessibili legittimamente"
-    ],
-    "privacy": "Dati personali non necessari non devono essere pubblicati su GitHub. Telefono, email e dati CRM privati appartengono al datastore autenticato o locale autorizzato.",
+    "classification": "PROSPECT_TO_LEAD_TO_INTERACTION_TO_TASK",
+    "new_opportunity_flow": "DASHBOARD_TO_NEW_OPPORTUNITY_TO_RESEARCH_TO_DATA_TO_VERIFY_TO_DEDUPE_TO_UNIFIED_CRM",
+    "duplicate_keys": ["source_url", "telefono", "email", "indirizzo", "comune+via", "immobile_id"],
+    "public_sources": ["Seller Radar AUTO","fonti pubbliche immobiliari","microzone","directory pubbliche di attività/professionisti","siti professionali/pubblici","segnali social pubblici accessibili legittimamente"],
+    "privacy": "Dati personali non necessari non devono essere pubblicati su GitHub. Telefono, email e dati CRM privati appartengono al datastore autenticato.",
     "compliance": "Nessun bypass di login/CAPTCHA/aree riservate; nessuna inferenza automatica di proprietà; VENDUTO e INCARICO_SCADUTO richiedono evidenza verificabile."
   },
   "property_marketing_engine": {
     "separate_from_acquisition": true,
-    "views": [
-      "facebook-network-radar.html",
-      "facebook-pubblico.html",
-      "facebook-ottimizzazione.html",
-      "instagram-crescita.html",
-      "instagram-ranking.html",
-      "gruppi-social-f1.html"
-    ],
-    "rule": "Facebook/Instagram promuovono immobili, community, buyer lead, Open House, Just Listed/Just Sold; eventuali seller lead entrano nel CRM Acquisition con source FACEBOOK o INSTAGRAM."
+    "views": ["facebook-network-radar.html","facebook-pubblico.html","facebook-ottimizzazione.html","instagram-crescita.html","instagram-ranking.html","gruppi-social-f1.html"],
+    "rule": "Facebook/Instagram promuovono immobili, community, buyer lead, Open House, Just Listed/Just Sold; eventuali seller lead entrano esclusivamente nel CRM unificato."
   },
   "infrastructure": [
     {"id":"mobile","label":"F1 Mobile Ready","path":"oggi.html","role":"PWA / interfaccia smartphone"},
@@ -102,6 +68,9 @@
     "property_history_rule": "append observations/events; never erase prior price/agency observations"
   },
   "legacy_redirects": [
+    {"id":"f1-os-mobile-local-crm","path":"f1-os-mobile.html","redirect_to":"oggi.html","status":"RETIRED"},
+    {"id":"legacy-browser-crm","storage_key":"f1CRMContacts","migrate_to":"leads/interactions/tasks","status":"RETIRED"},
+    {"id":"legacy-acq-mobile-contacts","storage_key":"acqProMobile.contacts","migrate_to":"leads/interactions/tasks","status":"RETIRED"},
     {"id":"radar-operativo-statico","path":"radar-operativo.html","redirect_to":"oggi.html#competitor"},
     {"id":"seller-radar-legacy","path":"https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar/","redirect_to":"oggi.html"}
   ]
