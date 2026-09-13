@@ -1,0 +1,1 @@
+window.F1_SPHERE_250_SOURCES=(window.F1_SPHERE_250_SOURCES||[]).concat([{id:101,raw:'Bar abituale - titolari e clienti conosciuti',group:'FONTI E ARCHIVI'},{id:102,raw:'Ristoranti frequentati - proprietari e personale conosciuto',group:'FONTI E ARCHIVI'},{id:103,raw:'Parrucchiere/barbiere - titolare e collaboratori conosciuti',group:'FONTI E ARCHIVI'}]);
