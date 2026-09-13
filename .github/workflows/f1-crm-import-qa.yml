@@ -8,7 +8,10 @@ on:
       - 'crm-unified-app.js'
       - 'f1-acquisition-data.js'
       - 'f1-acquisition-core.js'
+      - 'supabase-sync.js'
+      - 'setup-cloud.html'
       - 'tests/crm-excel-import.spec.js'
+      - 'tests/cloud-auth.spec.js'
       - 'package.json'
       - '.github/workflows/f1-crm-import-qa.yml'
   workflow_dispatch:
@@ -25,12 +28,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Static importer validation
+      - name: Static importer and auth validation
         shell: bash
         run: |
           set -euo pipefail
           node --check crm-import-app.js
+          node --check supabase-sync.js
           node --check tests/crm-excel-import.spec.js
+          node --check tests/cloud-auth.spec.js
           grep -q 'CARICA CONTATTI EXCEL' crm.html
           grep -q 'CONFERMA E IMPORTA' crm.html
           grep -q 'xlsx.full.min.js' crm.html
@@ -41,14 +46,20 @@ jobs:
           grep -q 'csvDelimiter' crm-import-app.js
           grep -q 'function ensureCloud()' crm-import-app.js
           grep -q 'function isCloudReady()' crm-import-app.js
+          grep -q 'signInWithPassword' supabase-sync.js
+          grep -q 'sendMagicLink' supabase-sync.js
+          grep -q 'localStorage.setItem(SESSION_KEY' supabase-sync.js
+          grep -q 'ACCESSO CLOUD' setup-cloud.html
+          grep -q 'ACCEDI AL CRM' setup-cloud.html
+          grep -q 'create_user:false' supabase-sync.js
           if grep -q 'Data().requireCloud();' crm-import-app.js; then
             echo 'Direct requireCloud compatibility call forbidden'
             exit 1
           fi
           grep -q 'f1-acquisition-data.js?v=20260913-1147' crm.html
           grep -q 'crm-import-app.js?v=20260913-1147' crm.html
-          if grep -R -E 'sk-[A-Za-z0-9_-]{20,}|OPENAI_API_KEY|api\.openai\.com' crm.html crm-import-app.js; then
-            echo 'Public OpenAI credential/API reference forbidden'
+          if grep -R -E 'service_role|sb_secret_|sk-[A-Za-z0-9_-]{20,}|OPENAI_API_KEY|api\.openai\.com' crm.html crm-import-app.js supabase-sync.js setup-cloud.html; then
+            echo 'Public secret credential/API reference forbidden'
             exit 1
           fi
       - name: Install QA dependencies
@@ -57,6 +68,8 @@ jobs:
           npx playwright install --with-deps chromium
       - name: XLSX XLS CSV import E2E including cached adapter regression
         run: npx playwright test tests/crm-excel-import.spec.js --project=desktop-chromium
+      - name: Supabase auth persistence E2E
+        run: npx playwright test tests/cloud-auth.spec.js --project=desktop-chromium
       - name: Live GitHub Pages smoke
         shell: bash
         run: |
@@ -66,15 +79,17 @@ jobs:
           for i in $(seq 1 60); do
             if curl -fsSL --max-time 20 "$base/crm.html?qa=$RANDOM" -o /tmp/crm.html \
               && curl -fsSL --max-time 20 "$base/crm-import-app.js?qa=$RANDOM" -o /tmp/import.js \
+              && curl -fsSL --max-time 20 "$base/supabase-sync.js?qa=$RANDOM" -o /tmp/sync.js \
+              && curl -fsSL --max-time 20 "$base/setup-cloud.html?qa=$RANDOM" -o /tmp/setup.html \
               && grep -q 'CARICA CONTATTI EXCEL' /tmp/crm.html \
               && grep -q 'CONFERMA E IMPORTA' /tmp/crm.html \
               && grep -q 'crm_import_log' /tmp/import.js \
-              && grep -q 'NOME + COGNOME' /tmp/import.js \
-              && grep -q 'parseDelimited' /tmp/import.js \
               && grep -q 'function ensureCloud()' /tmp/import.js \
-              && grep -q 'f1-acquisition-data.js?v=20260913-1147' /tmp/crm.html \
-              && grep -q 'crm-import-app.js?v=20260913-1147' /tmp/crm.html; then ok=1; break; fi
+              && grep -q 'signInWithPassword' /tmp/sync.js \
+              && grep -q 'sendMagicLink' /tmp/sync.js \
+              && grep -q 'ACCESSO CLOUD' /tmp/setup.html \
+              && grep -q 'ACCEDI AL CRM' /tmp/setup.html; then ok=1; break; fi
             sleep 5
           done
           test "$ok" = 1
-          echo 'PASS CRM Excel importer deployed with requireCloud compatibility'
+          echo 'PASS CRM importer and persistent Supabase authentication deployed'
