@@ -1,83 +1,123 @@
 <!doctype html>
 <html lang="it">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>F1 Immobiliare · Dashboard Operativa</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070907">
+<title>F1 Immobiliare · Postazione Operativa</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>
-:root{--bg:#070907;--p:#101510;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--sea:#50c9e8;--academy:#b89cff;--red:#ff5c5c}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt);font-family:Arial,Helvetica,sans-serif}header{padding:28px 18px 22px;text-align:center;border-bottom:1px solid #1c251e}header .ey{color:var(--g);font-size:11px;font-weight:900;letter-spacing:.18em}header h1{margin:7px 0 4px;letter-spacing:.08em;font-size:clamp(28px,5vw,48px)}header p{margin:0;color:var(--mut);font-size:13px}.wrap{max-width:1240px;margin:auto;padding:22px 16px 100px}.script-quick-wrap{margin-bottom:18px}.script-quick{position:relative;display:flex;flex-direction:column;min-height:150px;padding:18px;border:2px solid #ff8c8c;border-radius:16px;background:linear-gradient(135deg,#ef3f49,#a90f1b);color:#fff;text-decoration:none;box-shadow:0 18px 44px rgba(239,63,73,.24);transition:.18s}.script-quick:hover{transform:translateY(-3px);border-color:#fff;box-shadow:0 22px 54px rgba(239,63,73,.36)}.script-quick .status{border-color:rgba(255,255,255,.72);color:#fff;background:rgba(0,0,0,.14)}.script-quick .icon{width:48px;height:48px;display:grid;place-items:center;border-radius:13px;background:#fff;color:#a90f1b;font-size:22px;margin-bottom:12px}.script-quick h2{margin:0 0 8px;font-size:clamp(30px,5vw,44px);line-height:1;letter-spacing:.08em}.script-quick p{margin:0;max-width:820px;color:#fff;font-size:13px;line-height:1.5}.script-quick .go{margin-top:auto;padding-top:14px;color:#fff;font-size:11px;font-weight:900;letter-spacing:.08em}.process{border:2px solid var(--g);border-radius:18px;padding:18px;background:radial-gradient(circle at top right,#17412766,transparent 40%),linear-gradient(145deg,#0d1810,#102817);margin-bottom:24px}.process-top{display:flex;justify-content:space-between;gap:16px;align-items:center}.process h2{margin:0 0 5px;font-size:23px}.process p{margin:0;color:var(--mut);font-size:12px;line-height:1.5}.process-path{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin:16px 0}.process-path span{display:flex;flex-direction:column;align-items:center;text-align:center;border:1px solid #35513d;border-radius:10px;padding:8px 4px;color:#d7dfd9;font-size:8px;font-weight:900;min-height:52px}.process-path b{color:var(--g);font-size:14px;margin-bottom:3px}.flow-actions{display:flex;gap:8px;flex-wrap:wrap}.flow-main-btn,.flow-resume-btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 16px;border-radius:10px;text-decoration:none;font-size:11px;font-weight:900}.flow-main-btn{background:var(--g);color:#07100a}.flow-resume-btn{border:1px solid #4e6655;background:#111a13;color:#fff}.section-title{display:flex;align-items:center;gap:10px;margin:28px 0 12px}.section-title::after{content:'';height:1px;flex:1;background:var(--line)}.section-title h2{margin:0;font-size:15px;letter-spacing:.10em}.section-title.ops h2{color:var(--g)}.section-title.academy h2{color:var(--academy)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.card{position:relative;display:flex;flex-direction:column;min-height:180px;padding:18px;border:1px solid var(--line);border-radius:16px;background:var(--p);color:#fff;text-decoration:none;transition:.18s}.card:hover{transform:translateY(-3px);border-color:var(--g);box-shadow:0 16px 34px rgba(0,0,0,.25)}.card .icon{width:46px;height:46px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,var(--g),#20ce70);color:#07100a;font-size:21px;margin-bottom:13px}.card h3{margin:0 0 7px;font-size:16px}.card p{margin:0;color:var(--mut);font-size:12px;line-height:1.45}.card .go{margin-top:auto;padding-top:14px;color:var(--g);font-size:10px;font-weight:900;letter-spacing:.08em}.card.primary{border:2px solid var(--g);background:linear-gradient(145deg,#0d1810,#102817)}.card.primary h3{font-size:19px}.academy-card{border-color:#393148;background:linear-gradient(145deg,#121017,#17141f)}.academy-card:hover{border-color:var(--academy)}.academy-card .icon{background:linear-gradient(135deg,var(--academy),var(--sea))}.academy-card .go{color:var(--academy)}.status{position:absolute;top:12px;right:12px;padding:5px 7px;border-radius:999px;border:1px solid #35513d;color:var(--g);font-size:7px;font-weight:900;letter-spacing:.08em}.note{margin-top:22px;padding:13px 15px;border:1px solid var(--line);border-radius:12px;background:#0c100d;color:var(--mut);font-size:11px;line-height:1.55}footer{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:28px;padding:13px;background:rgba(7,9,7,.95);border-top:1px solid var(--line);backdrop-filter:blur(8px)}footer a{color:var(--mut);text-decoration:none;font-size:11px;font-weight:800}footer a:hover{color:var(--g)}@media(max-width:900px){.process-path{grid-template-columns:repeat(5,1fr)}.process-top{align-items:flex-start;flex-direction:column}}@media(max-width:650px){.wrap{padding-left:12px;padding-right:12px}.grid{grid-template-columns:1fr}.card{min-height:155px}.process-path{grid-template-columns:repeat(2,1fr)}.flow-main-btn,.flow-resume-btn{width:100%}.script-quick{min-height:145px}.script-quick h2{font-size:32px}}
-.jls-widget{border:2px solid #f4c95d;border-radius:18px;padding:18px;background:linear-gradient(145deg,#17140d,#211b0e);margin-bottom:24px}.jls-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.jls-widget h2{margin:4px 0 5px;font-size:24px}.jls-widget p{margin:0;color:#d6cfb2;font-size:11px;line-height:1.5}.jls-open{display:inline-flex;padding:11px 13px;border-radius:9px;background:#f4c95d;color:#171107;text-decoration:none;font-size:10px;font-weight:900;white-space:nowrap}.jls-progress-label{margin:12px 0 6px;color:#f4c95d;font-size:11px;font-weight:900}.jls-progress{height:12px;border:1px solid #66552a;border-radius:999px;background:#17150f;overflow:hidden}.jls-progress>div{height:100%;width:0;background:linear-gradient(90deg,#f4c95d,#39f28a);transition:.25s}.jls-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px}.jls-stats div{padding:9px;text-align:center;border:1px solid #40391f;border-radius:10px;background:#11130f}.jls-stats b{display:block;color:#39f28a;font-size:22px}.jls-stats span{display:block;color:#aeb7b0;font-size:7px;font-weight:900}.jls-rule{margin-top:10px!important}@media(max-width:700px){.jls-top{display:block}.jls-open{margin-top:10px;width:100%;justify-content:center}.jls-stats{grid-template-columns:1fr 1fr}.jls-stats div:last-child{grid-column:1/-1}}
-.mp-widget{border:2px solid #50c9e8;border-radius:18px;padding:18px;background:linear-gradient(145deg,#0d1619,#102229);margin-bottom:24px}.mp-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.mp-widget h2{margin:4px 0 5px;font-size:24px}.mp-widget p{margin:0;color:#bed5db;font-size:11px;line-height:1.5}.mp-open{display:inline-flex;padding:11px 13px;border-radius:9px;background:#50c9e8;color:#071116;text-decoration:none;font-size:10px;font-weight:900;white-space:nowrap}.mp-bars{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.mp-label{color:#50c9e8;font-size:10px;font-weight:900;margin-bottom:5px}.mp-progress{height:11px;border:1px solid #34515a;border-radius:999px;background:#0a1114;overflow:hidden}.mp-progress>div{height:100%;width:0;background:linear-gradient(90deg,#50c9e8,#39f28a);transition:.25s}.mp-stats{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px}.mp-stats div{padding:8px;text-align:center;border:1px solid #2b444b;border-radius:10px;background:#0d1416}.mp-stats b{display:block;color:#39f28a;font-size:20px}.mp-stats span{display:block;color:#aeb7b0;font-size:7px;font-weight:900}@media(max-width:700px){.mp-top{display:block}.mp-open{margin-top:10px;width:100%;justify-content:center}.mp-bars{grid-template-columns:1fr}.mp-stats{grid-template-columns:1fr 1fr}.mp-stats div:last-child{grid-column:1/-1}}
-.p90-widget{border:2px solid #39f28a;border-radius:18px;padding:18px;background:radial-gradient(circle at top right,#17412755,transparent 42%),linear-gradient(145deg,#0d1810,#102817);margin-bottom:24px}.p90-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.p90-widget h2{margin:4px 0 5px;font-size:26px}.p90-widget p{margin:0;color:#bed0c1;font-size:11px;line-height:1.5}.p90-open{display:inline-flex;padding:11px 13px;border-radius:9px;background:#39f28a;color:#07100a;text-decoration:none;font-size:10px;font-weight:900;white-space:nowrap}.p90-progress{height:11px;border:1px solid #35513d;border-radius:999px;background:#07100a;overflow:hidden;margin:11px 0}.p90-progress>div{height:100%;width:0;background:linear-gradient(90deg,#39f28a,#f4c95d)}.p90-stats{display:grid;grid-template-columns:repeat(6,1fr);gap:7px}.p90-stats div{padding:9px;text-align:center;border:1px solid #2c4031;border-radius:10px;background:#0b120d}.p90-stats b{display:block;color:#39f28a;font-size:18px}.p90-stats span{display:block;color:#aeb7b0;font-size:7px;font-weight:900}@media(max-width:800px){.p90-top{display:block}.p90-open{margin-top:10px;width:100%;justify-content:center}.p90-stats{grid-template-columns:1fr 1fr}}
-.net-widget{border:2px solid #2f8cff;border-radius:18px;padding:18px;background:radial-gradient(circle at top right,#1c63b755,transparent 42%),linear-gradient(145deg,#0b1b31,#102b4d);margin-bottom:24px}.net-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.net-widget h2{margin:4px 0 5px;font-size:26px}.net-widget p{margin:0;color:#bdd8f2;font-size:11px;line-height:1.5}.net-open{display:inline-flex;padding:11px 13px;border-radius:9px;background:#2f8cff;color:#fff;text-decoration:none;font-size:10px;font-weight:900;white-space:nowrap}.net-progress{height:11px;border:1px solid #315b88;border-radius:999px;background:#07111f;overflow:hidden;margin:11px 0}.net-progress>div{height:100%;width:0;background:linear-gradient(90deg,#2f8cff,#5fd3ff)}.net-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.net-stats div{padding:9px;text-align:center;border:1px solid #274b72;border-radius:10px;background:#09182a}.net-stats b{display:block;color:#5fd3ff;font-size:18px}.net-stats span{display:block;color:#aebfd1;font-size:7px;font-weight:900}@media(max-width:800px){.net-top{display:block}.net-open{margin-top:10px;width:100%;justify-content:center}.net-stats{grid-template-columns:1fr 1fr}}
-</style>
-<link rel="stylesheet" href="daily-command-panel.css?v=20260913-daily3">
+<link rel="stylesheet" href="daily-command-panel.css?v=20260914-ia004-1">
+<link rel="stylesheet" href="dashboard-workspace.css?v=20260914-ia004-1">
 </head>
 <body>
-<header><div class="ey">F1 IMMOBILIARE</div><h1>DASHBOARD OPERATIVA</h1><p>Un solo punto di partenza per ricerca, verifica, CRM, contatto ed esito.</p></header>
+<header class="f1-app-header">
+  <div class="f1-brand">
+    <div class="f1-mark">F1</div>
+    <div class="f1-brand-copy"><b>F1 IMMOBILIARE</b><span>POSTAZIONE OPERATIVA · RICERCA · ACQUISIZIONE · VENDITA · PUBBLICITÀ</span></div>
+  </div>
+  <div class="f1-userbar">
+    <div class="f1-user"><b id="f1StaffName">FUNZIONARIO F1</b><span id="f1StaffRole">PROFILO IN CARICAMENTO</span></div>
+    <span id="f1CloudState" class="f1-system-pill warn">CLOUD · VERIFICA</span>
+    <span id="f1SyncState" class="f1-system-pill warn">DATI · VERIFICA</span>
+  </div>
+  <div class="f1-clock"><b id="f1HeaderClock">--:--</b><span id="f1HeaderDate">—</span></div>
+  <nav class="f1-quicknav" aria-label="Azioni rapide">
+    <a href="index.html"><i class="fa-solid fa-table-columns"></i>DASHBOARD</a>
+    <a href="crm.html"><i class="fa-solid fa-address-book"></i>CRM</a>
+    <a href="oggi.html#tasks"><i class="fa-solid fa-list-check"></i>TASK</a>
+    <a href="funzionario-notiziere.html"><i class="fa-solid fa-bell"></i>NOTIFICHE</a>
+    <button id="f1Logout" type="button"><i class="fa-solid fa-right-from-bracket"></i>ESCI</button>
+  </nav>
+</header>
 <main class="wrap">
-<section class="script-quick-wrap">
-<a class="script-quick" href="script.html"><span class="status">ARCHIVIO OPERATIVO</span><div class="icon"><i class="fa-solid fa-headset"></i></div><h2>SCRIPT</h2><p>Copioni F1 Immobiliare per prospecting, acquirenti, venditori, privati, incarichi scaduti, presentazioni e obiezioni. Ricerca, lettura, copia e stampa.</p><span class="go">APRI ARCHIVIO SCRIPT →</span></a>
-</section>
-<section class="p90-widget" id="program90Widget">
-  <div class="p90-top"><div><div class="ey">ROUTINE OPERATIVA · 90 GIORNI</div><h2>PROGRAMMA 90 GIORNI</h2><p id="p90Stage">Caricamento giornata operativa…</p></div><a class="p90-open" href="program-90.html">APRI PROGRAMMA DI OGGI →</a></div>
-  <div class="p90-progress"><div id="p90Progress"></div></div>
-  <div class="p90-stats"><div><b id="p90Day">— / 90</b><span>GIORNO</span></div><div><b id="p90Completed">0 / 4</b><span>ATTIVITÀ COMPLETATE</span></div><div><b id="p90Time">0m / 6h 30m</b><span>TEMPO PRODUTTIVO</span></div><div><b id="p90Prospecting">0 / 20</b><span>CONTATTI PROSPECTING</span></div><div><b id="p90Preview">0 / 5–7</b><span>PREVIEW IMMOBILI</span></div><div><b id="p90Followup">0 / 10</b><span>FOLLOW-UP</span></div></div>
-</section>
-<section class="net-widget" id="network250Widget">
-  <div class="net-top"><div><div class="ey">RETE PERSONALE E PROFESSIONALE · 250 FONTI</div><h2>RICOSTRUZIONE RETE 250</h2><p id="netStage">Caricamento rete reale…</p></div><a class="net-open" href="network-reconstruction.html">AVVIA RICOSTRUZIONE RETE →</a></div>
-  <div class="net-progress"><div id="netProgressBar"></div></div>
-  <div class="net-stats"><div><b id="netSourcesDone">0 / 250</b><span>FONTI COMPLETATE</span></div><div><b id="netPeople">0</b><span>PERSONE UNICHE</span></div><div><b id="netDup">0</b><span>DUPLICATI INTERCETTATI</span></div><div><b id="netReactivate">0</b><span>DA RIATTIVARE</span></div></div>
-</section>
-<section class="mp-widget" id="marketPreviewWidget">
-  <div class="mp-top"><div><div class="ey">ATTIVITÀ QUOTIDIANA · 2 ORE</div><h2>MARKET PREVIEW</h2><p id="mpStage">Caricamento piano mercato…</p></div><a class="mp-open" href="market-preview.html">APRI MARKET PREVIEW →</a></div>
-  <div class="mp-bars"><div><div class="mp-label" id="mpVisionText">IMMOBILI VISIONATI OGGI: 0 / 5–7</div><div class="mp-progress"><div id="mpVisionBar"></div></div></div><div><div class="mp-label" id="mpTimeText">TEMPO PREVIEW: 0 / 120 MIN</div><div class="mp-progress"><div id="mpTimeBar"></div></div></div></div>
-  <div class="mp-stats"><div><b id="mpVisioned">0</b><span>VISIONATI</span></div><div><b id="mpTime">0</b><span>MINUTI</span></div><div><b id="mpPrivate">0</b><span>PRIVATI</span></div><div><b id="mpExpired">0</b><span>POSSIBILI SCADUTI</span></div><div><b id="mpOpp">0</b><span>OPPORTUNITÀ CRM</span></div></div>
-</section>
-<section class="jls-widget" id="jlsWidget">
-  <div class="jls-top"><div><div class="ey">SETTIMANA 2+ · PROSPECTING TERRITORIALE</div><h2>JUST LISTED / JUST SOLD</h2><p id="jlsStage">Caricamento progressione…</p></div><a class="jls-open" href="just-listed-sold.html">APRI ATTIVITÀ →</a></div>
-  <div class="jls-progress-label" id="jlsProgressText">JUST LISTED / JUST SOLD: 0 / 10</div><div class="jls-progress"><div id="jlsProgressBar"></div></div>
-  <div class="jls-stats"><div><b id="jlsDone">0</b><span>CONTATTI EFFETTUATI</span></div><div><b id="jlsTalk">0</b><span>CONVERSAZIONI</span></div><div><b id="jlsReferral">0</b><span>SEGNALAZIONI</span></div><div><b id="jlsSeller">0</b><span>POTENZIALI VENDITORI</span></div><div><b id="jlsAppt">0</b><span>APPUNTAMENTI</span></div></div>
-  <p class="jls-rule">Il contatto conta solo dopo la registrazione dell’esito nel CRM UNIFICATO. Le campagne partono esclusivamente da immobili reali confermati come acquisiti o venduti.</p>
-</section>
-<section class="process">
-<div class="process-top"><div><div class="ey">PROCESSO F1</div><h2>PARTI DA QUI</h2><p>Apri una nuova opportunità e segui il processo senza saltare il contesto tra un modulo e l'altro.</p></div><div id="flowResume" class="flow-actions"><a class="flow-main-btn" href="nuova-opportunita.html">+ NUOVA OPPORTUNITÀ</a></div></div>
-<div class="process-path"><span><b>1</b>DASHBOARD</span><span><b>2</b>NUOVA OPPORTUNITÀ</span><span><b>3</b>RICERCA</span><span><b>4</b>RISULTATI</span><span><b>5</b>VERIFICA</span><span><b>6</b>CRM</span><span><b>7</b>CONTATTO</span><span><b>8</b>SCRIPT</span><span><b>9</b>ESITO</span><span><b>10</b>FOLLOW-UP</span></div>
-</section>
+  <section class="f1-workspace" aria-label="Postazione operativa F1">
+    <div class="f1-departments">
+      <section class="f1-dept research" id="reparto-ricerca">
+        <header class="f1-dept-head"><div class="kicker">01 · INDIVIDUA E VERIFICA</div><h2>RICERCA</h2><p>Trova opportunità, segnali, zone e risultati utili.</p></header>
+        <div class="f1-card-stack">
+          <a class="f1-op-card priority" data-card="leads_analyze" href="crm.html"><span class="f1-card-badge"></span><span class="ico"><i class="fa-solid fa-magnifying-glass-chart"></i></span><span><h3>LEAD DA ANALIZZARE</h3><p>Lead reali ancora da qualificare.</p></span><span class="f1-metric" data-metric="leads_analyze"><b>…</b><span>DA ANALIZZARE</span></span></a>
+          <a class="f1-op-card priority" data-card="results_today" href="centrale-risultati.html"><span class="f1-card-badge"></span><span class="ico"><i class="fa-solid fa-list-check"></i></span><span><h3>RISULTATI TROVATI OGGI</h3><p>Nuovi elementi registrati oggi.</p></span><span class="f1-metric" data-metric="results_today"><b>…</b><span>OGGI</span></span></a>
+          <a class="f1-op-card priority" href="seller-radar-unico.html?view=vendita"><span class="ico"><i class="fa-solid fa-radar"></i></span><span><h3>NUOVA RICERCA</h3><p>Avvia Seller Radar sull'area di lavoro.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
+          <a class="f1-op-card" href="territory-control.html"><span class="ico"><i class="fa-solid fa-map-location-dot"></i></span><span><h3>ZONE ASSEGNATE</h3><p>Territori collegati al profilo.</p></span><span class="f1-metric" data-metric="zones"><b>…</b><span>ZONE</span></span></a>
+          <a class="f1-op-card" href="address-intelligence.html"><span class="ico"><i class="fa-solid fa-bolt"></i></span><span><h3>QUERY RAPIDE</h3><p>Indirizzo, via, microzona e incroci.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
+          <a class="f1-op-card" href="market-preview.html"><span class="ico"><i class="fa-solid fa-binoculars"></i></span><span><h3>PORTALI MONITORATI</h3><p>Market Preview e osservazione mercato.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
+          <a class="f1-op-card" href="neighborhood-intelligence.html"><span class="ico"><i class="fa-solid fa-filter-circle-dollar"></i></span><span><h3>LEAD GREZZI</h3><p>Segnali da ripulire e classificare.</p></span><span class="f1-metric" data-metric="raw_leads"><b>…</b><span>LEAD</span></span></a>
+          <a class="f1-op-card" href="centrale-risultati.html"><span class="ico"><i class="fa-solid fa-file-export"></i></span><span><h3>RISULTATI / ESPORTAZIONI</h3><p>Coda unica dei risultati prodotti.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
+        </div>
+      </section>
 
-<div class="section-title ops"><h2>CONTROLLO F1</h2></div>
-<section class="grid">
-<a class="card primary" href="clienti-passati-coi.html"><span class="status">2° MOTORE</span><div class="icon"><i class="fa-solid fa-people-group"></i></div><h3>Clienti Passati + Centro di Influenza</h3><p>5–7 contatti al giorno dal CRM unificato, script di riattivazione, esiti, task, referenze e crescita progressiva fino a 20.</p><span class="go">APRI CONTATTI DEL GIORNO →</span></a>
-<a class="card primary" href="centrale-risultati.html"><span class="status">CENTRALE</span><div class="icon"><i class="fa-solid fa-list-check"></i></div><h3>Centrale Risultati</h3><p>Un'unica coda con i risultati prodotti automaticamente. Approva gli immobili che vuoi approfondire e avvia l'incrocio.</p><span class="go">VEDI RISULTATI →</span></a>
-<a class="card" href="seller-radar-unico.html?view=vendita"><span class="status">SELLER RADAR</span><div class="icon"><i class="fa-solid fa-house-circle-check"></i></div><h3>Controlla in vendita</h3><p>Apri il Comune di lavoro e controlla gli immobili attualmente rilevati in vendita.</p><span class="go">CONTROLLA IN VENDITA →</span></a>
-<a class="card" href="seller-radar-unico.html?view=scaduti"><span class="status">VERIFICA</span><div class="icon"><i class="fa-solid fa-clock-rotate-left"></i></div><h3>Scaduti</h3><p>Visualizza gli immobili scaduti, ritirati o da verificare nell’area selezionata.</p><span class="go">APRI SCADUTI →</span></a>
-<a class="card" href="address-intelligence.html"><span class="status">VERIFICA</span><div class="icon"><i class="fa-solid fa-location-crosshairs"></i></div><h3>Address Intelligence</h3><p>Costruisci ricerche su indirizzo candidato, vie, attività, social, portali e microzona.</p><span class="go">ANALIZZA INDIRIZZO →</span></a>
-<a class="card" href="crm.html"><span class="status">CRM</span><div class="icon"><i class="fa-solid fa-address-book"></i></div><h3>CRM Operativo</h3><p>Lead, contatti, verifiche, esiti e prossime azioni. Le icone PB, PG e controllo usano direttamente Comune e Via della riga.</p><span class="go">APRI CRM →</span></a>
-<a class="card" href="telefonate-oggi.html"><span class="status">CONTATTO</span><div class="icon"><i class="fa-solid fa-phone"></i></div><h3>Telefonate di oggi</h3><p>Apri i task di contatto pronti e registra poi l'esito nel CRM.</p><span class="go">APRI CONTATTI →</span></a>
-<a class="card" href="script-operativo.html"><span class="status">SCRIPT</span><div class="icon"><i class="fa-solid fa-scroll"></i></div><h3>Script Operativo</h3><p>Passaggio guidato tra contatto, script F1, obiezioni e registrazione esito.</p><span class="go">APRI SCRIPT →</span></a>
-<a class="card" href="oggi.html#tasks"><span class="status">FOLLOW-UP</span><div class="icon"><i class="fa-solid fa-arrow-rotate-right"></i></div><h3>Follow-Up</h3><p>Task dovuti, richiami e prossime azioni generate dal processo operativo.</p><span class="go">APRI FOLLOW-UP →</span></a>
-<a class="card" href="content-opportunity-engine.html"><span class="status">CONTENT AI</span><div class="icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div><h3>Content Opportunity Engine</h3><p>Trasforma i dati di Seller Radar e Address Intelligence in idee grafiche, hook, CTA e prompt.</p><span class="go">APRI CONTENT ENGINE →</span></a>
-<a class="card" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/u/0/r"><div class="icon"><i class="fa-solid fa-calendar-days"></i></div><h3>Google Calendar</h3><p>Appuntamenti e richiami già fissati.</p><span class="go">APRI →</span></a>
-<a class="card" target="_blank" rel="noopener" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/content-center.html"><div class="icon"><i class="fa-solid fa-layer-group"></i></div><h3>Open Social Scheduler</h3><p>Centro contenuti per creare, organizzare e programmare le pubblicazioni.</p><span class="go">APRI SCHEDULER →</span></a>
-<a class="card" target="_blank" rel="noopener" href="https://cdn.shopify.com/s/files/1/1046/2730/6835/files/F1_Immobiliare_-_Porta_a_Porta_Volantino_Premium.pdf?v=1784845457"><div class="icon"><i class="fa-solid fa-envelopes-bulk"></i></div><h3>Distribuzione volantini</h3><p>Procedura premium porta a porta.</p><span class="go">APRI PROCEDURA →</span></a>
-<a class="card" target="_blank" rel="noopener" href="https://f1immobiliare.com/pages/prossima-campagna"><div class="icon"><i class="fa-brands fa-whatsapp"></i></div><h3>Campagna WhatsApp</h3><p>Preparazione materiale, invio e registrazione della prossima campagna.</p><span class="go">APRI CAMPAGNA →</span></a>
-</section>
-<div class="section-title academy"><h2>F1 ACADEMY · FORMAZIONE</h2></div>
-<section class="grid">
-<a class="card academy-card" target="_blank" rel="noopener" href="https://f1immobiliare.com/pages/role-play-academy"><div class="icon"><i class="fa-solid fa-people-arrows"></i></div><h3>Role Play Academy</h3><p>Simulazioni, allenamento e gestione delle obiezioni.</p><span class="go">APRI ACADEMY →</span></a>
-<a class="card academy-card" target="_blank" rel="noopener" href="https://www.fad-anfa.it/login/index.php#section-3-"><div class="icon"><i class="fa-solid fa-graduation-cap"></i></div><h3>FAD ANFA</h3><p>Formazione e percorso di studio sulla piattaforma FAD.</p><span class="go">APRI FAD →</span></a>
-<a class="card academy-card" target="_blank" rel="noopener" href="https://f1immobiliare.com/pages/f1-academy"><div class="icon"><i class="fa-solid fa-chalkboard-user"></i></div><h3>F1 Academy</h3><p>Manuali, video e formazione dei funzionari.</p><span class="go">APRI F1 ACADEMY →</span></a>
-<a class="card academy-card" target="_blank" rel="noopener" href="https://f1immobiliare.com/pages/acquisizione-giornaliera"><div class="icon"><i class="fa-solid fa-book-open"></i></div><h3>Teoria F1 Academy</h3><p>Metodo, principi e acquisizione giornaliera.</p><span class="go">APRI TEORIA →</span></a>
-<a class="card academy-card" target="_blank" rel="noopener" href="https://cdn.shopify.com/s/files/1/1046/2730/6835/files/ChatGPT_Image_23_lug_2026_11_33_49.png?v=1784851165"><div class="icon"><i class="fa-solid fa-euro-sign"></i></div><h3>Guadagni funzionario</h3><p>Schema compensi e valori economici di riferimento.</p><span class="go">APRI SCHEMA →</span></a>
-</section>
-<div class="note"><b>Flusso operativo:</b> DASHBOARD → NUOVA OPPORTUNITÀ → RICERCA → RISULTATI → VERIFICA → CRM → CONTATTO → SCRIPT → ESITO → FOLLOW-UP.</div>
+      <section class="f1-dept acquisition" id="reparto-acquisizione">
+        <header class="f1-dept-head"><div class="kicker">02 · CONTATTA E QUALIFICA</div><h2>ACQUISIZIONE</h2><p>Prospecting, chiamate, script, follow-up e appuntamenti.</p></header>
+        <div class="f1-card-stack">
+          <a class="f1-op-card priority" data-card="owners_contact" href="telefonate-oggi.html"><span class="f1-card-badge"></span><span class="ico"><i class="fa-solid fa-user-tag"></i></span><span><h3>PROPRIETARI DA CONTATTARE</h3><p>Task di contatto/prospecting aperti.</p></span><span class="f1-metric" data-metric="owners_contact"><b>…</b><span>DA CONTATTARE</span></span></a>
+          <a class="f1-op-card priority" href="telefonate-oggi.html"><span class="ico"><i class="fa-solid fa-phone"></i></span><span><h3>CHIAMATE DEL GIORNO</h3><p>Esiti telefonici già registrati oggi.</p></span><span class="f1-metric" data-metric="calls_today"><b>…</b><span>ESEGUITE</span></span></a>
+          <a class="f1-op-card priority" data-card="followup_overdue" href="oggi.html#tasks"><span class="f1-card-badge"></span><span class="ico"><i class="fa-solid fa-clock-rotate-left"></i></span><span><h3>FOLLOW-UP SCADUTI</h3><p>Task aperti oltre la scadenza.</p></span><span class="f1-metric" data-metric="followup_overdue"><b>…</b><span>SCADUTI</span></span></a>
+          <a class="f1-op-card" href="script.html"><span class="ico"><i class="fa-solid fa-headset"></i></span><span><h3>SCRIPT F1</h3><p>Archivio copioni commerciali F1.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
+          <a class="f1-op-card" href="script-operativo.html"><span class="ico"><i class="fa-solid fa-comments"></i></span><span><h3>OBIEZIONI</h3><p>Gestione guidata durante il contatto.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
+          <a class="f1-op-card" href="oggi.html#tasks"><span class="ico"><i class="fa-solid fa-arrow-rotate-right"></i></span><span><h3>FOLLOW-UP</h3><p>Richiami e prossime azioni aperte.</p></span><span class="f1-metric" data-metric="followup_open"><b>…</b><span>APERTI</span></span></a>
+          <a class="f1-op-card" href="crm.html"><span class="ico"><i class="fa-solid fa-calendar-check"></i></span><span><h3>APPUNTAMENTI ACQUISIZIONE</h3><p>Task appuntamento ancora aperti.</p></span><span class="f1-metric" data-metric="appointments"><b>…</b><span>APERTI</span></span></a>
+          <a class="f1-op-card" href="funzionario-notiziere.html"><span class="ico"><i class="fa-solid fa-newspaper"></i></span><span><h3>NOTIZIE IMMOBILIARI</h3><p>Notizie inserite dal funzionario oggi.</p></span><span class="f1-metric" data-metric="news"><b>…</b><span>OGGI</span></span></a>
+        </div>
+      </section>
+
+      <section class="f1-dept sales" id="reparto-vendita">
+        <header class="f1-dept-head"><div class="kicker">03 · ABBINA E CONVERTI</div><h2>VENDITA</h2><p>Immobili, trattative, acquirenti e match domanda/offerta.</p></header>
+        <div class="f1-card-stack">
+          <a class="f1-op-card priority" href="crm.html"><span class="ico"><i class="fa-solid fa-house-circle-check"></i></span><span><h3>IMMOBILI ATTIVI</h3><p>Immobili non venduti e non archiviati.</p></span><span class="f1-metric" data-metric="properties_active"><b>…</b><span>ATTIVI</span></span></a>
+          <a class="f1-op-card priority" data-card="deals" href="crm.html"><span class="f1-card-badge"></span><span class="ico"><i class="fa-solid fa-handshake"></i></span><span><h3>TRATTATIVE</h3><p>Lead in proposta, negoziazione o trattativa.</p></span><span class="f1-metric" data-metric="deals"><b>…</b><span>APERTE</span></span></a>
+          <a class="f1-op-card priority" href="oggi.html#tasks"><span class="ico"><i class="fa-solid fa-user-clock"></i></span><span><h3>ACQUIRENTI DA RICONTATTARE</h3><p>Richieste immobiliari ancora attive.</p></span><span class="f1-metric" data-metric="buyers_recall"><b>…</b><span>ATTIVI</span></span></a>
+          <a class="f1-op-card" href="just-listed-sold.html"><span class="ico"><i class="fa-solid fa-house-circle-check"></i></span><span><h3>IMMOBILI VENDUTI</h3><p>Storico immobili con stato venduto.</p></span><span class="f1-metric" data-metric="properties_sold"><b>…</b><span>VENDUTI</span></span></a>
+          <a class="f1-op-card" href="cerco-casa.html"><span class="ico"><i class="fa-solid fa-users-viewfinder"></i></span><span><h3>ACQUIRENTI ATTIVI</h3><p>Richieste di ricerca attive.</p></span><span class="f1-metric" data-metric="buyers_active"><b>…</b><span>RICHIESTE</span></span></a>
+          <a class="f1-op-card" href="f1-crm-intelligence.html"><span class="ico"><i class="fa-solid fa-code-compare"></i></span><span><h3>MATCH DOMANDA / OFFERTA</h3><p>Abbinamenti calcolati dal CRM.</p></span><span class="f1-metric" data-metric="matches"><b>…</b><span>MATCH</span></span></a>
+          <a class="f1-op-card" href="just-listed-sold.html"><span class="ico"><i class="fa-solid fa-people-roof"></i></span><span><h3>OPEN HOUSE</h3><p>Task Open House presenti nel sistema.</p></span><span class="f1-metric" data-metric="open_house"><b>…</b><span>TASK</span></span></a>
+          <a class="f1-op-card" href="crm.html"><span class="ico"><i class="fa-solid fa-house-user"></i></span><span><h3>RICHIESTE IMMOBILIARI</h3><p>Richieste salvate nel CRM F1.</p></span><span class="f1-metric" data-metric="requests"><b>…</b><span>RICHIESTE</span></span></a>
+        </div>
+      </section>
+
+      <section class="f1-dept advertising" id="reparto-pubblicita">
+        <header class="f1-dept-head"><div class="kicker">04 · COMUNICA E DISTRIBUISCI</div><h2>PUBBLICITÀ</h2><p>Contenuti, campagne, programmazione e materiali territoriali.</p></header>
+        <div class="f1-card-stack">
+          <a class="f1-op-card priority" href="content-opportunity-engine.html"><span class="ico"><i class="fa-solid fa-wand-magic-sparkles"></i></span><span><h3>CONTENUTI DEL GIORNO</h3><p>Campagne aggiornate o create oggi.</p></span><span class="f1-metric" data-metric="content_today"><b>…</b><span>CAMPAGNE</span></span></a>
+          <a class="f1-op-card priority" target="_blank" rel="noopener" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/content-center.html"><span class="ico"><i class="fa-solid fa-paper-plane"></i></span><span><h3>POST DA PUBBLICARE</h3><p>Apri il centro contenuti operativo.</p></span><span class="f1-metric" data-metric="scheduled_posts"><b>…</b><span>PROGRAMMATE</span></span></a>
+          <a class="f1-op-card priority" href="oggi.html#tasks"><span class="ico"><i class="fa-solid fa-triangle-exclamation"></i></span><span><h3>ATTIVITÀ IN SCADENZA</h3><p>Usa la coda task e le priorità reali.</p></span><span class="f1-metric" data-metric="followup_task"><b>…</b><span>BLOCCHI</span></span></a>
+          <a class="f1-op-card" href="content-opportunity-engine.html"><span class="ico"><i class="fa-solid fa-palette"></i></span><span><h3>GRAFICHE</h3><p>Hook, CTA, prompt e creatività.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
+          <a class="f1-op-card" href="facebook-ottimizzazione.html"><span class="ico"><i class="fa-solid fa-bullhorn"></i></span><span><h3>ANNUNCI</h3><p>Campagne social registrate nel sistema.</p></span><span class="f1-metric" data-metric="ads"><b>…</b><span>CAMPAGNE</span></span></a>
+          <a class="f1-op-card" target="_blank" rel="noopener" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/content-center.html"><span class="ico"><i class="fa-solid fa-calendar-days"></i></span><span><h3>POST PROGRAMMATI</h3><p>Campagne con stato pianificato.</p></span><span class="f1-metric" data-metric="scheduled_posts"><b>…</b><span>PROGRAMMATE</span></span></a>
+          <a class="f1-op-card" target="_blank" rel="noopener" href="https://cdn.shopify.com/s/files/1/1046/2730/6835/files/F1_Immobiliare_-_Porta_a_Porta_Volantino_Premium.pdf?v=1784845457"><span class="ico"><i class="fa-solid fa-envelopes-bulk"></i></span><span><h3>VOLANTINI / MATERIALI</h3><p>Procedura premium porta a porta.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
+          <a class="f1-op-card" href="content-opportunity-engine.html"><span class="ico"><i class="fa-solid fa-chart-line"></i></span><span><h3>KPI CAMPAGNE / VISIBILITÀ</h3><p>Campagne operative ancora attive.</p></span><span class="f1-metric" data-metric="campaign_kpi"><b>…</b><span>ATTIVE</span></span></a>
+        </div>
+      </section>
+    </div>
+
+    <nav class="f1-utilities" aria-label="Strumenti F1 preservati">
+      <span class="label">STRUMENTI:</span>
+      <span id="flowResume"><a class="flow-main-btn" href="nuova-opportunita.html">+ NUOVA OPPORTUNITÀ</a></span>
+      <a href="program-90.html"><i class="fa-solid fa-stopwatch"></i>90 GIORNI</a>
+      <a href="network-reconstruction.html"><i class="fa-solid fa-share-nodes"></i>RETE 250</a>
+      <a href="gruppi-social-f1.html"><i class="fa-brands fa-facebook"></i>GRUPPI SOCIAL</a>
+      <a target="_blank" rel="noopener" href="https://calendar.google.com/calendar/u/0/r"><i class="fa-solid fa-calendar"></i>CALENDAR</a>
+      <a target="_blank" rel="noopener" href="https://f1immobiliare.com/pages/f1-academy"><i class="fa-solid fa-graduation-cap"></i>F1 ACADEMY</a>
+      <a target="_blank" rel="noopener" href="https://f1immobiliare.com/pages/role-play-academy"><i class="fa-solid fa-people-arrows"></i>ROLE PLAY</a>
+    </nav>
+
+    <section class="legacy-data-bridge" aria-hidden="true">
+      <section id="program90Widget"><p id="p90Stage"></p><div id="p90Progress"></div><b id="p90Day">— / 90</b><b id="p90Completed">0 / 4</b><b id="p90Time">0m / 6h 30m</b><b id="p90Prospecting">0 / 20</b><b id="p90Preview">0 / 5–7</b><b id="p90Followup">0 / 10</b></section>
+      <section id="network250Widget"><p id="netStage"></p><div id="netProgressBar"></div><b id="netSourcesDone">0 / 250</b><b id="netPeople">0</b><b id="netDup">0</b><b id="netReactivate">0</b></section>
+      <section id="marketPreviewWidget"><p id="mpStage"></p><span id="mpVisionText"></span><div id="mpVisionBar"></div><span id="mpTimeText"></span><div id="mpTimeBar"></div><b id="mpVisioned">0</b><b id="mpTime">0</b><b id="mpPrivate">0</b><b id="mpExpired">0</b><b id="mpOpp">0</b></section>
+      <section id="jlsWidget"><p id="jlsStage"></p><span id="jlsProgressText"></span><div id="jlsProgressBar"></div><b id="jlsDone">0</b><b id="jlsTalk">0</b><b id="jlsReferral">0</b><b id="jlsSeller">0</b><b id="jlsAppt">0</b></section>
+    </section>
+  </section>
 </main>
-<footer><a href="nuova-opportunita.html"><i class="fa-solid fa-plus"></i> Opportunità</a><a href="centrale-risultati.html"><i class="fa-solid fa-list-check"></i> Risultati</a><a href="crm.html"><i class="fa-solid fa-address-book"></i> CRM</a><a href="oggi.html#tasks"><i class="fa-solid fa-arrow-rotate-right"></i> Follow-Up</a></footer>
-<script src="f1-operational-flow.js"></script>
+<script src="supabase-config.js?v=20260914-auth"></script>
+<script src="supabase-sync.js?v=20260914-auth"></script>
+<script src="f1-staff-data.js?v=20260914-staff"></script>
+<script src="f1-operational-flow.js?v=20260914-flow"></script>
 <script src="market-preview-widget.js?v=20260913-mp2"></script>
 <script src="just-listed-sold-widget.js?v=20260913-w2"></script>
 <script src="program-90-widget.js?v=20260913-p90-1"></script>
 <script src="program-90-phase-widget.js?v=20260913-p90-adv2"></script>
 <script src="network-reconstruction-widget.js?v=20260913-net1"></script>
-<script src="daily-command-panel.js?v=20260913-daily3"></script>
-</body></html>
+<script src="daily-command-panel.js?v=20260914-ia004-1"></script>
+<script src="dashboard-workspace.js?v=20260914-ia004-1"></script>
+</body>
+</html>
