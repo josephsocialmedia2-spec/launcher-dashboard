@@ -1,0 +1,52 @@
+name: F1 Google Dork Engine Integrate
+on:
+  push:
+    paths:
+      - '.github/workflows/f1-google-dork-integrate.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Integrate CRM loader and canonical schema
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          crm=Path('crm.html')
+          s=crm.read_text()
+          old='market-listing-ui.js?v=20260914-market3'
+          new='market-listing-ui.js?v=20260914-market4'
+          if old in s:
+              s=s.replace(old,new)
+          elif new not in s:
+              raise SystemExit('crm market-listing-ui cache marker not found')
+          crm.write_text(s)
+
+          qa=Path('.github/workflows/f1-market-normalizer-qa.yml')
+          q=qa.read_text()
+          q=q.replace("market-listing-ui.js?v=20260914-market3","market-listing-ui.js?v=20260914-market4")
+          qa.write_text(q)
+
+          schema=Path('supabase-schema.sql')
+          mig=Path('supabase-migrations/20260914_f1_google_dork_research_engine.sql').read_text()
+          base=schema.read_text()
+          if 'create table if not exists public.research_jobs' not in base:
+              schema.write_text(base.rstrip()+"\n\n-- ============================================================================\n-- F1 GOOGLE DORK BACKGROUND RESEARCH ENGINE\n-- ============================================================================\n\n"+mig.strip()+"\n")
+          PY
+      - name: Static contract
+        run: |
+          grep -q 'market-listing-ui.js?v=20260914-market4' crm.html
+          grep -q 'create table if not exists public.research_jobs' supabase-schema.sql
+          grep -q 'create table if not exists public.research_results' supabase-schema.sql
+          grep -q 'create table if not exists public.research_entities' supabase-schema.sql
+      - name: Commit integration
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add crm.html .github/workflows/f1-market-normalizer-qa.yml supabase-schema.sql
+          git commit -m 'Integrate F1 Google Dork research engine' || exit 0
+          git push
