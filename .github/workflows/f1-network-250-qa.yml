@@ -7,6 +7,7 @@ on:
       - 'network-reconstruction.js'
       - 'network-reconstruction-widget.js'
       - 'network-250-sources.js'
+      - 'network-250-data-*.js'
       - 'tests/network-reconstruction.spec.js'
       - '.github/workflows/f1-network-250-qa.yml'
   workflow_dispatch:
@@ -25,15 +26,24 @@ jobs:
         run: |
           set -ex
           node --check network-250-sources.js
+          for f in network-250-data-*.js; do node --check "$f"; done
           node --check network-reconstruction.js
           node --check network-reconstruction-widget.js
           node --check tests/network-reconstruction.spec.js
           node - <<'NODE'
           global.window={};
           require('./network-250-sources.js');
-          if(!Array.isArray(window.F1_NETWORK_250)||window.F1_NETWORK_250.length!==250) throw new Error('Catalogo Network 250 incompleto');
-          const ids=new Set(window.F1_NETWORK_250.map(x=>x.id));
+          const rows=window.F1_NETWORK_250;
+          if(!Array.isArray(rows)||rows.length!==250) throw new Error('Catalogo Network 250 incompleto');
+          const ids=new Set(rows.map(x=>x.id));
           if(ids.size!==250||Math.min(...ids)!==1||Math.max(...ids)!==250) throw new Error('ID fonti non validi');
+          const byId=id=>rows.find(x=>x.id===id);
+          if(byId(1)?.check!=='Tutti i contatti salvati, inclusi quelli senza cognome') throw new Error('Dettaglio fonte 1 non canonico');
+          if(byId(120)?.check!=='Solo contatti professionali non sensibili') throw new Error('Cautela fonte 120 assente');
+          if(byId(195)?.name!=="Centri per l'impiego") throw new Error('Fonte 195 non canonica');
+          if(byId(238)?.check!=='Solo ricordo relazionale, senza annotare dati sensibili') throw new Error('Cautela fonte 238 assente');
+          if(byId(250)?.people!=='Espansione sistematica della sfera') throw new Error('Dettaglio fonte 250 non canonico');
+          if(rows.some(x=>!x.name||!x.check||!x.people||!x.macro)) throw new Error('Una o più fonti non hanno tutti i campi operativi');
           NODE
           grep -q 'id="network250Widget"' index.html
           grep -q 'RICOSTRUZIONE RETE 250' index.html
@@ -67,11 +77,20 @@ jobs:
               && curl -fsSL "$base/network-reconstruction.html?qa=$RANDOM" -o /tmp/net \
               && curl -fsSL "$base/network-reconstruction.js?qa=$RANDOM" -o /tmp/netjs \
               && curl -fsSL "$base/network-250-sources.js?qa=$RANDOM" -o /tmp/sources \
+              && curl -fsSL "$base/network-250-data-1.js?qa=$RANDOM" -o /tmp/data1 \
+              && curl -fsSL "$base/network-250-data-5.js?qa=$RANDOM" -o /tmp/data5 \
+              && curl -fsSL "$base/network-250-data-8.js?qa=$RANDOM" -o /tmp/data8 \
+              && curl -fsSL "$base/network-250-data-10.js?qa=$RANDOM" -o /tmp/data10 \
               && curl -fsSL "$base/network-reconstruction-widget.js?qa=$RANDOM" -o /tmp/widget \
               && grep -q 'id="network250Widget"' /tmp/index \
               && grep -q 'AVVIA RICOSTRUZIONE RETE' /tmp/net \
               && grep -q 'network_contacts' /tmp/netjs \
-              && grep -q 'F1_NETWORK_250' /tmp/sources \
+              && grep -q 'Catalogo Network 250 specifico incompleto' /tmp/sources \
+              && grep -q 'Tutti i contatti salvati, inclusi quelli senza cognome' /tmp/data1 \
+              && grep -q 'Solo contatti professionali non sensibili' /tmp/data5 \
+              && grep -q "Centri per l'impiego" /tmp/data8 \
+              && grep -q 'Solo ricordo relazionale, senza annotare dati sensibili' /tmp/data10 \
+              && grep -q 'Espansione sistematica della sfera' /tmp/data10 \
               && grep -q 'netSourcesDone' /tmp/widget; then
               deployed=1
               break
@@ -79,3 +98,4 @@ jobs:
             sleep 5
           done
           test "$deployed" = 1
+          echo 'PASS Network 250 canonical detailed catalog published'
