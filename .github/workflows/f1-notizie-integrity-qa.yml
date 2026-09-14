@@ -1,0 +1,64 @@
+name: F1 Notizie Integrity QA
+on:
+  push:
+    paths:
+      - 'funzionario-notiziere.html'
+      - 'f1-staff-data.js'
+      - 'f1-notizie-integrity.js'
+      - 'tests/notizie-integrity.spec.js'
+      - 'tests/fixtures/notizie-integrity-harness.html'
+      - '.github/workflows/f1-notizie-integrity-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit all reset calls and production contract
+        run: |
+          set -euxo pipefail
+          echo '=== ALL .reset() CALLS IN REPOSITORY ==='
+          grep -RIn --exclude-dir=.git -E '\.reset[[:space:]]*\(' . || true
+          node --check f1-staff-data.js
+          node --check f1-notizie-integrity.js
+          node --check tests/notizie-integrity.spec.js
+          grep -q 'f1-notizie-integrity.js?v=20260914-news1' funzionario-notiziere.html
+          grep -q 'F1NotizieIntegrity.bindNewsForm' funzionario-notiziere.html
+          grep -q 'id="newsList"' funzionario-notiziere.html
+          grep -q 'SALVATAGGIO NOTIZIA NON CONFERMATO' f1-staff-data.js
+          ! grep -q 'e.currentTarget.reset()' funzionario-notiziere.html
+          ! grep -q 'return r?.\[0\]||row' f1-staff-data.js
+      - name: Install browser QA
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+      - name: Run six mandatory news integrity tests
+        run: npx playwright test tests/notizie-integrity.spec.js --project=desktop-chromium
+      - name: Published GitHub Pages smoke
+        run: |
+          set -e
+          base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
+          deployed=0
+          for i in $(seq 1 72); do
+            if curl -fsSL "$base/funzionario-notiziere.html?qa=$RANDOM" -o /tmp/notiziere \
+              && curl -fsSL "$base/f1-notizie-integrity.js?qa=$RANDOM" -o /tmp/integrity \
+              && curl -fsSL "$base/f1-staff-data.js?qa=$RANDOM" -o /tmp/staff \
+              && grep -q 'f1-notizie-integrity.js?v=20260914-news1' /tmp/notiziere \
+              && grep -q 'F1NotizieIntegrity.bindNewsForm' /tmp/notiziere \
+              && grep -q 'id="newsList"' /tmp/notiziere \
+              && ! grep -q 'e.currentTarget.reset()' /tmp/notiziere \
+              && grep -q 'safeResetForm' /tmp/integrity \
+              && grep -q 'SALVATAGGIO NON COMPLETATO — I DATI SONO STATI MANTENUTI' /tmp/integrity \
+              && grep -q 'SALVATAGGIO NOTIZIA NON CONFERMATO' /tmp/staff; then
+              deployed=1
+              break
+            fi
+            sleep 5
+          done
+          test "$deployed" = 1
