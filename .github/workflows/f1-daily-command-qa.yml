@@ -13,6 +13,10 @@ on:
       - 'f1-operational-procedures.js'
       - 'f1-guided-workspace.css'
       - 'f1-guided-workspace.js'
+      - 'f1-priority-zero.js'
+      - 'f1-priority-zero-bridge.js'
+      - 'tests/priority-zero-browser.spec.js'
+      - 'tests/priority-zero-engine.node.js'
       - 'tests/daily-command-panel.spec.js'
       - '.github/workflows/f1-daily-command-qa.yml'
   workflow_dispatch:
@@ -36,14 +40,21 @@ jobs:
           node --check f1-operational-procedures.js
           node --check f1-ai-guide.js
           node --check f1-guided-workspace.js
+          node --check f1-priority-zero.js
+          node --check f1-priority-zero-bridge.js
+          node --check tests/priority-zero-engine.node.js
+          node --check tests/priority-zero-browser.spec.js
           node --check tests/daily-command-panel.spec.js
+          node tests/priority-zero-engine.node.js
           grep -q 'dashboard-workspace.css?v=20260914-ia004-1' index.html
           grep -q 'dashboard-workspace.js?v=20260914-ia004-1' index.html
           grep -q 'f1-ai-guide.css?v=20260914-guide2' index.html
           grep -q 'f1-operational-procedures.js?v=20260914-docops1' index.html
+          grep -q 'f1-priority-zero.js?v=20260914-priority0-1' index.html
           grep -q 'f1-ai-guide.js?v=20260914-guide5' index.html
           grep -q 'f1-guided-workspace.css?v=20260914-guide5' index.html
           grep -q 'f1-guided-workspace.js?v=20260914-guide5' index.html
+          grep -q 'f1-priority-zero-bridge.js?v=20260914-priority0-bridge1' index.html
           grep -q 'market-preview-widget.js?v=20260914-mp3' index.html
           grep -q 'id="reparto-ricerca"' index.html
           grep -q 'id="reparto-acquisizione"' index.html
@@ -66,6 +77,12 @@ jobs:
           grep -q 'f1AiZone' f1-ai-guide.js
           grep -q 'f1AiExecute' f1-ai-guide.js
           grep -q 'f1AiRegister' f1-ai-guide.js
+          grep -q 'ADESSO CERCA UNA NOTIZIA' f1-priority-zero.js
+          grep -q 'FAMILY' f1-priority-zero.js
+          grep -q 'FRIENDS' f1-priority-zero.js
+          grep -q 'NETWORK' f1-priority-zero.js
+          grep -q 'STRANGERS' f1-priority-zero.js
+          grep -q 'INTRODUZIONE CONSENSUALE' f1-priority-zero.js
           grep -q 'PRIMI 30 GIORNI' f1-operational-procedures.js
           grep -q 'VECCHIE VALUTAZIONI' f1-operational-procedures.js
           grep -q 'AVVIA E APRI' f1-guided-workspace.js
@@ -89,8 +106,8 @@ jobs:
         run: |
           npm install
           npx playwright install --with-deps chromium
-      - name: IA004 daily command E2E
-        run: npx playwright test tests/daily-command-panel.spec.js --project=desktop-chromium
+      - name: IA004 daily command and priority-zero E2E
+        run: npx playwright test tests/daily-command-panel.spec.js tests/priority-zero-browser.spec.js --project=desktop-chromium
       - name: Existing CRM and dashboard regressions
         run: npx playwright test tests/crm-full-e2e.spec.js tests/market-preview.spec.js --project=desktop-chromium
       - name: Published GitHub Pages smoke
@@ -104,6 +121,8 @@ jobs:
               && curl -fsSL "$base/dashboard-workspace.js?qa=$RANDOM" -o /tmp/workjs \
               && curl -fsSL "$base/daily-command-panel.js?qa=$RANDOM" -o /tmp/dailyjs \
               && curl -fsSL "$base/f1-operational-procedures.js?qa=$RANDOM" -o /tmp/procjs \
+              && curl -fsSL "$base/f1-priority-zero.js?qa=$RANDOM" -o /tmp/p0js \
+              && curl -fsSL "$base/f1-priority-zero-bridge.js?qa=$RANDOM" -o /tmp/p0bridge \
               && curl -fsSL "$base/f1-ai-guide.js?qa=$RANDOM" -o /tmp/guidejs \
               && curl -fsSL "$base/f1-ai-guide.css?qa=$RANDOM" -o /tmp/guidecss \
               && curl -fsSL "$base/f1-guided-workspace.js?qa=$RANDOM" -o /tmp/guidedjs \
@@ -111,13 +130,18 @@ jobs:
               && grep -q 'id="reparto-ricerca"' /tmp/index \
               && grep -q 'id="reparto-pubblicita"' /tmp/index \
               && grep -q 'f1-operational-procedures.js?v=20260914-docops1' /tmp/index \
+              && grep -q 'f1-priority-zero.js?v=20260914-priority0-1' /tmp/index \
               && grep -q 'f1-ai-guide.js?v=20260914-guide5' /tmp/index \
               && grep -q 'f1-guided-workspace.js?v=20260914-guide5' /tmp/index \
+              && grep -q 'f1-priority-zero-bridge.js?v=20260914-priority0-bridge1' /tmp/index \
               && grep -q 'market-preview-widget.js?v=20260914-mp3' /tmp/index \
               && grep -q 'grid-template-columns:minmax(0,80%)' /tmp/workcss \
               && grep -q 'HO FINITO' /tmp/workjs \
               && grep -q 'PROGRAMMA OPERATIVO DI OGGI' /tmp/dailyjs \
               && grep -q 'VECCHIE VALUTAZIONI' /tmp/procjs \
+              && grep -q 'ADESSO CERCA UNA NOTIZIA' /tmp/p0js \
+              && grep -q 'PRIORITY_ZERO_NEWS' /tmp/p0js \
+              && grep -q 'F1PriorityZeroBridge' /tmp/p0bridge \
               && grep -q 'ORDINE OPERATIVO' /tmp/guidejs \
               && grep -q 'f1AiZone' /tmp/guidejs \
               && grep -q 'f1-ai-guide-active' /tmp/guidecss \
