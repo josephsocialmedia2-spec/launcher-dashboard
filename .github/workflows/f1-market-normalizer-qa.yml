@@ -1,0 +1,61 @@
+name: F1 Market Normalizer QA
+on:
+  push:
+    paths:
+      - 'crm.html'
+      - 'crm-unified-app.js'
+      - 'f1-acquisition-data.js'
+      - 'market-listing-parser.js'
+      - 'market-listing-ui.js'
+      - 'market-listing-research.js'
+      - '.github/workflows/f1-market-normalizer-qa.yml'
+  workflow_dispatch:
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax
+        run: |
+          node --check market-listing-parser.js
+          node --check market-listing-ui.js
+          node --check market-listing-research.js
+          node --check crm-unified-app.js
+          node --check f1-acquisition-data.js
+      - name: Parser contract
+        run: |
+          node - <<'NODE'
+          const assert=require('assert'),P=require('./market-listing-parser.js');
+          const lead={source_url:'https://www.immobiliare.it/annunci/111886863/',comune:'Villar Dora',via:'Borgata Cordonatto',civico:'2'};
+          const raw='Terratetto unifamiliare\nBorgata Cordonatto 2, Villar Dora\n€ 49.000\n65 m²\n3 locali\n2 camere\n1 bagno\nPiano terra\nGiardino circa 700 m²\nAnnuncio aggiornato il 19/08/2026\nInserzionista:\nFabio Panero';
+          const a=P.normalize(raw,lead);
+          assert.equal(a.price,49000);assert.equal(a.commercial_sqm,65);assert.equal(a.rooms,3);assert.equal(a.bedrooms,2);assert.equal(a.bathrooms,1);assert.equal(a.advertiser_name,'Fabio Panero');assert.equal(a.agency_name,'');assert.equal(a.classification,'DA_CLASSIFICARE');assert.equal(a.owner_name,'');
+          const required=['source_portal','source_url','external_listing_id','reference_code','listing_updated_at','property_category','property_type_raw','property_type_normalized','transaction_type','ownership','property_class','address_raw','street','street_number','fraction','municipality','zone','province','price','price_currency','price_per_sqm','condo_fees','commercial_sqm','garden_sqm','garden_sqm_estimated','land_sqm','other_surface_sqm','rooms','bedrooms','bathrooms','kitchen','floor','building_floors','elevator','balcony','terrace','garden','garage','parking_spaces','furnished','heating_present','roof_renovated','roof_renovation_year','window_frame_material','window_glass','land_present','land_partially_buildable','energy_class','energy_consumption','energy_consumption_unit','advertiser_name','agency_name','owner_name','advertiser_type','classification','status','evidence','verification_evidence'];
+          for(const k of required)assert.ok(Object.prototype.hasOwnProperty.call(a,k),'missing '+k);
+          assert.equal(P.normalize(raw+'\nXYZ Immobiliare',lead).classification,'COMPETITOR_LISTING');
+          assert.equal(P.normalize(raw+'\nVendita da privato - no agenzie',lead).classification,'FSBO_VERIFIED');
+          assert.equal(P.normalize(raw+'\nGiardino privato',lead).classification,'DA_CLASSIFICARE');
+          assert.equal(P.normalize(raw.replace('19/08/2026','19/08/2019'),lead).classification,'DA_CLASSIFICARE');
+          console.log('market parser contract OK');
+          NODE
+      - name: CRM integration contract
+        run: |
+          grep -q 'SEGNALAZIONE DI MERCATO' crm-unified-app.js
+          grep -q 'INCOLLA / NORMALIZZA' crm-unified-app.js
+          grep -q 'MODIFICA SEGNALAZIONE DI MERCATO' crm.html
+          grep -q 'ANALIZZA E NORMALIZZA' crm.html
+          grep -q 'CONFERMA NORMALIZZAZIONE' crm.html
+          grep -q 'market_data' f1-acquisition-data.js
+          grep -q 'NON_APPLICABILE' market-listing-ui.js
+          grep -q 'ESITO VERIFICA' market-listing-ui.js
+          grep -q 'verification_evidence' market-listing-ui.js
+      - name: Published Pages smoke
+        run: |
+          ok=0
+          for i in $(seq 1 24); do
+            CRM=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/crm.html?v=20260914-market2' || true)
+            PARSER=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/market-listing-parser.js?v=20260914-market2' || true)
+            if echo "$CRM" | grep -q 'MODIFICA SEGNALAZIONE DI MERCATO' && echo "$CRM" | grep -q 'market-listing-ui.js?v=20260914-market2' && echo "$PARSER" | grep -q "20260914-parser2"; then ok=1; break; fi
+            sleep 5
+          done
+          test "$ok" = 1
