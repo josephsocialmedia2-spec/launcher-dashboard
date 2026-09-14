@@ -1,0 +1,100 @@
+name: F1 Google Dork Companion QA
+on:
+  push:
+    paths:
+      - 'market-interest-core.js'
+      - 'market-interest-engine.js'
+      - 'market-listing-ui.js'
+      - 'crm.html'
+      - 'chrome-companion/**'
+      - 'supabase-schema.sql'
+      - 'supabase-migrations/20260914_f1_google_dork_research_engine.sql'
+      - 'supabase-migrations/20260914_f1_google_dork_research_sources.sql'
+      - '.github/workflows/f1-google-dork-companion-qa.yml'
+  workflow_dispatch:
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: JavaScript syntax
+        run: |
+          node --check market-interest-core.js
+          node --check market-interest-engine.js
+          node --check market-listing-ui.js
+          node --check chrome-companion/service-worker.js
+          node --check chrome-companion/f1-session-bridge.js
+          node -e "JSON.parse(require('fs').readFileSync('chrome-companion/manifest.json','utf8')); console.log('manifest OK')"
+      - name: Dynamic Google Dork contract
+        run: |
+          node - <<'NODE'
+          const assert=require('assert'),C=require('./market-interest-core.js');
+          const seed={advertiser_name:'Mario Rossi',street:'Via Test',street_number:'12',municipality:'Comune Prova',reference_code:'REF-7788',external_listing_id:'998877',property_type_normalized:'Trilocale'};
+          const q=C.buildQueries(seed,{maxQueries:28});
+          const text=q.map(x=>x.query).join('\n');
+          assert(q.length>10 && q.length<=28);
+          assert(text.includes('"Mario Rossi" immobiliare'));
+          assert(text.includes('"Mario Rossi" "Comune Prova"'));
+          assert(text.includes('"Via Test 12" "Comune Prova"'));
+          assert(text.includes('"REF-7788"'));
+          assert(text.includes('site:immobiliare.it "Via Test" "Comune Prova"'));
+          assert(text.includes('site:linkedin.com'));
+          assert(text.includes('"Via Test" "Comune Prova" geometra'));
+          const cascade=C.buildAgencyQueries(seed,'Agenzia Test','agenziatest.it').map(x=>x.query).join('\n');
+          assert(cascade.includes('"Agenzia Test" "Comune Prova"'));
+          assert(cascade.includes('site:agenziatest.it "Mario Rossi"'));
+          assert.equal(C.normalizePhone('+39 333 123 4567'),'3331234567');
+          assert.equal(C.canonicalUrl('https://example.it/x?utm_source=a#z'),'https://example.it/x');
+          console.log('dork contract OK');
+          NODE
+          ! grep -Ei 'Fabio Panero|Villar Dora|Borgata Cordonatto' market-interest-core.js chrome-companion/service-worker.js
+      - name: Supabase queue and evidence contract
+        run: |
+          grep -q 'create table if not exists public.research_jobs' supabase-schema.sql
+          grep -q 'create table if not exists public.research_results' supabase-schema.sql
+          grep -q 'create table if not exists public.research_entities' supabase-schema.sql
+          grep -q 'GOOGLE_VERIFICATION_REQUIRED' supabase-schema.sql
+          grep -q 'phone_source_url' supabase-schema.sql
+          grep -q 'email_source_url' supabase-schema.sql
+          grep -q 'enable row level security' supabase-migrations/20260914_f1_google_dork_research_engine.sql
+          grep -q 'auth.uid()' supabase-migrations/20260914_f1_google_dork_research_engine.sql
+      - name: CRM MI INTERESSA contract
+        run: |
+          grep -q 'market-interest-core.js?v=20260914-research1' market-listing-ui.js
+          grep -q 'market-interest-engine.js?v=20260914-research1' market-listing-ui.js
+          grep -q '★ MI INTERESSA' market-interest-engine.js
+          grep -q '★ RICERCA IN CORSO' market-interest-engine.js
+          grep -q '★ DOSSIER PRONTO' market-interest-engine.js
+          grep -q '★ VERIFICA RICHIESTA' market-interest-engine.js
+          grep -q 'ESPORTA RICERCA CSV' market-interest-engine.js
+          grep -q "priority:'P1'" market-interest-engine.js
+          grep -q 'research_jobs' market-interest-engine.js
+          grep -q 'research_results' market-interest-engine.js
+          grep -q 'research_entities' market-interest-engine.js
+          grep -q 'market-listing-ui.js?v=20260914-market4' crm.html
+      - name: Chrome Companion contract
+        run: |
+          grep -q '"manifest_version": 3' chrome-companion/manifest.json
+          grep -q 'service-worker.js' chrome-companion/manifest.json
+          grep -q "active:false" chrome-companion/service-worker.js
+          grep -q 'GOOGLE_VERIFICATION_REQUIRED' chrome-companion/service-worker.js
+          grep -q 'research_results' chrome-companion/service-worker.js
+          grep -q 'research_entities' chrome-companion/service-worker.js
+          grep -q 'completed_queries' chrome-companion/service-worker.js
+          grep -q 'phone_source_url' chrome-companion/service-worker.js
+          grep -q 'email_source_url' chrome-companion/service-worker.js
+          grep -q 'classification.*COMPETITOR_LISTING' chrome-companion/service-worker.js
+          ! grep -Ei 'serpapi|brave[ _-]?search|customsearch|googleapis\.com/customsearch' market-interest-core.js market-interest-engine.js chrome-companion/service-worker.js
+      - name: Published Pages smoke
+        run: |
+          ok=0
+          for i in $(seq 1 36); do
+            CRM=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/crm.html?v=20260914-research1' || true)
+            UI=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/market-listing-ui.js?v=20260914-market4' || true)
+            CORE=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/market-interest-core.js?v=20260914-research1' || true)
+            ENG=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/market-interest-engine.js?v=20260914-research1' || true)
+            MAN=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/chrome-companion/manifest.json?v=20260914-companion1' || true)
+            if echo "$CRM" | grep -q 'market-listing-ui.js?v=20260914-market4' && echo "$UI" | grep -q '20260914-market4' && echo "$CORE" | grep -q '20260914-research1' && echo "$ENG" | grep -q '★ MI INTERESSA' && echo "$MAN" | grep -q 'F1 Chrome Companion'; then ok=1; break; fi
+            sleep 5
+          done
+          test "$ok" = 1
