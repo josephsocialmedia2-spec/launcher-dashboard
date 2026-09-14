@@ -8,6 +8,8 @@ on:
       - 'dashboard-workspace.css'
       - 'dashboard-workspace.js'
       - 'market-preview-widget.js'
+      - 'f1-ai-guide.css'
+      - 'f1-ai-guide.js'
       - 'tests/daily-command-panel.spec.js'
       - '.github/workflows/f1-daily-command-qa.yml'
   workflow_dispatch:
@@ -28,6 +30,7 @@ jobs:
           node --check daily-command-panel.js
           node --check dashboard-workspace.js
           node --check market-preview-widget.js
+          node --check f1-ai-guide.js
           node --check tests/daily-command-panel.spec.js
           grep -q 'dashboard-workspace.css?v=20260914-ia004-1' index.html
           grep -q 'dashboard-workspace.js?v=20260914-ia004-1' index.html
@@ -46,6 +49,11 @@ jobs:
           grep -q 'setInterval(tick,1000)' daily-command-panel.js
           grep -q '06:30' daily-command-panel.js
           grep -q '20:00' daily-command-panel.js
+          grep -q 'GUIDA FUNZIONARIO' f1-ai-guide.js
+          grep -q 'COSA FACCIO ADESSO?' f1-ai-guide.js
+          grep -q 'SONO BLOCCATO' f1-ai-guide.js
+          grep -q 'APRI SCRIPT' f1-ai-guide.js
+          grep -q 'f1-ai-guide.js?v=20260914-guide1' market-preview-widget.js
           node - <<'NODE'
           const fs=require('fs');
           const s=fs.readFileSync('daily-command-panel.js','utf8');
@@ -76,11 +84,15 @@ jobs:
               && curl -fsSL "$base/dashboard-workspace.css?qa=$RANDOM" -o /tmp/workcss \
               && curl -fsSL "$base/dashboard-workspace.js?qa=$RANDOM" -o /tmp/workjs \
               && curl -fsSL "$base/daily-command-panel.js?qa=$RANDOM" -o /tmp/dailyjs \
+              && curl -fsSL "$base/f1-ai-guide.js?qa=$RANDOM" -o /tmp/guidejs \
+              && curl -fsSL "$base/f1-ai-guide.css?qa=$RANDOM" -o /tmp/guidecss \
               && grep -q 'id="reparto-ricerca"' /tmp/index \
               && grep -q 'id="reparto-pubblicita"' /tmp/index \
               && grep -q 'grid-template-columns:minmax(0,80%)' /tmp/workcss \
               && grep -q 'HO FINITO' /tmp/workjs \
-              && grep -q 'PROGRAMMA OPERATIVO DI OGGI' /tmp/dailyjs; then
+              && grep -q 'PROGRAMMA OPERATIVO DI OGGI' /tmp/dailyjs \
+              && grep -q 'GUIDA FUNZIONARIO' /tmp/guidejs \
+              && grep -q 'f1-ai-guide-active' /tmp/guidecss; then
               deployed=1
               break
             fi
