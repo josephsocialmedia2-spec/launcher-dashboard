@@ -15,7 +15,21 @@ async function interactions(userId,limit=200){return rest('interactions?user_id=
 async function ownLeads(userId,limit=300){return rest('leads?created_by_user_id=eq.'+encodeURIComponent(userId)+'&deleted=eq.false&select=*&order=updated_at.desc&limit='+Number(limit||300))}
 async function createOrLinkLead(payload){return rpc('f1_create_or_link_lead',{p_payload:payload})}
 async function news(userId,limit=100){return rest('f1_real_estate_news?user_id=eq.'+encodeURIComponent(userId)+'&select=*&order=updated_at.desc&limit='+Number(limit||100))}
-async function addNews(userId,payload){const row={user_id:userId,level:payload.level||'N0',title:payload.title||'',detail:payload.detail||'',source:payload.source||'',source_reference:payload.source_reference||'',regione:payload.regione||'Piemonte',provincia:payload.provincia||'TO',comune:payload.comune||'',zona:payload.zona||'',quartiere:payload.quartiere||'',via:payload.via||'',microzona:payload.microzona||'',justification:payload.justification||'',usable:!!payload.usable,status:payload.status||'ACTIVE',lead_id:payload.lead_id||'',property_id:payload.property_id||'',updated_at:new Date().toISOString()};const r=await rest('f1_real_estate_news',{method:'POST',body:JSON.stringify([row]),prefer:'return=representation'});return r?.[0]||row}
+async function addNews(userId,payload){
+  if(!userId)throw new Error('UTENTE NOTIZIA MANCANTE');
+  if(!payload||typeof payload!=='object')throw new Error('RECORD NOTIZIA MANCANTE');
+  const clean=v=>String(v??'').trim();
+  const level=clean(payload.level||'N0').toUpperCase();
+  if(!/^N[0-6]$/.test(level))throw new Error('LIVELLO NOTIZIA NON VALIDO');
+  const required=[['title','TITOLO'],['comune','COMUNE'],['detail','INFORMAZIONE CONCRETA'],['justification','GIUSTIFICAZIONE']];
+  for(const [key,label] of required)if(!clean(payload[key]))throw new Error('CAMPO NOTIZIA OBBLIGATORIO MANCANTE: '+label);
+  const row={user_id:userId,level,title:clean(payload.title),detail:clean(payload.detail),source:clean(payload.source),source_reference:clean(payload.source_reference),regione:clean(payload.regione)||'Piemonte',provincia:clean(payload.provincia)||'TO',comune:clean(payload.comune),zona:clean(payload.zona),quartiere:clean(payload.quartiere),via:clean(payload.via),microzona:clean(payload.microzona),justification:clean(payload.justification),usable:!!payload.usable,status:clean(payload.status)||'ACTIVE',lead_id:clean(payload.lead_id),property_id:clean(payload.property_id),updated_at:new Date().toISOString()};
+  const r=await rest('f1_real_estate_news',{method:'POST',body:JSON.stringify([row]),prefer:'return=representation'});
+  const saved=Array.isArray(r)?r[0]:null;
+  if(!saved?.news_id)throw new Error('SALVATAGGIO NOTIZIA NON CONFERMATO');
+  if(String(saved.user_id||'')!==String(userId))throw new Error('SALVATAGGIO NOTIZIA NON COERENTE CON UTENTE');
+  return saved;
+}
 async function quality(userId,limit=30){return rest('f1_quality_snapshots?user_id=eq.'+encodeURIComponent(userId)+'&select=*&order=report_date.desc&limit='+Number(limit||30))}
 async function reports(userId,limit=30){return rest('f1_daily_reports?user_id=eq.'+encodeURIComponent(userId)+'&select=*&order=report_date.desc&limit='+Number(limit||30))}
 async function duplicateEvents(userId,limit=50){return rest('f1_duplicate_events?user_id=eq.'+encodeURIComponent(userId)+'&select=*&order=created_at.desc&limit='+Number(limit||50))}
