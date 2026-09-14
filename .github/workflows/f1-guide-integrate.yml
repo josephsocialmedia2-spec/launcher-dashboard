@@ -1,0 +1,71 @@
+name: F1 Guided Workspace Integrator
+on:
+  push:
+    paths:
+      - 'f1-guided-workspace.js'
+permissions:
+  contents: write
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate guided workspace source
+        run: |
+          node --check f1-guided-workspace.js
+          test -f f1-guided-workspace.css
+          grep -q 'AVVIA E APRI' f1-guided-workspace.js
+          grep -q 'MODALITÀ GUIDATA' f1-guided-workspace.js
+      - name: Integrate guided workspace into dashboard and regression QA
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          index=Path('index.html')
+          h=index.read_text()
+          css='<link rel="stylesheet" href="f1-guided-workspace.css?v=20260914-guide3">'
+          js='<script src="f1-guided-workspace.js?v=20260914-guide3"></script>'
+          if css not in h:
+              h=h.replace('<link rel="stylesheet" href="f1-ai-guide.css?v=20260914-guide2">', '<link rel="stylesheet" href="f1-ai-guide.css?v=20260914-guide2">\n'+css)
+          if js not in h:
+              h=h.replace('<script src="f1-ai-guide.js?v=20260914-guide2"></script>', '<script src="f1-ai-guide.js?v=20260914-guide2"></script>\n'+js)
+          index.write_text(h)
+
+          spec=Path('tests/daily-command-panel.spec.js')
+          s=spec.read_text()
+          marker="  test('desktop mostra 4 reparti + guida in 100vh senza scroll pagina'"
+          if 'nuovo funzionario apre il modulo senza perdere la guida' not in s:
+              test_block="""  test('nuovo funzionario apre il modulo senza perdere la guida',async({browser})=>{\n    const context=await browser.newContext({timezoneId:'Europe/Rome',viewport:{width:1440,height:1000}});const page=await context.newPage();await openAt(page,'2026-09-13T09:40:00+02:00');\n    await expect(page.locator('#f1AiTitle')).toContainText('VERIFICA OPPORTUNITÀ');await expect(page.locator('#f1AiStart')).toHaveText(/AVVIA E APRI|APRI MODULO/);\n    const before=new URL(page.url()).pathname;await page.locator('#f1AiStart').click();\n    await expect(page.locator('#f1GuidedWorkspace')).toHaveClass(/on/);await expect(page.locator('#f1AIGuide')).toBeVisible();await expect(page.locator('#f1GuidedTask')).toContainText('VERIFICA OPPORTUNITÀ');\n    await expect(page.locator('#f1GuidedFrame')).toHaveAttribute('src',/centrale-risultati\\.html/);expect(new URL(page.url()).pathname).toBe(before);\n    await page.locator('#f1GuidedBack').click();await expect(page.locator('#f1GuidedWorkspace')).not.toHaveClass(/on/);await context.close();\n  });\n\n"""
+              s=s.replace(marker,test_block+marker)
+          spec.write_text(s)
+
+          qa=Path('.github/workflows/f1-daily-command-qa.yml')
+          q=qa.read_text()
+          if "      - 'f1-guided-workspace.js'" not in q:
+              q=q.replace("      - 'f1-ai-guide.js'", "      - 'f1-ai-guide.js'\n      - 'f1-guided-workspace.css'\n      - 'f1-guided-workspace.js'")
+          if 'node --check f1-guided-workspace.js' not in q:
+              q=q.replace('          node --check f1-ai-guide.js', '          node --check f1-ai-guide.js\n          node --check f1-guided-workspace.js')
+          if "grep -q 'f1-guided-workspace.js?v=20260914-guide3' index.html" not in q:
+              q=q.replace("          grep -q 'APRI SCRIPT' f1-ai-guide.js", "          grep -q 'APRI SCRIPT' f1-ai-guide.js\n          grep -q 'f1-guided-workspace.css?v=20260914-guide3' index.html\n          grep -q 'f1-guided-workspace.js?v=20260914-guide3' index.html\n          grep -q 'AVVIA E APRI' f1-guided-workspace.js")
+          if 'f1-guided-workspace.js?qa=$RANDOM' not in q:
+              q=q.replace('              && curl -fsSL "$base/f1-ai-guide.css?qa=$RANDOM" -o /tmp/guidecss \\\n', '              && curl -fsSL "$base/f1-ai-guide.css?qa=$RANDOM" -o /tmp/guidecss \\\n              && curl -fsSL "$base/f1-guided-workspace.js?qa=$RANDOM" -o /tmp/guidedjs \\\n              && curl -fsSL "$base/f1-guided-workspace.css?qa=$RANDOM" -o /tmp/guidedcss \\\n')
+              q=q.replace("              && grep -q 'f1-ai-guide-active' /tmp/guidecss; then", "              && grep -q 'f1-ai-guide-active' /tmp/guidecss \\\n              && grep -q 'AVVIA E APRI' /tmp/guidedjs \\\n              && grep -q 'f1-guided-workspace' /tmp/guidedcss \\\n              && grep -q 'f1-guided-workspace.js?v=20260914-guide3' /tmp/index; then")
+          qa.write_text(q)
+          PY
+          node --check tests/daily-command-panel.spec.js
+          grep -q 'f1-guided-workspace.js?v=20260914-guide3' index.html
+          grep -q 'nuovo funzionario apre il modulo senza perdere la guida' tests/daily-command-panel.spec.js
+      - name: Commit dashboard integration
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html tests/daily-command-panel.spec.js .github/workflows/f1-daily-command-qa.yml
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Keep F1 guide visible inside operational modules'
+          git push origin HEAD:main
