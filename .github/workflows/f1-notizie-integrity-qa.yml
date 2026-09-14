@@ -62,3 +62,4 @@ jobs:
             sleep 5
           done
           test "$deployed" = 1
+# verification trigger 2026-09-14
