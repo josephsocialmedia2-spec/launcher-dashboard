@@ -34,6 +34,9 @@ jobs:
           node --check tests/daily-command-panel.spec.js
           grep -q 'dashboard-workspace.css?v=20260914-ia004-1' index.html
           grep -q 'dashboard-workspace.js?v=20260914-ia004-1' index.html
+          grep -q 'f1-ai-guide.css?v=20260914-guide2' index.html
+          grep -q 'f1-ai-guide.js?v=20260914-guide2' index.html
+          grep -q 'market-preview-widget.js?v=20260914-mp3' index.html
           grep -q 'id="reparto-ricerca"' index.html
           grep -q 'id="reparto-acquisizione"' index.html
           grep -q 'id="reparto-vendita"' index.html
@@ -53,7 +56,7 @@ jobs:
           grep -q 'COSA FACCIO ADESSO?' f1-ai-guide.js
           grep -q 'SONO BLOCCATO' f1-ai-guide.js
           grep -q 'APRI SCRIPT' f1-ai-guide.js
-          grep -q 'f1-ai-guide.js?v=20260914-guide1' market-preview-widget.js
+          ! grep -q 'f1AiGuideLoader' market-preview-widget.js
           node - <<'NODE'
           const fs=require('fs');
           const s=fs.readFileSync('daily-command-panel.js','utf8');
@@ -88,6 +91,9 @@ jobs:
               && curl -fsSL "$base/f1-ai-guide.css?qa=$RANDOM" -o /tmp/guidecss \
               && grep -q 'id="reparto-ricerca"' /tmp/index \
               && grep -q 'id="reparto-pubblicita"' /tmp/index \
+              && grep -q 'f1-ai-guide.css?v=20260914-guide2' /tmp/index \
+              && grep -q 'f1-ai-guide.js?v=20260914-guide2' /tmp/index \
+              && grep -q 'market-preview-widget.js?v=20260914-mp3' /tmp/index \
               && grep -q 'grid-template-columns:minmax(0,80%)' /tmp/workcss \
               && grep -q 'HO FINITO' /tmp/workjs \
               && grep -q 'PROGRAMMA OPERATIVO DI OGGI' /tmp/dailyjs \
