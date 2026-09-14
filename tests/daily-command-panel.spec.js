@@ -71,3 +71,4 @@ test.describe('F1 daily command + IA004 workspace + Guida IA',()=>{
     const context=await browser.newContext({timezoneId:'Europe/Rome',viewport:{width:1280,height:900}});const page=await context.newPage();await openAt(page,'2026-09-13T19:00:00+02:00');await page.evaluate(()=>F1DailyCommand.completeTask('content'));expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('f1DailyCommand:2026-09-13')).tasks.content.status)).toBe('completed');await page.clock.setFixedTime(new Date('2026-09-14T06:31:00+02:00'));await page.evaluate(()=>F1DailyCommand.render());await expect(page.locator('#f1CompletedCount')).toHaveText('0 / 20');expect(await page.evaluate(()=>localStorage.getItem('f1DailyCommand:2026-09-13')!==null)).toBeTruthy();await context.close();
   });
 });
+// Guided workspace regression: navigation must never remove the right-side guide.
