@@ -29,8 +29,10 @@ jobs:
 
           index=Path('index.html')
           h=index.read_text()
-          css='<link rel="stylesheet" href="f1-guided-workspace.css?v=20260914-guide3">'
-          js='<script src="f1-guided-workspace.js?v=20260914-guide3"></script>'
+          css='<link rel="stylesheet" href="f1-guided-workspace.css?v=20260914-guide4">'
+          js='<script src="f1-guided-workspace.js?v=20260914-guide4"></script>'
+          h=h.replace('<link rel="stylesheet" href="f1-guided-workspace.css?v=20260914-guide3">',css)
+          h=h.replace('<script src="f1-guided-workspace.js?v=20260914-guide3"></script>',js)
           if css not in h:
               h=h.replace('<link rel="stylesheet" href="f1-ai-guide.css?v=20260914-guide2">', '<link rel="stylesheet" href="f1-ai-guide.css?v=20260914-guide2">\n'+css)
           if js not in h:
@@ -46,8 +48,8 @@ jobs:
           spec.write_text(s)
           PY
           node --check tests/daily-command-panel.spec.js
-          grep -q 'f1-guided-workspace.css?v=20260914-guide3' index.html
-          grep -q 'f1-guided-workspace.js?v=20260914-guide3' index.html
+          grep -q 'f1-guided-workspace.css?v=20260914-guide4' index.html
+          grep -q 'f1-guided-workspace.js?v=20260914-guide4' index.html
           grep -q 'nuovo funzionario apre il modulo senza perdere la guida' tests/daily-command-panel.spec.js
       - name: Commit dashboard integration
         run: |
@@ -55,5 +57,5 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html tests/daily-command-panel.spec.js
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Keep F1 guide visible inside operational modules'
+          git commit -m 'Keep F1 guide visible inside operational modules guide4'
           git push origin HEAD:main
