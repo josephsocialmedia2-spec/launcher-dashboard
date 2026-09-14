@@ -4,6 +4,9 @@ on:
     paths:
       - 'f1-guided-workspace.js'
       - 'f1-territory-guard.js'
+      - 'f1-priority-zero.js'
+      - 'f1-priority-zero-bridge.js'
+      - 'tests/priority-zero-engine.node.js'
 permissions:
   contents: write
 jobs:
@@ -23,11 +26,14 @@ jobs:
           node --check f1-ai-guide.js
           node --check f1-operational-procedures.js
           if [ -f f1-territory-guard.js ]; then node --check f1-territory-guard.js; fi
+          if [ -f f1-priority-zero.js ]; then node --check f1-priority-zero.js; fi
+          if [ -f f1-priority-zero-bridge.js ]; then node --check f1-priority-zero-bridge.js; fi
           test -f f1-guided-workspace.css
           grep -q 'AVVIA E APRI' f1-guided-workspace.js
           grep -q 'MODALITÀ GUIDATA' f1-guided-workspace.js
           grep -q 'ORDINE OPERATIVO' f1-ai-guide.js
           grep -q 'PRIMI 30 GIORNI' f1-operational-procedures.js
+          if [ -f f1-priority-zero.js ]; then grep -q 'ADESSO CERCA UNA NOTIZIA' f1-priority-zero.js; fi
       - name: Verify territorial guard
         if: ${{ hashFiles('f1-territory-guard.js') != '' }}
         run: |
@@ -62,7 +68,10 @@ jobs:
             console.log('territory-guard OK',ids.join(','));
           })().catch(e=>{console.error(e);process.exit(1)});
           NODE
-      - name: Integrate guide5 into dashboard and regression QA
+      - name: Verify priority-zero hierarchy
+        if: ${{ hashFiles('tests/priority-zero-engine.node.js') != '' }}
+        run: node tests/priority-zero-engine.node.js
+      - name: Integrate guide into dashboard and regression QA
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -82,6 +91,13 @@ jobs:
           staff='<script src="f1-staff-data.js?v=20260914-staff"></script>'
           if Path('f1-territory-guard.js').exists() and guard not in h:
               h=h.replace(staff,staff+'\n'+guard)
+          p0='<script src="f1-priority-zero.js?v=20260914-priority0-1"></script>'
+          if Path('f1-priority-zero.js').exists() and p0 not in h:
+              h=h.replace(guide,p0+'\n'+guide)
+          workspace='<script src="f1-guided-workspace.js?v=20260914-guide5"></script>'
+          bridge='<script src="f1-priority-zero-bridge.js?v=20260914-priority0-bridge1"></script>'
+          if Path('f1-priority-zero-bridge.js').exists() and bridge not in h:
+              h=h.replace(workspace,workspace+'\n'+bridge)
           index.write_text(h)
 
           spec=Path('tests/daily-command-panel.spec.js')
@@ -101,6 +117,8 @@ jobs:
           grep -q 'f1-guided-workspace.css?v=20260914-guide5' index.html
           grep -q 'f1-guided-workspace.js?v=20260914-guide5' index.html
           if [ -f f1-territory-guard.js ]; then grep -q 'f1-territory-guard.js?v=20260914-territory1' index.html; fi
+          if [ -f f1-priority-zero.js ]; then grep -q 'f1-priority-zero.js?v=20260914-priority0-1' index.html; fi
+          if [ -f f1-priority-zero-bridge.js ]; then grep -q 'f1-priority-zero-bridge.js?v=20260914-priority0-bridge1' index.html; fi
           grep -q 'nuovo funzionario apre il modulo senza perdere la guida' tests/daily-command-panel.spec.js
       - name: Commit dashboard integration
         run: |
@@ -108,5 +126,5 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html tests/daily-command-panel.spec.js
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Integrate F1 guide territorial guard'
+          git commit -m 'Integrate F1 priority-zero news engine'
           git push origin HEAD:main
