@@ -1,9 +1,49 @@
 {
   "version": 2,
-  "generated_at": "2026-09-14T05:19:21.027996+00:00",
+  "generated_at": "2026-09-14T10:55:00.060151+00:00",
   "pipeline": "F1_COMMON_APPROVAL_QUEUE",
   "crm_target": "Supabase public.approval_queue",
   "items": [
+    {
+      "approval_id": "facebook-group-FBG-4AE515841D",
+      "task_id": "facebook-group-FBG-4AE515841D",
+      "lead_id": "",
+      "property_id": "",
+      "module": "FACEBOOK_GROUPS",
+      "platform": "FACEBOOK",
+      "comune": "Villarbasse",
+      "type": "GROUP_APPROVAL",
+      "subject": "Sei di Villarbasse se",
+      "result": "5 days ago · 🎶 Hai mai pensato di far parte di un coro? La musica unisce, emoziona e crea nuovi legami! L’UNITRE Villarbasse-Reano ti invita a scoprire il nostro Corso di Canto e Coro, un’occasione per avvicinarsi al mondo della musica in un ambiente sereno, amicale e ricco di collaborazione.",
+      "action_proposed": "APPROVA GRUPPO",
+      "score": null,
+      "source_url": "https://www.facebook.com/groups/520543891399703/",
+      "preview_url": "",
+      "created_at": "2026-09-14T10:45:05+00:00",
+      "origin": "open-social-scheduler/growth/groups.json",
+      "status": "DA_APPROVARE",
+      "metadata": {}
+    },
+    {
+      "approval_id": "facebook-group-FBG-4BF9AFAA6A",
+      "task_id": "facebook-group-FBG-4BF9AFAA6A",
+      "lead_id": "",
+      "property_id": "",
+      "module": "FACEBOOK_GROUPS",
+      "platform": "FACEBOOK",
+      "comune": "Reano",
+      "type": "GROUP_APPROVAL",
+      "subject": "Sei di Reano se...",
+      "result": "🎶 Hai mai pensato di far parte di un coro? La musica unisce, emoziona e crea nuovi legami! L’UNITRE Villarbasse-Reano ti invita a scoprire il nostro Corso di Canto e Coro, un’occasione per avvicinarsi al mondo della musica in un ambiente sereno, amicale e ricco di collaborazione.",
+      "action_proposed": "APPROVA GRUPPO",
+      "score": null,
+      "source_url": "https://www.facebook.com/groups/31602468703/",
+      "preview_url": "",
+      "created_at": "2026-09-14T10:44:40+00:00",
+      "origin": "open-social-scheduler/growth/groups.json",
+      "status": "DA_APPROVARE",
+      "metadata": {}
+    },
     {
       "approval_id": "facebook-group-FBG-9CCC9FE19D",
       "task_id": "facebook-group-FBG-9CCC9FE19D",
@@ -15831,10 +15871,10 @@
     }
   ],
   "summary": {
-    "total": 790,
+    "total": 792,
     "seller_radar": 565,
     "social_content": 5,
-    "facebook_groups": 193,
+    "facebook_groups": 195,
     "facebook_network": 26,
     "social_optimization": 1,
     "instagram_gate": 0
