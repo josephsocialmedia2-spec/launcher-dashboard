@@ -65,7 +65,7 @@ test.describe('F1 daily command + IA004 workspace + Guida IA',()=>{
     const context=await browser.newContext({timezoneId:'Europe/Rome',viewport:{width:1400,height:900}});const page=await context.newPage();await openAt(page,'2026-09-13T09:00:00+02:00');
     await expect(page.locator('#f1CloudState')).toContainText(/ACCESSO RICHIESTO|ATTIVO/);
     const values=await page.locator('[data-metric] b').allTextContents();expect(values.every(v=>v!=='…')).toBeTruthy();
-    await expect(page.locator('#f1AiSource')).toContainText(/modalità calendario\/dashboard|dati cloud verificati/);await context.close();
+    await expect(page.locator('#f1AiSource')).toContainText(/dati cloud non disponibili|cloud verificato/);await context.close();
   });
 
   test('mobile mette guida prima dell operatività e non crea overflow orizzontale',async({browser})=>{
