@@ -1,0 +1,48 @@
+name: F1 Staff Onboarding QA
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'setup-cloud.html'
+      - 'supabase-sync.js'
+      - 'funzionario-notiziere.html'
+      - '.github/workflows/f1-staff-onboarding-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check standalone auth JavaScript
+        run: node --check supabase-sync.js
+      - name: Extract and check inline onboarding JavaScript
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path('setup-cloud.html').read_text(encoding='utf-8')
+          scripts = re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>', html, flags=re.S|re.I)
+          inline = [s for s in scripts if s.strip()]
+          if not inline:
+              raise SystemExit('No inline JavaScript found in setup-cloud.html')
+          Path('/tmp/setup-cloud-inline.js').write_text('\n'.join(inline), encoding='utf-8')
+          print('inline scripts:', len(inline))
+          PY
+          node --check /tmp/setup-cloud-inline.js
+      - name: Verify Anastasia onboarding contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Fq 'CREA ACCOUNT · PRIMO ACCESSO' setup-cloud.html
+          grep -Fq 'anastasia.cetrulo@f1immobiliare.it' setup-cloud.html
+          grep -Fq 'funzionario-notiziere.html' setup-cloud.html
+          grep -Fq 'f1-staff-claim' setup-cloud.html
+          grep -Fq "'anastasia.cetrulo@f1immobiliare.it':'joseph.socialmedia2+f1.anastasia.cetrulo@gmail.com'" supabase-sync.js
+          echo 'F1 staff onboarding contract: PASS'
