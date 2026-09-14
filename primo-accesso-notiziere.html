@@ -6,14 +6,22 @@
 (async()=>{'use strict';
 const USERS={
  antonietta:{name:'Antonietta Russo',first:'Antonietta',last:'Russo',company:'antonietta.russo@f1immobiliare.it',auth:'joseph.socialmedia2+f1.antonietta.russo@gmail.com'},
- renato:{name:'Renato Toniolo',first:'Renato',last:'Toniolo',company:'renato.toniolo@f1immobiliare.it',auth:'joseph.socialmedia2+f1.renato.toniolo@gmail.com'}
+ renato:{name:'Renato Toniolo',first:'Renato',last:'Toniolo',company:'renato.toniolo@f1immobiliare.it',auth:'joseph.socialmedia2+f1.renato.toniolo@gmail.com'},
+ erica:{name:'Erica Malafronte',first:'Erica',last:'Malafronte',company:'erica.malafronte@f1immobiliare.it',auth:'joseph.socialmedia2+f1.erica.malafronte@gmail.com'}
 };
 const $=id=>document.getElementById(id),params=new URLSearchParams(location.search),key=String(params.get('utente')||'').toLowerCase(),u=USERS[key];
 if(!u){document.querySelector('.card').innerHTML='<div class="status err">ACCESSO NON VALIDO · account non riconosciuto.</div>';return}
 $('fullName').textContent=u.name;$('email').value=u.company;
 function setStatus(text,ok=false){$('status').textContent=text;$('status').className='status '+(ok?'ok':'err')}
 function callbackUrl(){const x=new URL('primo-accesso-notiziere.html',location.href);x.searchParams.set('utente',key);return x.href}
-async function claim(){const token=await F1Sync.authToken(false);const r=await fetch(F1_SUPABASE.url.replace(/\/$/,'')+'/functions/v1/f1-staff-claim',{method:'POST',headers:{apikey:F1_SUPABASE.anonKey,Authorization:'Bearer '+token,'Content-Type':'application/json'},body:'{}'});const j=await r.json().catch(()=>({}));if(!r.ok||!j.ok)throw new Error(j.error||j.message||('Attivazione profilo F1 '+r.status));return j}
+async function claim(){
+ const token=await F1Sync.authToken(false);
+ if(key==='erica'){
+   const r=await fetch(F1_SUPABASE.url.replace(/\/$/,'')+'/rest/v1/rpc/f1_claim_erica_malafronte_notiziere',{method:'POST',headers:{apikey:F1_SUPABASE.anonKey,Authorization:'Bearer '+token,'Content-Type':'application/json'},body:'{}'});
+   const j=await r.json().catch(()=>({}));if(!r.ok||!j.ok)throw new Error(j.error||j.message||('Attivazione profilo F1 '+r.status));return j;
+ }
+ const r=await fetch(F1_SUPABASE.url.replace(/\/$/,'')+'/functions/v1/f1-staff-claim',{method:'POST',headers:{apikey:F1_SUPABASE.anonKey,Authorization:'Bearer '+token,'Content-Type':'application/json'},body:'{}'});const j=await r.json().catch(()=>({}));if(!r.ok||!j.ok)throw new Error(j.error||j.message||('Attivazione profilo F1 '+r.status));return j
+}
 async function finish(){await claim();setStatus('ACCESSO ATTIVO · apertura area Notiziere…',true);setTimeout(()=>location.replace('funzionario-notiziere.html'),350)}
 async function signup(){try{$('signupBtn').disabled=true;setStatus('Creazione account…',true);const j=await F1Sync.signUpWithPassword(u.auth,$('password').value,{first_name:u.first,last_name:u.last,f1_function:'NOTIZIERE'},callbackUrl());if(j?.access_token&&j?.refresh_token){await finish();return}setStatus('ACCOUNT REGISTRATO · è richiesta la conferma iniziale F1. Dopo la conferma torna qui e premi ENTRA.',true)}catch(e){setStatus('ERRORE · '+e.message)}finally{$('signupBtn').disabled=false}}
 async function login(){try{$('loginBtn').disabled=true;setStatus('Accesso in corso…',true);await F1Sync.signInWithPassword(u.auth,$('password').value);await finish()}catch(e){setStatus('ERRORE · '+e.message)}finally{$('loginBtn').disabled=false}}
