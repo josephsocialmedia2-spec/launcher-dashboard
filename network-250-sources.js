@@ -1,4 +1,16 @@
 (()=>{'use strict';
+function loadParts(){
+  if((window.F1_NETWORK_250_PARTS||[]).flat().length===250)return;
+  if(typeof XMLHttpRequest!=='undefined'){
+    for(let i=1;i<=10;i++){
+      const x=new XMLHttpRequest();x.open('GET',`network-250-data-${i}.js?v=20260914-net2`,false);x.send(null);
+      if(x.status<200||x.status>=300)throw new Error(`Catalogo Network 250: blocco ${i} non disponibile`);
+      (0,eval)(x.responseText);
+    }
+    return;
+  }
+  if(typeof require==='function')for(let i=1;i<=10;i++)require(`./network-250-data-${i}.js`);
+}
 function macro(id,name){const s=name.toLowerCase();
 if(id===201)return'TIMELINE PERSONALE';if(id===202)return'TIMELINE PROFESSIONALE';if(id===203)return'TIMELINE GEOGRAFICA';if(id===204)return'SCUOLA';if(id===205)return'TIMELINE GEOGRAFICA';if(id>=206)return'TECNICHE DI MEMORIA';
 if(/whatsapp|messenger|telegram|sms|skype|teams|slack|dm|registro chiamate/.test(s))return'WHATSAPP E MESSAGGISTICA';
@@ -25,6 +37,7 @@ if(/immobiliare\.it|idealista|casa\.it|subito|marketplace|annunci/.test(s))retur
 if(/indeed|infojobs|linkedin jobs|agenzie per il lavoro|centri per (l')?impiego/.test(s))return'PIATTAFORME LAVORATIVE';
 if(/networking|business breakfast|camera di commercio|confartigianato|gruppi imprenditoriali|associazioni di categoria/.test(s))return'NETWORKING';
 return'RETE PERSONALE E PROFESSIONALE'}
+loadParts();
 const R=(window.F1_NETWORK_250_PARTS||[]).flat().sort((a,b)=>a.id-b.id);
 const ids=new Set(R.map(x=>Number(x.id)));
 if(R.length!==250||ids.size!==250||Math.min(...ids)!==1||Math.max(...ids)!==250)throw new Error('Catalogo Network 250 specifico incompleto');
