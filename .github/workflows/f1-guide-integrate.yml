@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'f1-guided-workspace.js'
+      - 'f1-territory-guard.js'
 permissions:
   contents: write
 jobs:
@@ -21,11 +22,46 @@ jobs:
           node --check f1-guided-workspace.js
           node --check f1-ai-guide.js
           node --check f1-operational-procedures.js
+          if [ -f f1-territory-guard.js ]; then node --check f1-territory-guard.js; fi
           test -f f1-guided-workspace.css
           grep -q 'AVVIA E APRI' f1-guided-workspace.js
           grep -q 'MODALITÀ GUIDATA' f1-guided-workspace.js
           grep -q 'ORDINE OPERATIVO' f1-ai-guide.js
           grep -q 'PRIMI 30 GIORNI' f1-operational-procedures.js
+      - name: Verify territorial guard
+        if: ${{ hashFiles('f1-territory-guard.js') != '' }}
+        run: |
+          node - <<'NODE'
+          global.window=global;
+          const profile={role:'FUNZIONARIO',assigned_territory:{comune:'Villar Dora'}};
+          const leads=[
+            {lead_id:'collegno',comune:'Collegno',via:'Via Torino 47'},
+            {lead_id:'villar',comune:'Villar Dora',via:'Via Roma 1'}
+          ];
+          window.F1StaffData={
+            ready:()=>true,
+            me:async()=>profile,
+            tasks:async()=>[
+              {task_id:'t1',lead_id:'collegno',status:'OPEN'},
+              {task_id:'t2',lead_id:'villar',status:'OPEN'},
+              {task_id:'t3',lead_id:'collegno',status:'OPEN',territory_override:true}
+            ],
+            ownLeads:async()=>leads,
+            news:async()=>[],
+            rest:async()=>[]
+          };
+          require('./f1-territory-guard.js');
+          (async()=>{
+            const filteredLeads=await F1StaffData.ownLeads('u',500);
+            if(filteredLeads.length!==1||filteredLeads[0].comune!=='Villar Dora')throw new Error('Filtro lead territorio non applicato');
+            const filteredTasks=await F1StaffData.tasks('u');
+            const ids=filteredTasks.map(x=>x.task_id);
+            if(ids.includes('t1'))throw new Error('Task Collegno non filtrato');
+            if(!ids.includes('t2'))throw new Error('Task Villar Dora rimosso');
+            if(!ids.includes('t3'))throw new Error('Override territoriale esplicito non rispettato');
+            console.log('territory-guard OK',ids.join(','));
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
       - name: Integrate guide5 into dashboard and regression QA
         run: |
           python3 - <<'PY'
@@ -42,6 +78,10 @@ jobs:
           guide='<script src="f1-ai-guide.js?v=20260914-guide5"></script>'
           if proc not in h:
               h=h.replace(guide,proc+'\n'+guide)
+          guard='<script src="f1-territory-guard.js?v=20260914-territory1"></script>'
+          staff='<script src="f1-staff-data.js?v=20260914-staff"></script>'
+          if Path('f1-territory-guard.js').exists() and guard not in h:
+              h=h.replace(staff,staff+'\n'+guard)
           index.write_text(h)
 
           spec=Path('tests/daily-command-panel.spec.js')
@@ -60,6 +100,7 @@ jobs:
           grep -q 'f1-ai-guide.js?v=20260914-guide5' index.html
           grep -q 'f1-guided-workspace.css?v=20260914-guide5' index.html
           grep -q 'f1-guided-workspace.js?v=20260914-guide5' index.html
+          if [ -f f1-territory-guard.js ]; then grep -q 'f1-territory-guard.js?v=20260914-territory1' index.html; fi
           grep -q 'nuovo funzionario apre il modulo senza perdere la guida' tests/daily-command-panel.spec.js
       - name: Commit dashboard integration
         run: |
@@ -67,5 +108,5 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html tests/daily-command-panel.spec.js
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Integrate F1 document-grounded operational guide5'
+          git commit -m 'Integrate F1 guide territorial guard'
           git push origin HEAD:main
