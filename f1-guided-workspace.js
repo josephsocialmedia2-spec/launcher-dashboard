@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const VERSION='20260914-guide3';
+const VERSION='20260914-guide4';
 const $=id=>document.getElementById(id);
 const txt=v=>String(v||'').trim().toUpperCase();
 let workspaceUrl='',workspaceLabel='';
@@ -91,7 +91,8 @@ async function markCloudRunning(){
 function syncButton(){
   const b=$('f1AiStart');if(!b)return;
   const d=currentDailyTask(),running=d&&window.F1DailyCommand?.loadState?.()?.tasks?.[d.id]?.status==='running';
-  b.textContent=running?'APRI MODULO':'AVVIA E APRI';
+  const label=running?'APRI MODULO':'AVVIA E APRI';
+  if(b.textContent!==label)b.textContent=label;
 }
 async function startGuided(){
   const daily=currentDailyTask();
@@ -117,18 +118,20 @@ function afterGuideClick(e){
   const target=e.target instanceof Element?e.target:null;if(!target)return;
   if(target.closest('#f1AiDone'))setTimeout(closeWorkspace,30);
 }
+function syncTaskLabel(){
+  const el=$('f1GuidedTask');
+  if(!el||!$('f1GuidedWorkspace')?.classList.contains('on'))return;
+  const label=`STAI LAVORANDO SU: ${$('f1AiTitle')?.textContent||'TASK CORRENTE'}`;
+  if(el.textContent!==label)el.textContent=label;
+}
 function init(){
   document.addEventListener('click',captureGuideClick,true);
   document.addEventListener('click',afterGuideClick,false);
-  const observer=new MutationObserver(()=>{
-    syncButton();
-    if($('f1GuidedWorkspace')?.classList.contains('on')&&$('f1GuidedTask'))$('f1GuidedTask').textContent=`STAI LAVORANDO SU: ${$('f1AiTitle')?.textContent||'TASK CORRENTE'}`;
-  });
+  const observer=new MutationObserver(()=>{syncButton();syncTaskLabel()});
   observer.observe(document.documentElement,{subtree:true,childList:true,characterData:true});
   const wait=setInterval(()=>{if($('f1AIGuide')){clearInterval(wait);syncButton();ensureWorkspace()}},100);
   setTimeout(()=>clearInterval(wait),10000);
 }
 window.F1GuidedWorkspace={version:VERSION,open:openWorkspace,close:closeWorkspace,state:()=>({open:!!$('f1GuidedWorkspace')?.classList.contains('on'),url:workspaceUrl,label:workspaceLabel})};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
-// Integration trigger: companion must remain loaded by index.html.
 })();
