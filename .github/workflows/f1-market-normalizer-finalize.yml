@@ -16,19 +16,19 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           p=Path('crm.html'); s=p.read_text()
-          s=s.replace('market-listing-parser.js?v=20260914-market1','market-listing-parser.js?v=20260914-market2')
-          s=s.replace('market-listing-ui.js?v=20260914-market1','market-listing-ui.js?v=20260914-market2')
+          s=s.replace('market-listing-parser.js?v=20260914-market2','market-listing-parser.js?v=20260914-market3')
+          s=s.replace('market-listing-ui.js?v=20260914-market2','market-listing-ui.js?v=20260914-market3')
           p.write_text(s)
           PY
           node --check market-listing-parser.js
           node --check market-listing-ui.js
           node --check market-listing-research.js
-          grep -q 'market-listing-parser.js?v=20260914-market2' crm.html
-          grep -q 'market-listing-ui.js?v=20260914-market2' crm.html
+          grep -q 'market-listing-parser.js?v=20260914-market3' crm.html
+          grep -q 'market-listing-ui.js?v=20260914-market3' crm.html
       - name: Commit
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add crm.html
-          git commit -m 'Finalize market listing normalizer assets' || exit 0
+          git commit -m 'Bump market listing normalizer to market3' || exit 0
           git push
