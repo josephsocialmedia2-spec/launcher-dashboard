@@ -1,0 +1,111 @@
+name: F1 Notizie Integrity Structural Fix
+on:
+  push:
+    paths:
+      - '.github/workflows/f1-notizie-integrity-fix.yml'
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Patch news save chain structurally
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          # 1) Persistence API: no false success. A saved row with news_id is mandatory.
+          p=Path('f1-staff-data.js')
+          s=p.read_text()
+          pattern=re.compile(r"async function addNews\(userId,payload\)\{.*?\}\nasync function quality",re.S)
+          replacement="""async function addNews(userId,payload){
+            if(!userId)throw new Error('UTENTE NOTIZIA MANCANTE');
+            if(!payload||typeof payload!=='object')throw new Error('RECORD NOTIZIA MANCANTE');
+            const clean=v=>String(v??'').trim();
+            const level=clean(payload.level||'N0').toUpperCase();
+            if(!/^N[0-6]$/.test(level))throw new Error('LIVELLO NOTIZIA NON VALIDO');
+            const required=[['title','TITOLO'],['comune','COMUNE'],['detail','INFORMAZIONE CONCRETA'],['justification','GIUSTIFICAZIONE']];
+            for(const [key,label] of required)if(!clean(payload[key]))throw new Error('CAMPO NOTIZIA OBBLIGATORIO MANCANTE: '+label);
+            const row={user_id:userId,level,title:clean(payload.title),detail:clean(payload.detail),source:clean(payload.source),source_reference:clean(payload.source_reference),regione:clean(payload.regione)||'Piemonte',provincia:clean(payload.provincia)||'TO',comune:clean(payload.comune),zona:clean(payload.zona),quartiere:clean(payload.quartiere),via:clean(payload.via),microzona:clean(payload.microzona),justification:clean(payload.justification),usable:!!payload.usable,status:clean(payload.status)||'ACTIVE',lead_id:clean(payload.lead_id),property_id:clean(payload.property_id),updated_at:new Date().toISOString()};
+            const r=await rest('f1_real_estate_news',{method:'POST',body:JSON.stringify([row]),prefer:'return=representation'});
+            const saved=Array.isArray(r)?r[0]:null;
+            if(!saved?.news_id)throw new Error('SALVATAGGIO NOTIZIA NON CONFERMATO');
+            if(String(saved.user_id||'')!==String(userId))throw new Error('SALVATAGGIO NOTIZIA NON COERENTE CON UTENTE');
+            return saved;
+          }
+          async function quality"""
+          s2,n=pattern.subn(replacement,s,count=1)
+          if n!=1: raise SystemExit('addNews patch target not found exactly once')
+          p.write_text(s2)
+
+          # 2) UI: load integrity module, render archive from persisted source, bind one safe submit handler.
+          p=Path('funzionario-notiziere.html')
+          h=p.read_text()
+          old='<script src="f1-staff-data.js?v=20260913-staff1"></script><script>'
+          new='<script src="f1-staff-data.js?v=20260913-staff1"></script><script src="f1-notizie-integrity.js?v=20260914-news1"></script><script>'
+          if old not in h and 'f1-notizie-integrity.js?v=20260914-news1' not in h: raise SystemExit('script insertion target missing')
+          h=h.replace(old,new,1)
+
+          old_form='<button class="btn gold">REGISTRA NOTIZIA</button><div id="newsMsg" class="msg"></div></form>'
+          new_form='<button type="submit" class="btn gold">REGISTRA NOTIZIA</button><div id="newsMsg" class="msg"></div></form><div class="mut" style="margin-top:10px;font-weight:900">ULTIME NOTIZIE SALVATE</div><div id="newsList" class="list" style="max-height:220px;margin-top:7px"></div>'
+          if old_form not in h and 'id="newsList"' not in h: raise SystemExit('news form target missing')
+          h=h.replace(old_form,new_form,1)
+
+          old_kpi="$('kNews').textContent=news.length;"
+          list_render="""$('kNews').textContent=news.length;const newsList=$('newsList');if(newsList)newsList.innerHTML=(data.news||[]).slice(0,12).map(n=>`<div class=\"item\"><span class=\"status\">${esc(n.level||'N0')}</span><b>${esc(n.title||'Notizia')}</b><small>${esc(n.comune||'—')}${n.via?' · '+esc(n.via):''} · ${esc(day(n.created_at)||'—')}</small></div>`).join('')||'<div class=\"mut\">Nessuna notizia salvata.</div>';"""
+          if old_kpi not in h and "const newsList=$('newsList')" not in h: raise SystemExit('KPI news target missing')
+          h=h.replace(old_kpi,list_render,1)
+
+          if 'async function refreshNewsAfterSave()' not in h:
+            target='async function load(){'
+            insert="async function refreshNewsAfterSave(){if(!profile?.user_id)throw new Error('Profilo funzionario non disponibile');data.news=await F1StaffData.news(profile.user_id);render();return data.news}\nasync function load(){"
+            if target not in h: raise SystemExit('load target missing')
+            h=h.replace(target,insert,1)
+
+          tail=re.compile(r"\$\('reload'\)\.onclick=load;\$\('contactForm'\)\.onsubmit=.*?;\$\('newsForm'\)\.onsubmit=.*?;load\(\)\}\)\(\);",re.S)
+          new_tail="""$('reload').onclick=load;$('contactForm').onsubmit=async e=>{e.preventDefault();const form=e.currentTarget,m=$('contactMsg');if(!(form instanceof HTMLFormElement)){console.error('Submit contatto: form non valido');if(m){m.className='msg err';m.textContent='FORM CONTATTO NON DISPONIBILE'}return}if(form.dataset.saving==='1')return;const submitButton=form.querySelector('button[type=\"submit\"],input[type=\"submit\"],button:not([type])');form.dataset.saving='1';if(submitButton)submitButton.disabled=true;const fd=new FormData(form),p=Object.fromEntries(fd.entries());try{m.className='msg';m.textContent='Controllo duplicati e salvataggio…';const r=await F1StaffData.createOrLinkLead({...p,source:'FUNZIONARIO_NOTIZIERE',lead_reason:'RETE_NOTIZIERE',created_by:`${profile.first_name||''} ${profile.last_name||''}`.trim()});if(!r)throw new Error('Salvataggio contatto non confermato');m.textContent=r.action==='CREATED'?'CONTATTO CREATO NEL CRM F1':`DUPLICATO INTERCETTATO · nuova informazione collegata (${(r.matched_by||[]).join(', ')})`;F1NotizieIntegrity.safeResetForm(form);await load()}catch(x){m.className='msg err';m.textContent=x.message}finally{form.dataset.saving='';if(submitButton&&submitButton.isConnected)submitButton.disabled=false}};F1NotizieIntegrity.bindNewsForm({form:$('newsForm'),message:$('newsMsg'),getUserId:()=>profile?.user_id||'',refresh:refreshNewsAfterSave,api:F1StaffData});load()})();"""
+          h2,n=tail.subn(new_tail,h,count=1)
+          if n!=1:
+            if 'F1NotizieIntegrity.bindNewsForm' not in h: raise SystemExit('submit handler patch target not found exactly once')
+            h2=h
+          p.write_text(h2)
+          PY
+
+      - name: Static integrity checks and complete reset audit
+        run: |
+          set -euxo pipefail
+          node --check f1-staff-data.js
+          node --check f1-notizie-integrity.js
+          grep -q 'SALVATAGGIO NOTIZIA NON CONFERMATO' f1-staff-data.js
+          grep -q 'F1NotizieIntegrity.bindNewsForm' funzionario-notiziere.html
+          grep -q 'id="newsList"' funzionario-notiziere.html
+          grep -q 'refreshNewsAfterSave' funzionario-notiziere.html
+          ! grep -q 'e.currentTarget.reset()' funzionario-notiziere.html
+          ! grep -q 'return r?.\[0\]||row' f1-staff-data.js
+          echo '=== RESET AUDIT ==='
+          grep -RIn --exclude-dir=.git -E '\.reset[[:space:]]*\(' . || true
+
+      - name: Install browser QA
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: Run mandatory news tests before commit
+        run: npx playwright test tests/notizie-integrity.spec.js --project=desktop-chromium
+
+      - name: Commit structural fix
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add funzionario-notiziere.html f1-staff-data.js
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Fix notizie save-before-reset integrity flow'
+          git push origin HEAD:main
