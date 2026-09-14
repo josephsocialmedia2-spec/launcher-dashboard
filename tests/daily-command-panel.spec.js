@@ -8,7 +8,7 @@ test.describe('F1 daily command + IA004 workspace + Guida IA',()=>{
     await openAt(page,'2026-09-13T16:45:00+02:00');
     await expect(page.locator('[data-task-id="contact-pm"]')).toHaveClass(/current/);
     await expect(page.locator('#f1AiTitle')).toContainText('CONTATTO');
-    for(const id of ['#f1AiWhere','#f1AiWho','#f1AiObjective','#f1AiDuration','#f1AiCompletion','#f1AiNext'])await expect(page.locator(id)).not.toHaveText('—');
+    for(const id of ['#f1AiWhere','#f1AiWho','#f1AiZone','#f1AiExecute','#f1AiRegister','#f1AiObjective','#f1AiDuration','#f1AiCompletion','#f1AiNext'])await expect(page.locator(id)).not.toHaveText('—');
     await page.evaluate(()=>F1DailyCommand.startTask('contact-pm'));
     expect(await page.evaluate(()=>F1DailyCommand.loadState().tasks['contact-pm'].status)).toBe('running');
     await page.clock.fastForward('00:00:05');
@@ -28,6 +28,13 @@ test.describe('F1 daily command + IA004 workspace + Guida IA',()=>{
     await page.locator('#f1AiHow').click();await expect(page.locator('#f1AiStepper')).toHaveClass(/on/);await expect(page.locator('#f1AiStepNo')).toContainText('PASSO 1');
     await page.locator('#f1AiStepClose').click();await page.locator('#f1AiBlocked').click();await expect(page.locator('#f1AiBlockers')).toHaveClass(/on/);await expect(page.locator('[data-block="responsabile"]')).toBeVisible();
     await context.close();
+  });
+
+  test('ordine operativo espone APRI CERCA ZONA ESEGUI REGISTRA',async({browser})=>{
+    const context=await browser.newContext({timezoneId:'Europe/Rome',viewport:{width:1440,height:1000}});const page=await context.newPage();await openAt(page,'2026-09-13T09:40:00+02:00');
+    await expect(page.locator('#f1AIGuide')).toContainText('ORDINE OPERATIVO');
+    for(const text of ['APRI','CERCA','ZONA','ESEGUI','REGISTRA','TERMINA QUANDO'])await expect(page.locator('#f1AIGuide')).toContainText(text);
+    await expect(page.locator('#f1AiNext')).toContainText(/PROSSIMO ORDINE|NON PASSARE/);await context.close();
   });
 
   test('nuovo funzionario apre il modulo senza perdere la guida',async({browser})=>{
