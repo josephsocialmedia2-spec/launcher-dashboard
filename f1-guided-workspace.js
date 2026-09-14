@@ -19,3 +19,4 @@ function init(){document.addEventListener('click',captureGuideClick,true);const 
 window.F1GuidedWorkspace={version:VERSION,open:openWorkspace,close:closeWorkspace,state:()=>({open:!!$('f1GuidedWorkspace')?.classList.contains('on'),url:workspaceUrl,label:workspaceLabel})};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
+// guide5 integration trigger
