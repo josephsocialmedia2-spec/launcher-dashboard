@@ -30,6 +30,15 @@ test.describe('F1 daily command + IA004 workspace + Guida IA',()=>{
     await context.close();
   });
 
+  test('nuovo funzionario apre il modulo senza perdere la guida',async({browser})=>{
+    const context=await browser.newContext({timezoneId:'Europe/Rome',viewport:{width:1440,height:1000}});const page=await context.newPage();await openAt(page,'2026-09-13T09:40:00+02:00');
+    await expect(page.locator('#f1AiTitle')).toContainText('VERIFICA OPPORTUNITÀ');await expect(page.locator('#f1AiStart')).toHaveText(/AVVIA E APRI|APRI MODULO/);
+    const before=new URL(page.url()).pathname;await page.locator('#f1AiStart').click();
+    await expect(page.locator('#f1GuidedWorkspace')).toHaveClass(/on/);await expect(page.locator('#f1AIGuide')).toBeVisible();await expect(page.locator('#f1GuidedTask')).toContainText('VERIFICA OPPORTUNITÀ');
+    await expect(page.locator('#f1GuidedFrame')).toHaveAttribute('src',/centrale-risultati\.html/);expect(new URL(page.url()).pathname).toBe(before);
+    await page.locator('#f1GuidedBack').click();await expect(page.locator('#f1GuidedWorkspace')).not.toHaveClass(/on/);await context.close();
+  });
+
   test('desktop mostra 4 reparti + guida in 100vh senza scroll pagina',async({browser})=>{
     const context=await browser.newContext({timezoneId:'Europe/Rome',viewport:{width:1600,height:1000}});const page=await context.newPage();await openAt(page,'2026-09-13T10:15:00+02:00');
     for(const sel of ['#reparto-ricerca','#reparto-acquisizione','#reparto-vendita','#reparto-pubblicita','#f1CommandPanel','#f1AIGuide'])await expect(page.locator(sel)).toBeVisible();
