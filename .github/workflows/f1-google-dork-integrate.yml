@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Integrate CRM loader and canonical schema
+      - name: Integrate CRM loader schema and source evidence
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -27,15 +27,40 @@ jobs:
           crm.write_text(s)
 
           qa=Path('.github/workflows/f1-market-normalizer-qa.yml')
-          q=qa.read_text()
-          q=q.replace("market-listing-ui.js?v=20260914-market3","market-listing-ui.js?v=20260914-market4")
+          q=qa.read_text().replace('market-listing-ui.js?v=20260914-market3','market-listing-ui.js?v=20260914-market4')
           qa.write_text(q)
 
           schema=Path('supabase-schema.sql')
           mig=Path('supabase-migrations/20260914_f1_google_dork_research_engine.sql').read_text()
           base=schema.read_text()
           if 'create table if not exists public.research_jobs' not in base:
-              schema.write_text(base.rstrip()+"\n\n-- ============================================================================\n-- F1 GOOGLE DORK BACKGROUND RESEARCH ENGINE\n-- ============================================================================\n\n"+mig.strip()+"\n")
+              base=base.rstrip()+"\n\n-- ============================================================================\n-- F1 GOOGLE DORK BACKGROUND RESEARCH ENGINE\n-- ============================================================================\n\n"+mig.strip()+"\n"
+          if 'phone_source_url text' not in base:
+              marker="  linkedin_url text not null default '',\n  source_urls jsonb"
+              repl="  linkedin_url text not null default '',\n  phone_source_url text not null default '',\n  email_source_url text not null default '',\n  source_urls jsonb"
+              if marker not in base:
+                  raise SystemExit('research entity source marker missing from schema')
+              base=base.replace(marker,repl,1)
+          schema.write_text(base)
+
+          worker=Path('chrome-companion/service-worker.js')
+          w=worker.read_text()
+          old_person="pec:'',website:agency&&ownDomain?page.url:'',...social"
+          new_person="pec:'',phone_source_url:near.phone?page.url:'',email_source_url:near.email?page.url:'',website:agency&&ownDomain?page.url:'',...social"
+          if old_person in w:
+              w=w.replace(old_person,new_person,1)
+          old_agency="pec,website:ownDomain?page.url:'',...social"
+          new_agency="pec,phone_source_url:phones[0]?page.url:'',email_source_url:(email||pec)?page.url:'',website:ownDomain?page.url:'',...social"
+          if old_agency in w:
+              w=w.replace(old_agency,new_agency,1)
+          old_patch="pec:old.pec||item.pec,website:old.website||item.website"
+          new_patch="pec:old.pec||item.pec,phone_source_url:old.phone_source_url||item.phone_source_url,email_source_url:old.email_source_url||item.email_source_url,website:old.website||item.website"
+          if old_patch in w:
+              w=w.replace(old_patch,new_patch,1)
+          for required in ['phone_source_url:near.phone?page.url',"email_source_url:(email||pec)?page.url",'phone_source_url:old.phone_source_url||item.phone_source_url']:
+              if required not in w:
+                  raise SystemExit('service worker evidence patch missing: '+required)
+          worker.write_text(w)
           PY
       - name: Static contract
         run: |
@@ -43,10 +68,12 @@ jobs:
           grep -q 'create table if not exists public.research_jobs' supabase-schema.sql
           grep -q 'create table if not exists public.research_results' supabase-schema.sql
           grep -q 'create table if not exists public.research_entities' supabase-schema.sql
+          grep -q 'phone_source_url text' supabase-schema.sql
+          grep -q 'phone_source_url' chrome-companion/service-worker.js
       - name: Commit integration
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add crm.html .github/workflows/f1-market-normalizer-qa.yml supabase-schema.sql
+          git add crm.html .github/workflows/f1-market-normalizer-qa.yml supabase-schema.sql chrome-companion/service-worker.js
           git commit -m 'Integrate F1 Google Dork research engine' || exit 0
           git push
