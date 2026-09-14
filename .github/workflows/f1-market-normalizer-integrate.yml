@@ -1,0 +1,86 @@
+name: F1 Market Normalizer Integrate
+on:
+  push:
+    paths:
+      - '.github/workflows/f1-market-normalizer-integrate.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Integrate market listing normalizer
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          def patch(path, old, new):
+              p=Path(path); s=p.read_text()
+              if old not in s:
+                  raise SystemExit(f'marker not found in {path}: {old[:80]}')
+              p.write_text(s.replace(old,new,1))
+
+          p=Path('market-listing-parser.js'); s=p.read_text()
+          s=s.replace("(function(){'use strict';","(function(root){'use strict';",1)
+          s=s.replace("window.F1MarketListingParser={version:'20260914-parser1',normalize};})();","const api={version:'20260914-parser1',normalize};root.F1MarketListingParser=api;if(typeof module==='object'&&module.exports)module.exports=api;})(typeof window!=='undefined'?window:globalThis);",1)
+          p.write_text(s)
+
+          patch('f1-acquisition-data.js',"rpo_status:row.rpo_status||'DA_VERIFICARE',created_by:","rpo_status:row.rpo_status||'DA_VERIFICARE',market_data:row.market_data&&typeof row.market_data==='object'?row.market_data:{},created_by:")
+          patch('f1-acquisition-data.js',"rpo_status:r.rpo_status,created_by:","rpo_status:r.rpo_status,market_data:r.market_data||{},created_by:")
+
+          p=Path('crm-unified-app.js'); s=p.read_text()
+          marker="const phone=s=>{let d=String(s||'').replace(/\\D/g,'');if(d.startsWith('39')&&d.length>10)d=d.slice(2);return d};"
+          helper=marker+"\nconst MARKET_TYPES=new Set(['MARKET_LISTING','MARKET_SIGNAL','COMPETITOR_LISTING','FSBO_CANDIDATE','EXPIRED_CANDIDATE','EXPIRED_VERIFIED']);const TYPE_LABELS={MARKET_LISTING:'Annuncio di mercato',MARKET_SIGNAL:'Segnalazione di mercato',COMPETITOR_LISTING:'Agenzia concorrente',FSBO:'Privato verificato',FSBO_CANDIDATE:'Privato da verificare',EXPIRED_CANDIDATE:'Possibile scaduto',EXPIRED_VERIFIED:'Scaduto verificato',PAST_CLIENT:'Cliente passato',COI:'Centro di influenza',REFERRAL:'Referral'};function isMarketRecord(l){return !!l&&(MARKET_TYPES.has(String(l.source_type||'').toUpperCase())||(!clean(l.nome||l.cognome||l.telefono||l.email)&&!!clean(l.source_url)))}function typeLabel(v){return TYPE_LABELS[v]||String(v||'Altro').replaceAll('_',' ')}function marketSummary(l){const m=l.market_data||{};return [m.property_type_normalized,m.price!=null?'€ '+Number(m.price).toLocaleString('it-IT'):'',m.commercial_sqm!=null?m.commercial_sqm+' m²':'',m.rooms!=null?m.rooms+' locali':''].filter(Boolean).join(' · ')}"
+          if marker not in s: raise SystemExit('phone marker missing')
+          s=s.replace(marker,helper,1)
+          s=s.replace("if(cf==='RPO')return l.rpo_status==='DA_VERIFICARE';","if(cf==='RPO')return !!l.telefono&&l.rpo_status==='DA_VERIFICARE';",1)
+          s=s.replace("||l.azienda||'Lead senza nome'","||l.azienda||(isMarketRecord(l)?'SEGNALAZIONE DI MERCATO':'Lead senza nome')",1)
+          s=s.replace("${l.telefono?' · '+esc(l.telefono):''}<br>${esc(l.source_type||'OTHER')}","${l.telefono?' · '+esc(l.telefono):''}${marketSummary(l)?'<br>'+esc(marketSummary(l)):''}<br>${esc(typeLabel(l.source_type||'OTHER'))}",1)
+          s=s.replace("${l.source_url?'<br><b>Fonte originale:</b> '+esc(l.source_url):''}","${l.source_url?'<br><b>Fonte originale:</b> <a class=\"back\" target=\"_blank\" rel=\"noopener noreferrer\" href=\"'+esc(l.source_url)+'\">APRI ANNUNCIO ↗</a>':''}",1)
+          s=s.replace("${l.rpo_status==='DA_VERIFICARE'?'<span class=\"badge red\">RPO DA VERIFICARE</span>':''}","${l.telefono&&l.rpo_status==='DA_VERIFICARE'?'<span class=\"badge red\">RPO DA VERIFICARE</span>':''}",1)
+          s=s.replace('>MODIFICA</button>','>${isMarketRecord(l)?\'INCOLLA / NORMALIZZA\':\'MODIFICA\'}</button>',1)
+          s=s.replace("if(!l)return;state.editId=id;","if(!l)return;if(isMarketRecord(l)&&window.F1MarketSignalNormalizer?.open){window.F1MarketSignalNormalizer.open(id,l);return}state.editId=id;",1)
+          p.write_text(s)
+
+          p=Path('crm.html'); s=p.read_text()
+          s=s.replace('<div class="stat"><b id="sTot">0</b>Lead</div>','<div class="stat"><b id="sTot">0</b>Record CRM</div>',1)
+          css='.marketPaste{min-height:250px}.marketPreview{display:grid;grid-template-columns:1fr 1fr;gap:7px}.marketPreviewRow{border:1px solid var(--line);border-radius:9px;padding:9px;background:#101510}.marketPreviewRow b{display:block;color:var(--g);font-size:9px;margin-bottom:4px}.marketPreviewRow span{font-size:12px}.marketResearch{display:flex;gap:7px;flex-wrap:wrap}@media(max-width:700px){.marketPreview{grid-template-columns:1fr}}'
+          if '.marketPaste{' not in s: s=s.replace('</style>',css+'</style>',1)
+          dlg='''<dialog id="marketDlg"><div class="modalh"><div><b>MODIFICA SEGNALAZIONE DI MERCATO</b><div id="marketCurrent" class="meta"></div></div><button class="btn" id="marketDlgClose">✕</button></div><div class="modalb"><div class="actions"><a id="marketSourceLink" class="btn gold" target="_blank" rel="noopener noreferrer">APRI ANNUNCIO ↗</a></div><label class="meta">INCOLLA ANNUNCIO COMPLETO</label><textarea class="field marketPaste" id="marketRaw" placeholder="CTRL+V: incolla qui tutto il testo dell'annuncio"></textarea><button class="btn primary" id="marketAnalyzeBtn">ANALIZZA E NORMALIZZA</button><h3>DATI ESTRATTI</h3><div id="marketPreview" class="marketPreview"></div><h3>RICERCA E VERIFICA</h3><div id="marketResearch" class="marketResearch"></div><button class="btn primary" id="marketConfirmBtn" disabled>CONFERMA NORMALIZZAZIONE</button><div id="marketNormalizeMsg" class="status"></div></div></dialog>'''
+          if 'id="marketDlg"' not in s: s=s.replace('<dialog id="outcomeDlg">',dlg+'\n<dialog id="outcomeDlg">',1)
+          old='<script src="crm-unified-app.js?v=20260913-auth2"></script>'
+          new=old+'<script src="market-listing-parser.js?v=20260914-market1"></script><script src="market-listing-research.js?v=20260914-market1"></script><script src="market-listing-ui.js?v=20260914-market1"></script>'
+          if 'market-listing-parser.js' not in s: s=s.replace(old,new,1)
+          p.write_text(s)
+
+          for f in ['market-test.js','market-listing-normalizer-version.txt']:
+              Path(f).unlink(missing_ok=True)
+          import shutil; shutil.rmtree('.integration',ignore_errors=True)
+          PY
+      - name: Syntax and parser tests
+        run: |
+          node --check market-listing-parser.js
+          node --check market-listing-ui.js
+          node --check market-listing-research.js
+          node --check crm-unified-app.js
+          node --check f1-acquisition-data.js
+          node - <<'NODE'
+          const assert=require('assert'),P=require('./market-listing-parser.js');
+          const lead={source_url:'https://www.immobiliare.it/annunci/111886863/',comune:'Villar Dora',via:'Borgata Cordonatto',civico:'2'};
+          const raw='Terratetto unifamiliare Borgata Cordonatto 2, Villar Dora\n€ 49.000\n65 m²\n3 locali\n2 camere\n1 bagno\nAnnuncio aggiornato il 19/08/2026\nInserzionista:\nFabio Panero';
+          const a=P.normalize(raw,lead);assert.equal(a.price,49000);assert.equal(a.commercial_sqm,65);assert.equal(a.rooms,3);assert.equal(a.bathrooms,1);assert.equal(a.classification,'DA_CLASSIFICARE');
+          assert.equal(P.normalize(raw+'\nAgenzia Immobiliare XYZ',lead).classification,'COMPETITOR_LISTING');
+          assert.equal(P.normalize(raw+'\nVendita da privato, no agenzie',lead).classification,'FSBO_VERIFIED');
+          console.log('parser OK');
+          NODE
+          grep -q 'MODIFICA SEGNALAZIONE DI MERCATO' crm.html
+          grep -q 'INCOLLA / NORMALIZZA' crm-unified-app.js
+          grep -q 'market_data' f1-acquisition-data.js
+      - name: Commit integration
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Integrate market listing paste normalizer' || exit 0
+          git push
