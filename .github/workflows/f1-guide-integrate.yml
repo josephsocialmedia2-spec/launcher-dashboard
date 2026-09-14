@@ -19,37 +19,47 @@ jobs:
       - name: Validate guided workspace source
         run: |
           node --check f1-guided-workspace.js
+          node --check f1-ai-guide.js
+          node --check f1-operational-procedures.js
           test -f f1-guided-workspace.css
           grep -q 'AVVIA E APRI' f1-guided-workspace.js
           grep -q 'MODALITÀ GUIDATA' f1-guided-workspace.js
-      - name: Integrate guided workspace into dashboard and regression QA
+          grep -q 'ORDINE OPERATIVO' f1-ai-guide.js
+          grep -q 'PRIMI 30 GIORNI' f1-operational-procedures.js
+      - name: Integrate guide5 into dashboard and regression QA
         run: |
           python3 - <<'PY'
           from pathlib import Path
 
           index=Path('index.html')
           h=index.read_text()
-          css='<link rel="stylesheet" href="f1-guided-workspace.css?v=20260914-guide4">'
-          js='<script src="f1-guided-workspace.js?v=20260914-guide4"></script>'
-          h=h.replace('<link rel="stylesheet" href="f1-guided-workspace.css?v=20260914-guide3">',css)
-          h=h.replace('<script src="f1-guided-workspace.js?v=20260914-guide3"></script>',js)
-          if css not in h:
-              h=h.replace('<link rel="stylesheet" href="f1-ai-guide.css?v=20260914-guide2">', '<link rel="stylesheet" href="f1-ai-guide.css?v=20260914-guide2">\n'+css)
-          if js not in h:
-              h=h.replace('<script src="f1-ai-guide.js?v=20260914-guide2"></script>', '<script src="f1-ai-guide.js?v=20260914-guide2"></script>\n'+js)
+          h=h.replace('f1-guided-workspace.css?v=20260914-guide4','f1-guided-workspace.css?v=20260914-guide5')
+          h=h.replace('f1-guided-workspace.css?v=20260914-guide3','f1-guided-workspace.css?v=20260914-guide5')
+          h=h.replace('f1-ai-guide.js?v=20260914-guide2','f1-ai-guide.js?v=20260914-guide5')
+          h=h.replace('f1-guided-workspace.js?v=20260914-guide4','f1-guided-workspace.js?v=20260914-guide5')
+          h=h.replace('f1-guided-workspace.js?v=20260914-guide3','f1-guided-workspace.js?v=20260914-guide5')
+          proc='<script src="f1-operational-procedures.js?v=20260914-docops1"></script>'
+          guide='<script src="f1-ai-guide.js?v=20260914-guide5"></script>'
+          if proc not in h:
+              h=h.replace(guide,proc+'\n'+guide)
           index.write_text(h)
 
           spec=Path('tests/daily-command-panel.spec.js')
           s=spec.read_text()
-          marker="  test('desktop mostra 4 reparti + guida in 100vh senza scroll pagina'"
-          if 'nuovo funzionario apre il modulo senza perdere la guida' not in s:
-              test_block="""  test('nuovo funzionario apre il modulo senza perdere la guida',async({browser})=>{\n    const context=await browser.newContext({timezoneId:'Europe/Rome',viewport:{width:1440,height:1000}});const page=await context.newPage();await openAt(page,'2026-09-13T09:40:00+02:00');\n    await expect(page.locator('#f1AiTitle')).toContainText('VERIFICA OPPORTUNITÀ');await expect(page.locator('#f1AiStart')).toHaveText(/AVVIA E APRI|APRI MODULO/);\n    const before=new URL(page.url()).pathname;await page.locator('#f1AiStart').click();\n    await expect(page.locator('#f1GuidedWorkspace')).toHaveClass(/on/);await expect(page.locator('#f1AIGuide')).toBeVisible();await expect(page.locator('#f1GuidedTask')).toContainText('VERIFICA OPPORTUNITÀ');\n    await expect(page.locator('#f1GuidedFrame')).toHaveAttribute('src',/centrale-risultati\\.html/);expect(new URL(page.url()).pathname).toBe(before);\n    await page.locator('#f1GuidedBack').click();await expect(page.locator('#f1GuidedWorkspace')).not.toHaveClass(/on/);await context.close();\n  });\n\n"""
-              s=s.replace(marker,test_block+marker)
+          old="for(const id of ['#f1AiWhere','#f1AiWho','#f1AiObjective','#f1AiDuration','#f1AiCompletion','#f1AiNext'])await expect(page.locator(id)).not.toHaveText('—');"
+          new="for(const id of ['#f1AiWhere','#f1AiWho','#f1AiZone','#f1AiExecute','#f1AiRegister','#f1AiObjective','#f1AiDuration','#f1AiCompletion','#f1AiNext'])await expect(page.locator(id)).not.toHaveText('—');"
+          s=s.replace(old,new)
+          if "ordine operativo espone APRI CERCA ZONA ESEGUI REGISTRA" not in s:
+              marker="  test('nuovo funzionario apre il modulo senza perdere la guida'"
+              block="""  test('ordine operativo espone APRI CERCA ZONA ESEGUI REGISTRA',async({browser})=>{\n    const context=await browser.newContext({timezoneId:'Europe/Rome',viewport:{width:1440,height:1000}});const page=await context.newPage();await openAt(page,'2026-09-13T09:40:00+02:00');\n    await expect(page.locator('#f1AIGuide')).toContainText('ORDINE OPERATIVO');\n    for(const text of ['APRI','CERCA','ZONA','ESEGUI','REGISTRA','TERMINA QUANDO'])await expect(page.locator('#f1AIGuide')).toContainText(text);\n    await expect(page.locator('#f1AiNext')).toContainText(/PROSSIMO ORDINE|NON PASSARE/);await context.close();\n  });\n\n"""
+              s=s.replace(marker,block+marker)
           spec.write_text(s)
           PY
           node --check tests/daily-command-panel.spec.js
-          grep -q 'f1-guided-workspace.css?v=20260914-guide4' index.html
-          grep -q 'f1-guided-workspace.js?v=20260914-guide4' index.html
+          grep -q 'f1-operational-procedures.js?v=20260914-docops1' index.html
+          grep -q 'f1-ai-guide.js?v=20260914-guide5' index.html
+          grep -q 'f1-guided-workspace.css?v=20260914-guide5' index.html
+          grep -q 'f1-guided-workspace.js?v=20260914-guide5' index.html
           grep -q 'nuovo funzionario apre il modulo senza perdere la guida' tests/daily-command-panel.spec.js
       - name: Commit dashboard integration
         run: |
@@ -57,5 +67,5 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html tests/daily-command-panel.spec.js
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Keep F1 guide visible inside operational modules guide4'
+          git commit -m 'Integrate F1 document-grounded operational guide5'
           git push origin HEAD:main
