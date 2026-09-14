@@ -49,13 +49,15 @@ jobs:
           grep -q 'NON_APPLICABILE' market-listing-ui.js
           grep -q 'ESITO VERIFICA' market-listing-ui.js
           grep -q 'verification_evidence' market-listing-ui.js
+          grep -q 'CERCA INSERZIONISTA' market-listing-research.js
+          grep -q 'APRI GOOGLE MAPS' market-listing-research.js
       - name: Published Pages smoke
         run: |
           ok=0
-          for i in $(seq 1 24); do
-            CRM=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/crm.html?v=20260914-market2' || true)
-            PARSER=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/market-listing-parser.js?v=20260914-market2' || true)
-            if echo "$CRM" | grep -q 'MODIFICA SEGNALAZIONE DI MERCATO' && echo "$CRM" | grep -q 'market-listing-ui.js?v=20260914-market2' && echo "$PARSER" | grep -q "20260914-parser2"; then ok=1; break; fi
+          for i in $(seq 1 30); do
+            CRM=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/crm.html?v=20260914-market3' || true)
+            PARSER=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/market-listing-parser.js?v=20260914-market3' || true)
+            if echo "$CRM" | grep -q 'MODIFICA SEGNALAZIONE DI MERCATO' && echo "$CRM" | grep -q 'market-listing-ui.js?v=20260914-market3' && echo "$PARSER" | grep -q "20260914-parser3"; then ok=1; break; fi
             sleep 5
           done
           test "$ok" = 1
