@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="it">
+<head><meta charset="utf-8"><title>F1 Notizie Integrity Harness</title></head>
+<body>
+<div id="newsMount">
+  <form id="newsForm">
+    <select name="level"><option>N0</option><option>N1</option><option>N2</option><option selected>N3</option><option>N4</option><option>N5</option><option>N6</option></select>
+    <input name="title" required>
+    <input name="comune" required>
+    <input name="via">
+    <input name="zona">
+    <input name="source">
+    <textarea name="detail" required></textarea>
+    <textarea name="justification" required></textarea>
+    <label><input name="usable" type="checkbox"> utilizzabile</label>
+    <button id="save" type="submit">SALVA</button>
+    <div id="newsMsg" class="msg"></div>
+  </form>
+</div>
+<div id="kNews">0</div>
+<div id="newsList"></div>
+<script src="../../f1-notizie-integrity.js"></script>
+<script>
+(()=>{
+  const KEY='f1-notizie-integrity-harness';
+  const read=()=>JSON.parse(localStorage.getItem(KEY)||'[]');
+  const write=rows=>localStorage.setItem(KEY,JSON.stringify(rows));
+  window.__resetHarness=()=>write([]);
+  window.__FAIL_SAVE=false;
+  window.__RERENDER_ON_REFRESH=false;
+  const api={
+    addNews:async(userId,record)=>{
+      await new Promise(r=>setTimeout(r,40));
+      if(window.__FAIL_SAVE)throw new Error('DB TEST FAILURE');
+      const rows=read();
+      const saved={...record,news_id:'news-'+Date.now()+'-'+Math.random().toString(16).slice(2),user_id:userId,created_at:new Date().toISOString(),updated_at:new Date().toISOString()};
+      rows.unshift(saved);write(rows);return saved;
+    }
+  };
+  window.__refreshNews=async()=>{
+    const rows=read();
+    document.getElementById('kNews').textContent=String(rows.length);
+    document.getElementById('newsList').innerHTML=rows.map(r=>`<div class="news">${r.level} · ${r.title} · ${r.comune}</div>`).join('');
+    if(window.__RERENDER_ON_REFRESH){
+      document.getElementById('newsMount').innerHTML='<div id="newsFormRemoved">FORM RICOSTRUITO</div>';
+    }
+    return rows;
+  };
+  window.__bind=()=>F1NotizieIntegrity.bindNewsForm({
+    form:document.getElementById('newsForm'),
+    message:document.getElementById('newsMsg'),
+    getUserId:()=> 'test-user',
+    refresh:window.__refreshNews,
+    api
+  });
+  window.__bind();
+  window.__refreshNews();
+})();
+</script>
+</body>
+</html>
