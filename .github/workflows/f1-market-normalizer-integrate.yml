@@ -22,6 +22,7 @@ jobs:
               p.write_text(s.replace(old,new,1))
 
           p=Path('market-listing-parser.js'); s=p.read_text()
+          s=s.replace(r"m[²2]\b/i",r"m[²2]/i")
           s=s.replace("(function(){'use strict';","(function(root){'use strict';",1)
           s=s.replace("window.F1MarketListingParser={version:'20260914-parser1',normalize};})();","const api={version:'20260914-parser1',normalize};root.F1MarketListingParser=api;if(typeof module==='object'&&module.exports)module.exports=api;})(typeof window!=='undefined'?window:globalThis);",1)
           p.write_text(s)
