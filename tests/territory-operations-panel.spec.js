@@ -2,11 +2,20 @@ const {test,expect}=require('@playwright/test');
 const OBS='00000000-0000-4000-8000-000000000111';
 
 async function mountPanel(page,state){
-  await page.setContent('<!doctype html><html><body><aside id="f1CommandPanel"><div id="f1NextOrder"></div><div id="f1AfterOrder"></div></aside></body></html>');
+  await page.setContent('<!doctype html><html><body><aside id="f1CommandPanel" class="f1-command-panel"><div class="f1-command-head"><div id="f1NextOrder"></div><div id="f1AfterOrder"></div></div><div class="f1-command-list" id="f1CommandList"></div><section class="f1-final-report" id="f1Report"></section></aside></body></html>');
   await page.evaluate(s=>{window.F1StaffData={ready:()=>true,rpc:async()=>s}},state);
   await page.addStyleTag({path:'territory-operations-panel.css'});
   await page.addScriptTag({path:'territory-operations-panel.js'});
 }
+
+test('territory panel is a visible direct row of the right command sidebar',async({page})=>{
+  await mountPanel(page,{progress:null,summary:{},pending_news:[]});
+  const panel=page.locator('#f1TerritoryPanel');
+  await expect(panel).toBeVisible();
+  expect(await panel.evaluate(el=>el.parentElement?.id)).toBe('f1CommandPanel');
+  expect(await page.locator('#f1CommandPanel').evaluate(el=>[...el.children].map(x=>x.id||x.className))).toEqual(['f1-command-head','f1TerritoryPanel','f1CommandList','f1Report']);
+  await expect(page.locator('#f1CommandPanel')).toHaveClass(/f1-territory-enabled/);
+});
 
 test('territory panel renders current street, counters, pending CRM action and restart civic',async({page})=>{
   await mountPanel(page,{progress:{progress_id:'p1',comune:'Avigliana',zona:'Zona A',via:'Via Roma',civic_start:'1',last_civic:'27',next_civic:'28',status:'DA_CONSUNTIVARE'},summary:{civics:27,condominiums:3,activities:7,contacts:2,news:4,pending_crm:3,callbacks:1},pending_news:[{observation_id:OBS,news_type:'PROPRIETARIO_VALUTA_VENDITA',via:'Via Roma',civico:'27',detail:'Proprietario valuta vendita'}]});
