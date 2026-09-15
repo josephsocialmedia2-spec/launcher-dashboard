@@ -5,6 +5,8 @@ on:
       - 'market-interest-core.js'
       - 'market-interest-engine.js'
       - 'market-listing-ui.js'
+      - 'f1-acquisition-data.js'
+      - 'crm-unified-app.js'
       - 'crm.html'
       - 'chrome-companion/**'
       - 'supabase-schema.sql'
@@ -22,6 +24,8 @@ jobs:
           node --check market-interest-core.js
           node --check market-interest-engine.js
           node --check market-listing-ui.js
+          node --check f1-acquisition-data.js
+          node --check crm-unified-app.js
           node --check chrome-companion/service-worker.js
           node --check chrome-companion/f1-session-bridge.js
           node -e "JSON.parse(require('fs').readFileSync('chrome-companion/manifest.json','utf8')); console.log('manifest OK')"
@@ -48,6 +52,26 @@ jobs:
           console.log('dork contract OK');
           NODE
           ! grep -Ei 'Fabio Panero|Villar Dora|Borgata Cordonatto' market-interest-core.js chrome-companion/service-worker.js
+      - name: Research performance contract
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          ui=Path('market-listing-ui.js').read_text()
+          eng=Path('market-interest-engine.js').read_text()
+          data=Path('f1-acquisition-data.js').read_text()
+          crm=Path('crm-unified-app.js').read_text()
+          install=ui.split('function install(){',1)[1].split("window.F1MarketSignalNormalizer",1)[0]
+          assert 'loadResearch()' not in install, 'Research engine still starts from CRM boot'
+          assert 'setInterval(load,15000)' not in eng, 'Massive 15s polling still present'
+          assert 'new MutationObserver' not in eng, 'Global Research MutationObserver still present'
+          assert 'pullLeads()' not in eng, 'Research engine still downloads all leads'
+          assert "list.addEventListener('click',delegatedClick)" in ui, 'MI INTERESSA is not event delegated'
+          assert "research_jobs?id=eq." in eng, 'Research polling is not job-targeted'
+          assert 'async function pullLead(leadId)' in data, 'Targeted lead fetch missing'
+          assert 'const old=await pullLead(leadId)' in data, 'updateLead still depends on full lead table'
+          assert "f1-crm-rendered" in crm, 'Explicit CRM render event missing'
+          print('research performance contract OK')
+          PY
       - name: Supabase queue and evidence contract
         run: |
           grep -q 'create table if not exists public.research_jobs' supabase-schema.sql
@@ -60,9 +84,9 @@ jobs:
           grep -q 'auth.uid()' supabase-migrations/20260914_f1_google_dork_research_engine.sql
       - name: CRM MI INTERESSA contract
         run: |
-          grep -q 'market-interest-core.js?v=20260914-research1' market-listing-ui.js
-          grep -q 'market-interest-engine.js?v=20260914-research1' market-listing-ui.js
-          grep -q '★ MI INTERESSA' market-interest-engine.js
+          grep -q 'market-interest-core.js?v=20260915-research2' market-listing-ui.js
+          grep -q 'market-interest-engine.js?v=20260915-research2' market-listing-ui.js
+          grep -q '★ MI INTERESSA' market-listing-ui.js
           grep -q '★ RICERCA IN CORSO' market-interest-engine.js
           grep -q '★ DOSSIER PRONTO' market-interest-engine.js
           grep -q '★ VERIFICA RICHIESTA' market-interest-engine.js
@@ -71,7 +95,7 @@ jobs:
           grep -q 'research_jobs' market-interest-engine.js
           grep -q 'research_results' market-interest-engine.js
           grep -q 'research_entities' market-interest-engine.js
-          grep -q 'market-listing-ui.js?v=20260914-market4' crm.html
+          grep -q 'market-listing-ui.js?v=20260915-market5' crm.html
       - name: Chrome Companion contract
         run: |
           grep -q '"manifest_version": 3' chrome-companion/manifest.json
@@ -89,12 +113,12 @@ jobs:
         run: |
           ok=0
           for i in $(seq 1 36); do
-            CRM=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/crm.html?v=20260914-research1' || true)
-            UI=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/market-listing-ui.js?v=20260914-market4' || true)
-            CORE=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/market-interest-core.js?v=20260914-research1' || true)
-            ENG=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/market-interest-engine.js?v=20260914-research1' || true)
+            CRM=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/crm.html?v=20260915-perf1' || true)
+            UI=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/market-listing-ui.js?v=20260915-market5' || true)
+            CORE=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/market-interest-core.js?v=20260915-research2' || true)
+            ENG=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/market-interest-engine.js?v=20260915-research2' || true)
             MAN=$(curl -fsSL 'https://josephsocialmedia2-spec.github.io/launcher-dashboard/chrome-companion/manifest.json?v=20260914-companion1' || true)
-            if echo "$CRM" | grep -q 'market-listing-ui.js?v=20260914-market4' && echo "$UI" | grep -q '20260914-market4' && echo "$CORE" | grep -q '20260914-research1' && echo "$ENG" | grep -q '★ MI INTERESSA' && echo "$MAN" | grep -q 'F1 Chrome Companion'; then ok=1; break; fi
+            if echo "$CRM" | grep -q 'market-listing-ui.js?v=20260915-market5' && echo "$UI" | grep -q '20260915-market5' && echo "$CORE" | grep -q '20260914-research1' && echo "$ENG" | grep -q '20260915-research2' && echo "$MAN" | grep -q 'F1 Chrome Companion'; then ok=1; break; fi
             sleep 5
           done
           test "$ok" = 1
