@@ -49,12 +49,6 @@ jobs:
         run: |
           npm install
           npx playwright install --with-deps chromium
-      - name: Start static server
-        run: |
-          python3 -m http.server 4173 >/tmp/f1-territory-http.log 2>&1 &
-          echo $! > /tmp/f1-territory-http.pid
-          for i in $(seq 1 20); do curl -fsS http://127.0.0.1:4173/index.html >/dev/null && exit 0; sleep 1; done
-          exit 1
       - name: Territory browser regression
         run: npx playwright test tests/territory-operations-panel.spec.js --project=desktop-chromium
       - name: Live GitHub Pages smoke
