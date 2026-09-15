@@ -22,6 +22,8 @@ test('XLSX XLS CSV -> preview -> dedupe -> unified CRM',async({page})=>{
   await page.evaluate(()=>{if(window.F1AcquisitionData)delete window.F1AcquisitionData.requireCloud});
   await expect.poll(()=>page.evaluate(()=>typeof window.F1AcquisitionData?.requireCloud)).toBe('undefined');
   await page.click('#excelImportBtn');
+  await expect(page.locator('#excelImportDlg')).toBeVisible();
+  await expect.poll(()=>page.evaluate(()=>!!window.XLSX)).toBeTruthy();
 
   await page.setInputFiles('#importFile',xlsx);await page.selectOption('#importCategory','CENTRO_INFLUENZA');await page.check('#relationshipConfirm');await page.click('#analyzeImportBtn');await analyzeReady(page);
   await expect(page.locator('#impFound')).toHaveText('2');expect(await mapValue(page,'Telefono')).toBe('telefono');expect(await mapValue(page,'Email')).toBe('email');
