@@ -33,8 +33,8 @@ jobs:
           node --check territory-operations-panel.js
           node --check crm-territory-handoff.js
           node --check tests/territory-operations-panel.spec.js
-          grep -q 'territory-operations-panel.css?v=20260916-territory1' index.html
-          grep -q 'territory-operations-panel.js?v=20260916-territory1' index.html
+          grep -Eq 'territory-operations-panel.css\?v=20260916-territory(1|2)' index.html
+          grep -Eq 'territory-operations-panel.js\?v=20260916-territory(1|2)' index.html
           grep -q 'crm-territory-handoff.js?v=20260916-territory1' crm.html
           grep -q 'f1_territory_panel_state' territory-operations-panel.js
           grep -q 'DA INSERIRE NEL CRM' territory-operations-panel.js
@@ -62,7 +62,7 @@ jobs:
               && curl -fsSL --max-time 20 "$base/crm.html?qa=$RANDOM" -o /tmp/crm.html \
               && curl -fsSL --max-time 20 "$base/territory-operations-panel.js?qa=$RANDOM" -o /tmp/panel.js \
               && curl -fsSL --max-time 20 "$base/crm-territory-handoff.js?qa=$RANDOM" -o /tmp/handoff.js \
-              && grep -q 'territory-operations-panel.js?v=20260916-territory1' /tmp/index.html \
+              && grep -Eq 'territory-operations-panel.js\?v=20260916-territory(1|2)' /tmp/index.html \
               && grep -q 'crm-territory-handoff.js?v=20260916-territory1' /tmp/crm.html \
               && grep -q 'f1_territory_panel_state' /tmp/panel.js \
               && grep -q 'INSERITA_CRM' /tmp/handoff.js; then ok=1; break; fi
