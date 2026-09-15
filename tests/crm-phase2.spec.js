@@ -70,10 +70,11 @@ async function installBackend(page) {
   return {metrics,leads};
 }
 
+async function openReady(page){await page.goto('/crm.html');await expect(page.locator('article.lead')).toHaveCount(50);}
+
 test('critical path: KPI -> 50 lead -> task visibili, senza interactions/research/XLSX', async ({page}) => {
   const {metrics}=await installBackend(page);
-  await page.goto('/crm.html');
-  await expect(page.locator('article.lead')).toHaveCount(50);
+  await openReady(page);
   await expect(page.locator('#sTot')).toHaveText('1240');
   await expect(page.locator('#sCore')).toHaveText('154');
   await expect(page.locator('#sDue')).toHaveText('381');
@@ -95,7 +96,7 @@ test('critical path: KPI -> 50 lead -> task visibili, senza interactions/researc
 });
 
 test('paginazione e filtri restano server-side', async ({page}) => {
-  const {metrics}=await installBackend(page);await page.goto('/crm.html');
+  const {metrics}=await installBackend(page);await openReady(page);
   await page.click('#crmNextPage');await expect(page.locator('#crmPager')).toContainText('Pagina 2 / 25');expect(metrics.pageBodies.at(-1).p_offset).toBe(50);
   await page.selectOption('#statusFilter','DA_CONTATTARE');await expect.poll(()=>metrics.pageBodies.at(-1)?.p_status).toBe('DA_CONTATTARE');expect(metrics.pageBodies.at(-1).p_offset).toBe(0);
   await page.selectOption('#coreFilter','DUE');await expect.poll(()=>metrics.pageBodies.at(-1)?.p_filter).toBe('DUE');
@@ -105,7 +106,7 @@ test('paginazione e filtri restano server-side', async ({page}) => {
 });
 
 test('dettaglio e interazioni sono lazy per un solo lead', async ({page}) => {
-  const {metrics}=await installBackend(page);await page.goto('/crm.html');
+  const {metrics}=await installBackend(page);await openReady(page);
   expect(metrics.leadDetail).toHaveLength(0);expect(metrics.interactionLeadGets).toHaveLength(0);
   await page.locator('article[data-lead-id="lead-2"] button').filter({hasText:'MODIFICA'}).click();
   await expect(page.locator('#leadDlg')).toBeVisible();
@@ -116,32 +117,32 @@ test('dettaglio e interazioni sono lazy per un solo lead', async ({page}) => {
 });
 
 test('modifica lead usa PATCH singolo e aggiorna una card senza reload pagina', async ({page}) => {
-  const {metrics}=await installBackend(page);await page.goto('/crm.html');const baseline=metrics.pageBodies.length;
+  const {metrics}=await installBackend(page);await openReady(page);const baseline=metrics.pageBodies.length;
   await page.locator('article[data-lead-id="lead-2"] button').filter({hasText:'MODIFICA'}).click();await page.fill('#fNome','Luigi');await page.click('#saveLeadBtn');
   await expect(page.locator('article[data-lead-id="lead-2"] .name')).toContainText('Luigi');
   expect(metrics.leadPatch.some(x=>x.id==='lead-2'&&x.patch.nome==='Luigi')).toBeTruthy();expect(metrics.pageBodies.length).toBe(baseline);expect(metrics.fullLeads).toBe(0);
 });
 
 test('registrare esito aggiorna record/card/KPI senza reload CRM', async ({page}) => {
-  const {metrics}=await installBackend(page);await page.goto('/crm.html');const baseline=metrics.pageBodies.length;
+  const {metrics}=await installBackend(page);await openReady(page);const baseline=metrics.pageBodies.length;
   await page.locator('article[data-lead-id="lead-3"] button').filter({hasText:'REGISTRA ESITO'}).click();await page.fill('#oOutcome','RICHIAMATO');await page.fill('#oNote','Esito QA');await page.click('#saveOutcomeBtn');
   await expect(page.locator('article[data-lead-id="lead-3"]')).toContainText('1 interazioni');
   expect(metrics.interactionPosts).toBe(1);expect(metrics.leadPatch.some(x=>x.id==='lead-3')).toBeTruthy();expect(metrics.taskPatch).toBe(1);expect(metrics.pageBodies.length).toBe(baseline);expect(metrics.fullInteractions).toBe(0);
 });
 
 test('ricerca rapida esegue una sola query dopo debounce', async ({page}) => {
-  const {metrics}=await installBackend(page);await page.goto('/crm.html');const baseline=metrics.pageBodies.length;
+  const {metrics}=await installBackend(page);await openReady(page);const baseline=metrics.pageBodies.length;
   await page.locator('#q').pressSequentially('VILLAR DORA',{delay:10});await page.waitForTimeout(550);
   expect(metrics.pageBodies.length-baseline).toBe(1);expect(metrics.pageBodies.at(-1).p_search).toBe('VILLAR DORA');expect(metrics.fullLeads).toBe(0);
 });
 
 test('XLSX entra nel runtime solo al click import', async ({page}) => {
-  const {metrics}=await installBackend(page);await page.goto('/crm.html');expect(metrics.xlsx).toBe(0);
+  const {metrics}=await installBackend(page);await openReady(page);expect(metrics.xlsx).toBe(0);
   await page.click('#excelImportBtn');await expect(page.locator('#excelImportDlg')).toBeVisible();expect(metrics.xlsx).toBe(1);
 });
 
 test('errore Research resta isolato e CRM continua a funzionare', async ({page}) => {
-  const {metrics}=await installBackend(page);await page.goto('/crm.html');await expect(page.locator('.f1InterestBtn')).toHaveCount(1);
+  const {metrics}=await installBackend(page);await openReady(page);await expect(page.locator('.f1InterestBtn')).toHaveCount(1);
   page.once('dialog',d=>d.dismiss());await page.click('.f1InterestBtn');await page.waitForTimeout(150);
   await expect(page.locator('article.lead')).toHaveCount(50);await expect(page.locator('#newBtn')).toBeEnabled();expect(metrics.researchScripts).toBeGreaterThan(0);expect(metrics.fullLeads).toBe(0);expect(metrics.fullTasks).toBe(0);expect(metrics.fullInteractions).toBe(0);
 });
