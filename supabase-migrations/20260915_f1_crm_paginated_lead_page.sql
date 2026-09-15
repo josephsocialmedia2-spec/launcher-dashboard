@@ -49,7 +49,10 @@ set search_path = public, pg_temp
 as $$
 with lead_base as (
   select
-    l.*,
+    l.lead_id,l.pillar,l.source_type,l.source,l.source_url,l.nome,l.cognome,l.azienda,l.telefono,l.email,
+    l.comune,l.via,l.civico,l.zona,l.immobile_id,l.competitor_agency,l.lead_reason,l.lead_score,l.confidence,
+    l.status,l.last_contact,l.next_action,l.next_action_date,l.assigned_to,l.notes,l.privacy_basis,l.do_not_contact,
+    l.rpo_status,l.updated_at,l.market_data,
     case
       when upper(l.source_type) = 'PAST_CLIENT' or upper(l.lead_reason) like '%PAST_CLIENT%' then 'PAST_CLIENT'
       when upper(l.source_type) = 'COI' or upper(l.lead_reason) like '%COI%' then 'COI'
