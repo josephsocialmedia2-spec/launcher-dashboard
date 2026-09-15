@@ -1,0 +1,40 @@
+name: F1 Territory Panel Cachebust
+
+on:
+  push:
+    paths:
+      - '.github/workflows/f1-territory-panel-cachebust.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bump dashboard territory asset version
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          s=s.replace('territory-operations-panel.css?v=20260916-territory1','territory-operations-panel.css?v=20260916-territory2')
+          s=s.replace('territory-operations-panel.js?v=20260916-territory1','territory-operations-panel.js?v=20260916-territory2')
+          p.write_text(s)
+          PY
+          grep -q 'territory-operations-panel.css?v=20260916-territory2' index.html
+          grep -q 'territory-operations-panel.js?v=20260916-territory2' index.html
+      - name: Commit cache bust
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- index.html; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git commit -m 'fix: force visible territory panel assets'
+          git push
