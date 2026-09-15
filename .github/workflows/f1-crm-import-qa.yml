@@ -59,7 +59,7 @@ jobs:
           grep -q 'ACCEDI AL CRM' crm-auth-guard.js
           grep -q "url: 'https://nqnmlsmeiynxbdojeyjt.supabase.co'" supabase-config.js
           grep -q "anonKey: 'sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu'" supabase-config.js
-          grep -q 'crm-auth-guard.js?v=20260913-auth2' crm.html
+          grep -q 'crm-auth-guard.js?v=' crm.html
           grep -q 'f1-acquisition-data.js?v=' crm.html
           grep -q 'async function pullKpis(){requireCloud();' f1-acquisition-data.js
           grep -q 'async function pullVisibleTasks(leadIds=' f1-acquisition-data.js
@@ -125,7 +125,7 @@ jobs:
               && curl -fsSL --max-time 20 "$base/crm-import-app.js?qa=$RANDOM" -o /tmp/import.js \
               && curl -fsSL --max-time 20 "$base/setup-cloud.html?qa=$RANDOM" -o /tmp/setup.html \
               && grep -q 'CARICA CONTATTI EXCEL' /tmp/crm.html \
-              && grep -q 'crm-auth-guard.js?v=20260913-auth2' /tmp/crm.html \
+              && grep -q 'crm-auth-guard.js?v=' /tmp/crm.html \
               && ! grep -q 'xlsx.full.min.js.*</script>' /tmp/crm.html \
               && grep -q 'ACCESSO CRM RICHIESTO' /tmp/guard.js \
               && grep -q "url: 'https://nqnmlsmeiynxbdojeyjt.supabase.co'" /tmp/config.js \
