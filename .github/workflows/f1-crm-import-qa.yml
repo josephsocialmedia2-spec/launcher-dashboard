@@ -135,7 +135,8 @@ jobs:
               && grep -q 'async function pullVisibleTasks(leadIds=' /tmp/data.js \
               && grep -q 'rpc/f1_crm_lead_page_v2' /tmp/data.js \
               && grep -q 'loadXlsxLibrary' /tmp/import.js \
-              && grep -q 'ACCEDI AL CRM' /tmp/setup.html; then ok=1; break; fi
+              && grep -q 'id="loginBtn"' /tmp/setup.html \
+              && grep -q 'id="crmBtn"' /tmp/setup.html; then ok=1; break; fi
             sleep 5
           done
           test "$ok" = 1
