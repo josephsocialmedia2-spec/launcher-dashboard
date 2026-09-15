@@ -5,6 +5,20 @@ const AUTH=BASE+'/auth/v1/';
 const REST=BASE+'/rest/v1/';
 
 function idField(table){return table==='leads'?'lead_id':table==='tasks'?'task_id':table==='interactions'?'interaction_id':table+'_id'}
+function core4(lead){return ['PAST_CLIENT','COI','FSBO','EXPIRED_CANDIDATE','EXPIRED_VERIFIED'].includes(String(lead.source_type||'').toUpperCase())}
+function due(task){return !['DONE','CANCELLED'].includes(String(task.status||'OPEN').toUpperCase())&&(!task.due_date||String(task.due_date).slice(0,10)<='2026-09-15')}
+function pageRows(db,body){
+  const q=String(body.p_search||'').trim().toLowerCase(),status=String(body.p_status||''),filter=String(body.p_filter||''),offset=Number(body.p_offset||0),limit=Number(body.p_limit||50);
+  let rows=db.leads.filter(x=>!x.deleted);
+  if(q)rows=rows.filter(x=>[x.nome,x.cognome,x.telefono,x.email,x.comune,x.via,x.source,x.source_url,x.notes].join(' ').toLowerCase().includes(q));
+  if(status)rows=rows.filter(x=>String(x.status||'')===status);
+  if(filter==='CORE4')rows=rows.filter(core4);
+  if(filter==='RPO')rows=rows.filter(x=>String(x.rpo_status||'')==='DA_VERIFICARE');
+  if(filter==='MARKET_LISTING')rows=rows.filter(x=>['MARKET_LISTING','MARKET_SIGNAL','COMPETITOR_LISTING','FSBO_CANDIDATE','EXPIRED_CANDIDATE','EXPIRED_VERIFIED'].includes(String(x.source_type||'')));
+  if(filter==='DUE')rows=rows.filter(x=>db.tasks.some(t=>String(t.lead_id)===String(x.lead_id)&&due(t)));
+  const filtered=rows.length;
+  return rows.slice(offset,offset+limit).map(x=>({...x,interaction_count:db.interactions.filter(i=>String(i.lead_id)===String(x.lead_id)).length,filtered_count:filtered}));
+}
 
 async function installBackend(context,db){
   await context.route(AUTH+'token?grant_type=password',async route=>{
@@ -17,10 +31,28 @@ async function installBackend(context,db){
     await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({id:'00000000-0000-4000-8000-000000000001',role:'authenticated'})});
   });
   await context.route(REST+'**',async route=>{
-    const req=route.request(),u=new URL(req.url()),table=u.pathname.split('/').pop(),method=req.method();
-    if(!db[table])return route.fulfill({status:404,contentType:'application/json',body:'[]'});
+    const req=route.request(),u=new URL(req.url()),path=u.pathname,table=path.split('/').pop(),method=req.method();
     expect(req.headers().authorization||'').toContain('Bearer qa-access');
-    if(method==='GET')return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(db[table])});
+    const ok=body=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(body)});
+    if(path.endsWith('/rpc/f1_crm_kpis'))return ok([{
+      leads:db.leads.filter(x=>!x.deleted).length,
+      core4:db.leads.filter(x=>!x.deleted&&core4(x)).length,
+      tasks_due:db.tasks.filter(due).length,
+      interactions:db.interactions.length,
+      assignments:db.leads.filter(x=>['INCARICO','ACQUISITO'].includes(String(x.status||''))).length,
+      do_not_contact:db.leads.filter(x=>x.do_not_contact||String(x.status||'')==='NON_CONTATTARE').length
+    }]);
+    if(path.endsWith('/rpc/f1_crm_lead_page_v2'))return ok(pageRows(db,JSON.parse(req.postData()||'{}')));
+    if(path.endsWith('/rpc/f1_crm_visible_tasks')){
+      const body=JSON.parse(req.postData()||'{}'),ids=new Set((body.p_lead_ids||[]).map(String));
+      return ok(db.tasks.filter(t=>ids.has(String(t.lead_id))&&!['DONE','CANCELLED'].includes(String(t.status||'OPEN').toUpperCase())));
+    }
+    if(!db[table])return route.fulfill({status:404,contentType:'application/json',body:'[]'});
+    if(method==='GET'){
+      const field=idField(table),eq=u.searchParams.get(field)?.replace(/^eq\./,'');
+      const rows=eq?db[table].filter(x=>String(x[field])===String(eq)):db[table];
+      return ok(rows);
+    }
     if(method==='POST'){
       const incoming=JSON.parse(req.postData()||'[]'),rows=Array.isArray(incoming)?incoming:[incoming],field=idField(table);
       for(const row of rows){const i=db[table].findIndex(x=>String(x[field])===String(row[field]));if(i>=0)db[table][i]={...db[table][i],...row};else db[table].push({...row})}
@@ -29,7 +61,7 @@ async function installBackend(context,db){
     if(method==='PATCH'){
       const patch=JSON.parse(req.postData()||'{}'),field=idField(table),filter=u.searchParams.get(field),value=filter?.replace(/^eq\./,'');
       const changed=[];for(let i=0;i<db[table].length;i++)if(!value||String(db[table][i][field])===value){db[table][i]={...db[table][i],...patch};changed.push(db[table][i])}
-      return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(changed)});
+      return ok(changed);
     }
     if(method==='DELETE'){
       const field=idField(table),filter=u.searchParams.get(field),value=filter?.replace(/^eq\./,'');db[table]=db[table].filter(x=>String(x[field])!==value);return route.fulfill({status:204,body:''});
@@ -93,6 +125,7 @@ test('dashboard -> auth -> CRM -> lead/interactions/task -> refresh/reopen persi
   await page.fill('#q','MODIFICATO');
   await expect(page.locator('#list')).toContainText('QA Browser CRM');
   await page.fill('#q','');
+  await expect(page.locator('#list')).toContainText('QA Browser CRM');
 
   await page.getByRole('button',{name:'REGISTRA ESITO'}).first().click();
   await page.fill('#oOutcome','CONTATTO QA');
