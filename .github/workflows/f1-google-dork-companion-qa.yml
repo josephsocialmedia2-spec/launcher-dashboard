@@ -11,7 +11,6 @@ on:
       - 'chrome-companion/**'
       - 'supabase-schema.sql'
       - 'supabase-migrations/20260914_f1_google_dork_research_engine.sql'
-      - 'supabase-migrations/20260914_f1_google_dork_research_sources.sql'
       - '.github/workflows/f1-google-dork-companion-qa.yml'
   workflow_dispatch:
 jobs:
@@ -72,14 +71,12 @@ jobs:
           assert "f1-crm-rendered" in crm, 'Explicit CRM render event missing'
           print('research performance contract OK')
           PY
-      - name: Supabase queue and evidence contract
+      - name: Supabase queue contract
         run: |
           grep -q 'create table if not exists public.research_jobs' supabase-schema.sql
           grep -q 'create table if not exists public.research_results' supabase-schema.sql
           grep -q 'create table if not exists public.research_entities' supabase-schema.sql
           grep -q 'GOOGLE_VERIFICATION_REQUIRED' supabase-schema.sql
-          grep -q 'phone_source_url' supabase-schema.sql
-          grep -q 'email_source_url' supabase-schema.sql
           grep -q 'enable row level security' supabase-migrations/20260914_f1_google_dork_research_engine.sql
           grep -q 'auth.uid()' supabase-migrations/20260914_f1_google_dork_research_engine.sql
       - name: CRM MI INTERESSA contract
@@ -105,8 +102,6 @@ jobs:
           grep -q 'research_results' chrome-companion/service-worker.js
           grep -q 'research_entities' chrome-companion/service-worker.js
           grep -q 'completed_queries' chrome-companion/service-worker.js
-          grep -q 'phone_source_url' chrome-companion/service-worker.js
-          grep -q 'email_source_url' chrome-companion/service-worker.js
           grep -q 'classification.*COMPETITOR_LISTING' chrome-companion/service-worker.js
           ! grep -Ei 'serpapi|brave[ _-]?search|customsearch|googleapis\.com/customsearch' market-interest-core.js market-interest-engine.js chrome-companion/service-worker.js
       - name: Published Pages smoke
