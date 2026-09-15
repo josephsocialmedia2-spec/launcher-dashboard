@@ -4,8 +4,8 @@ if(!/\/crm\.html$/i.test(location.pathname))return;
 const Sync=window.F1Sync,Data=window.F1AcquisitionData;
 if(!Sync||!Data)return;
 const LOGIN='setup-cloud.html?return=crm.html';
-const originals={pullLeads:Data.pullLeads.bind(Data),pullTasks:Data.pullTasks.bind(Data),pullInteractions:Data.pullInteractions.bind(Data)};
-const perfMarks=new Set(),firstDataDone=new Set(),firstDataNames=new Set(Object.keys(originals));
+const originals={pullLeadPage:Data.pullLeadPage.bind(Data),pullLeads:Data.pullLeads.bind(Data),pullTasks:Data.pullTasks.bind(Data),pullInteractions:Data.pullInteractions.bind(Data)};
+const perfMarks=new Set(),firstDataDone=new Set(),firstDataNames=new Set(['pullLeadPage','pullTasks','pullInteractions']);
 let resolved=false,authenticated=false,lastError='';
 function pMark(name){try{if(!perfMarks.has(name)){performance.mark(name);perfMarks.add(name)}}catch(_){}}
 function pMeasure(name,start,end){try{performance.measure(name,start,end);const x=performance.getEntriesByName(name,'measure');return x.length?x[x.length-1].duration:null}catch(_){return null}}
@@ -19,7 +19,7 @@ function showGate(){if(authenticated)return;const list=document.getElementById('
 function unlock(){const cloud=document.getElementById('cloudStatus');if(cloud){cloud.textContent='CLOUD: SUPABASE AUTENTICATO · SOURCE OF TRUTH';cloud.className='cloud on'}for(const id of ['newBtn','syncBtn','excelImportBtn']){const b=document.getElementById(id);if(b)b.disabled=false}}
 async function validate(){try{if(!Sync.configured()){lastError='Configurazione Supabase non disponibile.';return false}if(!Sync.ready())return false;const ok=await Sync.ensureSession();if(!ok)return false;return true}catch(e){lastError='Verifica sessione non riuscita: '+String(e?.message||e);return false}finally{resolved=true;pMark('AUTH_COMPLETE');pMeasure('AUTH','F1_BOOT_START','AUTH_COMPLETE')}}
 const validation=validate().then(ok=>{authenticated=ok;if(ok)unlock();else showGate();return ok});
-for(const name of Object.keys(originals))Data[name]=async function(...args){const ok=await validation;if(!ok){showGate();throw authError()}if(!perfMarks.has('FIRST_DATA_START'))pMark('FIRST_DATA_START');try{return await originals[name](...args)}finally{if(!perfMarks.has('FIRST_DATA_END')){firstDataDone.add(name);if(firstDataDone.size===firstDataNames.size){pMark('FIRST_DATA_END');pMeasure('FIRST DATA','FIRST_DATA_START','FIRST_DATA_END');pMark('FIRST_RENDER_START')}}}};
+for(const name of Object.keys(originals))Data[name]=async function(...args){const ok=await validation;if(!ok){showGate();throw authError()}if(firstDataNames.has(name)&&!perfMarks.has('FIRST_DATA_START'))pMark('FIRST_DATA_START');try{return await originals[name](...args)}finally{if(firstDataNames.has(name)&&!perfMarks.has('FIRST_DATA_END')){firstDataDone.add(name);if(firstDataDone.size===firstDataNames.size){pMark('FIRST_DATA_END');pMeasure('FIRST DATA','FIRST_DATA_START','FIRST_DATA_END');pMark('FIRST_RENDER_START')}}}};
 function onFirstRender(){if(perfMarks.has('FIRST_RENDER_END'))return;pMark('FIRST_RENDER_END');pMeasure('RENDER','FIRST_RENDER_START','FIRST_RENDER_END');pMark('CRM_USABLE');pMeasure('TIME TO USABLE','F1_BOOT_START','CRM_USABLE');pReport()}
 window.addEventListener('f1-crm-rendered',onFirstRender);
 window.F1CRMPerf={mark:pMark,measure:pMeasure,duration:pDuration,report:pReport,marks:perfMarks};
