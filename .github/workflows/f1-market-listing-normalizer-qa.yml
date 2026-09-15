@@ -1,0 +1,73 @@
+name: F1 Market Listing Normalizer QA
+
+on:
+  push:
+    paths:
+      - 'market-listing-parser.js'
+      - 'market-listing-research.js'
+      - 'market-listing-ui.js'
+      - 'tests/market-listing-normalizer.node.js'
+      - 'crm.html'
+      - '.github/workflows/f1-market-listing-normalizer-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Static syntax and integration contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check market-listing-parser.js
+          node --check market-listing-research.js
+          node --check market-listing-ui.js
+          node --check tests/market-listing-normalizer.node.js
+          grep -q "version:'20260915-parser4'" market-listing-parser.js
+          grep -q "version:'20260915-research2'" market-listing-research.js
+          grep -q "version:'20260915-market7'" market-listing-ui.js
+          grep -q 'market-listing-parser.js?v=20260915-parser4' crm.html
+          grep -q 'market-listing-research.js?v=20260915-research2' crm.html
+          grep -q 'market-listing-ui.js?v=20260915-market7' crm.html
+          grep -q 'classification_evidence' market-listing-parser.js
+          grep -q 'agency_detected' market-listing-parser.js
+          grep -q 'research_queries' market-listing-ui.js
+          grep -q 'market_data:d' market-listing-ui.js
+          grep -q 'POSSIBILE_STESSO_IMMOBILE' market-listing-research.js
+      - name: Villar Dora hierarchy regression
+        run: node tests/market-listing-normalizer.node.js
+      - name: Live GitHub Pages smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
+          ok=0
+          for i in $(seq 1 60); do
+            if curl -fsSL --max-time 20 "$base/crm.html?qa=$RANDOM" -o /tmp/crm.html \
+              && curl -fsSL --max-time 20 "$base/market-listing-parser.js?qa=$RANDOM" -o /tmp/parser.js \
+              && curl -fsSL --max-time 20 "$base/market-listing-research.js?qa=$RANDOM" -o /tmp/research.js \
+              && curl -fsSL --max-time 20 "$base/market-listing-ui.js?qa=$RANDOM" -o /tmp/ui.js \
+              && grep -q 'market-listing-parser.js?v=20260915-parser4' /tmp/crm.html \
+              && grep -q 'market-listing-research.js?v=20260915-research2' /tmp/crm.html \
+              && grep -q 'market-listing-ui.js?v=20260915-market7' /tmp/crm.html \
+              && grep -q "version:'20260915-parser4'" /tmp/parser.js \
+              && grep -q "version:'20260915-research2'" /tmp/research.js \
+              && grep -q "version:'20260915-market7'" /tmp/ui.js \
+              && grep -q 'VILLA_TRIFAMILIARE' /tmp/parser.js \
+              && grep -q 'IDENTIFICA AGENZIA PUBBLICATRICE' /tmp/parser.js \
+              && grep -q 'POSSIBILE_STESSO_IMMOBILE' /tmp/research.js; then
+              ok=1
+              break
+            fi
+            sleep 5
+          done
+          test "$ok" = 1
+          echo 'PASS hierarchical listing parser/classification/dork live deployment'
