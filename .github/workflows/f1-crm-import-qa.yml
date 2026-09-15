@@ -50,6 +50,8 @@ jobs:
           grep -q 'CONFERMA E IMPORTA' crm.html
           grep -q 'crm_import_log' crm-import-app.js
           grep -q 'function ensureCloud()' crm-import-app.js
+          grep -q 'loadXlsxLibrary' crm-import-app.js
+          ! grep -q 'xlsx.full.min.js.*</script>' crm.html
           grep -q 'signInWithPassword' supabase-sync.js
           grep -q 'ensureSession' supabase-sync.js
           grep -q "authBase()+'user'" supabase-sync.js
@@ -58,7 +60,10 @@ jobs:
           grep -q "url: 'https://nqnmlsmeiynxbdojeyjt.supabase.co'" supabase-config.js
           grep -q "anonKey: 'sb_publishable_Clz5qPTkTtvwV0rqWTcfMQ_sCDSRgnu'" supabase-config.js
           grep -q 'crm-auth-guard.js?v=20260913-auth2' crm.html
-          grep -q 'f1-acquisition-data.js?v=20260913-auth2' crm.html
+          grep -q 'f1-acquisition-data.js?v=' crm.html
+          grep -q 'async function pullKpis(){requireCloud();' f1-acquisition-data.js
+          grep -q 'async function pullVisibleTasks(leadIds=' f1-acquisition-data.js
+          grep -q 'rpc/f1_crm_lead_page_v2' f1-acquisition-data.js
           grep -q 'async function pullLeads(){requireCloud();' f1-acquisition-data.js
           grep -q 'async function pullTasks(){requireCloud();' f1-acquisition-data.js
           grep -q 'async function pullInteractions(){requireCloud();' f1-acquisition-data.js
@@ -117,16 +122,19 @@ jobs:
               && curl -fsSL --max-time 20 "$base/supabase-config.js?qa=$RANDOM" -o /tmp/config.js \
               && curl -fsSL --max-time 20 "$base/supabase-sync.js?qa=$RANDOM" -o /tmp/sync.js \
               && curl -fsSL --max-time 20 "$base/f1-acquisition-data.js?qa=$RANDOM" -o /tmp/data.js \
+              && curl -fsSL --max-time 20 "$base/crm-import-app.js?qa=$RANDOM" -o /tmp/import.js \
               && curl -fsSL --max-time 20 "$base/setup-cloud.html?qa=$RANDOM" -o /tmp/setup.html \
               && grep -q 'CARICA CONTATTI EXCEL' /tmp/crm.html \
               && grep -q 'crm-auth-guard.js?v=20260913-auth2' /tmp/crm.html \
+              && ! grep -q 'xlsx.full.min.js.*</script>' /tmp/crm.html \
               && grep -q 'ACCESSO CRM RICHIESTO' /tmp/guard.js \
               && grep -q "url: 'https://nqnmlsmeiynxbdojeyjt.supabase.co'" /tmp/config.js \
               && grep -q 'ensureSession' /tmp/sync.js \
               && grep -q 'ACCESSO SUPABASE NEGATO' /tmp/data.js \
-              && grep -q 'async function pullLeads(){requireCloud();' /tmp/data.js \
-              && grep -q 'async function pullTasks(){requireCloud();' /tmp/data.js \
-              && grep -q 'async function pullInteractions(){requireCloud();' /tmp/data.js \
+              && grep -q 'async function pullKpis(){requireCloud();' /tmp/data.js \
+              && grep -q 'async function pullVisibleTasks(leadIds=' /tmp/data.js \
+              && grep -q 'rpc/f1_crm_lead_page_v2' /tmp/data.js \
+              && grep -q 'loadXlsxLibrary' /tmp/import.js \
               && grep -q 'ACCEDI AL CRM' /tmp/setup.html; then ok=1; break; fi
             sleep 5
           done
