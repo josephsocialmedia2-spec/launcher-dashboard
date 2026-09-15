@@ -1,0 +1,79 @@
+name: F1 Territory Panel Integrate
+
+on:
+  push:
+    paths:
+      - '.github/workflows/f1-territory-panel-integrate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Integrate territory panel into Dashboard and CRM
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          index = Path('index.html')
+          text = index.read_text(encoding='utf-8')
+          css = '<link rel="stylesheet" href="territory-operations-panel.css?v=20260916-territory1">'
+          if 'territory-operations-panel.css' not in text:
+              m = re.search(r'(<link rel="stylesheet" href="dashboard-workspace\.css[^>]*>)', text)
+              if not m:
+                  raise SystemExit('dashboard-workspace.css anchor missing')
+              text = text[:m.end()] + '\n' + css + text[m.end():]
+          js = '<script src="territory-operations-panel.js?v=20260916-territory1"></script>'
+          if 'territory-operations-panel.js' not in text:
+              m = re.search(r'(<script src="dashboard-workspace\.js[^>]*></script>)', text)
+              if not m:
+                  raise SystemExit('dashboard-workspace.js anchor missing')
+              text = text[:m.end()] + '\n' + js + text[m.end():]
+          index.write_text(text, encoding='utf-8')
+
+          crm = Path('crm.html')
+          text = crm.read_text(encoding='utf-8')
+          staff = '<script src="f1-staff-data.js?v=20260916-territory1"></script>'
+          if 'f1-staff-data.js' not in text:
+              anchor = '<script src="f1-acquisition-core.js"></script>'
+              if anchor not in text:
+                  raise SystemExit('f1-acquisition-core.js anchor missing')
+              text = text.replace(anchor, staff + anchor, 1)
+          handoff = '<script src="crm-territory-handoff.js?v=20260916-territory1"></script>'
+          if 'crm-territory-handoff.js' not in text:
+              text = text.replace('</body>', handoff + '\n</body>', 1)
+          crm.write_text(text, encoding='utf-8')
+      - name: Static contract
+        run: |
+          set -euo pipefail
+          node --check territory-operations-panel.js
+          node --check crm-territory-handoff.js
+          grep -q 'territory-operations-panel.css?v=20260916-territory1' index.html
+          grep -q 'territory-operations-panel.js?v=20260916-territory1' index.html
+          grep -q 'f1-staff-data.js?v=20260916-territory1' crm.html
+          grep -q 'crm-territory-handoff.js?v=20260916-territory1' crm.html
+          grep -q 'f1_territory_panel_state' territory-operations-panel.js
+          grep -q 'territory_observation' crm-territory-handoff.js
+      - name: Commit integration
+        run: |
+          set -euo pipefail
+          if git diff --quiet; then
+            echo 'Integration already present'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html crm.html
+          git commit -m 'feat: show territory operations in F1 dashboard'
+          git push origin HEAD:main
