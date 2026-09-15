@@ -92,6 +92,16 @@ jobs:
           npx playwright install --with-deps chromium
       - name: CRM functional and Phase 2 QA
         run: npx playwright test tests/unified-crm.spec.js tests/crm-phase2.spec.js --project=desktop-chromium
+      - name: Retain browser failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: crm-phase2-failure-${{ github.run_id }}
+          path: |
+            test-results
+            playwright-report
+          if-no-files-found: ignore
+          retention-days: 3
       - name: Live GitHub Pages smoke
         if: github.ref == 'refs/heads/main'
         shell: bash
