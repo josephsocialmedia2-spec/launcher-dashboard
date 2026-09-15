@@ -1,0 +1,64 @@
+name: F1 Market Listing Cache Bust
+
+on:
+  push:
+    paths:
+      - '.github/workflows/f1-market-listing-cache-bust.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Point CRM to hierarchical parser assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('crm.html')
+          s=p.read_text(encoding='utf-8')
+          rules={
+            r'market-listing-parser\.js\?v=[^"\']+':'market-listing-parser.js?v=20260915-parser4',
+            r'market-listing-research\.js\?v=[^"\']+':'market-listing-research.js?v=20260915-research2',
+            r'market-listing-ui\.js\?v=[^"\']+':'market-listing-ui.js?v=20260915-market7',
+          }
+          for pattern,replacement in rules.items():
+              s,n=re.subn(pattern,replacement,s)
+              if n != 1:
+                  raise SystemExit(f'Expected exactly one {pattern}, got {n}')
+          p.write_text(s,encoding='utf-8')
+          PY
+          grep -q 'market-listing-parser.js?v=20260915-parser4' crm.html
+          grep -q 'market-listing-research.js?v=20260915-research2' crm.html
+          grep -q 'market-listing-ui.js?v=20260915-market7' crm.html
+      - name: Regression before commit
+        run: |
+          node --check market-listing-parser.js
+          node --check market-listing-research.js
+          node --check market-listing-ui.js
+          node --check tests/market-listing-normalizer.node.js
+          node tests/market-listing-normalizer.node.js
+      - name: Commit CRM cache-bust only
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- crm.html; then
+            echo 'CRM asset versions already current.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add crm.html
+          git commit -m 'fix: activate hierarchical listing normalizer in CRM'
+          git push origin HEAD:main
