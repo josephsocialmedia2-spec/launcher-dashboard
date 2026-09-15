@@ -9,7 +9,6 @@ on:
       - 'crm-unified-app.js'
       - 'crm.html'
       - 'chrome-companion/**'
-      - 'supabase-schema.sql'
       - 'supabase-migrations/20260914_f1_google_dork_research_engine.sql'
       - '.github/workflows/f1-google-dork-companion-qa.yml'
   workflow_dispatch:
@@ -73,12 +72,13 @@ jobs:
           PY
       - name: Supabase queue contract
         run: |
-          grep -q 'create table if not exists public.research_jobs' supabase-schema.sql
-          grep -q 'create table if not exists public.research_results' supabase-schema.sql
-          grep -q 'create table if not exists public.research_entities' supabase-schema.sql
-          grep -q 'GOOGLE_VERIFICATION_REQUIRED' supabase-schema.sql
-          grep -q 'enable row level security' supabase-migrations/20260914_f1_google_dork_research_engine.sql
-          grep -q 'auth.uid()' supabase-migrations/20260914_f1_google_dork_research_engine.sql
+          MIG='supabase-migrations/20260914_f1_google_dork_research_engine.sql'
+          grep -q 'create table if not exists public.research_jobs' "$MIG"
+          grep -q 'create table if not exists public.research_results' "$MIG"
+          grep -q 'create table if not exists public.research_entities' "$MIG"
+          grep -q 'GOOGLE_VERIFICATION_REQUIRED' "$MIG"
+          grep -q 'enable row level security' "$MIG"
+          grep -q 'auth.uid()' "$MIG"
       - name: CRM MI INTERESSA contract
         run: |
           grep -q 'market-interest-core.js?v=20260915-research2' market-listing-ui.js
