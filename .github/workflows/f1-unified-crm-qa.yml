@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'crm.html'
+      - 'crm-auth-guard.js'
       - 'crm-unified-app.js'
       - 'f1-acquisition-data.js'
       - 'supabase-sync.js'
@@ -35,6 +36,7 @@ jobs:
           set -euo pipefail
           node --check f1-acquisition-data.js
           node --check supabase-sync.js
+          node --check crm-auth-guard.js
           node --check f1-opportunity-crm.js
           node --check f1-opportunity-crm-ui-v2.js
           node --check crm-unified-app.js
@@ -44,6 +46,14 @@ jobs:
           grep -q 'SALVA NEL CRM' f1-opportunity-crm-ui-v2.js
           grep -q 'CRM legacy disattivato' supabase-sync.js
           grep -q 'READ_ONLY_CACHE' system-registry.json
+          grep -q "F1_BOOT_START" crm-auth-guard.js
+          grep -q "AUTH_COMPLETE" crm-auth-guard.js
+          grep -q "FIRST_DATA_START" crm-auth-guard.js
+          grep -q "FIRST_DATA_END" crm-auth-guard.js
+          grep -q "FIRST_RENDER_START" crm-auth-guard.js
+          grep -q "FIRST_RENDER_END" crm-auth-guard.js
+          grep -q "CRM_USABLE" crm-auth-guard.js
+          grep -q "console.table" crm-auth-guard.js
           ! grep -q "f1OSStateV3" f1-os-mobile.html
           ! grep -q "f1CRMContacts.*contatti" gestione-app.html
       - name: Install browser QA
@@ -60,9 +70,11 @@ jobs:
           ok=0
           for i in $(seq 1 60); do
             if curl -fsSL --max-time 20 "$base/crm.html?qa=$RANDOM" -o /tmp/crm.html \
+              && curl -fsSL --max-time 20 "$base/crm-auth-guard.js?qa=$RANDOM" -o /tmp/guard.js \
               && curl -fsSL --max-time 20 "$base/f1-opportunity-crm.js?qa=$RANDOM" -o /tmp/opp.js \
               && curl -fsSL --max-time 20 "$base/f1-os-mobile.html?qa=$RANDOM" -o /tmp/legacy.html \
               && grep -q 'CRM UNIFICATO' /tmp/crm.html \
+              && grep -q 'F1_BOOT_START' /tmp/guard.js \
               && grep -q 'OPPORTUNITA_GIA_PRESENTE' /tmp/opp.js \
               && grep -q 'Modulo legacy disattivato' /tmp/legacy.html; then ok=1; break; fi
             sleep 5
