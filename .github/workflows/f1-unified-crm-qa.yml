@@ -61,6 +61,7 @@ jobs:
           grep -q "rpc/f1_crm_lead_page" f1-acquisition-data.js
           grep -q "PAGE_SIZE=50" crm-unified-app.js
           grep -q "create or replace function public.f1_crm_lead_page" supabase-migrations/20260915_f1_crm_paginated_lead_page.sql
+          ! grep -Fq 'l.*' supabase-migrations/20260915_f1_crm_paginated_lead_page.sql
           ! grep -q "f1OSStateV3" f1-os-mobile.html
           ! grep -q "f1CRMContacts.*contatti" gestione-app.html
       - name: Install browser QA
