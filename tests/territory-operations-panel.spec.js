@@ -12,8 +12,8 @@ test('territory panel renders current street, counters, pending CRM action and r
   await mountPanel(page,{progress:{progress_id:'p1',comune:'Avigliana',zona:'Zona A',via:'Via Roma',civic_start:'1',last_civic:'27',next_civic:'28',status:'DA_CONSUNTIVARE'},summary:{civics:27,condominiums:3,activities:7,contacts:2,news:4,pending_crm:3,callbacks:1},pending_news:[{observation_id:OBS,news_type:'PROPRIETARIO_VALUTA_VENDITA',via:'Via Roma',civico:'27',detail:'Proprietario valuta vendita'}]});
   const panel=page.locator('#f1TerritoryPanel');
   await expect(panel).toContainText('RICERCA TERRITORIALE');
-  await expect(panel).toContainText('AVIGLIANA · ZONA A');
-  await expect(panel).toContainText('VIA ROMA');
+  await expect(panel).toContainText('Avigliana · Zona A');
+  await expect(panel).toContainText('Via Roma');
   await expect(panel).toContainText('Civici lavorati: 1–27');
   await expect(panel).toContainText('RIPARTI DAL CIVICO 28');
   await expect(panel).toContainText('DA INSERIRE NEL CRM: 3');
