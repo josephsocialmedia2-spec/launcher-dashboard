@@ -8,7 +8,8 @@ const PROTECTED_SCRIPTS=[
   'f1-tour-admin-dashboard.js?v=20260916-tour1',
   'f1-staff-access-panel.js?v=20260916-access1',
   'f1-realtime.js?v=20260916-mobile1',
-  'f1-desktop-mobile-bridge.js?v=20260916-mobile1'
+  'f1-desktop-mobile-bridge.js?v=20260916-mobile1',
+  'f1-office-sign-link.js?v=20260916-office1'
 ];
 let ok=false,settled=false;
 function reveal(){document.documentElement.classList.remove('f1-auth-pending')}
