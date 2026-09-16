@@ -15,8 +15,14 @@
     });
   }
 
-  // PWA bootstrap only. The previous implementation injected buyer-demand and
-  // Radar Edilizio sections directly into oggi.html. The Acquisition Command
-  // Center now owns its layout explicitly, so dynamic dashboard mutation here
-  // would recreate a second source of UI truth.
+  function loadOnce(src,id){
+    if(document.getElementById(id)||document.querySelector(`script[src^="${src.split('?')[0]}"]`))return;
+    const s=document.createElement('script');s.id=id;s.src=src;s.defer=true;document.body.appendChild(s);
+  }
+
+  const page=location.pathname.split('/').pop().toLowerCase();
+  if(page==='notiziere-mobile.html') loadOnce('f1-sign-capture.js?v=20260916-sign-office1','f1SignCaptureLoader');
+  if(page==='ricerca-territoriale.html') loadOnce('f1-office-sign-link.js?v=20260916-office1','f1OfficeSignLinkLoader');
+
+  // PWA bootstrap only. The Acquisition Command Center owns its layout explicitly.
 })();
