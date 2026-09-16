@@ -1,133 +1,23 @@
 <!doctype html>
 <html lang="it">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#070907">
-<title>F1 Immobiliare · Postazione Operativa</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="daily-command-panel.css?v=20260914-ia004-1">
-<link rel="stylesheet" href="dashboard-workspace.css?v=20260914-ia004-1">
-<link rel="stylesheet" href="territory-operations-panel.css?v=20260916-territory3">
-<link rel="stylesheet" href="f1-ai-guide.css?v=20260914-guide2">
-<link rel="stylesheet" href="f1-guided-workspace.css?v=20260914-guide5">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#087842">
+  <title>F1 Immobiliare · Apertura dashboard</title>
+  <meta name="robots" content="noindex">
+  <script>
+    (() => {
+      const params = new URLSearchParams(location.search);
+      if (!params.has('utm_source')) params.set('utm_source', 'chatgpt.com');
+      const target = 'ricerca-territoriale.html?' + params.toString() + (location.hash || '');
+      location.replace(target);
+    })();
+  </script>
 </head>
 <body>
-<header class="f1-app-header">
-  <div class="f1-brand">
-    <div class="f1-mark">F1</div>
-    <div class="f1-brand-copy"><b>F1 IMMOBILIARE</b><span>POSTAZIONE OPERATIVA · RICERCA · ACQUISIZIONE · VENDITA · PUBBLICITÀ</span></div>
-  </div>
-  <div class="f1-userbar">
-    <div class="f1-user"><b id="f1StaffName">FUNZIONARIO F1</b><span id="f1StaffRole">PROFILO IN CARICAMENTO</span></div>
-    <span id="f1CloudState" class="f1-system-pill warn">CLOUD · VERIFICA</span>
-    <span id="f1SyncState" class="f1-system-pill warn">DATI · VERIFICA</span>
-  </div>
-  <div class="f1-clock"><b id="f1HeaderClock">--:--</b><span id="f1HeaderDate">—</span></div>
-  <nav class="f1-quicknav" aria-label="Azioni rapide">
-    <a href="index.html"><i class="fa-solid fa-table-columns"></i>DASHBOARD</a>
-    <a href="crm.html"><i class="fa-solid fa-address-book"></i>CRM</a>
-    <a href="oggi.html#tasks"><i class="fa-solid fa-list-check"></i>TASK</a>
-    <a href="funzionario-notiziere.html"><i class="fa-solid fa-bell"></i>NOTIFICHE</a>
-    <button id="f1Logout" type="button"><i class="fa-solid fa-right-from-bracket"></i>ESCI</button>
-  </nav>
-</header>
-<main class="wrap">
-  <section class="f1-workspace" aria-label="Postazione operativa F1">
-    <div class="f1-departments">
-      <section class="f1-dept research" id="reparto-ricerca">
-        <header class="f1-dept-head"><div class="kicker">01 · INDIVIDUA E VERIFICA</div><h2>RICERCA</h2><p>Trova opportunità, segnali, zone e risultati utili.</p></header>
-        <div class="f1-card-stack">
-          <a class="f1-op-card priority" data-card="leads_analyze" href="crm.html"><span class="f1-card-badge"></span><span class="ico"><i class="fa-solid fa-magnifying-glass-chart"></i></span><span><h3>LEAD DA ANALIZZARE</h3><p>Lead reali ancora da qualificare.</p></span><span class="f1-metric" data-metric="leads_analyze"><b>…</b><span>DA ANALIZZARE</span></span></a>
-          <a class="f1-op-card priority" data-card="results_today" href="centrale-risultati.html"><span class="f1-card-badge"></span><span class="ico"><i class="fa-solid fa-list-check"></i></span><span><h3>RISULTATI TROVATI OGGI</h3><p>Nuovi elementi registrati oggi.</p></span><span class="f1-metric" data-metric="results_today"><b>…</b><span>OGGI</span></span></a>
-          <a class="f1-op-card priority" href="seller-radar-unico.html?view=vendita"><span class="ico"><i class="fa-solid fa-radar"></i></span><span><h3>NUOVA RICERCA</h3><p>Avvia Seller Radar sull'area di lavoro.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
-          <a class="f1-op-card" href="territory-control.html"><span class="ico"><i class="fa-solid fa-map-location-dot"></i></span><span><h3>ZONE ASSEGNATE</h3><p>Territori collegati al profilo.</p></span><span class="f1-metric" data-metric="zones"><b>…</b><span>ZONE</span></span></a>
-          <a class="f1-op-card" href="address-intelligence.html"><span class="ico"><i class="fa-solid fa-bolt"></i></span><span><h3>QUERY RAPIDE</h3><p>Indirizzo, via, microzona e incroci.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
-          <a class="f1-op-card" href="market-preview.html"><span class="ico"><i class="fa-solid fa-binoculars"></i></span><span><h3>PORTALI MONITORATI</h3><p>Market Preview e osservazione mercato.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
-          <a class="f1-op-card" href="neighborhood-intelligence.html"><span class="ico"><i class="fa-solid fa-filter-circle-dollar"></i></span><span><h3>LEAD GREZZI</h3><p>Segnali da ripulire e classificare.</p></span><span class="f1-metric" data-metric="raw_leads"><b>…</b><span>LEAD</span></span></a>
-          <a class="f1-op-card" href="centrale-risultati.html"><span class="ico"><i class="fa-solid fa-file-export"></i></span><span><h3>RISULTATI / ESPORTAZIONI</h3><p>Coda unica dei risultati prodotti.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
-        </div>
-      </section>
-
-      <section class="f1-dept acquisition" id="reparto-acquisizione">
-        <header class="f1-dept-head"><div class="kicker">02 · CONTATTA E QUALIFICA</div><h2>ACQUISIZIONE</h2><p>Prospecting, chiamate, script, follow-up e appuntamenti.</p></header>
-        <div class="f1-card-stack">
-          <a class="f1-op-card priority" data-card="owners_contact" href="telefonate-oggi.html"><span class="f1-card-badge"></span><span class="ico"><i class="fa-solid fa-user-tag"></i></span><span><h3>PROPRIETARI DA CONTATTARE</h3><p>Task di contatto/prospecting aperti.</p></span><span class="f1-metric" data-metric="owners_contact"><b>…</b><span>DA CONTATTARE</span></span></a>
-          <a class="f1-op-card priority" href="telefonate-oggi.html"><span class="ico"><i class="fa-solid fa-phone"></i></span><span><h3>CHIAMATE DEL GIORNO</h3><p>Esiti telefonici già registrati oggi.</p></span><span class="f1-metric" data-metric="calls_today"><b>…</b><span>ESEGUITE</span></span></a>
-          <a class="f1-op-card priority" data-card="followup_overdue" href="oggi.html#tasks"><span class="f1-card-badge"></span><span class="ico"><i class="fa-solid fa-clock-rotate-left"></i></span><span><h3>FOLLOW-UP SCADUTI</h3><p>Task aperti oltre la scadenza.</p></span><span class="f1-metric" data-metric="followup_overdue"><b>…</b><span>SCADUTI</span></span></a>
-          <a class="f1-op-card" href="script.html"><span class="ico"><i class="fa-solid fa-headset"></i></span><span><h3>SCRIPT F1</h3><p>Archivio copioni commerciali F1.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
-          <a class="f1-op-card" href="script-operativo.html"><span class="ico"><i class="fa-solid fa-comments"></i></span><span><h3>OBIEZIONI</h3><p>Gestione guidata durante il contatto.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
-          <a class="f1-op-card" href="oggi.html#tasks"><span class="ico"><i class="fa-solid fa-arrow-rotate-right"></i></span><span><h3>FOLLOW-UP</h3><p>Richiami e prossime azioni aperte.</p></span><span class="f1-metric" data-metric="followup_open"><b>…</b><span>APERTI</span></span></a>
-          <a class="f1-op-card" href="crm.html"><span class="ico"><i class="fa-solid fa-calendar-check"></i></span><span><h3>APPUNTAMENTI ACQUISIZIONE</h3><p>Task appuntamento ancora aperti.</p></span><span class="f1-metric" data-metric="appointments"><b>…</b><span>APERTI</span></span></a>
-          <a class="f1-op-card" href="funzionario-notiziere.html"><span class="ico"><i class="fa-solid fa-newspaper"></i></span><span><h3>NOTIZIE IMMOBILIARI</h3><p>Notizie inserite dal funzionario oggi.</p></span><span class="f1-metric" data-metric="news"><b>…</b><span>OGGI</span></span></a>
-        </div>
-      </section>
-
-      <section class="f1-dept sales" id="reparto-vendita">
-        <header class="f1-dept-head"><div class="kicker">03 · ABBINA E CONVERTI</div><h2>VENDITA</h2><p>Immobili, trattative, acquirenti e match domanda/offerta.</p></header>
-        <div class="f1-card-stack">
-          <a class="f1-op-card priority" href="crm.html"><span class="ico"><i class="fa-solid fa-house-circle-check"></i></span><span><h3>IMMOBILI ATTIVI</h3><p>Immobili non venduti e non archiviati.</p></span><span class="f1-metric" data-metric="properties_active"><b>…</b><span>ATTIVI</span></span></a>
-          <a class="f1-op-card priority" data-card="deals" href="crm.html"><span class="f1-card-badge"></span><span class="ico"><i class="fa-solid fa-handshake"></i></span><span><h3>TRATTATIVE</h3><p>Lead in proposta, negoziazione o trattativa.</p></span><span class="f1-metric" data-metric="deals"><b>…</b><span>APERTE</span></span></a>
-          <a class="f1-op-card priority" href="oggi.html#tasks"><span class="ico"><i class="fa-solid fa-user-clock"></i></span><span><h3>ACQUIRENTI DA RICONTATTARE</h3><p>Richieste immobiliari ancora attive.</p></span><span class="f1-metric" data-metric="buyers_recall"><b>…</b><span>ATTIVI</span></span></a>
-          <a class="f1-op-card" href="just-listed-sold.html"><span class="ico"><i class="fa-solid fa-house-circle-check"></i></span><span><h3>IMMOBILI VENDUTI</h3><p>Storico immobili con stato venduto.</p></span><span class="f1-metric" data-metric="properties_sold"><b>…</b><span>VENDUTI</span></span></a>
-          <a class="f1-op-card" href="cerco-casa.html"><span class="ico"><i class="fa-solid fa-users-viewfinder"></i></span><span><h3>ACQUIRENTI ATTIVI</h3><p>Richieste di ricerca attive.</p></span><span class="f1-metric" data-metric="buyers_active"><b>…</b><span>RICHIESTE</span></span></a>
-          <a class="f1-op-card" href="f1-crm-intelligence.html"><span class="ico"><i class="fa-solid fa-code-compare"></i></span><span><h3>MATCH DOMANDA / OFFERTA</h3><p>Abbinamenti calcolati dal CRM.</p></span><span class="f1-metric" data-metric="matches"><b>…</b><span>MATCH</span></span></a>
-          <a class="f1-op-card" href="just-listed-sold.html"><span class="ico"><i class="fa-solid fa-people-roof"></i></span><span><h3>OPEN HOUSE</h3><p>Task Open House presenti nel sistema.</p></span><span class="f1-metric" data-metric="open_house"><b>…</b><span>TASK</span></span></a>
-          <a class="f1-op-card" href="crm.html"><span class="ico"><i class="fa-solid fa-house-user"></i></span><span><h3>RICHIESTE IMMOBILIARI</h3><p>Richieste salvate nel CRM F1.</p></span><span class="f1-metric" data-metric="requests"><b>…</b><span>RICHIESTE</span></span></a>
-        </div>
-      </section>
-
-      <section class="f1-dept advertising" id="reparto-pubblicita">
-        <header class="f1-dept-head"><div class="kicker">04 · COMUNICA E DISTRIBUISCI</div><h2>PUBBLICITÀ</h2><p>Contenuti, campagne, programmazione e materiali territoriali.</p></header>
-        <div class="f1-card-stack">
-          <a class="f1-op-card priority" href="content-opportunity-engine.html"><span class="ico"><i class="fa-solid fa-wand-magic-sparkles"></i></span><span><h3>CONTENUTI DEL GIORNO</h3><p>Campagne aggiornate o create oggi.</p></span><span class="f1-metric" data-metric="content_today"><b>…</b><span>CAMPAGNE</span></span></a>
-          <a class="f1-op-card priority" target="_blank" rel="noopener" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/content-center.html"><span class="ico"><i class="fa-solid fa-paper-plane"></i></span><span><h3>POST DA PUBBLICARE</h3><p>Apri il centro contenuti operativo.</p></span><span class="f1-metric" data-metric="scheduled_posts"><b>…</b><span>PROGRAMMATE</span></span></a>
-          <a class="f1-op-card priority" href="oggi.html#tasks"><span class="ico"><i class="fa-solid fa-triangle-exclamation"></i></span><span><h3>ATTIVITÀ IN SCADENZA</h3><p>Usa la coda task e le priorità reali.</p></span><span class="f1-metric" data-metric="followup_task"><b>…</b><span>BLOCCHI</span></span></a>
-          <a class="f1-op-card" href="content-opportunity-engine.html"><span class="ico"><i class="fa-solid fa-palette"></i></span><span><h3>GRAFICHE</h3><p>Hook, CTA, prompt e creatività.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
-          <a class="f1-op-card" href="facebook-ottimizzazione.html"><span class="ico"><i class="fa-solid fa-bullhorn"></i></span><span><h3>ANNUNCI</h3><p>Campagne social registrate nel sistema.</p></span><span class="f1-metric" data-metric="ads"><b>…</b><span>CAMPAGNE</span></span></a>
-          <a class="f1-op-card" target="_blank" rel="noopener" href="https://josephsocialmedia2-spec.github.io/open-social-scheduler/content-center.html"><span class="ico"><i class="fa-solid fa-calendar-days"></i></span><span><h3>POST PROGRAMMATI</h3><p>Campagne con stato pianificato.</p></span><span class="f1-metric" data-metric="scheduled_posts"><b>…</b><span>PROGRAMMATE</span></span></a>
-          <a class="f1-op-card" target="_blank" rel="noopener" href="https://cdn.shopify.com/s/files/1/1046/2730/6835/files/F1_Immobiliare_-_Porta_a_Porta_Volantino_Premium.pdf?v=1784845457"><span class="ico"><i class="fa-solid fa-envelopes-bulk"></i></span><span><h3>VOLANTINI / MATERIALI</h3><p>Procedura premium porta a porta.</p></span><span class="f1-metric"><b>→</b><span>APRI</span></span></a>
-          <a class="f1-op-card" href="content-opportunity-engine.html"><span class="ico"><i class="fa-solid fa-chart-line"></i></span><span><h3>KPI CAMPAGNE / VISIBILITÀ</h3><p>Campagne operative ancora attive.</p></span><span class="f1-metric" data-metric="campaign_kpi"><b>…</b><span>ATTIVE</span></span></a>
-        </div>
-      </section>
-    </div>
-
-    <nav class="f1-utilities" aria-label="Strumenti F1 preservati">
-      <span class="label">STRUMENTI:</span>
-      <span id="flowResume"><a class="flow-main-btn" href="nuova-opportunita.html">+ NUOVA OPPORTUNITÀ</a></span>
-      <a href="program-90.html"><i class="fa-solid fa-stopwatch"></i>90 GIORNI</a>
-      <a href="network-reconstruction.html"><i class="fa-solid fa-share-nodes"></i>RETE 250</a>
-      <a href="gruppi-social-f1.html"><i class="fa-brands fa-facebook"></i>GRUPPI SOCIAL</a>
-      <a target="_blank" rel="noopener" href="https://calendar.google.com/calendar/u/0/r"><i class="fa-solid fa-calendar"></i>CALENDAR</a>
-      <a target="_blank" rel="noopener" href="https://f1immobiliare.com/pages/f1-academy"><i class="fa-solid fa-graduation-cap"></i>F1 ACADEMY</a>
-      <a target="_blank" rel="noopener" href="https://f1immobiliare.com/pages/role-play-academy"><i class="fa-solid fa-people-arrows"></i>ROLE PLAY</a>
-    </nav>
-
-    <section class="legacy-data-bridge" aria-hidden="true">
-      <section id="program90Widget"><p id="p90Stage"></p><div id="p90Progress"></div><b id="p90Day">— / 90</b><b id="p90Completed">0 / 4</b><b id="p90Time">0m / 6h 30m</b><b id="p90Prospecting">0 / 20</b><b id="p90Preview">0 / 5–7</b><b id="p90Followup">0 / 10</b></section>
-      <section id="network250Widget"><p id="netStage"></p><div id="netProgressBar"></div><b id="netSourcesDone">0 / 250</b><b id="netPeople">0</b><b id="netDup">0</b><b id="netReactivate">0</b></section>
-      <section id="marketPreviewWidget"><p id="mpStage"></p><span id="mpVisionText"></span><div id="mpVisionBar"></div><span id="mpTimeText"></span><div id="mpTimeBar"></div><b id="mpVisioned">0</b><b id="mpTime">0</b><b id="mpPrivate">0</b><b id="mpExpired">0</b><b id="mpOpp">0</b></section>
-      <section id="jlsWidget"><p id="jlsStage"></p><span id="jlsProgressText"></span><div id="jlsProgressBar"></div><b id="jlsDone">0</b><b id="jlsTalk">0</b><b id="jlsReferral">0</b><b id="jlsSeller">0</b><b id="jlsAppt">0</b></section>
-    </section>
-  </section>
-</main>
-<script src="supabase-config.js?v=20260914-auth"></script>
-<script src="supabase-sync.js?v=20260914-auth"></script>
-<script src="f1-staff-data.js?v=20260914-staff"></script>
-<script src="f1-territory-guard.js?v=20260914-territory1"></script>
-<script src="f1-operational-flow.js?v=20260914-flow"></script>
-<script src="market-preview-widget.js?v=20260914-mp3"></script>
-<script src="just-listed-sold-widget.js?v=20260913-w2"></script>
-<script src="program-90-widget.js?v=20260913-p90-1"></script>
-<script src="program-90-phase-widget.js?v=20260913-p90-adv2"></script>
-<script src="network-reconstruction-widget.js?v=20260913-net1"></script>
-<script src="daily-command-panel.js?v=20260914-ia004-1"></script>
-<script src="dashboard-workspace.js?v=20260914-ia004-1"></script>
-<script src="territory-operations-panel.js?v=20260916-territory3"></script>
-<script src="f1-operational-procedures.js?v=20260914-docops1"></script>
-<script src="f1-priority-zero.js?v=20260914-priority0-1"></script>
-<script src="f1-ai-guide.js?v=20260914-guide5"></script>
-<script src="f1-guided-workspace.js?v=20260914-guide5"></script>
-<script src="f1-priority-zero-bridge.js?v=20260914-priority0-bridge1"></script>
+  <noscript>
+    <a href="ricerca-territoriale.html?utm_source=chatgpt.com">Apri la dashboard F1 Immobiliare</a>
+  </noscript>
 </body>
 </html>
