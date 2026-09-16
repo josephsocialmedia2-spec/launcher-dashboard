@@ -1,0 +1,49 @@
+(()=>{'use strict';
+const $=id=>document.getElementById(id),txt=v=>String(v??'').trim();
+let state=null,profile=null,progress=null,civic='',busy=false,completedResult=null;
+function setStatus(message,kind=''){const e=$('status');e.textContent=message;e.className='status'+(kind?' '+kind:'')}
+function formStatus(form,message,bad=false){const e=form.querySelector('[data-form-status]');if(!e)return;e.textContent=message;e.className='status'+(bad?' err':'')}
+function setBusy(on){busy=!!on;['observationBtn','personBtn','newsBtn','completeBtn','pauseBtn'].forEach(id=>{const e=$(id);if(e)e.disabled=busy||!!completedResult})}
+function actionButtons(enabled){['mapBtn','observationBtn','personBtn','newsBtn','completeBtn','pauseBtn'].forEach(id=>{const e=$(id);if(!e)return;if('disabled'in e)e.disabled=!enabled;if(id==='mapBtn')e.style.pointerEvents=enabled?'':'none'})}
+function openDlg(id){const d=$(id);if(d&&!d.open)d.showModal()}
+function closeDlg(id){const d=$(id);if(d?.open)d.close()}
+function currentAddress(){return[progress?.comune,progress?.zona,progress?.via,civic&&'civico '+civic].map(txt).filter(Boolean).join(' · ')}
+function render(){
+  progress=state?.territory?.progress||null;civic=window.F1NotiziereEngine.civicOf(progress);
+  $('where').textContent=progress?[progress.comune,progress.zona,progress.via].map(txt).filter(Boolean).join(' · ')||'Territorio assegnato':'Nessun giro territoriale assegnato';
+  $('civic').textContent=civic||'—';$('progressState').textContent=txt(progress?.status||'NESSUN GIRO').replaceAll('_',' ');
+  if(progress&&civic){$('mapBtn').href=F1NotiziereEngine.mapUrl(progress);actionButtons(true);setStatus(`SEI QUI · ${currentAddress()}. Esegui le istruzioni e registra solo ciò che accade realmente.`)}
+  else{actionButtons(false);$('mapBtn').removeAttribute('href');if(progress)setStatus('PERCORSO CIVICI NON CONFIGURATO · F1 non inventa il prossimo civico. Torna alla Home Operativa e verifica l’assegnazione.','warn');else setStatus('NESSUN GIRO ASSEGNATO · non iniziare un percorso inventato. Torna alla Home Operativa.','warn')}
+  $('navNext').disabled=true;$('navNext').textContent='AVANTI →';
+}
+async function boot(){
+  try{
+    if(!window.F1Sync?.configured?.()||!await F1Sync.ensureSession()){location.replace('setup-cloud.html?return='+encodeURIComponent('notiziere-civico.html'+location.search));return}
+    profile=await F1StaffData.me();state=await F1NotiziereEngine.load({force:true});render();document.documentElement.classList.remove('f1-auth-pending');
+    const a=new URLSearchParams(location.search).get('action');if(a==='person'&&civic)openDlg('personDlg');if(a==='news'&&civic)openDlg('newsDlg');if(a==='observation'&&civic)openDlg('observationDlg');
+  }catch(e){document.documentElement.classList.remove('f1-auth-pending');setStatus('ERRORE · '+String(e?.message||e),'err');actionButtons(false)}
+}
+async function saveObservation(ev){ev.preventDefault();if(busy||!progress)return;const form=ev.currentTarget;if(!(form instanceof HTMLFormElement)||!form.reportValidity())return;const fd=new FormData(form);setBusy(true);formStatus(form,'SALVATAGGIO OSSERVAZIONE…');try{await F1NotiziereEngine.addObservation(progress.progress_id,{observation_type:fd.get('observation_type'),building:fd.get('building'),detail:fd.get('detail'),notes:fd.get('notes'),source:'RICERCA TERRITORIALE',status:'OSSERVAZIONE'});form.reset();formStatus(form,'✓ OSSERVAZIONE SALVATA');setStatus('✓ OSSERVAZIONE REGISTRATA · continua a lavorare questo civico.');setTimeout(()=>closeDlg('observationDlg'),450)}catch(e){formStatus(form,'SALVATAGGIO NON COMPLETATO — I DATI SONO STATI MANTENUTI. '+String(e?.message||e),true)}finally{setBusy(false)}}
+async function savePerson(ev){ev.preventDefault();if(busy||!progress)return;const form=ev.currentTarget;if(!(form instanceof HTMLFormElement)||!form.reportValidity())return;const fd=new FormData(form),outcome=txt(fd.get('outcome'));setBusy(true);formStatus(form,'REGISTRAZIONE PERSONA…');try{
+    const rule=F1NotiziereEngine.personRule(outcome,fd.get('callback_date'));
+    const nome=txt(fd.get('nome')),cognome=txt(fd.get('cognome')),telefono=txt(fd.get('telefono')),email=txt(fd.get('email')),notes=txt(fd.get('notes'));
+    if(!nome&&!cognome&&!telefono&&!email){await F1NotiziereEngine.addObservation(progress.progress_id,{observation_type:'PERSONA_ANONIMA',detail:`Conversazione al civico. Esito: ${outcome}.${notes?' '+notes:''}`,source:'RICERCA TERRITORIALE',notes:'Nessun identificativo personale raccolto.',status:'OSSERVAZIONE'});form.reset();formStatus(form,'✓ CONVERSAZIONE REGISTRATA COME OSSERVAZIONE');setStatus('✓ CONVERSAZIONE REGISTRATA · nessuna identità inventata.');setTimeout(()=>closeDlg('personDlg'),500);return}
+    const payload={nome,cognome,telefono,email,comune:txt(progress.comune),zona:txt(progress.zona),via:[txt(progress.via),civic].filter(Boolean).join(' '),source_type:'TERRITORY',source:'NOTIZIERE_TERRITORIO',lead_reason:`ESITO_GUIDATO_${outcome}`,notes:[`Esito guidato: ${outcome}`,notes].filter(Boolean).join('\n'),status:rule.status,next_action:rule.next_action,next_action_date:rule.next_action_date||'',do_not_contact:!!rule.do_not_contact,created_by:[profile?.first_name,profile?.last_name].filter(Boolean).join(' ')};
+    const saved=await F1StaffData.createOrLinkLead(payload);if(!saved)throw new Error('SALVATAGGIO CONTATTO NON CONFERMATO');await F1NotiziereEngine.registerContact(progress.progress_id);form.reset();$('callbackWrap').hidden=true;formStatus(form,'✓ PERSONA REGISTRATA · STATO E PROSSIMA AZIONE ASSEGNATI');setStatus(`✓ PERSONA REGISTRATA · prossima azione: ${rule.next_action}.`);setTimeout(()=>closeDlg('personDlg'),550)
+  }catch(e){formStatus(form,'SALVATAGGIO NON COMPLETATO — I DATI SONO STATI MANTENUTI. '+String(e?.message||e),true)}finally{setBusy(false)}}
+async function saveNews(ev){ev.preventDefault();if(busy||!progress)return;const form=ev.currentTarget;if(!(form instanceof HTMLFormElement)||!form.reportValidity())return;const fd=new FormData(form),eventType=txt(fd.get('event_type'));setBusy(true);formStatus(form,'SALVATAGGIO NOTIZIA…');try{await F1NotiziereEngine.addObservation(progress.progress_id,{observation_type:'NOTIZIA_IMMOBILIARE',news_type:'DA_CLASSIFICARE',detail:fd.get('detail'),source:fd.get('source')||'RICERCA TERRITORIALE',person_name:fd.get('person_name'),notes:[`TIPO RACCOLTA: ${eventType}`,txt(fd.get('notes'))].filter(Boolean).join('\n'),status:'DA_INSERIRE_CRM'});form.reset();formStatus(form,'✓ NOTIZIA SALVATA · DA CLASSIFICARE / VERIFICARE');setStatus('✓ NOTIZIA REGISTRATA · F1 non ha inventato un livello N0–N6. Il dato è in coda CRM per verifica.');setTimeout(()=>closeDlg('newsDlg'),600)}catch(e){formStatus(form,'SALVATAGGIO NON COMPLETATO — I DATI SONO STATI MANTENUTI. '+String(e?.message||e),true)}finally{setBusy(false)}}
+async function completeCivic(ev){ev.preventDefault();if(busy||!progress||!civic)return;const form=ev.currentTarget;if(!(form instanceof HTMLFormElement)||!form.reportValidity())return;const fd=new FormData(form),outcome=txt(fd.get('outcome'));setBusy(true);formStatus(form,'CHIUSURA CIVICO…');try{
+    await F1NotiziereEngine.addObservation(progress.progress_id,{observation_type:'ESITO_CIVICO',detail:outcome==='NESSUNA_NOVITA'?'Nessuna informazione utile rilevata durante il passaggio al civico.':'Dati, osservazioni, persone o notizie registrati durante il lavoro del civico.',source:'RICERCA TERRITORIALE',notes:`ESITO MINIMO: ${outcome}`,status:'OSSERVAZIONE'});
+    const r=await F1NotiziereEngine.completeCivic(progress.progress_id,civic);completedResult=r;closeDlg('completeDlg');actionButtons(false);$('navNext').disabled=!txt(r?.next_civic);$('navNext').textContent=r?.next_civic?`CIVICO ${r.next_civic} →`:'AVANTI NON DISPONIBILE';
+    if(r?.next_civic)setStatus(`✓ CIVICO ${r.completed_civic} REGISTRATO · ORA PASSA AL CIVICO ${r.next_civic}.`);else if(r?.sequence_configured)setStatus(`✓ CIVICO ${r.completed_civic} REGISTRATO · sequenza civici terminata. Torna alla Home per il consuntivo.`);else setStatus(`✓ CIVICO ${r.completed_civic} REGISTRATO · il prossimo civico NON è configurato. F1 non lo inventa.`,'warn')
+  }catch(e){formStatus(form,'CHIUSURA NON COMPLETATA — '+String(e?.message||e),true);setBusy(false)}}
+async function pause(){if(busy||!progress||!civic)return;setBusy(true);setStatus('SALVATAGGIO PUNTO DI RIPRESA…');try{await F1NotiziereEngine.pause(progress.progress_id,civic);setStatus(`✓ GIRO IN PAUSA · punto salvato: ${txt(progress.via)} · civico ${civic}.`);setTimeout(()=>location.href='ricerca-territoriale.html',500)}catch(e){setStatus('PAUSA NON SALVATA · '+String(e?.message||e),'err');setBusy(false)}}
+function wire(){
+  document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeDlg(b.dataset.close)));
+  $('observationBtn').onclick=()=>openDlg('observationDlg');$('personBtn').onclick=()=>openDlg('personDlg');$('newsBtn').onclick=()=>openDlg('newsDlg');$('completeBtn').onclick=()=>openDlg('completeDlg');$('pauseBtn').onclick=pause;
+  $('observationForm').addEventListener('submit',saveObservation);$('personForm').addEventListener('submit',savePerson);$('newsForm').addEventListener('submit',saveNews);$('completeForm').addEventListener('submit',completeCivic);
+  $('personForm').elements.outcome.addEventListener('change',e=>{$('callbackWrap').hidden=e.target.value!=='CALLBACK';if(e.target.value!=='CALLBACK')$('personForm').elements.callback_date.value=''});
+  $('navNext').onclick=()=>{if(completedResult?.next_civic)location.href='notiziere-civico.html'};
+}
+wire();boot();
+})();
