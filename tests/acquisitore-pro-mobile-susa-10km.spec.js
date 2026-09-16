@@ -39,6 +39,49 @@ test('Filtro Susa 10 km: include il bordo valido ed esclude comuni oltre 10 km',
   for(const comune of OUTSIDE)expect(targets).not.toContain(comune);
 });
 
+test('Haversine: il punto zero è Susa e il confine 10 km è matematico',async({page})=>{
+  await mockSources(page);
+  await page.goto('/acquisitore-pro-mobile/index.html?haversineq='+Date.now(),{waitUntil:'domcontentloaded'});
+  await page.waitForFunction(()=>!!window.F1Susa10kmFilter);
+  const result=await page.evaluate(()=>{
+    const f=window.F1Susa10kmFilter,R=f.EARTH_RADIUS_KM,c=f.CENTER;
+    const point=(km)=>({lat:c.lat+(km/R)*(180/Math.PI),lon:c.lon});
+    const p9999=point(9.999),p10001=point(10.001);
+    return {
+      center:c,
+      d0:f.haversineKm(c,c),
+      d9999:f.haversineKm(c,p9999),
+      d10001:f.haversineKm(c,p10001),
+      in9999:f.isAllowedCoords(p9999.lat,p9999.lon),
+      out10001:f.isAllowedCoords(p10001.lat,p10001.lon)
+    };
+  });
+  expect(result.center).toEqual({lat:45.138352,lon:7.050245});
+  expect(result.d0).toBeLessThan(0.000001);
+  expect(result.d9999).toBeCloseTo(9.999,3);
+  expect(result.d10001).toBeCloseTo(10.001,3);
+  expect(result.in9999).toBeTruthy();
+  expect(result.out10001).toBeFalsy();
+});
+
+test('Coordinate reali hanno precedenza sul nome del Comune',async({page})=>{
+  await mockSources(page);
+  await page.goto('/acquisitore-pro-mobile/index.html?coordqa='+Date.now(),{waitUntil:'domcontentloaded'});
+  await page.waitForFunction(()=>!!window.F1Susa10kmFilter);
+  const result=await page.evaluate(()=>{
+    const f=window.F1Susa10kmFilter,R=f.EARTH_RADIUS_KM,c=f.CENTER;
+    const atKm=km=>({lat:c.lat+(km/R)*(180/Math.PI),lon:c.lon});
+    const inside=atKm(5),outside=atKm(10.5);
+    const rows=[
+      {id:'wrong-name-out',comune:'Susa',lat:outside.lat,lon:outside.lon},
+      {id:'wrong-name-in',comune:'Comune inventato',lat:inside.lat,lon:inside.lon},
+      {id:'unknown-no-coords',comune:'Comune inventato'}
+    ];
+    return f.filterRecords(rows).map(x=>x.id);
+  });
+  expect(result).toEqual(['wrong-name-in']);
+});
+
 test('Filtro Susa 10 km: pulisce anche cache e destinazioni legacy fuori raggio',async({page})=>{
   await page.addInitScript(()=>{
     localStorage.setItem('f1SellerSignalCacheV3',JSON.stringify({records:[
@@ -60,7 +103,7 @@ test('Filtro Susa 10 km: pulisce anche cache e destinazioni legacy fuori raggio'
   expect(targets).toEqual(['Susa']);
 });
 
-test('Perimetro canonico: nessun comune non verificato viene ammesso',async({page})=>{
+test('Perimetro canonico: nessun comune non verificato viene ammesso senza coordinate',async({page})=>{
   await mockSources(page);
   await page.goto('/acquisitore-pro-mobile/index.html?radiuslistqa='+Date.now(),{waitUntil:'domcontentloaded'});
   await page.waitForFunction(()=>!!window.F1Susa10kmFilter);
