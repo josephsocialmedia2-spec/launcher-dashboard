@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="it" class="f1-auth-pending">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070907">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>F1 · Navigatore Notiziere</title>
+<style>html.f1-auth-pending body{visibility:hidden}</style>
+<link rel="manifest" href="notiziere-mobile.webmanifest">
+<link rel="stylesheet" href="notiziere-mobile.css?v=20260916-mobile1">
+</head>
+<body>
+<header class="top"><div class="topin">
+  <div><div class="brand"><b>F1</b> IMMOBILIARE</div><span class="role">NAVIGATORE · NOTIZIERE</span></div>
+  <div class="topright"><span id="clock" class="clock">--:--</span><span id="syncState" class="sync">VERIFICA</span></div>
+</div></header>
+
+<main class="wrap">
+  <div id="offlineBanner" class="offline-banner hidden">OFFLINE · lavoro salvato sul telefono. Verrà sincronizzato appena torna la rete.</div>
+  <div id="conflictBanner" class="offline-banner hidden">CONFLITTO DA VERIFICARE · il PC e il telefono hanno modificato lo stesso giro. Non sovrascrivo i dati automaticamente.</div>
+
+  <section id="view-oggi" class="view active" data-view="oggi">
+    <div class="ey">OGGI · COSA DEVI FARE ADESSO</div>
+    <section class="card hero">
+      <div id="todayLocation" class="location">Caricamento assegnazione…</div>
+      <h1 id="todayTitle">ATTENDI <span>F1</span></h1>
+      <p id="todayInstruction">Recupero il punto esatto da cui devi partire.</p>
+      <div class="lastline">
+        <div class="mini"><small>ULTIMO CIVICO</small><strong id="lastCivic">—</strong></div>
+        <div class="mini"><small>DOPO</small><strong id="afterCivic">—</strong></div>
+      </div>
+      <div class="now">
+        <small>ADESSO</small>
+        <h2 id="nowTitle">CARICAMENTO…</h2>
+        <p id="nowDetail">F1 sta determinando la prossima azione.</p>
+        <button id="primaryAction" class="btn primary" type="button" disabled>ATTENDI</button>
+      </div>
+    </section>
+
+    <section class="card section">
+      <h2>DA FARE OGGI</h2>
+      <div class="kpis">
+        <div class="kpi"><strong id="kpiCivics">0</strong><small>CIVICI</small></div>
+        <div class="kpi"><strong id="kpiContacts">0</strong><small>PERSONE</small></div>
+        <div class="kpi"><strong id="kpiNews">0</strong><small>NOTIZIE</small></div>
+        <div class="kpi"><strong id="kpiCallbacks">0</strong><small>RICHIAMI</small></div>
+      </div>
+    </section>
+
+    <section class="helper"><strong>? NON SO COSA FARE</strong><p id="helpText">F1 ti mostrerà una sola istruzione concreta in base al punto del giro.</p><button id="helpBtn" class="btn slim" type="button">DIMMI COSA FARE</button></section>
+    <div id="mainStatus" class="status" aria-live="polite"></div>
+  </section>
+
+  <section id="view-zona" class="view" data-view="zona">
+    <div class="ey">ZONA · DOVE SEI</div>
+    <section class="card hero">
+      <div id="zoneLocation" class="location">—</div>
+      <h1>VIA <span id="zoneStreet">—</span></h1>
+      <div class="lastline">
+        <div class="mini"><small>CIVICO CORRENTE</small><strong id="zoneCurrent">—</strong></div>
+        <div class="mini"><small>ULTIMO COMPLETATO</small><strong id="zoneLast">—</strong></div>
+      </div>
+      <div class="grid2 section">
+        <button id="gpsBtn" class="btn" type="button">⌖ SONO IN ZONA</button>
+        <a id="mapBtn" class="btn" target="_blank" rel="noopener">MAPPA →</a>
+      </div>
+      <div id="gpsStatus" class="status"></div>
+    </section>
+    <section class="card section">
+      <h2>GIRO</h2>
+      <div class="stack">
+        <button id="startCivicBtn" class="btn primary" type="button">INIZIA CIVICO</button>
+        <button id="pauseBtn" class="btn danger" type="button">Ⅱ PAUSA GIRO</button>
+      </div>
+    </section>
+  </section>
+
+  <section id="view-notizie" class="view" data-view="notizie">
+    <div class="ey">NOTIZIE · RACCOLTE SUL TERRITORIO</div>
+    <section class="card">
+      <h2>NOTIZIE DA VERIFICARE</h2>
+      <div id="newsList" class="list"><div class="item"><p>Nessuna notizia caricata.</p></div></div>
+    </section>
+  </section>
+
+  <section id="view-altro" class="view" data-view="altro">
+    <div class="ey">ALTRO · STRUMENTI SECONDARI</div>
+    <section class="card menu">
+      <a class="btn" href="crm.html?mode=notiziere">CRM GUIDATO</a>
+      <a class="btn" href="oggi.html#tasks">AGENDA</a>
+      <a class="btn" href="documenti-vendita.html">DOCUMENTI</a>
+      <a class="btn" href="centrale-risultati.html">REPORT</a>
+      <a class="btn" href="script.html">SCRIPT</a>
+      <a class="btn" href="setup-cloud.html?return=notiziere-mobile.html">IMPOSTAZIONI</a>
+      <a class="btn" href="ricerca-territoriale.html">VERSIONE PC</a>
+      <button id="syncBtn" class="btn" type="button">SINCRONIZZA ORA</button>
+    </section>
+    <section class="card section">
+      <h2>STATO SINCRONIZZAZIONE</h2>
+      <div id="syncDetail" class="status">Verifica…</div>
+    </section>
+  </section>
+</main>
+
+<nav class="bottom" aria-label="Navigazione mobile"><div class="bottomin">
+  <button class="tab active" data-tab="oggi" type="button"><span>⌂</span>OGGI</button>
+  <button class="tab" data-tab="zona" type="button"><span>⌖</span>ZONA</button>
+  <button class="tab" data-tab="notizie" type="button"><span>◆</span>NOTIZIE</button>
+  <button class="tab" data-tab="altro" type="button"><span>⋯</span>ALTRO</button>
+</div></nav>
+
+<div id="civicSheet" class="sheet hidden" role="dialog" aria-modal="true" aria-labelledby="civicSheetTitle"><div class="sheetpanel">
+  <div class="sheethead"><div><div class="ey">SEI QUI</div><h2 id="civicSheetTitle">CIVICO —</h2></div><button class="close" data-close="civicSheet" type="button">×</button></div>
+  <div id="civicAddress" class="location">—</div>
+  <div class="instruction"><h3>COSA DEVI FARE</h3><div class="steps">
+    <div class="step"><b>1</b><span>Controlla il tipo di edificio e gli ingressi visibili.</span></div>
+    <div class="step"><b>2</b><span>Osserva eventuali attività, cartelli o segnali pubblici.</span></div>
+    <div class="step"><b>3</b><span>Se incontri qualcuno, registra cosa è successo.</span></div>
+  </div></div>
+  <div class="actions">
+    <button id="nothingBtn" class="btn primary" type="button">NESSUNA INFORMAZIONE</button>
+    <button id="observeBtn" class="btn" type="button">HO VISTO QUALCOSA</button>
+    <button id="personBtn" class="btn" type="button">HO PARLATO CON QUALCUNO</button>
+    <button id="newsBtn" class="btn gold" type="button">HO UNA NOTIZIA</button>
+    <button id="propertyBtn" class="btn" type="button">POSSIBILE IMMOBILE</button>
+  </div>
+  <div class="helper"><strong>? NON SO COSA FARE</strong><p id="civicHelp">Controlla il civico. Se non emerge nulla, premi NESSUNA INFORMAZIONE e F1 ti porta al civico successivo.</p></div>
+  <div id="civicStatus" class="status" aria-live="polite"></div>
+</div></div>
+
+<div id="observeSheet" class="sheet hidden" role="dialog" aria-modal="true"><div class="sheetpanel">
+  <div class="sheethead"><h2>COSA HAI NOTATO?</h2><button class="close" data-close="observeSheet" type="button">×</button></div>
+  <form id="observeForm" class="stack">
+    <select class="field" name="observation_type" required><option value="">Tipo osservazione…</option><option>EDIFICIO</option><option>CONDOMINIO</option><option>VILLA_CASA</option><option value="NEGOZIO_ATTIVITA">NEGOZIO / ATTIVITÀ</option><option>CARTELLO</option><option value="IMMOBILE_APPARENTEMENTE_VUOTO">IMMOBILE APPARENTEMENTE VUOTO</option><option value="LAVORI_RISTRUTTURAZIONE">LAVORI / RISTRUTTURAZIONE</option><option value="POSSIBILE_IMMOBILE">POSSIBILE IMMOBILE</option><option>ALTRO</option></select>
+    <label class="label">DESCRIVI SOLO CIÒ CHE HAI VISTO</label>
+    <div class="voice"><textarea id="observeText" class="field" name="detail" required placeholder="Descrivi l'osservazione"></textarea><button class="btn slim" type="button" data-dictate="observeText">🎙 DETTA</button></div>
+    <input class="field" name="notes" placeholder="Nota facoltativa">
+    <label class="btn slim" for="observePhoto">📷 SCATTA FOTO</label><input id="observePhoto" class="hidden" type="file" accept="image/*" capture="environment">
+    <img id="observePreview" class="photo-preview hidden" alt="Anteprima foto">
+    <button class="btn primary" type="submit">SALVA OSSERVAZIONE</button>
+    <div class="status" data-form-status></div>
+  </form>
+</div></div>
+
+<div id="personSheet" class="sheet hidden" role="dialog" aria-modal="true"><div class="sheetpanel">
+  <div class="sheethead"><h2>HO PARLATO CON QUALCUNO</h2><button class="close" data-close="personSheet" type="button">×</button></div>
+  <div class="helper"><strong>OBIETTIVO</strong><p>Capire se la persona conosce movimenti immobiliari o persone con una possibile necessità. Registra i fatti, non supposizioni.</p><button id="scriptBtn" class="btn slim" type="button">COSA POSSO DIRE?</button></div>
+  <form id="personForm" class="stack section">
+    <select class="field" name="person_type"><option value="ALTRO">Tipo persona…</option><option value="RESIDENTE">Residente</option><option value="COMMERCIANTE">Commerciante</option><option value="PORTINAIO">Portinaio</option><option value="AMMINISTRATORE">Amministratore</option><option value="PROPRIETARIO">Proprietario</option></select>
+    <div class="grid2"><input class="field" name="nome" placeholder="Nome, se noto"><input class="field" name="cognome" placeholder="Cognome, se noto"></div>
+    <div class="grid2"><input class="field" name="telefono" inputmode="tel" placeholder="Telefono, se fornito"><input class="field" name="email" type="email" placeholder="Email, se fornita"></div>
+    <select class="field" name="outcome" required><option value="">Cosa è successo?…</option><option value="INFO">Mi ha dato un'informazione</option><option value="CALLBACK">Vuole essere ricontattato</option><option value="REFERRAL">Conosce una persona con possibile necessità</option><option value="SELL">Sta pensando di vendere</option><option value="BUY">Sta cercando casa</option><option value="DNC">Non vuole essere contattato</option><option value="PARTIAL">Ho raccolto dati parziali</option><option value="OTHER">Altro</option></select>
+    <input id="callbackDate" class="field hidden" name="callback_date" type="date">
+    <textarea id="personNotes" class="field" name="notes" placeholder="Che cosa ti ha detto?"></textarea>
+    <button class="btn primary" type="submit">REGISTRA PERSONA</button>
+    <div class="status" data-form-status></div>
+  </form>
+</div></div>
+
+<div id="newsSheet" class="sheet hidden" role="dialog" aria-modal="true"><div class="sheetpanel">
+  <div class="sheethead"><h2>HO UNA NOTIZIA</h2><button class="close" data-close="newsSheet" type="button">×</button></div>
+  <form id="newsForm" class="stack">
+    <label class="label">1 · COSA HAI SAPUTO?</label>
+    <div class="voice"><textarea id="newsText" class="field" name="detail" required placeholder="Informazione concreta"></textarea><button class="btn slim" type="button" data-dictate="newsText">🎙 DETTA</button></div>
+    <input class="field" name="source" placeholder="Fonte / chi te l'ha detto, se noto">
+    <label class="label">2 · SAI DOVE SI TROVA L'IMMOBILE?</label><div class="choice"><label class="btn"><input type="radio" name="has_location" value="YES" required> SÌ</label><label class="btn"><input type="radio" name="has_location" value="NO"> NO</label></div>
+    <label class="label">3 · CONOSCI IL PROPRIETARIO?</label><div class="choice"><label class="btn"><input type="radio" name="knows_owner" value="YES" required> SÌ</label><label class="btn"><input type="radio" name="knows_owner" value="NO"> NO</label></div>
+    <label class="label">4 · CONOSCI NOME O COGNOME?</label><div class="choice"><label class="btn"><input type="radio" name="has_name" value="YES" required> SÌ</label><label class="btn"><input type="radio" name="has_name" value="NO"> NO</label></div>
+    <input class="field" name="person_name" placeholder="Nome/cognome, se noto">
+    <label class="label">5 · HAI UN RECAPITO?</label><div class="choice"><label class="btn"><input type="radio" name="has_contact" value="YES" required> SÌ</label><label class="btn"><input type="radio" name="has_contact" value="NO"> NO</label></div>
+    <input class="field" name="phone" inputmode="tel" placeholder="Telefono, se disponibile">
+    <label class="label">6 · HAI GIÀ PARLATO DIRETTAMENTE CON IL PROPRIETARIO?</label><div class="choice"><label class="btn"><input type="radio" name="talked_owner" value="YES" required> SÌ</label><label class="btn"><input type="radio" name="talked_owner" value="NO"> NO</label></div>
+    <label class="btn slim" for="newsPhoto">📷 SCATTA FOTO</label><input id="newsPhoto" class="hidden" type="file" accept="image/*" capture="environment"><img id="newsPreview" class="photo-preview hidden" alt="Anteprima foto">
+    <button class="btn primary" type="submit">F1 · SALVA E DIMMI COSA FARE DOPO</button>
+    <div class="status" data-form-status></div>
+  </form>
+</div></div>
+
+<div id="scriptSheet" class="sheet hidden" role="dialog" aria-modal="true"><div class="sheetpanel"><div class="sheethead"><h2>SCRIPT CONSIGLIATO</h2><button class="close" data-close="scriptSheet" type="button">×</button></div><div id="scriptText" class="instruction">Sei sul territorio: presentati in modo semplice, spiega che stai conoscendo la zona e chiedi se la persona è a conoscenza di movimenti immobiliari o persone che potrebbero avere una necessità. Non fare promesse e non inventare informazioni.</div></div></div>
+
+<script src="supabase-config.js?v=20260916-auth2"></script>
+<script src="supabase-sync.js?v=20260916-auth2"></script>
+<script src="f1-staff-data.js?v=20260916-mobile1"></script>
+<script src="f1-notiziere-engine.js?v=20260916-mobile1"></script>
+<script src="f1-mobile-store.js?v=20260916-mobile1"></script>
+<script src="f1-realtime.js?v=20260916-mobile1"></script>
+<script src="pwa.js?v=20260916-mobile1"></script>
+<script src="notiziere-mobile.js?v=20260916-mobile1"></script>
+</body></html>
