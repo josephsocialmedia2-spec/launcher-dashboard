@@ -1,6 +1,13 @@
 name: Acquisitore Pro Mobile Seller Signal QA
 
 on:
+  push:
+    branches: [ acquisitore-pro-v26-operatore-zona ]
+    paths:
+      - 'acquisitore-pro-mobile/**'
+      - 'tests/acquisitore-pro-mobile-seller-signals-local.spec.js'
+      - 'tests/acquisitore-pro-mobile-susa-10km.spec.js'
+      - '.github/workflows/acquisitore-pro-mobile-seller-signals-qa.yml'
   pull_request:
     branches: [ main ]
   workflow_dispatch:
