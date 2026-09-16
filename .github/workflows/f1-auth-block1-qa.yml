@@ -1,0 +1,27 @@
+name: F1 Auth Block 1 QA
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'setup-cloud.html'
+      - 'supabase-config.js'
+      - 'supabase-sync.js'
+      - 'f1-dashboard-auth-guard.js'
+      - 'ricerca-territoriale.html'
+      - 'tests/cloud-auth.spec.js'
+      - '.github/workflows/f1-auth-block1-qa.yml'
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - name: Blocco 1 — Registrazione Login Sessione Dashboard
+        run: npx playwright test tests/cloud-auth.spec.js --config=playwright.config.js --project=desktop-chromium --reporter=line
