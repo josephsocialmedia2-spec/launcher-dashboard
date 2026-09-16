@@ -162,7 +162,7 @@ test('invalid stored session is rejected and CRM never falls back to cached lead
 
 test('expired access token is refreshed then validated before CRM data loads',async({page})=>{
   await page.addInitScript(()=>localStorage.setItem('f1SupabaseSession',JSON.stringify({access_token:'expired',refresh_token:'qa-refresh',expires_at:Date.now()-1000})));
-  await page.route(AUTH+'token?grant_type=refresh_token',async route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({access_token:'qa-access',refresh_token:'qa-refresh-2',expires_in:3600,user:{id:USER_ID})}));
+  await page.route(AUTH+'token?grant_type=refresh_token',async route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({access_token:'qa-access',refresh_token:'qa-refresh-2',expires_in:3600,user:{id:USER_ID}})}));
   await page.route(AUTH+'user',async route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({id:USER_ID,role:'authenticated'})}));
   await mockRest(page);
   await page.goto('/crm.html');
