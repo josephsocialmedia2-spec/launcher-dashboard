@@ -1,6 +1,6 @@
 (()=>{'use strict';
 const LOGIN='setup-cloud.html?return=ricerca-territoriale.html';
-const PROTECTED_SCRIPTS=['f1-staff-data.js?v=20260916-auth1','f1-notiziere-engine.js?v=20260916-notiziere1','ricerca-territoriale.js?v=20260916-notiziere1','f1-notiziere-assistant-bridge.js?v=20260916-notiziere1'];
+const PROTECTED_SCRIPTS=['f1-staff-data.js?v=20260916-auth1','f1-notiziere-engine.js?v=20260916-notiziere1','ricerca-territoriale.js?v=20260916-notiziere1','f1-notiziere-assistant-bridge.js?v=20260916-notiziere1','f1-tour-admin-dashboard.js?v=20260916-tour1'];
 let ok=false,settled=false;
 function reveal(){document.documentElement.classList.remove('f1-auth-pending')}
 function redirect(){if(settled)return;settled=true;try{window.F1Sync?.clearSession?.()}catch(_){}location.replace(LOGIN)}
