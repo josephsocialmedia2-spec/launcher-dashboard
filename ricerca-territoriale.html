@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#087842" />
+  <title>F1 Immobiliare — Ricerca in Zona</title>
+  <link rel="stylesheet" href="ricerca-territoriale.css?v=20260916-zone1" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Dashboard F1">
+      <div class="brand-mark">⌂</div>
+      <div class="brand-name">F1 <span>IMMOBILIARE</span></div>
+      <div class="brand-sep"></div>
+      <nav class="micro-nav"><span>TERRITORIO</span><span>|</span><span>PERSONE</span><span>|</span><span>VALORE</span></nav>
+    </a>
+    <div class="topbar-right">
+      <div id="todayDate" class="top-item">📅 —</div>
+      <div id="topClock" class="top-item">🕒 --:--</div>
+      <div id="cloudPill" class="status-pill">● VERIFICA</div>
+      <div id="userBadge" class="user-badge">F1</div>
+      <div class="user-name">Funzionario: <strong id="staffName">F1</strong></div>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <a class="side-item" href="index.html">⌂ <span>Dashboard</span></a>
+    <a class="side-item active" href="ricerca-territoriale.html">📍 <span>Ricerca territoriale</span></a>
+    <a class="side-item" href="crm.html#immobili">🏠 <span>Immobili</span></a>
+    <a class="side-item" href="crm.html#contatti">👥 <span>Contatti</span></a>
+    <a class="side-item" href="crm.html">🗄 <span>CRM</span></a>
+    <a class="side-item" href="oggi.html#tasks">🗓 <span>Agenda</span></a>
+    <a class="side-item" href="documenti-vendita.html">📄 <span>Documenti</span></a>
+    <a class="side-item" href="centrale-risultati.html">▥ <span>Report</span></a>
+    <a class="side-item" href="setup-cloud.html?return=ricerca-territoriale.html">⚙ <span>Impostazioni</span></a>
+    <div class="sidebar-footer"><div class="mountains"></div><div class="side-claim">PIÙ VALORE<br>AL TUO TERRITORIO</div></div>
+  </aside>
+
+  <main class="app">
+    <section class="steps" aria-label="Sequenza operativa">
+      <div class="step"><div class="num">1</div><div><small>ORA</small><strong id="stepClock">--:--</strong><em id="operationState">Sei operativo</em></div></div>
+      <div class="arrow">›</div>
+      <div class="step"><div class="num">2</div><div><small>ATTIVITÀ CORRENTE</small><strong>Ricerca territoriale</strong><em>Presidio capillare della zona</em></div></div>
+      <div class="arrow">›</div>
+      <div class="step"><div class="num">3</div><div><small>TEMPO DEL BLOCCO</small><strong id="remainingTop">--:--</strong><em id="remainingCaption">rimanenti</em></div></div>
+      <div class="arrow">›</div>
+      <div class="step"><div class="num">4</div><div><small>COSA DEVE FARE ADESSO</small><strong id="stepNow">Caricamento territorio…</strong><em>Prosegui la ricerca</em></div></div>
+      <div class="arrow">›</div>
+      <div class="step muted"><div class="num">5</div><div><small>ATTIVITÀ SUCCESSIVA</small><strong id="stepNext">—</strong><em>Dopo questa</em></div></div>
+    </section>
+
+    <section class="grid main-grid">
+      <div class="card current-card">
+        <div class="card-title-row"><h2>▣ ATTIVITÀ CORRENTE</h2><span id="territoryStatus" class="badge success">IN CORSO ●</span></div>
+        <div class="current-hero">
+          <div class="pin">●</div>
+          <div class="hero-copy"><h1>RICERCA TERRITORIALE</h1><p>Presidio capillare della zona</p><div id="crumbs" class="crumbs">CARICAMENTO…</div></div>
+          <div class="hero-image"><span>Il territorio<br>è la nostra casa</span></div>
+        </div>
+        <div class="timer-block">
+          <div class="timer-head"><strong>◷ TEMPO BLOCCO</strong><b id="remainingMain">--:-- rimanenti</b></div>
+          <div class="progress-row"><span id="blockStartLabel">09:00</span><div class="progress"><div id="timeProgress" class="progress-fill"></div></div><span id="blockEndLabel">12:30</span></div>
+        </div>
+        <div class="action-now">
+          <div class="action-icon">☑</div>
+          <div class="action-copy"><small>COSA DEVI FARE ADESSO</small><h3 id="actionNowTitle">▶ CARICAMENTO TERRITORIO</h3><p id="actionNowSub">Recupero il punto esatto da cui ripartire.</p></div>
+          <a class="action-button" id="continueSearch" href="territory-control.html">▶ CONTINUA RICERCA</a>
+        </div>
+      </div>
+
+      <div class="right-col">
+        <div class="card today-card">
+          <div class="section-head"><h2>▣ OGGI</h2><span id="todayLabel">—</span></div>
+          <div class="kpis">
+            <div><strong id="kpiCivics">0</strong><span>▥</span><small>CIVICI</small></div>
+            <div><strong id="kpiCondos">0</strong><span>🏢</span><small>CONDOMINI</small></div>
+            <div><strong id="kpiActivities">0</strong><span>⌑</span><small>ATTIVITÀ</small></div>
+            <div><strong id="kpiContacts">0</strong><span>👥</span><small>CONTATTI</small></div>
+            <div><strong id="kpiNews">0</strong><span>📄</span><small>NOTIZIE</small></div>
+          </div>
+          <div class="brand-quote"><div>❝ <span>Ogni porta può essere<br>un’opportunità.</span></div><div class="mini-brand">⌂ F1 IMMOBILIARE<small>PERSONE | CASE | TERRITORIO</small></div></div>
+        </div>
+
+        <div class="card crm-alert">
+          <div class="section-head warning"><h2 id="pendingTitle">⚠ 0 DATI DA INSERIRE NEL CRM</h2><a href="crm.html#territory-news">Vedi tutti →</a></div>
+          <div id="pendingBody" class="alert-row"><div class="doc-circle">📄</div><div class="alert-copy"><strong>Nessuna notizia pendente</strong><span>Il giro territoriale è allineato al CRM.</span></div><a class="outline-link" href="crm.html">APRI CRM →</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid territory-grid">
+      <div class="card territory-card" id="territorio">
+        <h2>🗺 RICERCA TERRITORIALE</h2>
+        <div class="territory-inner">
+          <div class="facts"><div><span>Comune</span><strong id="factComune">—</strong></div><div><span>Zona</span><strong id="factZona">—</strong></div><div><span>Strada</span><strong id="factVia">—</strong></div></div>
+          <div class="civics"><p>Civici completati</p><div class="civic-progress"><span id="civicStart">—</span><div class="progress"><div id="civicProgress" class="progress-fill civic-fill"></div></div><span id="civicLast">—</span></div><div class="civic-badges"><div>● <strong>ULTIMO CIVICO:</strong> <span id="lastCivic">—</span></div><div>◷ <strong>PROSSIMO CIVICO:</strong> <span id="nextCivic">—</span></div></div></div>
+        </div>
+      </div>
+      <div></div>
+    </section>
+
+    <section class="grid bottom-grid">
+      <a class="card next-card link-card" id="nextActivity" href="territory-control.html"><div><h2>» PROSSIMA ATTIVITÀ</h2><h3 id="nextActivityTitle">→ RICERCA TERRITORIALE</h3></div><div class="after"><span>◷ DOPO QUESTA</span><p id="nextActivitySub">Continua la ricerca territoriale nella zona assegnata</p></div></a>
+      <div class="card crm-open"><a class="crm-button" href="crm.html">🗄 APRI CRM →</a><p>Gestisci contatti, inserisci dati,<br>aggiorna opportunità.</p></div>
+    </section>
+
+    <section class="grid support-grid" id="persone">
+      <div class="card script-card">
+        <div class="section-head"><h2>🧠 SCRIPT DA IMPARARE A MEMORIA</h2><span>PERSONE ESTRANEE</span></div>
+        <div class="script-body"><small>ARCHIVIO SCRIPT F1</small><p>Apri gli script ufficiali F1 per persone estranee, obiezioni e contatti territoriali.</p></div>
+        <div class="button-row"><a class="outline-link" href="script.html">SCRIPT F1</a><a class="outline-link" href="script-operativo.html">OBIEZIONI</a><a class="action-button compact" href="script.html">RIPETI A MEMORIA</a></div>
+      </div>
+
+      <div class="card docs-card" id="valore">
+        <div class="section-head"><h2>📚 DOCUMENTI PER LA VENDITA DELLA CASA</h2></div>
+        <div class="doc-counters"><div><strong>9</strong><small>Categorie checklist</small></div><div><strong>1</strong><small>Percorso guidato</small></div><div><strong>CRM</strong><small>Collegato</small></div></div>
+        <div class="checklist"><span>Proprietario</span><span>Provenienza immobile</span><span>Catasto</span><span>Urbanistica / Edilizia</span><span>APE</span><span>Condominio</span><span>Mutui / Vincoli</span><span>Immobile locato</span><span>Pertinenze</span></div>
+        <div class="button-row"><a class="outline-link" href="documenti-vendita.html">APRI CHECKLIST</a><a class="outline-link" href="crm.html">APRI CRM IMMOBILE</a><a class="action-button compact" href="documenti-vendita.html#carica">DOCUMENTI MANCANTI</a></div>
+        <p class="legal-note">La checklist supporta il lavoro operativo e non determina automaticamente conformità o vendibilità.</p>
+      </div>
+    </section>
+
+    <footer class="footer"><div><strong>⌂ F1</strong> IMMOBILIARE</div><div>IL TERRITORIO CREA OPPORTUNITÀ, NOI LE TRASFORMIAMO IN VALORE.</div><div>Persone prima di tutto.</div></footer>
+  </main>
+
+  <div id="toast" class="toast"></div>
+  <script src="supabase-config.js?v=20260914-auth"></script>
+  <script src="supabase-sync.js?v=20260914-auth"></script>
+  <script src="f1-staff-data.js?v=20260914-staff"></script>
+  <script src="ricerca-territoriale.js?v=20260916-zone1"></script>
+</body>
+</html>
