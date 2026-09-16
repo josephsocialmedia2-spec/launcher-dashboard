@@ -1,0 +1,39 @@
+name: F1 Notiziere Guided QA
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'f1-notiziere-engine.js'
+      - 'notiziere-civico.html'
+      - 'notiziere-civico.js'
+      - 'funzionario-notiziere.html'
+      - 'ricerca-territoriale.js'
+      - 'f1-dashboard-auth-guard.js'
+      - 'f1-notiziere-assistant-bridge.js'
+      - 'f1-notiziere-crm-mode.js'
+      - 'crm-territory-handoff.js'
+      - 'giro-acquisizione.html'
+      - 'tests/notiziere-guided.spec.js'
+      - '.github/workflows/f1-notiziere-guided-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: f1-notiziere-guided-qa
+  cancel-in-progress: true
+
+jobs:
+  playwright:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - name: Guided Notiziere desktop + smartphone
+        run: npx playwright test tests/notiziere-guided.spec.js --config=playwright.config.js --reporter=line
