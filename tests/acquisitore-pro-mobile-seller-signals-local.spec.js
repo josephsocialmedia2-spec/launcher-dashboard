@@ -27,8 +27,8 @@ test('VAI IN ZONA apre Seller Signal ordinati per score',async({page})=>{
 test('NON_DETERMINATO resta visibile come DA VERIFICARE e viene dopo i segnali forti',async({page})=>{
   const csv=[
     'COMUNE,DOVE_ANDRE,COSA_CERCO,PREZZO,SELLER_SIGNAL,SCORE,PRIORITA,FONTE,URL',
-    'Condove,Via Roma 10,Appartamento,120000,INDIZIO_PRIVATO,70,ALTA,Radar Test,https://example.com/strong',
-    'Vaie,Via Martiri 8,Trilocale,95000,NON_DETERMINATO,30,BASSA,Radar Test,https://example.com/verify'
+    'Bussoleno,Via Roma 10,Appartamento,120000,INDIZIO_PRIVATO,70,ALTA,Radar Test,https://example.com/strong',
+    'Chianocco,Via Martiri 8,Trilocale,95000,NON_DETERMINATO,30,BASSA,Radar Test,https://example.com/verify'
   ].join('\n');
   await page.route('https://josephsocialmedia2-spec.github.io/immobili-in-zona/**',route=>route.fulfill({status:200,contentType:'text/csv',body:csv}));
   await page.goto('/acquisitore-pro-mobile/index.html?qa='+Date.now(),{waitUntil:'domcontentloaded'});
@@ -44,7 +44,7 @@ test('NON_DETERMINATO resta visibile come DA VERIFICARE e viene dopo i segnali f
   expect(active[strong].signals).toContain('PRIVATO');
   expect(active[verify].signals).toContain('DA VERIFICARE');
   const targets=await page.evaluate(()=>JSON.parse(localStorage.getItem('f1VaiZonaTargets')||'[]'));
-  expect(targets.some(x=>x.paese==='Vaie'&&String(x.segnale).includes('DA VERIFICARE'))).toBeTruthy();
+  expect(targets.some(x=>x.paese==='Chianocco'&&String(x.segnale).includes('DA VERIFICARE'))).toBeTruthy();
 });
 
 test('PROSSIMO SELLER e LAVORATO aggiornano davvero lo stato',async({page})=>{
@@ -69,7 +69,7 @@ test('PROSSIMO SELLER e LAVORATO aggiornano davvero lo stato',async({page})=>{
 
 test('fallback telefono: Seller Signal resta disponibile se le fonti non rispondono',async({page})=>{
   await page.addInitScript(()=>{
-    localStorage.setItem('f1SellerSignalCacheV2',JSON.stringify({ts:new Date().toISOString(),records:[{id:'cached-seller',comune:'Condove',indirizzo:'Via Roma 99',cosa_cerco:'Appartamento con cartello',prezzo_attuale:'€99.000',seller_signal:['INVENDUTO','RIBASSO'],score:92,priorita:'ALTA',fonte:'Cache Radar',url:''}]}));
+    localStorage.setItem('f1SellerSignalCacheV2',JSON.stringify({ts:new Date().toISOString(),records:[{id:'cached-seller',comune:'Bussoleno',indirizzo:'Via Roma 99',cosa_cerco:'Appartamento con cartello',prezzo_attuale:'€99.000',seller_signal:['INVENDUTO','RIBASSO'],score:92,priorita:'ALTA',fonte:'Cache Radar',url:''}]}));
     const originalFetch=window.fetch.bind(window);
     window.fetch=(input,init)=>{
       const u=String(input&&input.url?input.url:input||'');
@@ -80,7 +80,7 @@ test('fallback telefono: Seller Signal resta disponibile se le fonti non rispond
   await page.goto('/acquisitore-pro-mobile/index.html?qa='+Date.now(),{waitUntil:'domcontentloaded'});
   await page.waitForFunction(()=>!!window.F1SellerSignalsZone);
   await page.locator('#zoneOpenBtn').click();
-  await expect(page.locator('#sellerZoneBody')).toContainText('Condove');
+  await expect(page.locator('#sellerZoneBody')).toContainText('Bussoleno');
   await expect(page.locator('#sellerZoneBody')).toContainText('Via Roma 99');
   await expect(page.locator('#sellerZoneBody')).toContainText('RIBASSO');
 });
