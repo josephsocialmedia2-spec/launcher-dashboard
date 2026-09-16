@@ -1,0 +1,58 @@
+/* F1 Premium Help Layer · lightweight UI enhancement */
+:root{--f1-luxe:#0a8a4d;--f1-luxe-dark:#055b34;--f1-luxe-deep:#073c27;--f1-gold:#c9a86a;--f1-pearl:#fbfcfc;--f1-glass:rgba(255,255,255,.92);--f1-luxe-shadow:0 22px 55px rgba(20,48,39,.13),0 6px 18px rgba(20,48,39,.08)}
+body{background:radial-gradient(circle at 82% 4%,rgba(10,138,77,.08),transparent 24%),linear-gradient(180deg,#f8faf9 0,#eef3f1 100%)!important}
+.card,.steps{border-color:rgba(52,80,70,.10)!important;box-shadow:var(--f1-luxe-shadow)!important;backdrop-filter:saturate(1.03);-webkit-backdrop-filter:saturate(1.03)}
+.card{position:relative}
+.card:after{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);pointer-events:none}
+.topbar{box-shadow:0 10px 28px rgba(4,75,42,.22)!important;border-bottom:1px solid rgba(255,255,255,.12)}
+.side-item{border-radius:0 14px 14px 0;margin-right:12px}
+.side-item.active{box-shadow:inset 0 0 0 1px rgba(10,138,77,.06),0 4px 14px rgba(10,138,77,.05)}
+.step .num{box-shadow:0 7px 18px rgba(8,120,66,.25),inset 0 1px rgba(255,255,255,.3)!important}
+.action-button,.crm-button{background:linear-gradient(180deg,#13ad66 0,#078046 100%)!important;border:1px solid rgba(4,94,52,.35);box-shadow:0 12px 26px rgba(7,128,70,.25),inset 0 1px rgba(255,255,255,.38)!important;letter-spacing:.02em}
+.outline-link{box-shadow:0 7px 16px rgba(15,84,53,.08)!important}
+.kpis>div{box-shadow:0 8px 18px rgba(17,59,45,.07),inset 0 1px rgba(255,255,255,.98)!important;transition:transform .18s ease,box-shadow .18s ease}
+.kpis>div:hover{transform:translateY(-2px);box-shadow:0 14px 26px rgba(17,59,45,.11),inset 0 1px rgba(255,255,255,.98)!important}
+.progress-fill{box-shadow:0 0 18px rgba(12,165,94,.38)!important}
+.title-icon{box-shadow:inset 0 0 0 1px rgba(10,138,77,.08),0 5px 13px rgba(10,138,77,.08)}
+
+.f1-help-anchor{display:inline-flex!important;align-items:center;gap:8px!important;position:relative}
+.f1-info-button{width:24px;height:24px;min-width:24px;border:0;background:transparent;padding:0;cursor:pointer;display:inline-grid;place-items:center;vertical-align:middle;position:relative;z-index:4;color:var(--f1-luxe);filter:drop-shadow(0 2px 5px rgba(8,120,66,.12));transition:transform .16s ease,filter .16s ease}
+.f1-info-button:before{content:"";position:absolute;width:21px;height:18px;border:2px solid currentColor;border-radius:50%;background:#fff;left:0;top:0;box-shadow:0 2px 6px rgba(7,96,53,.08)}
+.f1-info-button:after{content:"";position:absolute;width:7px;height:7px;background:#fff;border-left:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(-25deg);left:2px;bottom:1px;border-bottom-left-radius:2px}
+.f1-info-button i{position:relative;z-index:2;font-size:11px;font-weight:900;line-height:1;margin-top:-2px}
+.f1-info-button.solid:before,.f1-info-button.solid:after{background:var(--f1-luxe);border-color:var(--f1-luxe)}
+.f1-info-button.solid i{color:#fff}
+.f1-info-button:hover,.f1-info-button:focus-visible{transform:translateY(-1px) scale(1.06);filter:drop-shadow(0 5px 9px rgba(8,120,66,.18));outline:none}
+
+.f1-help-popover{position:fixed;z-index:10000;width:min(340px,calc(100vw - 24px));background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(247,252,249,.98));border:1px solid rgba(10,138,77,.16);border-radius:18px;box-shadow:0 24px 70px rgba(14,45,35,.22),0 5px 18px rgba(14,45,35,.10);padding:16px 17px 14px;color:#17392d;opacity:0;transform:translateY(6px) scale(.985);pointer-events:none;transition:opacity .15s ease,transform .15s ease;backdrop-filter:blur(16px)}
+.f1-help-popover.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.f1-help-popover .eyebrow{display:flex;align-items:center;gap:8px;color:var(--f1-luxe);font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.f1-help-popover h4{margin:8px 0 6px;font-size:17px;line-height:1.15;color:#0c3e2a}
+.f1-help-popover p{margin:0;color:#546b61;font-size:13px;line-height:1.5}
+.f1-help-popover .action{margin-top:10px;padding:9px 10px;border-radius:10px;background:#edf8f2;color:#0c6c40;font-size:12px;font-weight:800;line-height:1.4;border:1px solid rgba(10,138,77,.10)}
+.f1-help-popover .close{position:absolute;right:10px;top:9px;border:0;background:transparent;color:#6c7e76;cursor:pointer;width:28px;height:28px;border-radius:50%}
+.f1-help-popover .close:hover{background:#eef5f1;color:#174a34}
+
+.f1-assistant-launcher{position:fixed;right:22px;bottom:22px;z-index:9998;border:0;background:linear-gradient(145deg,#0ba05a,#066d3c);color:#fff;border-radius:22px;padding:10px 15px 10px 10px;display:flex;align-items:center;gap:10px;cursor:pointer;box-shadow:0 18px 42px rgba(5,92,51,.32),inset 0 1px rgba(255,255,255,.30);transition:transform .18s ease,box-shadow .18s ease}
+.f1-assistant-launcher:hover{transform:translateY(-2px);box-shadow:0 23px 50px rgba(5,92,51,.38),inset 0 1px rgba(255,255,255,.30)}
+.f1-assistant-avatar{width:42px;height:42px;border-radius:14px;background:linear-gradient(180deg,#fff,#eaf8f0);color:#087b45;display:grid;place-items:center;font-size:21px;box-shadow:0 6px 16px rgba(0,0,0,.13);position:relative}
+.f1-assistant-avatar:after{content:"";position:absolute;right:-2px;bottom:-2px;width:10px;height:10px;border-radius:50%;background:#34df86;border:2px solid #fff;box-shadow:0 0 0 3px rgba(52,223,134,.14)}
+.f1-assistant-launcher .copy{text-align:left;line-height:1.05}
+.f1-assistant-launcher .copy strong{display:block;font-size:12px;letter-spacing:.01em}
+.f1-assistant-launcher .copy small{display:block;margin-top:4px;font-size:10px;opacity:.82;font-weight:650}
+
+.f1-assistant-panel{position:fixed;right:22px;bottom:86px;z-index:9999;width:min(390px,calc(100vw - 24px));background:linear-gradient(180deg,#fff 0,#f8fcfa 100%);border:1px solid rgba(10,138,77,.14);border-radius:22px;box-shadow:0 28px 80px rgba(11,45,34,.24),0 7px 20px rgba(11,45,34,.10);overflow:hidden;opacity:0;transform:translateY(12px) scale(.98);pointer-events:none;transition:opacity .18s ease,transform .18s ease}
+.f1-assistant-panel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.f1-assistant-head{background:linear-gradient(135deg,#076f3f,#0b9856);color:#fff;padding:15px 16px;display:flex;align-items:center;gap:11px}
+.f1-assistant-head .mini-avatar{width:42px;height:42px;border-radius:13px;background:#fff;color:#087b45;display:grid;place-items:center;font-size:20px;box-shadow:0 5px 13px rgba(0,0,0,.12)}
+.f1-assistant-head .head-copy{flex:1}.f1-assistant-head strong{display:block;font-size:14px}.f1-assistant-head small{display:block;margin-top:3px;font-size:10px;opacity:.83}.f1-assistant-head button{border:0;background:rgba(255,255,255,.12);color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer}
+.f1-assistant-body{padding:15px 16px 16px}
+.f1-assistant-message{padding:12px 13px;background:#eef8f3;border:1px solid rgba(10,138,77,.10);border-radius:14px 14px 14px 5px;color:#24493a;font-size:12px;line-height:1.5;box-shadow:0 5px 13px rgba(20,67,48,.05)}
+.f1-assistant-message strong{color:#086c3f}.f1-assistant-context{margin-top:10px;padding:10px 12px;border-radius:12px;background:#fff;border:1px solid #e8eeeb;color:#60736a;font-size:11px;line-height:1.45}
+.f1-assistant-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.f1-assistant-actions a,.f1-assistant-actions button{min-height:40px;border-radius:10px;border:1px solid #dfe9e4;background:#fff;color:#1d4e39;padding:9px 10px;text-decoration:none;font-size:11px;font-weight:800;cursor:pointer;text-align:center;display:flex;align-items:center;justify-content:center;gap:7px;transition:background .15s ease,border-color .15s ease,transform .15s ease}
+.f1-assistant-actions a:hover,.f1-assistant-actions button:hover{background:#eff9f4;border-color:#bcdcca;transform:translateY(-1px)}
+.f1-assistant-actions .primary{grid-column:1/-1;background:linear-gradient(180deg,#0ca25b,#087b45);color:#fff;border-color:#087b45;box-shadow:0 7px 16px rgba(8,123,69,.18)}
+
+@media(max-width:800px){.f1-assistant-launcher{right:12px;bottom:12px;padding-right:11px}.f1-assistant-launcher .copy{display:none}.f1-assistant-panel{right:12px;bottom:70px}.f1-help-popover{left:12px!important;right:12px!important;width:auto!important}.f1-info-button{width:26px;height:26px;min-width:26px}}
+@media(prefers-reduced-motion:reduce){.f1-info-button,.f1-help-popover,.f1-assistant-launcher,.f1-assistant-panel,.kpis>div{transition:none!important}.live-dot{animation:none!important}}
