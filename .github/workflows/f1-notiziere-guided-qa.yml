@@ -12,6 +12,7 @@ on:
       - 'ricerca-territoriale.js'
       - 'f1-dashboard-auth-guard.js'
       - 'f1-tour-admin-dashboard.js'
+      - 'f1-staff-access-panel.js'
       - 'assegna-giro.html'
       - 'assegna-giro.js'
       - 'f1-notiziere-assistant-bridge.js'
@@ -19,8 +20,10 @@ on:
       - 'crm-territory-handoff.js'
       - 'giro-acquisizione.html'
       - 'supabase-migrations/20260916_f1_tour_assignment_admin.sql'
+      - 'supabase-migrations/20260916_f1_staff_dashboard_access_log.sql'
       - 'tests/notiziere-guided.spec.js'
       - 'tests/tour-assignment.spec.js'
+      - 'tests/staff-access-panel.spec.js'
       - '.github/workflows/f1-notiziere-guided-qa.yml'
   workflow_dispatch:
 
@@ -41,5 +44,5 @@ jobs:
           node-version: 22
       - run: npm install --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
-      - name: Guided Notiziere + assegnazione giro desktop e smartphone
-        run: npx playwright test tests/notiziere-guided.spec.js tests/tour-assignment.spec.js --config=playwright.config.js --reporter=line
+      - name: Guided Notiziere + assegnazione giro + accessi dashboard
+        run: npx playwright test tests/notiziere-guided.spec.js tests/tour-assignment.spec.js tests/staff-access-panel.spec.js --config=playwright.config.js --reporter=line
