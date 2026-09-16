@@ -1,5 +1,7 @@
 (()=>{'use strict';
 const MAX_KM=10;
+const EARTH_RADIUS_KM=6371.0088;
+const CENTER=Object.freeze({lat:45.138352,lon:7.050245});
 const DISTANCES_KM={
   'susa':0,
   'mompantero':1.4,
@@ -21,11 +23,34 @@ const CACHE_KEYS=['f1SellerSignalCacheV3','f1SellerSignalCacheV2'];
 const TARGET_KEY='f1VaiZonaTargets';
 const originalFetch=window.fetch.bind(window);
 const norm=v=>String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’‘`´]/g,"'").replace(/\s+/g,' ').trim().toLowerCase();
+const rad=deg=>Number(deg)*Math.PI/180;
+function finiteNumber(v){if(typeof v==='string')v=v.trim().replace(',','.');const n=Number(v);return Number.isFinite(n)?n:null}
+function haversineKm(a,b){
+  const lat1=finiteNumber(a?.lat),lon1=finiteNumber(a?.lon),lat2=finiteNumber(b?.lat),lon2=finiteNumber(b?.lon);
+  if(lat1===null||lon1===null||lat2===null||lon2===null)return null;
+  if(Math.abs(lat1)>90||Math.abs(lat2)>90||Math.abs(lon1)>180||Math.abs(lon2)>180)return null;
+  const dLat=rad(lat2-lat1),dLon=rad(lon2-lon1),p1=rad(lat1),p2=rad(lat2);
+  const h=Math.sin(dLat/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(dLon/2)**2;
+  return 2*EARTH_RADIUS_KM*Math.asin(Math.min(1,Math.sqrt(h)));
+}
+function recordCoords(row){
+  if(!row||typeof row!=='object')return null;
+  const lat=finiteNumber(row.lat??row.latitude??row.LAT??row.LATITUDE??row.y);
+  const lon=finiteNumber(row.lon??row.lng??row.longitude??row.LON??row.LNG??row.LONGITUDE??row.x);
+  return lat===null||lon===null?null:{lat,lon};
+}
 function distanceFor(comune){const key=norm(comune);return Object.prototype.hasOwnProperty.call(DISTANCES_KM,key)?DISTANCES_KM[key]:null}
 function isAllowedComune(comune){const d=distanceFor(comune);return Number.isFinite(d)&&d<=MAX_KM}
+function distanceForRecord(row,field='comune'){
+  const coords=recordCoords(row);
+  if(coords)return haversineKm(CENTER,coords);
+  return distanceFor(row?.[field]??row?.COMUNE??row?.paese);
+}
+function isAllowedCoords(lat,lon){const d=haversineKm(CENTER,{lat,lon});return Number.isFinite(d)&&d<=MAX_KM}
+function isAllowedRecord(row,field='comune'){const d=distanceForRecord(row,field);return Number.isFinite(d)&&d<=MAX_KM}
 function filterRecords(list,field='comune'){
   if(!Array.isArray(list))return[];
-  return list.filter(row=>isAllowedComune(row?.[field]??row?.COMUNE??row?.paese));
+  return list.filter(row=>isAllowedRecord(row,field));
 }
 function parseCSV(text){
   text=String(text||'').replace(/^\uFEFF/,'');
@@ -46,7 +71,7 @@ function parseCSV(text){
 }
 function csvCell(v){const s=String(v??'');return /[",\n\r]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
 function toCSV(headers,records){return [headers,...records.map(r=>headers.map(h=>r[h]??''))].map(row=>row.map(csvCell).join(',')).join('\n')}
-function cloneResponse(response,body,contentType){const headers=new Headers(response.headers);if(contentType)headers.set('content-type',contentType);headers.set('x-f1-radius-filter','Susa-10km');return new Response(body,{status:response.status,statusText:response.statusText,headers})}
+function cloneResponse(response,body,contentType){const headers=new Headers(response.headers);if(contentType)headers.set('content-type',contentType);headers.set('x-f1-radius-filter','Susa-10km-haversine');return new Response(body,{status:response.status,statusText:response.statusText,headers})}
 function sanitizeCaches(){
   for(const key of CACHE_KEYS){
     try{const x=JSON.parse(localStorage.getItem(key)||'null');if(Array.isArray(x?.records)){const before=x.records.length;x.records=filterRecords(x.records);if(x.records.length!==before)localStorage.setItem(key,JSON.stringify(x))}}catch{}
@@ -71,5 +96,5 @@ window.fetch=async function(input,init){
 };
 sanitizeCaches();
 window.addEventListener('storage',e=>{if(CACHE_KEYS.includes(e.key)||e.key===TARGET_KEY)sanitizeCaches()});
-window.F1Susa10kmFilter={MAX_KM,DISTANCES_KM,distanceFor,isAllowedComune,filterRecords,sanitizeCaches};
+window.F1Susa10kmFilter={MAX_KM,EARTH_RADIUS_KM,CENTER,DISTANCES_KM,haversineKm,recordCoords,distanceFor,distanceForRecord,isAllowedComune,isAllowedCoords,isAllowedRecord,filterRecords,sanitizeCaches};
 })();
