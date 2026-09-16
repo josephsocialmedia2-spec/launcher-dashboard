@@ -1,0 +1,15 @@
+{
+  "name": "F1 Immobiliare · Navigatore Notiziere",
+  "short_name": "F1 Notiziere",
+  "id": "./notiziere-mobile.html",
+  "start_url": "./notiziere-mobile.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#070907",
+  "theme_color": "#070907",
+  "description": "Navigatore operativo mobile F1 per il Notiziere: territorio, civici, notizie e prossima azione sullo stesso sistema del PC.",
+  "icons": [
+    {"src":"./f1-mobile-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
