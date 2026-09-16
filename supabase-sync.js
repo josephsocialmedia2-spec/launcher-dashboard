@@ -30,3 +30,13 @@ async function signOut(){const s=session();try{if(s?.access_token)await fetch(au
 function legacyDisabled(){throw new Error('CRM legacy disattivato: usare F1 ACQUISITION ENGINE · CRM UNIFICATO')}
 window.F1Sync={ready,configured,authToken,ensureSession,currentUser,refreshSession,deviceId,session,saveSession,clearSession,loginEmail,signInWithPassword,signUpWithPassword,sendMagicLink,sendRecoveryEmail,updatePassword,acceptRedirectSession,signOut,pushOne:legacyDisabled,remove:legacyDisabled,pull:legacyDisabled,syncAll:legacyDisabled};
 })();
+
+(function loadF1GlobalBrand(){
+  'use strict';
+  if(document.querySelector('script[data-f1-global-brand]'))return;
+  const s=document.createElement('script');
+  s.src='f1-global-brand.js?v=20260916-luxury1';
+  s.defer=true;
+  s.dataset.f1GlobalBrand='1';
+  document.head.appendChild(s);
+})();
