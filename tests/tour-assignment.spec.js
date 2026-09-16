@@ -56,11 +56,12 @@ test('Giro già attivo non viene sovrascritto',async({page})=>{
   expect(await page.evaluate(()=>window.__assignCalls.length)).toBe(1);
 });
 
-test('Dashboard Titolare espone + ASSEGNA NUOVO GIRO',async({page})=>{
+test('Dashboard Titolare espone il comando + ASSEGNA NUOVO GIRO',async({page})=>{
   await page.route('**/f1-dashboard-auth-guard.js*',route=>route.fulfill({status:200,contentType:'application/javascript',body:`document.documentElement.classList.remove('f1-auth-pending');window.F1StaffData={ready:()=>true,me:async()=>({role:'TITOLARE'}),rpc:async()=>[]};const s=document.createElement('script');s.src='f1-tour-admin-dashboard.js?v=qa';document.body.appendChild(s);`}));
   await page.goto('/ricerca-territoriale.html?qa='+Date.now(),{waitUntil:'domcontentloaded'});
-  await expect(page.getByText('+ Assegna giro')).toBeVisible();
-  await expect(page.getByText('+ ASSEGNA NUOVO GIRO')).toBeVisible();
+  const cta=page.getByRole('link',{name:/ASSEGNA NUOVO GIRO/});
+  await expect(cta).toBeVisible();
+  await expect(cta).toHaveAttribute('href','assegna-giro.html');
 });
 
 test('Smartphone: wizard senza overflow orizzontale',async({page,isMobile})=>{
