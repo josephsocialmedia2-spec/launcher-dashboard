@@ -8,7 +8,7 @@ test('motore Notiziere emette un solo ordine civico senza usare uno schedule loc
   await page.evaluate(s=>{window.F1StaffData={ready:()=>true,me:async()=>({user_id:'u1',role:'NOTIZIERE'}),rpc:async(name)=>name==='f1_territory_panel_state'?s:null,tasks:async()=>[]}},territoryState());
   await page.addScriptTag({path:'f1-notiziere-engine.js'});
   const i=await page.evaluate(async()=>{const s=await F1NotiziereEngine.load({force:true});return s.instruction});
-  expect(i.kind).toBe('CIVIC');expect(i.title).toBe('VAI AL CIVICO 28');expect(i.href).toBe('notiziere-civico.html');
+  expect(i.kind).toBe('CIVIC');expect(i.title).toBe('VAI AL CIVICO 28');expect(i.href).toBe('territory-mobile.html#terr');
   const dashboard=fs.readFileSync('ricerca-territoriale.js','utf8');
   expect(dashboard).toContain('F1NotiziereEngine.load');
   expect(dashboard).not.toContain('function blockFor');
@@ -33,6 +33,21 @@ test('interfaccia Notiziere nasconde N0–N6 e il CRM tecnico dal primo livello'
   expect(civic).toContain('Non devi scegliere N0–N6');
   expect(civic).toContain('DA CLASSIFICARE');
   expect(civic).toContain('CIVICO COMPLETATO');
+});
+
+test('F1 Territory live integra CRM, notizie, lettere, FSBO e procedura 30 volantini',async()=>{
+  const ui=fs.readFileSync('territory-mobile.html','utf8');
+  expect(ui).toContain('I GRANDI AGENTI OTTENGONO APPUNTAMENTI. NON CONVERSAZIONI!');
+  expect(ui).toContain("HAI PRESO L'APPUNTAMENTO?");
+  expect(ui).toContain('CRM · TUTTO IL LAVORO SVOLTO');
+  expect(ui).toContain('LETTERE DA IMBUCARE');
+  expect(ui).toContain('FSBO · FOR SALE BY OWNER');
+  expect(ui).toContain('HAI STAMPATO 30 VOLANTINI?');
+  expect(ui).toContain('f1_territory_mobile_crm_v2');
+  expect(ui).toContain('f1_territory_letter_create_v2');
+  expect(ui).toContain('f1_territory_news_update_v2');
+  expect(ui).not.toContain('HO TROVATO UN’ATTIVITÀ');
+  expect(ui).not.toContain('localStorage.setItem');
 });
 
 async function mockCivicApp(page){
