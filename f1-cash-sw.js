@@ -1,0 +1,5 @@
+const CACHE='f1-cash-shell-20260917-v1';
+const SHELL=['./f1-cash.html','./f1-cash.js','./f1-cash-engine.js','./supabase-config.js','./supabase-sync.js','./f1-staff-data.js','./ricerca-territoriale.html','./notiziere-civico.html'];
+self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).catch(()=>null));self.skipWaiting()});
+self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('f1-cash-shell-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',event=>{const req=event.request;if(req.method!=='GET')return;const u=new URL(req.url);if(u.origin!==location.origin)return;if(/supabase|\/rest\/v1\/|\/auth\/v1\//i.test(u.pathname))return;event.respondWith(fetch(req).then(res=>{if(res&&res.ok){const copy=res.clone();caches.open(CACHE).then(c=>c.put(req,copy)).catch(()=>{})}return res}).catch(()=>caches.match(req).then(r=>r||caches.match('./f1-cash.html'))))});
