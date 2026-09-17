@@ -1,10 +1,11 @@
 (()=>{'use strict';
-const VERSION='20260917-cash1';
+const VERSION='20260917-cash2';
 let cache=null,cacheAt=0,loading=null;
 const txt=v=>String(v??'').trim();
 const num=v=>Number(v||0);
 const up=v=>txt(v).toUpperCase();
 const CLOSED=new Set(['PERSO','NON_INTERESSATO']);
+const TIMER_KEY='f1CashOperatorTimerV1';
 function ready(){return !!window.F1StaffData?.ready?.()}
 function money(v){return new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:2}).format(num(v))}
 function dateTime(v){if(!v)return'—';const d=new Date(v);return Number.isNaN(d.getTime())?'—':new Intl.DateTimeFormat('it-IT',{timeZone:'Europe/Rome',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(d)}
@@ -36,5 +37,12 @@ function issuePhrase(issue){const map={SOCIAL_ABBANDONATI:'i social sembrano poc
 function conversationGuide(o={}){const verified=['OSSERVATO','DICHIARATO','VERIFICATO'].includes(up(o.evidence_kind)),phrase=issuePhrase(o.observed_issue);const opening=verified&&phrase?`Buongiorno, sto lavorando con attività della zona sulla comunicazione digitale. Ho notato che ${phrase}. Posso chiederle chi segue oggi questa parte?`:'Buongiorno, sto lavorando con attività della zona sulla comunicazione digitale. Posso chiederle chi segue oggi questa parte e se avete qualcosa che vorreste migliorare?';return{why:verified&&phrase?`Segnale registrato come ${human(o.evidence_kind)}: ${phrase}.`:'Il bisogno non è verificato: non presentarlo come un problema certo.',objective:'Capire se esiste un bisogno reale e chi prende la decisione. Non vendere subito un pacchetto.',opening,nextQuestion:'Qual è oggi la parte della vostra comunicazione che vi porta via più tempo o che vorreste migliorare?',microGoal:'Ottieni un esito concreto: referente, interesse, richiamo, appuntamento oppure no.'}}
 function nextNeedsDate(code){return['RICHIAMARE','APPUNTAMENTO','FOLLOW_UP'].includes(up(code))}
 function active(o){return o&&!CLOSED.has(up(o.stage))}
-window.F1CashEngine={version:VERSION,ready,load,invalidate,products,allProducts,territory,createProspect,outcome,offer,payment,production,closeDay,updateGoal,upsertProduct,history,coords,money,dateTime,human,telHref,waHref,conversationGuide,nextNeedsDate,active};
+function readTimer(){try{return JSON.parse(localStorage.getItem(TIMER_KEY)||'null')}catch(_){return null}}
+function startTimer(minutes){const m=Math.max(1,Math.min(240,Number(minutes||0))),state={started_at:Date.now(),ends_at:Date.now()+m*60000,minutes:m};localStorage.setItem(TIMER_KEY,JSON.stringify(state));renderTimer();return state}
+function stopTimer(){localStorage.removeItem(TIMER_KEY);renderTimer()}
+function renderTimer(){const host=document.getElementById('cashOperatorTimer');if(!host)return;const t=readTimer(),label=host.querySelector('[data-timer-left]');if(!t||!t.ends_at){label.textContent='NON AVVIATO';return}const left=Math.max(0,Number(t.ends_at)-Date.now()),mm=Math.floor(left/60000),ss=Math.floor(left%60000/1000);label.textContent=left?`${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`:'COMPLETATO';if(!left)localStorage.removeItem(TIMER_KEY)}
+function installTimer(){if(!/\/f1-cash\.html$/i.test(location.pathname)||document.getElementById('cashOperatorTimer'))return;const now=document.querySelector('.now');if(!now)return;const box=document.createElement('div');box.id='cashOperatorTimer';box.style.cssText='margin-top:12px;padding-top:12px;border-top:1px solid #294034;display:grid;gap:8px';box.innerHTML='<div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div><small style="display:block;color:#a8b3aa;font-weight:900">BLOCCO OPERATIVO · AVVIO MANUALE</small><span style="font-size:10px;color:#829087">Nessun orario aziendale inventato: scegli tu la durata del blocco corrente.</span></div><strong data-timer-left style="font-size:20px;color:#c8ff39">NON AVVIATO</strong></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" class="btn" data-cash-min="15">15 MIN</button><button type="button" class="btn" data-cash-min="30">30 MIN</button><button type="button" class="btn" data-cash-min="60">60 MIN</button><button type="button" class="btn red" data-cash-stop>STOP</button></div>';now.appendChild(box);box.querySelectorAll('[data-cash-min]').forEach(b=>b.addEventListener('click',()=>startTimer(b.dataset.cashMin)));box.querySelector('[data-cash-stop]').addEventListener('click',stopTimer);renderTimer();setInterval(renderTimer,1000)}
+function installRuntime(){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',installTimer,{once:true});else installTimer()}
+window.F1CashEngine={version:VERSION,ready,load,invalidate,products,allProducts,territory,createProspect,outcome,offer,payment,production,closeDay,updateGoal,upsertProduct,history,coords,money,dateTime,human,telHref,waHref,conversationGuide,nextNeedsDate,active,startTimer,stopTimer,readTimer};
+installRuntime();
 })();
