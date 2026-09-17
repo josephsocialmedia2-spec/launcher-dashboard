@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const VERSION='20260916-notiziere1';
+const VERSION='20260917-territory2';
 const CLOSED=new Set(['DONE','COMPLETED','CLOSED','CANCELLED','ANNULLATO','ARCHIVED']);
 let cache=null,cacheAt=0,loading=null;
 const txt=v=>String(v??'').trim();
@@ -8,13 +8,13 @@ const esc=v=>encodeURIComponent(txt(v));
 function ready(){return !!window.F1StaffData?.ready?.()}
 function civicOf(p){return txt(p?.next_civic||p?.civic_start||'')}
 function openTask(t){return !CLOSED.has(up(t?.status))}
-function taskHref(t){const v=up(`${t?.task_type||''} ${t?.reason||''} ${t?.outcome||''}`);if(/FIELD|TERRITOR|GIRO/.test(v))return'giro-acquisizione.html';if(/CALL|CHIAM|PHONE|CONTATT|PROSPECT/.test(v))return'telefonate-oggi.html';if(/FOLLOW|RICHIAM/.test(v))return'oggi.html#tasks';if(/SCRIPT/.test(v))return'script.html';return'crm.html?mode=notiziere'}
+function taskHref(t){const v=up(`${t?.task_type||''} ${t?.reason||''} ${t?.outcome||''}`);if(/FIELD|TERRITOR|GIRO/.test(v))return'territory-mobile.html#terr';if(/CALL|CHIAM|PHONE|CONTATT|PROSPECT/.test(v))return'telefonate-oggi.html';if(/FOLLOW|RICHIAM/.test(v))return'oggi.html#tasks';if(/SCRIPT/.test(v))return'script.html';return'crm.html?mode=notiziere'}
 function instructionFrom(state){
   const p=state?.territory?.progress||null,pending=state?.territory?.pending_news||[],summary=state?.territory?.summary||{},civic=civicOf(p);
   if(p){
-    if(up(p.status)==='DA_CONSUNTIVARE'&&pending.length){const n=pending[0];return{kind:'CRM_PENDING',priority:'ALTA',title:`REGISTRA ${pending.length} DATO${pending.length===1?'':'I'} NEL CRM`,detail:`${txt(p.comune)||'Territorio'} · ${txt(p.via)||'via da verificare'} · prima di chiudere il giro`,cta:'REGISTRA ADESSO',href:`crm.html?territory_observation=${esc(n.observation_id)}#territory-news`,progress:p,summary,pending,nextTitle:'Chiudi il giro soltanto dopo aver registrato i dati pendenti.'}}
-    if(civic){return{kind:'CIVIC',priority:'ALTA',title:`VAI AL CIVICO ${civic}`,detail:[p.comune,p.zona,p.via].map(txt).filter(Boolean).join(' · '),cta:`APRI CIVICO ${civic}`,href:'notiziere-civico.html',progress:p,summary,pending,nextTitle:'Dopo il salvataggio F1 ti mostrerà il prossimo civico configurato.'}}
-    if(up(p.status)==='DA_CONSUNTIVARE'){return{kind:'CONSUNTIVO',priority:'NORMALE',title:'GIRO DA CONSUNTIVARE',detail:[p.comune,p.zona,p.via].map(txt).filter(Boolean).join(' · '),cta:'APRI CRM GUIDATO',href:'crm.html?mode=notiziere',progress:p,summary,pending,nextTitle:'Dopo il consuntivo attendi la prossima assegnazione.'}}
+    if(up(p.status)==='DA_CONSUNTIVARE'&&pending.length){const n=pending[0];return{kind:'CRM_PENDING',priority:'ALTA',title:`REGISTRA ${pending.length} DATO${pending.length===1?'':'I'} NEL CRM`,detail:`${txt(p.comune)||'Territorio'} · ${txt(p.via)||'via da verificare'} · prima di chiudere il giro`,cta:'REGISTRA ADESSO',href:`territory-mobile.html#not`,progress:p,summary,pending,nextTitle:'Chiudi il giro soltanto dopo aver registrato i dati pendenti.'}}
+    if(civic){return{kind:'CIVIC',priority:'ALTA',title:`VAI AL CIVICO ${civic}`,detail:[p.comune,p.zona,p.via].map(txt).filter(Boolean).join(' · '),cta:`APRI CIVICO ${civic}`,href:'territory-mobile.html#terr',progress:p,summary,pending,nextTitle:'Dopo il salvataggio F1 ti mostrerà il prossimo civico configurato.'}}
+    if(up(p.status)==='DA_CONSUNTIVARE'){return{kind:'CONSUNTIVO',priority:'NORMALE',title:'GIRO DA CONSUNTIVARE',detail:[p.comune,p.zona,p.via].map(txt).filter(Boolean).join(' · '),cta:'APRI CRM TERRITORIALE',href:'territory-mobile.html#crm',progress:p,summary,pending,nextTitle:'Dopo il consuntivo attendi la prossima assegnazione.'}}
     return{kind:'NEEDS_SEQUENCE',priority:'ALTA',title:'PERCORSO CIVICI DA CONFIGURARE',detail:'F1 non inventa il civico successivo. Serve una sequenza civici assegnata al giro.',cta:'VERIFICA ASSEGNAZIONE',href:'territory-control.html',progress:p,summary,pending,nextTitle:'Dopo la configurazione F1 riprenderà dal primo civico assegnato.'};
   }
   const task=(state?.tasks||[]).filter(openTask).sort((a,b)=>String(a.due_date||'9999').localeCompare(String(b.due_date||'9999'))||Number(b.priority||0)-Number(a.priority||0))[0];
