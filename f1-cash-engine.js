@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const VERSION='20260917-cash2';
+const VERSION='20260917-cash3';
 let cache=null,cacheAt=0,loading=null;
 const txt=v=>String(v??'').trim();
 const num=v=>Number(v||0);
@@ -42,7 +42,8 @@ function startTimer(minutes){const m=Math.max(1,Math.min(240,Number(minutes||0))
 function stopTimer(){localStorage.removeItem(TIMER_KEY);renderTimer()}
 function renderTimer(){const host=document.getElementById('cashOperatorTimer');if(!host)return;const t=readTimer(),label=host.querySelector('[data-timer-left]');if(!t||!t.ends_at){label.textContent='NON AVVIATO';return}const left=Math.max(0,Number(t.ends_at)-Date.now()),mm=Math.floor(left/60000),ss=Math.floor(left%60000/1000);label.textContent=left?`${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`:'COMPLETATO';if(!left)localStorage.removeItem(TIMER_KEY)}
 function installTimer(){if(!/\/f1-cash\.html$/i.test(location.pathname)||document.getElementById('cashOperatorTimer'))return;const now=document.querySelector('.now');if(!now)return;const box=document.createElement('div');box.id='cashOperatorTimer';box.style.cssText='margin-top:12px;padding-top:12px;border-top:1px solid #294034;display:grid;gap:8px';box.innerHTML='<div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><div><small style="display:block;color:#a8b3aa;font-weight:900">BLOCCO OPERATIVO · AVVIO MANUALE</small><span style="font-size:10px;color:#829087">Nessun orario aziendale inventato: scegli tu la durata del blocco corrente.</span></div><strong data-timer-left style="font-size:20px;color:#c8ff39">NON AVVIATO</strong></div><div style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" class="btn" data-cash-min="15">15 MIN</button><button type="button" class="btn" data-cash-min="30">30 MIN</button><button type="button" class="btn" data-cash-min="60">60 MIN</button><button type="button" class="btn red" data-cash-stop>STOP</button></div>';now.appendChild(box);box.querySelectorAll('[data-cash-min]').forEach(b=>b.addEventListener('click',()=>startTimer(b.dataset.cashMin)));box.querySelector('[data-cash-stop]').addEventListener('click',stopTimer);renderTimer();setInterval(renderTimer,1000)}
-function installRuntime(){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',installTimer,{once:true});else installTimer()}
+function installPwa(){if(!/\/f1-cash\.html$/i.test(location.pathname))return;if(!document.querySelector('link[rel="manifest"]')){const l=document.createElement('link');l.rel='manifest';l.href='f1-cash.webmanifest';document.head.appendChild(l)}if('serviceWorker'in navigator&&(location.protocol==='https:'||['localhost','127.0.0.1'].includes(location.hostname)))navigator.serviceWorker.register('./f1-cash-sw.js').catch(()=>{})}
+function installRuntime(){const run=()=>{installPwa();installTimer()};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run()}
 window.F1CashEngine={version:VERSION,ready,load,invalidate,products,allProducts,territory,createProspect,outcome,offer,payment,production,closeDay,updateGoal,upsertProduct,history,coords,money,dateTime,human,telHref,waHref,conversationGuide,nextNeedsDate,active,startTimer,stopTimer,readTimer};
 installRuntime();
 })();
