@@ -2,7 +2,7 @@
 const LOGIN='setup-cloud.html?return=ricerca-territoriale.html';
 const PROTECTED_SCRIPTS=[
   'f1-staff-data.js?v=20260916-auth1',
-  'f1-notiziere-engine.js?v=20260916-notiziere1',
+  'f1-notiziere-engine.js?v=20260917-territory2',
   'ricerca-territoriale.js?v=20260916-notiziere1',
   'f1-notiziere-assistant-bridge.js?v=20260916-notiziere1',
   'f1-tour-admin-dashboard.js?v=20260916-tour1',
