@@ -7,6 +7,7 @@ on:
       - 'f1-notiziere-engine.js'
       - 'notiziere-civico.html'
       - 'notiziere-civico.js'
+      - 'territory-mobile.html'
       - 'funzionario-notiziere.html'
       - 'ricerca-territoriale.html'
       - 'ricerca-territoriale.js'
@@ -19,6 +20,7 @@ on:
       - 'f1-notiziere-crm-mode.js'
       - 'crm-territory-handoff.js'
       - 'giro-acquisizione.html'
+      - 'supabase-migrations/20260917_f1_territory_mobile_operating_system_v2.sql'
       - 'supabase-migrations/20260916_f1_tour_assignment_admin.sql'
       - 'supabase-migrations/20260916_f1_staff_dashboard_access_log.sql'
       - 'tests/notiziere-guided.spec.js'
@@ -44,5 +46,5 @@ jobs:
           node-version: 22
       - run: npm install --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
-      - name: Guided Notiziere + assegnazione giro + accessi dashboard
+      - name: Guided Notiziere + F1 Territory + assegnazione giro + accessi dashboard
         run: npx playwright test tests/notiziere-guided.spec.js tests/tour-assignment.spec.js tests/staff-access-panel.spec.js --config=playwright.config.js --reporter=line
