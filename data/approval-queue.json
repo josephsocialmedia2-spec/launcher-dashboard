@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generated_at": "2026-09-17T19:18:40.136319+00:00",
+  "generated_at": "2026-09-17T22:21:59.893410+00:00",
   "pipeline": "F1_COMMON_APPROVAL_QUEUE",
   "crm_target": "Supabase public.approval_queue",
   "items": [
