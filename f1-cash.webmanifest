@@ -1,0 +1,11 @@
+{
+  "name": "F1 CASH · Generatore di Opportunità",
+  "short_name": "F1 CASH",
+  "description": "Modulo operativo F1 per prospecting, incassi, produzione e prossima azione.",
+  "start_url": "./f1-cash.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#050805",
+  "theme_color": "#050805",
+  "lang": "it-IT"
+}
