@@ -3,11 +3,12 @@ const $=id=>document.getElementById(id),txt=v=>String(v??'').trim();
 let state=null,profile=null,progress=null,civic='',busy=false,completedResult=null;
 function setStatus(message,kind=''){const e=$('status');e.textContent=message;e.className='status'+(kind?' '+kind:'')}
 function formStatus(form,message,bad=false){const e=form.querySelector('[data-form-status]');if(!e)return;e.textContent=message;e.className='status'+(bad?' err':'')}
-function setBusy(on){busy=!!on;['observationBtn','personBtn','newsBtn','completeBtn','pauseBtn'].forEach(id=>{const e=$(id);if(e)e.disabled=busy||!!completedResult})}
-function actionButtons(enabled){['mapBtn','observationBtn','personBtn','newsBtn','completeBtn','pauseBtn'].forEach(id=>{const e=$(id);if(!e)return;if('disabled'in e)e.disabled=!enabled;if(id==='mapBtn')e.style.pointerEvents=enabled?'':'none'})}
+function setBusy(on){busy=!!on;['observationBtn','personBtn','newsBtn','cashBtn','completeBtn','pauseBtn'].forEach(id=>{const e=$(id);if(e&&'disabled'in e)e.disabled=busy||!!completedResult})}
+function actionButtons(enabled){['mapBtn','observationBtn','personBtn','newsBtn','cashBtn','completeBtn','pauseBtn'].forEach(id=>{const e=$(id);if(!e)return;if('disabled'in e)e.disabled=!enabled;if(id==='mapBtn'||id==='cashBtn')e.style.pointerEvents=enabled?'':'none';e.style.opacity=enabled?'':'0.45'})}
 function openDlg(id){const d=$(id);if(d&&!d.open)d.showModal()}
 function closeDlg(id){const d=$(id);if(d?.open)d.close()}
 function currentAddress(){return[progress?.comune,progress?.zona,progress?.via,civic&&'civico '+civic].map(txt).filter(Boolean).join(' · ')}
+function injectCashButton(){if($('cashBtn'))return;const actions=document.querySelector('.hero .actions'),complete=$('completeBtn');if(!actions||!complete)return;const a=document.createElement('a');a.id='cashBtn';a.className='btn';a.href='f1-cash.html?mode=new&from=territory&return=notiziere-civico.html';a.textContent='💼 HO TROVATO UN’ATTIVITÀ';a.setAttribute('aria-label','Registra opportunità di lavoro in F1 CASH');actions.insertBefore(a,complete)}
 function render(){
   progress=state?.territory?.progress||null;civic=window.F1NotiziereEngine.civicOf(progress);
   $('where').textContent=progress?[progress.comune,progress.zona,progress.via].map(txt).filter(Boolean).join(' · ')||'Territorio assegnato':'Nessun giro territoriale assegnato';
@@ -39,6 +40,7 @@ async function completeCivic(ev){ev.preventDefault();if(busy||!progress||!civic)
   }catch(e){formStatus(form,'CHIUSURA NON COMPLETATA — '+String(e?.message||e),true);setBusy(false)}}
 async function pause(){if(busy||!progress||!civic)return;setBusy(true);setStatus('SALVATAGGIO PUNTO DI RIPRESA…');try{await F1NotiziereEngine.pause(progress.progress_id,civic);setStatus(`✓ GIRO IN PAUSA · punto salvato: ${txt(progress.via)} · civico ${civic}.`);setTimeout(()=>location.href='ricerca-territoriale.html',500)}catch(e){setStatus('PAUSA NON SALVATA · '+String(e?.message||e),'err');setBusy(false)}}
 function wire(){
+  injectCashButton();
   document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>closeDlg(b.dataset.close)));
   $('observationBtn').onclick=()=>openDlg('observationDlg');$('personBtn').onclick=()=>openDlg('personDlg');$('newsBtn').onclick=()=>openDlg('newsDlg');$('completeBtn').onclick=()=>openDlg('completeDlg');$('pauseBtn').onclick=pause;
   $('observationForm').addEventListener('submit',saveObservation);$('personForm').addEventListener('submit',savePerson);$('newsForm').addEventListener('submit',saveNews);$('completeForm').addEventListener('submit',completeCivic);
