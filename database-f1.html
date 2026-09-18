@@ -18,13 +18,13 @@ header{position:sticky;top:0;z-index:10;background:#070907f5;border-bottom:1px s
 .head{max-width:1280px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}.ey{color:var(--g);font-size:10px;font-weight:900;letter-spacing:.14em}
 h1{margin:3px 0;font-size:22px}.sub{font-size:10px;color:var(--mut)}.toplinks{display:flex;gap:8px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#151c17;color:#fff;text-decoration:none;font-size:10px;font-weight:900;cursor:pointer}.btn.primary{background:var(--g);border-color:var(--g);color:#061008}.btn.gold{color:var(--gold);border-color:#66552a}
 .wrap{max-width:1280px;margin:auto;padding:18px 14px 70px}.notice{border:1px solid #35513d;background:#0c1710;border-radius:12px;padding:11px 13px;color:#b9e9ca;font-size:11px;line-height:1.5}
-.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin:14px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px;text-align:center}.stat b{display:block;color:var(--g);font-size:24px}.stat span{font-size:9px;color:var(--mut);font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(7,1fr);gap:9px;margin:14px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px;text-align:center}.stat b{display:block;color:var(--g);font-size:24px}.stat span{font-size:9px;color:var(--mut);font-weight:800}
 .grid{display:grid;grid-template-columns:1.4fr .8fr;gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:14px}.card h2{margin:0 0 10px;font-size:14px;letter-spacing:.06em}.meta{font-size:10px;color:var(--mut);line-height:1.5}.status{color:var(--g);font-weight:900}.status.warn{color:var(--gold)}.status.err{color:var(--red)}
 .toolbar{display:grid;grid-template-columns:1fr auto;gap:8px;margin:12px 0}.field{width:100%;padding:11px;border-radius:9px;border:1px solid var(--line);background:#0d120e;color:#fff}
 .tablewrap{overflow:auto;max-height:620px;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;min-width:980px}th,td{border-bottom:1px solid #202921;padding:8px;text-align:left;font-size:10px;vertical-align:top}th{position:sticky;top:0;background:#111812;color:var(--g);z-index:1}td a{color:var(--g)}
 .pills{display:flex;gap:6px;flex-wrap:wrap}.pill{border:1px solid #35513d;border-radius:999px;padding:5px 7px;font-size:9px;color:var(--g);font-weight:900}.pill.gold{color:var(--gold);border-color:#66552a}
 .backup-list,.report-list{display:grid;gap:8px}.mini{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--panel2)}.mini strong{display:block;font-size:11px}.mini span{font-size:9px;color:var(--mut)}
-.empty{padding:26px;text-align:center;color:var(--mut)}@media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}}@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.head{align-items:flex-start}.toplinks{justify-content:flex-end}.toplinks .btn span{display:none}}
+.seller-card{margin-top:12px;border-color:#466d50}.seller-script{max-width:420px;line-height:1.45;color:#dfe9e2}.seller-actions{display:flex;gap:6px;flex-wrap:wrap}.seller-actions a,.seller-actions button{padding:7px 8px;font-size:9px}.same-civic{color:var(--gold);font-weight:900}.empty{padding:26px;text-align:center;color:var(--mut)}@media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}}@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.head{align-items:flex-start}.toplinks{justify-content:flex-end}.toplinks .btn span{display:none}}
 </style>
 </head>
 <body>
@@ -37,6 +37,7 @@ h1{margin:3px 0;font-size:22px}.sub{font-size:10px;color:var(--mut)}.toplinks{di
   <div class="stat"><b id="kFollow">0</b><span>FOLLOW-UP</span></div>
   <div class="stat"><b id="kNews">0</b><span>NOTIZIE</span></div>
   <div class="stat"><b id="kAppt">0</b><span>APPUNTAMENTI OGGI</span></div>
+  <div class="stat"><b id="kSeller">0</b><span>POSSIBILI SELLER</span></div>
   <div class="stat"><b id="kBackup">—</b><span>ULTIMO BACKUP</span></div>
 </section>
 <div class="grid">
@@ -50,13 +51,19 @@ h1{margin:3px 0;font-size:22px}.sub{font-size:10px;color:var(--mut)}.toplinks{di
     <section class="card"><h2>BACKUP</h2><div id="backupBox" class="backup-list"><div class="empty">Caricamento…</div></div></section>
   </aside>
 </div>
+<section class="card seller-card">
+  <h2>POSSIBILI SELLER · INCROCIO IMMOBILI F1 × CONTATTI DELLA VIA</h2>
+  <div class="meta">Il sistema non li considera automaticamente venditori: li segnala come contatti da verificare perché risultano nella stessa via di uno o più immobili F1 in vendita.</div>
+  <div class="toolbar"><input class="field" id="sellerQ" placeholder="Cerca possibile seller, comune o via…"><button class="btn gold" id="sellerCsvBtn">CSV SELLER</button></div>
+  <div class="tablewrap"><table><thead><tr><th>NOME</th><th>TELEFONO</th><th>COMUNE / VIA</th><th>IMMOBILI F1 NELLA VIA</th><th>CONTROLLO</th><th>AZIONE</th><th>SCRIPT</th></tr></thead><tbody id="sellerRows"><tr><td colspan="7" class="empty">Caricamento incroci…</td></tr></tbody></table></div>
+</section>
 </main>
 <script src="supabase-config.js?v=20260918-secretdb1"></script>
 <script src="supabase-sync.js?v=20260918-secretdb1"></script>
 <script src="f1-staff-data.js?v=20260918-secretdb1"></script>
 <script>
 (()=>{'use strict';
-const $=id=>document.getElementById(id);let state={leads:[],tasks:[],news:[],interactions:[],reports:[],backups:[],me:null};
+const $=id=>document.getElementById(id);let state={leads:[],tasks:[],news:[],interactions:[],reports:[],backups:[],triggers:[],possibleSellers:[],me:null};
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const dayRome=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Rome',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 const shortDate=v=>{if(!v)return'—';try{return new Date(v).toLocaleString('it-IT',{timeZone:'Europe/Rome',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}catch(_){return String(v)}};
@@ -66,6 +73,49 @@ function renderLeads(){
   const rows=state.leads.filter(x=>!term||[x.nome,x.cognome,x.telefono,x.email,x.comune,x.via,x.civico,x.source,x.source_type,x.status,x.next_action].join(' ').toLowerCase().includes(term));
   $('leadRows').innerHTML=rows.length?rows.map(x=>`<tr><td><b>${esc([x.nome,x.cognome].filter(Boolean).join(' ')||'—')}</b></td><td>${esc(x.telefono||'—')}</td><td>${esc(x.comune||'—')}</td><td>${esc([x.via,x.civico].filter(Boolean).join(' ')||'—')}</td><td>${esc(x.source||x.source_type||'—')}</td><td><span class="pill">${esc(x.status||'—')}</span></td><td>${esc(x.next_action||'—')}${x.next_action_date?' · '+esc(String(x.next_action_date).slice(0,10)):''}</td><td>${esc(shortDate(x.updated_at))}</td></tr>`).join(''):'<tr><td colspan="8" class="empty">Nessun record.</td></tr>';
 }
+
+const norm=s=>String(s??'').trim().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’`]/g,"'").replace(/[.,;:]+/g,' ').replace(/\s+/g,' ').trim();
+const normComune=s=>norm(s).replace(/SANT'/g,'SANT ');
+function streetOnly(s){return norm(s).replace(/\s+\d+[A-Z]?(?:[\/-]\d+[A-Z]?)?(?:\s+BIS)?$/,'').trim()}
+function civicFromAddress(s){const m=norm(s).match(/\s+(\d+[A-Z]?(?:[\/-]\d+[A-Z]?)?(?:\s+BIS)?)$/);return m?m[1].replace(/\s+/g,'').replace(/-/g,'/'):''}
+function normCivic(s){return norm(s).replace(/\s+/g,'').replace(/-/g,'/')}
+function buildPossibleSellers(){
+  const campaigns=new Map();
+  for(const t of state.triggers.filter(x=>x.active!==false)){
+    const key=normComune(t.paese)+'|'+norm(t.via_norm||streetOnly(t.indirizzo));
+    if(!campaigns.has(key))campaigns.set(key,[]);
+    campaigns.get(key).push(t);
+  }
+  const out=[],seen=new Set();
+  for(const l of state.leads){
+    const street=streetOnly(l.via||''),key=normComune(l.comune)+'|'+street;
+    const props=campaigns.get(key);
+    if(!props||!street)continue;
+    const uniqueKey=String(l.lead_id||'')||[l.telefono,l.email,l.comune,street].join('|');
+    if(seen.has(uniqueKey))continue;seen.add(uniqueKey);
+    const contactCivic=normCivic(l.civico||civicFromAddress(l.via||''));
+    const sameCivic=!!contactCivic&&props.some(p=>normCivic(p.civico)===contactCivic);
+    const place=props[0]?.paese||l.comune||'';
+    const road=(props[0]?.via_norm||street).toLowerCase().replace(/(^|\s)\S/g,m=>m.toUpperCase());
+    const script='Buongiorno, sono di F1 Immobiliare. Stiamo seguendo '+(props.length>1?'più immobili':'un immobile')+' in '+road+', a '+place+'. Visto che lei abita nella stessa via, volevo chiederle: le farebbe comodo conoscere gratuitamente il valore aggiornato del suo immobile? Oppure ha parenti o amici che vorrebbero avvicinarsi in questa zona?';
+    out.push({...l,props,sameCivic,possibleSellerScript:script,matchStreet:road});
+  }
+  state.possibleSellers=out.sort((a,b)=>String(a.comune||'').localeCompare(String(b.comune||''),'it')||String(a.matchStreet||'').localeCompare(String(b.matchStreet||''),'it')||String(a.nome||'').localeCompare(String(b.nome||''),'it'));
+}
+function copySellerScript(id){
+  const r=state.possibleSellers.find(x=>String(x.lead_id)===String(id));if(!r)return;
+  navigator.clipboard?.writeText(r.possibleSellerScript).then(()=>alert('Script copiato')).catch(()=>prompt('Copia lo script:',r.possibleSellerScript));
+}
+function renderPossibleSellers(){
+  const term=$('sellerQ').value.trim().toLowerCase();
+  const rows=state.possibleSellers.filter(x=>!term||[x.nome,x.cognome,x.telefono,x.comune,x.matchStreet,x.possibleSellerScript].join(' ').toLowerCase().includes(term));
+  $('sellerRows').innerHTML=rows.length?rows.map(x=>{
+    const props=x.props.map(p=>esc(p.indirizzo)+' · '+esc(p.tipologia||'')).join('<br>');
+    const phone=String(x.telefono||'').replace(/\D/g,'');
+    return `<tr><td><b>${esc([x.nome,x.cognome].filter(Boolean).join(' ')||'—')}</b></td><td>${esc(x.telefono||'—')}</td><td><b>${esc(x.comune||'—')}</b><br>${esc(x.matchStreet||'—')}</td><td>${props}</td><td>${x.sameCivic?'<span class="same-civic">STESSO CIVICO · VERIFICARE</span>':'<span class="pill">STESSA VIA</span>'}</td><td><div class="seller-actions">${phone?'<a class="btn primary" href="tel:+'+phone+'">CHIAMA</a>':''}<button class="btn" onclick="copySellerScript('${esc(x.lead_id)}')">COPIA SCRIPT</button></div></td><td class="seller-script">${esc(x.possibleSellerScript)}</td></tr>`;
+  }).join(''):'<tr><td colspan="7" class="empty">Nessun possibile seller trovato con i contatti CRM attuali.</td></tr>';
+}
+
 function renderReport(){
   const r=state.reports[0];
   if(!r){$('reportBox').innerHTML='<div class="empty">Nessun report consolidato.</div>';return}
@@ -80,7 +130,7 @@ function renderBackups(){
 function renderKpis(){
   const open=state.tasks.filter(openTask),follow=open.filter(x=>String(x.task_type||'').toUpperCase()==='FOLLOW_UP');
   const today=dayRome(),appts=state.interactions.filter(x=>String(x.occurred_at||'').slice(0,10)===today&&/APPUNT|SOPRALLUOGO|VALUTAZIONE/i.test(String(x.outcome||'')));
-  $('kLeads').textContent=state.leads.length;$('kTasks').textContent=open.length;$('kFollow').textContent=follow.length;$('kNews').textContent=state.news.length;$('kAppt').textContent=appts.length;$('kBackup').textContent=state.backups[0]?.status||'—';
+  $('kLeads').textContent=state.leads.length;$('kTasks').textContent=open.length;$('kFollow').textContent=follow.length;$('kNews').textContent=state.news.length;$('kAppt').textContent=appts.length;$('kSeller').textContent=state.possibleSellers.length;$('kBackup').textContent=state.backups[0]?.status||'—';
 }
 async function load(){
   $('refreshBtn').disabled=true;
@@ -90,26 +140,35 @@ async function load(){
     }
     state.me=await F1StaffData.me();
     $('who').textContent='Accesso: '+[state.me.first_name,state.me.last_name].filter(Boolean).join(' ')+' · '+String(state.me.role||'F1');
-    const [leads,tasks,news,interactions,reports,backups]=await Promise.all([
+    const [leads,tasks,news,interactions,reports,backups,triggers]=await Promise.all([
       F1StaffData.rest('leads?deleted=eq.false&select=lead_id,nome,cognome,telefono,email,comune,via,civico,source,source_type,status,next_action,next_action_date,updated_at&order=updated_at.desc&limit=1000'),
       F1StaffData.rest('tasks?select=task_id,lead_id,task_type,reason,status,due_date,priority,created_at,updated_at&order=due_date.asc&limit=1000'),
       F1StaffData.rest('f1_real_estate_news?select=news_id,level,title,comune,via,status,created_at,updated_at&order=updated_at.desc&limit=1000'),
       F1StaffData.rest('interactions?select=interaction_id,lead_id,interaction_type,outcome,occurred_at&order=occurred_at.desc&limit=1000'),
       F1StaffData.reports(state.me.user_id,30),
-      F1StaffData.backups()
+      F1StaffData.backups(),
+      F1StaffData.rest('f1_possible_seller_sources?active=eq.true&select=trigger_id,paese,indirizzo,via_norm,civico,tipologia,active&order=paese.asc,via_norm.asc')
     ]);
-    state={...state,leads:leads||[],tasks:tasks||[],news:news||[],interactions:interactions||[],reports:reports||[],backups:backups||[]};
-    renderKpis();renderLeads();renderReport();renderBackups();
+    state={...state,leads:leads||[],tasks:tasks||[],news:news||[],interactions:interactions||[],reports:reports||[],backups:backups||[],triggers:triggers||[]};
+    buildPossibleSellers();renderKpis();renderLeads();renderPossibleSellers();renderReport();renderBackups();
   }catch(e){
     console.error(e);$('leadRows').innerHTML='<tr><td colspan="8" class="empty">Errore: '+esc(e.message||e)+'</td></tr>';
   }finally{$('refreshBtn').disabled=false}
 }
+
+function exportSellerCsv(){
+  const rows=[['Nome','Cognome','Telefono','Comune','Via','N immobili F1','Immobili F1','Controllo','Prossima azione','Script'],
+    ...state.possibleSellers.map(x=>[x.nome,x.cognome,x.telefono,x.comune,x.matchStreet,x.props.length,x.props.map(p=>p.indirizzo+' · '+p.tipologia).join(' | '),x.sameCivic?'STESSO CIVICO - VERIFICARE':'STESSA VIA','Chiamare: valutazione / parenti-amici',x.possibleSellerScript])];
+  const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'}));a.download='F1_possibili_seller_'+dayRome()+'.csv';a.click();URL.revokeObjectURL(a.href);
+}
+
 function exportCsv(){
   const rows=[['Nome','Cognome','Telefono','Email','Comune','Via','Civico','Fonte','Stato','Prossima azione','Data prossima azione','Aggiornato'],...state.leads.map(x=>[x.nome,x.cognome,x.telefono,x.email,x.comune,x.via,x.civico,x.source||x.source_type,x.status,x.next_action,x.next_action_date,x.updated_at])];
   const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'}));a.download='F1_database_live_'+dayRome()+'.csv';a.click();URL.revokeObjectURL(a.href);
 }
-$('q').addEventListener('input',renderLeads);$('refreshBtn').onclick=load;$('csvBtn').onclick=exportCsv;load();
+$('q').addEventListener('input',renderLeads);$('sellerQ').addEventListener('input',renderPossibleSellers);$('refreshBtn').onclick=load;$('csvBtn').onclick=exportCsv;$('sellerCsvBtn').onclick=exportSellerCsv;load();
 })();
 </script>
 </body></html>
