@@ -1,6 +1,6 @@
 (()=>{
 'use strict';
-const VERSION='20260918-territory-admin-v3';
+const VERSION='20260918-territory-admin-v3b';
 const $=id=>document.getElementById(id);
 const txt=v=>String(v??'').trim();
 let profile=null,crm=null,timer=null;
@@ -28,8 +28,10 @@ function inject(){
     <div class="f1tv3-actions"><a class="f1tv3-btn primary" href="territory-mobile.html#crm">APRI CRM TERRITORIALE</a><button id="f1tv3Excel" class="f1tv3-btn" type="button">SCARICA EXCEL</button><button id="f1tv3Refresh" class="f1tv3-btn" type="button">AGGIORNA ORA</button></div>
     <div id="f1tv3BulletinBox" class="f1tv3-bulletin">
       <strong>GIORNALINO F1 · PDF WHATSAPP</strong>
-      <div class="f1tv3-bulletin-grid"><input id="f1tv3BulletinTitle" value="GIORNALINO F1" placeholder="Titolo giornalino"><input id="f1tv3BulletinFile" type="file" accept="application/pdf"></div>
-      <div class="f1tv3-actions"><button id="f1tv3Publish" class="f1tv3-btn primary" type="button">PUBBLICA PDF PER I FUNZIONARI</button><a id="f1tv3BulletinOpen" class="f1tv3-btn" href="#" target="_blank" rel="noopener">APRI PDF ATTIVO</a></div>
+      <div class="f1tv3-bulletin-grid"><input id="f1tv3BulletinTitle" value="GIORNALINO F1 · OFFERTE IMMOBILIARI" placeholder="Titolo giornalino"><input id="f1tv3BulletinFile" type="file" accept="application/pdf"></div>
+      <textarea id="f1tv3BulletinIntro" style="width:100%;box-sizing:border-box;margin-top:8px;min-height:70px;border:1px solid #d4ddd7;border-radius:9px;padding:9px" placeholder="Introduzione">Le nostre proposte immobiliari selezionate. Per informazioni e visite contatta F1 Immobiliare.</textarea>
+      <textarea id="f1tv3BulletinOffers" style="width:100%;box-sizing:border-box;margin-top:8px;min-height:120px;border:1px solid #d4ddd7;border-radius:9px;padding:9px" placeholder="Una offerta per riga: Comune | Tipologia / descrizione | Prezzo | Link"></textarea>
+      <div class="f1tv3-actions"><button id="f1tv3CreatePublish" class="f1tv3-btn primary" type="button">CREA E PUBBLICA PDF</button><button id="f1tv3Publish" class="f1tv3-btn" type="button">PUBBLICA PDF GIÀ PRONTO</button><a id="f1tv3BulletinOpen" class="f1tv3-btn" href="#" target="_blank" rel="noopener">APRI PDF ATTIVO</a></div>
       <div id="f1tv3BulletinStatus" class="f1tv3-status">Caricamento stato giornalino…</div>
     </div>
   </div>`;
@@ -42,6 +44,53 @@ async function loadCRM(){
   $('f1tv3Civics').textContent=crm.civics.length;$('f1tv3Contacts').textContent=crm.conversations.length;$('f1tv3News').textContent=crm.news.length;$('f1tv3Notes').textContent=crm.notes.length;$('f1tv3Audio').textContent=crm.notes.filter(n=>n.note_type==='AUDIO').length;$('f1tv3Streets').textContent=crm.streets.length;
   $('f1tv3Live').textContent='AGGIORNATO '+new Intl.DateTimeFormat('it-IT',{hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(new Date());
   const b=crm.active_bulletin;if(b?.public_url){$('f1tv3BulletinOpen').href=b.public_url;$('f1tv3BulletinOpen').style.display='inline-flex';status('PDF attivo: '+(b.title||'GIORNALINO F1')+' · pubblicato '+new Date(b.published_at).toLocaleString('it-IT'),false,true)}else{$('f1tv3BulletinOpen').style.display='none';status('Nessun giornalino PDF attivo.')}
+}
+function loadJsPdf(){
+  return new Promise((resolve,reject)=>{
+    if(window.jspdf?.jsPDF)return resolve(window.jspdf.jsPDF);
+    const s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js';
+    s.onload=()=>resolve(window.jspdf.jsPDF);
+    s.onerror=()=>reject(new Error('GENERATORE PDF NON DISPONIBILE'));
+    document.head.appendChild(s);
+  });
+}
+function parseOffers(){
+  return txt($('f1tv3BulletinOffers').value).split(/\n+/).map(line=>{
+    const p=line.split('|').map(txt);
+    return {comune:p[0]||'',descrizione:p[1]||'',prezzo:p[2]||'',link:p[3]||''};
+  }).filter(x=>x.comune||x.descrizione||x.prezzo||x.link).slice(0,8);
+}
+async function createBulletinPdf(){
+  const JsPDF=await loadJsPdf(),doc=new JsPDF({unit:'mm',format:'a4'}),title=txt($('f1tv3BulletinTitle').value)||'GIORNALINO F1 · OFFERTE IMMOBILIARI',intro=txt($('f1tv3BulletinIntro').value),offers=parseOffers();
+  if(!offers.length)throw new Error('INSERISCI ALMENO UNA OFFERTA IMMOBILIARE');
+  doc.setTextColor(11,111,61);doc.setFont('helvetica','bold');doc.setFontSize(20);doc.text('F1 IMMOBILIARE',15,18);
+  doc.setTextColor(25,33,28);doc.setFontSize(14);doc.text(title,15,28);
+  doc.setFont('helvetica','normal');doc.setFontSize(9);const introLines=doc.splitTextToSize(intro||'Le nostre proposte immobiliari selezionate.',180);doc.text(introLines,15,36);
+  let y=36+introLines.length*4+6;
+  offers.forEach((o,i)=>{
+    if(y>257){doc.addPage();y=18}
+    doc.setDrawColor(210);doc.roundedRect(15,y,180,27,2,2);
+    doc.setTextColor(11,111,61);doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text((i+1)+'. '+(o.comune||'OFFERTA F1'),20,y+7);
+    doc.setTextColor(30);doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text(doc.splitTextToSize(o.descrizione||'Immobile F1',115),20,y+13);
+    if(o.prezzo){doc.setFont('helvetica','bold');doc.text(o.prezzo,150,y+8)}
+    if(o.link){doc.setFont('helvetica','normal');doc.setFontSize(7);doc.textWithLink('APRI ANNUNCIO',150,y+17,{url:o.link})}
+    y+=32;
+  });
+  doc.setTextColor(55);doc.setFontSize(8);doc.setFont('helvetica','normal');
+  doc.text('F1 IMMOBILIARE di Aurigemma Francesca',15,282);
+  doc.text('Francesca +39 371 424 6300 · Joseph +39 371 370 8294 · f1immobiliaresusa@outlook.it',15,287);
+  return doc.output('blob');
+}
+async function createAndPublish(){
+  if(!['TITOLARE','ADMIN','MANAGER'].includes(String(profile?.role||'').toUpperCase()))return status('Solo il Titolare può creare e pubblicare il giornalino.',true);
+  try{
+    status('Creo il giornalino PDF…');
+    const blob=await createBulletinPdf(),path=profile.user_id+'/'+Date.now()+'-giornalino-f1.pdf',url=await storageUploadPdf(blob,path);
+    await rpc('f1_territory_bulletin_publish_v3',{p_title:txt($('f1tv3BulletinTitle').value)||'GIORNALINO F1',p_pdf_path:path,p_public_url:url});
+    await loadCRM();
+    status('✓ PDF creato e pubblicato. È ora disponibile nel tasto INVIO GIORNALINO sul telefono.',false,true);
+  }catch(e){status(e.message||e,true)}
 }
 async function storageUploadPdf(file,path){
   const cfg=window.F1_SUPABASE,token=await F1Sync.authToken();
@@ -70,7 +119,7 @@ async function excel(){
 }
 async function init(){
   css();inject();try{profile=await F1StaffData.me();if(!['TITOLARE','ADMIN','MANAGER'].includes(String(profile.role||'').toUpperCase()))$('f1tv3BulletinBox').style.display='none';await loadCRM()}catch(e){console.error(e)}
-  $('f1tv3Excel').onclick=excel;$('f1tv3Refresh').onclick=loadCRM;$('f1tv3Publish').onclick=publish;
+  $('f1tv3Excel').onclick=excel;$('f1tv3Refresh').onclick=loadCRM;$('f1tv3Publish').onclick=publish;$('f1tv3CreatePublish').onclick=createAndPublish;
   clearInterval(timer);timer=setInterval(()=>{if(!document.hidden)loadCRM().catch(()=>{})},15000);
   window.addEventListener('focus',()=>loadCRM().catch(()=>{}));
 }
