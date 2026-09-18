@@ -443,6 +443,12 @@ async function openNotesForRecord(record){
   $('v3NotesCount').textContent=notes.length;
   $('v3NotesTitle').textContent='NOTE · '+record.via+' '+record.civico;
   $('v3NoteText').value='';
+  const editable=canEditRecord(record);
+  $('v3NoteText').disabled=!editable;
+  $('v3SaveTextNote').disabled=!editable;
+  $('v3StartAudio').disabled=!editable;
+  $('v3StopAudio').disabled=true;
+  setStatus('v3AudioState',editable?'Microfono pronto.':'SOLA LETTURA · note di un altro funzionario',!editable);
   $('v3NotesList').innerHTML=notes.length?notes.map(n=>'<div class="v3-note"><div class="row"><strong>'+(n.note_type==='AUDIO'?'NOTA AUDIO':'NOTA SCRITTA')+'</strong><small>'+new Date(n.created_at).toLocaleString('it-IT')+'</small></div>'+(n.note_type==='TEXT'?'<div style="margin-top:6px;white-space:pre-wrap">'+esc(n.note_text||'')+'</div>':'<audio controls data-audio-path="'+esc(n.audio_path||'')+'"></audio>')+'</div>').join(''):'<div class="mut">Nessuna nota salvata.</div>';
   $('v3NotesModal').classList.add('open');
   await hydrateAudioUrls();
