@@ -71,8 +71,8 @@ async function ensureCurrentCivic(){
 function injectStyle(){
   if($('f1TerritoryV3Style'))return;
   const s=document.createElement('style');s.id='f1TerritoryV3Style';s.textContent=`
-  .v3-list{display:grid;gap:8px}.v3-muni,.v3-street{width:100%;text-align:left;border:1px solid var(--line);border-radius:12px;background:#fff;padding:11px;cursor:pointer;display:flex;justify-content:space-between;gap:10px;align-items:center;font:inherit}.v3-muni strong,.v3-street strong{font-size:12px}.v3-muni small,.v3-street small{display:block;margin-top:3px;color:var(--mut);font-size:9px}.v3-state{font-size:8px;font-weight:950;color:var(--g);white-space:nowrap}.v3-search{margin:10px 0}.v3-gps{background:var(--g);color:#fff;border:0;border-radius:13px;padding:13px;width:100%;font-weight:950;cursor:pointer}.v3-gps.off{background:#163f2b}.v3-status{font-size:10px;font-weight:850;margin-top:8px;color:var(--mut);line-height:1.4}.v3-script{margin-top:10px;padding:11px;border:1px solid #b9dfc9;border-radius:11px;background:#f4fbf7}.v3-script .ask{font-size:13px;font-weight:950;font-style:italic}.v3-script .offer{margin-top:8px;font-size:10px;font-weight:900;line-height:1.45}.v3-wa{margin-top:9px;width:100%;min-height:48px;border:0;border-radius:11px;background:#148c4f;color:#fff;font-weight:950;cursor:pointer}.v3-value{margin-top:10px;padding:11px;border:1px solid #e2b500;border-radius:11px;background:#fffbea}.v3-value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}.v3-value-grid button{border:1px solid #e2b500;background:#fff;border-radius:9px;padding:8px;font-size:9px;font-weight:900}.v3-note-row{display:flex;gap:10px;align-items:center;margin-top:10px}.v3-note-btn{width:88px;height:78px;border:0;border-radius:10px;background:#d71920;color:#fff;font-weight:950;cursor:pointer}.v3-note-count{font-size:9px;color:#a61d22;font-weight:900}.v3-contact-context{padding:9px;border:1px solid #b9dfc9;border-radius:10px;background:#f4fbf7;font-size:10px}.v3-outcomes{display:grid;grid-template-columns:1fr 1fr;gap:7px}.v3-outcomes button{min-height:44px;border:1px solid var(--line);background:#fff;border-radius:10px;font-size:10px;font-weight:900}.v3-notes-list{display:grid;gap:8px}.v3-note{border:1px solid var(--line);border-radius:10px;padding:9px}.v3-note small{color:var(--mut)}.v3-note audio{width:100%;margin-top:7px}.v3-record{background:#d71920!important;color:#fff!important}.v3-audio-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.v3-export{background:#0b6f3d!important;color:#fff!important}.rownum button{border:0;background:transparent;color:#0b6f3d;font-weight:950;cursor:pointer}.v3-crm-note{min-width:170px}.v3-crm-note button{margin-top:4px}.v3-hidden{display:none!important}
-  @media(max-width:560px){.v3-value-grid{grid-template-columns:1fr}.v3-audio-actions{grid-template-columns:1fr}}
+  .v3-list{display:grid;gap:8px}.v3-municipality-intro{margin-top:7px;color:var(--mut);font-size:11px;line-height:1.5}.v3-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}.v3-step{border:1px solid #cfe2d6;background:#f5fbf7;border-radius:10px;padding:9px 7px;text-align:center;font-size:8px;font-weight:950;line-height:1.25;color:#174b31}.v3-zone{margin-top:14px}.v3-zone-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.v3-zone-head small{display:block;font-size:9px;font-weight:950;letter-spacing:.06em;color:var(--g)}.v3-zone-head h2{margin-top:2px;font-size:16px}.v3-zone-count{min-width:34px;height:34px;border-radius:10px;background:var(--gs);border:1px solid #b9dfc9;color:var(--gd);font-size:12px;font-weight:950;display:grid;place-items:center}.v3-zone-empty{display:none}.v3-muni,.v3-street{width:100%;text-align:left;border:1px solid var(--line);border-radius:12px;background:#fff;padding:11px;cursor:pointer;display:flex;justify-content:space-between;gap:10px;align-items:center;font:inherit}.v3-muni strong,.v3-street strong{font-size:12px}.v3-muni small,.v3-street small{display:block;margin-top:3px;color:var(--mut);font-size:9px}.v3-state{font-size:8px;font-weight:950;color:var(--g);white-space:nowrap}.v3-search{margin:10px 0}.v3-gps{background:var(--g);color:#fff;border:0;border-radius:13px;padding:13px;width:100%;font-weight:950;cursor:pointer}.v3-gps.off{background:#163f2b}.v3-status{font-size:10px;font-weight:850;margin-top:8px;color:var(--mut);line-height:1.4}.v3-script{margin-top:10px;padding:11px;border:1px solid #b9dfc9;border-radius:11px;background:#f4fbf7}.v3-script .ask{font-size:13px;font-weight:950;font-style:italic}.v3-script .offer{margin-top:8px;font-size:10px;font-weight:900;line-height:1.45}.v3-wa{margin-top:9px;width:100%;min-height:48px;border:0;border-radius:11px;background:#148c4f;color:#fff;font-weight:950;cursor:pointer}.v3-value{margin-top:10px;padding:11px;border:1px solid #e2b500;border-radius:11px;background:#fffbea}.v3-value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}.v3-value-grid button{border:1px solid #e2b500;background:#fff;border-radius:9px;padding:8px;font-size:9px;font-weight:900}.v3-note-row{display:flex;gap:10px;align-items:center;margin-top:10px}.v3-note-btn{width:88px;height:78px;border:0;border-radius:10px;background:#d71920;color:#fff;font-weight:950;cursor:pointer}.v3-note-count{font-size:9px;color:#a61d22;font-weight:900}.v3-contact-context{padding:9px;border:1px solid #b9dfc9;border-radius:10px;background:#f4fbf7;font-size:10px}.v3-outcomes{display:grid;grid-template-columns:1fr 1fr;gap:7px}.v3-outcomes button{min-height:44px;border:1px solid var(--line);background:#fff;border-radius:10px;font-size:10px;font-weight:900}.v3-notes-list{display:grid;gap:8px}.v3-note{border:1px solid var(--line);border-radius:10px;padding:9px}.v3-note small{color:var(--mut)}.v3-note audio{width:100%;margin-top:7px}.v3-record{background:#d71920!important;color:#fff!important}.v3-audio-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}.v3-export{background:#0b6f3d!important;color:#fff!important}.rownum button{border:0;background:transparent;color:#0b6f3d;font-weight:950;cursor:pointer}.v3-crm-note{min-width:170px}.v3-crm-note button{margin-top:4px}.v3-hidden{display:none!important}
+  @media(max-width:560px){.v3-value-grid{grid-template-columns:1fr}.v3-audio-actions{grid-template-columns:1fr}.v3-steps{grid-template-columns:1fr 1fr}.v3-step{font-size:8px}}
   `;document.head.appendChild(s);
 }
 function injectScreens(){
@@ -80,7 +80,19 @@ function injectScreens(){
     const home=$('home');
     home.insertAdjacentHTML('afterend',`
     <section id="municipalities" class="screen"><div class="stack">
-      <div class="card"><div class="ey">RICERCA TERRITORIALE</div><h1>COMUNI DELLA VALLE DI SUSA</h1><input id="v3MunicipalitySearch" class="v3-search" placeholder="Cerca Comune"><div id="v3MunicipalityList" class="v3-list"></div></div>
+      <div class="card">
+        <div class="ey">F1 TERRITORY</div>
+        <h1>COMUNI DELLA VALLE DI SUSA</h1>
+        <p class="v3-municipality-intro">Seleziona il Comune. F1 apre prima la scheda del Comune. Il GPS parte solo quando premi <strong>ATTIVA GPS · POSIZIONE PRECISA</strong>.</p>
+        <div class="v3-steps" aria-label="Flusso operativo Comune">
+          <div class="v3-step">1. SCEGLI IL COMUNE</div>
+          <div class="v3-step">2. APRE LA SCHEDA COMUNE</div>
+          <div class="v3-step">3. PREMI ATTIVA GPS</div>
+          <div class="v3-step">4. APRE LA VIA IN CUI SEI</div>
+        </div>
+        <input id="v3MunicipalitySearch" class="v3-search" placeholder="Cerca Comune" autocomplete="off">
+        <div id="v3MunicipalityList"></div>
+      </div>
     </div></section>
     <section id="municipality" class="screen"><div class="stack">
       <div class="card"><div class="ey">COMUNE ASSEGNATO / SELEZIONATO</div><h1 id="v3MunicipalityTitle">—</h1><button id="v3GpsBtn" class="v3-gps off" type="button">◎ ATTIVA GPS · POSIZIONE PRECISA</button><div id="v3GpsState" class="v3-status">GPS OFF · parte solo premendo il tasto.</div></div>
@@ -130,11 +142,30 @@ function injectModals(){
   }
 }
 function allMunicipalities(){return [...MUNICIPALITIES.lower,...MUNICIPALITIES.upper,...MUNICIPALITIES.cenischia]}
+function municipalityReadyCount(name){
+  const rows=crmCache?.streets||[];
+  return rows.filter(r=>txt(r.comune).toLocaleLowerCase('it-IT')===txt(name).toLocaleLowerCase('it-IT')&&!excludedRoad(r.via,r.road_type)).length;
+}
+function municipalityButton(name){
+  const ready=municipalityReadyCount(name);
+  const subtitle=ready>0
+    ? ready+' vie pronte · localizza e apri la via'
+    : 'Localizza e prepara automaticamente le vie';
+  return '<button class="v3-muni" data-v3-municipality="'+esc(name)+'"><span><strong>'+esc(name)+'</strong><small>'+esc(subtitle)+'</small></span><span>→</span></button>';
+}
+function municipalityZone(label,title,names,q){
+  const filtered=names.filter(name=>!q||name.toLocaleLowerCase('it-IT').includes(q));
+  if(!filtered.length)return '';
+  return '<section class="v3-zone"><div class="v3-zone-head"><div><small>'+esc(label)+'</small><h2>'+names.length+' COMUNI</h2></div><span class="v3-zone-count">'+names.length+'</span></div><div class="v3-list">'+filtered.map(municipalityButton).join('')+'</div></section>';
+}
 function renderMunicipalities(q=''){
   const host=$('v3MunicipalityList');if(!host)return;
   q=txt(q).toLocaleLowerCase('it-IT');
-  const rows=allMunicipalities().filter(x=>!q||x.toLocaleLowerCase('it-IT').includes(q));
-  host.innerHTML=rows.map(name=>'<button class="v3-muni" data-v3-municipality="'+esc(name)+'"><span><strong>'+esc(name)+'</strong><small>Apri Comune e carica le vie reali</small></span><span>→</span></button>').join('');
+  host.innerHTML=[
+    municipalityZone('BASSA VALLE DI SUSA','BASSA VALLE DI SUSA',MUNICIPALITIES.lower,q),
+    municipalityZone('ALTA VALLE DI SUSA','ALTA VALLE DI SUSA',MUNICIPALITIES.upper,q),
+    municipalityZone('VAL CENISCHIA','VAL CENISCHIA',MUNICIPALITIES.cenischia,q)
+  ].join('') || '<div class="mut" style="margin-top:12px">Nessun Comune trovato.</div>';
   host.querySelectorAll('[data-v3-municipality]').forEach(b=>b.onclick=()=>selectMunicipality(b.dataset.v3Municipality));
 }
 async function selectMunicipality(name){
@@ -609,7 +640,19 @@ function bind(){
 }
 async function init(){
   injectStyle();injectScreens();injectTerritoryExtras();injectModals();renderMunicipalities();bind();
-  try{window.F1TerritoryV3.profile=await F1StaffData.me();await crm(true);updateNoteCount()}catch(e){console.warn('F1 Territory v3 init',e)}
+
+  const explicitHash=txt(location.hash).replace('#','');
+  if(!explicitHash || explicitHash==='home'){
+    screen('municipalities');
+    try{history.replaceState({screen:'municipalities'},'',location.pathname+location.search+'#municipalities')}catch(_){}
+  }
+
+  try{
+    window.F1TerritoryV3.profile=await F1StaffData.me();
+    await crm(true);
+    renderMunicipalities($('v3MunicipalitySearch')?.value||'');
+    updateNoteCount();
+  }catch(e){console.warn('F1 Territory v3 init',e)}
 }
 window.F1TerritoryV3={version:VERSION,profile:null,crm,openCivicEditor,openNotesForRecord,augmentExcel,exportExcel,selectMunicipality,activateGps};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,0),{once:true});else setTimeout(init,0);
