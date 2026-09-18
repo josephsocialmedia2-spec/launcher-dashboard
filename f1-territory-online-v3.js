@@ -90,6 +90,7 @@ function injectTerritoryExtras(){
   if(firstCard&&!$('v3AddNotes')){
     const wrap=document.createElement('div');wrap.className='v3-note-row';wrap.innerHTML='<button id="v3AddNotes" class="v3-note-btn" type="button">＋<br>AGGIUNGI<br>NOTE</button><div><strong id="v3NoteCount" class="v3-note-count">0 NOTE</strong><div class="mut" style="font-size:9px;margin-top:3px">Note scritte o audio collegate alla riga CRM.</div></div>';
     firstCard.appendChild(wrap);
+    const next=document.createElement('div');next.id='v3OperationalNext';next.className='v3-contact-context';next.style.marginTop='10px';next.innerHTML='<div class="ey">PROSSIMA AZIONE</div><strong id="v3OperationalNextText">—</strong>';firstCard.appendChild(next);
   }
   const script=terr.querySelector('.scriptbox');
   if(script&&!$('v3SendBulletin')){
@@ -373,6 +374,9 @@ async function updateNoteCount(){
   const x=await currentContext().catch(()=>null);if(!x?.progress||!x.civic)return;
   const data=await crm(true),r=data.civics.find(c=>c.progress_id===x.progress.progress_id&&txt(c.civico)===x.civic),n=r?data.notes.filter(z=>z.civic_record_id===r.civic_record_id).length:0;
   if($('v3NoteCount'))$('v3NoteCount').textContent=n+' '+(n===1?'NOTA':'NOTE');
+  const conv=(data.conversations||[]).filter(z=>z.progress_id===x.progress.progress_id&&txt(z.civico)===x.civic).sort((a,b)=>String(b.created_at||'').localeCompare(String(a.created_at||'')))[0];
+  const next=conv?.next_action||r?.next_action||'NESSUNA AZIONE';
+  if($('v3OperationalNextText'))$('v3OperationalNextText').textContent=next;
 }
 
 async function openCivicEditor(id){
