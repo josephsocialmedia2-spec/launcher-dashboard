@@ -59,6 +59,10 @@ test('F1 Territory live integra CRM, notizie, lettere, FSBO e procedura 30 volan
   expect(v3).toContain('AGGIUNGI');
   expect(v3).toContain("f1_territory_note_add_v3");
   expect(v3).toContain("f1_territory_open_street_v3");
+  expect(v3).toContain("f1_territory_civic_patch_record_v3");
+  expect(v3).toContain("f1_territory_conversation_add_record_v3");
+  expect(v3).toContain('id="civicEdit"');
+  expect(v3).toContain('APRI / MODIFICA');
   expect(v3).toContain('SCARICA EXCEL');
 });
 
