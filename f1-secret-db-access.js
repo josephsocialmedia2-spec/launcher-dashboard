@@ -23,7 +23,7 @@
   }
 
   function install(){
-    let dot=document.querySelector('#cloudPill .live-dot');
+    let dot=document.querySelector('[data-f1-secret-dot],#cloudPill .live-dot');
     if(!dot && isCRM){
       const cloud=document.getElementById('cloudStatus');
       if(cloud){
