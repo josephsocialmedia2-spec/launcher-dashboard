@@ -11,6 +11,9 @@ const MUNICIPALITIES={
   cenischia:['Giaglione','Novalesa','Moncenisio']
 };
 const ALLOWED_ROADS=new Set(['residential','service','living_street','pedestrian','unclassified','tertiary','tertiary_link','secondary','secondary_link','primary','primary_link','track','road']);
+const EDIT_SIGNALS=['NESSUN SEGNALE','IMMOBILE GIÀ SUL MERCATO','CARTELLO VENDITA','CARTELLO AFFITTO','LAVORI','CANTIERE','RISTRUTTURAZIONE','NUOVA COSTRUZIONE','TERRENO','POSSIBILE IMMOBILE NON UTILIZZATO','CIVICO NON INDIVIDUATO','ALTRO'];
+const EDIT_TYPES=['CONDOMINIO','APPARTAMENTO','VILLA','CASA INDIPENDENTE','BIFAMILIARE','RUSTICO','TERRENO','NEGOZIO','LOCALE COMMERCIALE','CAPANNONE','ALTRO'];
+const EDIT_TARGETS=['NEGOZIO','RESIDENTE','VICINO','AMMINISTRATORE','CONOSCENTE DELLA ZONA','NESSUNO APPROPRIATO'];
 let selectedMunicipality='';
 let crmCache=null;
 let activeContact={target:'',civic:'',progressId:'',record:null};
@@ -21,6 +24,7 @@ let mediaChunks=[];
 let mediaStarted=0;
 let audioTimer=null;
 let contactDraftTimer=null;
+let activeEditRecord=null;
 
 function excludedRoad(name,type=''){
   const n=txt(name).toUpperCase(),t=txt(type).toLowerCase();
@@ -81,6 +85,25 @@ function injectScreens(){
     <section id="municipality" class="screen"><div class="stack">
       <div class="card"><div class="ey">COMUNE ASSEGNATO / SELEZIONATO</div><h1 id="v3MunicipalityTitle">—</h1><button id="v3GpsBtn" class="v3-gps off" type="button">◎ ATTIVA GPS · POSIZIONE PRECISA</button><div id="v3GpsState" class="v3-status">GPS OFF · parte solo premendo il tasto.</div></div>
       <div class="card"><div class="row"><h2>ELENCO VIE</h2><span id="v3StreetCount" class="queuecount">0</span></div><div id="v3StreetStatus" class="v3-status">Seleziona un Comune.</div><div id="v3StreetList" class="v3-list" style="margin-top:10px"></div></div>
+    </div></section>
+    <section id="civicEdit" class="screen"><div class="stack">
+      <div class="card">
+        <div class="row"><div><div class="ey">CRM · MODIFICA IMMOBILE</div><h2 id="v3EditComune">—</h2><div id="v3EditVia" class="route">—</div></div><button id="v3EditBack" class="mini" type="button">← CRM</button></div>
+        <div class="mut" style="margin-top:12px">CIVICO</div><div style="font-size:30px;font-weight:950" id="v3EditCivic">—</div>
+        <div class="v3-note-row"><button id="v3EditNotes" class="v3-note-btn" type="button">＋<br>AGGIUNGI<br>NOTE</button><div><strong id="v3EditNoteCount" class="v3-note-count">0 NOTE</strong><div class="mut" style="font-size:9px;margin-top:3px">Note scritte o audio collegate esattamente a questa riga CRM.</div></div></div>
+        <div class="v3-contact-context" style="margin-top:10px"><div class="ey">PROSSIMA AZIONE</div><strong id="v3EditNext">—</strong></div>
+        <div id="v3EditReadOnly" class="v3-status"></div>
+      </div>
+      <div class="card"><div class="row"><h2>COSA VEDI?</h2><span class="ey">SALVATAGGIO ONLINE</span></div><div id="v3EditSignals" class="grid2" style="margin-top:9px"></div><div id="v3EditSignalState" class="v3-status"></div></div>
+      <div class="card"><div class="row"><h2>TIPO IMMOBILE</h2><span class="mut">facoltativo</span></div><div id="v3EditTypes" class="grid2" style="margin-top:9px"></div><div id="v3EditTypeState" class="v3-status"></div></div>
+      <div class="card">
+        <div class="row"><h2>PARLA CON QUALCUNO</h2><span class="ey">QUANDO APPROPRIATO</span></div>
+        <p class="mut" style="margin-top:6px">L'obiettivo è ottenere informazioni immobiliari utili, non semplicemente completare una mappa.</p>
+        <div class="ey" style="margin-top:13px">CON CHI PUOI PARLARE?</div><div id="v3EditTargets" class="grid2" style="margin-top:8px"></div>
+        <div class="scriptbox"><strong>DOMANDA CENTRALE</strong><br>«Buongiorno, F1 Immobiliare. Sto lavorando specificamente questa zona. Per caso sa se nel quartiere c'è qualcuno che sta pensando di vendere nei prossimi mesi?»</div>
+        <div class="v3-script"><div class="ask">“Qual è il numero migliore a cui contattarla?”</div><div class="offer">LE MANDO LE NOSTRE OFFERTE IMMOBILIARI, DOVESSE AVERE BISOGNO HA I NOSTRI RECAPITI!</div><button id="v3EditSendBulletin" class="v3-wa" type="button">INVIO GIORNALINO · WHATSAPP</button><div id="v3EditBulletinState" class="v3-status">Il PDF viene pubblicato dal Titolare F1 dalla dashboard centrale.</div></div>
+        <div class="v3-value"><div class="ey">OTTENERE IL NUMERO · SCAMBIO DI VALORE PROFESSIONALE</div><div class="v3-value-grid"><button type="button" data-v3-edit-value="REPORT PREZZI ZONA">REPORT PREZZI ZONA</button><button type="button" data-v3-edit-value="APPENA ACQUISITO">APPENA ACQUISITO</button><button type="button" data-v3-edit-value="APPENA VENDUTO">APPENA VENDUTO</button></div><div id="v3EditValueScript" class="v3-status"><b>FRASE DA DIRE</b><br>Seleziona il valore che stai offrendo.</div></div>
+      </div>
     </div></section>`);
   }
 }
@@ -178,6 +201,7 @@ async function loadMunicipalityStreets(name,refreshOsm=false){
   }catch(e){setStatus('v3StreetStatus','Vie online non disponibili: '+(e.message||e),true)}
 }
 async function openStreet(via,source='OPENSTREETMAP',ref=''){
+  activeEditRecord=null;
   if(excludedRoad(via))return;
   try{
     setStatus('v3StreetStatus','Apro '+via+'…');
@@ -224,6 +248,79 @@ async function activateGps(){
   }catch(e){$('gpsStatus').textContent='GPS OFF';$('gpsStatus').classList.remove('on');setStatus('v3GpsState',e.message||'GPS NON DISPONIBILE',true)}
 }
 
+function canEditRecord(record){
+  return !!record && String(record.user_id||'')===String(stateProfile()?.user_id||'');
+}
+function editButton(value,selected,kind){
+  return '<button type="button" class="choice'+(selected?' sel':'')+'" data-v3-edit-'+kind+'="'+esc(value)+'">'+esc(value)+'</button>';
+}
+async function renderEditRecord(record,refresh=false){
+  if(!record)return;
+  if(refresh){
+    const data=await crm(true);
+    record=data.civics.find(x=>x.civic_record_id===record.civic_record_id)||record;
+  }
+  activeEditRecord=record;
+  $('v3EditComune').textContent=record.comune||'—';
+  $('v3EditVia').textContent=record.via||'—';
+  $('v3EditCivic').textContent=record.civico||'—';
+  $('v3EditNext').textContent=record.next_action||'NESSUNA AZIONE';
+  const data=await crm(false);
+  const notes=(data.notes||[]).filter(n=>n.civic_record_id===record.civic_record_id);
+  $('v3EditNoteCount').textContent=notes.length+' '+(notes.length===1?'NOTA':'NOTE');
+  const editable=canEditRecord(record);
+  $('v3EditReadOnly').textContent=editable?'MODIFICA ONLINE · ogni dato viene scritto sul CRM F1':'SOLA LETTURA · record di un altro funzionario';
+  $('v3EditSignals').innerHTML=EDIT_SIGNALS.map(v=>editButton(v,(record.signals||[]).includes(v),'signal')).join('');
+  $('v3EditTypes').innerHTML=EDIT_TYPES.map(v=>editButton(v,record.property_type===v,'type')).join('');
+  $('v3EditTargets').innerHTML=EDIT_TARGETS.map(v=>editButton(v,false,'target')).join('');
+  document.querySelectorAll('[data-v3-edit-signal]').forEach(b=>{b.disabled=!editable;b.onclick=()=>toggleEditSignal(b.dataset.v3EditSignal)});
+  document.querySelectorAll('[data-v3-edit-type]').forEach(b=>{b.disabled=!editable;b.onclick=()=>setEditType(b.dataset.v3EditType)});
+  document.querySelectorAll('[data-v3-edit-target]').forEach(b=>{b.disabled=!editable;b.onclick=()=>openContactForRecord(b.dataset.v3EditTarget,activeEditRecord)});
+  $('v3EditNotes').disabled=!editable;
+  $('v3EditSendBulletin').disabled=!editable;
+}
+async function toggleEditSignal(value){
+  if(!canEditRecord(activeEditRecord))return;
+  let arr=[...(activeEditRecord.signals||[])];
+  if(value==='NESSUN SEGNALE')arr=arr.includes(value)?[]:['NESSUN SEGNALE'];
+  else{
+    arr=arr.filter(x=>x!=='NESSUN SEGNALE');
+    arr=arr.includes(value)?arr.filter(x=>x!==value):[...arr,value];
+  }
+  try{
+    setStatus('v3EditSignalState','Salvataggio…');
+    const r=await rpc('f1_territory_civic_patch_record_v3',{p_civic_record_id:activeEditRecord.civic_record_id,p_property_type:null,p_signals:arr});
+    activeEditRecord=r;crmCache=null;setStatus('v3EditSignalState','✓ SEGNALI SALVATI NEL CRM');await renderEditRecord(r,true);
+  }catch(e){setStatus('v3EditSignalState',e.message||e,true)}
+}
+async function setEditType(value){
+  if(!canEditRecord(activeEditRecord))return;
+  try{
+    setStatus('v3EditTypeState','Salvataggio…');
+    const r=await rpc('f1_territory_civic_patch_record_v3',{p_civic_record_id:activeEditRecord.civic_record_id,p_property_type:value,p_signals:null});
+    activeEditRecord=r;crmCache=null;setStatus('v3EditTypeState','✓ TIPO IMMOBILE SALVATO NEL CRM');await renderEditRecord(r,true);
+  }catch(e){setStatus('v3EditTypeState',e.message||e,true)}
+}
+async function openContactForRecord(target,record){
+  if(target==='NESSUNO APPROPRIATO'){setStatus('v3EditReadOnly','✓ NESSUNA CONVERSAZIONE POSSIBILE');return}
+  if(!canEditRecord(record))return;
+  const data=await crm(true);
+  const existing=(data.conversations||[]).filter(c=>c.civic_record_id===record.civic_record_id&&c.target_type===target).sort((a,b)=>String(b.created_at||'').localeCompare(String(a.created_at||'')))[0];
+  activeContact={target,civic:record.civico,progressId:record.progress_id,record:existing||null,directRecord:record,leadId:existing?.lead_id||''};
+  $('v3ContactTitle').textContent=target;
+  $('v3ContactContext').textContent=[record.comune,record.via,'CIVICO '+record.civico,target].filter(Boolean).join(' · ');
+  $('v3ContactName').value=existing?.person_name||'';
+  $('v3ContactPhone').value=existing?.phone||'';
+  $('v3ContactNotes').value=existing?.notes||'';
+  $('v3ContactOutcomes').innerHTML=['NESSUNA INFORMAZIONE','INFORMAZIONE UTILE','POSSIBILE VENDITA','DA RICONTATTARE','APPUNTAMENTO'].map(v=>'<button type="button" data-v3-outcome="'+esc(v)+'">'+esc(v)+'</button>').join('');
+  $('v3ContactOutcomes').querySelectorAll('[data-v3-outcome]').forEach(b=>b.onclick=()=>saveContactOutcome(b.dataset.v3Outcome));
+  setStatus('v3ContactState','CRM pronto · dati associati esattamente a '+record.via+' '+record.civico);
+  $('v3ContactModal').classList.add('open');
+}
+async function backToCRM(){
+  screen('crm');
+  setTimeout(()=>{$('openCRMExcel')?.click()},80);
+}
 async function openContact(target){
   if(target==='NESSUNO APPROPRIATO'){setStatus('terrStatus','✓ NESSUNA CONVERSAZIONE POSSIBILE');return}
   try{
@@ -246,7 +343,9 @@ async function openContact(target){
 async function maybeSaveLead(){
   const name=txt($('v3ContactName').value),phone=txt($('v3ContactPhone').value);
   if(!name&&!phone)return '';
-  const x=await currentContext(),saved=await F1StaffData.createOrLinkLead({
+  const direct=activeContact.directRecord||null;
+  const x=direct?{progress:{comune:direct.comune,zona:direct.zona,via:direct.via},civic:direct.civico}:await currentContext();
+  const saved=await F1StaffData.createOrLinkLead({
     nome:name,
     telefono:phone,
     comune:txt(x.progress?.comune),
@@ -285,35 +384,54 @@ function stateProfile(){return window.F1TerritoryV3?.profile||null}
 async function saveContactOutcome(outcome){
   try{
     setStatus('v3ContactState','Salvataggio nel CRM…');
-    await rpc('f1_territory_set_manual_civic_v3',{p_progress_id:activeContact.progressId,p_civico:activeContact.civic});
     let leadId='';try{leadId=await maybeSaveLead()}catch(_){}
-    const res=await rpc('f1_territory_conversation_add_v2',{p_progress_id:activeContact.progressId,p_civico:activeContact.civic,p_target_type:activeContact.target,p_person_name:txt($('v3ContactName').value),p_phone:txt($('v3ContactPhone').value),p_outcome:outcome,p_notes:txt($('v3ContactNotes').value),p_lead_id:leadId||null});
+    let res;
+    if(activeContact.directRecord){
+      res=await rpc('f1_territory_conversation_add_record_v3',{p_civic_record_id:activeContact.directRecord.civic_record_id,p_target_type:activeContact.target,p_person_name:txt($('v3ContactName').value),p_phone:txt($('v3ContactPhone').value),p_outcome:outcome,p_notes:txt($('v3ContactNotes').value),p_lead_id:leadId||null});
+    }else{
+      await rpc('f1_territory_set_manual_civic_v3',{p_progress_id:activeContact.progressId,p_civico:activeContact.civic});
+      res=await rpc('f1_territory_conversation_add_v2',{p_progress_id:activeContact.progressId,p_civico:activeContact.civic,p_target_type:activeContact.target,p_person_name:txt($('v3ContactName').value),p_phone:txt($('v3ContactPhone').value),p_outcome:outcome,p_notes:txt($('v3ContactNotes').value),p_lead_id:leadId||null});
+    }
     crmCache=null;setStatus('v3ContactState','✓ '+outcome+' · SALVATO NEL CRM');
+    if(activeContact.directRecord){const d=await crm(true),fresh=d.civics.find(x=>x.civic_record_id===activeContact.directRecord.civic_record_id);if(fresh){activeEditRecord=fresh;await renderEditRecord(fresh,false)}}
     setTimeout(()=>{window.dispatchEvent(new Event('focus'))},150);
     if(res?.news?.observation_id&&['INFORMAZIONE UTILE','POSSIBILE VENDITA'].includes(outcome))setStatus('v3ContactState','✓ CRM aggiornato · notizia creata');
   }catch(e){setStatus('v3ContactState',e.message||e,true)}
 }
 async function createContactLetter(){
   try{
-    await rpc('f1_territory_set_manual_civic_v3',{p_progress_id:activeContact.progressId,p_civico:activeContact.civic});
-    await rpc('f1_territory_letter_create_v2',{p_progress_id:activeContact.progressId,p_civico:activeContact.civic});
+    if(activeContact.directRecord)await rpc('f1_territory_letter_create_record_v3',{p_civic_record_id:activeContact.directRecord.civic_record_id});
+    else{
+      await rpc('f1_territory_set_manual_civic_v3',{p_progress_id:activeContact.progressId,p_civico:activeContact.civic});
+      await rpc('f1_territory_letter_create_v2',{p_progress_id:activeContact.progressId,p_civico:activeContact.civic});
+    }
     crmCache=null;setStatus('v3ContactState','✓ LETTERA CREATA · DA STAMPARE');
   }catch(e){setStatus('v3ContactState',e.message||e,true)}
 }
 function normalizePhone(v){
   let d=String(v||'').replace(/\D+/g,'');if(d.startsWith('00'))d=d.slice(2);if(!d.startsWith('39')&&d.length===10)d='39'+d;return d;
 }
+async function sendBulletinForRecord(record,statusId){
+  try{
+    const data=await crm(true);
+    const rows=(data.conversations||[]).filter(c=>c.civic_record_id===record.civic_record_id&&txt(c.phone)).sort((a,b)=>String(b.created_at||'').localeCompare(String(a.created_at||'')));
+    const contact=rows[0];if(!contact)throw new Error('MANCA UN TELEFONO / WHATSAPP NEL CRM DEL CIVICO');
+    const b=data.active_bulletin;if(!b?.public_url)throw new Error('IL TITOLARE NON HA ANCORA PUBBLICATO IL GIORNALINO PDF');
+    const phone=normalizePhone(contact.phone);if(!phone)throw new Error('NUMERO WHATSAPP NON VALIDO');
+    const name=txt(contact.person_name),msg=(name?'Buongiorno '+name+',':'Buongiorno,')+'\ncome anticipato, le mando le nostre offerte immobiliari F1.\nDovesse avere bisogno, ha i nostri recapiti.\n\n'+b.public_url;
+    setStatus(statusId,'✓ Apro WhatsApp con il giornalino pubblicato.');
+    location.href='https://wa.me/'+phone+'?text='+encodeURIComponent(msg);
+  }catch(e){setStatus(statusId,e.message||e,true)}
+}
 async function sendBulletin(){
   try{
-    const x=await currentContext(),data=await crm(true);
-    const rows=data.conversations.filter(c=>txt(c.via).toLowerCase()===txt(x.progress?.via).toLowerCase()&&txt(c.civico)===x.civic&&txt(c.phone));
-    const c=rows[0];if(!c)throw new Error('MANCA UN TELEFONO / WHATSAPP NEL CRM DEL CIVICO');
-    const b=data.active_bulletin;if(!b?.public_url)throw new Error('IL TITOLARE NON HA ANCORA PUBBLICATO IL GIORNALINO PDF');
-    const phone=normalizePhone(c.phone);if(!phone)throw new Error('NUMERO WHATSAPP NON VALIDO');
-    const name=txt(c.person_name),msg=(name?'Buongiorno '+name+',':'Buongiorno,')+'\ncome anticipato, le mando le nostre offerte immobiliari F1.\nDovesse avere bisogno, ha i nostri recapiti.\n\n'+b.public_url;
-    setStatus('v3BulletinState','✓ Apro WhatsApp con il giornalino pubblicato.');
-    location.href='https://wa.me/'+phone+'?text='+encodeURIComponent(msg);
+    const x=await ensureCurrentCivic();
+    await sendBulletinForRecord(x.record,'v3BulletinState');
   }catch(e){setStatus('v3BulletinState',e.message||e,true)}
+}
+async function sendEditBulletin(){
+  if(!activeEditRecord)return;
+  await sendBulletinForRecord(activeEditRecord,'v3EditBulletinState');
 }
 
 async function openNotesForCurrent(){
@@ -371,8 +489,17 @@ async function finishAudio(){
   finally{mediaStream?.getTracks().forEach(t=>t.stop());mediaStream=null;mediaRecorder=null;mediaChunks=[];$('v3StartAudio').disabled=false;$('v3StopAudio').disabled=true;$('v3AudioTime').textContent='00:00'}
 }
 async function updateNoteCount(){
+  const data=await crm(true);
+  if($('civicEdit')?.classList.contains('active')&&activeEditRecord){
+    const fresh=data.civics.find(x=>x.civic_record_id===activeEditRecord.civic_record_id)||activeEditRecord;
+    activeEditRecord=fresh;
+    const n=data.notes.filter(z=>z.civic_record_id===fresh.civic_record_id).length;
+    if($('v3EditNoteCount'))$('v3EditNoteCount').textContent=n+' '+(n===1?'NOTA':'NOTE');
+    if($('v3EditNext'))$('v3EditNext').textContent=fresh.next_action||'NESSUNA AZIONE';
+    return;
+  }
   const x=await currentContext().catch(()=>null);if(!x?.progress||!x.civic)return;
-  const data=await crm(true),r=data.civics.find(c=>c.progress_id===x.progress.progress_id&&txt(c.civico)===x.civic),n=r?data.notes.filter(z=>z.civic_record_id===r.civic_record_id).length:0;
+  const r=data.civics.find(c=>c.progress_id===x.progress.progress_id&&txt(c.civico)===x.civic),n=r?data.notes.filter(z=>z.civic_record_id===r.civic_record_id).length:0;
   if($('v3NoteCount'))$('v3NoteCount').textContent=n+' '+(n===1?'NOTA':'NOTE');
   const conv=(data.conversations||[]).filter(z=>z.progress_id===x.progress.progress_id&&txt(z.civico)===x.civic).sort((a,b)=>String(b.created_at||'').localeCompare(String(a.created_at||'')))[0];
   const next=conv?.next_action||r?.next_action||'NESSUNA AZIONE';
@@ -382,9 +509,9 @@ async function updateNoteCount(){
 async function openCivicEditor(id){
   try{
     const data=await crm(true),r=data.civics.find(x=>x.civic_record_id===id);if(!r)return;
-    const p=await rpc('f1_territory_open_street_v3',{p_comune:r.comune,p_via:r.via,p_source:'CRM F1',p_source_ref:r.civic_record_id});
-    await rpc('f1_territory_set_manual_civic_v3',{p_progress_id:p.progress_id,p_civico:r.civico});
-    F1NotiziereEngine.invalidate();location.hash='terr';location.reload();
+    $('excelModal')?.classList.remove('open');
+    await renderEditRecord(r,false);
+    screen('civicEdit');
   }catch(e){alert(e.message||e)}
 }
 function noteSummary(notes){
@@ -432,6 +559,10 @@ function valueScript(v){
 function bind(){
   $('v3MunicipalitySearch').oninput=e=>renderMunicipalities(e.target.value);
   $('v3GpsBtn').onclick=activateGps;
+  $('v3EditBack').onclick=backToCRM;
+  $('v3EditNotes').onclick=()=>{if(activeEditRecord)openNotesForRecord(activeEditRecord)};
+  $('v3EditSendBulletin').onclick=sendEditBulletin;
+  document.querySelectorAll('[data-v3-edit-value]').forEach(b=>b.onclick=()=>{$('v3EditValueScript').innerHTML='<b>FRASE DA DIRE</b><br>'+esc(valueScript(b.dataset.v3EditValue))});
   $('v3AddNotes').onclick=openNotesForCurrent;
   $('v3SendBulletin').onclick=sendBulletin;
   $('v3ContactLetter').onclick=createContactLetter;
@@ -452,6 +583,7 @@ function bind(){
     if($('home')?.classList.contains('active')){e.preventDefault();e.stopImmediatePropagation();renderMunicipalities();screen('municipalities')}
     else if($('municipalities')?.classList.contains('active')){e.preventDefault();e.stopImmediatePropagation();screen('home')}
     else if($('municipality')?.classList.contains('active')){e.preventDefault();e.stopImmediatePropagation();renderMunicipalities();screen('municipalities')}
+    else if($('civicEdit')?.classList.contains('active')){e.preventDefault();e.stopImmediatePropagation();backToCRM()}
   },true);
   $('openCRMExcel')?.addEventListener('click',()=>setTimeout(augmentExcel,120));
   $('openDeliverCRM')?.addEventListener('click',()=>setTimeout(augmentExcel,120));
