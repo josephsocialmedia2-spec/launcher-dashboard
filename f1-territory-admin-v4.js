@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const VERSION='20260918-territory-admin-v4';
+const VERSION='20260919-territory-admin-v5';
 const $=id=>document.getElementById(id);
 const txt=v=>String(v??'').trim();
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -36,6 +36,8 @@ function inject(){
       <div class="f1tv4-kpi"><strong id="f1tv4Ocr">0</strong><small>OCR FOTO</small></div>
       <div class="f1tv4-kpi"><strong id="f1tv4Print">0</strong><small>LETTERE DA STAMPARE</small></div>
       <div class="f1tv4-kpi"><strong id="f1tv4Deliver">0</strong><small>LETTERE DA IMBUCARE</small></div>
+      <div class="f1tv4-kpi"><strong id="f1tv4Appointments">0</strong><small>APPUNTAMENTI OGGI</small></div>
+      <div class="f1tv4-kpi"><strong id="f1tv4Followups">0</strong><small>FOLLOW-UP APERTI</small></div>
     </div>
     <div class="f1tv4-actions">
       <a class="f1tv4-btn primary" href="territory-mobile.html">APRI F1 TERRITORY MOBILE</a>
@@ -45,6 +47,10 @@ function inject(){
     <div class="f1tv4-grid">
       <div class="f1tv4-box"><div><h3>RIPRENDI LA ZONA</h3><span class="f1tv4-sub">Ultima registrazione effettuata da ciascun operatore</span></div><div id="f1tv4Resume" class="f1tv4-list"></div></div>
       <div class="f1tv4-box"><div><h3>LETTERE DI OGGI</h3><span class="f1tv4-sub">Da stampare e da imbucare, ordinate per Comune · Via · Civico</span></div><div id="f1tv4Letters" class="f1tv4-list"></div></div>
+    </div>
+    <div class="f1tv4-grid">
+      <div class="f1tv4-box"><div><h3>APPUNTAMENTI</h3><span class="f1tv4-sub">Appuntamenti registrati dal mobile e visibili sul PC</span></div><div id="f1tv4AppointmentsList" class="f1tv4-list"></div></div>
+      <div class="f1tv4-box"><div><h3>FOLLOW-UP</h3><span class="f1tv4-sub">Richiami da gestire senza reinserire i dati</span></div><div id="f1tv4FollowupsList" class="f1tv4-list"></div></div>
     </div>
     <div id="f1tv4AssetsBox" class="f1tv4-assets">
       <div><h3 style="margin:0">MATERIALI DIGITALI WHATSAPP</h3><span class="f1tv4-sub">Il Titolare carica qui i PDF che il telefono utilizza con i referenti</span></div>
@@ -65,15 +71,15 @@ function routeSort(a,b){return [a.comune,a.via,a.civico].map(txt).join('|').loca
 function formatDate(v){if(!v)return'—';const d=new Date(v);return Number.isNaN(d.getTime())?txt(v):d.toLocaleString('it-IT',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
 function safePart(v){return txt(v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9]+/g,'_').replace(/^_+|_+$/g,'').slice(0,70)||'DATO'}
 async function load(){
-  data=await rpc('f1_territory_office_dashboard_v4',{p_limit:2000})||{};
-  for(const k of ['civics','conversations','news','letters','notes','streets','active_assets','last_positions','team'])data[k]=data[k]||[];
+  data=await rpc('f1_territory_office_dashboard_v5',{p_limit:2000})||{};
+  for(const k of ['civics','conversations','news','letters','notes','streets','active_assets','last_positions','team','appointments','followups'])data[k]=data[k]||[];
   render();
 }
 function render(){
   $('f1tv4Civics').textContent=data.civics.length;$('f1tv4Contacts').textContent=data.conversations.length;$('f1tv4News').textContent=data.news.length;$('f1tv4Notes').textContent=data.notes.length;$('f1tv4Ocr').textContent=data.notes.filter(x=>x.note_type==='OCR').length;
-  const p=data.letters.filter(x=>x.status==='DA_STAMPARE'),d=data.letters.filter(x=>x.status==='DA_IMBUCARE');$('f1tv4Print').textContent=p.length;$('f1tv4Deliver').textContent=d.length;
-  $('f1tv4Live').textContent='AGGIORNATO '+new Intl.DateTimeFormat('it-IT',{hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(new Date());
-  renderResume();renderLetters();renderAssets();renderActivity();
+  const p=data.letters.filter(x=>x.status==='DA_STAMPARE'),d=data.letters.filter(x=>x.status==='DA_IMBUCARE');$('f1tv4Print').textContent=p.length;$('f1tv4Deliver').textContent=d.length;const today=new Date().toISOString().slice(0,10);$('f1tv4Appointments').textContent=(data.appointments||[]).filter(x=>String(x.appointment_at||'').slice(0,10)===today).length;$('f1tv4Followups').textContent=(data.followups||[]).length;
+  const syncAt=data.server_synced_at?new Date(data.server_synced_at):new Date();$('f1tv4Live').textContent='CRM ONLINE · '+new Intl.DateTimeFormat('it-IT',{hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(syncAt);
+  renderResume();renderLetters();renderAppointments();renderFollowups();renderAssets();renderActivity();
 }
 function renderResume(){
   const rows=(data.last_positions||[]).slice().sort((a,b)=>String(b.updated_at||'').localeCompare(String(a.updated_at||'')));
@@ -84,6 +90,15 @@ function renderLetters(){
   $('f1tv4Letters').innerHTML=rows.length?rows.map(l=>`<div class="f1tv4-row"><div><strong>${esc([l.comune,l.via,l.civico].filter(Boolean).join(' · '))}</strong><small>${esc(l.operator_name||staffName(l.user_id))} · ${esc(l.status.replaceAll('_',' '))}</small></div><div class="f1tv4-row-actions">${l.status==='DA_STAMPARE'?'<button class="f1tv4-mini primary" data-letter-pdf="'+esc(l.letter_id)+'">SCARICA PDF</button>':''}${l.status==='DA_IMBUCARE'?'<button class="f1tv4-mini done" data-letter-done="'+esc(l.letter_id)+'">IMBUCATA ✓</button>':''}</div></div>`).join(''):'<div class="f1tv4-sub">Nessuna lettera operativa.</div>';
   document.querySelectorAll('[data-letter-pdf]').forEach(b=>b.onclick=()=>downloadLetter(b.dataset.letterPdf));
   document.querySelectorAll('[data-letter-done]').forEach(b=>b.onclick=()=>markDelivered(b.dataset.letterDone));
+}
+
+function renderAppointments(){
+  const rows=(data.appointments||[]).slice().sort((a,b)=>String(a.appointment_at||'').localeCompare(String(b.appointment_at||'')));
+  $('f1tv4AppointmentsList').innerHTML=rows.length?rows.map(r=>`<div class="f1tv4-row"><div><strong>${esc(r.person_name||r.target_type||'APPUNTAMENTO')}</strong><small>${esc([r.comune,r.via,r.civico?'Civico '+r.civico:''].filter(Boolean).join(' · '))}</small><small>${esc(formatDate(r.appointment_at))}${r.phone?' · '+esc(r.phone):''}</small></div><div class="f1tv4-row-actions"><span class="f1tv4-mini primary">APPUNTAMENTO</span></div></div>`).join(''):'<div class="f1tv4-sub">Nessun appuntamento registrato.</div>';
+}
+function renderFollowups(){
+  const rows=(data.followups||[]).slice().sort((a,b)=>String(b.updated_at||'').localeCompare(String(a.updated_at||'')));
+  $('f1tv4FollowupsList').innerHTML=rows.length?rows.map(r=>`<div class="f1tv4-row"><div><strong>${esc(r.person_name||r.target_type||'CONTATTO')}</strong><small>${esc([r.comune,r.via,r.civico?'Civico '+r.civico:''].filter(Boolean).join(' · '))}</small><small>${esc(r.phone||'')} ${r.next_action?' · '+esc(r.next_action):''}</small></div><div class="f1tv4-row-actions"><span class="f1tv4-mini done">DA RICHIAMARE</span></div></div>`).join(''):'<div class="f1tv4-sub">Nessun follow-up aperto.</div>';
 }
 function renderAssets(){
   for(const type of ['GIORNALINO','VOLANTINO_UFFICIO','REPORT_PREZZI_ZONA']){
