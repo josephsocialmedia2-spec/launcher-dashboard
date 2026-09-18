@@ -124,7 +124,7 @@ function renderSyncStatus(){
   else{el.textContent='CRM ONLINE'}
 }
 function renderAll(){renderSyncStatus();renderHeader();renderHome();renderTerr();renderNews();renderCRM();renderToday();if($('excelModal').classList.contains('open'))renderExcel(state.letterFilter)}
-async function refreshCRM(render=true){state.crm=await rpc('f1_territory_mobile_crm_v4',{p_limit:700})||state.crm;if(render)renderAll()}
+async function refreshCRM(render=true){state.crm=await rpc('f1_territory_mobile_crm_v5',{p_limit:700})||state.crm;if(render)renderAll()}
 function flashAppointment(){const b=$('appointmentBox');b.classList.remove('flash');void b.offsetWidth;b.classList.add('flash');setTimeout(()=>b.classList.remove('flash'),1450)}
 function openExcel(filter='ALL',tab='xCivics'){renderExcel(filter);openTab(tab);modal('excelModal')}
 function openTab(id){document.querySelectorAll('.excel-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===id));document.querySelectorAll('.excel-pane').forEach(p=>p.classList.toggle('active',p.id===id))}
