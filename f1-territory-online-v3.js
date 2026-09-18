@@ -217,6 +217,14 @@ function geo(){
     navigator.geolocation.getCurrentPosition(resolve,reject,{enableHighAccuracy:true,maximumAge:0,timeout:15000});
   });
 }
+function normalizeMunicipalityName(name){
+  const n=txt(name);
+  const known=allMunicipalities().find(x=>x.toLocaleLowerCase('it-IT')===n.toLocaleLowerCase('it-IT'));
+  if(known)return known;
+  const compact=s=>s.toLocaleLowerCase('it-IT').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
+  const hit=allMunicipalities().find(x=>compact(x)===compact(n));
+  return hit||n;
+}
 async function reverseRoad(lat,lon){
   const u='https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=18&addressdetails=1&lat='+encodeURIComponent(lat)+'&lon='+encodeURIComponent(lon);
   const r=await fetch(u,{headers:{'Accept-Language':'it'}});if(!r.ok)throw new Error('LOCALIZZAZIONE VIA NON DISPONIBILE');
@@ -236,9 +244,12 @@ async function activateGps(){
     const p=await geo(),lat=p.coords.latitude,lon=p.coords.longitude,acc=Math.round(p.coords.accuracy||0);
     $('gpsStatus').textContent='GPS ON · ±'+acc+'m';$('gpsStatus').classList.add('on');
     const rev=await reverseRoad(lat,lon),a=rev.address||{};
-    const foundComune=txt(a.town||a.city||a.village||a.municipality||a.county);
+    const foundComune=normalizeMunicipalityName(a.town||a.city||a.village||a.municipality||a.county);
     if(foundComune&&foundComune.toLocaleLowerCase('it-IT')!==selectedMunicipality.toLocaleLowerCase('it-IT')&&!foundComune.toLocaleLowerCase('it-IT').includes(selectedMunicipality.toLocaleLowerCase('it-IT'))){
-      setStatus('v3GpsState','La posizione risulta in '+foundComune+', non in '+selectedMunicipality+'.',true);return;
+      selectedMunicipality=foundComune;
+      $('v3MunicipalityTitle').textContent=foundComune;
+      setStatus('v3GpsState','✓ SEI A '+foundComune.toUpperCase()+' · apro subito il Comune corretto');
+      await loadMunicipalityStreets(foundComune,true);
     }
     let via=txt(a.road||a.pedestrian||a.residential||a.path),ref='';
     if(excludedRoad(via)){const near=await nearestRoad(lat,lon);via=near?.via||'';ref=near?.ref||''}
