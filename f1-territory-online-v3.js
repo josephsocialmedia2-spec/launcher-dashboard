@@ -20,6 +20,7 @@ let mediaStream=null;
 let mediaChunks=[];
 let mediaStarted=0;
 let audioTimer=null;
+let contactDraftTimer=null;
 
 function excludedRoad(name,type=''){
   const n=txt(name).toUpperCase(),t=txt(type).toLowerCase();
@@ -244,8 +245,40 @@ async function openContact(target){
 async function maybeSaveLead(){
   const name=txt($('v3ContactName').value),phone=txt($('v3ContactPhone').value);
   if(!name&&!phone)return '';
-  const x=await currentContext(),saved=await F1StaffData.createOrLinkLead({nome:name,telefono:phone,comune:txt(x.progress?.comune),zona:txt(x.progress?.zona),via:txt(x.progress?.via),civico:x.civic,source_type:'TERRITORY',source:'F1 TERRITORY',lead_reason:'CONTATTO TERRITORIALE',status:'DA_VERIFICARE',next_action:'COMPLETARE CONVERSAZIONE',notes:txt($('v3ContactNotes').value),created_by:[stateProfile()?.first_name,stateProfile()?.last_name].filter(Boolean).join(' ')});
-  return txt(saved?.lead_id||saved?.record?.lead_id||saved?.lead?.lead_id);
+  const x=await currentContext(),saved=await F1StaffData.createOrLinkLead({
+    nome:name,
+    telefono:phone,
+    comune:txt(x.progress?.comune),
+    zona:txt(x.progress?.zona),
+    via:txt(x.progress?.via),
+    civico:x.civic,
+    source_type:'TERRITORY',
+    source:'F1 TERRITORY',
+    lead_reason:'CONTATTO TERRITORIALE · '+(activeContact.target||'CONTATTO'),
+    status:'DA_VERIFICARE',
+    next_action:'COMPLETARE CONVERSAZIONE / QUALIFICARE',
+    notes:txt($('v3ContactNotes').value),
+    created_by:[stateProfile()?.first_name,stateProfile()?.last_name].filter(Boolean).join(' ')
+  });
+  const leadId=txt(saved?.lead_id||saved?.record?.lead_id||saved?.lead?.lead_id);
+  if(leadId)activeContact.leadId=leadId;
+  return leadId;
+}
+async function saveContactDraft(){
+  const name=txt($('v3ContactName')?.value),phone=txt($('v3ContactPhone')?.value),notes=txt($('v3ContactNotes')?.value);
+  if(!name&&!phone)return;
+  try{
+    setStatus('v3ContactState','Salvataggio immediato nel CRM…');
+    await maybeSaveLead();
+    crmCache=null;
+    setStatus('v3ContactState','✓ CONTATTO SALVATO NEL CRM · puoi continuare la conversazione');
+  }catch(e){
+    setStatus('v3ContactState',e.message||e,true);
+  }
+}
+function queueContactDraftSave(){
+  clearTimeout(contactDraftTimer);
+  contactDraftTimer=setTimeout(saveContactDraft,450);
 }
 function stateProfile(){return window.F1TerritoryV3?.profile||null}
 async function saveContactOutcome(outcome){
@@ -398,6 +431,11 @@ function bind(){
   $('v3AddNotes').onclick=openNotesForCurrent;
   $('v3SendBulletin').onclick=sendBulletin;
   $('v3ContactLetter').onclick=createContactLetter;
+  ['v3ContactName','v3ContactPhone','v3ContactNotes'].forEach(id=>{
+    $(id).addEventListener('input',queueContactDraftSave);
+    $(id).addEventListener('change',saveContactDraft);
+    $(id).addEventListener('blur',saveContactDraft);
+  });
   $('v3SaveTextNote').onclick=saveTextNote;
   $('v3StartAudio').onclick=startAudio;$('v3StopAudio').onclick=stopAudio;
   document.querySelectorAll('[data-v3-close]').forEach(b=>b.onclick=()=>$(b.dataset.v3Close)?.classList.remove('open'));
