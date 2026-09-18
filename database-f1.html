@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070907">
+<meta name="robots" content="noindex,nofollow">
+<title>F1 Immobiliare · Database Riservato</title>
+<script>
+  if(sessionStorage.getItem('f1SecretDbGesture')!=='1'){
+    location.replace('ricerca-territoriale.html');
+  }
+</script>
+<style>
+:root{--bg:#070907;--panel:#101510;--panel2:#151b16;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--gold:#f4c95d;--red:#ff7777}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt);font-family:Inter,Arial,sans-serif}
+header{position:sticky;top:0;z-index:10;background:#070907f5;border-bottom:1px solid var(--line);padding:12px 14px;backdrop-filter:blur(10px)}
+.head{max-width:1280px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}.ey{color:var(--g);font-size:10px;font-weight:900;letter-spacing:.14em}
+h1{margin:3px 0;font-size:22px}.sub{font-size:10px;color:var(--mut)}.toplinks{display:flex;gap:8px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#151c17;color:#fff;text-decoration:none;font-size:10px;font-weight:900;cursor:pointer}.btn.primary{background:var(--g);border-color:var(--g);color:#061008}.btn.gold{color:var(--gold);border-color:#66552a}
+.wrap{max-width:1280px;margin:auto;padding:18px 14px 70px}.notice{border:1px solid #35513d;background:#0c1710;border-radius:12px;padding:11px 13px;color:#b9e9ca;font-size:11px;line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin:14px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px;text-align:center}.stat b{display:block;color:var(--g);font-size:24px}.stat span{font-size:9px;color:var(--mut);font-weight:800}
+.grid{display:grid;grid-template-columns:1.4fr .8fr;gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:14px}.card h2{margin:0 0 10px;font-size:14px;letter-spacing:.06em}.meta{font-size:10px;color:var(--mut);line-height:1.5}.status{color:var(--g);font-weight:900}.status.warn{color:var(--gold)}.status.err{color:var(--red)}
+.toolbar{display:grid;grid-template-columns:1fr auto;gap:8px;margin:12px 0}.field{width:100%;padding:11px;border-radius:9px;border:1px solid var(--line);background:#0d120e;color:#fff}
+.tablewrap{overflow:auto;max-height:620px;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;min-width:980px}th,td{border-bottom:1px solid #202921;padding:8px;text-align:left;font-size:10px;vertical-align:top}th{position:sticky;top:0;background:#111812;color:var(--g);z-index:1}td a{color:var(--g)}
+.pills{display:flex;gap:6px;flex-wrap:wrap}.pill{border:1px solid #35513d;border-radius:999px;padding:5px 7px;font-size:9px;color:var(--g);font-weight:900}.pill.gold{color:var(--gold);border-color:#66552a}
+.backup-list,.report-list{display:grid;gap:8px}.mini{border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--panel2)}.mini strong{display:block;font-size:11px}.mini span{font-size:9px;color:var(--mut)}
+.empty{padding:26px;text-align:center;color:var(--mut)}@media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}}@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.head{align-items:flex-start}.toplinks{justify-content:flex-end}.toplinks .btn span{display:none}}
+</style>
+</head>
+<body>
+<header><div class="head"><div><div class="ey">F1 IMMOBILIARE · AREA RISERVATA</div><h1>DATABASE OPERATIVO</h1><div id="who" class="sub">Verifica accesso…</div></div><div class="toplinks"><a class="btn" href="ricerca-territoriale.html"><span>DASHBOARD</span> ←</a><a class="btn" href="crm.html"><span>CRM</span></a><a class="btn primary" href="crm.html?openImport=1"><span>IMPORTA MASTER</span> ↑</a><button class="btn gold" id="refreshBtn"><span>AGGIORNA</span> ↻</button></div></div></header>
+<main class="wrap">
+<div class="notice"><b>Database centrale F1:</b> questa pagina legge i dati live da Supabase. Il pallino verde ×5 è soltanto l’accesso nascosto; la protezione reale è l’autenticazione F1 + Row Level Security. Consolidamento attività alle <b>22:45</b> e backup automatico alle <b>23:00 Europe/Rome</b>, con verifica alle 23:05.</div>
+<section class="stats">
+  <div class="stat"><b id="kLeads">0</b><span>LEAD / CONTATTI</span></div>
+  <div class="stat"><b id="kTasks">0</b><span>TASK APERTI</span></div>
+  <div class="stat"><b id="kFollow">0</b><span>FOLLOW-UP</span></div>
+  <div class="stat"><b id="kNews">0</b><span>NOTIZIE</span></div>
+  <div class="stat"><b id="kAppt">0</b><span>APPUNTAMENTI OGGI</span></div>
+  <div class="stat"><b id="kBackup">—</b><span>ULTIMO BACKUP</span></div>
+</section>
+<div class="grid">
+  <section class="card">
+    <h2>RACCOGLITORE / CRM LIVE</h2>
+    <div class="toolbar"><input class="field" id="q" placeholder="Cerca nome, telefono, comune, via, fonte, stato…"><button class="btn primary" id="csvBtn">CSV</button></div>
+    <div class="tablewrap"><table><thead><tr><th>NOME</th><th>TELEFONO</th><th>COMUNE</th><th>VIA</th><th>FONTE</th><th>STATO</th><th>PROSSIMA AZIONE</th><th>AGGIORNATO</th></tr></thead><tbody id="leadRows"><tr><td colspan="8" class="empty">Caricamento…</td></tr></tbody></table></div>
+  </section>
+  <aside>
+    <section class="card" style="margin-bottom:12px"><h2>REPORT GIORNALIERO</h2><div id="reportBox" class="report-list"><div class="empty">Caricamento…</div></div></section>
+    <section class="card"><h2>BACKUP</h2><div id="backupBox" class="backup-list"><div class="empty">Caricamento…</div></div></section>
+  </aside>
+</div>
+</main>
+<script src="supabase-config.js?v=20260918-secretdb1"></script>
+<script src="supabase-sync.js?v=20260918-secretdb1"></script>
+<script src="f1-staff-data.js?v=20260918-secretdb1"></script>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id);let state={leads:[],tasks:[],news:[],interactions:[],reports:[],backups:[],me:null};
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const dayRome=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Rome',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+const shortDate=v=>{if(!v)return'—';try{return new Date(v).toLocaleString('it-IT',{timeZone:'Europe/Rome',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}catch(_){return String(v)}};
+function openTask(t){return !['DONE','COMPLETED','CLOSED','ANNULLATO','CANCELLED'].includes(String(t.status||'').toUpperCase())}
+function renderLeads(){
+  const term=$('q').value.trim().toLowerCase();
+  const rows=state.leads.filter(x=>!term||[x.nome,x.cognome,x.telefono,x.email,x.comune,x.via,x.civico,x.source,x.source_type,x.status,x.next_action].join(' ').toLowerCase().includes(term));
+  $('leadRows').innerHTML=rows.length?rows.map(x=>`<tr><td><b>${esc([x.nome,x.cognome].filter(Boolean).join(' ')||'—')}</b></td><td>${esc(x.telefono||'—')}</td><td>${esc(x.comune||'—')}</td><td>${esc([x.via,x.civico].filter(Boolean).join(' ')||'—')}</td><td>${esc(x.source||x.source_type||'—')}</td><td><span class="pill">${esc(x.status||'—')}</span></td><td>${esc(x.next_action||'—')}${x.next_action_date?' · '+esc(String(x.next_action_date).slice(0,10)):''}</td><td>${esc(shortDate(x.updated_at))}</td></tr>`).join(''):'<tr><td colspan="8" class="empty">Nessun record.</td></tr>';
+}
+function renderReport(){
+  const r=state.reports[0];
+  if(!r){$('reportBox').innerHTML='<div class="empty">Nessun report consolidato.</div>';return}
+  $('reportBox').innerHTML=`<div class="mini"><strong>${esc(r.report_date||'—')} · ${esc(r.day_status||'REPORT')}</strong><span>Qualità: ${esc(r.quality_score??'—')} · Minuti operativi: ${esc(r.operational_minutes??0)}</span></div>
+  <div class="mini"><strong>CONTATTI</strong><span>Nuovi ${esc(r.new_contacts??0)} · Aggiornati ${esc(r.updated_contacts??0)} · Duplicati ${esc(r.duplicates_intercepted??0)}</span></div>
+  <div class="mini"><strong>ATTIVITÀ</strong><span>Task ${esc(r.tasks_completed??0)}/${esc(r.tasks_assigned??0)} · Follow-up ${esc(r.followups??0)} · Appuntamenti ${esc(r.appointments??0)} · Notizie ${esc(r.real_estate_news??0)}</span></div>`;
+}
+function renderBackups(){
+  if(!state.backups.length){$('backupBox').innerHTML='<div class="empty">Nessun backup registrato.</div>';return}
+  $('backupBox').innerHTML=state.backups.slice(0,8).map(b=>`<div class="mini"><strong>${esc(b.backup_date||'—')} · <span class="status ${String(b.status).includes('FAIL')?'err':String(b.status)==='VERIFIED'?'':'warn'}">${esc(b.status||'—')}</span></strong><span>${esc(b.verified_at?('Verificato '+shortDate(b.verified_at)):(b.created_at?shortDate(b.created_at):''))}</span></div>`).join('');
+}
+function renderKpis(){
+  const open=state.tasks.filter(openTask),follow=open.filter(x=>String(x.task_type||'').toUpperCase()==='FOLLOW_UP');
+  const today=dayRome(),appts=state.interactions.filter(x=>String(x.occurred_at||'').slice(0,10)===today&&/APPUNT|SOPRALLUOGO|VALUTAZIONE/i.test(String(x.outcome||'')));
+  $('kLeads').textContent=state.leads.length;$('kTasks').textContent=open.length;$('kFollow').textContent=follow.length;$('kNews').textContent=state.news.length;$('kAppt').textContent=appts.length;$('kBackup').textContent=state.backups[0]?.status||'—';
+}
+async function load(){
+  $('refreshBtn').disabled=true;
+  try{
+    if(!F1Sync.configured() || !(await F1Sync.ensureSession())){
+      location.replace('setup-cloud.html?return=database-f1.html');return;
+    }
+    state.me=await F1StaffData.me();
+    $('who').textContent='Accesso: '+[state.me.first_name,state.me.last_name].filter(Boolean).join(' ')+' · '+String(state.me.role||'F1');
+    const [leads,tasks,news,interactions,reports,backups]=await Promise.all([
+      F1StaffData.rest('leads?deleted=eq.false&select=lead_id,nome,cognome,telefono,email,comune,via,civico,source,source_type,status,next_action,next_action_date,updated_at&order=updated_at.desc&limit=1000'),
+      F1StaffData.rest('tasks?select=task_id,lead_id,task_type,reason,status,due_date,priority,created_at,updated_at&order=due_date.asc&limit=1000'),
+      F1StaffData.rest('f1_real_estate_news?select=news_id,level,title,comune,via,status,created_at,updated_at&order=updated_at.desc&limit=1000'),
+      F1StaffData.rest('interactions?select=interaction_id,lead_id,interaction_type,outcome,occurred_at&order=occurred_at.desc&limit=1000'),
+      F1StaffData.reports(state.me.user_id,30),
+      F1StaffData.backups()
+    ]);
+    state={...state,leads:leads||[],tasks:tasks||[],news:news||[],interactions:interactions||[],reports:reports||[],backups:backups||[]};
+    renderKpis();renderLeads();renderReport();renderBackups();
+  }catch(e){
+    console.error(e);$('leadRows').innerHTML='<tr><td colspan="8" class="empty">Errore: '+esc(e.message||e)+'</td></tr>';
+  }finally{$('refreshBtn').disabled=false}
+}
+function exportCsv(){
+  const rows=[['Nome','Cognome','Telefono','Email','Comune','Via','Civico','Fonte','Stato','Prossima azione','Data prossima azione','Aggiornato'],...state.leads.map(x=>[x.nome,x.cognome,x.telefono,x.email,x.comune,x.via,x.civico,x.source||x.source_type,x.status,x.next_action,x.next_action_date,x.updated_at])];
+  const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'}));a.download='F1_database_live_'+dayRome()+'.csv';a.click();URL.revokeObjectURL(a.href);
+}
+$('q').addEventListener('input',renderLeads);$('refreshBtn').onclick=load;$('csvBtn').onclick=exportCsv;load();
+})();
+</script>
+</body></html>
