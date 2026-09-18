@@ -3,13 +3,13 @@
 const VERSION='20260918-territory-admin-v3b';
 const $=id=>document.getElementById(id);
 const txt=v=>String(v??'').trim();
-let profile=null,crm=null,timer=null;
+let profile=null,crm=null,timer=null,teamRows=[];
 const rpc=(n,p={})=>F1StaffData.rpc(n,p);
 
 function css(){
   if($('f1TerritoryAdminV3Style'))return;
   const s=document.createElement('style');s.id='f1TerritoryAdminV3Style';s.textContent=`
-  .f1tv3-panel{margin-top:18px}.f1tv3-card{background:#fff;border:1px solid #dce6df;border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(17,56,37,.08)}.f1tv3-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.f1tv3-head h2{margin:0}.f1tv3-live{font-size:10px;font-weight:900;color:#0b6f3d}.f1tv3-kpis{display:grid;grid-template-columns:repeat(6,minmax(90px,1fr));gap:8px;margin-top:14px}.f1tv3-kpi{border:1px solid #dce6df;border-radius:12px;padding:10px;background:#f8fbf9}.f1tv3-kpi strong{display:block;font-size:20px}.f1tv3-kpi small{font-size:9px;font-weight:850;color:#657269}.f1tv3-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.f1tv3-btn{min-height:42px;border:1px solid #cfdad3;background:#fff;border-radius:10px;padding:8px 12px;font-weight:900;cursor:pointer;text-decoration:none;color:#17211b;display:inline-flex;align-items:center}.f1tv3-btn.primary{background:#0b6f3d;color:#fff;border-color:#0b6f3d}.f1tv3-bulletin{margin-top:14px;padding:13px;border:1px solid #b9dfc9;border-radius:13px;background:#f4fbf7}.f1tv3-bulletin-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.f1tv3-bulletin input{width:100%;box-sizing:border-box;border:1px solid #d4ddd7;border-radius:9px;padding:9px}.f1tv3-status{font-size:10px;margin-top:8px;color:#53645a}.f1tv3-status.bad{color:#b42318}.f1tv3-status.ok{color:#067647;font-weight:900}@media(max-width:900px){.f1tv3-kpis{grid-template-columns:repeat(3,1fr)}.f1tv3-bulletin-grid{grid-template-columns:1fr}}@media(max-width:560px){.f1tv3-kpis{grid-template-columns:repeat(2,1fr)}}`;document.head.appendChild(s);
+  .f1tv3-panel{margin-top:18px}.f1tv3-card{background:#fff;border:1px solid #dce6df;border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(17,56,37,.08)}.f1tv3-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.f1tv3-head h2{margin:0}.f1tv3-live{font-size:10px;font-weight:900;color:#0b6f3d}.f1tv3-kpis{display:grid;grid-template-columns:repeat(6,minmax(90px,1fr));gap:8px;margin-top:14px}.f1tv3-kpi{border:1px solid #dce6df;border-radius:12px;padding:10px;background:#f8fbf9}.f1tv3-kpi strong{display:block;font-size:20px}.f1tv3-kpi small{font-size:9px;font-weight:850;color:#657269}.f1tv3-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.f1tv3-btn{min-height:42px;border:1px solid #cfdad3;background:#fff;border-radius:10px;padding:8px 12px;font-weight:900;cursor:pointer;text-decoration:none;color:#17211b;display:inline-flex;align-items:center}.f1tv3-btn.primary{background:#0b6f3d;color:#fff;border-color:#0b6f3d}.f1tv3-bulletin{margin-top:14px;padding:13px;border:1px solid #b9dfc9;border-radius:13px;background:#f4fbf7}.f1tv3-bulletin-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.f1tv3-bulletin input{width:100%;box-sizing:border-box;border:1px solid #d4ddd7;border-radius:9px;padding:9px}.f1tv3-status{font-size:10px;margin-top:8px;color:#53645a}.f1tv3-activity{margin-top:14px;border-top:1px solid #e1e8e3;padding-top:12px}.f1tv3-activity-list{display:grid;gap:7px;margin-top:8px}.f1tv3-event{display:grid;grid-template-columns:minmax(120px,1fr) minmax(180px,2fr) auto;gap:8px;align-items:center;padding:8px 9px;border:1px solid #e1e8e3;border-radius:10px;background:#fbfdfb;font-size:10px}.f1tv3-event small{color:#64736a}.f1tv3-status.bad{color:#b42318}.f1tv3-status.ok{color:#067647;font-weight:900}@media(max-width:900px){.f1tv3-kpis{grid-template-columns:repeat(3,1fr)}.f1tv3-bulletin-grid{grid-template-columns:1fr}}@media(max-width:560px){.f1tv3-kpis{grid-template-columns:repeat(2,1fr)}}`;document.head.appendChild(s);
 }
 function inject(){
   if($('f1TerritoryAdminV3'))return;
@@ -34,16 +34,34 @@ function inject(){
       <div class="f1tv3-actions"><button id="f1tv3CreatePublish" class="f1tv3-btn primary" type="button">CREA E PUBBLICA PDF</button><button id="f1tv3Publish" class="f1tv3-btn" type="button">PUBBLICA PDF GIÀ PRONTO</button><a id="f1tv3BulletinOpen" class="f1tv3-btn" href="#" target="_blank" rel="noopener">APRI PDF ATTIVO</a></div>
       <div id="f1tv3BulletinStatus" class="f1tv3-status">Caricamento stato giornalino…</div>
     </div>
+    <div class="f1tv3-activity"><div class="f1tv3-head"><div><small>AGGIORNAMENTO IN TEMPO REALE</small><h2>ATTIVITÀ FUNZIONARI</h2></div></div><div id="f1tv3Activity" class="f1tv3-activity-list"><div class="f1tv3-status">Caricamento attività…</div></div></div>
   </div>`;
   target.parentNode.insertBefore(section,target);
 }
 function status(msg,bad=false,ok=false){const e=$('f1tv3BulletinStatus');if(!e)return;e.textContent=msg;e.className='f1tv3-status '+(bad?'bad':ok?'ok':'')}
+function staffName(userId){
+  const p=teamRows.find(x=>String(x.user_id)===String(userId));
+  return p?[p.first_name,p.last_name].filter(Boolean).join(' ')||p.email||'Funzionario F1':'Funzionario F1';
+}
+function activityEvents(){
+  const rows=[];
+  (crm.civics||[]).forEach(r=>rows.push({at:r.updated_at,user:r.user_id,label:'CIVICO / IMMOBILE',detail:[r.comune,r.via,r.civico,r.property_type].filter(Boolean).join(' · ')}));
+  (crm.conversations||[]).forEach(r=>rows.push({at:r.created_at||r.updated_at,user:r.user_id,label:'CONVERSAZIONE',detail:[r.person_name||r.target_type,r.outcome,r.via,r.civico].filter(Boolean).join(' · ')}));
+  (crm.news||[]).forEach(r=>rows.push({at:r.updated_at||r.observed_at,user:r.user_id,label:'NOTIZIA',detail:[r.news_type||r.observation_type,r.via,r.civico,r.next_action].filter(Boolean).join(' · ')}));
+  (crm.notes||[]).forEach(r=>rows.push({at:r.created_at,user:r.user_id,label:r.note_type==='AUDIO'?'NOTA AUDIO':'NOTA',detail:[r.comune,r.via,r.civico,r.note_type==='TEXT'?String(r.note_text||'').slice(0,70):((r.audio_duration_seconds||'')+'s')].filter(Boolean).join(' · ')}));
+  return rows.filter(x=>x.at).sort((a,b)=>String(b.at).localeCompare(String(a.at))).slice(0,12);
+}
+function renderActivity(){
+  const e=$('f1tv3Activity');if(!e)return;const rows=activityEvents();
+  e.innerHTML=rows.length?rows.map(x=>'<div class="f1tv3-event"><strong>'+staffName(x.user)+'</strong><span><b>'+x.label+'</b><br><small>'+String(x.detail||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))+'</small></span><small>'+new Date(x.at).toLocaleString('it-IT')+'</small></div>').join(''):'<div class="f1tv3-status">Nessuna attività territoriale registrata.</div>';
+}
 async function loadCRM(){
   crm=await rpc('f1_territory_mobile_crm_v3',{p_limit:1500})||{};
   crm.civics=crm.civics||[];crm.conversations=crm.conversations||[];crm.news=crm.news||[];crm.notes=crm.notes||[];crm.streets=crm.streets||[];crm.letters=crm.letters||[];
   $('f1tv3Civics').textContent=crm.civics.length;$('f1tv3Contacts').textContent=crm.conversations.length;$('f1tv3News').textContent=crm.news.length;$('f1tv3Notes').textContent=crm.notes.length;$('f1tv3Audio').textContent=crm.notes.filter(n=>n.note_type==='AUDIO').length;$('f1tv3Streets').textContent=crm.streets.length;
   $('f1tv3Live').textContent='AGGIORNATO '+new Intl.DateTimeFormat('it-IT',{hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(new Date());
   const b=crm.active_bulletin;if(b?.public_url){$('f1tv3BulletinOpen').href=b.public_url;$('f1tv3BulletinOpen').style.display='inline-flex';status('PDF attivo: '+(b.title||'GIORNALINO F1')+' · pubblicato '+new Date(b.published_at).toLocaleString('it-IT'),false,true)}else{$('f1tv3BulletinOpen').style.display='none';status('Nessun giornalino PDF attivo.')}
+  renderActivity();
 }
 function loadJsPdf(){
   return new Promise((resolve,reject)=>{
@@ -118,7 +136,7 @@ async function excel(){
   }catch(e){alert(e.message||e)}
 }
 async function init(){
-  css();inject();try{profile=await F1StaffData.me();if(!['TITOLARE','ADMIN','MANAGER'].includes(String(profile.role||'').toUpperCase()))$('f1tv3BulletinBox').style.display='none';await loadCRM()}catch(e){console.error(e)}
+  css();inject();try{profile=await F1StaffData.me();try{teamRows=await F1StaffData.team()||[]}catch(_){teamRows=[]}if(!['TITOLARE','ADMIN','MANAGER'].includes(String(profile.role||'').toUpperCase()))$('f1tv3BulletinBox').style.display='none';await loadCRM()}catch(e){console.error(e)}
   $('f1tv3Excel').onclick=excel;$('f1tv3Refresh').onclick=loadCRM;$('f1tv3Publish').onclick=publish;$('f1tv3CreatePublish').onclick=createAndPublish;
   clearInterval(timer);timer=setInterval(()=>{if(!document.hidden)loadCRM().catch(()=>{})},15000);
   window.addEventListener('focus',()=>loadCRM().catch(()=>{}));
