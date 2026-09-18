@@ -43,11 +43,23 @@ test('F1 Territory live integra CRM, notizie, lettere, FSBO e procedura 30 volan
   expect(ui).toContain('LETTERE DA IMBUCARE');
   expect(ui).toContain('FSBO · FOR SALE BY OWNER');
   expect(ui).toContain('HAI STAMPATO 30 VOLANTINI?');
-  expect(ui).toContain('f1_territory_mobile_crm_v2');
+  expect(ui).toContain('f1_territory_mobile_crm_v3');
   expect(ui).toContain('f1_territory_letter_create_v2');
   expect(ui).toContain('f1_territory_news_update_v2');
+  expect(ui).toContain("'TERRENO','NEGOZIO','LOCALE COMMERCIALE'");
+  expect(ui).toContain('f1-territory-online-v3.js');
+  expect(ui).not.toContain('navigator.geolocation.getCurrentPosition');
+  expect(ui).not.toContain('id="civicInput" readonly');
   expect(ui).not.toContain('HO TROVATO UN’ATTIVITÀ');
   expect(ui).not.toContain('localStorage.setItem');
+
+  const v3=fs.readFileSync('f1-territory-online-v3.js','utf8');
+  expect(v3).toContain('ATTIVA GPS · POSIZIONE PRECISA');
+  expect(v3).toContain('INVIO GIORNALINO · WHATSAPP');
+  expect(v3).toContain('AGGIUNGI');
+  expect(v3).toContain("f1_territory_note_add_v3");
+  expect(v3).toContain("f1_territory_open_street_v3");
+  expect(v3).toContain('SCARICA EXCEL');
 });
 
 async function mockCivicApp(page){
