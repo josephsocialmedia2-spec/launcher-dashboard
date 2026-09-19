@@ -1,5 +1,9 @@
 name: UGC Avatar Studio CI
 
+concurrency:
+  group: ugc-avatar-studio-ci-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     paths:
