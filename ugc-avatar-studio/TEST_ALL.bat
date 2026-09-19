@@ -52,6 +52,10 @@ if not exist external\SadTalker\checkpoints\SadTalker_V0.0.2_512.safetensors (
   echo [ERRORE] Checkpoint SadTalker 512 mancante.
   exit /b 1
 )
+if not exist external\SadTalker\examples\source_image\full_body_1.png (
+  echo [ERRORE] Immagine esempio SadTalker mancante.
+  exit /b 1
+)
 
 external\SadTalker\.venv\Scripts\python.exe -c "import torch, numpy, scipy, cv2; print('SADTALKER_IMPORTS_OK'); print('torch', torch.__version__); print('cuda', torch.cuda.is_available())"
 if errorlevel 1 exit /b 1
