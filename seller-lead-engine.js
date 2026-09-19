@@ -16,6 +16,6 @@ async function boot(){try{
  $('policy').textContent=(d.communication_policy||{}).rule||'Ogni invio deve superare il gate di eleggibilità del canale.';
  $('meta').textContent='Ultimo run: '+fmt(d.generated_at)+' · hub: '+fmt((d.territory||{}).reference_hub)+' · coda comunicazioni: '+fmt((q.items||[]).length)+' · feed pubblico privo di recapiti personali.';
  if(d.valuation&&d.valuation.url)$('valuationBtn').href=d.valuation.url
-}catch(e){$('rows').innerHTML='<tr><td colspan="7" class="empty">ERRORE · '+esc(e.message)+'</td></tr>';$('meta').textContent='Errore caricamento Seller Lead Engine'}}
+}catch(e){$('rows').innerHTML='<tr><td colspan="7" class="empty">ERRORE · '+esc(e.message)+'</td></tr>';$('meta').textContent='Errore caricamento Sistema Acquisizione Venditori'}}
 document.addEventListener('DOMContentLoaded',boot);
 })();
