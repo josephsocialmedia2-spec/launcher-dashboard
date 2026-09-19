@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "generated_at": "2026-09-19T12:43:18.404099+02:00",
+  "version": 2,
+  "generated_at": "2026-09-19T12:59:55.520423+02:00",
   "engine": "F1 Seller Lead Engine",
   "valuation": {
     "label": "VALUTAZIONE PROFESSIONALE GRATUITA",
@@ -9,12 +9,16 @@
   "territory": {
     "reference_hub": "Villar Dora",
     "microzone_radius_m": 1000,
+    "neighborhood_engine_version": "4",
+    "neighborhood_shape": "SQUARE",
+    "neighborhood_half_side_m": 1000,
     "neighborhood_signals_count": 592
   },
   "integrations": {
     "crm": "CONNECTED_EXISTING",
     "seller_radar": "CONNECTED_EXISTING",
     "microzones": "CONNECTED_EXISTING",
+    "communication_scheduler": "QUEUE_READY",
     "postiz": "NOT_FOUND",
     "email_channel": "ELIGIBILITY_GATE_REQUIRED",
     "whatsapp_channel": "ELIGIBILITY_GATE_REQUIRED"
