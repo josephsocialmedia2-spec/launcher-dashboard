@@ -1,16 +1,18 @@
 name: Verify F1 Script Trainer
 
 on:
-  workflow_run:
-    workflows: ["pages build and deployment"]
-    types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - "mike-ferry-script-trainer/**"
+      - ".github/workflows/verify-f1-script-trainer.yml"
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
   verify:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Verify public trainer
@@ -19,7 +21,7 @@ jobs:
           set -euo pipefail
           BASE="https://josephsocialmedia2-spec.github.io/launcher-dashboard/mike-ferry-script-trainer"
           ok=0
-          for i in {1..18}; do
+          for i in {1..24}; do
             if curl -fsSL --max-time 20 "$BASE/" -o /tmp/index.html; then
               ok=1
               break
@@ -33,7 +35,9 @@ jobs:
           curl -fsSL --max-time 20 "$BASE/data/scripts.js" -o /tmp/scripts.js
           grep -q "window.F1_SCRIPTS" /tmp/scripts.js
           curl -fsSL --max-time 20 "$BASE/app.js" -o /tmp/app.js
+          grep -q "SpeechSynthesisUtterance" /tmp/app.js
           curl -fsSL --max-time 20 "$BASE/service-worker.js" -o /tmp/sw.js
+          grep -q "data/scripts.js" /tmp/sw.js
           printf 'PUBLIC_URL_OK=1\n'
           printf 'INDEX_BYTES=%s\n' "$(wc -c < /tmp/index.html)"
           printf 'DATA_BYTES=%s\n' "$(wc -c < /tmp/scripts.js)"
