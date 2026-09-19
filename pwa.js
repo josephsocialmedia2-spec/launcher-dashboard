@@ -3,9 +3,9 @@
 
   if('serviceWorker' in navigator){
     window.addEventListener('load',()=>{
-      navigator.serviceWorker.register('./sw.js',{scope:'./'})
+      navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'})
         .then(reg=>{
-          document.documentElement.dataset.f1Sw='ready';
+          document.documentElement.dataset.f1Sw='ready'; reg.update().catch(()=>{});
           if(reg.waiting) window.dispatchEvent(new CustomEvent('f1:sw-update-ready'));
         })
         .catch(err=>{
