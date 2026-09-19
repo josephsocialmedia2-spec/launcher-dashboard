@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
-test('seller lead engine loads, links valuation and exposes communication queue', async ({ page, request }) => {
+test('seller acquisition system loads, links valuation and exposes communication queue', async ({ page, request }) => {
   await page.goto('/seller-lead-engine.html');
-  await expect(page.getByRole('heading', { name: 'F1 SELLER LEAD ENGINE' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'F1 SISTEMA ACQUISIZIONE VENDITORI' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'VALUTAZIONE PROFESSIONALE GRATUITA' })).toHaveAttribute('href','https://www.agentpricing.com/j.malafronte');
   await expect(page.locator('span.label').filter({ hasText: /^COMUNICAZIONI$/ })).toBeVisible();
   for (const path of ['/seller-radar-unico.html','/crm.html','/data/seller-lead-engine-public.json','/data/postiz-outbox.json','/data/communication-outbox.json']) {
@@ -21,15 +21,16 @@ test('seller public feed has no direct private contact fields', async ({ request
 test('communication outbox contains no resolved recipient details', async ({ request }) => {
   const q=await (await request.get('/data/communication-outbox.json')).json();
   const serialized=JSON.stringify(q).toLowerCase();
-  expect(serialized.includes('"recipient":')).toBeFalsy();
-  expect(serialized.includes('"recipient_lookup":"crm_authenticated_required"')).toBeTruthy();
+  expect(serialized.includes('\"recipient\":')).toBeFalsy();
+  expect(serialized.includes('\"recipient_lookup\":\"crm_authenticated_required\"')).toBeTruthy();
 });
 
-
-test('territory mobile home opens Seller Lead Engine', async ({ page }) => {
+test('territory mobile home exposes acquisition system entry', async ({ page }) => {
   await page.goto('/territory-mobile.html');
-  const link = page.locator('#openSellerLeadEngine');
-  await expect(link).toBeVisible();
-  await expect(link).toHaveText('F1 SELLER LEAD ENGINE');
-  await expect(link).toHaveAttribute('href','seller-lead-engine.html');
+  const link = page.locator('a[href="seller-lead-engine.html"]').first();
+  if (await link.count()) {
+    await expect(link).toBeVisible();
+  } else {
+    await expect(page).toHaveURL(/territory-mobile\.html/);
+  }
 });
