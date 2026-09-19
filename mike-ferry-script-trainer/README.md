@@ -4,7 +4,7 @@ Mobile-first PWA for learning real-estate prospecting and listing scripts by rep
 
 ## Current build
 
-- 48 Italian operational scripts covering prospecting, FSBO, expired, Just Listed/Just Sold, database, lead follow-up, seller prequalification, listing presentation, objections, price reduction, buyer, referral and appointment setting.
+- 61 Italian operational scripts covering prospecting, FSBO, expired, Just Listed/Just Sold, database, lead follow-up, seller prequalification, listing presentation, objections, price reduction, buyer, referral and appointment setting.
 - Source/status shown on every script.
 - On-device Italian speech synthesis. No paid TTS dependency is required.
 - Automatic preference for an available Italian voice; quality depends on the voices installed in iOS/Android/desktop OS.
@@ -13,6 +13,10 @@ Mobile-first PWA for learning real-estate prospecting and listing scripts by rep
 - Favorites, learned/review state, listen counters stored in localStorage.
 - Offline cache via Service Worker.
 - PWA manifest and iOS Home Screen metadata.
+
+## Source hierarchy
+
+Where an official Mike Ferry Italy translation is publicly available, the app uses it as the primary reference while keeping the trainer wording as an original F1 adaptation rather than reproducing the protected script verbatim.
 
 ## Copyright note
 
