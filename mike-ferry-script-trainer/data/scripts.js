@@ -71,7 +71,8 @@ window.F1_SCRIPTS = [
       "Quando pensa di decidere?"
     ],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/scripts/"
+    "sourceUrl": "https://www.mikeferry.com/scripts/",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "prospecting-generale",
@@ -155,7 +156,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "circle-prospecting",
@@ -239,7 +241,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "porta-a-porta",
@@ -324,7 +327,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "just-listed-telefono",
@@ -418,7 +422,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "RIFERIMENTO UFFICIALE - TESTO F1 ADATTATO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "just-listed-porta",
@@ -513,7 +518,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "RIFERIMENTO UFFICIALE - TESTO F1 ADATTATO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "just-sold-telefono",
@@ -604,7 +610,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "database-past-client",
@@ -690,7 +697,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "database-coi",
@@ -775,7 +783,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "database-valore",
@@ -855,7 +864,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "referral-post-vendita",
@@ -943,7 +953,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "open-house-prospecting",
@@ -1034,7 +1045,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "sign-call",
@@ -1122,7 +1134,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "tenant-occupied",
@@ -1203,7 +1216,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "referral-coi",
@@ -1290,7 +1304,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -1364,7 +1379,8 @@ window.F1_SCRIPTS = [
       "Possiamo fissare quando siete entrambi presenti?"
     ],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/scripts/"
+    "sourceUrl": "https://www.mikeferry.com/scripts/",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "fsbo-primo-contatto",
@@ -1459,7 +1475,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "RIFERIMENTO UFFICIALE - TESTO F1 ADATTATO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "fsbo-followup",
@@ -1547,7 +1564,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "RIFERIMENTO UFFICIALE - TESTO F1 ADATTATO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "fsbo-no-agenzie",
@@ -1636,7 +1654,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "RIFERIMENTO UFFICIALE - TESTO F1 ADATTATO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "fsbo-commissione",
@@ -1721,7 +1740,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "RIFERIMENTO UFFICIALE - TESTO F1 ADATTATO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "fsbo-gia-acquirente",
@@ -1812,7 +1832,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "RIFERIMENTO UFFICIALE - TESTO F1 ADATTATO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "expired-primo",
@@ -1903,7 +1924,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "RIFERIMENTO UFFICIALE - TESTO F1 ADATTATO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "expired-precedente-agente",
@@ -1987,7 +2009,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "RIFERIMENTO UFFICIALE - TESTO F1 ADATTATO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "expired-followup",
@@ -2072,7 +2095,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "RIFERIMENTO UFFICIALE - TESTO F1 ADATTATO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "lead-caldo",
@@ -2161,7 +2185,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "lead-non-risponde",
@@ -2251,7 +2276,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "lead-futuro",
@@ -2337,7 +2363,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "buyer-prequalifica",
@@ -2430,7 +2457,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "RIFERIMENTO UFFICIALE - TESTO F1 ADATTATO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "buyer-offerta",
@@ -2516,7 +2544,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "presenting-offer",
@@ -2604,7 +2633,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "qualifica-motivazione-buyer",
@@ -2690,7 +2720,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "RIFERIMENTO UFFICIALE - TESTO F1 ADATTATO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "followup-appuntamento",
@@ -2774,7 +2805,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "followup-post-visita",
@@ -2861,7 +2893,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -2966,7 +2999,8 @@ window.F1_SCRIPTS = [
       "Confermiamo giorno e ora."
     ],
     "source": "Mike Ferry Italy / The Mike Ferry Organization",
-    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_prequalifica_venditore.pdf"
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_prequalifica_venditore.pdf",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "prequalifica-motivazione",
@@ -3050,7 +3084,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "CORRETTO NELL'AUDIT 2026-09-19",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "prequalifica-venditore",
@@ -3146,7 +3181,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "RIFERIMENTO UFFICIALE - TESTO F1 ADATTATO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "prequalifica-decisori",
@@ -3230,7 +3266,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "CORRETTO NELL'AUDIT 2026-09-19",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -3304,7 +3341,8 @@ window.F1_SCRIPTS = [
       "Martedì o mercoledì?"
     ],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/blog/post/setting-more-qualified-appointments/"
+    "sourceUrl": "https://www.mikeferry.com/blog/post/setting-more-qualified-appointments/",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "appointment-direct",
@@ -3387,7 +3425,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "id": "appointment-no-decision",
@@ -3474,7 +3513,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Prima di usare il copione per contatti promozionali telefonici, verificare base giuridica/consenso applicabile e Registro Pubblico delle Opposizioni. La presenza di un numero online non equivale automaticamente a consenso marketing."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -3542,7 +3582,8 @@ window.F1_SCRIPTS = [
     "objections": [],
     "followUps": [],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/blog/post/5-steps-to-improve-your-listing-presentation/"
+    "sourceUrl": "https://www.mikeferry.com/blog/post/5-steps-to-improve-your-listing-presentation/",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -3613,7 +3654,8 @@ window.F1_SCRIPTS = [
       "Sediamoci e partiamo dai punti decisivi."
     ],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/2023/01%2025%202023%20Listing%20Presentation%20Script.pdf"
+    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/2023/01%2025%202023%20Listing%20Presentation%20Script.pdf",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -3684,7 +3726,8 @@ window.F1_SCRIPTS = [
       "Partiamo dalla prequalifica."
     ],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/2023/01%2025%202023%20Listing%20Presentation%20Script.pdf"
+    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/2023/01%2025%202023%20Listing%20Presentation%20Script.pdf",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "listing-apertura",
@@ -3768,7 +3811,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "CORRETTO NELL'AUDIT 2026-09-19",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -3843,7 +3887,8 @@ window.F1_SCRIPTS = [
       "Possiamo procedere così?"
     ],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/02%2027%202023%20CMA%20Presentation%20Script.pdf"
+    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/02%2027%202023%20CMA%20Presentation%20Script.pdf",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "listing-one-minute",
@@ -3938,7 +3983,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "CORRETTO NELL'AUDIT 2026-09-19",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "listing-piano",
@@ -4030,7 +4076,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "listing-chiusura",
@@ -4117,7 +4164,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "listing-prezzo",
@@ -4207,7 +4255,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "listing-marketing",
@@ -4299,7 +4348,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "listing-esclusiva",
@@ -4389,7 +4439,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "listing-piano-azione",
@@ -4487,7 +4538,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -4570,7 +4622,8 @@ window.F1_SCRIPTS = [
       "Cosa è cambiato?"
     ],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/02%2027%202023%20CMA%20Presentation%20Script.pdf"
+    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/02%2027%202023%20CMA%20Presentation%20Script.pdf",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -4640,7 +4693,8 @@ window.F1_SCRIPTS = [
       "Qual è la priorità principale?"
     ],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/02%2027%202023%20CMA%20Presentation%20Script.pdf"
+    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/02%2027%202023%20CMA%20Presentation%20Script.pdf",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -4715,7 +4769,8 @@ window.F1_SCRIPTS = [
       "Quali caratteristiche giustificano una correzione?"
     ],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/02%2027%202023%20CMA%20Presentation%20Script.pdf"
+    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/02%2027%202023%20CMA%20Presentation%20Script.pdf",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "listing-cma",
@@ -4801,7 +4856,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "CORRETTO NELL'AUDIT 2026-09-19",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -4871,7 +4927,8 @@ window.F1_SCRIPTS = [
       "Quale scelta è coerente con la sua scadenza?"
     ],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/2023/01%2025%202023%20Listing%20Presentation%20Script.pdf"
+    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/2023/01%2025%202023%20Listing%20Presentation%20Script.pdf",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -4950,7 +5007,8 @@ window.F1_SCRIPTS = [
       "Concordiamo anche tempi e accessi?"
     ],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/scripts/"
+    "sourceUrl": "https://www.mikeferry.com/scripts/",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -5026,7 +5084,8 @@ window.F1_SCRIPTS = [
       "Qual è il punto preciso che vuole chiarire?"
     ],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/blog/post/how-to-overcome-the-most-common-objections-in-real-estate/"
+    "sourceUrl": "https://www.mikeferry.com/blog/post/how-to-overcome-the-most-common-objections-in-real-estate/",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -5106,7 +5165,8 @@ window.F1_SCRIPTS = [
       "Qual è il vero punto che blocca la decisione?"
     ],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/blog/post/how-to-overcome-the-most-common-objections-in-real-estate/"
+    "sourceUrl": "https://www.mikeferry.com/blog/post/how-to-overcome-the-most-common-objections-in-real-estate/",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "obiezione-pensarci",
@@ -5193,7 +5253,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "obiezione-coniuge",
@@ -5280,7 +5341,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "obiezione-provvigione",
@@ -5370,7 +5432,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "obiezione-valutazione-alta",
@@ -5459,7 +5522,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "obiezione-esclusiva",
@@ -5546,7 +5610,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "obiezione-conosco-agente",
@@ -5635,7 +5700,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "obiezione-richiamami",
@@ -5720,7 +5786,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "obiezione-origine-numero",
@@ -5808,7 +5875,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "obiezione-non-interessato",
@@ -5889,7 +5957,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "obiezione-non-fretta",
@@ -5973,7 +6042,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "obiezione-prima-comprare",
@@ -6061,7 +6131,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "price-weekly",
@@ -6152,7 +6223,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "price-no-visite",
@@ -6239,7 +6311,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "price-visite-no-offerte",
@@ -6329,7 +6402,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "obiezione-prezzo-alto",
@@ -6416,7 +6490,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "VERIFICATO COME ADATTAMENTO MFO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "id": "obiezione-multiagenzia",
@@ -6505,7 +6580,8 @@ window.F1_SCRIPTS = [
       ]
     },
     "auditStatus": "ADATTAMENTO F1 DA VERIFICARE CON CONTESTO",
-    "reviewedAt": "2026-09-19"
+    "reviewedAt": "2026-09-19",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -6577,7 +6653,8 @@ window.F1_SCRIPTS = [
       "Qual è l'unico punto che impedisce di procedere?"
     ],
     "source": "Mike Ferry Organization",
-    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/2023/01%2025%202023%20Listing%20Presentation%20Script.pdf"
+    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/2023/01%2025%202023%20Listing%20Presentation%20Script.pdf",
+    "legalNote": "Adattare il copione alla normativa e alla documentazione del caso concreto."
   },
   {
     "category": "PERCORSO ACQUISIZIONE",
@@ -6656,6 +6733,7 @@ window.F1_SCRIPTS = [
       "È tutto chiaro prima della firma?"
     ],
     "source": "Adattamento operativo italiano + struttura MFO",
-    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/2023/01%2025%202023%20Listing%20Presentation%20Script.pdf"
+    "sourceUrl": "https://assets-prod.mikeferry.com/wp-content/uploads/scripts/2023/01%2025%202023%20Listing%20Presentation%20Script.pdf",
+    "legalNote": "Per l'incarico verificare titolarità, soggetti firmatari, condizioni contrattuali e adempimenti applicabili; il trainer non sostituisce consulenza legale."
   }
 ];
