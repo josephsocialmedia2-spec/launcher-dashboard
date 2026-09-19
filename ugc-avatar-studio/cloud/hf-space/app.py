@@ -391,6 +391,15 @@ if os.environ.get("UGC_SKIP_PREWARM") != "1":
     threading.Thread(target=prewarm, daemon=True).start()
 
 if __name__ == "__main__":
+    # ZeroGPU reserves the PORT env value (commonly 7861) for its internal proxy.
+    # Gradio Spaces are publicly served from 7860, so bind the combined
+    # FastAPI + Gradio application there explicitly.
+    try:
+        from spaces.zero import startup as zero_startup
+        zero_startup()
+        print("zerogpu: startup report sent", flush=True)
+    except ImportError:
+        pass
+
     import uvicorn
-    port = int(os.environ.get("PORT", "7860"))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    uvicorn.run(app, host="0.0.0.0", port=7860)
