@@ -74,3 +74,64 @@ jobs:
           path: ugc-avatar-studio/renders/_selftest/
           if-no-files-found: error
           retention-days: 7
+
+
+  sadtalker-windows:
+    needs: integration-windows
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ugc-avatar-studio
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+      - name: Ensure FFmpeg
+        shell: pwsh
+        run: |
+          if (-not (Get-Command ffmpeg -ErrorAction SilentlyContinue)) {
+            choco install ffmpeg -y --no-progress
+          }
+          ffmpeg -version
+          ffprobe -version
+      - uses: actions/download-artifact@v4
+        with:
+          name: ugc-avatar-studio-windows-selftest
+          path: ugc-avatar-studio/renders/_selftest/
+      - name: Clone SadTalker
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force external | Out-Null
+          git clone --depth 1 https://github.com/OpenTalker/SadTalker.git external/SadTalker
+      - name: Install SadTalker Python stack
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade "pip<25" setuptools wheel
+          pip install torch==1.12.1+cpu torchvision==0.13.1+cpu torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install -r external/SadTalker/requirements.txt
+      - name: Download SadTalker checkpoints
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force external/SadTalker/checkpoints | Out-Null
+          New-Item -ItemType Directory -Force external/SadTalker/gfpgan/weights | Out-Null
+          $ProgressPreference='SilentlyContinue'
+          Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/OpenTalker/SadTalker/releases/download/v0.0.2-rc/mapping_00109-model.pth.tar' -OutFile 'external/SadTalker/checkpoints/mapping_00109-model.pth.tar'
+          Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/OpenTalker/SadTalker/releases/download/v0.0.2-rc/mapping_00229-model.pth.tar' -OutFile 'external/SadTalker/checkpoints/mapping_00229-model.pth.tar'
+          Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/OpenTalker/SadTalker/releases/download/v0.0.2-rc/SadTalker_V0.0.2_256.safetensors' -OutFile 'external/SadTalker/checkpoints/SadTalker_V0.0.2_256.safetensors'
+          Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/OpenTalker/SadTalker/releases/download/v0.0.2-rc/SadTalker_V0.0.2_512.safetensors' -OutFile 'external/SadTalker/checkpoints/SadTalker_V0.0.2_512.safetensors'
+          Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/xinntao/facexlib/releases/download/v0.1.0/alignment_WFLW_4HG.pth' -OutFile 'external/SadTalker/gfpgan/weights/alignment_WFLW_4HG.pth'
+          Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/xinntao/facexlib/releases/download/v0.1.0/detection_Resnet50_Final.pth' -OutFile 'external/SadTalker/gfpgan/weights/detection_Resnet50_Final.pth'
+          Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.4.pth' -OutFile 'external/SadTalker/gfpgan/weights/GFPGANv1.4.pth'
+          Invoke-WebRequest -UseBasicParsing -Uri 'https://github.com/xinntao/facexlib/releases/download/v0.2.2/parsing_parsenet.pth' -OutFile 'external/SadTalker/gfpgan/weights/parsing_parsenet.pth'
+      - name: Real SadTalker end-to-end render
+        shell: pwsh
+        run: |
+          python -c "import torch, numpy, scipy, cv2; print('torch',torch.__version__,'cuda',torch.cuda.is_available())"
+          python scripts/verify_sadtalker.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ugc-avatar-studio-sadtalker-e2e
+          path: ugc-avatar-studio/renders/_selftest/VIDEO_UGC_001.mp4
+          if-no-files-found: error
+          retention-days: 7
