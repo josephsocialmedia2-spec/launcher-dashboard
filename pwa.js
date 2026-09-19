@@ -22,7 +22,6 @@
 
   const page=location.pathname.split('/').pop().toLowerCase();
   if(page==='notiziere-mobile.html'){
-    loadOnce('f1-sign-capture.js?v=20260919-sign-crm1','f1SignCaptureLoader');
     loadOnce('f1-mobile-field-only-guard.js?v=20260916-office1','f1MobileFieldOnlyLoader');
   }
 // PWA bootstrap only. The Acquisition Command Center owns its layout explicitly.
