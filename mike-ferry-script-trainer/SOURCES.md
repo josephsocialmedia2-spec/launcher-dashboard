@@ -22,3 +22,17 @@
 ## Editorial rule
 
 The app does not reproduce the protected MFO scriptbook in full. Entries marked “ADATTAMENTO BASATO SUL METODO MIKE FERRY” or “VERSIONE F1 ISPIRATA AL METODO MIKE FERRY” are original Italian training texts derived from the documented purpose, sequence and selling logic of the cited MFO material. They must not be represented as verbatim Mike Ferry scripts.
+
+## Official Italian references
+
+- Mike Ferry Italy — Copioni gratuiti: https://mikeferryitaly.com/account/area-riservata/copioni-gratuiti/
+- Primo Copione Acquirenti: https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Primo_Copione_Acquirenti.pdf
+- Secondo Copione Acquirenti / prequalifica motivazione: https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Secondo_Copione_Acquirenti_prequalifica_motivazione.pdf
+- Prequalifica venditore: https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_prequalifica_venditore.pdf
+- Incarichi appena acquisiti: https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_incarichi_appena_acquisiti.pdf
+- Venditori privati: https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_venditori_privati.pdf
+- Incarichi scaduti: https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_incarichi_scaduti.pdf
+- Presentazione da un minuto: https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_presentazione_da_un_minuto.pdf
+- Presentazione con analisi comparativa: https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_presentazione_con_analisi_comparativa.pdf
+
+Mike Ferry Italy states that it is the official Italian arm of The Mike Ferry Organization. The app cites these materials as source references and does not reproduce the full copyrighted PDFs.
