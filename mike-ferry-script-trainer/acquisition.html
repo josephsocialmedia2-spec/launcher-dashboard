@@ -1,0 +1,22 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#16a34a"><meta name="apple-mobile-web-app-capable" content="yes"><title>Corso Acquisizione · F1 Script Trainer</title><link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./styles.css"></head><body>
+<header class="topbar"><div class="brand"><a class="brandmark" href="./">F1</a><div><div class="brandtitle">CORSO ACQUISIZIONE</div><div class="brandsub">Dalla notizia alla firma · memorizzazione sequenziale</div></div></div></header>
+<main class="container"><section class="hero"><div class="kicker">Sequenza operativa</div><h1>Impara cosa viene prima e cosa viene dopo.</h1><p>Ogni modulo può essere ascoltato, spezzato in frasi, ripetuto a catena e provato col cliente virtuale.</p><div class="progressbar" style="margin-top:14px"><i id="courseProgress"></i></div><div id="courseLabel" class="meta" style="margin-top:6px"></div></section>
+<div class="training-layout" style="margin-top:14px">
+<aside><div id="phaseList" class="phase-list"></div></aside>
+<section class="trainer-panel" id="trainer">
+<div class="row wrap"><div><span id="phaseBadge" class="badge phase"></span><h2 id="title" style="margin:7px 0 3px"></h2><div id="sourceStatus" class="meta"></div></div><a id="simLink" class="btn primary" href="./simulator.html">PROVA CON IL CLIENTE</a></div>
+<p id="purpose" style="color:#c9d3ce;line-height:1.45"></p>
+<div class="divider"></div>
+<div class="row wrap"><div><div class="meta">VOCE TRAINER</div><select id="voice" class="search" style="padding:9px;min-width:220px"></select></div><div><div class="meta">VELOCITÀ</div><select id="rate" class="search" style="padding:9px"><option value=".75">0.75x</option><option value=".85">0.85x</option><option value=".9">0.90x</option><option value="1" selected>1.00x</option><option value="1.05">1.05x</option></select></div><div><div class="meta">RIPETIZIONI</div><select id="loops" class="search" style="padding:9px"><option value="1">1</option><option value="3">3</option><option value="5">5</option><option value="10">10</option><option value="999">Loop</option></select></div></div>
+<div class="actions" style="margin-top:10px"><button id="listen" class="btn primary">▶ ASCOLTA</button><button id="pause" class="btn">⏸ PAUSA</button><button id="repeat" class="btn">↺ RIPETI</button><button id="hide" class="btn ghost">NASCONDI TESTO</button></div>
+<div class="section-title"><div><h2>Copione</h2><p id="usage"></p></div></div><div id="script" class="scriptbox"></div>
+<div class="section-title"><div><h2>Parole chiave</h2><p>Modalità assistita: ricorda la logica, non solo le parole.</p></div></div><div id="keywords" class="keyword-list"></div>
+<div class="section-title"><div><h2>Mappa mentale</h2></div></div><div id="memoryMap" class="memory-map"></div>
+<div class="section-title"><div><h2>Frase per frase</h2><p>Ascolta → ripeti → passa alla successiva.</p></div><span id="sentenceCounter" class="badge"></span></div><div id="sentences"></div>
+<div class="actions"><button id="prevSentence" class="btn">⏪</button><button id="listenSentence" class="btn primary">▶ FRASE</button><button id="countRepeat" class="btn">HO RIPETUTO</button><button id="nextSentence" class="btn">⏩</button></div>
+<div class="section-title"><div><h2>Catena di memoria</h2><p>1 → 1+2 → 1+2+3 fino al copione completo.</p></div><span id="chainCounter" class="badge"></span></div><div id="chainBox" class="scriptbox"></div><div class="actions" style="margin-top:8px"><button id="chainListen" class="btn primary">▶ ASCOLTA CATENA</button><button id="chainGrow" class="btn">+ AGGIUNGI FRASE</button><button id="chainReset" class="btn ghost">RICOMINCIA</button></div>
+<div class="section-title"><div><h2>Stato apprendimento</h2></div></div><div class="mode-switch" id="memoryStates"></div>
+<div id="trainingStats" class="meta" style="margin-top:10px"></div>
+</section></div></main>
+<nav class="bottomnav"><a href="./">Home</a><a class="active" href="./acquisition.html">Acquisizione</a><a href="./simulator.html">Simulatore</a></nav>
+<script src="./data/scripts.js"></script><script src="./acquisition.js"></script></body></html>
