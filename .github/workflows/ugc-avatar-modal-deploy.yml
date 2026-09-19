@@ -7,6 +7,10 @@ on:
     paths:
       - 'ugc-avatar-studio/cloud/modal/**'
       - '.github/workflows/ugc-avatar-modal-deploy.yml'
+  pull_request:
+    paths:
+      - 'ugc-avatar-studio/cloud/modal/**'
+      - '.github/workflows/ugc-avatar-modal-deploy.yml'
   workflow_dispatch:
 
 jobs:
@@ -35,6 +39,7 @@ jobs:
           PY
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: validate
     runs-on: ubuntu-latest
     env:
