@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0f0c">
+<title>F1 Email Radar</title>
+<style>
+:root{--bg:#090d0a;--panel:#111713;--panel2:#151d17;--line:#263329;--text:#f4f7f4;--mut:#9eaaa0;--g:#39f28a;--gold:#f4c95d;--red:#ff6b6b;--blue:#78c7ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% 0,#142219 0,#090d0a 38%,#070907 100%);color:var(--text);font:14px/1.4 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:inherit}.wrap{max-width:1500px;margin:auto;padding:22px 16px 90px}.top{display:flex;gap:16px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}.ey{font-size:11px;font-weight:900;letter-spacing:.18em;color:var(--g)}h1{margin:4px 0 4px;font-size:clamp(28px,4vw,50px);line-height:1}h2{margin:0 0 10px;font-size:20px}.sub{color:var(--mut);max-width:900px}.status{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid var(--line);border-radius:999px;padding:7px 10px;font-size:11px;font-weight:800;background:#0d120e}.pill.ok{color:var(--g);border-color:#245f3c}.pill.warn{color:var(--gold);border-color:#5f5124}.pill.bad{color:var(--red);border-color:#5f2424}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.btn{border:1px solid #2f4e39;background:#153020;color:#fff;border-radius:10px;padding:10px 13px;font-weight:900;cursor:pointer;text-decoration:none}.btn:hover{border-color:var(--g)}.btn.alt{background:#101612;border-color:var(--line)}.btn.gold{border-color:#66561e;background:#332b12;color:#ffe79d}.btn.red{border-color:#5b2b2b;background:#2f1414}.btn:disabled{opacity:.45;cursor:not-allowed}
+.stats{display:grid;grid-template-columns:repeat(8,minmax(120px,1fr));gap:9px;margin:16px 0}.stat{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:14px;padding:13px;min-height:88px}.stat b{display:block;font-size:27px;color:var(--g)}.stat span{color:var(--mut);font-size:10px;font-weight:900;letter-spacing:.08em}
+.panel{background:rgba(17,23,19,.96);border:1px solid var(--line);border-radius:15px;padding:15px;margin:11px 0}.grid2{display:grid;grid-template-columns:1.4fr .6fr;gap:11px}.filters{display:grid;grid-template-columns:1.2fr .8fr .8fr .8fr auto;gap:8px}input,select,textarea{width:100%;background:#0c120e;color:#fff;border:1px solid var(--line);border-radius:9px;padding:10px}textarea{min-height:80px;resize:vertical}.meta{font-size:11px;color:var(--mut)}.notice{border-left:3px solid var(--gold);background:#1c190d;padding:10px 12px;border-radius:8px;color:#e9dfb7}.notice.ok{border-color:var(--g);background:#0f2116}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:1150px}th,td{border-bottom:1px solid #202a22;padding:9px;text-align:left;vertical-align:top}th{position:sticky;top:0;background:#111713;color:#b9c5bb;font-size:10px;letter-spacing:.08em;z-index:1}td a{color:var(--blue)}.tag{display:inline-block;border-radius:999px;padding:3px 7px;border:1px solid var(--line);font-size:10px;font-weight:900}.tag.ok{color:var(--g);border-color:#245f3c}.tag.warn{color:var(--gold);border-color:#5f5124}.sourceList{display:grid;gap:7px}.source{border:1px solid var(--line);border-radius:10px;padding:10px}.sourceTop{display:flex;justify-content:space-between;gap:8px}.source a{color:var(--blue);word-break:break-all}.empty{padding:20px;text-align:center;color:var(--mut)}
+dialog{width:min(900px,95vw);background:#0e1510;color:#fff;border:1px solid var(--line);border-radius:16px;padding:0}dialog::backdrop{background:rgba(0,0,0,.75)}.modal{padding:18px}.formgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.span2{grid-column:span 2}.span3{grid-column:span 3}.toast{position:fixed;right:14px;bottom:14px;max-width:520px;background:#111713;border:1px solid var(--line);padding:12px 14px;border-radius:11px;z-index:99;display:none}.toast.ok{border-color:#245f3c}.toast.bad{border-color:#5f2424}.foot{position:fixed;bottom:0;left:0;right:0;background:#090d0aee;border-top:1px solid var(--line);backdrop-filter:blur(10px)}.footin{max-width:1500px;margin:auto;padding:10px 16px;display:flex;gap:9px;flex-wrap:wrap}.foot a{font-size:11px;font-weight:900;text-decoration:none;color:#c7d0c8}
+@media(max-width:1100px){.stats{grid-template-columns:repeat(4,1fr)}.grid2{grid-template-columns:1fr}.filters{grid-template-columns:1fr 1fr 1fr}.filters .wide{grid-column:span 3}}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:1fr}.filters .wide{grid-column:auto}.formgrid{grid-template-columns:1fr}.span2,.span3{grid-column:auto}.wrap{padding:15px 10px 90px}}
+</style>
+<script defer src="supabase-config.js"></script>
+<script defer src="supabase-sync.js?v=20260920-emailradar1"></script>
+<script defer src="f1-dashboard-auth-guard.js?v=20260920-emailradar1"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script defer src="f1-email-radar.js?v=20260920-1"></script>
+</head>
+<body>
+<main class="wrap">
+  <div class="top">
+    <div><div class="ey">F1 IMMOBILIARE · TERRITORIAL INTELLIGENCE</div><h1>F1 EMAIL RADAR</h1><div class="sub">Censimento economico territoriale: soggetti → ATECO → indirizzo → contatti pubblici → fonte → verifica → deduplicazione. PEC e marketing restano separati.</div></div>
+    <div class="status"><span class="pill" id="cloudPill">CLOUD…</span><span class="pill" id="territoryPill">TERRITORIO…</span><span class="pill" id="atecoPill">ATECO…</span></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" id="newBtn">+ NUOVO DATO</button>
+    <button class="btn alt" id="importBtn">IMPORTA CSV / XLSX</button>
+    <input id="importFile" type="file" accept=".csv,.xlsx,.xls" hidden>
+    <button class="btn gold" id="scanBtn">AVVIA SCANSIONE</button>
+    <button class="btn alt" id="continueBtn">CONTINUA SCANSIONE</button>
+    <button class="btn alt" id="atecoSyncBtn">SINCRONIZZA ATECO ISTAT</button>
+    <button class="btn alt" id="csvBtn">ESPORTA CSV</button>
+    <button class="btn alt" id="xlsxBtn">ESPORTA XLSX</button>
+    <a class="btn alt" href="crm.html">CRM F1</a>
+  </div>
+
+  <div class="notice" id="legalNotice"><b>REGOLA:</b> email pubblica ≠ consenso marketing. I record di Email Radar sono intelligence territoriale; nessun contatto viene inserito automaticamente nel database marketing.</div>
+
+  <div class="stats">
+    <div class="stat"><b id="kSubjects">0</b><span>SOGGETTI</span></div>
+    <div class="stat"><b id="kCompanies">0</b><span>AZIENDE</span></div>
+    <div class="stat"><b id="kPros">0</b><span>PROFESSIONISTI</span></div>
+    <div class="stat"><b id="kEmails">0</b><span>EMAIL</span></div>
+    <div class="stat"><b id="kPec">0</b><span>PEC</span></div>
+    <div class="stat"><b id="kPhones">0</b><span>TELEFONI</span></div>
+    <div class="stat"><b id="kWeb">0</b><span>SITI</span></div>
+    <div class="stat"><b id="kVerified">0</b><span>VERIFICATI</span></div>
+  </div>
+
+  <section class="panel">
+    <h2>Ricerca e filtri</h2>
+    <div class="filters">
+      <select id="comuneFilter"><option value="">TUTTI I COMUNI</option></select>
+      <select id="typeFilter"><option value="">AZIENDE + PROFESSIONISTI</option><option value="AZIENDA">AZIENDE</option><option value="PROFESSIONISTA">PROFESSIONISTI</option></select>
+      <select id="contactFilter"><option value="">TUTTI I CONTATTI</option><option value="EMAIL">CON EMAIL</option><option value="NO_EMAIL">SENZA EMAIL</option><option value="PEC">CON PEC</option><option value="PHONE">CON TELEFONO</option><option value="WEB">CON SITO</option></select>
+      <select id="verifyFilter"><option value="">TUTTI GLI STATI</option><option>VERIFICATO</option><option>PARZIALMENTE_VERIFICATO</option><option>DA_VERIFICARE</option><option>DATI_INSUFFICIENTI</option><option>NON_PIU_ATTIVO</option></select>
+      <input class="wide" id="searchBox" placeholder="Nome, via, email, telefono, dominio, ATECO…">
+    </div>
+  </section>
+
+  <div class="grid2">
+    <section class="panel">
+      <h2 id="tableTitle">Database territoriale</h2>
+      <div class="meta" id="tableMeta"></div>
+      <div class="tablewrap"><table><thead><tr><th>STATO</th><th>COMUNE / VIA</th><th>SOGGETTO</th><th>ATECO</th><th>EMAIL / PEC</th><th>TELEFONO</th><th>SITO</th><th>FONTE</th></tr></thead><tbody id="rows"></tbody></table></div>
+    </section>
+
+    <aside class="panel">
+      <h2>Fonti e copertura</h2>
+      <div class="meta" id="runMeta">Nessuna scansione selezionata.</div>
+      <div class="sourceList" id="sourceList"></div>
+      <div class="notice" style="margin-top:10px"><b>NESSUNA SIMULAZIONE:</b> una fonte che richiede credenziali/API resta “DA CONFIGURARE” finché non esiste un connettore autorizzato.</div>
+    </aside>
+  </div>
+</main>
+
+<dialog id="entityDialog">
+  <form method="dialog" class="modal" id="entityForm">
+    <div class="top"><div><div class="ey">F1 EMAIL RADAR</div><h2>Nuovo soggetto territoriale</h2></div><button class="btn alt" value="cancel">CHIUDI</button></div>
+    <div class="formgrid">
+      <select name="subject_type"><option value="AZIENDA">AZIENDA / IMPRESA</option><option value="PROFESSIONISTA">PROFESSIONISTA</option><option value="STUDIO_PROFESSIONALE">STUDIO PROFESSIONALE</option><option value="AMMINISTRATORE_CONDOMINIO">AMMINISTRATORE CONDOMINIO</option><option value="ENTE">ENTE / ASSOCIAZIONE</option></select>
+      <input name="denomination" placeholder="Denominazione *" required>
+      <input name="legal_name" placeholder="Ragione sociale">
+      <input name="comune" list="comuniList" placeholder="Comune *" required>
+      <input name="indirizzo" placeholder="Via / indirizzo">
+      <input name="civico" placeholder="Civico">
+      <input name="ateco_code" placeholder="Codice ATECO">
+      <input name="category" placeholder="Categoria attività">
+      <input name="profession" placeholder="Professione">
+      <input name="phone" placeholder="Telefono">
+      <input name="mobile" placeholder="Cellulare">
+      <input name="website" placeholder="Sito web">
+      <input name="email" placeholder="Email ordinaria">
+      <select name="email_type"><option>EMAIL_NON_VERIFICATA</option><option>EMAIL_COMMERCIALE_PUBBLICA</option><option>EMAIL_GENERICA_AZIENDALE</option><option>EMAIL_CONTATTO_CLIENTI</option><option>EMAIL_AMMINISTRATIVA</option><option>EMAIL_PERSONALE</option><option>EMAIL_ALTRO</option></select>
+      <input name="pec" placeholder="PEC">
+      <input name="vat_number" placeholder="Partita IVA">
+      <select name="primary_source_type"><option value="SITO_UFFICIALE">SITO UFFICIALE</option><option value="REGISTRO_IMPRESE">REGISTRO IMPRESE</option><option value="INI_PEC">INI-PEC</option><option value="INAD">INAD</option><option value="ALBO_PROFESSIONALE">ALBO PROFESSIONALE</option><option value="MAPS_DIRECTORY">MAPPA / DIRECTORY</option><option value="SITO_ISTITUZIONALE">SITO ISTITUZIONALE</option><option value="ALTRO">ALTRO</option></select>
+      <input class="span2" name="primary_source_url" placeholder="URL esatto della fonte">
+      <select name="verification_status"><option>DA_VERIFICARE</option><option>PARZIALMENTE_VERIFICATO</option><option>VERIFICATO</option><option>DATI_INSUFFICIENTI</option></select>
+      <input name="confidence_score" type="number" min="0" max="100" value="50" placeholder="Confidence 0-100">
+      <select name="marketing_status"><option>DA_VALUTARE</option><option>NON_USARE_MARKETING</option><option>CONSENSO_PRESENTE</option><option>CLIENTE_ESISTENTE</option><option>SOFT_SPAM_DA_VALUTARE</option><option>ALTRO</option></select>
+      <textarea class="span3" name="notes" placeholder="Note"></textarea>
+    </div>
+    <div class="actions"><button class="btn" id="saveEntityBtn" value="default">SALVA / DEDUPLICA</button></div>
+  </form>
+</dialog>
+<datalist id="comuniList"></datalist>
+
+<div class="toast" id="toast"></div>
+<div class="foot"><div class="footin"><a href="ricerca-territoriale.html">RICERCA TERRITORIALE</a><a href="seller-lead-engine.html">SISTEMA ACQUISIZIONE VENDITORI</a><a href="crm.html">CRM</a><a href="oggi.html">OGGI</a><a href="setup-cloud.html">CLOUD</a></div></div>
+</body>
+</html>
