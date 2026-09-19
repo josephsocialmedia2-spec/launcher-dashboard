@@ -1,0 +1,103 @@
+name: Deploy UGC Avatar Studio to Modal
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'ugc-avatar-studio/cloud/modal/**'
+      - '.github/workflows/ugc-avatar-modal-deploy.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install Modal SDK
+        run: pip install "modal>=1.1,<2"
+      - name: Compile Modal application
+        run: python -m py_compile ugc-avatar-studio/cloud/modal/modal_app.py
+      - name: Import Modal application
+        run: |
+          python - <<'PY'
+          import importlib.util
+          path = "ugc-avatar-studio/cloud/modal/modal_app.py"
+          spec = importlib.util.spec_from_file_location("ugc_avatar_modal", path)
+          module = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(module)
+          assert module.APP_NAME == "ugc-avatar-studio"
+          assert module.GPU_TYPE == "T4"
+          print("MODAL_APP_IMPORT_OK")
+          PY
+
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+    env:
+      MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
+      MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Verify Modal credentials
+        run: |
+          if [ -z "$MODAL_TOKEN_ID" ] || [ -z "$MODAL_TOKEN_SECRET" ]; then
+            echo "MODAL_TOKEN_MISSING"
+            exit 1
+          fi
+          echo "MODAL_TOKEN_PRESENT"
+      - name: Install Modal SDK
+        run: pip install "modal>=1.1,<2"
+      - name: Deploy Modal application
+        run: modal deploy ugc-avatar-studio/cloud/modal/modal_app.py --name ugc-avatar-studio
+      - name: Resolve public URL
+        id: modal_url
+        run: |
+          python - <<'PY' > modal-url.txt
+          import modal
+          fn = modal.Function.from_name("ugc-avatar-studio", "web")
+          url = fn.get_web_url()
+          if not url:
+              raise SystemExit("MODAL_PUBLIC_URL_MISSING")
+          print(url)
+          PY
+          URL="$(tail -n 1 modal-url.txt)"
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+          echo "UGC_AVATAR_STUDIO_URL=$URL"
+      - name: Verify public health
+        env:
+          APP_URL: ${{ steps.modal_url.outputs.url }}
+        run: |
+          python - <<'PY'
+          import json, os, time, urllib.request
+          url = os.environ["APP_URL"].rstrip("/") + "/health"
+          last = None
+          for attempt in range(30):
+              try:
+                  with urllib.request.urlopen(url, timeout=20) as r:
+                      body = r.read().decode("utf-8", "replace")
+                      print("HEALTH_HTTP", r.status)
+                      print(body[:1200])
+                      data = json.loads(body)
+                      if r.status == 200 and data.get("status") == "ok":
+                          raise SystemExit(0)
+              except Exception as exc:
+                  last = exc
+                  print(f"HEALTH_RETRY {attempt+1}: {exc}")
+              time.sleep(10)
+          raise SystemExit(f"MODAL_HEALTH_TIMEOUT: {last}")
+          PY
+      - name: Publish URL in workflow summary
+        env:
+          APP_URL: ${{ steps.modal_url.outputs.url }}
+        run: |
+          echo "## UGC Avatar Studio — Modal" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Public app: $APP_URL" >> "$GITHUB_STEP_SUMMARY"
+          echo "Health: $APP_URL/health" >> "$GITHUB_STEP_SUMMARY"
