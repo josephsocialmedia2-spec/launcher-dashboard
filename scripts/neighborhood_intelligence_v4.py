@@ -10,7 +10,7 @@ OUT=DATA/'neighborhood_intelligence.json'; SEEN=DATA/'neighborhood_seen.json'
 GIRO_URL='https://raw.githubusercontent.com/josephsocialmedia2-spec/immobili-in-zona/main/seller_radar_auto/data/giro_acquisizione_oggi.csv'
 NOMINATIM='https://nominatim.openstreetmap.org/search'; OVERPASS='https://overpass-api.de/api/interpreter'
 UA='F1-Neighborhood-Intelligence/4.0 (public-business-context)'
-HALF_SIDE_M=int(os.getenv('F1_NEIGHBORHOOD_HALF_SIDE','1000')); MAX_ENRICH=int(os.getenv('F1_NEIGHBORHOOD_MAX_ENRICH','0'))
+HALF_SIDE_M=int(os.getenv('F1_NEIGHBORHOOD_HALF_SIDE','1000')); MAX_ENRICH=int(os.getenv('F1_NEIGHBORHOOD_MAX_ENRICH','25'))
 ENGINE_VERSION='4'; TERRITORY=load_territory(); ROUTE=configured_communes(TERRITORY); RANK=rank_map(TERRITORY); ALLOWED=allowed_set(TERRITORY); SELLER=TERRITORY.get('seller_radar') or {}
 
 def now_iso(): return datetime.now(timezone.utc).isoformat(timespec='seconds')

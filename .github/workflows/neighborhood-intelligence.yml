@@ -58,7 +58,7 @@ jobs:
         if: steps.gate.outputs.run == 'true'
         env:
           F1_NEIGHBORHOOD_HALF_SIDE: '1000'
-          F1_NEIGHBORHOOD_MAX_ENRICH: '0'
+          F1_NEIGHBORHOOD_MAX_ENRICH: '25'
         run: python scripts/neighborhood_intelligence_v4.py
 
       - name: Build public Seller Radar feed

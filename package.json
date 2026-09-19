@@ -5,7 +5,8 @@
     "test": "playwright test tests/acquisition-command-center.spec.js",
     "test:acquisition": "playwright test tests/acquisition-command-center.spec.js",
     "test:daily": "python3 -m unittest tests/test_acquisition_daily.py -v",
-    "test:crm-import": "playwright test tests/crm-excel-import.spec.js --project=desktop-chromium"
+    "test:crm-import": "playwright test tests/crm-excel-import.spec.js --project=desktop-chromium",
+    "test:centrale": "playwright test tests/centrale-risultati.spec.js"
   },
   "devDependencies": {
     "@playwright/test": "1.55.0",
