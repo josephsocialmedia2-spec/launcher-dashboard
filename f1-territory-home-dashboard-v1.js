@@ -1,6 +1,6 @@
 (()=>{
 'use strict';
-const VERSION='20260919-home-dashboard-v2';
+const VERSION='20260919-home-dashboard-v3';
 const INACTIVITY_MS=5*60*1000;
 const $=id=>document.getElementById(id);
 const qs=s=>document.querySelector(s);
@@ -17,7 +17,7 @@ function injectStyle(){
   .f1-home-tile{min-height:96px;border:1px solid var(--line);border-radius:16px;background:#fff;color:var(--ink);padding:12px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:8px;cursor:pointer;box-shadow:0 4px 14px rgba(12,43,27,.06)}
   .f1-home-tile strong{font-size:12px;font-weight:950;line-height:1.15}.f1-home-tile small{font-size:9px;color:var(--mut);font-weight:800;line-height:1.35}.f1-home-tile .ico{font-size:22px;line-height:1}
   .f1-home-tile.resume{background:linear-gradient(180deg,#f5fff8,#e8f7ed);border-color:#9dceb0}.f1-home-tile.capture{background:linear-gradient(145deg,#063e25,#0b6f3d);border-color:#063e25;color:#fff}.f1-home-tile.capture small{color:#d6efe0}.f1-home-tile:disabled{opacity:.48;cursor:not-allowed}
-  .f1-home-idle-note{margin-top:8px;padding:8px 9px;border:1px solid #d8e5dc;border-radius:10px;background:#f7faf8;color:var(--mut);font-size:9px;font-weight:850;line-height:1.35}
+  .f1-home-idle-note{margin-top:10px;padding:11px 12px;border:1px solid #d8e5dc;border-radius:14px;background:#f7faf8;color:var(--ink);font-size:9px;font-weight:850;line-height:1.35}.f1-home-idle-note .f1-last-label{display:block;color:var(--g);font-size:9px;font-weight:950;letter-spacing:.06em}.f1-home-idle-note .f1-last-place{display:block;margin-top:4px;font-size:12px;font-weight:950;color:var(--ink)}.f1-home-idle-note .f1-last-note{display:block;margin-top:4px;color:var(--mut);font-size:9px;font-weight:800}.f1-seller-system-btn{width:100%;min-height:58px;margin-top:9px;border:1px solid #0a6036;border-radius:15px;background:linear-gradient(135deg,#0a6338,#0f874a);color:#fff;padding:11px 13px;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;font:inherit;font-weight:950;cursor:pointer;box-shadow:0 6px 18px rgba(6,64,34,.18)}.f1-seller-system-btn .f1-seller-system-main{font-size:12px;line-height:1.15}.f1-seller-system-btn .f1-seller-system-sub{display:block;margin-top:3px;color:#d9f0e3;font-size:9px;font-weight:800}.f1-seller-system-btn .f1-seller-system-arrow{font-size:21px;line-height:1}
   @media(max-width:720px){
     .f1-home-dashboard-v1 .top{grid-template-columns:auto minmax(0,1fr)!important;row-gap:6px!important;padding:7px 8px!important}
     .f1-home-dashboard-v1 .top .meta{grid-column:1/-1!important;display:grid!important;grid-template-columns:auto repeat(5,minmax(0,1fr))!important;grid-template-rows:auto auto!important;gap:5px!important;overflow:visible!important;width:100%!important}
@@ -74,6 +74,8 @@ function syncDashboard(){
   const rm=$('f1HomeResumeMeta');
   if(rp)rp.textContent=place;
   if(rm)rm.textContent=meta;
+  const lp=$('f1HomeLastPlace');
+  if(lp)lp.textContent=place;
   if(r){
     const core=$('mobileResumeBtn');
     r.disabled=!!core?.disabled||!core;
@@ -113,8 +115,14 @@ function buildDashboard(){
   const note=document.createElement('div');
   note.id='f1HomeIdleNote';
   note.className='f1-home-idle-note';
-  note.innerHTML='<b>HOME AUTOMATICA</b> · dopo 5 minuti senza utilizzo l’app torna qui senza perdere il giro salvato.';
+  note.innerHTML='<span class="f1-last-label">ULTIMO GIRO SALVATO</span><strong id="f1HomeLastPlace" class="f1-last-place">—</strong><span class="f1-last-note">Il ritorno automatico alla Home non cancella questa posizione.</span>';
   dash.insertAdjacentElement('afterend',note);
+  const seller=document.createElement('button');
+  seller.id='f1SellerSystemButton';
+  seller.className='f1-seller-system-btn';
+  seller.type='button';
+  seller.innerHTML='<span><span class="f1-seller-system-main">F1 SISTEMA ACQUISIZIONE VENDITORI</span><span class="f1-seller-system-sub">Apri Seller Lead Engine</span></span><span class="f1-seller-system-arrow">›</span>';
+  note.insertAdjacentElement('afterend',seller);
   $('f1HomeResume').addEventListener('click',()=>{
     const core=$('mobileResumeBtn');
     if(core&&!core.disabled)core.click();
@@ -122,6 +130,7 @@ function buildDashboard(){
   $('f1HomePrivateSign').addEventListener('click',openPrivateSign);
   $('f1HomeToday').addEventListener('click',()=>clickCore('oggi'));
   $('f1HomeCRM').addEventListener('click',()=>clickCore('crm'));
+  $('f1SellerSystemButton').addEventListener('click',()=>{window.location.href='seller-lead-engine.html'});
   syncDashboard();
   return true;
 }
