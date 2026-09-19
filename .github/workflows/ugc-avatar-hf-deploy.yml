@@ -41,3 +41,45 @@ jobs:
           HF_SPACE_OWNER: realmediajo
           HF_SPACE_NAME: ugc-avatar-studio
         run: python publish_space.py
+
+      - name: Verify Space runtime and public health
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python - <<'PY'
+          import os, time, requests
+          from huggingface_hub import HfApi
+
+          repo_id = "realmediajo/ugc-avatar-studio"
+          api = HfApi(token=os.environ["HF_TOKEN"])
+
+          for attempt in range(40):
+              runtime = api.get_space_runtime(repo_id)
+              stage = str(getattr(runtime, "stage", "UNKNOWN"))
+              hardware = str(getattr(runtime, "hardware", "UNKNOWN"))
+              requested = str(getattr(runtime, "requested_hardware", "UNKNOWN"))
+              print(f"SPACE_RUNTIME attempt={attempt+1} stage={stage} hardware={hardware} requested={requested}")
+
+              if "ERROR" in stage.upper():
+                  raise SystemExit(f"SPACE_RUNTIME_ERROR:{stage}")
+
+              if "RUNNING" in stage.upper() and "BUILDING" not in stage.upper():
+                  info = api.space_info(repo_id)
+                  subdomain = getattr(info, "subdomain", None)
+                  if not subdomain:
+                      raise SystemExit("SPACE_SUBDOMAIN_MISSING")
+                  app_url = f"https://{subdomain}.hf.space"
+                  print(f"APP_URL={app_url}")
+                  try:
+                      response = requests.get(app_url + "/health", timeout=20)
+                      print(f"HEALTH_HTTP={response.status_code}")
+                      print(response.text[:1000])
+                      if response.status_code == 200:
+                          raise SystemExit(0)
+                  except requests.RequestException as exc:
+                      print(f"HEALTH_RETRY={exc}")
+
+              time.sleep(15)
+
+          raise SystemExit("SPACE_RUNTIME_TIMEOUT")
+          PY
