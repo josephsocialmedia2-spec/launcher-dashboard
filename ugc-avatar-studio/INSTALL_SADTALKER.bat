@@ -41,10 +41,9 @@ if errorlevel 1 (
 py -3.8 -c "import sys; print(sys.version)" >nul 2>nul
 if errorlevel 1 (
   echo [INFO] Fallback installer ufficiale Python 3.8.10...
-  set "PY38_INSTALLER=%TEMP%\python-3.8.10-amd64.exe"
-  powershell -NoProfile -ExecutionPolicy Bypass -Command "$ProgressPreference='SilentlyContinue'; Invoke-WebRequest -UseBasicParsing -Uri 'https://www.python.org/ftp/python/3.8.10/python-3.8.10-amd64.exe' -OutFile '%PY38_INSTALLER%'"
+  powershell -NoProfile -ExecutionPolicy Bypass -Command "$ProgressPreference='SilentlyContinue'; Invoke-WebRequest -UseBasicParsing -Uri 'https://www.python.org/ftp/python/3.8.10/python-3.8.10-amd64.exe' -OutFile \"$env:TEMP\\python-3.8.10-amd64.exe\""
   if errorlevel 1 exit /b 1
-  "%PY38_INSTALLER%" /quiet InstallAllUsers=0 PrependPath=1 Include_test=0 Include_launcher=1
+  "%TEMP%\python-3.8.10-amd64.exe" /quiet InstallAllUsers=0 PrependPath=1 Include_test=0 Include_launcher=1
   if errorlevel 1 exit /b 1
   call :refresh_path
 )
