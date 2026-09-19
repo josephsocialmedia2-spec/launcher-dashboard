@@ -24,8 +24,8 @@ async function loadConfig(){
 async function loadStats(){
  const comune=$('comuneFilter').value||null;
  STATE.stats=await rpc('f1_email_radar_dashboard',{p_comune:comune});
- [['kSubjects','subjects'],['kCompanies','companies'],['kPros','professionals'],['kEmails','emails'],['kPec','pec'],['kPhones','phones'],['kWeb','websites'],['kVerified','verified']].forEach(([id,k])=>$(id).textContent=Number(STATE.stats?.[k]||0).toLocaleString('it-IT'));
- $('atecoPill').textContent='ATECO '+Number(STATE.stats?.ateco_catalog||0).toLocaleString('it-IT');$('atecoPill').className='pill '+(Number(STATE.stats?.ateco_catalog||0)>=3000?'ok':'warn');
+ [['kSubjects','subjects'],['kCompanies','companies'],['kPros','professionals'],['kEmails','emails'],['kPec','pec'],['kPhones','phones'],['kWeb','websites'],['kVerified','verified'],['kToVerify','to_verify'],['kDup','duplicates_merged']].forEach(([id,k])=>$(id).textContent=Number(STATE.stats?.[k]||0).toLocaleString('it-IT'));
+ $('atecoPill').textContent='ATECO '+Number(STATE.stats?.ateco_catalog||0).toLocaleString('it-IT');$('atecoPill').className='pill '+(Number(STATE.stats?.ateco_catalog||0)>=3000?'ok':'warn');const lu=STATE.stats?.last_updated?new Date(STATE.stats.last_updated):null;$('updatedPill').textContent=lu&&!Number.isNaN(lu.getTime())?'AGG. '+lu.toLocaleString('it-IT'):'AGGIORNAMENTO —';
 }
 async function loadEntities(){
  let q='f1_email_radar_entities?select=*&order=updated_at.desc&limit=1000';
