@@ -41,7 +41,33 @@ async function backups(){return rest('f1_backup_runs?select=*&order=backup_date.
 async function audit(limit=300){return rest('f1_audit_log?select=*&order=created_at.desc&limit='+Number(limit||300))}
 async function restoreRequests(){return rest('f1_restore_requests?select=*&order=created_at.desc&limit=100')}
 async function requestRestore(userId,payload){const r=await rest('f1_restore_requests',{method:'POST',body:JSON.stringify([{user_id:userId,restore_scope:payload.restore_scope||'PERSONAL_RECORD',table_name:payload.table_name||'',record_key:payload.record_key||'',audit_id:payload.audit_id||null,backup_run_id:payload.backup_run_id||null,reason:payload.reason||'',metadata:payload.metadata||{}}]),prefer:'return=representation'});return r?.[0]||null}
-async function staffAdmin(payload){requireCloud();const r=await fetch(CFG().url.replace(/\/$/,'')+'/functions/v1/f1-staff-admin',{method:'POST',headers:{apikey:CFG().anonKey,Authorization:'Bearer '+await F1Sync.authToken(),'Content-Type':'application/json'},body:JSON.stringify(payload)});const j=await r.json().catch(()=>({}));if(!r.ok||!j.ok)throw new Error(j.message||j.error||('Staff admin '+r.status));return j}
+function staffAdminError(message,code,status=0){const e=new Error(message);e.code=code;e.status=status;return e}
+async function staffAdmin(payload){
+  requireCloud();
+  const url=CFG().url.replace(/\/$/,'')+'/functions/v1/f1-staff-admin';
+  const token=await F1Sync.authToken();
+  const ctl=new AbortController();
+  const timer=setTimeout(()=>ctl.abort(),15000);
+  let r;
+  try{
+    r=await fetch(url,{method:'POST',headers:{apikey:CFG().anonKey,Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify(payload),signal:ctl.signal});
+  }catch(err){
+    if(err?.name==='AbortError')throw staffAdminError('SERVER ACCESSI F1 NON RISPONDE · TIMEOUT','NETWORK_ERROR',0);
+    throw staffAdminError('IMPOSSIBILE CONTATTARE IL SERVER ACCESSI F1 · ERRORE RETE/CORS','CORS_OR_NETWORK_ERROR',0);
+  }finally{clearTimeout(timer)}
+  const raw=await r.text();
+  let j=null;
+  if(raw){try{j=JSON.parse(raw)}catch(_){j=null}}
+  if(r.status===401){
+    F1Sync.clearSession();
+    throw staffAdminError('SESSIONE SCADUTA · ESEGUI NUOVAMENTE L\'ACCESSO','AUTH_ERROR',401);
+  }
+  if(r.status===403)throw staffAdminError('ACCESSO NEGATO · '+String(j?.error||j?.message||'TITOLARE_REQUIRED'),'AUTH_ERROR',403);
+  if(!r.ok)throw staffAdminError('ERRORE ACCESSI F1 · HTTP '+r.status+' · '+String(j?.error||j?.message||raw||'SERVER_ERROR'),'SERVER_ERROR',r.status);
+  if(!j||typeof j!=='object')throw staffAdminError('RISPOSTA NON VALIDA DAL SERVER ACCESSI F1','INVALID_RESPONSE',r.status);
+  if(!j.ok)throw staffAdminError(String(j.message||j.error||'ERRORE ACCESSI F1'),'SERVER_ERROR',r.status);
+  return j;
+}
 function todayRome(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Rome',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
 window.F1StaffData={ready,requireCloud,rest,rpc,me,setting,acknowledgement,acceptPolicy,tasks,interactions,ownLeads,createOrLinkLead,news,addNews,quality,reports,duplicateEvents,team,teamQuality,teamReports,alerts,backups,audit,restoreRequests,requestRestore,staffAdmin,todayRome};
 })();

@@ -10,7 +10,8 @@ const PROTECTED_SCRIPTS=[
   'f1-realtime.js?v=20260916-mobile1',
   'f1-desktop-mobile-bridge.js?v=20260916-mobile1',
   'f1-office-sign-link.js?v=20260916-office1',
-  'f1-territory-admin-v4.js?v=20260919-territory-admin-v5'
+  'f1-territory-admin-v4.js?v=20260919-territory-admin-v5',
+  'ricerca-territoriale-layout.js?v=20260919-layout-final1'
 ];
 let ok=false,settled=false;
 function reveal(){document.documentElement.classList.remove('f1-auth-pending')}

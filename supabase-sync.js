@@ -41,7 +41,7 @@ window.F1Sync={ready,configured,authToken,ensureSession,currentUser,refreshSessi
   'use strict';
   if(document.querySelector('script[data-f1-global-brand]'))return;
   const s=document.createElement('script');
-  s.src='f1-global-brand.js?v=20260916-luxury1';
+  s.src='f1-global-brand.js?v=20260919-layout-final1';
   s.defer=true;
   s.dataset.f1GlobalBrand='1';
   document.head.appendChild(s);

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="it" class="f1-auth-pending">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090c09">
+<title>F1 Immobiliare — Accessi Ufficio</title>
+<style>
+html.f1-auth-pending body{visibility:hidden}
+:root{--g:#9bdc00;--g2:#78c900;--bg:#eef1ee;--ink:#172017;--mut:#68736b;--line:#dfe5df;--dark:#090c09;--danger:#b12d2d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif}
+.top{position:sticky;top:0;z-index:10;background:var(--dark);color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
+.brand{font-weight:900}.brand b{color:var(--g);font-size:26px;margin-right:7px}.top a{color:#fff;text-decoration:none;font-weight:800}
+.wrap{width:min(1180px,100%);margin:auto;padding:22px}
+.hero{background:linear-gradient(135deg,#0d120d,#1d251d);color:#fff;border-radius:20px;padding:22px;margin-bottom:18px}
+.hero h1{margin:5px 0 7px;font-size:clamp(28px,4vw,42px)}.hero p{margin:0;color:#cbd5cb;max-width:780px}
+.grid{display:grid;grid-template-columns:minmax(320px,.8fr) minmax(0,1.5fr);gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px;box-shadow:0 8px 24px #25362512}
+h2{margin:0 0 14px}.field{display:grid;gap:6px;margin:11px 0;font-weight:800;font-size:12px}.field input,.field select{width:100%;padding:12px;border:1px solid #cbd4cb;border-radius:10px;font:inherit;background:#fff}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:11px 13px;font:inherit;font-weight:900;cursor:pointer}.btn.primary{background:linear-gradient(180deg,var(--g),var(--g2));color:#172100}.btn.dark{background:#121812;color:#fff}.btn.secondary{background:#e8ece8;color:#273127}.btn.danger{background:var(--danger);color:#fff}.btn:disabled{opacity:.5;cursor:not-allowed}
+.note{font-size:12px;line-height:1.5;color:var(--mut);background:#f7f9f7;border-radius:10px;padding:10px;margin-top:12px}.msg{display:none;margin-top:12px;padding:11px;border-radius:10px;font-weight:800;font-size:12px}.msg.show{display:block}.msg.ok{background:#eef8dd;color:#355200}.msg.bad{background:#fff0f0;color:#8d1f1f}
+.toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.count{font-size:12px;color:var(--mut);font-weight:800}
+.accounts{display:grid;gap:12px}.account{border:1px solid var(--line);border-radius:13px;padding:14px;background:#fbfcfb}.account-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.account-head strong{display:block}.account-head small{display:block;color:var(--mut);margin-top:3px}.badge{padding:5px 8px;border-radius:999px;font-size:10px;font-weight:900;background:#edf2e9}.badge.off{background:#fae7e7;color:#8a2020}
+.meta{display:grid;grid-template-columns:125px 1fr;gap:7px 10px;margin:12px 0;font-size:12px}.meta span{color:var(--mut);font-weight:800}.meta strong{word-break:break-word}
+.password-box{margin-top:12px;padding-top:12px;border-top:1px solid #e7ebe7}.password-row{display:grid;grid-template-columns:1fr auto auto;gap:8px}.password-row input{min-width:0;padding:10px;border:1px solid #cbd4cb;border-radius:9px}
+.empty{padding:18px;border:1px dashed #bdc7bd;border-radius:12px;color:var(--mut)}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.row{grid-template-columns:1fr}.password-row{grid-template-columns:1fr}.btn{min-height:44px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="brand"><b>F1</b> IMMOBILIARE · TITOLARE</div><a href="ricerca-territoriale.html">← DASHBOARD</a></header>
+<main class="wrap">
+<section class="hero"><small>SUPABASE AUTH · AMMINISTRAZIONE</small><h1>GESTIONE ACCESSI UFFICIO</h1><p>Crea, attiva o disattiva gli account di lavoro F1 e gestisci il recupero o la sostituzione delle password. Le password correnti non sono mai leggibili.</p></section>
+<div class="grid">
+<section class="card">
+<h2>NUOVO ACCESSO</h2>
+<div class="row"><label class="field">NOME<input id="firstName" autocomplete="off"></label><label class="field">COGNOME<input id="lastName" autocomplete="off"></label></div>
+<label class="field">EMAIL DI LAVORO<input id="email" type="email" autocomplete="off" placeholder="nome@azienda.it"></label>
+<div class="row"><label class="field">RUOLO<select id="role"><option value="FUNZIONARIO">FUNZIONARIO</option><option value="RESPONSABILE">RESPONSABILE</option></select></label><label class="field">TELEFONO<input id="phone" autocomplete="off"></label></div>
+<label class="field">PASSWORD TEMPORANEA<input id="password" type="password" minlength="12" autocomplete="new-password" placeholder="Minimo 12 caratteri"></label>
+<div class="actions"><button class="btn secondary" id="generatePassword" type="button">GENERA PASSWORD</button><button class="btn primary" id="createAccount" type="button">CREA ACCESSO</button></div>
+<div class="note">La password temporanea viene inviata a Supabase Auth ma non viene salvata nel CRM, nei profili F1 o nei log. Dopo la consegna all'utente è preferibile farla cambiare.</div>
+<div class="msg" id="msg" aria-live="polite"></div>
+</section>
+<section class="card">
+<div class="toolbar"><div><h2 style="margin:0">ACCESSI REGISTRATI</h2><div class="count" id="count">—</div></div><button class="btn secondary" id="reload" type="button">AGGIORNA</button></div>
+<div class="accounts" id="accounts"><div class="empty">Caricamento…</div></div>
+</section>
+</div>
+</main>
+<script src="supabase-config.js?v=20260916-auth2"></script>
+<script src="supabase-sync.js?v=20260919-access-office1"></script>
+<script src="f1-staff-data.js?v=20260919-access-fix2"></script>
+<script src="accessi-ufficio.js?v=20260919-access-office1"></script>
+</body>
+</html>

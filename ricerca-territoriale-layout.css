@@ -1,0 +1,453 @@
+/* F1 Ricerca Territoriale — layout finale 2026-09-19
+   Obiettivo: flusso verticale naturale, nessuna altezza fissa, nessuna sovrapposizione. */
+
+:root{
+  --f1-layout-max:1380px;
+  --f1-gap-xs:8px;
+  --f1-gap-sm:12px;
+  --f1-gap-md:16px;
+  --f1-gap-lg:24px;
+  --f1-card-radius:12px;
+}
+
+/* Neutralizza il vecchio fullscreen a righe fisse anche se rimane in cache. */
+body.f1-dashboard-fullscreen{
+  overflow:auto!important;
+}
+body.f1-dashboard-fullscreen .app{
+  display:block!important;
+  height:auto!important;
+  min-height:100vh!important;
+  overflow:visible!important;
+  grid-template-rows:none!important;
+  gap:0!important;
+  padding:84px 22px 28px!important;
+}
+body.f1-dashboard-fullscreen .main-grid,
+body.f1-dashboard-fullscreen .current-card,
+body.f1-dashboard-fullscreen .right-col,
+body.f1-dashboard-fullscreen .today-card,
+body.f1-dashboard-fullscreen .crm-alert,
+body.f1-dashboard-fullscreen .territory-grid,
+body.f1-dashboard-fullscreen .territory-card,
+body.f1-dashboard-fullscreen .bottom-grid,
+body.f1-dashboard-fullscreen .next-card,
+body.f1-dashboard-fullscreen .crm-open{
+  height:auto!important;
+  min-height:0!important;
+  overflow:visible!important;
+  grid-template-rows:none!important;
+}
+
+/* Shell */
+.steps{display:none!important}
+.app{
+  max-width:none;
+  padding:84px 22px 28px;
+}
+.app>*{
+  width:min(100%,var(--f1-layout-max));
+  margin-left:auto;
+  margin-right:auto;
+}
+.grid{gap:var(--f1-gap-md)}
+.card{
+  min-width:0;
+  border-radius:var(--f1-card-radius);
+  overflow:visible;
+}
+.card:after{display:none!important}
+
+/* 1 — COSA DEVO FARE ADESSO */
+.main-grid{
+  display:block!important;
+  margin:0 auto!important;
+}
+.current-card{
+  padding:18px!important;
+  display:block!important;
+}
+.card-title-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding-bottom:12px;
+  border-bottom:1px solid #e6ece8;
+}
+.card-title-row h2{
+  margin:0;
+  font-size:17px!important;
+  line-height:1.2;
+}
+.current-card .current-hero,
+.current-card .timer-block{
+  display:none!important;
+}
+.action-now{
+  display:grid!important;
+  grid-template-columns:48px minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:14px!important;
+  margin-top:14px!important;
+  padding:18px!important;
+  min-height:0!important;
+  height:auto!important;
+}
+.action-copy small{display:none!important}
+.action-copy h3{
+  margin:0 0 4px!important;
+  font-size:28px!important;
+  line-height:1.08!important;
+}
+.action-copy p{
+  margin:0!important;
+  font-size:14px!important;
+  line-height:1.45!important;
+}
+.action-now .action-button{
+  min-width:220px;
+  min-height:50px!important;
+  white-space:nowrap;
+}
+
+/* 2 — RICERCA TERRITORIALE */
+.territory-grid{
+  display:block!important;
+  margin-top:var(--f1-gap-md)!important;
+}
+.territory-card{
+  width:100%;
+  padding:18px!important;
+  height:auto!important;
+  min-height:0!important;
+}
+.territory-card>h2{
+  margin:0!important;
+  font-size:18px!important;
+}
+.territory-inner{
+  display:grid!important;
+  grid-template-columns:minmax(260px,.85fr) minmax(0,1.15fr)!important;
+  gap:28px!important;
+  margin-top:14px!important;
+}
+.facts>div{
+  display:grid!important;
+  grid-template-columns:105px minmax(0,1fr)!important;
+  gap:10px;
+  padding:8px 0!important;
+}
+.civics p{margin:0 0 8px!important}
+.civic-progress{
+  display:grid!important;
+  grid-template-columns:24px minmax(0,1fr) 34px!important;
+  gap:8px!important;
+}
+.civic-badges{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:8px!important;
+  margin-top:12px!important;
+}
+.civic-badges>div{
+  padding:9px 11px!important;
+  min-height:0!important;
+}
+.territory-spacer:empty{display:none!important}
+
+/* 3 — INFORMAZIONI OPERATIVE */
+.right-col.f1-ops-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:var(--f1-gap-md)!important;
+  margin-top:var(--f1-gap-md)!important;
+}
+.today-card,
+.crm-alert{
+  padding:16px!important;
+  height:auto!important;
+  min-height:0!important;
+  overflow:visible!important;
+}
+.today-card .section-head,
+.crm-alert .section-head{
+  min-height:34px;
+}
+.kpis{
+  display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:8px!important;
+  margin-top:10px!important;
+}
+.kpis>div{
+  min-height:66px!important;
+  padding:8px 5px!important;
+  border-radius:8px!important;
+}
+.kpis strong{
+  font-size:22px!important;
+  line-height:1!important;
+}
+.kpis i{display:none!important}
+.kpis small{
+  margin-top:5px!important;
+  font-size:9px!important;
+  line-height:1.1!important;
+}
+.brand-quote{display:none!important}
+
+.crm-alert .warning h2{
+  font-size:14px!important;
+  line-height:1.25!important;
+}
+.alert-row{
+  display:grid!important;
+  grid-template-columns:36px minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:10px!important;
+  margin-top:10px!important;
+  padding:10px!important;
+  min-height:0!important;
+}
+.doc-circle{
+  width:34px!important;
+  height:34px!important;
+}
+.alert-copy strong{font-size:13px!important}
+.alert-copy span{font-size:11px!important}
+.alert-row .outline-link{
+  min-height:40px!important;
+  padding:9px 12px!important;
+}
+
+/* 4 — PROSSIMA ATTIVITÀ + CRM */
+.bottom-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.4fr) minmax(280px,.6fr)!important;
+  gap:var(--f1-gap-md)!important;
+  margin-top:var(--f1-gap-md)!important;
+  height:auto!important;
+}
+.next-card,
+.crm-open{
+  height:auto!important;
+  min-height:0!important;
+  padding:16px!important;
+}
+.next-card{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(220px,.65fr)!important;
+  align-items:center!important;
+  gap:18px!important;
+}
+.next-card h3{
+  margin:5px 0 0!important;
+  font-size:20px!important;
+}
+.after{
+  padding-left:18px!important;
+}
+.crm-open .crm-button{
+  min-height:48px!important;
+}
+.crm-open p{
+  display:block!important;
+  margin:7px 0 0!important;
+}
+
+/* 5 — ACCORDION SECONDARI */
+.f1-secondary-stack{
+  display:grid;
+  gap:12px;
+  margin-top:12px!important;
+}
+.f1-secondary-details{
+  width:100%;
+  margin:0!important;
+  border:1px solid #dfe7e2;
+  border-radius:var(--f1-card-radius);
+  background:#fff;
+  overflow:hidden;
+  box-shadow:0 3px 10px rgba(20,54,38,.05);
+}
+.f1-secondary-details>summary{
+  list-style:none;
+  min-height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:0 16px;
+  cursor:pointer;
+  color:#244435;
+  background:#fbfcfb;
+  font-size:13px;
+  font-weight:850;
+  user-select:none;
+}
+.f1-secondary-details>summary::-webkit-details-marker{display:none}
+.f1-secondary-details>summary::after{
+  content:"+";
+  color:#0a8a4d;
+  font-size:21px;
+  line-height:1;
+}
+.f1-secondary-details[open]>summary::after{content:"−"}
+.f1-secondary-details[open]>summary{
+  border-bottom:1px solid #e7ece9;
+}
+.f1-secondary-details>.support-grid,
+.f1-secondary-details>#f1MobileLivePanel,
+.f1-secondary-details>#f1TerritoryAdminV4,
+.f1-secondary-details>.card{
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:14px!important;
+}
+.f1-secondary-details>#f1MobileLivePanel>.card{
+  border:0!important;
+  box-shadow:none!important;
+}
+.f1-secondary-details>#f1TerritoryAdminV4{
+  margin:0!important;
+}
+.f1-secondary-details .f1tv4-card{
+  border:0!important;
+  box-shadow:none!important;
+  padding:0!important;
+}
+#f1AssignmentsDetails{order:1}
+#f1MobileLiveDetails{order:2}
+#f1OfficeDetails{order:3}
+#f1ToolsDetails{order:4}
+
+/* Amministrazione aperta: leggibile ma non dominante. */
+.f1tv4-kpis{
+  grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+.f1tv4-kpi{padding:9px!important}
+.f1tv4-grid{
+  grid-template-columns:1fr 1fr!important;
+  gap:12px!important;
+}
+.f1tv4-list{max-height:280px!important}
+
+/* Evita che contenuti lunghi allarghino la pagina */
+.card *,
+.f1tv4 *,
+.f1-secondary-details *{
+  min-width:0;
+}
+.card h1,.card h2,.card h3,.card p,.card span,.card strong,
+.f1tv4 h1,.f1tv4 h2,.f1tv4 h3,.f1tv4 p,.f1tv4 span,.f1tv4 strong{
+  overflow-wrap:anywhere;
+}
+
+/* Dock laterale: non deve coprire il contenuto */
+.f1-luxury-dock{
+  right:14px!important;
+  bottom:18px!important;
+}
+
+/* Tablet */
+@media(max-width:1179px){
+  .app{
+    padding:78px 14px 24px!important;
+  }
+  .right-col.f1-ops-grid{
+    grid-template-columns:1fr!important;
+  }
+  .territory-inner{
+    grid-template-columns:1fr!important;
+    gap:16px!important;
+  }
+  .bottom-grid{
+    grid-template-columns:1fr!important;
+  }
+  .f1tv4-kpis{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+
+/* Mobile */
+@media(max-width:900px){
+  .app{
+    margin-left:0!important;
+    padding:76px 10px 20px!important;
+  }
+  .current-card,
+  .territory-card,
+  .today-card,
+  .crm-alert,
+  .next-card,
+  .crm-open{
+    padding:14px!important;
+  }
+  .action-now{
+    grid-template-columns:38px minmax(0,1fr)!important;
+    gap:10px!important;
+    padding:14px!important;
+  }
+  .action-now .action-button{
+    grid-column:1/-1!important;
+    width:100%!important;
+    min-width:0!important;
+    min-height:48px!important;
+  }
+  .action-copy h3{font-size:23px!important}
+  .kpis{
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  }
+  .alert-row{
+    grid-template-columns:34px minmax(0,1fr)!important;
+  }
+  .alert-row .outline-link{
+    grid-column:1/-1!important;
+    width:100%!important;
+  }
+  .next-card{
+    grid-template-columns:1fr!important;
+  }
+  .after{
+    border-left:0!important;
+    border-top:1px solid #e1e7e3!important;
+    padding:12px 0 0!important;
+  }
+  .f1-secondary-details>summary{
+    min-height:50px;
+    padding:0 14px;
+  }
+}
+
+@media(max-width:560px){
+  html,body{max-width:100%;overflow-x:hidden}
+  .brand-sep,.status-pill{display:none!important}
+  .brand-name{font-size:20px!important}
+  .brand-name span{font-size:13px!important}
+  .topbar{padding:8px 10px!important}
+  .territory-inner{gap:12px!important}
+  .facts>div{
+    grid-template-columns:88px minmax(0,1fr)!important;
+  }
+  .kpis{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+  .kpis>div{
+    min-height:62px!important;
+  }
+  .f1tv4-kpis{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  .f1tv4-grid{
+    grid-template-columns:1fr!important;
+  }
+  .f1-luxury-dock{display:none!important}
+}
+
+/* Nessun dock flottante sopra il contenuto della dashboard territoriale. */
+body.f1-dashboard-fluid .f1-luxury-dock,
+body.f1-dashboard-fullscreen .f1-luxury-dock{display:none!important}
