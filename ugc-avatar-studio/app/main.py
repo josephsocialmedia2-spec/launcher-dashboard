@@ -12,8 +12,11 @@ from services.db import init_db, save_render
 from providers.tts.piper_provider import PiperTTSProvider
 from providers.avatar.sadtalker_provider import SadTalkerProvider
 
+STATIC_DIR = ROOT/"static"
+STATIC_DIR.mkdir(parents=True, exist_ok=True)
+
 app = FastAPI(title="UGC AVATAR STUDIO")
-app.mount("/static", StaticFiles(directory=ROOT/"static"), name="static")
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 init_db()
 
 @app.get("/", response_class=HTMLResponse)

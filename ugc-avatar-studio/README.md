@@ -42,3 +42,29 @@ La versione cloud non richiede Python, SadTalker, Piper o FFmpeg sul computer de
 - Target gratuito preparato: Gradio + ZeroGPU.
 
 Il file `cloud/hf-space/publish_space.py` crea e pubblica lo Space quando è disponibile una credenziale Hugging Face con permesso write.
+
+
+## VERSIONE CLOUD GRATUITA — MODAL
+
+A seguito del rifiuto HTTP 402 restituito da Hugging Face per la creazione di un Gradio Space sull'account gratuito, il percorso cloud principale è stato spostato su Modal.
+
+Percorso:
+
+`cloud/modal/`
+
+Architettura:
+
+Browser → FastAPI Modal → GPU T4 serverless → Piper TTS → SadTalker → FFmpeg → MP4 1080×1920.
+
+Il worker GPU usa `min_containers=0` e `max_containers=1` per evitare GPU accese a riposo e limitare il consumo.
+
+Il deploy automatico usa il workflow:
+
+`.github/workflows/ugc-avatar-modal-deploy.yml`
+
+e richiede esclusivamente i GitHub Repository Secrets Modal:
+
+- `MODAL_TOKEN_ID`
+- `MODAL_TOKEN_SECRET`
+
+Hugging Face resta disponibile come implementazione precedente, ma non è più il percorso cloud predefinito.
