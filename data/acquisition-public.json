@@ -1,6 +1,6 @@
 {
   "version": 4,
-  "generated_at": "2026-09-19T08:02:23.333919+02:00",
+  "generated_at": "2026-09-19T08:05:24.936503+02:00",
   "territory_version": 4,
   "reference_hub": "Villar Dora",
   "territory_policy": "CENTRO_RADIALE_SINISTRA_DESTRA",
@@ -10177,7 +10177,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.339482+02:00"
+      "updated_at": "2026-09-19T08:05:24.941433+02:00"
     },
     {
       "task_id": "7dd2fd47-30db-5042-9a8a-81a4c410b905",
@@ -10211,7 +10211,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.417020+02:00"
+      "updated_at": "2026-09-19T08:05:25.025887+02:00"
     },
     {
       "task_id": "a437bac7-4175-58a8-aabd-33472e4ad83d",
@@ -10245,7 +10245,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.421177+02:00"
+      "updated_at": "2026-09-19T08:05:25.030015+02:00"
     },
     {
       "task_id": "af9f6743-3b1a-5396-afdd-f7151fd140cb",
@@ -10279,7 +10279,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.386971+02:00"
+      "updated_at": "2026-09-19T08:05:24.988798+02:00"
     },
     {
       "task_id": "3a971a0f-a2a2-54d7-9c00-93dfbc983076",
@@ -10313,7 +10313,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.424576+02:00"
+      "updated_at": "2026-09-19T08:05:25.033433+02:00"
     },
     {
       "task_id": "66640512-d94a-55c9-b37e-bea235f6de4a",
@@ -10347,7 +10347,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.424941+02:00"
+      "updated_at": "2026-09-19T08:05:25.033783+02:00"
     },
     {
       "task_id": "d8b28337-7e46-5f09-8e3d-3962dcac065d",
@@ -10381,7 +10381,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.366563+02:00"
+      "updated_at": "2026-09-19T08:05:24.968240+02:00"
     },
     {
       "task_id": "f436e4d7-ec10-5be4-9161-f130e25d6f24",
@@ -10415,7 +10415,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.379500+02:00"
+      "updated_at": "2026-09-19T08:05:24.981329+02:00"
     },
     {
       "task_id": "cd7dcb5f-bbe8-5405-9998-8689b34e52b4",
@@ -10449,7 +10449,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.336057+02:00"
+      "updated_at": "2026-09-19T08:05:24.938229+02:00"
     },
     {
       "task_id": "66c1feba-80d4-5d3f-8994-7e1e8b39571d",
@@ -10483,7 +10483,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.409902+02:00"
+      "updated_at": "2026-09-19T08:05:25.018726+02:00"
     },
     {
       "task_id": "4bca7adc-a937-594a-ac1f-e3cb31f93295",
@@ -10517,7 +10517,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.337113+02:00"
+      "updated_at": "2026-09-19T08:05:24.939270+02:00"
     },
     {
       "task_id": "7253f26c-0460-5c34-8980-8f662fdf7363",
@@ -10551,7 +10551,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.339796+02:00"
+      "updated_at": "2026-09-19T08:05:24.941732+02:00"
     },
     {
       "task_id": "1a49742d-a20a-5d03-b718-035b039ad5fe",
@@ -10585,7 +10585,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.337832+02:00"
+      "updated_at": "2026-09-19T08:05:24.939919+02:00"
     },
     {
       "task_id": "302ad116-4e6c-549a-aa5d-c78f8860e50a",
@@ -10619,7 +10619,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.339417+02:00"
+      "updated_at": "2026-09-19T08:05:24.941367+02:00"
     },
     {
       "task_id": "fe543230-47c3-5170-bbd1-397e5305570c",
@@ -10653,7 +10653,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.339304+02:00"
+      "updated_at": "2026-09-19T08:05:24.941244+02:00"
     },
     {
       "task_id": "29443bb2-c4e7-590b-a3d4-5b7bd7a1289e",
@@ -10687,7 +10687,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.338433+02:00"
+      "updated_at": "2026-09-19T08:05:24.940410+02:00"
     },
     {
       "task_id": "ef83f354-8b6c-5411-9548-251d93df8181",
@@ -10721,7 +10721,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.411979+02:00"
+      "updated_at": "2026-09-19T08:05:25.020809+02:00"
     },
     {
       "task_id": "20072b27-ccb0-5560-8514-599385a63e82",
@@ -10755,7 +10755,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.412090+02:00"
+      "updated_at": "2026-09-19T08:05:25.020921+02:00"
     },
     {
       "task_id": "7836c2a8-9452-5426-bc47-16721224a212",
@@ -10789,7 +10789,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.341170+02:00"
+      "updated_at": "2026-09-19T08:05:24.943088+02:00"
     },
     {
       "task_id": "ddc21cc9-347b-5563-a82e-f5e6452df0ef",
@@ -10823,7 +10823,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.341282+02:00"
+      "updated_at": "2026-09-19T08:05:24.943216+02:00"
     },
     {
       "task_id": "d7fdc254-0b9d-5e3e-b636-a732b8cbb765",
@@ -10857,7 +10857,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.412921+02:00"
+      "updated_at": "2026-09-19T08:05:25.021770+02:00"
     },
     {
       "task_id": "732b80de-14bb-519e-a30a-662e6d7d518e",
@@ -10891,7 +10891,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.414597+02:00"
+      "updated_at": "2026-09-19T08:05:25.023479+02:00"
     },
     {
       "task_id": "39bad856-2472-5525-a63f-c0f06f5e606e",
@@ -10925,7 +10925,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.414715+02:00"
+      "updated_at": "2026-09-19T08:05:25.023582+02:00"
     },
     {
       "task_id": "ed1798cb-9d91-5393-851c-450f0d3c3166",
@@ -10959,7 +10959,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.419366+02:00"
+      "updated_at": "2026-09-19T08:05:25.028225+02:00"
     },
     {
       "task_id": "2ad558c3-f087-56cb-8ca8-982f267dd04f",
@@ -10993,7 +10993,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.417125+02:00"
+      "updated_at": "2026-09-19T08:05:25.025994+02:00"
     },
     {
       "task_id": "0aef3d33-cf9b-58f1-a7b5-a021ce189043",
@@ -11027,7 +11027,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.343402+02:00"
+      "updated_at": "2026-09-19T08:05:24.945382+02:00"
     },
     {
       "task_id": "d297ae23-ac11-5d61-bd1c-01afdc18d778",
@@ -11061,7 +11061,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.343178+02:00"
+      "updated_at": "2026-09-19T08:05:24.945113+02:00"
     },
     {
       "task_id": "99e58938-c8d6-55df-a87f-ff0f34d16abb",
@@ -11095,7 +11095,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.418356+02:00"
+      "updated_at": "2026-09-19T08:05:25.027215+02:00"
     },
     {
       "task_id": "6d4166a1-9b82-5db2-9119-618bb4312302",
@@ -11129,7 +11129,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.419652+02:00"
+      "updated_at": "2026-09-19T08:05:25.028517+02:00"
     },
     {
       "task_id": "fb6c2e1f-c30a-5e4e-bb7d-97e603089063",
@@ -11163,7 +11163,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.416244+02:00"
+      "updated_at": "2026-09-19T08:05:25.025107+02:00"
     },
     {
       "task_id": "4a867f95-5fbb-538c-8ff7-ce5c8087cdb2",
@@ -11197,7 +11197,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.342675+02:00"
+      "updated_at": "2026-09-19T08:05:24.944653+02:00"
     },
     {
       "task_id": "9a5904d4-0ef4-5718-8981-64bc8af966fd",
@@ -11231,7 +11231,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.343289+02:00"
+      "updated_at": "2026-09-19T08:05:24.945254+02:00"
     },
     {
       "task_id": "ee0482e2-31d5-5380-b9cc-0b8aa9104517",
@@ -11265,7 +11265,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.420814+02:00"
+      "updated_at": "2026-09-19T08:05:25.029654+02:00"
     },
     {
       "task_id": "4e33ffe2-dd37-5c47-bb9f-81d8c8a6233f",
@@ -11299,7 +11299,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.420929+02:00"
+      "updated_at": "2026-09-19T08:05:25.029774+02:00"
     },
     {
       "task_id": "baab26ab-57b9-5cba-b63a-b8e17e9b0741",
@@ -11333,7 +11333,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.349858+02:00"
+      "updated_at": "2026-09-19T08:05:24.951633+02:00"
     },
     {
       "task_id": "942e20b8-abf7-5daa-9828-5ab114f95b31",
@@ -11367,7 +11367,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.346934+02:00"
+      "updated_at": "2026-09-19T08:05:24.948825+02:00"
     },
     {
       "task_id": "b3ba47f4-7a1d-5505-99ce-4742b678f2ce",
@@ -11401,7 +11401,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.347162+02:00"
+      "updated_at": "2026-09-19T08:05:24.949047+02:00"
     },
     {
       "task_id": "6a991fcc-0890-569d-a309-4f5f64eceb9b",
@@ -11435,7 +11435,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.351228+02:00"
+      "updated_at": "2026-09-19T08:05:24.952977+02:00"
     },
     {
       "task_id": "5e032828-bfa3-5bad-8567-6f363b5bb63f",
@@ -11469,7 +11469,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.348482+02:00"
+      "updated_at": "2026-09-19T08:05:24.950348+02:00"
     },
     {
       "task_id": "a14a59e1-eca9-5c5f-8121-c618bcb4ddfc",
@@ -11503,7 +11503,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.347049+02:00"
+      "updated_at": "2026-09-19T08:05:24.948932+02:00"
     },
     {
       "task_id": "c4602eb5-9d89-551e-8a41-3f70c630f493",
@@ -11537,7 +11537,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.346819+02:00"
+      "updated_at": "2026-09-19T08:05:24.948713+02:00"
     },
     {
       "task_id": "6c285623-64c8-54bd-9cb4-a7a550c8882c",
@@ -11571,7 +11571,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.348798+02:00"
+      "updated_at": "2026-09-19T08:05:24.950635+02:00"
     },
     {
       "task_id": "0f709a90-c6ee-519f-9060-e0a9a7761001",
@@ -11605,7 +11605,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.347386+02:00"
+      "updated_at": "2026-09-19T08:05:24.949307+02:00"
     },
     {
       "task_id": "8044f632-0f09-5272-b4ea-d4c5c1b4b096",
@@ -11639,7 +11639,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.348101+02:00"
+      "updated_at": "2026-09-19T08:05:24.949998+02:00"
     },
     {
       "task_id": "ada5641b-2d30-5d8d-bf37-91aae8e8a195",
@@ -11673,7 +11673,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.348256+02:00"
+      "updated_at": "2026-09-19T08:05:24.950109+02:00"
     },
     {
       "task_id": "5afa3124-a397-5496-a9d9-bd9c8d5770d6",
@@ -11707,7 +11707,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.347275+02:00"
+      "updated_at": "2026-09-19T08:05:24.949157+02:00"
     },
     {
       "task_id": "49f45fc4-a468-518b-bf88-3dafc43d6181",
@@ -11741,7 +11741,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.348371+02:00"
+      "updated_at": "2026-09-19T08:05:24.950230+02:00"
     },
     {
       "task_id": "3efcdb32-ebe5-56f9-8a02-72049af1d801",
@@ -11775,7 +11775,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.352404+02:00"
+      "updated_at": "2026-09-19T08:05:24.954150+02:00"
     },
     {
       "task_id": "e6e382a2-4343-58f9-999f-e4a2fad0ad52",
@@ -11809,7 +11809,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.421581+02:00"
+      "updated_at": "2026-09-19T08:05:25.030445+02:00"
     },
     {
       "task_id": "37ba8ea3-35bd-5b44-9b7e-c033402f8a44",
@@ -11843,7 +11843,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.421301+02:00"
+      "updated_at": "2026-09-19T08:05:25.030135+02:00"
     },
     {
       "task_id": "177acbf5-a056-58fa-857f-1e884d358761",
@@ -11877,7 +11877,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.347503+02:00"
+      "updated_at": "2026-09-19T08:05:24.949425+02:00"
     },
     {
       "task_id": "6e3d01e8-91c7-5b16-85ae-30b632040ee9",
@@ -11911,7 +11911,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.420678+02:00"
+      "updated_at": "2026-09-19T08:05:25.029540+02:00"
     },
     {
       "task_id": "d22e80ae-1308-58fe-a85e-da74fadca20d",
@@ -11945,7 +11945,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.352514+02:00"
+      "updated_at": "2026-09-19T08:05:24.954289+02:00"
     },
     {
       "task_id": "b36cf1f1-445f-5f22-9831-555083d272d9",
@@ -11979,7 +11979,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.347987+02:00"
+      "updated_at": "2026-09-19T08:05:24.949882+02:00"
     },
     {
       "task_id": "b0876881-effe-556a-9e6e-eed0841e117a",
@@ -12013,7 +12013,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.356638+02:00"
+      "updated_at": "2026-09-19T08:05:24.958382+02:00"
     },
     {
       "task_id": "51af7f1f-323b-5835-a67e-1e1fabe99adc",
@@ -12047,7 +12047,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.356778+02:00"
+      "updated_at": "2026-09-19T08:05:24.958503+02:00"
     },
     {
       "task_id": "b061f57b-b9bd-53ed-8bc2-fa8cf7ed7b65",
@@ -12081,7 +12081,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.370579+02:00"
+      "updated_at": "2026-09-19T08:05:24.972307+02:00"
     },
     {
       "task_id": "a59d510d-1969-528e-a52a-911fc06b3baf",
@@ -12115,7 +12115,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.362479+02:00"
+      "updated_at": "2026-09-19T08:05:24.964132+02:00"
     },
     {
       "task_id": "3ebaab32-14e8-5016-8263-fd7821c9c3a6",
@@ -12149,7 +12149,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.363199+02:00"
+      "updated_at": "2026-09-19T08:05:24.964860+02:00"
     },
     {
       "task_id": "7bf0b10d-d3c6-5c58-baa0-475e9f468e44",
@@ -12183,7 +12183,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.394313+02:00"
+      "updated_at": "2026-09-19T08:05:25.003065+02:00"
     },
     {
       "task_id": "392fa701-9c03-5677-bfb0-4ea30668c3c3",
@@ -12217,7 +12217,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.356894+02:00"
+      "updated_at": "2026-09-19T08:05:24.958621+02:00"
     },
     {
       "task_id": "8c45967d-23df-5396-bc2c-9c4048ea8ecd",
@@ -12251,7 +12251,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.421707+02:00"
+      "updated_at": "2026-09-19T08:05:25.030560+02:00"
     },
     {
       "task_id": "dea55153-bd10-5e7f-9dfb-219394898e09",
@@ -12285,7 +12285,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.421828+02:00"
+      "updated_at": "2026-09-19T08:05:25.030672+02:00"
     },
     {
       "task_id": "24563fce-a5c8-541a-b728-c98efb6643e9",
@@ -12319,7 +12319,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.357011+02:00"
+      "updated_at": "2026-09-19T08:05:24.958735+02:00"
     },
     {
       "task_id": "0a8e2e81-0636-5372-98d3-0c1ab6fb9dcb",
@@ -12353,7 +12353,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.363428+02:00"
+      "updated_at": "2026-09-19T08:05:24.965099+02:00"
     },
     {
       "task_id": "b049970e-a9ed-5f17-9821-575c20ae6998",
@@ -12387,7 +12387,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.422199+02:00"
+      "updated_at": "2026-09-19T08:05:25.031020+02:00"
     },
     {
       "task_id": "bb73194e-75cb-5171-9940-9c590b992073",
@@ -12421,7 +12421,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.425875+02:00"
+      "updated_at": "2026-09-19T08:05:25.034724+02:00"
     },
     {
       "task_id": "a8b124dd-d738-5c55-b52a-0ac0628105a1",
@@ -12455,7 +12455,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.366098+02:00"
+      "updated_at": "2026-09-19T08:05:24.967747+02:00"
     },
     {
       "task_id": "e800d05c-e612-59be-be89-d23539391083",
@@ -12489,7 +12489,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.357598+02:00"
+      "updated_at": "2026-09-19T08:05:24.959336+02:00"
     },
     {
       "task_id": "bf4b8119-b536-5afa-8235-feb4e814a962",
@@ -12523,7 +12523,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.363542+02:00"
+      "updated_at": "2026-09-19T08:05:24.965235+02:00"
     },
     {
       "task_id": "22028fbe-9259-596b-8867-6f4a523ba5ad",
@@ -12557,7 +12557,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.357131+02:00"
+      "updated_at": "2026-09-19T08:05:24.958849+02:00"
     },
     {
       "task_id": "006dc823-e515-5722-90db-efbe3ea12756",
@@ -12591,7 +12591,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.357483+02:00"
+      "updated_at": "2026-09-19T08:05:24.959213+02:00"
     },
     {
       "task_id": "86aecfec-0876-5bf4-9d1b-2d67f339a78d",
@@ -12625,7 +12625,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.357362+02:00"
+      "updated_at": "2026-09-19T08:05:24.959075+02:00"
     },
     {
       "task_id": "0c751ee6-155c-5f91-ba04-a6438d41263a",
@@ -12659,7 +12659,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.363657+02:00"
+      "updated_at": "2026-09-19T08:05:24.965362+02:00"
     },
     {
       "task_id": "d2bb727a-a0ca-59b2-8b9b-fc85b6eabd10",
@@ -12693,7 +12693,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.357248+02:00"
+      "updated_at": "2026-09-19T08:05:24.958962+02:00"
     },
     {
       "task_id": "f32f0e8b-1fbe-5ca3-9549-3ec593c9998d",
@@ -12727,7 +12727,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.363315+02:00"
+      "updated_at": "2026-09-19T08:05:24.964974+02:00"
     },
     {
       "task_id": "deeda508-cb45-550c-99b4-699bed2aa2a4",
@@ -12761,7 +12761,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.366675+02:00"
+      "updated_at": "2026-09-19T08:05:24.968355+02:00"
     },
     {
       "task_id": "0d230dc0-b79d-543a-a2fb-e5a1558be9f6",
@@ -12795,7 +12795,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.391770+02:00"
+      "updated_at": "2026-09-19T08:05:24.998450+02:00"
     },
     {
       "task_id": "c0f014d1-e0b1-5d93-b24c-de7455abcaf4",
@@ -12829,7 +12829,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.365096+02:00"
+      "updated_at": "2026-09-19T08:05:24.966755+02:00"
     },
     {
       "task_id": "2699b5a0-7126-5450-ac88-843d0106b59b",
@@ -12863,7 +12863,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.354429+02:00"
+      "updated_at": "2026-09-19T08:05:24.956161+02:00"
     },
     {
       "task_id": "c05669ce-6f82-5357-86b6-7648554cd1d7",
@@ -12897,7 +12897,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.357736+02:00"
+      "updated_at": "2026-09-19T08:05:24.959448+02:00"
     },
     {
       "task_id": "836112ff-f491-5747-be56-97d5b4b951bb",
@@ -12931,7 +12931,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.388873+02:00"
+      "updated_at": "2026-09-19T08:05:24.992299+02:00"
     },
     {
       "task_id": "799c601b-fa54-5075-a922-d7f29b408217",
@@ -12965,7 +12965,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.364986+02:00"
+      "updated_at": "2026-09-19T08:05:24.966645+02:00"
     },
     {
       "task_id": "f2ed9c08-ea9c-54a9-a16c-7a694bd34e9d",
@@ -12999,7 +12999,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.387800+02:00"
+      "updated_at": "2026-09-19T08:05:24.990078+02:00"
     },
     {
       "task_id": "5c59a6da-09db-57ec-b75d-e05bc87ec37b",
@@ -13033,7 +13033,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.372172+02:00"
+      "updated_at": "2026-09-19T08:05:24.973907+02:00"
     },
     {
       "task_id": "cd6524b0-ad56-51e1-867b-4ae90310307a",
@@ -13067,7 +13067,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.385062+02:00"
+      "updated_at": "2026-09-19T08:05:24.986898+02:00"
     },
     {
       "task_id": "1dbce3f0-33c4-50a4-a284-96534a2ec1b6",
@@ -13101,7 +13101,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.358315+02:00"
+      "updated_at": "2026-09-19T08:05:24.960013+02:00"
     },
     {
       "task_id": "cdd2eace-a182-5900-8961-a85ea997ed51",
@@ -13135,7 +13135,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.371949+02:00"
+      "updated_at": "2026-09-19T08:05:24.973674+02:00"
     },
     {
       "task_id": "154506dd-6cfd-5a04-a3b4-3e9907e3d425",
@@ -13169,7 +13169,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.358203+02:00"
+      "updated_at": "2026-09-19T08:05:24.959904+02:00"
     },
     {
       "task_id": "da8718f9-0cab-5fa4-ab31-e63edcbbf643",
@@ -13203,7 +13203,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.365206+02:00"
+      "updated_at": "2026-09-19T08:05:24.966864+02:00"
     },
     {
       "task_id": "dc4207d5-eb7b-5a82-bd18-a9e13e431265",
@@ -13237,7 +13237,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.388032+02:00"
+      "updated_at": "2026-09-19T08:05:24.990592+02:00"
     },
     {
       "task_id": "eed529fb-da52-5b50-89e7-b47041c3239a",
@@ -13271,7 +13271,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.422079+02:00"
+      "updated_at": "2026-09-19T08:05:25.030904+02:00"
     },
     {
       "task_id": "8af5e190-d938-5000-8f73-446f6d5e9aeb",
@@ -13305,7 +13305,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.391888+02:00"
+      "updated_at": "2026-09-19T08:05:24.998735+02:00"
     },
     {
       "task_id": "dd9ddd7f-987f-5dbb-94e5-99be507a37ba",
@@ -13339,7 +13339,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.387913+02:00"
+      "updated_at": "2026-09-19T08:05:24.990350+02:00"
     },
     {
       "task_id": "fd7631ee-0423-546e-be0b-4941c2eafb9a",
@@ -13373,7 +13373,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.383580+02:00"
+      "updated_at": "2026-09-19T08:05:24.985429+02:00"
     },
     {
       "task_id": "aa3af08c-8be6-5d7a-993c-00695d5a7ea6",
@@ -13407,7 +13407,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.400683+02:00"
+      "updated_at": "2026-09-19T08:05:25.009540+02:00"
     },
     {
       "task_id": "ad1891bb-38b2-52d5-a6ce-a21099653a06",
@@ -13441,7 +13441,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.395357+02:00"
+      "updated_at": "2026-09-19T08:05:25.004234+02:00"
     },
     {
       "task_id": "d047e03e-d511-5527-9f31-564fa6561105",
@@ -13475,7 +13475,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.372959+02:00"
+      "updated_at": "2026-09-19T08:05:24.974706+02:00"
     },
     {
       "task_id": "7a80a3b5-04e9-5757-93c4-6508a1a55277",
@@ -13509,7 +13509,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.369843+02:00"
+      "updated_at": "2026-09-19T08:05:24.971534+02:00"
     },
     {
       "task_id": "a47ba153-6190-53ae-817d-1dff52e17a49",
@@ -13543,7 +13543,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.385171+02:00"
+      "updated_at": "2026-09-19T08:05:24.987007+02:00"
     },
     {
       "task_id": "1277bd78-004a-5308-8289-868ad94f59dd",
@@ -13577,7 +13577,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.384405+02:00"
+      "updated_at": "2026-09-19T08:05:24.986262+02:00"
     },
     {
       "task_id": "626a55c4-66e4-5d04-8bef-aef725b8660f",
@@ -13611,7 +13611,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.358538+02:00"
+      "updated_at": "2026-09-19T08:05:24.960250+02:00"
     },
     {
       "task_id": "0f884b96-ba36-5b18-80b7-904b972aa40a",
@@ -13645,7 +13645,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.365316+02:00"
+      "updated_at": "2026-09-19T08:05:24.966973+02:00"
     },
     {
       "task_id": "780580a8-2642-5abf-bd91-439a9c89cc01",
@@ -13679,7 +13679,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.385287+02:00"
+      "updated_at": "2026-09-19T08:05:24.987116+02:00"
     },
     {
       "task_id": "5c43e4d2-4d74-5323-b79c-f2500dbbc209",
@@ -13713,7 +13713,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.358648+02:00"
+      "updated_at": "2026-09-19T08:05:24.960364+02:00"
     },
     {
       "task_id": "b74e72db-0034-5556-9ff8-07bc8f91a340",
@@ -13747,7 +13747,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.358427+02:00"
+      "updated_at": "2026-09-19T08:05:24.960122+02:00"
     },
     {
       "task_id": "d7858a83-fdf2-5456-bfd3-1378aa2cecd4",
@@ -13781,7 +13781,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.388984+02:00"
+      "updated_at": "2026-09-19T08:05:24.992516+02:00"
     },
     {
       "task_id": "e246275d-92d8-5145-b754-893de4ab10d9",
@@ -13815,7 +13815,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.394723+02:00"
+      "updated_at": "2026-09-19T08:05:25.003528+02:00"
     },
     {
       "task_id": "de2acf01-22a3-5f0e-9455-3e13c46a2e54",
@@ -13849,7 +13849,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.360425+02:00"
+      "updated_at": "2026-09-19T08:05:24.962086+02:00"
     },
     {
       "task_id": "53af1b6e-8170-556e-b960-41e96fbef4a4",
@@ -13883,7 +13883,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.423037+02:00"
+      "updated_at": "2026-09-19T08:05:25.031851+02:00"
     },
     {
       "task_id": "26cc2c14-7c11-5a96-879c-990d68164dff",
@@ -13917,7 +13917,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.394594+02:00"
+      "updated_at": "2026-09-19T08:05:25.003413+02:00"
     },
     {
       "task_id": "7f00b00b-af95-5d59-8a75-49e03cbf7b08",
@@ -13951,7 +13951,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.389638+02:00"
+      "updated_at": "2026-09-19T08:05:24.993872+02:00"
     },
     {
       "task_id": "1d65b71e-7536-5337-8b82-12672f5bd9ee",
@@ -13985,7 +13985,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.423146+02:00"
+      "updated_at": "2026-09-19T08:05:25.031967+02:00"
     },
     {
       "task_id": "da7b232d-10a9-54d5-9a2b-431ba6256be0",
@@ -14019,7 +14019,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.423254+02:00"
+      "updated_at": "2026-09-19T08:05:25.032078+02:00"
     },
     {
       "task_id": "e8f3b809-935b-5373-a194-95d885095a05",
@@ -14053,7 +14053,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.424703+02:00"
+      "updated_at": "2026-09-19T08:05:25.033546+02:00"
     },
     {
       "task_id": "65338871-2df4-5f8b-b1f1-51d681cad2cf",
@@ -14087,7 +14087,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.372502+02:00"
+      "updated_at": "2026-09-19T08:05:24.974258+02:00"
     },
     {
       "task_id": "9fbcad38-6bf3-57f8-842c-46d284f45d76",
@@ -14121,7 +14121,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.372735+02:00"
+      "updated_at": "2026-09-19T08:05:24.974483+02:00"
     },
     {
       "task_id": "682ed277-d487-5962-91b7-40e6d36a494d",
@@ -14155,7 +14155,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.372849+02:00"
+      "updated_at": "2026-09-19T08:05:24.974595+02:00"
     },
     {
       "task_id": "478a8563-428d-5e9e-9637-6774781c5f5e",
@@ -14189,7 +14189,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.372392+02:00"
+      "updated_at": "2026-09-19T08:05:24.974128+02:00"
     },
     {
       "task_id": "6092d83f-e77c-523e-9587-aa63dfa4afd4",
@@ -14223,7 +14223,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.372611+02:00"
+      "updated_at": "2026-09-19T08:05:24.974369+02:00"
     },
     {
       "task_id": "d086929a-8d32-55ef-a506-a64e560474f9",
@@ -14257,7 +14257,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.360650+02:00"
+      "updated_at": "2026-09-19T08:05:24.962338+02:00"
     },
     {
       "task_id": "1f24532a-6e33-5bf4-8252-330c22e4f230",
@@ -14291,7 +14291,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.360537+02:00"
+      "updated_at": "2026-09-19T08:05:24.962215+02:00"
     },
     {
       "task_id": "97d06b69-d6fc-5958-91a0-5e32a2205948",
@@ -14325,7 +14325,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.366380+02:00"
+      "updated_at": "2026-09-19T08:05:24.968038+02:00"
     },
     {
       "task_id": "8f3ad357-f1e5-5528-b3de-f27b245a9150",
@@ -14359,7 +14359,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.360786+02:00"
+      "updated_at": "2026-09-19T08:05:24.962450+02:00"
     },
     {
       "task_id": "53962f0e-aa6a-575e-a154-538690edcd42",
@@ -14393,7 +14393,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.367805+02:00"
+      "updated_at": "2026-09-19T08:05:24.969476+02:00"
     },
     {
       "task_id": "5e5e4380-6d5b-5d21-a33e-3b69cbafa752",
@@ -14427,7 +14427,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.400405+02:00"
+      "updated_at": "2026-09-19T08:05:25.009253+02:00"
     },
     {
       "task_id": "3a8e61e4-5a8d-54e5-8187-339111c7b664",
@@ -14461,7 +14461,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.368136+02:00"
+      "updated_at": "2026-09-19T08:05:24.969816+02:00"
     },
     {
       "task_id": "e76759c1-1b65-58bc-83e5-52c481692984",
@@ -14495,7 +14495,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.367915+02:00"
+      "updated_at": "2026-09-19T08:05:24.969591+02:00"
     },
     {
       "task_id": "4b0a11ea-270a-5128-b453-e66706a920fd",
@@ -14529,7 +14529,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.368023+02:00"
+      "updated_at": "2026-09-19T08:05:24.969701+02:00"
     },
     {
       "task_id": "d7d840bc-e04f-5690-892d-bf805636690f",
@@ -14563,7 +14563,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.364753+02:00"
+      "updated_at": "2026-09-19T08:05:24.966415+02:00"
     },
     {
       "task_id": "c8d2d391-d2e6-572f-9da2-57d139b1f020",
@@ -14597,7 +14597,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.364610+02:00"
+      "updated_at": "2026-09-19T08:05:24.966301+02:00"
     },
     {
       "task_id": "0ba09ad6-7020-599d-aec4-51fc0c4bca37",
@@ -14631,7 +14631,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.372063+02:00"
+      "updated_at": "2026-09-19T08:05:24.973794+02:00"
     },
     {
       "task_id": "ce61834e-7ba6-5982-a55f-2a359f37dbfe",
@@ -14665,7 +14665,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.363792+02:00"
+      "updated_at": "2026-09-19T08:05:24.965477+02:00"
     },
     {
       "task_id": "18e65d72-8cee-5277-87dd-186fa8e9ba63",
@@ -14699,7 +14699,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.368248+02:00"
+      "updated_at": "2026-09-19T08:05:24.969933+02:00"
     },
     {
       "task_id": "d72f0226-bfbb-52d5-9db5-c8083b3bdd15",
@@ -14733,7 +14733,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.364260+02:00"
+      "updated_at": "2026-09-19T08:05:24.965932+02:00"
     },
     {
       "task_id": "08be3578-6644-5f8d-abcf-e5423e61dc50",
@@ -14767,7 +14767,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.364495+02:00"
+      "updated_at": "2026-09-19T08:05:24.966164+02:00"
     },
     {
       "task_id": "49b26e3c-2ecd-5923-b9cb-506f786dfced",
@@ -14801,7 +14801,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.364381+02:00"
+      "updated_at": "2026-09-19T08:05:24.966049+02:00"
     },
     {
       "task_id": "8d77f678-04c1-515d-8c12-a10c5adce582",
@@ -14835,7 +14835,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.363907+02:00"
+      "updated_at": "2026-09-19T08:05:24.965591+02:00"
     },
     {
       "task_id": "a36a5aca-29be-54a0-a8af-bda3d8b1e675",
@@ -14869,7 +14869,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.373078+02:00"
+      "updated_at": "2026-09-19T08:05:24.974830+02:00"
     },
     {
       "task_id": "aee037db-962f-55af-a6d8-8cd4370b340e",
@@ -14903,7 +14903,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.366812+02:00"
+      "updated_at": "2026-09-19T08:05:24.968473+02:00"
     },
     {
       "task_id": "8331fbce-10f6-5053-8d00-95148c932c32",
@@ -14937,7 +14937,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.366929+02:00"
+      "updated_at": "2026-09-19T08:05:24.968592+02:00"
     },
     {
       "task_id": "ccc577a1-740e-50d2-9312-63cc93b84c44",
@@ -14971,7 +14971,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.364023+02:00"
+      "updated_at": "2026-09-19T08:05:24.965704+02:00"
     },
     {
       "task_id": "d868e436-cc0c-5a35-8114-a76d3922b573",
@@ -15005,7 +15005,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.364143+02:00"
+      "updated_at": "2026-09-19T08:05:24.965819+02:00"
     },
     {
       "task_id": "2d0d706a-81d2-58ac-b011-380e9587cce0",
@@ -15039,7 +15039,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.422313+02:00"
+      "updated_at": "2026-09-19T08:05:25.031136+02:00"
     },
     {
       "task_id": "d9283fb3-32be-59dc-81aa-dea4edaa1257",
@@ -15073,7 +15073,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.422916+02:00"
+      "updated_at": "2026-09-19T08:05:25.031735+02:00"
     },
     {
       "task_id": "8eafd0d9-0598-5e92-8590-f05cca2796dc",
@@ -15107,7 +15107,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.425398+02:00"
+      "updated_at": "2026-09-19T08:05:25.034259+02:00"
     },
     {
       "task_id": "f9267cd5-5ed3-5e42-8502-1681f838e308",
@@ -15141,7 +15141,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.355826+02:00"
+      "updated_at": "2026-09-19T08:05:24.957544+02:00"
     },
     {
       "task_id": "bbbb01dc-3dd0-51f8-8cc2-4f43331cbffd",
@@ -15175,7 +15175,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.401513+02:00"
+      "updated_at": "2026-09-19T08:05:25.010388+02:00"
     },
     {
       "task_id": "da0d3603-0df7-57ee-b197-8322e2a1bb05",
@@ -15209,7 +15209,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.401625+02:00"
+      "updated_at": "2026-09-19T08:05:25.010506+02:00"
     },
     {
       "task_id": "40a329a6-990a-5592-9a43-c06d7bef6b52",
@@ -15243,7 +15243,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.401395+02:00"
+      "updated_at": "2026-09-19T08:05:25.010258+02:00"
     },
     {
       "task_id": "7d335245-8cae-5c2a-8b93-b7618de3a6a3",
@@ -15277,7 +15277,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.370469+02:00"
+      "updated_at": "2026-09-19T08:05:24.972167+02:00"
     },
     {
       "task_id": "0bd85653-397e-5177-bdbf-aca9293d2966",
@@ -15311,7 +15311,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.361482+02:00"
+      "updated_at": "2026-09-19T08:05:24.963143+02:00"
     },
     {
       "task_id": "13b2c110-aa80-5d4a-8ca5-5b0930dc55ae",
@@ -15345,7 +15345,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.383111+02:00"
+      "updated_at": "2026-09-19T08:05:24.984927+02:00"
     },
     {
       "task_id": "932f755b-fc47-5e7a-9f3f-6164e3ae90b7",
@@ -15379,7 +15379,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.362966+02:00"
+      "updated_at": "2026-09-19T08:05:24.964628+02:00"
     },
     {
       "task_id": "67809ba9-363f-53c1-8ed6-3f0b40b0ac8a",
@@ -15413,7 +15413,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.401283+02:00"
+      "updated_at": "2026-09-19T08:05:25.010109+02:00"
     },
     {
       "task_id": "e9691819-fbc9-5f3e-b231-a5254db6d701",
@@ -15447,7 +15447,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.361140+02:00"
+      "updated_at": "2026-09-19T08:05:24.962797+02:00"
     },
     {
       "task_id": "6d0d5e8b-3919-5035-b1e2-7a0c4c115768",
@@ -15481,7 +15481,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.367334+02:00"
+      "updated_at": "2026-09-19T08:05:24.968991+02:00"
     },
     {
       "task_id": "4f7630ab-4912-5edc-a3bd-08642d51763a",
@@ -15515,7 +15515,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.401758+02:00"
+      "updated_at": "2026-09-19T08:05:25.010617+02:00"
     },
     {
       "task_id": "47ce2ff8-8ac1-54f1-8f68-6851f31bd439",
@@ -15549,7 +15549,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.361026+02:00"
+      "updated_at": "2026-09-19T08:05:24.962679+02:00"
     },
     {
       "task_id": "bc5c9633-1ff6-5156-88da-9c043db01a79",
@@ -15583,7 +15583,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.369540+02:00"
+      "updated_at": "2026-09-19T08:05:24.971239+02:00"
     },
     {
       "task_id": "ee3c9e20-6ae5-5583-82df-b8cab7ea5ac2",
@@ -15617,7 +15617,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.367215+02:00"
+      "updated_at": "2026-09-19T08:05:24.968878+02:00"
     },
     {
       "task_id": "2ad35915-f9d9-5e68-b271-1b6d6d07a704",
@@ -15651,7 +15651,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.380864+02:00"
+      "updated_at": "2026-09-19T08:05:24.982695+02:00"
     },
     {
       "task_id": "609d7920-c993-5230-8cdf-73555ea0fadb",
@@ -15685,7 +15685,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.361368+02:00"
+      "updated_at": "2026-09-19T08:05:24.963031+02:00"
     },
     {
       "task_id": "4567a105-09f4-5e99-ac61-a1172de3af90",
@@ -15719,7 +15719,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.360904+02:00"
+      "updated_at": "2026-09-19T08:05:24.962565+02:00"
     },
     {
       "task_id": "af248267-c807-59d6-861a-7475207ca27c",
@@ -15753,7 +15753,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.401169+02:00"
+      "updated_at": "2026-09-19T08:05:25.009991+02:00"
     },
     {
       "task_id": "7847e438-286d-53a3-b891-8e9b2b4c8ece",
@@ -15787,7 +15787,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.361597+02:00"
+      "updated_at": "2026-09-19T08:05:24.963279+02:00"
     },
     {
       "task_id": "065d756a-59d1-50fa-ac51-130262238364",
@@ -15821,7 +15821,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.369426+02:00"
+      "updated_at": "2026-09-19T08:05:24.971107+02:00"
     },
     {
       "task_id": "3face06d-4fff-5a80-9238-3cbfc7df46bd",
@@ -15855,7 +15855,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.363081+02:00"
+      "updated_at": "2026-09-19T08:05:24.964743+02:00"
     },
     {
       "task_id": "9bebc730-a3d5-5861-9aa7-6e96287f2bd6",
@@ -15889,7 +15889,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.361254+02:00"
+      "updated_at": "2026-09-19T08:05:24.962914+02:00"
     },
     {
       "task_id": "10faa82d-7b53-5c1c-a2d2-9b608bcf4063",
@@ -15923,7 +15923,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.366493+02:00"
+      "updated_at": "2026-09-19T08:05:24.968149+02:00"
     },
     {
       "task_id": "67b87181-6758-5be8-8a44-af945d8dee9b",
@@ -15957,7 +15957,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.361848+02:00"
+      "updated_at": "2026-09-19T08:05:24.963505+02:00"
     },
     {
       "task_id": "c32a97ab-9629-5751-a287-332735f1d696",
@@ -15991,7 +15991,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.403288+02:00"
+      "updated_at": "2026-09-19T08:05:25.012131+02:00"
     },
     {
       "task_id": "0f52e5c1-7e4e-5338-b9a4-95f6e1bc42f9",
@@ -16025,7 +16025,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.361726+02:00"
+      "updated_at": "2026-09-19T08:05:24.963391+02:00"
     },
     {
       "task_id": "67032417-ad44-5085-b552-6f0294a503e8",
@@ -16059,7 +16059,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.361960+02:00"
+      "updated_at": "2026-09-19T08:05:24.963614+02:00"
     },
     {
       "task_id": "e7414be2-e9c7-57fa-98ef-ffed2323db00",
@@ -16093,7 +16093,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.362070+02:00"
+      "updated_at": "2026-09-19T08:05:24.963723+02:00"
     },
     {
       "task_id": "8a958b74-d9ee-565d-aa50-75562f7e92e7",
@@ -16127,7 +16127,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.365806+02:00"
+      "updated_at": "2026-09-19T08:05:24.967464+02:00"
     },
     {
       "task_id": "f12ff1a8-4ab8-5c42-a951-0ffc148de429",
@@ -16161,7 +16161,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.422428+02:00"
+      "updated_at": "2026-09-19T08:05:25.031271+02:00"
     },
     {
       "task_id": "7d186711-3750-5d6f-9e29-c8a23f435a86",
@@ -16195,7 +16195,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.381261+02:00"
+      "updated_at": "2026-09-19T08:05:24.983096+02:00"
     },
     {
       "task_id": "d0365272-9fa4-58b3-9bd9-070bdb680046",
@@ -16229,7 +16229,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.421964+02:00"
+      "updated_at": "2026-09-19T08:05:25.030788+02:00"
     },
     {
       "task_id": "2e2f98bb-4760-59e7-a0ac-05e71ea9e03a",
@@ -16263,7 +16263,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.364874+02:00"
+      "updated_at": "2026-09-19T08:05:24.966532+02:00"
     },
     {
       "task_id": "d19562f0-1f8b-5a1e-a0b8-0fd0b22008c8",
@@ -16297,7 +16297,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.372283+02:00"
+      "updated_at": "2026-09-19T08:05:24.974019+02:00"
     },
     {
       "task_id": "dabf2c1e-63ef-5682-93d9-223fcef48c66",
@@ -16331,7 +16331,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.362192+02:00"
+      "updated_at": "2026-09-19T08:05:24.963835+02:00"
     },
     {
       "task_id": "cab56786-e779-5346-8071-a802f5d78d1d",
@@ -16365,7 +16365,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.380978+02:00"
+      "updated_at": "2026-09-19T08:05:24.982807+02:00"
     },
     {
       "task_id": "23657444-cc74-5966-b563-632a27758db4",
@@ -16399,7 +16399,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.382631+02:00"
+      "updated_at": "2026-09-19T08:05:24.984466+02:00"
     },
     {
       "task_id": "af26d7bd-495b-5c45-8df3-2ae80df2c986",
@@ -16433,7 +16433,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.403402+02:00"
+      "updated_at": "2026-09-19T08:05:25.012266+02:00"
     },
     {
       "task_id": "6b2e860f-347a-5a71-9809-c411778dcd60",
@@ -16467,7 +16467,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.403704+02:00"
+      "updated_at": "2026-09-19T08:05:25.012559+02:00"
     },
     {
       "task_id": "b5367bb1-24a9-54d6-a36d-94c4ce90ddd0",
@@ -16501,7 +16501,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.428995+02:00"
+      "updated_at": "2026-09-19T08:05:25.037861+02:00"
     },
     {
       "task_id": "022baf27-1f80-53be-9bc7-fc95a3e71654",
@@ -16535,7 +16535,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.406210+02:00"
+      "updated_at": "2026-09-19T08:05:25.015034+02:00"
     },
     {
       "task_id": "c864f845-56cc-52a2-94e0-4a23c13c5377",
@@ -16569,7 +16569,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.406097+02:00"
+      "updated_at": "2026-09-19T08:05:25.014921+02:00"
     },
     {
       "task_id": "fbda48c8-2e17-587b-8eb6-391fb6743fb6",
@@ -16603,7 +16603,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.405809+02:00"
+      "updated_at": "2026-09-19T08:05:25.014641+02:00"
     },
     {
       "task_id": "6cb64652-49b2-5773-8ac3-1ffec3abf9c3",
@@ -16637,7 +16637,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.407391+02:00"
+      "updated_at": "2026-09-19T08:05:25.016235+02:00"
     },
     {
       "task_id": "d31176c7-a965-58b4-abf9-9e41ae93c276",
@@ -16671,7 +16671,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.335216+02:00"
+      "updated_at": "2026-09-19T08:05:24.937698+02:00"
     },
     {
       "task_id": "bf983b8c-f4f2-5930-8e1e-c6ed1fb27f37",
@@ -16705,7 +16705,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.335005+02:00"
+      "updated_at": "2026-09-19T08:05:24.937492+02:00"
     },
     {
       "task_id": "6f122b40-aa41-5fab-beb7-b2d69704c302",
@@ -16739,7 +16739,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.408854+02:00"
+      "updated_at": "2026-09-19T08:05:25.017681+02:00"
     },
     {
       "task_id": "04f2217e-b90c-5444-ab6e-9a3252a1ceb9",
@@ -16773,7 +16773,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.335406+02:00"
+      "updated_at": "2026-09-19T08:05:24.937887+02:00"
     },
     {
       "task_id": "61c9d8b5-aa06-5599-bd91-c691f978c484",
@@ -16807,7 +16807,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.335591+02:00"
+      "updated_at": "2026-09-19T08:05:24.938067+02:00"
     },
     {
       "task_id": "4cef441c-d080-53aa-8721-2de751d0ec51",
@@ -16841,7 +16841,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.409033+02:00"
+      "updated_at": "2026-09-19T08:05:25.017857+02:00"
     },
     {
       "task_id": "1a58fc60-c987-5291-b375-9eeeb8b8cd27",
@@ -16875,7 +16875,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.409220+02:00"
+      "updated_at": "2026-09-19T08:05:25.018043+02:00"
     },
     {
       "task_id": "be1f7382-74fc-567f-9ca4-82e9a17c11b9",
@@ -16909,7 +16909,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.409403+02:00"
+      "updated_at": "2026-09-19T08:05:25.018243+02:00"
     },
     {
       "task_id": "c0328047-706b-52c1-ab22-cb756b0b3f1f",
@@ -16943,7 +16943,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.336250+02:00"
+      "updated_at": "2026-09-19T08:05:24.938416+02:00"
     },
     {
       "task_id": "bcba04e0-2745-5613-a50a-c32efbe74313",
@@ -16977,7 +16977,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.409574+02:00"
+      "updated_at": "2026-09-19T08:05:25.018421+02:00"
     },
     {
       "task_id": "13c48d81-45a8-55e2-9d14-994f532c7a74",
@@ -17011,7 +17011,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.409766+02:00"
+      "updated_at": "2026-09-19T08:05:25.018603+02:00"
     },
     {
       "task_id": "d2882ebf-48d4-5395-aadf-dd7d7734099c",
@@ -17045,7 +17045,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.336431+02:00"
+      "updated_at": "2026-09-19T08:05:24.938598+02:00"
     },
     {
       "task_id": "b2ce1d16-c9dd-59e0-b91e-8d6a9c8d683e",
@@ -17079,7 +17079,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.336810+02:00"
+      "updated_at": "2026-09-19T08:05:24.938950+02:00"
     },
     {
       "task_id": "ac0b6eb5-9c76-5f9e-8086-92c5b288f4cb",
@@ -17113,7 +17113,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.336611+02:00"
+      "updated_at": "2026-09-19T08:05:24.938777+02:00"
     },
     {
       "task_id": "49f4c389-aa64-5e34-8ba2-e17bb25b5974",
@@ -17147,7 +17147,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.337000+02:00"
+      "updated_at": "2026-09-19T08:05:24.939129+02:00"
     },
     {
       "task_id": "3119c013-e11a-5a15-8972-0ea983b65b7d",
@@ -17181,7 +17181,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.410081+02:00"
+      "updated_at": "2026-09-19T08:05:25.018901+02:00"
     },
     {
       "task_id": "ac41beb6-de8f-5b4d-91b2-f4209c95e002",
@@ -17215,7 +17215,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.410247+02:00"
+      "updated_at": "2026-09-19T08:05:25.019066+02:00"
     },
     {
       "task_id": "1545275f-6205-5661-9dc0-439714a86006",
@@ -17249,7 +17249,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.410585+02:00"
+      "updated_at": "2026-09-19T08:05:25.019431+02:00"
     },
     {
       "task_id": "3af593cd-4e8f-5d77-8010-115bb3f951a5",
@@ -17283,7 +17283,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.410783+02:00"
+      "updated_at": "2026-09-19T08:05:25.019607+02:00"
     },
     {
       "task_id": "62933a0a-4460-5d7d-9c28-533b60daf142",
@@ -17317,7 +17317,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.410415+02:00"
+      "updated_at": "2026-09-19T08:05:25.019256+02:00"
     },
     {
       "task_id": "93375e05-6eea-57fc-b7ea-acaf79bb16a4",
@@ -17351,7 +17351,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.337308+02:00"
+      "updated_at": "2026-09-19T08:05:24.939462+02:00"
     },
     {
       "task_id": "21a18cdc-3dbe-5b42-8e46-22f3f7f729ca",
@@ -17385,7 +17385,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.337482+02:00"
+      "updated_at": "2026-09-19T08:05:24.939635+02:00"
     },
     {
       "task_id": "ac7747ed-2ed0-5ea2-9b73-beb96356f912",
@@ -17419,7 +17419,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.410965+02:00"
+      "updated_at": "2026-09-19T08:05:25.019779+02:00"
     },
     {
       "task_id": "2d157e37-1da8-5db5-8d55-fd65523f5a12",
@@ -17453,7 +17453,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.337659+02:00"
+      "updated_at": "2026-09-19T08:05:24.939809+02:00"
     },
     {
       "task_id": "15523c3a-09f5-5872-a45d-d7b4747d82d0",
@@ -17487,7 +17487,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.411142+02:00"
+      "updated_at": "2026-09-19T08:05:25.019954+02:00"
     },
     {
       "task_id": "4c35b524-26fb-53cb-914b-aaca78496207",
@@ -17521,7 +17521,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.338018+02:00"
+      "updated_at": "2026-09-19T08:05:24.940089+02:00"
     },
     {
       "task_id": "440716ba-8b5a-5ba1-9357-c3e1d6d5c03d",
@@ -17555,7 +17555,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.338261+02:00"
+      "updated_at": "2026-09-19T08:05:24.940281+02:00"
     },
     {
       "task_id": "af6fb20f-b020-547f-a57c-222ec8cb7167",
@@ -17589,7 +17589,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.338816+02:00"
+      "updated_at": "2026-09-19T08:05:24.940755+02:00"
     },
     {
       "task_id": "a9b8dca4-feec-57c5-a3dc-6b6a56743471",
@@ -17623,7 +17623,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.339660+02:00"
+      "updated_at": "2026-09-19T08:05:24.941614+02:00"
     },
     {
       "task_id": "91e3c878-a3ad-5615-af12-1e5c072acb02",
@@ -17657,7 +17657,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.339972+02:00"
+      "updated_at": "2026-09-19T08:05:24.941903+02:00"
     },
     {
       "task_id": "c4821524-5755-5ac4-b133-69610a4d920a",
@@ -17691,7 +17691,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.411319+02:00"
+      "updated_at": "2026-09-19T08:05:25.020140+02:00"
     },
     {
       "task_id": "84e2dc27-b21f-5ecb-9213-e5ecf1906ef9",
@@ -17725,7 +17725,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.411484+02:00"
+      "updated_at": "2026-09-19T08:05:25.020333+02:00"
     },
     {
       "task_id": "64a05f45-927e-56b7-90c6-466eab8a0fd5",
@@ -17759,7 +17759,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.340148+02:00"
+      "updated_at": "2026-09-19T08:05:24.942074+02:00"
     },
     {
       "task_id": "d3bdfcb5-bed4-5619-a78d-5708e163f239",
@@ -17793,7 +17793,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.411660+02:00"
+      "updated_at": "2026-09-19T08:05:25.020506+02:00"
     },
     {
       "task_id": "ab294044-f90a-5fa3-938e-03c0d7426d81",
@@ -17827,7 +17827,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.339190+02:00"
+      "updated_at": "2026-09-19T08:05:24.941106+02:00"
     },
     {
       "task_id": "aa817dc6-ece2-5d5d-a3e0-0b315907a068",
@@ -17861,7 +17861,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.340327+02:00"
+      "updated_at": "2026-09-19T08:05:24.942269+02:00"
     },
     {
       "task_id": "210eda37-5153-503a-9e54-ba97b78c6e30",
@@ -17895,7 +17895,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.340499+02:00"
+      "updated_at": "2026-09-19T08:05:24.942452+02:00"
     },
     {
       "task_id": "faffa14c-21fc-57a9-87e9-bf6464defcff",
@@ -17929,7 +17929,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.338621+02:00"
+      "updated_at": "2026-09-19T08:05:24.940583+02:00"
     },
     {
       "task_id": "10071fcc-ec73-5379-9753-f56f350f1080",
@@ -17963,7 +17963,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.339005+02:00"
+      "updated_at": "2026-09-19T08:05:24.940934+02:00"
     },
     {
       "task_id": "3a0a9535-7d7d-5ca0-a3b7-72757fc65beb",
@@ -17997,7 +17997,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.340673+02:00"
+      "updated_at": "2026-09-19T08:05:24.942626+02:00"
     },
     {
       "task_id": "395ffc13-9041-5bb2-a90b-f83673769c9f",
@@ -18031,7 +18031,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.412608+02:00"
+      "updated_at": "2026-09-19T08:05:25.021473+02:00"
     },
     {
       "task_id": "4735fb18-41d0-5ef1-8643-bca8072f1aad",
@@ -18065,7 +18065,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.340870+02:00"
+      "updated_at": "2026-09-19T08:05:24.942799+02:00"
     },
     {
       "task_id": "95f839c0-45ab-5d8e-b5e2-2cba8e72995f",
@@ -18099,7 +18099,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.412436+02:00"
+      "updated_at": "2026-09-19T08:05:25.021289+02:00"
     },
     {
       "task_id": "9c3b2cb4-e5c4-5d6a-b98b-d7842cebc424",
@@ -18133,7 +18133,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.412259+02:00"
+      "updated_at": "2026-09-19T08:05:25.021096+02:00"
     },
     {
       "task_id": "de14e19c-b50c-5db2-9bcb-423597262e98",
@@ -18167,7 +18167,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.411861+02:00"
+      "updated_at": "2026-09-19T08:05:25.020691+02:00"
     },
     {
       "task_id": "b7b052b0-583a-5966-8c01-ad8e15ff05b6",
@@ -18201,7 +18201,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.341057+02:00"
+      "updated_at": "2026-09-19T08:05:24.942976+02:00"
     },
     {
       "task_id": "e4669e07-ca3c-50b6-a6f4-3b08e19d9eac",
@@ -18235,7 +18235,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.413435+02:00"
+      "updated_at": "2026-09-19T08:05:25.022308+02:00"
     },
     {
       "task_id": "b1721380-26a9-5a75-8553-ea143a4fe7b8",
@@ -18269,7 +18269,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.413603+02:00"
+      "updated_at": "2026-09-19T08:05:25.022482+02:00"
     },
     {
       "task_id": "26da739e-4f06-5606-aee1-fc0dcc630304",
@@ -18303,7 +18303,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.341457+02:00"
+      "updated_at": "2026-09-19T08:05:24.943397+02:00"
     },
     {
       "task_id": "8e96b340-6dfd-5201-afba-a728901e8af7",
@@ -18337,7 +18337,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.412793+02:00"
+      "updated_at": "2026-09-19T08:05:25.021644+02:00"
     },
     {
       "task_id": "3d528252-5e3f-5838-8e9f-94ab42843fa9",
@@ -18371,7 +18371,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.342218+02:00"
+      "updated_at": "2026-09-19T08:05:24.944089+02:00"
     },
     {
       "task_id": "fd733f15-6de7-5951-b2c4-b186fdab8820",
@@ -18405,7 +18405,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.414890+02:00"
+      "updated_at": "2026-09-19T08:05:25.023754+02:00"
     },
     {
       "task_id": "f3849b0f-6897-5119-832d-cad0dac82918",
@@ -18439,7 +18439,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.416132+02:00"
+      "updated_at": "2026-09-19T08:05:25.024996+02:00"
     },
     {
       "task_id": "13ed8f1d-5274-5112-96a6-63c3f76f6878",
@@ -18473,7 +18473,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.413791+02:00"
+      "updated_at": "2026-09-19T08:05:25.022650+02:00"
     },
     {
       "task_id": "2d7d0674-3745-5951-b062-3c1e49afe607",
@@ -18507,7 +18507,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.415242+02:00"
+      "updated_at": "2026-09-19T08:05:25.024104+02:00"
     },
     {
       "task_id": "c972ff70-12a4-567c-ad6d-467c0358b738",
@@ -18541,7 +18541,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.415778+02:00"
+      "updated_at": "2026-09-19T08:05:25.024654+02:00"
     },
     {
       "task_id": "a2d5a746-1418-5a6a-8ca8-8c7d895ae97e",
@@ -18575,7 +18575,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.415591+02:00"
+      "updated_at": "2026-09-19T08:05:25.024483+02:00"
     },
     {
       "task_id": "4122101f-2539-5898-879b-e09719fbc335",
@@ -18609,7 +18609,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.342566+02:00"
+      "updated_at": "2026-09-19T08:05:24.944528+02:00"
     },
     {
       "task_id": "9a430a54-710e-50cb-bc57-5076ad61b94f",
@@ -18643,7 +18643,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.342395+02:00"
+      "updated_at": "2026-09-19T08:05:24.944335+02:00"
     },
     {
       "task_id": "54e9fb77-688f-5cd3-9f21-46264b738e0e",
@@ -18677,7 +18677,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.413970+02:00"
+      "updated_at": "2026-09-19T08:05:25.022826+02:00"
     },
     {
       "task_id": "8bc2dfa4-d6b5-57e8-a3f5-12d6bb6fcf6c",
@@ -18711,7 +18711,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.415068+02:00"
+      "updated_at": "2026-09-19T08:05:25.023935+02:00"
     },
     {
       "task_id": "49a7fb4f-7926-5356-986c-5f058fe62b4b",
@@ -18745,7 +18745,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.342044+02:00"
+      "updated_at": "2026-09-19T08:05:24.943913+02:00"
     },
     {
       "task_id": "c9f417e7-91b7-54bb-8c14-520be87e8624",
@@ -18779,7 +18779,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.413089+02:00"
+      "updated_at": "2026-09-19T08:05:25.021943+02:00"
     },
     {
       "task_id": "edf1e21c-33e3-515c-a57a-f69f0630b5df",
@@ -18813,7 +18813,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.414145+02:00"
+      "updated_at": "2026-09-19T08:05:25.023005+02:00"
     },
     {
       "task_id": "961cc8cd-5f6d-5318-950e-daf93e3bcdc2",
@@ -18847,7 +18847,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.415415+02:00"
+      "updated_at": "2026-09-19T08:05:25.024299+02:00"
     },
     {
       "task_id": "3dd9aa97-5bc7-5a70-babe-c5f704fb3204",
@@ -18881,7 +18881,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.415959+02:00"
+      "updated_at": "2026-09-19T08:05:25.024826+02:00"
     },
     {
       "task_id": "04567478-6a62-55e0-a3c3-771dd027546a",
@@ -18915,7 +18915,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.341628+02:00"
+      "updated_at": "2026-09-19T08:05:24.943567+02:00"
     },
     {
       "task_id": "391dbdc5-671f-5612-b4cb-3ce78bd3ed20",
@@ -18949,7 +18949,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.341847+02:00"
+      "updated_at": "2026-09-19T08:05:24.943739+02:00"
     },
     {
       "task_id": "4ab3cd7e-cb70-5126-b86a-3fc2f59a4717",
@@ -18983,7 +18983,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.414318+02:00"
+      "updated_at": "2026-09-19T08:05:25.023192+02:00"
     },
     {
       "task_id": "57648c84-7517-50eb-b938-cccef5982ac4",
@@ -19017,7 +19017,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.414488+02:00"
+      "updated_at": "2026-09-19T08:05:25.023369+02:00"
     },
     {
       "task_id": "adbae894-a127-5cba-b229-823e3e124062",
@@ -19051,7 +19051,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.413265+02:00"
+      "updated_at": "2026-09-19T08:05:25.022116+02:00"
     },
     {
       "task_id": "dd4dc938-3bc8-5e46-ba9a-3d4368e474c2",
@@ -19085,7 +19085,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.344884+02:00"
+      "updated_at": "2026-09-19T08:05:24.946827+02:00"
     },
     {
       "task_id": "d2e43fa5-0459-5700-b869-9af31a28f046",
@@ -19119,7 +19119,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.342891+02:00"
+      "updated_at": "2026-09-19T08:05:24.944830+02:00"
     },
     {
       "task_id": "decd0820-a27a-55df-ac97-3883a2023687",
@@ -19153,7 +19153,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.418903+02:00"
+      "updated_at": "2026-09-19T08:05:25.027754+02:00"
     },
     {
       "task_id": "2615d401-16cf-586e-a696-268427e6002c",
@@ -19187,7 +19187,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.416413+02:00"
+      "updated_at": "2026-09-19T08:05:25.025298+02:00"
     },
     {
       "task_id": "ba7fbe65-4900-501c-93c0-18e068ae5cee",
@@ -19221,7 +19221,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.417297+02:00"
+      "updated_at": "2026-09-19T08:05:25.026185+02:00"
     },
     {
       "task_id": "839fd738-82da-54b3-b3d5-fbc985e05414",
@@ -19255,7 +19255,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.419252+02:00"
+      "updated_at": "2026-09-19T08:05:25.028096+02:00"
     },
     {
       "task_id": "494ec710-d4d2-5ae1-b48b-ab2d82327908",
@@ -19289,7 +19289,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.344515+02:00"
+      "updated_at": "2026-09-19T08:05:24.946480+02:00"
     },
     {
       "task_id": "8b76c5a9-6bf8-507c-be65-f6b63c053625",
@@ -19323,7 +19323,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.420217+02:00"
+      "updated_at": "2026-09-19T08:05:25.029049+02:00"
     },
     {
       "task_id": "3a82dfc1-c5db-5f53-96c7-e864a5829cef",
@@ -19357,7 +19357,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.420399+02:00"
+      "updated_at": "2026-09-19T08:05:25.029252+02:00"
     },
     {
       "task_id": "c430b5af-b1b9-51dc-b1dd-9a7c3b560528",
@@ -19391,7 +19391,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.417659+02:00"
+      "updated_at": "2026-09-19T08:05:25.026537+02:00"
     },
     {
       "task_id": "fc7c2d18-5cd1-5d63-8606-8d1944d631e5",
@@ -19425,7 +19425,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.418057+02:00"
+      "updated_at": "2026-09-19T08:05:25.026891+02:00"
     },
     {
       "task_id": "0d51a414-ceef-5589-bcf1-a13cade7e192",
@@ -19459,7 +19459,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.418536+02:00"
+      "updated_at": "2026-09-19T08:05:25.027404+02:00"
     },
     {
       "task_id": "c767a5ec-5bd8-5bff-9d49-8f23b8dc55c9",
@@ -19493,7 +19493,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.418728+02:00"
+      "updated_at": "2026-09-19T08:05:25.027584+02:00"
     },
     {
       "task_id": "84c48b71-805c-52b6-8d0e-f7ee7e65c665",
@@ -19527,7 +19527,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.420576+02:00"
+      "updated_at": "2026-09-19T08:05:25.029436+02:00"
     },
     {
       "task_id": "7db24c8a-ea30-55e4-bfde-db41c46c5d81",
@@ -19561,7 +19561,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.345230+02:00"
+      "updated_at": "2026-09-19T08:05:24.947168+02:00"
     },
     {
       "task_id": "cc35aafe-0381-5e4c-92e8-e61ef2511166",
@@ -19595,7 +19595,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.344687+02:00"
+      "updated_at": "2026-09-19T08:05:24.946656+02:00"
     },
     {
       "task_id": "a7714f16-30c0-5685-bcf4-1c0c02ad5c3b",
@@ -19629,7 +19629,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.419856+02:00"
+      "updated_at": "2026-09-19T08:05:25.028690+02:00"
     },
     {
       "task_id": "de805df5-57d0-5ff3-acdf-2dba9af4ff6e",
@@ -19663,7 +19663,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.420032+02:00"
+      "updated_at": "2026-09-19T08:05:25.028865+02:00"
     },
     {
       "task_id": "503fc120-01f0-50b8-93af-a4e8016187d5",
@@ -19697,7 +19697,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.343581+02:00"
+      "updated_at": "2026-09-19T08:05:24.945557+02:00"
     },
     {
       "task_id": "46868649-e06e-58b3-9ec5-cc13302fb609",
@@ -19731,7 +19731,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.345057+02:00"
+      "updated_at": "2026-09-19T08:05:24.946997+02:00"
     },
     {
       "task_id": "ae7eb1a9-a6f7-556a-bba9-4fb1975e9fa3",
@@ -19765,7 +19765,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.417879+02:00"
+      "updated_at": "2026-09-19T08:05:25.026719+02:00"
     },
     {
       "task_id": "05f5f2ff-8df6-5379-b3e0-dbd5ab9a9ef7",
@@ -19799,7 +19799,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.419533+02:00"
+      "updated_at": "2026-09-19T08:05:25.028397+02:00"
     },
     {
       "task_id": "884c182e-3192-52aa-bb4c-0f27b61ed680",
@@ -19833,7 +19833,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.345406+02:00"
+      "updated_at": "2026-09-19T08:05:24.947372+02:00"
     },
     {
       "task_id": "00fa0e54-2a65-5c32-bb2a-3b886f9a40a1",
@@ -19867,7 +19867,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.416591+02:00"
+      "updated_at": "2026-09-19T08:05:25.025478+02:00"
     },
     {
       "task_id": "2965a46b-8fa8-5878-a457-658b24bc34f0",
@@ -19901,7 +19901,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.416779+02:00"
+      "updated_at": "2026-09-19T08:05:25.025649+02:00"
     },
     {
       "task_id": "c1028e3f-8ee4-51f1-a189-9db3b8059501",
@@ -19935,7 +19935,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.416954+02:00"
+      "updated_at": "2026-09-19T08:05:25.025816+02:00"
     },
     {
       "task_id": "d78eca77-e952-5c4c-9261-17dd8de2e831",
@@ -19969,7 +19969,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.418239+02:00"
+      "updated_at": "2026-09-19T08:05:25.027074+02:00"
     },
     {
       "task_id": "0acd2789-aa2c-5add-b9de-a4694cc082d6",
@@ -20003,7 +20003,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.343788+02:00"
+      "updated_at": "2026-09-19T08:05:24.945737+02:00"
     },
     {
       "task_id": "93bf90ff-5f22-5ffb-9dc7-6662e889cedf",
@@ -20037,7 +20037,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.344343+02:00"
+      "updated_at": "2026-09-19T08:05:24.946292+02:00"
     },
     {
       "task_id": "37fd2b27-0fde-597f-bb46-4f52478a0ec9",
@@ -20071,7 +20071,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.344170+02:00"
+      "updated_at": "2026-09-19T08:05:24.946083+02:00"
     },
     {
       "task_id": "26867793-f878-57d7-bf05-e7e184efeaf4",
@@ -20105,7 +20105,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.343996+02:00"
+      "updated_at": "2026-09-19T08:05:24.945913+02:00"
     },
     {
       "task_id": "5b9b3306-2645-5f1e-a0b8-f091351ca503",
@@ -20139,7 +20139,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.417467+02:00"
+      "updated_at": "2026-09-19T08:05:25.026364+02:00"
     },
     {
       "task_id": "35763e91-d2b3-514b-9fc2-03d774fe3e44",
@@ -20173,7 +20173,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.419076+02:00"
+      "updated_at": "2026-09-19T08:05:25.027921+02:00"
     },
     {
       "task_id": "0ab463b0-42e7-5440-bc97-dbe62d600a10",
@@ -20207,7 +20207,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.343065+02:00"
+      "updated_at": "2026-09-19T08:05:24.945000+02:00"
     },
     {
       "task_id": "02009734-72a3-5a58-9ce8-519b988c8194",
@@ -20241,7 +20241,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.346158+02:00"
+      "updated_at": "2026-09-19T08:05:24.948062+02:00"
     },
     {
       "task_id": "0721b740-8f27-5839-8ab4-aeb179641c85",
@@ -20275,7 +20275,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.353398+02:00"
+      "updated_at": "2026-09-19T08:05:24.955147+02:00"
     },
     {
       "task_id": "ea24b0ea-9c56-5bf1-9e41-5b9af434765d",
@@ -20309,7 +20309,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.345581+02:00"
+      "updated_at": "2026-09-19T08:05:24.947552+02:00"
     },
     {
       "task_id": "7db30d9b-e151-5c2b-93d8-8c229227d1c7",
@@ -20343,7 +20343,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.351949+02:00"
+      "updated_at": "2026-09-19T08:05:24.953695+02:00"
     },
     {
       "task_id": "737f3320-b511-5956-a4a2-56e6dc424de0",
@@ -20377,7 +20377,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.346334+02:00"
+      "updated_at": "2026-09-19T08:05:24.948252+02:00"
     },
     {
       "task_id": "2c863534-2353-50d4-b788-d0ded4d4eb5f",
@@ -20411,7 +20411,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.353572+02:00"
+      "updated_at": "2026-09-19T08:05:24.955346+02:00"
     },
     {
       "task_id": "6a787fca-5427-5578-8583-3fc72a217fdb",
@@ -20445,7 +20445,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.346679+02:00"
+      "updated_at": "2026-09-19T08:05:24.948601+02:00"
     },
     {
       "task_id": "34d35af1-52f5-51f2-a33d-2a096bd2d93f",
@@ -20479,7 +20479,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.346507+02:00"
+      "updated_at": "2026-09-19T08:05:24.948429+02:00"
     },
     {
       "task_id": "5a5b84eb-c43d-51ca-a806-a87cae046080",
@@ -20513,7 +20513,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.348660+02:00"
+      "updated_at": "2026-09-19T08:05:24.950521+02:00"
     },
     {
       "task_id": "9bb125a3-0790-5c01-a84f-dca799494aed",
@@ -20547,7 +20547,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.351115+02:00"
+      "updated_at": "2026-09-19T08:05:24.952867+02:00"
     },
     {
       "task_id": "3f3630ea-25bb-52e7-9260-bbc0dd8acdc2",
@@ -20581,7 +20581,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.350941+02:00"
+      "updated_at": "2026-09-19T08:05:24.952697+02:00"
     },
     {
       "task_id": "32df3449-2355-5097-9c37-65b053281fbc",
@@ -20615,7 +20615,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.349166+02:00"
+      "updated_at": "2026-09-19T08:05:24.950981+02:00"
     },
     {
       "task_id": "115670fb-17cd-52ac-84ce-3f7a317a828d",
@@ -20649,7 +20649,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.352127+02:00"
+      "updated_at": "2026-09-19T08:05:24.953863+02:00"
     },
     {
       "task_id": "c587a51b-207f-54e1-8fd1-08a33795790c",
@@ -20683,7 +20683,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.351404+02:00"
+      "updated_at": "2026-09-19T08:05:24.953145+02:00"
     },
     {
       "task_id": "5a05931d-d8ff-57b3-89c7-600c4f628c6d",
@@ -20717,7 +20717,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.421109+02:00"
+      "updated_at": "2026-09-19T08:05:25.029947+02:00"
     },
     {
       "task_id": "314085fb-e42b-58e1-b876-316779164db0",
@@ -20751,7 +20751,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.350390+02:00"
+      "updated_at": "2026-09-19T08:05:24.952149+02:00"
     },
     {
       "task_id": "bf841763-b927-54b5-94b0-99604d3d1a27",
@@ -20785,7 +20785,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.350760+02:00"
+      "updated_at": "2026-09-19T08:05:24.952524+02:00"
     },
     {
       "task_id": "bc56f2d8-73df-5157-94f0-dad71db23ee1",
@@ -20819,7 +20819,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.349513+02:00"
+      "updated_at": "2026-09-19T08:05:24.951347+02:00"
     },
     {
       "task_id": "2031e7b6-db49-574d-a5b3-26d9192595ed",
@@ -20853,7 +20853,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.349342+02:00"
+      "updated_at": "2026-09-19T08:05:24.951152+02:00"
     },
     {
       "task_id": "930471ec-260b-5878-b391-7bc98b4f089c",
@@ -20887,7 +20887,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.350219+02:00"
+      "updated_at": "2026-09-19T08:05:24.951980+02:00"
     },
     {
       "task_id": "af58f653-d7f1-55e2-8946-d62d0f53187e",
@@ -20921,7 +20921,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.348981+02:00"
+      "updated_at": "2026-09-19T08:05:24.950808+02:00"
     },
     {
       "task_id": "563bf2fd-66a3-5930-9cfe-ac8a4844d4ae",
@@ -20955,7 +20955,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.350564+02:00"
+      "updated_at": "2026-09-19T08:05:24.952346+02:00"
     },
     {
       "task_id": "b7619dcb-21ef-555b-8e7d-882c494c90c5",
@@ -20989,7 +20989,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.353220+02:00"
+      "updated_at": "2026-09-19T08:05:24.954974+02:00"
     },
     {
       "task_id": "bbf25c15-f69a-5005-9fe2-cf79b1323e74",
@@ -21023,7 +21023,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.352878+02:00"
+      "updated_at": "2026-09-19T08:05:24.954636+02:00"
     },
     {
       "task_id": "37168a94-e697-5c08-9e0b-df2c26845592",
@@ -21057,7 +21057,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.353050+02:00"
+      "updated_at": "2026-09-19T08:05:24.954804+02:00"
     },
     {
       "task_id": "54572fe2-7146-50d2-a477-5bee10450517",
@@ -21091,7 +21091,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.352683+02:00"
+      "updated_at": "2026-09-19T08:05:24.954464+02:00"
     },
     {
       "task_id": "3b59d3d4-c36b-53cf-87d2-74e4c3e0cb58",
@@ -21125,7 +21125,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.349686+02:00"
+      "updated_at": "2026-09-19T08:05:24.951520+02:00"
     },
     {
       "task_id": "24f2905b-8600-5605-ba5b-ccd866ddac3c",
@@ -21159,7 +21159,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.347676+02:00"
+      "updated_at": "2026-09-19T08:05:24.949598+02:00"
     },
     {
       "task_id": "ffcbd886-d27a-50a1-bb09-0c8635206828",
@@ -21193,7 +21193,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.350043+02:00"
+      "updated_at": "2026-09-19T08:05:24.951807+02:00"
     },
     {
       "task_id": "72bd4955-4d25-55b3-93d7-08b181d9712d",
@@ -21227,7 +21227,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.421477+02:00"
+      "updated_at": "2026-09-19T08:05:25.030338+02:00"
     },
     {
       "task_id": "63354a11-8620-5a72-a4b1-f4e899657856",
@@ -21261,7 +21261,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.351576+02:00"
+      "updated_at": "2026-09-19T08:05:24.953348+02:00"
     },
     {
       "task_id": "9fb1101b-152a-50e5-a80e-c7176e96890c",
@@ -21295,7 +21295,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.352295+02:00"
+      "updated_at": "2026-09-19T08:05:24.954038+02:00"
     },
     {
       "task_id": "4d071b66-e0d5-5cc3-9bc0-5a4f95565a54",
@@ -21329,7 +21329,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.347869+02:00"
+      "updated_at": "2026-09-19T08:05:24.949769+02:00"
     },
     {
       "task_id": "ca06454e-5074-5a4d-ac79-5648e2ba100d",
@@ -21363,7 +21363,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.345985+02:00"
+      "updated_at": "2026-09-19T08:05:24.947894+02:00"
     },
     {
       "task_id": "35cf7ec1-fcfa-5470-ac40-4d5af73cb213",
@@ -21397,7 +21397,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.345799+02:00"
+      "updated_at": "2026-09-19T08:05:24.947723+02:00"
     },
     {
       "task_id": "6cb5a074-ccd5-54d4-bf45-541c303d8b63",
@@ -21431,7 +21431,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.351770+02:00"
+      "updated_at": "2026-09-19T08:05:24.953520+02:00"
     },
     {
       "task_id": "fe1e3f21-3cbe-57e9-bd31-b7e4c2303207",
@@ -21465,7 +21465,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.353767+02:00"
+      "updated_at": "2026-09-19T08:05:24.955528+02:00"
     },
     {
       "task_id": "1cc4cd78-7942-5773-a40c-03df4809daaa",
@@ -21499,7 +21499,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.353948+02:00"
+      "updated_at": "2026-09-19T08:05:24.955700+02:00"
     },
     {
       "task_id": "24cf00a8-aa84-56c2-a1ac-c1a9c302da43",
@@ -21533,7 +21533,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.354121+02:00"
+      "updated_at": "2026-09-19T08:05:24.955872+02:00"
     },
     {
       "task_id": "9bbd9f0f-7c72-5c17-8d52-e35031b29b0a",
@@ -21567,7 +21567,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.426222+02:00"
+      "updated_at": "2026-09-19T08:05:25.035064+02:00"
     },
     {
       "task_id": "ef9d025c-8bfe-5be9-932c-5da532004a34",
@@ -21601,7 +21601,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.356002+02:00"
+      "updated_at": "2026-09-19T08:05:24.957721+02:00"
     },
     {
       "task_id": "cbd69805-4085-5901-abe6-4b3bcc56e9e9",
@@ -21635,7 +21635,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.384952+02:00"
+      "updated_at": "2026-09-19T08:05:24.986785+02:00"
     },
     {
       "task_id": "e45045b5-195e-5bfa-a582-1e8953c20f7d",
@@ -21669,7 +21669,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.381808+02:00"
+      "updated_at": "2026-09-19T08:05:24.983649+02:00"
     },
     {
       "task_id": "ec0f749f-5f0c-5bd3-9ac6-547b9da85ab4",
@@ -21703,7 +21703,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.392415+02:00"
+      "updated_at": "2026-09-19T08:05:24.999826+02:00"
     },
     {
       "task_id": "87978982-9ead-52a9-8acd-555920510974",
@@ -21737,7 +21737,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.356349+02:00"
+      "updated_at": "2026-09-19T08:05:24.958066+02:00"
     },
     {
       "task_id": "a080a8f3-8297-5bd8-b781-4b02944f7346",
@@ -21771,7 +21771,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.365979+02:00"
+      "updated_at": "2026-09-19T08:05:24.967634+02:00"
     },
     {
       "task_id": "56e1c4a8-1f20-5069-9788-a71766758e37",
@@ -21805,7 +21805,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.383294+02:00"
+      "updated_at": "2026-09-19T08:05:24.985113+02:00"
     },
     {
       "task_id": "eecfc30c-7167-512a-8796-60aa2d67aeba",
@@ -21839,7 +21839,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.378199+02:00"
+      "updated_at": "2026-09-19T08:05:24.979988+02:00"
     },
     {
       "task_id": "22b25afb-15d6-5697-80bb-cad4ada8adf5",
@@ -21873,7 +21873,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.356175+02:00"
+      "updated_at": "2026-09-19T08:05:24.957894+02:00"
     },
     {
       "task_id": "2e4ad22e-4a99-579d-861e-67cb401611cc",
@@ -21907,7 +21907,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.356523+02:00"
+      "updated_at": "2026-09-19T08:05:24.958257+02:00"
     },
     {
       "task_id": "553b9254-8fd6-5456-b27d-528d0619c90e",
@@ -21941,7 +21941,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.396073+02:00"
+      "updated_at": "2026-09-19T08:05:25.004963+02:00"
     },
     {
       "task_id": "0c887f77-d7cd-50d7-9e30-755ad49eb880",
@@ -21975,7 +21975,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.395902+02:00"
+      "updated_at": "2026-09-19T08:05:25.004788+02:00"
     },
     {
       "task_id": "650b6e45-537a-5c2b-9b68-9f316ecb1823",
@@ -22009,7 +22009,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.379864+02:00"
+      "updated_at": "2026-09-19T08:05:24.981673+02:00"
     },
     {
       "task_id": "6ca6bb99-4f1b-52d9-8e0e-0003a571f6ed",
@@ -22043,7 +22043,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.390732+02:00"
+      "updated_at": "2026-09-19T08:05:24.996289+02:00"
     },
     {
       "task_id": "6787c4fe-093b-5017-8a36-f1859e44cbce",
@@ -22077,7 +22077,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.396250+02:00"
+      "updated_at": "2026-09-19T08:05:25.005136+02:00"
     },
     {
       "task_id": "5316542f-a7e3-5a98-90b1-61f5110deaef",
@@ -22111,7 +22111,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.392586+02:00"
+      "updated_at": "2026-09-19T08:05:25.000194+02:00"
     },
     {
       "task_id": "4a152e41-1332-51e5-ad84-9757ef32d8e1",
@@ -22145,7 +22145,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.382005+02:00"
+      "updated_at": "2026-09-19T08:05:24.983821+02:00"
     },
     {
       "task_id": "796bcaf4-5213-572d-aea4-19b460aca129",
@@ -22179,7 +22179,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.373418+02:00"
+      "updated_at": "2026-09-19T08:05:24.975195+02:00"
     },
     {
       "task_id": "546c38db-bcc4-5330-b404-4e2b1b05ee70",
@@ -22213,7 +22213,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.388382+02:00"
+      "updated_at": "2026-09-19T08:05:24.991353+02:00"
     },
     {
       "task_id": "651a50a4-75a2-51be-8eda-4fa6161be6ce",
@@ -22247,7 +22247,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.373587+02:00"
+      "updated_at": "2026-09-19T08:05:24.975372+02:00"
     },
     {
       "task_id": "a2ac9872-8a96-56a4-bc11-ca8bd9fd46ee",
@@ -22281,7 +22281,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.373247+02:00"
+      "updated_at": "2026-09-19T08:05:24.975006+02:00"
     },
     {
       "task_id": "28b64a41-9680-5315-9e31-188f376accd4",
@@ -22315,7 +22315,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.388557+02:00"
+      "updated_at": "2026-09-19T08:05:24.991704+02:00"
     },
     {
       "task_id": "57b18a87-cdbd-5ee9-b5d8-19dabd6af163",
@@ -22349,7 +22349,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.377667+02:00"
+      "updated_at": "2026-09-19T08:05:24.979479+02:00"
     },
     {
       "task_id": "9dea50f2-017f-5116-a531-5d970cbb896c",
@@ -22383,7 +22383,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.373776+02:00"
+      "updated_at": "2026-09-19T08:05:24.975546+02:00"
     },
     {
       "task_id": "0706d320-e97f-5834-aeab-b9fece17cc28",
@@ -22417,7 +22417,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.388746+02:00"
+      "updated_at": "2026-09-19T08:05:24.992040+02:00"
     },
     {
       "task_id": "4daddb70-306c-5ac0-94b2-33a1eca9b748",
@@ -22451,7 +22451,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.390359+02:00"
+      "updated_at": "2026-09-19T08:05:24.995481+02:00"
     },
     {
       "task_id": "8eb4de59-53eb-5320-9ed5-588a6c526613",
@@ -22485,7 +22485,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.373958+02:00"
+      "updated_at": "2026-09-19T08:05:24.975720+02:00"
     },
     {
       "task_id": "8bcdb83e-1f4c-57c0-bc0e-277fa2f3187b",
@@ -22519,7 +22519,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.401934+02:00"
+      "updated_at": "2026-09-19T08:05:25.010796+02:00"
     },
     {
       "task_id": "82213f6a-3b98-511d-87e3-02c4a0ff0364",
@@ -22553,7 +22553,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.389830+02:00"
+      "updated_at": "2026-09-19T08:05:24.994290+02:00"
     },
     {
       "task_id": "f8d7b2d8-e99b-58cc-892c-9e73cfd93008",
@@ -22587,7 +22587,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.387329+02:00"
+      "updated_at": "2026-09-19T08:05:24.989158+02:00"
     },
     {
       "task_id": "cff4417f-4783-50de-95a6-a48eff76635c",
@@ -22621,7 +22621,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.371460+02:00"
+      "updated_at": "2026-09-19T08:05:24.973203+02:00"
     },
     {
       "task_id": "265c3522-8b3b-50dc-9330-4c96efe82cf7",
@@ -22655,7 +22655,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.425114+02:00"
+      "updated_at": "2026-09-19T08:05:25.033953+02:00"
     },
     {
       "task_id": "e8413ba8-7569-5f8f-b43c-6a2716a5fc16",
@@ -22689,7 +22689,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.371830+02:00"
+      "updated_at": "2026-09-19T08:05:24.973560+02:00"
     },
     {
       "task_id": "e4a77c6e-026d-5069-b592-293ca90e312b",
@@ -22723,7 +22723,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.387156+02:00"
+      "updated_at": "2026-09-19T08:05:24.988979+02:00"
     },
     {
       "task_id": "f88f8ede-a87c-568f-b3b6-80349d645030",
@@ -22757,7 +22757,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.371639+02:00"
+      "updated_at": "2026-09-19T08:05:24.973383+02:00"
     },
     {
       "task_id": "ca2aa245-e036-5314-82bd-ccca4b0d25f1",
@@ -22791,7 +22791,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.425284+02:00"
+      "updated_at": "2026-09-19T08:05:25.034122+02:00"
     },
     {
       "task_id": "8a1b76da-3101-5478-ba74-74f26794fcfd",
@@ -22825,7 +22825,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.426928+02:00"
+      "updated_at": "2026-09-19T08:05:25.035774+02:00"
     },
     {
       "task_id": "ec68deef-187b-5bf8-a95d-85cc457dc913",
@@ -22859,7 +22859,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.354311+02:00"
+      "updated_at": "2026-09-19T08:05:24.956049+02:00"
     },
     {
       "task_id": "273bded0-0a9a-5395-9846-645513d84546",
@@ -22893,7 +22893,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.370766+02:00"
+      "updated_at": "2026-09-19T08:05:24.972481+02:00"
     },
     {
       "task_id": "0ac595b3-a2e2-5687-a439-6f2f0c876ab2",
@@ -22927,7 +22927,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.389347+02:00"
+      "updated_at": "2026-09-19T08:05:24.993248+02:00"
     },
     {
       "task_id": "29827f39-62fa-5732-9406-c569c7eebf1a",
@@ -22961,7 +22961,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.392778+02:00"
+      "updated_at": "2026-09-19T08:05:25.000552+02:00"
     },
     {
       "task_id": "9aaa0bea-0ec5-5862-9464-650e131c9601",
@@ -22995,7 +22995,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.370945+02:00"
+      "updated_at": "2026-09-19T08:05:24.972662+02:00"
     },
     {
       "task_id": "89a9a171-7976-5e7c-afab-fe2f0bd4aa86",
@@ -23029,7 +23029,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.391636+02:00"
+      "updated_at": "2026-09-19T08:05:24.998214+02:00"
     },
     {
       "task_id": "640cc28d-508f-54a1-b63e-a9360e2edfe1",
@@ -23063,7 +23063,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.402110+02:00"
+      "updated_at": "2026-09-19T08:05:25.010969+02:00"
     },
     {
       "task_id": "3a018071-e7ab-5f52-a1df-6f9915d8734e",
@@ -23097,7 +23097,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.423432+02:00"
+      "updated_at": "2026-09-19T08:05:25.032271+02:00"
     },
     {
       "task_id": "6458845b-56c6-5d7c-9ee8-e3a875a7d01c",
@@ -23131,7 +23131,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.398816+02:00"
+      "updated_at": "2026-09-19T08:05:25.007660+02:00"
     },
     {
       "task_id": "ee26bfd4-95f7-5250-983e-3c920e09e1d6",
@@ -23165,7 +23165,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.371118+02:00"
+      "updated_at": "2026-09-19T08:05:24.972836+02:00"
     },
     {
       "task_id": "2fe8c165-fd4c-520c-a1ec-3fbf63177876",
@@ -23199,7 +23199,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.395077+02:00"
+      "updated_at": "2026-09-19T08:05:25.003893+02:00"
     },
     {
       "task_id": "cd267151-3525-524e-88e8-0471943141de",
@@ -23233,7 +23233,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.362652+02:00"
+      "updated_at": "2026-09-19T08:05:24.964325+02:00"
     },
     {
       "task_id": "3f701590-489e-537b-8230-ed5368ac27d0",
@@ -23267,7 +23267,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.378374+02:00"
+      "updated_at": "2026-09-19T08:05:24.980161+02:00"
     },
     {
       "task_id": "6a535583-8fd9-53ee-9c10-3a811d746afc",
@@ -23301,7 +23301,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.369137+02:00"
+      "updated_at": "2026-09-19T08:05:24.970821+02:00"
     },
     {
       "task_id": "0472a5b6-8507-5b16-abf8-fa3d5e1fd379",
@@ -23335,7 +23335,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.402457+02:00"
+      "updated_at": "2026-09-19T08:05:25.011332+02:00"
     },
     {
       "task_id": "2f705aec-241a-5789-b596-3b4e064b819a",
@@ -23369,7 +23369,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.400576+02:00"
+      "updated_at": "2026-09-19T08:05:25.009433+02:00"
     },
     {
       "task_id": "601a672c-e0c1-59a8-a676-4ac8e5770239",
@@ -23403,7 +23403,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.357917+02:00"
+      "updated_at": "2026-09-19T08:05:24.959620+02:00"
     },
     {
       "task_id": "f5db9486-cf60-59d5-b675-938e6cc3358e",
@@ -23437,7 +23437,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.383468+02:00"
+      "updated_at": "2026-09-19T08:05:24.985312+02:00"
     },
     {
       "task_id": "2377a45b-5696-5005-b834-1a16a3169ca1",
@@ -23471,7 +23471,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.396425+02:00"
+      "updated_at": "2026-09-19T08:05:25.005336+02:00"
     },
     {
       "task_id": "1444f112-e51c-5a67-ae25-8321a441f898",
@@ -23505,7 +23505,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.382345+02:00"
+      "updated_at": "2026-09-19T08:05:24.984159+02:00"
     },
     {
       "task_id": "889b63ad-e020-5c2b-a2f4-8f49ae4e1487",
@@ -23539,7 +23539,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.390922+02:00"
+      "updated_at": "2026-09-19T08:05:24.996687+02:00"
     },
     {
       "task_id": "f12c847e-770f-5ba4-8b07-739f97774aa5",
@@ -23573,7 +23573,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.380558+02:00"
+      "updated_at": "2026-09-19T08:05:24.982408+02:00"
     },
     {
       "task_id": "d1c51d75-cc5e-5c01-bd26-37bb48d383ac",
@@ -23607,7 +23607,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.402286+02:00"
+      "updated_at": "2026-09-19T08:05:25.011138+02:00"
     },
     {
       "task_id": "b6e9ab64-e5b6-5df0-aeb0-791b35e3d724",
@@ -23641,7 +23641,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.358090+02:00"
+      "updated_at": "2026-09-19T08:05:24.959790+02:00"
     },
     {
       "task_id": "551fbfa8-398d-579e-809a-806b13789153",
@@ -23675,7 +23675,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.368416+02:00"
+      "updated_at": "2026-09-19T08:05:24.970104+02:00"
     },
     {
       "task_id": "476d6f2f-14b7-5487-a013-3024564f3efe",
@@ -23709,7 +23709,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.379438+02:00"
+      "updated_at": "2026-09-19T08:05:24.981259+02:00"
     },
     {
       "task_id": "0c284b19-9619-5d5f-b08a-692d4975806f",
@@ -23743,7 +23743,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.423604+02:00"
+      "updated_at": "2026-09-19T08:05:25.032452+02:00"
     },
     {
       "task_id": "86611329-ea30-53b4-8e61-1bcef7dbbccb",
@@ -23777,7 +23777,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.390534+02:00"
+      "updated_at": "2026-09-19T08:05:24.995869+02:00"
     },
     {
       "task_id": "3633428e-cd32-5671-835b-f76c67da6825",
@@ -23811,7 +23811,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.374843+02:00"
+      "updated_at": "2026-09-19T08:05:24.976602+02:00"
     },
     {
       "task_id": "731a4735-14fd-5a7a-b112-2b8493d604c3",
@@ -23845,7 +23845,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.374652+02:00"
+      "updated_at": "2026-09-19T08:05:24.976428+02:00"
     },
     {
       "task_id": "de24362b-bd79-5977-8a61-29807362f9e5",
@@ -23879,7 +23879,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.395246+02:00"
+      "updated_at": "2026-09-19T08:05:25.004066+02:00"
     },
     {
       "task_id": "1d098dea-b245-5cd2-a8ac-b41d82a7187d",
@@ -23913,7 +23913,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.374483+02:00"
+      "updated_at": "2026-09-19T08:05:24.976251+02:00"
     },
     {
       "task_id": "40171b4d-0014-5393-82b7-9ead9cd26c26",
@@ -23947,7 +23947,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.374303+02:00"
+      "updated_at": "2026-09-19T08:05:24.976060+02:00"
     },
     {
       "task_id": "e5e1e689-f69c-57f8-b3aa-71a148205b01",
@@ -23981,7 +23981,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.390005+02:00"
+      "updated_at": "2026-09-19T08:05:24.994686+02:00"
     },
     {
       "task_id": "43baf330-760a-5113-9f2a-43a9ef39ca8e",
@@ -24015,7 +24015,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.383769+02:00"
+      "updated_at": "2026-09-19T08:05:24.985602+02:00"
     },
     {
       "task_id": "cdaef248-1177-5530-891e-552af1eecb8e",
@@ -24049,7 +24049,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.374130+02:00"
+      "updated_at": "2026-09-19T08:05:24.975891+02:00"
     },
     {
       "task_id": "ed5146ed-a944-5fba-9160-41775b7a3830",
@@ -24083,7 +24083,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.392956+02:00"
+      "updated_at": "2026-09-19T08:05:25.000898+02:00"
     },
     {
       "task_id": "2e103950-3f0d-521a-931b-32b998564728",
@@ -24117,7 +24117,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.423796+02:00"
+      "updated_at": "2026-09-19T08:05:25.032629+02:00"
     },
     {
       "task_id": "78848e7a-cf8f-5491-9ad8-0c3e09067314",
@@ -24151,7 +24151,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.423973+02:00"
+      "updated_at": "2026-09-19T08:05:25.032804+02:00"
     },
     {
       "task_id": "6310538b-62a6-547a-b173-1b439c93f0ec",
@@ -24185,7 +24185,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.424152+02:00"
+      "updated_at": "2026-09-19T08:05:25.032979+02:00"
     },
     {
       "task_id": "c390f8bf-3933-5d27-a107-6c6c2f4d729c",
@@ -24219,7 +24219,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.424511+02:00"
+      "updated_at": "2026-09-19T08:05:25.033366+02:00"
     },
     {
       "task_id": "b2c21e25-1d7a-5c3a-aaf9-1e1abc451283",
@@ -24253,7 +24253,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.425763+02:00"
+      "updated_at": "2026-09-19T08:05:25.034618+02:00"
     },
     {
       "task_id": "a803f5d4-329c-59b6-92cc-4f7f4896a887",
@@ -24287,7 +24287,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.379669+02:00"
+      "updated_at": "2026-09-19T08:05:24.981500+02:00"
     },
     {
       "task_id": "dda66d1a-8626-51f2-be46-bc6a42ee8edb",
@@ -24321,7 +24321,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.393133+02:00"
+      "updated_at": "2026-09-19T08:05:25.001312+02:00"
     },
     {
       "task_id": "d109b14f-64d3-50c1-8e17-997ffc8d0427",
@@ -24355,7 +24355,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.375184+02:00"
+      "updated_at": "2026-09-19T08:05:24.976946+02:00"
     },
     {
       "task_id": "94706ef0-a66c-5cfe-936b-873bb1415370",
@@ -24389,7 +24389,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.381148+02:00"
+      "updated_at": "2026-09-19T08:05:24.982982+02:00"
     },
     {
       "task_id": "34269742-4fbc-5325-82c6-c6301e55f7fb",
@@ -24423,7 +24423,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.387498+02:00"
+      "updated_at": "2026-09-19T08:05:24.989521+02:00"
     },
     {
       "task_id": "ef518fd2-1505-5a17-851b-3a77e4043213",
@@ -24457,7 +24457,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.375015+02:00"
+      "updated_at": "2026-09-19T08:05:24.976776+02:00"
     },
     {
       "task_id": "d9d5dcd5-8ce3-59f0-8012-b91f2e329ee1",
@@ -24491,7 +24491,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.388207+02:00"
+      "updated_at": "2026-09-19T08:05:24.990987+02:00"
     },
     {
       "task_id": "10e2e383-f9df-51e2-8818-4b2121f29029",
@@ -24525,7 +24525,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.384123+02:00"
+      "updated_at": "2026-09-19T08:05:24.985955+02:00"
     },
     {
       "task_id": "c068411c-1dab-5175-9681-790eab4fbdbc",
@@ -24559,7 +24559,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.424335+02:00"
+      "updated_at": "2026-09-19T08:05:25.033167+02:00"
     },
     {
       "task_id": "91b3a160-6bb5-5bb5-b578-669a29c47abb",
@@ -24593,7 +24593,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.384582+02:00"
+      "updated_at": "2026-09-19T08:05:24.986438+02:00"
     },
     {
       "task_id": "43028136-57f1-5c75-a07c-95fe795910c6",
@@ -24627,7 +24627,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.375706+02:00"
+      "updated_at": "2026-09-19T08:05:24.977504+02:00"
     },
     {
       "task_id": "6326f316-c75c-5ee3-a521-0a472f2fdbe8",
@@ -24661,7 +24661,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.382515+02:00"
+      "updated_at": "2026-09-19T08:05:24.984352+02:00"
     },
     {
       "task_id": "e5962457-bc1e-5b29-bd42-6372f9097a76",
@@ -24695,7 +24695,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.375880+02:00"
+      "updated_at": "2026-09-19T08:05:24.977676+02:00"
     },
     {
       "task_id": "9a95025d-17e0-51ae-b393-9105983ed716",
@@ -24729,7 +24729,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.396603+02:00"
+      "updated_at": "2026-09-19T08:05:25.005515+02:00"
     },
     {
       "task_id": "21893668-75b3-5cd3-b69d-38dc4fcedb37",
@@ -24763,7 +24763,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.376051+02:00"
+      "updated_at": "2026-09-19T08:05:24.977847+02:00"
     },
     {
       "task_id": "c362dc26-30b1-5032-b1e5-cefa9d3b9224",
@@ -24797,7 +24797,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.375523+02:00"
+      "updated_at": "2026-09-19T08:05:24.977309+02:00"
     },
     {
       "task_id": "50242483-3ac7-564d-8f07-4ae5e465b7d1",
@@ -24831,7 +24831,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.375354+02:00"
+      "updated_at": "2026-09-19T08:05:24.977117+02:00"
     },
     {
       "task_id": "14dfb29e-270b-51e2-8124-02514a5bde79",
@@ -24865,7 +24865,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.402628+02:00"
+      "updated_at": "2026-09-19T08:05:25.011509+02:00"
     },
     {
       "task_id": "29d6190e-48d3-5894-a3fa-d05966e9ecef",
@@ -24899,7 +24899,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.393478+02:00"
+      "updated_at": "2026-09-19T08:05:25.002042+02:00"
     },
     {
       "task_id": "a2f03aa9-1214-5a85-a15c-8720758bcc0c",
@@ -24933,7 +24933,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.402818+02:00"
+      "updated_at": "2026-09-19T08:05:25.011681+02:00"
     },
     {
       "task_id": "f17830d3-6a5e-57f7-a5c0-429fc44d41d3",
@@ -24967,7 +24967,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.396985+02:00"
+      "updated_at": "2026-09-19T08:05:25.005861+02:00"
     },
     {
       "task_id": "bac6aee4-9f28-549c-a617-3fe51f25f240",
@@ -25001,7 +25001,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.384772+02:00"
+      "updated_at": "2026-09-19T08:05:24.986610+02:00"
     },
     {
       "task_id": "c280b2bd-4578-5bdb-9552-2babbefeaa44",
@@ -25035,7 +25035,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.359035+02:00"
+      "updated_at": "2026-09-19T08:05:24.960728+02:00"
     },
     {
       "task_id": "f5e572db-89ca-593f-8a64-053e81f0794b",
@@ -25069,7 +25069,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.368773+02:00"
+      "updated_at": "2026-09-19T08:05:24.970476+02:00"
     },
     {
       "task_id": "970050b6-a23f-5670-a3dc-dafcabe40cc6",
@@ -25103,7 +25103,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.381432+02:00"
+      "updated_at": "2026-09-19T08:05:24.983291+02:00"
     },
     {
       "task_id": "a8bcee17-a3df-581f-afb7-07772d2c8da4",
@@ -25137,7 +25137,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.362848+02:00"
+      "updated_at": "2026-09-19T08:05:24.964509+02:00"
     },
     {
       "task_id": "5a9e9454-15bc-5982-a743-6ca51bb4622e",
@@ -25171,7 +25171,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.367505+02:00"
+      "updated_at": "2026-09-19T08:05:24.969186+02:00"
     },
     {
       "task_id": "8f1d2b5d-4552-5b59-a19d-ffd6e8d7d4f4",
@@ -25205,7 +25205,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.359217+02:00"
+      "updated_at": "2026-09-19T08:05:24.960898+02:00"
     },
     {
       "task_id": "02bcfac1-243f-546c-bb73-91eb01037ca8",
@@ -25239,7 +25239,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.396802+02:00"
+      "updated_at": "2026-09-19T08:05:25.005689+02:00"
     },
     {
       "task_id": "90a6179e-fee8-5823-b998-204187fcaa33",
@@ -25273,7 +25273,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.370013+02:00"
+      "updated_at": "2026-09-19T08:05:24.971705+02:00"
     },
     {
       "task_id": "f8c5f281-a795-57fe-b858-2b302ee7f921",
@@ -25307,7 +25307,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.393307+02:00"
+      "updated_at": "2026-09-19T08:05:25.001697+02:00"
     },
     {
       "task_id": "0914e0d3-4528-50ef-bf3a-fc341d07c00f",
@@ -25341,7 +25341,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.368585+02:00"
+      "updated_at": "2026-09-19T08:05:24.970293+02:00"
     },
     {
       "task_id": "f402772c-8599-5ff5-9f35-92b6a173549d",
@@ -25375,7 +25375,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.358857+02:00"
+      "updated_at": "2026-09-19T08:05:24.960554+02:00"
     },
     {
       "task_id": "7f570d16-c396-5451-a203-78b530e1d67b",
@@ -25409,7 +25409,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.424879+02:00"
+      "updated_at": "2026-09-19T08:05:25.033720+02:00"
     },
     {
       "task_id": "b2f7ee3e-1afc-55d4-ad6f-b0222e0cc82e",
@@ -25443,7 +25443,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.427465+02:00"
+      "updated_at": "2026-09-19T08:05:25.036345+02:00"
     },
     {
       "task_id": "cf2d40cd-ec86-52fd-9ccc-174cec36b7ef",
@@ -25477,7 +25477,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.397680+02:00"
+      "updated_at": "2026-09-19T08:05:25.006587+02:00"
     },
     {
       "task_id": "1eb311f4-8ec2-5c36-83c2-988047ed295d",
@@ -25511,7 +25511,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.397164+02:00"
+      "updated_at": "2026-09-19T08:05:25.006038+02:00"
     },
     {
       "task_id": "f8c7a69d-b6fa-5b00-9b4d-8e243f1b410a",
@@ -25545,7 +25545,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.379095+02:00"
+      "updated_at": "2026-09-19T08:05:24.980893+02:00"
     },
     {
       "task_id": "4e4bbbc1-8553-5c31-957d-0455d8793d9c",
@@ -25579,7 +25579,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.397505+02:00"
+      "updated_at": "2026-09-19T08:05:25.006406+02:00"
     },
     {
       "task_id": "757962ce-4a22-5cca-8570-ab428f3d39cb",
@@ -25613,7 +25613,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.379267+02:00"
+      "updated_at": "2026-09-19T08:05:24.981068+02:00"
     },
     {
       "task_id": "b055a2fc-9a25-5827-b0cc-5b9757c0175c",
@@ -25647,7 +25647,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.376761+02:00"
+      "updated_at": "2026-09-19T08:05:24.978580+02:00"
     },
     {
       "task_id": "69e217c7-3b65-5f40-bf85-1a8ae82f2118",
@@ -25681,7 +25681,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.378906+02:00"
+      "updated_at": "2026-09-19T08:05:24.980711+02:00"
     },
     {
       "task_id": "7438564d-a85d-5932-8a16-9614d0733969",
@@ -25715,7 +25715,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.397336+02:00"
+      "updated_at": "2026-09-19T08:05:25.006230+02:00"
     },
     {
       "task_id": "9bc8fbf4-26ac-5e10-af73-c6a740976b8e",
@@ -25749,7 +25749,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.377860+02:00"
+      "updated_at": "2026-09-19T08:05:24.979650+02:00"
     },
     {
       "task_id": "5cc61de0-d8bc-5b11-bacb-249078d0cc05",
@@ -25783,7 +25783,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.376220+02:00"
+      "updated_at": "2026-09-19T08:05:24.978016+02:00"
     },
     {
       "task_id": "811b2a13-acb0-5eb0-b060-1582c216922f",
@@ -25817,7 +25817,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.376571+02:00"
+      "updated_at": "2026-09-19T08:05:24.978398+02:00"
     },
     {
       "task_id": "5c525d5e-711a-55fa-8c7c-57e1d2e696d4",
@@ -25851,7 +25851,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.395534+02:00"
+      "updated_at": "2026-09-19T08:05:25.004433+02:00"
     },
     {
       "task_id": "fd9dc03a-9283-5c1e-b108-83566b5beb02",
@@ -25885,7 +25885,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.397881+02:00"
+      "updated_at": "2026-09-19T08:05:25.006759+02:00"
     },
     {
       "task_id": "f7ddaf7a-3527-527b-add8-1cbfb7ad543b",
@@ -25919,7 +25919,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.376390+02:00"
+      "updated_at": "2026-09-19T08:05:24.978208+02:00"
     },
     {
       "task_id": "f3d65b13-c50e-5700-9cb8-134a84787757",
@@ -25953,7 +25953,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.376945+02:00"
+      "updated_at": "2026-09-19T08:05:24.978754+02:00"
     },
     {
       "task_id": "b580ac69-3cea-5870-a259-cd3d76395b0a",
@@ -25987,7 +25987,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.400880+02:00"
+      "updated_at": "2026-09-19T08:05:25.009710+02:00"
     },
     {
       "task_id": "00c9e33a-933e-534e-9f53-e406cdbf79fc",
@@ -26021,7 +26021,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.378729+02:00"
+      "updated_at": "2026-09-19T08:05:24.980539+02:00"
     },
     {
       "task_id": "4dee0e99-dc17-5476-8074-678220c6c234",
@@ -26055,7 +26055,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.378029+02:00"
+      "updated_at": "2026-09-19T08:05:24.979818+02:00"
     },
     {
       "task_id": "320ce7b5-e865-5bbe-abe9-b760c093bb23",
@@ -26089,7 +26089,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.380743+02:00"
+      "updated_at": "2026-09-19T08:05:24.982579+02:00"
     },
     {
       "task_id": "9472c68e-bf58-5e35-9f99-de8c6c3d1dd3",
@@ -26123,7 +26123,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.382815+02:00"
+      "updated_at": "2026-09-19T08:05:24.984638+02:00"
     },
     {
       "task_id": "e68eb93c-7334-5f74-b517-5173c6a24f00",
@@ -26157,7 +26157,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.427285+02:00"
+      "updated_at": "2026-09-19T08:05:25.036143+02:00"
     },
     {
       "task_id": "14c72af6-e61b-5c9f-bd8c-c6971bbb413e",
@@ -26191,7 +26191,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.386907+02:00"
+      "updated_at": "2026-09-19T08:05:24.988731+02:00"
     },
     {
       "task_id": "f4897d30-be46-5025-b877-d74b353025d6",
@@ -26225,7 +26225,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.380387+02:00"
+      "updated_at": "2026-09-19T08:05:24.982213+02:00"
     },
     {
       "task_id": "0e93379d-16f7-50e8-90e5-e2d1e8e9e183",
@@ -26259,7 +26259,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.365504+02:00"
+      "updated_at": "2026-09-19T08:05:24.967154+02:00"
     },
     {
       "task_id": "14af21ad-c408-5114-ac20-25b8ae1a78ea",
@@ -26293,7 +26293,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.394201+02:00"
+      "updated_at": "2026-09-19T08:05:25.002946+02:00"
     },
     {
       "task_id": "182a8461-736c-5f1f-8477-a615aba88fc4",
@@ -26327,7 +26327,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.402996+02:00"
+      "updated_at": "2026-09-19T08:05:25.011850+02:00"
     },
     {
       "task_id": "9ad7fa26-764b-53a4-b7ae-39c3f8a186c2",
@@ -26361,7 +26361,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.354798+02:00"
+      "updated_at": "2026-09-19T08:05:24.956532+02:00"
     },
     {
       "task_id": "c1ceb5a2-8139-5b96-b987-9a0c079f115a",
@@ -26395,7 +26395,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.354603+02:00"
+      "updated_at": "2026-09-19T08:05:24.956355+02:00"
     },
     {
       "task_id": "2fb1691f-7172-5446-ab61-cf692bacdbe7",
@@ -26429,7 +26429,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.365675+02:00"
+      "updated_at": "2026-09-19T08:05:24.967350+02:00"
     },
     {
       "task_id": "2931d1aa-dcca-5dab-8563-584df6fa3582",
@@ -26463,7 +26463,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.381607+02:00"
+      "updated_at": "2026-09-19T08:05:24.983469+02:00"
     },
     {
       "task_id": "88afd7bb-1eb3-5141-8b14-762f67c4ef13",
@@ -26497,7 +26497,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.401053+02:00"
+      "updated_at": "2026-09-19T08:05:25.009877+02:00"
     },
     {
       "task_id": "06205d8f-975f-54ed-aa15-2b350fbd4431",
@@ -26531,7 +26531,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.359393+02:00"
+      "updated_at": "2026-09-19T08:05:24.961072+02:00"
     },
     {
       "task_id": "ee5e3626-477f-5a6a-b30a-adb76d9731e3",
@@ -26565,7 +26565,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.359575+02:00"
+      "updated_at": "2026-09-19T08:05:24.961268+02:00"
     },
     {
       "task_id": "09213b2c-a0de-55ef-a213-500a1c757dfd",
@@ -26599,7 +26599,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.392066+02:00"
+      "updated_at": "2026-09-19T08:05:24.999105+02:00"
     },
     {
       "task_id": "61f17530-25aa-50bf-adbb-ce3083507f45",
@@ -26633,7 +26633,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.426557+02:00"
+      "updated_at": "2026-09-19T08:05:25.035433+02:00"
     },
     {
       "task_id": "d120c196-48a7-5956-9763-1fada62807d0",
@@ -26667,7 +26667,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.367100+02:00"
+      "updated_at": "2026-09-19T08:05:24.968764+02:00"
     },
     {
       "task_id": "127c8880-a476-5cd1-a0bf-4abeba0a1c30",
@@ -26701,7 +26701,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.398057+02:00"
+      "updated_at": "2026-09-19T08:05:25.006929+02:00"
     },
     {
       "task_id": "bff0e6d4-a04d-5eec-9920-e23bdaa82297",
@@ -26735,7 +26735,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.399544+02:00"
+      "updated_at": "2026-09-19T08:05:25.008423+02:00"
     },
     {
       "task_id": "68219104-bb7f-5218-a776-a92283feaf40",
@@ -26769,7 +26769,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.400114+02:00"
+      "updated_at": "2026-09-19T08:05:25.008944+02:00"
     },
     {
       "task_id": "ce787c26-0f78-521a-aebf-bd447a2781ee",
@@ -26803,7 +26803,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.382995+02:00"
+      "updated_at": "2026-09-19T08:05:24.984812+02:00"
     },
     {
       "task_id": "8df792dd-78cd-527c-9ae9-371d27683482",
@@ -26837,7 +26837,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.399001+02:00"
+      "updated_at": "2026-09-19T08:05:25.007835+02:00"
     },
     {
       "task_id": "ff101fcb-a7ce-593c-8047-a140f8d88ac4",
@@ -26871,7 +26871,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.399368+02:00"
+      "updated_at": "2026-09-19T08:05:25.008233+02:00"
     },
     {
       "task_id": "879e9160-306e-58da-96b9-bec18515fafe",
@@ -26905,7 +26905,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.399189+02:00"
+      "updated_at": "2026-09-19T08:05:25.008014+02:00"
     },
     {
       "task_id": "6f7a1b2f-a399-50f9-bf63-c16c42158f1c",
@@ -26939,7 +26939,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.399745+02:00"
+      "updated_at": "2026-09-19T08:05:25.008600+02:00"
     },
     {
       "task_id": "eeb088f1-36d3-5c9b-84be-85e451ce67dc",
@@ -26973,7 +26973,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.399929+02:00"
+      "updated_at": "2026-09-19T08:05:25.008774+02:00"
     },
     {
       "task_id": "287163bf-9c00-587b-b808-0daed43cb0df",
@@ -27007,7 +27007,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.383951+02:00"
+      "updated_at": "2026-09-19T08:05:24.985783+02:00"
     },
     {
       "task_id": "8f76a739-d654-5c2e-b844-e68e64cbbf80",
@@ -27041,7 +27041,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.422607+02:00"
+      "updated_at": "2026-09-19T08:05:25.031449+02:00"
     },
     {
       "task_id": "2e3d21b5-a5b5-5ae8-9cb9-afe12e06de00",
@@ -27075,7 +27075,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.398241+02:00"
+      "updated_at": "2026-09-19T08:05:25.007099+02:00"
     },
     {
       "task_id": "cef3df6b-ca8a-5cff-8a1c-15862f25b5b0",
@@ -27109,7 +27109,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.366267+02:00"
+      "updated_at": "2026-09-19T08:05:24.967923+02:00"
     },
     {
       "task_id": "f4b90c39-bd8b-579f-95d8-130ad4a6c82a",
@@ -27143,7 +27143,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.370356+02:00"
+      "updated_at": "2026-09-19T08:05:24.972047+02:00"
     },
     {
       "task_id": "c21d1716-2419-54cf-94aa-65d352c133de",
@@ -27177,7 +27177,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.359767+02:00"
+      "updated_at": "2026-09-19T08:05:24.961451+02:00"
     },
     {
       "task_id": "d96bc3ba-af07-5e46-894f-e6c13a48937c",
@@ -27211,7 +27211,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.398414+02:00"
+      "updated_at": "2026-09-19T08:05:25.007295+02:00"
     },
     {
       "task_id": "46b11399-2d3e-5e39-8c7e-8fe30c865b16",
@@ -27245,7 +27245,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.393651+02:00"
+      "updated_at": "2026-09-19T08:05:25.002358+02:00"
     },
     {
       "task_id": "d265ef8b-5c2b-55fe-97d5-630e5dbb82fe",
@@ -27279,7 +27279,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.380211+02:00"
+      "updated_at": "2026-09-19T08:05:24.982020+02:00"
     },
     {
       "task_id": "73bf2bbe-28da-5c7d-9d1a-df53d4f6284a",
@@ -27313,7 +27313,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.380041+02:00"
+      "updated_at": "2026-09-19T08:05:24.981848+02:00"
     },
     {
       "task_id": "e3700009-7e20-5a8e-a9ea-edeb83d4053d",
@@ -27347,7 +27347,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.391102+02:00"
+      "updated_at": "2026-09-19T08:05:24.997041+02:00"
     },
     {
       "task_id": "c16d8502-a9e5-58e1-95b1-88f173d47867",
@@ -27381,7 +27381,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.369311+02:00"
+      "updated_at": "2026-09-19T08:05:24.970991+02:00"
     },
     {
       "task_id": "2f8d8852-678a-5969-bf94-df5b4c9e4ba0",
@@ -27415,7 +27415,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.385469+02:00"
+      "updated_at": "2026-09-19T08:05:24.987304+02:00"
     },
     {
       "task_id": "16fb4b99-e980-51a8-9dd1-281781ccc73b",
@@ -27449,7 +27449,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.395723+02:00"
+      "updated_at": "2026-09-19T08:05:25.004611+02:00"
     },
     {
       "task_id": "0fa2ecfe-40c5-5224-bb28-aca66c3ff8e8",
@@ -27483,7 +27483,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.367674+02:00"
+      "updated_at": "2026-09-19T08:05:24.969364+02:00"
     },
     {
       "task_id": "db4fb132-81bf-5827-9b21-0fc77fe0bbce",
@@ -27517,7 +27517,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.400287+02:00"
+      "updated_at": "2026-09-19T08:05:25.009119+02:00"
     },
     {
       "task_id": "08295632-5133-5384-9d86-0556d0ccca8b",
@@ -27551,7 +27551,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.398600+02:00"
+      "updated_at": "2026-09-19T08:05:25.007483+02:00"
     },
     {
       "task_id": "147ef378-9352-5c82-9333-dba376ace0fb",
@@ -27585,7 +27585,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.391279+02:00"
+      "updated_at": "2026-09-19T08:05:24.997451+02:00"
     },
     {
       "task_id": "4b76e148-1e79-5477-84f5-735b8e4e5c79",
@@ -27619,7 +27619,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.370181+02:00"
+      "updated_at": "2026-09-19T08:05:24.971875+02:00"
     },
     {
       "task_id": "eac68747-de27-5b78-b176-978112343bb0",
@@ -27653,7 +27653,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.387668+02:00"
+      "updated_at": "2026-09-19T08:05:24.989853+02:00"
     },
     {
       "task_id": "ae3cbc86-6f8d-5346-ad1e-98fb4ca7445a",
@@ -27687,7 +27687,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.377119+02:00"
+      "updated_at": "2026-09-19T08:05:24.978927+02:00"
     },
     {
       "task_id": "d0353e92-baa0-5728-bed2-f819a7fdcf76",
@@ -27721,7 +27721,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.377317+02:00"
+      "updated_at": "2026-09-19T08:05:24.979104+02:00"
     },
     {
       "task_id": "3df6fce9-2265-5e0d-9d13-f2086f2e0d29",
@@ -27755,7 +27755,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.391460+02:00"
+      "updated_at": "2026-09-19T08:05:24.997835+02:00"
     },
     {
       "task_id": "d453542d-d9b4-555b-a1c7-9604263ecce2",
@@ -27789,7 +27789,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.394486+02:00"
+      "updated_at": "2026-09-19T08:05:25.003287+02:00"
     },
     {
       "task_id": "876d2761-ba5b-5264-977f-4db1f044345f",
@@ -27823,7 +27823,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.392243+02:00"
+      "updated_at": "2026-09-19T08:05:24.999483+02:00"
     },
     {
       "task_id": "831c560c-d78c-5381-836d-7fc931d14333",
@@ -27857,7 +27857,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.422795+02:00"
+      "updated_at": "2026-09-19T08:05:25.031621+02:00"
     },
     {
       "task_id": "98af7aae-157e-5a59-ae46-316b969c66d2",
@@ -27891,7 +27891,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.394027+02:00"
+      "updated_at": "2026-09-19T08:05:25.002763+02:00"
     },
     {
       "task_id": "6deeb835-520b-5599-baf3-263ef5f16e0c",
@@ -27925,7 +27925,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.368955+02:00"
+      "updated_at": "2026-09-19T08:05:24.970651+02:00"
     },
     {
       "task_id": "22d5a4f5-940f-51f2-8790-936d655a436f",
@@ -27959,7 +27959,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.403175+02:00"
+      "updated_at": "2026-09-19T08:05:25.012017+02:00"
     },
     {
       "task_id": "57a24912-ae10-5057-a724-dad5e3e67d13",
@@ -27993,7 +27993,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.371289+02:00"
+      "updated_at": "2026-09-19T08:05:24.973007+02:00"
     },
     {
       "task_id": "87c8c6c8-e2cb-58f2-94b7-43c7c89bb495",
@@ -28027,7 +28027,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.382176+02:00"
+      "updated_at": "2026-09-19T08:05:24.983990+02:00"
     },
     {
       "task_id": "6a9011fc-ede8-5b68-987a-f18aa588e96a",
@@ -28061,7 +28061,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.393850+02:00"
+      "updated_at": "2026-09-19T08:05:25.002577+02:00"
     },
     {
       "task_id": "3b937c8b-fc00-5726-b809-37735cf51a46",
@@ -28095,7 +28095,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.360312+02:00"
+      "updated_at": "2026-09-19T08:05:24.961974+02:00"
     },
     {
       "task_id": "a1ffce75-8a87-5c02-b538-9dc274ce2182",
@@ -28129,7 +28129,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.389522+02:00"
+      "updated_at": "2026-09-19T08:05:24.993624+02:00"
     },
     {
       "task_id": "abfb00c9-9460-54cc-96f6-d9b707436b84",
@@ -28163,7 +28163,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.360138+02:00"
+      "updated_at": "2026-09-19T08:05:24.961800+02:00"
     },
     {
       "task_id": "a58859a8-cceb-59cf-887f-2e78877cde19",
@@ -28197,7 +28197,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.359949+02:00"
+      "updated_at": "2026-09-19T08:05:24.961621+02:00"
     },
     {
       "task_id": "195c78ea-ca5b-53b3-8f49-523008b90c7b",
@@ -28231,7 +28231,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.385652+02:00"
+      "updated_at": "2026-09-19T08:05:24.987496+02:00"
     },
     {
       "task_id": "39c552d8-53b5-5932-8cd3-dcedb4301a91",
@@ -28265,7 +28265,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.385857+02:00"
+      "updated_at": "2026-09-19T08:05:24.987680+02:00"
     },
     {
       "task_id": "9eaf9adb-5db2-5999-bebf-0c4a8529df4d",
@@ -28299,7 +28299,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.386546+02:00"
+      "updated_at": "2026-09-19T08:05:24.988382+02:00"
     },
     {
       "task_id": "3b071db6-3e42-5015-a813-2f9525df1fca",
@@ -28333,7 +28333,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.386206+02:00"
+      "updated_at": "2026-09-19T08:05:24.988022+02:00"
     },
     {
       "task_id": "2ba4220c-78f6-599d-92f6-19b3f0fb2e74",
@@ -28367,7 +28367,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.386374+02:00"
+      "updated_at": "2026-09-19T08:05:24.988208+02:00"
     },
     {
       "task_id": "39f8dedc-ef41-5350-a0ed-3b1963575d7c",
@@ -28401,7 +28401,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.386732+02:00"
+      "updated_at": "2026-09-19T08:05:24.988560+02:00"
     },
     {
       "task_id": "57d1a5c1-30e3-5d77-895d-96018821847a",
@@ -28435,7 +28435,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.377490+02:00"
+      "updated_at": "2026-09-19T08:05:24.979296+02:00"
     },
     {
       "task_id": "8dd4f770-e96e-5f8d-a8dc-4d458989c9c4",
@@ -28469,7 +28469,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.378543+02:00"
+      "updated_at": "2026-09-19T08:05:24.980358+02:00"
     },
     {
       "task_id": "aa4f55c9-9f88-5650-9bb9-6d835bbc614e",
@@ -28503,7 +28503,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.386033+02:00"
+      "updated_at": "2026-09-19T08:05:24.987853+02:00"
     },
     {
       "task_id": "d1eac6ec-e615-5be8-9b5d-c5a0ac8bb69c",
@@ -28537,7 +28537,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.355159+02:00"
+      "updated_at": "2026-09-19T08:05:24.956885+02:00"
     },
     {
       "task_id": "c76636e1-8a6b-59f6-8992-b4c3f176ed05",
@@ -28571,7 +28571,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.426049+02:00"
+      "updated_at": "2026-09-19T08:05:25.034893+02:00"
     },
     {
       "task_id": "351faf54-9cdc-5860-8dc1-c274a86da337",
@@ -28605,7 +28605,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.426387+02:00"
+      "updated_at": "2026-09-19T08:05:25.035253+02:00"
     },
     {
       "task_id": "338e05ea-4732-5a99-b150-11942dd98ac2",
@@ -28639,7 +28639,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.426745+02:00"
+      "updated_at": "2026-09-19T08:05:25.035604+02:00"
     },
     {
       "task_id": "f8186d8b-0db1-54d7-89db-104b7e7c2df4",
@@ -28673,7 +28673,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.355334+02:00"
+      "updated_at": "2026-09-19T08:05:24.957061+02:00"
     },
     {
       "task_id": "46fc18ab-99cd-53eb-ac44-7cbdfddc7c60",
@@ -28707,7 +28707,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.394903+02:00"
+      "updated_at": "2026-09-19T08:05:25.003713+02:00"
     },
     {
       "task_id": "221c381f-eed0-5591-9727-76330c7301ed",
@@ -28741,7 +28741,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.355506+02:00"
+      "updated_at": "2026-09-19T08:05:24.957250+02:00"
     },
     {
       "task_id": "de5ca98c-90fa-5826-8ba6-05c1a0ba7644",
@@ -28775,7 +28775,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.355703+02:00"
+      "updated_at": "2026-09-19T08:05:24.957430+02:00"
     },
     {
       "task_id": "fb9fa6b8-c4e5-586a-9733-32251a6be7bc",
@@ -28809,7 +28809,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.384295+02:00"
+      "updated_at": "2026-09-19T08:05:24.986129+02:00"
     },
     {
       "task_id": "9a4bccfc-e09b-5ba2-846f-180238fcc4a2",
@@ -28843,7 +28843,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.389159+02:00"
+      "updated_at": "2026-09-19T08:05:24.992858+02:00"
     },
     {
       "task_id": "ae5c0aa1-fb08-565e-b177-945fa4cc701a",
@@ -28877,7 +28877,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.354980+02:00"
+      "updated_at": "2026-09-19T08:05:24.956714+02:00"
     },
     {
       "task_id": "e254b3a0-f835-5b07-a6d7-4c7e8370e11d",
@@ -28911,7 +28911,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.427104+02:00"
+      "updated_at": "2026-09-19T08:05:25.035954+02:00"
     },
     {
       "task_id": "7f8e8eab-293b-5ada-aa30-755e8ceda22d",
@@ -28945,7 +28945,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.425574+02:00"
+      "updated_at": "2026-09-19T08:05:25.034440+02:00"
     },
     {
       "task_id": "4c5e531d-6f5c-51d4-84c3-8a0dc0202f51",
@@ -28979,7 +28979,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.369726+02:00"
+      "updated_at": "2026-09-19T08:05:24.971421+02:00"
     },
     {
       "task_id": "de7c4ae3-8e1f-5346-b946-1b0370bebbb8",
@@ -29013,7 +29013,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.390177+02:00"
+      "updated_at": "2026-09-19T08:05:24.995069+02:00"
     },
     {
       "task_id": "3b0e360e-a82e-5c60-8512-dc62c4ee280c",
@@ -29047,7 +29047,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.362367+02:00"
+      "updated_at": "2026-09-19T08:05:24.964017+02:00"
     },
     {
       "task_id": "7cbfdbb0-d2eb-53f7-89c6-350d5c8206b9",
@@ -29081,7 +29081,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.427642+02:00"
+      "updated_at": "2026-09-19T08:05:25.036525+02:00"
     },
     {
       "task_id": "4327c2df-ad11-53c6-b767-332cca39001b",
@@ -29115,7 +29115,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.427829+02:00"
+      "updated_at": "2026-09-19T08:05:25.036693+02:00"
     },
     {
       "task_id": "5b3cb8e8-31cc-5b83-9b40-f5a01d5d223f",
@@ -29149,7 +29149,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.428004+02:00"
+      "updated_at": "2026-09-19T08:05:25.036864+02:00"
     },
     {
       "task_id": "bd264e0d-5c85-5fbd-9809-6560c77a8445",
@@ -29183,7 +29183,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.428172+02:00"
+      "updated_at": "2026-09-19T08:05:25.037033+02:00"
     },
     {
       "task_id": "08a6f01c-f4c3-5535-aca9-278914fd8be6",
@@ -29217,7 +29217,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.428347+02:00"
+      "updated_at": "2026-09-19T08:05:25.037231+02:00"
     },
     {
       "task_id": "e6246c8b-6f6d-51c8-bd2e-64cba5f186e7",
@@ -29251,7 +29251,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.403574+02:00"
+      "updated_at": "2026-09-19T08:05:25.012443+02:00"
     },
     {
       "task_id": "c2222bb0-0002-5e89-bfba-f14631b5b5ba",
@@ -29285,7 +29285,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.404257+02:00"
+      "updated_at": "2026-09-19T08:05:25.013100+02:00"
     },
     {
       "task_id": "4c13099a-2271-51ee-a609-9f1c814c8da2",
@@ -29319,7 +29319,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.403895+02:00"
+      "updated_at": "2026-09-19T08:05:25.012740+02:00"
     },
     {
       "task_id": "d5fa0b9f-385b-5f74-b7e3-8a3356596cf2",
@@ -29353,7 +29353,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.404085+02:00"
+      "updated_at": "2026-09-19T08:05:25.012927+02:00"
     },
     {
       "task_id": "377a022d-debf-5c8b-b2e8-d9bb17871535",
@@ -29387,7 +29387,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.428512+02:00"
+      "updated_at": "2026-09-19T08:05:25.037404+02:00"
     },
     {
       "task_id": "393fefba-f946-56e4-823c-890e3cb507e0",
@@ -29421,7 +29421,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.428684+02:00"
+      "updated_at": "2026-09-19T08:05:25.037579+02:00"
     },
     {
       "task_id": "ce3fcdd5-e076-5b37-bae5-e3753e7a6f6d",
@@ -29455,7 +29455,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.428876+02:00"
+      "updated_at": "2026-09-19T08:05:25.037749+02:00"
     },
     {
       "task_id": "015c7075-a674-5f4d-bd9f-938fba0400c0",
@@ -29489,7 +29489,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.407106+02:00"
+      "updated_at": "2026-09-19T08:05:25.015933+02:00"
     },
     {
       "task_id": "cd36099b-e96a-57ff-87b8-cb1940a09811",
@@ -29523,7 +29523,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.405500+02:00"
+      "updated_at": "2026-09-19T08:05:25.014357+02:00"
     },
     {
       "task_id": "08d1f0d3-a021-518c-a398-43c34ba79538",
@@ -29557,7 +29557,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.406563+02:00"
+      "updated_at": "2026-09-19T08:05:25.015404+02:00"
     },
     {
       "task_id": "d98bdc52-aa76-5f82-817e-5ff6da4f1717",
@@ -29591,7 +29591,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.407770+02:00"
+      "updated_at": "2026-09-19T08:05:25.016601+02:00"
     },
     {
       "task_id": "3108037f-5803-5e1a-8de2-1654a453bd99",
@@ -29625,7 +29625,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.404976+02:00"
+      "updated_at": "2026-09-19T08:05:25.013818+02:00"
     },
     {
       "task_id": "77793529-8024-55fc-a876-6ee27549abf8",
@@ -29659,7 +29659,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.407953+02:00"
+      "updated_at": "2026-09-19T08:05:25.016775+02:00"
     },
     {
       "task_id": "72e0ab7f-5059-5a5a-9c71-1643b0a4697c",
@@ -29693,7 +29693,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.404797+02:00"
+      "updated_at": "2026-09-19T08:05:25.013643+02:00"
     },
     {
       "task_id": "847a93eb-021f-575b-93e9-468ba21262e8",
@@ -29727,7 +29727,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.406928+02:00"
+      "updated_at": "2026-09-19T08:05:25.015753+02:00"
     },
     {
       "task_id": "9da008cb-aeac-5f84-a208-7986cced4d28",
@@ -29761,7 +29761,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.404430+02:00"
+      "updated_at": "2026-09-19T08:05:25.013295+02:00"
     },
     {
       "task_id": "8a08dab2-917b-5e05-92cd-fff08cd94ebf",
@@ -29795,7 +29795,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.406751+02:00"
+      "updated_at": "2026-09-19T08:05:25.015580+02:00"
     },
     {
       "task_id": "764770dc-c4b7-58cb-b513-d6120c4efbe9",
@@ -29829,7 +29829,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.405986+02:00"
+      "updated_at": "2026-09-19T08:05:25.014811+02:00"
     },
     {
       "task_id": "2159a139-96ed-5dda-a0c5-c11c5edac395",
@@ -29863,7 +29863,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.408132+02:00"
+      "updated_at": "2026-09-19T08:05:25.016945+02:00"
     },
     {
       "task_id": "4d904eb6-6926-566b-8549-0f3f03840e33",
@@ -29897,7 +29897,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.408304+02:00"
+      "updated_at": "2026-09-19T08:05:25.017120+02:00"
     },
     {
       "task_id": "2674f446-62b2-59dd-a05a-37f06ed2f56e",
@@ -29931,7 +29931,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.429174+02:00"
+      "updated_at": "2026-09-19T08:05:25.038044+02:00"
     },
     {
       "task_id": "f89784c1-2403-5645-a686-223f7daf90b5",
@@ -29965,7 +29965,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.408652+02:00"
+      "updated_at": "2026-09-19T08:05:25.017499+02:00"
     },
     {
       "task_id": "55c7996a-36cc-5fa6-9a20-28b6a66d8048",
@@ -29999,7 +29999,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.405155+02:00"
+      "updated_at": "2026-09-19T08:05:25.013988+02:00"
     },
     {
       "task_id": "95143885-d69f-5d37-bf24-85597248d495",
@@ -30033,7 +30033,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.429340+02:00"
+      "updated_at": "2026-09-19T08:05:25.038228+02:00"
     },
     {
       "task_id": "a9a98677-6e15-5ec8-a1e1-23177c736975",
@@ -30067,7 +30067,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.407568+02:00"
+      "updated_at": "2026-09-19T08:05:25.016413+02:00"
     },
     {
       "task_id": "25214170-b989-5ec1-88e9-a988968e7ab4",
@@ -30101,7 +30101,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.407279+02:00"
+      "updated_at": "2026-09-19T08:05:25.016105+02:00"
     },
     {
       "task_id": "21103cd0-29ee-576d-ad8f-00ad49a51eee",
@@ -30135,7 +30135,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.406390+02:00"
+      "updated_at": "2026-09-19T08:05:25.015225+02:00"
     },
     {
       "task_id": "9d1ddcda-cfac-59cb-96e7-9a79d290be3f",
@@ -30169,7 +30169,7 @@
       "is_new": true,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.408478+02:00"
+      "updated_at": "2026-09-19T08:05:25.017317+02:00"
     },
     {
       "task_id": "f1152047-fec1-535d-8145-c4e715fbc4b5",
@@ -30203,7 +30203,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.405328+02:00"
+      "updated_at": "2026-09-19T08:05:25.014161+02:00"
     },
     {
       "task_id": "e9103f18-d9bc-502a-9b39-7bd469b6490e",
@@ -30237,7 +30237,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.404601+02:00"
+      "updated_at": "2026-09-19T08:05:25.013472+02:00"
     },
     {
       "task_id": "8c98b7a5-92e0-5217-b051-169a87f4a4f0",
@@ -30271,7 +30271,7 @@
       "is_new": false,
       "territory_hub": "Villar Dora",
       "crm_required": true,
-      "updated_at": "2026-09-19T08:02:23.405675+02:00"
+      "updated_at": "2026-09-19T08:05:25.014531+02:00"
     }
   ]
 }
