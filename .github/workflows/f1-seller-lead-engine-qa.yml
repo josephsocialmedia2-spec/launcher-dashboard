@@ -1,5 +1,20 @@
 name: F1 Seller Lead Engine QA
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'seller-lead-engine.html'
+      - 'seller-lead-engine.js'
+      - 'config/seller-lead-engine.json'
+      - 'scripts/seller_lead_engine.py'
+      - 'data/seller-lead-engine-public.json'
+      - 'data/postiz-outbox.json'
+      - 'data/communication-outbox.json'
+      - 'tests/test_seller_lead_engine.py'
+      - 'tests/seller-lead-engine.spec.js'
+      - 'docs/FOLLOWUP_RULES.md'
+      - 'docs/F1_SELLER_LEAD_ENGINE_INTEGRATION.md'
+      - '.github/workflows/f1-seller-lead-engine-*.yml'
   pull_request:
     branches: [main]
     paths:
