@@ -24,3 +24,12 @@ test('communication outbox contains no resolved recipient details', async ({ req
   expect(serialized.includes('"recipient":')).toBeFalsy();
   expect(serialized.includes('"recipient_lookup":"crm_authenticated_required"')).toBeTruthy();
 });
+
+
+test('territory mobile home opens Seller Lead Engine', async ({ page }) => {
+  await page.goto('/territory-mobile.html');
+  const link = page.locator('#openSellerLeadEngine');
+  await expect(link).toBeVisible();
+  await expect(link).toHaveText('F1 SELLER LEAD ENGINE');
+  await expect(link).toHaveAttribute('href','seller-lead-engine.html');
+});
