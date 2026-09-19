@@ -75,6 +75,13 @@ if errorlevel 1 (
   exit /b 1
 )
 
+REM lmdb recente non pubblica wheel CPython 3.8 Windows; 1.4.1 include wheel win_amd64.
+pip install lmdb==1.4.1
+if errorlevel 1 (
+  echo [ERRORE] Installazione lmdb compatibile fallita.
+  exit /b 1
+)
+
 pip install -r external\SadTalker\requirements.txt
 if errorlevel 1 (
   echo [ERRORE] Dipendenze SadTalker non installate.
