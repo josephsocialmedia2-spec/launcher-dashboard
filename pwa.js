@@ -25,7 +25,5 @@
     loadOnce('f1-sign-capture.js?v=20260916-sign-office1','f1SignCaptureLoader');
     loadOnce('f1-mobile-field-only-guard.js?v=20260916-office1','f1MobileFieldOnlyLoader');
   }
-  if(page==='ricerca-territoriale.html') loadOnce('f1-office-sign-link.js?v=20260916-office1','f1OfficeSignLinkLoader');
-
-  // PWA bootstrap only. The Acquisition Command Center owns its layout explicitly.
+// PWA bootstrap only. The Acquisition Command Center owns its layout explicitly.
 })();
