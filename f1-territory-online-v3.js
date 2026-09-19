@@ -609,6 +609,12 @@ function bind(){
 }
 async function init(){
   injectStyle();injectScreens();injectTerritoryExtras();injectModals();renderMunicipalities();bind();
+  // Cold launch / Home-screen launch: always start from the municipality selector.
+  // Internal workflow hashes (for example #terr after selecting a street) are preserved.
+  if(!location.hash || location.hash==='#home' || location.hash==='#municipalities'){
+    if(location.hash) history.replaceState(null,'',location.pathname+location.search);
+    screen('municipalities');
+  }
   try{window.F1TerritoryV3.profile=await F1StaffData.me();await crm(true);updateNoteCount()}catch(e){console.warn('F1 Territory v3 init',e)}
 }
 window.F1TerritoryV3={version:VERSION,profile:null,crm,openCivicEditor,openNotesForRecord,augmentExcel,exportExcel,selectMunicipality,activateGps};
