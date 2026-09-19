@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const VERSION='20260919-sign-crm4';
+const VERSION='20260919-sign-crm5';
 const BUCKET='f1-territory-photos';
 const $=id=>document.getElementById(id), txt=v=>String(v??'').trim();
 let fileBlob=null, previewUrl='', ocrText='', ocrConfidence=0, context=null, duplicateOverride=false, busy=false;
@@ -25,6 +25,35 @@ function openOverlay(options={}){
   if(options?.autoTake){
     const input=$('f1SignFile');
     try{input?.click()}catch(e){console.warn('[F1 sign auto camera]',e)}
+  }
+}
+function openDirectCamera(options={}){
+  injectStyle();
+  const input=document.createElement('input');
+  input.type='file';
+  input.accept='image/*';
+  input.setAttribute('capture','environment');
+  input.setAttribute('aria-hidden','true');
+  input.style.cssText='position:fixed;left:-10000px;top:-10000px;width:1px;height:1px;opacity:0;pointer-events:none';
+  document.body.appendChild(input);
+  let cleaned=false;
+  const cleanup=()=>{if(cleaned)return;cleaned=true;try{input.remove()}catch(_){}};
+  input.onchange=()=>{
+    const f=input.files?.[0];
+    cleanup();
+    if(!f)return;
+    if($('f1SignOverlay'))closeOverlay();
+    openOverlay();
+    fileBlob=f;
+    if(previewUrl)URL.revokeObjectURL(previewUrl);
+    previewUrl=URL.createObjectURL(f);
+    renderPreview();
+  };
+  input.addEventListener('cancel',cleanup,{once:true});
+  try{input.click()}catch(e){
+    console.warn('[F1 sign direct camera]',e);
+    cleanup();
+    openOverlay({...options,autoTake:true});
   }
 }
 function closeOverlay(){if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl=''}fileBlob=null;ocrText='';ocrConfidence=0;duplicateOverride=false;$('f1SignOverlay')?.remove();}
@@ -108,5 +137,5 @@ function finishQueued(data){const b=$('f1SignBody'),hasPhone=/\d{7,}/.test(Strin
 function injectButtons(){injectStyle();const quick=$('quickSign');if(quick){quick.onclick=openOverlay;return}const actions=document.querySelector('#civicSheet .actions');if(actions&&!$('f1SignCivicBtn')){const b=document.createElement('button');b.id='f1SignCivicBtn';b.type='button';b.className='btn f1-sign-btn';b.textContent='📷 LEGGI CARTELLO';b.onclick=openOverlay;actions.insertBefore(b,actions.querySelector('#propertyBtn')||actions.lastElementChild);}}
 function boot(){injectButtons();if(navigator.onLine&&window.F1NotiziereEngine?.load)setTimeout(async()=>{try{const st=await F1NotiziereEngine.load({force:true});await window.F1MobileStore?.cacheState?.(st)}catch(e){console.warn('[F1 sign warm context]',e)}},1000);addEventListener('online',()=>setTimeout(flushPending,900));setTimeout(flushPending,2000);}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
-window.F1SignCapture={version:VERSION,open:openOverlay,flush:flushPending,phoneCandidates,classify};
+window.F1SignCapture={version:VERSION,open:openOverlay,captureDirect:openDirectCamera,flush:flushPending,phoneCandidates,classify};
 })();
