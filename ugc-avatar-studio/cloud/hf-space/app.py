@@ -96,6 +96,15 @@ def ensure_assets() -> None:
                     shutil.rmtree(SADTALKER, ignore_errors=True)
                 _run(["git", "clone", "--depth", "1", "https://github.com/OpenTalker/SadTalker.git", str(SADTALKER)], timeout=180)
 
+            # Compatibility patch for modern NumPy: upstream SadTalker still
+            # contains the removed np.float alias in its landmark code.
+            awing = SADTALKER / "src" / "face3d" / "util" / "my_awing_arch.py"
+            if awing.exists():
+                src = awing.read_text(encoding="utf-8")
+                patched = src.replace("preds.astype(np.float, copy=False)", "preds.astype(float, copy=False)")
+                if patched != src:
+                    awing.write_text(patched, encoding="utf-8")
+
             for dst, url in PIPER_URLS.items():
                 _download(url, dst)
 
