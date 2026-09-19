@@ -48,3 +48,54 @@ Il deploy viene eseguito con:
 `modal deploy ugc-avatar-studio/cloud/modal/modal_app.py --name ugc-avatar-studio`
 
 Dopo il deploy il workflow recupera il vero URL pubblico Modal e verifica `/health`.
+
+
+## Automazione end-to-end con Postiz
+
+Input operativo richiesto all'utente:
+
+1. immagine avatar;
+2. discorso/testo.
+
+Il backend esegue automaticamente:
+
+- validazione input;
+- Piper TTS italiano;
+- SadTalker;
+- sottotitoli;
+- FFmpeg 1080x1920;
+- controllo stream audio/video e durata;
+- generazione automatica titolo, caption e hashtag;
+- archiviazione persistente su Modal Volume;
+- discovery degli account collegati a Postiz;
+- upload MP4 a Postiz;
+- configurazione specifica per Instagram, TikTok, YouTube e Facebook;
+- scheduling automatico;
+- storico e report per job;
+- retry per rendering e richieste Postiz.
+
+Endpoint:
+
+- `POST /api/render`: accetta soltanto `photo` e `script`.
+- `GET /api/jobs/{job_id}`: report completo.
+- `GET /api/jobs/{job_id}/video`: MP4 archiviato.
+- `GET /api/history`: storico.
+- `GET /api/diagnostics`: stato Postiz e canali rilevati.
+
+### Secrets
+
+GitHub Actions richiede:
+
+- `MODAL_TOKEN_ID`
+- `MODAL_TOKEN_SECRET`
+- `POSTIZ_API_KEY`
+
+Il workflow sincronizza `POSTIZ_API_KEY` nel Modal Secret `ugc-avatar-studio-runtime` senza inserirla nel repository.
+
+### Pubblicazione
+
+Per default vengono selezionati automaticamente gli account Postiz collegati con provider:
+
+`instagram, instagram-standalone, tiktok, youtube, facebook`
+
+Il post viene schedulato automaticamente alcuni minuti dopo il completamento del render. Non è richiesta una selezione manuale per singolo contenuto.
