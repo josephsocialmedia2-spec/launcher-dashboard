@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const VERSION='20260919-sign-crm5';
+const VERSION='20260919-sign-crm6';
 const BUCKET='f1-territory-photos';
 const $=id=>document.getElementById(id), txt=v=>String(v??'').trim();
 let fileBlob=null, previewUrl='', ocrText='', ocrConfidence=0, context=null, duplicateOverride=false, busy=false;
@@ -56,6 +56,34 @@ function openDirectCamera(options={}){
     openOverlay({...options,autoTake:true});
   }
 }
+function openGalleryPicker(options={}){
+  injectStyle();
+  const input=document.createElement('input');
+  input.type='file';
+  input.accept='image/*';
+  input.setAttribute('aria-hidden','true');
+  input.style.cssText='position:fixed;left:-10000px;top:-10000px;width:1px;height:1px;opacity:0;pointer-events:none';
+  document.body.appendChild(input);
+  let cleaned=false;
+  const cleanup=()=>{if(cleaned)return;cleaned=true;try{input.remove()}catch(_){}};
+  input.onchange=()=>{
+    const f=input.files?.[0];
+    cleanup();
+    if(!f)return;
+    if($('f1SignOverlay'))closeOverlay();
+    openOverlay();
+    fileBlob=f;
+    if(previewUrl)URL.revokeObjectURL(previewUrl);
+    previewUrl=URL.createObjectURL(f);
+    renderPreview();
+  };
+  input.addEventListener('cancel',cleanup,{once:true});
+  try{input.click()}catch(e){
+    console.warn('[F1 sign gallery picker]',e);
+    cleanup();
+    openOverlay();
+  }
+}
 function closeOverlay(){if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl=''}fileBlob=null;ocrText='';ocrConfidence=0;duplicateOverride=false;$('f1SignOverlay')?.remove();}
 async function getContext(){
   let st=null,p=null;
@@ -92,7 +120,7 @@ async function getContext(){
   return{state:st,progress:p,civico,profile:await profile()};
 }
 async function profile(){if(window.__f1SignProfile)return window.__f1SignProfile;if(!navigator.onLine)return null;if(!window.F1StaffData?.ready?.())return null;try{return window.__f1SignProfile=await F1StaffData.me()}catch(_){return null}}
-function renderCapture(){const b=$('f1SignBody');if(!b)return;b.innerHTML=`<div class="f1-sign-step"><div class="f1-sign-note">Fotografa il cartello. F1 leggerà testo e numero; i dati vengono registrati nel flusso territoriale solo dopo la tua conferma.</div><input id="f1SignFile" class="f1-sign-field" type="file" accept="image/*" capture="environment"><button id="f1SignTake" class="f1-sign-primary" type="button">📷 SCATTA / SCEGLI FOTO</button><div id="f1SignStatus" class="f1-sign-status"></div></div>`;const i=$('f1SignFile');i.style.position='absolute';i.style.left='-9999px';$('f1SignTake').onclick=()=>i.click();i.onchange=async()=>{const f=i.files?.[0];if(!f)return;fileBlob=f;previewUrl=URL.createObjectURL(f);renderPreview();};}
+function renderCapture(){const b=$('f1SignBody');if(!b)return;b.innerHTML=`<div class="f1-sign-step"><div class="f1-sign-note">Acquisisci un cartello con la fotocamera oppure scegli una foto già presente sul telefono. F1 leggerà testo e numero; i dati vengono registrati nel flusso territoriale solo dopo la tua conferma.</div><div class="f1-sign-grid"><button id="f1SignTake" class="f1-sign-primary" type="button">📷 SCATTA FOTO</button><button id="f1SignGallery" class="f1-sign-secondary" type="button">🖼️ CARICA FOTO</button></div><div id="f1SignStatus" class="f1-sign-status"></div></div>`;$('f1SignTake').onclick=()=>openDirectCamera({source:'SIGN_OVERLAY_CAMERA'});$('f1SignGallery').onclick=()=>openGalleryPicker({source:'SIGN_OVERLAY_GALLERY'});}
 function renderPreview(){const b=$('f1SignBody');b.innerHTML=`<div class="f1-sign-step"><img class="f1-sign-preview" src="${previewUrl}" alt="Anteprima cartello"><div class="f1-sign-grid"><button id="f1SignRetake" class="f1-sign-secondary" type="button">RIFAI FOTO</button><button id="f1SignAnalyze" class="f1-sign-primary" type="button">ANALIZZA FOTO</button></div><div id="f1SignStatus" class="f1-sign-status"></div></div>`;$('f1SignRetake').onclick=renderCapture;$('f1SignAnalyze').onclick=analyze;}
 async function loadTesseract(){if(window.Tesseract?.createWorker)return window.Tesseract;await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';s.onload=resolve;s.onerror=()=>reject(new Error('MOTORE OCR NON DISPONIBILE'));document.head.appendChild(s)});if(!window.Tesseract?.createWorker)throw new Error('MOTORE OCR NON DISPONIBILE');return window.Tesseract;}
 async function ocrPreparedImage(blob){try{const bmp=await createImageBitmap(blob,{imageOrientation:'from-image'}).catch(()=>createImageBitmap(blob)),max=1800,scale=Math.min(1,max/Math.max(bmp.width,bmp.height)),w=Math.max(1,Math.round(bmp.width*scale)),h=Math.max(1,Math.round(bmp.height*scale)),c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d',{willReadFrequently:true});x.drawImage(bmp,0,0,w,h);bmp.close?.();try{const d=x.getImageData(0,0,w,h),p=d.data;for(let i=0;i<p.length;i+=4){const g=.299*p[i]+.587*p[i+1]+.114*p[i+2],v=Math.max(0,Math.min(255,(g-128)*1.22+128));p[i]=p[i+1]=p[i+2]=v}x.putImageData(d,0,0)}catch(_){}return await new Promise(resolve=>c.toBlob(b=>resolve(b||blob),'image/jpeg',.92))}catch(_){return blob}}
@@ -137,5 +165,5 @@ function finishQueued(data){const b=$('f1SignBody'),hasPhone=/\d{7,}/.test(Strin
 function injectButtons(){injectStyle();const quick=$('quickSign');if(quick){quick.onclick=openOverlay;return}const actions=document.querySelector('#civicSheet .actions');if(actions&&!$('f1SignCivicBtn')){const b=document.createElement('button');b.id='f1SignCivicBtn';b.type='button';b.className='btn f1-sign-btn';b.textContent='📷 LEGGI CARTELLO';b.onclick=openOverlay;actions.insertBefore(b,actions.querySelector('#propertyBtn')||actions.lastElementChild);}}
 function boot(){injectButtons();if(navigator.onLine&&window.F1NotiziereEngine?.load)setTimeout(async()=>{try{const st=await F1NotiziereEngine.load({force:true});await window.F1MobileStore?.cacheState?.(st)}catch(e){console.warn('[F1 sign warm context]',e)}},1000);addEventListener('online',()=>setTimeout(flushPending,900));setTimeout(flushPending,2000);}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
-window.F1SignCapture={version:VERSION,open:openOverlay,captureDirect:openDirectCamera,flush:flushPending,phoneCandidates,classify};
+window.F1SignCapture={version:VERSION,open:openOverlay,captureDirect:openDirectCamera,pickGallery:openGalleryPicker,flush:flushPending,phoneCandidates,classify};
 })();
