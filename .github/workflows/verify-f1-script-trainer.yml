@@ -38,6 +38,10 @@ jobs:
           grep -q "SpeechSynthesisUtterance" /tmp/app.js
           curl -fsSL --max-time 20 "$BASE/service-worker.js" -o /tmp/sw.js
           grep -q "data/scripts.js" /tmp/sw.js
+          node --check /tmp/app.js
+          node --check /tmp/scripts.js
+          python -m json.tool /tmp/manifest.webmanifest >/dev/null
+          grep -q "voiceSelect" /tmp/index.html
           printf 'PUBLIC_URL_OK=1\n'
           printf 'INDEX_BYTES=%s\n' "$(wc -c < /tmp/index.html)"
           printf 'DATA_BYTES=%s\n' "$(wc -c < /tmp/scripts.js)"
