@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "updated_at": "2026-09-20",
+  "sources": [
+    {
+      "key": "REGISTRO_IMPRESE",
+      "label": "Registro Imprese / dati camerali",
+      "url": "https://www.registroimprese.it/",
+      "mode": "CONNECTOR_REQUIRED",
+      "automatic": false,
+      "note": "Usare API/servizio autorizzato. Non aggirare login, CAPTCHA o paywall."
+    },
+    {
+      "key": "INI_PEC",
+      "label": "INI-PEC",
+      "url": "https://www.inipec.gov.it/",
+      "mode": "PUBLIC_INTERACTIVE_OR_AUTHORIZED_CONNECTOR",
+      "automatic": false,
+      "note": "PEC separata dall'email commerciale. Nessun uso marketing automatico."
+    },
+    {
+      "key": "INAD",
+      "label": "INAD",
+      "url": "https://domiciliodigitale.gov.it/",
+      "mode": "PUBLIC_INTERACTIVE_OR_AUTHORIZED_CONNECTOR",
+      "automatic": false,
+      "note": "Domicili digitali: usare solo secondo modalità consentite."
+    },
+    {
+      "key": "ALBI_PROFESSIONALI",
+      "label": "Ordini e albi professionali",
+      "url": "",
+      "mode": "MULTI_PUBLIC_SOURCES",
+      "automatic": false,
+      "note": "Fonti territoriali variabili per professione."
+    },
+    {
+      "key": "SITI_UFFICIALI",
+      "label": "Siti ufficiali aziende/professionisti",
+      "url": "",
+      "mode": "PUBLIC_WEB",
+      "automatic": false,
+      "note": "Home, Contatti, Chi siamo, Footer, Privacy, Dove siamo."
+    },
+    {
+      "key": "SEARCH_ENGINE",
+      "label": "Motori di ricerca",
+      "url": "https://www.google.com/",
+      "mode": "AUTHORIZED_SEARCH_PROVIDER_REQUIRED",
+      "automatic": false,
+      "note": "Per automazione server-side configurare un provider/API conforme alle condizioni applicabili."
+    },
+    {
+      "key": "MAPS_DIRECTORY",
+      "label": "Mappe / directory attività",
+      "url": "https://www.google.com/maps",
+      "mode": "AUTHORIZED_PROVIDER_REQUIRED",
+      "automatic": false,
+      "note": "Discovery e controllo territoriale; non assumere automaticamente attendibile ogni dato."
+    },
+    {
+      "key": "COMUNI_ASSOCIAZIONI",
+      "label": "Comuni / associazioni / Pro Loco / consorzi",
+      "url": "",
+      "mode": "PUBLIC_WEB",
+      "automatic": false,
+      "note": "Fonti istituzionali e territoriali."
+    }
+  ]
+}
