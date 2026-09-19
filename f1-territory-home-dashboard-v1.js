@@ -1,6 +1,6 @@
 (()=>{
 'use strict';
-const VERSION='20260919-home-dashboard-v3';
+const VERSION='20260919-home-dashboard-v4';
 const INACTIVITY_MS=5*60*1000;
 const $=id=>document.getElementById(id);
 const qs=s=>document.querySelector(s);
@@ -83,11 +83,15 @@ function syncDashboard(){
 }
 
 function openPrivateSign(){
-  if(!window.F1SignCapture?.open){
-    alert('FUNZIONE CARTELLO NON ANCORA PRONTA. RIPROVA TRA UN ISTANTE.');
+  if(window.F1SignCapture?.captureDirect){
+    window.F1SignCapture.captureDirect({source:'HOME_SCATTA_CARTELLO_PRIVATO'});
     return;
   }
-  window.F1SignCapture.open({autoTake:true,source:'HOME_SCATTA_CARTELLO_PRIVATO'});
+  if(window.F1SignCapture?.open){
+    window.F1SignCapture.open({autoTake:true,source:'HOME_SCATTA_CARTELLO_PRIVATO'});
+    return;
+  }
+  alert('FUNZIONE CARTELLO NON ANCORA PRONTA. RIPROVA TRA UN ISTANTE.');
 }
 function buildDashboard(){
   const screen=$('municipalities');
