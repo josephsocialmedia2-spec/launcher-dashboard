@@ -221,12 +221,6 @@
   },
   "legacy_redirects": [
     {
-      "id": "f1-os-mobile-local-crm",
-      "path": "f1-os-mobile.html",
-      "redirect_to": "oggi.html",
-      "status": "RETIRED"
-    },
-    {
       "id": "legacy-browser-crm",
       "storage_key": "f1CRMContacts",
       "migrate_to": "leads/interactions/tasks",
