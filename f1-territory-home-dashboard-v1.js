@@ -1,11 +1,11 @@
 (()=>{
 'use strict';
-const VERSION='20260919-home-dashboard-v1';
+const VERSION='20260919-home-dashboard-v2';
 const INACTIVITY_MS=5*60*1000;
 const $=id=>document.getElementById(id);
 const qs=s=>document.querySelector(s);
 const qsa=s=>[...document.querySelectorAll(s)];
-let idleTimer=0,lastActivity=Date.now(),privateCapture=false,privateObserver=null;
+let idleTimer=0,lastActivity=Date.now();
 
 function injectStyle(){
   if($('f1HomeDashboardStyle'))return;
@@ -80,36 +80,13 @@ function syncDashboard(){
   }
 }
 
-function monitorPrivateCapture(){
-  if(privateObserver)privateObserver.disconnect();
-  privateObserver=new MutationObserver(()=>{
-    if(!privateCapture)return;
-    const form=$('f1SignForm');
-    const sel=form?.elements?.sign_type;
-    if(sel){
-      sel.value='CARTELLO_PRIVATO';
-      sel.dispatchEvent(new Event('change',{bubbles:true}));
-      privateCapture=false;
-      privateObserver.disconnect();
-      privateObserver=null;
-      const note=form.querySelector('[name="notes"]');
-      if(note&&!note.value)note.value='Cartello Vendesi da privato acquisito dalla Home F1 Territory.';
-    }
-  });
-  privateObserver.observe(document.body,{childList:true,subtree:true});
-  setTimeout(()=>{if(privateObserver){privateObserver.disconnect();privateObserver=null}privateCapture=false},270000);
-}
-
 function openPrivateSign(){
   if(!window.F1SignCapture?.open){
     alert('FUNZIONE CARTELLO NON ANCORA PRONTA. RIPROVA TRA UN ISTANTE.');
     return;
   }
-  privateCapture=true;
-  monitorPrivateCapture();
-  window.F1SignCapture.open();
+  window.F1SignCapture.open({autoTake:true,source:'HOME_SCATTA_CARTELLO_PRIVATO'});
 }
-
 function buildDashboard(){
   const screen=$('municipalities');
   const card=screen?.querySelector('.card');
@@ -124,7 +101,7 @@ function buildDashboard(){
       <span class="ico">▶</span><span><strong>RIPRENDI GIRO</strong><small id="f1HomeResumePlace">—</small></span>
     </button>
     <button id="f1HomePrivateSign" class="f1-home-tile capture" type="button">
-      <span class="ico">📷</span><span><strong>SCATTA CARTELLO PRIVATO</strong><small>Foto → OCR → CRM territoriale</small></span>
+      <span class="ico">📷</span><span><strong>SCATTA CARTELLO PRIVATO</strong><small>Foto → notizia CRM → verifica proprietario</small></span>
     </button>
     <button id="f1HomeToday" class="f1-home-tile" type="button">
       <span class="ico">✓</span><span><strong>OGGI</strong><small>Appuntamenti, follow-up e lettere</small></span>
