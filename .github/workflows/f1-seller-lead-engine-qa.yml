@@ -9,6 +9,7 @@ on:
       - 'scripts/seller_lead_engine.py'
       - 'data/seller-lead-engine-public.json'
       - 'data/postiz-outbox.json'
+      - 'data/communication-outbox.json'
       - 'tests/test_seller_lead_engine.py'
       - 'tests/seller-lead-engine.spec.js'
       - 'docs/FOLLOWUP_RULES.md'
@@ -29,6 +30,9 @@ jobs:
           python -m json.tool config/seller-lead-engine.json >/dev/null
           python -m unittest tests/test_seller_lead_engine.py -v
           python scripts/seller_lead_engine.py
+          python -m json.tool data/seller-lead-engine-public.json >/dev/null
+          python -m json.tool data/postiz-outbox.json >/dev/null
+          python -m json.tool data/communication-outbox.json >/dev/null
   browser:
     runs-on: ubuntu-latest
     steps:
