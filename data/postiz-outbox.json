@@ -1,1 +1,208 @@
-{"version":1,"generated_at":null,"status":"NOT_FOUND","rule":"Postiz non e stato individuato nel repository o nei commit/branch cercati. Nessuna credenziale viene creata o estratta.","drafts":[]}
+{
+  "version": 1,
+  "generated_at": "2026-09-19T12:43:18.404099+02:00",
+  "status": "NOT_FOUND",
+  "rule": "Non creare credenziali o nuove integrazioni social. Produrre una outbox finche l'installazione Postiz esistente non e tecnicamente mappata.",
+  "drafts": [
+    {
+      "id": "d31176c7-a965-58b4-abf9-9e41ae93c276",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Beinasco",
+      "title": "Novita immobiliare a Beinasco",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "bf983b8c-f4f2-5930-8e1e-c6ed1fb27f37",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Bruino",
+      "title": "Novita immobiliare a Bruino",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "6f122b40-aa41-5fab-beb7-b2d69704c302",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Pianezza",
+      "title": "Novita immobiliare a Pianezza",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "04f2217e-b90c-5444-ab6e-9a3252a1ceb9",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Avigliana",
+      "title": "Novita immobiliare a Avigliana",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "61c9d8b5-aa06-5599-bd91-c691f978c484",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Pianezza",
+      "title": "Novita immobiliare a Pianezza",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "4cef441c-d080-53aa-8721-2de751d0ec51",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Rosta",
+      "title": "Novita immobiliare a Rosta",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "1a58fc60-c987-5291-b375-9eeeb8b8cd27",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Druento",
+      "title": "Novita immobiliare a Druento",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "be1f7382-74fc-567f-9ca4-82e9a17c11b9",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Druento",
+      "title": "Novita immobiliare a Druento",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "c0328047-706b-52c1-ab22-cb756b0b3f1f",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Grugliasco",
+      "title": "Novita immobiliare a Grugliasco",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "cd7dcb5f-bbe8-5405-9998-8689b34e52b4",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "San Giorio di Susa",
+      "title": "Novita immobiliare a San Giorio di Susa",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "bcba04e0-2745-5613-a50a-c32efbe74313",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Pianezza",
+      "title": "Novita immobiliare a Pianezza",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "13c48d81-45a8-55e2-9d14-994f532c7a74",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "San Gillio",
+      "title": "Novita immobiliare a San Gillio",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "66c1feba-80d4-5d3f-8994-7e1e8b39571d",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Sant'Antonino di Susa",
+      "title": "Novita immobiliare a Sant'Antonino di Susa",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "d2882ebf-48d4-5395-aadf-dd7d7734099c",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Alpignano",
+      "title": "Novita immobiliare a Alpignano",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "b2ce1d16-c9dd-59e0-b91e-8d6a9c8d683e",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Alpignano",
+      "title": "Novita immobiliare a Alpignano",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "ac0b6eb5-9c76-5f9e-8086-92c5b288f4cb",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Buttigliera Alta",
+      "title": "Novita immobiliare a Buttigliera Alta",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "49f4c389-aa64-5e34-8ba2-e17bb25b5974",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Collegno",
+      "title": "Novita immobiliare a Collegno",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "3119c013-e11a-5a15-8972-0ea983b65b7d",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Fiano",
+      "title": "Novita immobiliare a Fiano",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "4bca7adc-a937-594a-ac1f-e3cb31f93295",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "Rubiana",
+      "title": "Novita immobiliare a Rubiana",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    },
+    {
+      "id": "ac41beb6-de8f-5b4d-91b2-f4209c95e002",
+      "status": "PENDING_INTEGRATION",
+      "campaign_type": "NOVITA_IMMOBILIARE_NELLA_ZONA",
+      "comune": "San Gillio",
+      "title": "Novita immobiliare a San Gillio",
+      "text": "F1 Immobiliare opera in tutta la Valle di Susa. Richiedi una Valutazione Professionale Gratuita; il link e condivisibile con amici, conoscenti o parenti interessati a vendere o acquistare.",
+      "cta_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+      "cta_url": "https://www.agentpricing.com/j.malafronte"
+    }
+  ]
+}
