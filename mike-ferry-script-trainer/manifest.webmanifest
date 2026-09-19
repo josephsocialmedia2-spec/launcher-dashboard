@@ -1,0 +1,18 @@
+{
+  "name": "F1 Script Trainer — Mike Ferry Method Italian Edition",
+  "short_name": "F1 Scripts",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f1311",
+  "theme_color": "#14a651",
+  "description": "Trainer mobile F1 Immobiliare per memorizzare script di prospecting, acquisizione e objection handling.",
+  "icons": [
+    {
+      "src": "./assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
