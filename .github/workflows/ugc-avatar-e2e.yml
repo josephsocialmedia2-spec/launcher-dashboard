@@ -1,0 +1,128 @@
+name: UGC Avatar Studio E2E
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/ugc-avatar-e2e.yml'
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install E2E dependencies
+        run: |
+          pip install "gradio_client==1.14.0" requests
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+
+      - name: Wait for cloud models
+        run: |
+          python - <<'PY'
+          import time, requests
+          url="https://realmediajo-ugc-avatar-studio.hf.space/health"
+          for attempt in range(60):
+              try:
+                  r=requests.get(url,timeout=20)
+                  print("HEALTH",attempt+1,r.status_code,r.text[:500])
+                  if r.status_code==200:
+                      data=r.json()
+                      if data.get("models")=="ready":
+                          raise SystemExit(0)
+                      if data.get("models")=="error":
+                          raise SystemExit("CLOUD_MODELS_ERROR")
+              except requests.RequestException as exc:
+                  print("HEALTH_RETRY",repr(exc))
+              time.sleep(15)
+          raise SystemExit("CLOUD_MODELS_TIMEOUT")
+          PY
+
+      - name: Download authorized SadTalker test portrait
+        run: |
+          curl -fL --retry 3             https://raw.githubusercontent.com/OpenTalker/SadTalker/main/examples/source_image/full_body_1.png             -o test_portrait.png
+          test -s test_portrait.png
+
+      - name: Generate real cloud video
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          from gradio_client import Client, handle_file
+
+          app_url="https://realmediajo-ugc-avatar-studio.hf.space"
+          client=Client(app_url, hf_token=os.environ["HF_TOKEN"])
+          try:
+              print("API", json.dumps(client.view_api(return_format="dict"), default=str)[:4000])
+          except Exception as exc:
+              print("API_VIEW_WARNING",repr(exc))
+
+          result=client.predict(
+              handle_file("test_portrait.png"),
+              "Ciao, questo è il primo video generato interamente online da UGC Avatar Studio.",
+              1.0,
+              True,
+              api_name="/generate_video",
+          )
+          print("RESULT",repr(result))
+
+          def find_mp4(value):
+              if isinstance(value,str) and value.lower().endswith(".mp4") and Path(value).exists():
+                  return Path(value)
+              if isinstance(value,(list,tuple)):
+                  for item in value:
+                      found=find_mp4(item)
+                      if found:
+                          return found
+              if isinstance(value,dict):
+                  for item in value.values():
+                      found=find_mp4(item)
+                      if found:
+                          return found
+              return None
+
+          video=find_mp4(result)
+          if not video:
+              raise SystemExit("E2E_MP4_NOT_FOUND")
+          target=Path("VIDEO_UGC_001.mp4")
+          target.write_bytes(video.read_bytes())
+          if target.stat().st_size <= 1024:
+              raise SystemExit("E2E_MP4_TOO_SMALL")
+          print("VIDEO_PATH",target)
+          print("VIDEO_SIZE",target.stat().st_size)
+          PY
+
+      - name: Validate MP4 with FFprobe
+        run: |
+          ffprobe -v error -show_streams -show_format -of json VIDEO_UGC_001.mp4 > probe.json
+          cat probe.json
+          python - <<'PY'
+          import json
+          d=json.load(open("probe.json","r",encoding="utf-8"))
+          streams=d.get("streams",[])
+          v=next((s for s in streams if s.get("codec_type")=="video"),None)
+          a=next((s for s in streams if s.get("codec_type")=="audio"),None)
+          dur=float(d.get("format",{}).get("duration") or 0)
+          if not v or not a:
+              raise SystemExit("E2E_STREAMS_MISSING")
+          if int(v.get("width",0))!=1080 or int(v.get("height",0))!=1920:
+              raise SystemExit(f"E2E_BAD_RESOLUTION:{v.get('width')}x{v.get('height')}")
+          if dur<=0:
+              raise SystemExit("E2E_BAD_DURATION")
+          print("E2E_OK",v.get("width"),v.get("height"),dur)
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: UGC-Avatar-Studio-E2E
+          path: |
+            VIDEO_UGC_001.mp4
+            probe.json
+          retention-days: 1
