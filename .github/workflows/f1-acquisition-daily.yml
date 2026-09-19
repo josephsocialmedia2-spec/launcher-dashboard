@@ -13,6 +13,7 @@ on:
       - 'config/acquisition-engine.json'
       - 'data/neighborhood_intelligence.json'
       - 'scripts/acquisition_daily.py'
+      - 'scripts/build_common_approval_queue.py'
       - 'tests/test_acquisition_daily.py'
       - '.github/workflows/f1-acquisition-daily.yml'
 
@@ -62,14 +63,20 @@ jobs:
         if: steps.gate.outputs.run == 'true'
         run: python scripts/acquisition_daily.py
 
+      - name: Build common approval queue
+        if: steps.gate.outputs.run == 'true'
+        run: python scripts/build_common_approval_queue.py
+
       - name: Validate generated JSON
         if: steps.gate.outputs.run == 'true'
         run: |
           python -m json.tool data/acquisition-public.json >/dev/null
+          python -m json.tool data/approval-queue.json >/dev/null
           python - <<'PY'
           import json
           from pathlib import Path
           p=json.loads(Path('data/acquisition-public.json').read_text(encoding='utf-8'))
+          q=json.loads(Path('data/approval-queue.json').read_text(encoding='utf-8'))
           assert p['reference_hub']
           assert isinstance(p.get('tasks'), list)
           assert isinstance(p.get('events'), list)
@@ -82,7 +89,9 @@ jobs:
               elif isinstance(x,list):
                   for v in x: walk(v)
           walk(p)
-          print('PASS public acquisition feed', p['reference_hub'], len(p['tasks']))
+          assert q.get('pipeline')=='F1_COMMON_APPROVAL_QUEUE'
+          assert q.get('summary',{}).get('seller_radar')==len(p.get('tasks',[]))
+          print('PASS public acquisition feed + approval queue', p['reference_hub'], len(p['tasks']))
           PY
 
       - name: Publish feed
@@ -92,17 +101,19 @@ jobs:
           set -euo pipefail
           git config user.name 'f1-acquisition-bot'
           git config user.email 'actions@users.noreply.github.com'
-          git add data/acquisition-public.json
+          git add data/acquisition-public.json data/approval-queue.json
           if git diff --cached --quiet; then
-            echo 'No acquisition feed changes'
+            echo 'No acquisition/approval feed changes'
             exit 0
           fi
           cp data/acquisition-public.json /tmp/acquisition-public.json
+          cp data/approval-queue.json /tmp/approval-queue.json
           for attempt in 1 2 3; do
             git fetch origin main
             git reset --hard origin/main
             cp /tmp/acquisition-public.json data/acquisition-public.json
-            git add data/acquisition-public.json
+            cp /tmp/approval-queue.json data/approval-queue.json
+            git add data/acquisition-public.json data/approval-queue.json
             git commit -m 'Refresh F1 Acquisition Engine daily feed'
             if git push origin HEAD:main; then exit 0; fi
             sleep $((attempt * 2))

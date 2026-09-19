@@ -65,6 +65,10 @@ jobs:
         if: steps.gate.outputs.run == 'true'
         run: python scripts/acquisition_daily.py
 
+      - name: Build common approval queue
+        if: steps.gate.outputs.run == 'true'
+        run: python scripts/build_common_approval_queue.py
+
       - name: Build territorial operations
         if: steps.gate.outputs.run == 'true'
         run: python scripts/territory_orchestrator.py
@@ -79,6 +83,7 @@ jobs:
           cfg=json.loads(Path('config/territory.json').read_text(encoding='utf-8'))
           n=json.loads(Path('data/neighborhood_intelligence.json').read_text(encoding='utf-8'))
           feed=json.loads(Path('data/acquisition-public.json').read_text(encoding='utf-8'))
+          approval=json.loads(Path('data/approval-queue.json').read_text(encoding='utf-8'))
           assert cfg['seller_radar']['mode']=='DYNAMIC_WORK_COMMUNE'
           assert cfg['seller_radar']['microzone']['shape']=='SQUARE'
           assert cfg['seller_radar']['microzone']['half_side_m']==1000
@@ -92,6 +97,8 @@ jobs:
           assert feed.get('version')==4
           assert isinstance(feed.get('tasks'),list) and feed['tasks']
           assert feed.get('generated_at')
+          assert approval.get('pipeline')=='F1_COMMON_APPROVAL_QUEUE'
+          assert approval.get('summary',{}).get('seller_radar')==len(feed.get('tasks',[]))
           for s in n.get('signals',[]):
               assert 'queries' in s
               if s.get('enrichment_status')=='ENRICHED':
@@ -105,13 +112,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if git diff --quiet -- data/neighborhood_intelligence.json data/neighborhood_seen.json data/acquisition-public.json data/territory_operations.json data/territory_geocache.json; then
+          if git diff --quiet -- data/neighborhood_intelligence.json data/neighborhood_seen.json data/acquisition-public.json data/approval-queue.json data/territory_operations.json data/territory_geocache.json; then
             echo "No changes"
             exit 0
           fi
           git config user.name "f1-seller-radar-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/neighborhood_intelligence.json data/neighborhood_seen.json data/acquisition-public.json data/territory_operations.json data/territory_geocache.json
+          git add data/neighborhood_intelligence.json data/neighborhood_seen.json data/acquisition-public.json data/approval-queue.json data/territory_operations.json data/territory_geocache.json
           git commit -m "Refresh nightly Seller Radar intelligence"
           git fetch origin main
           git rebase origin/main
