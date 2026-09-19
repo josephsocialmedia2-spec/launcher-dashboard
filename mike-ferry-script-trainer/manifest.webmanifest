@@ -1,18 +1,32 @@
 {
-  "name": "F1 Script Trainer — Mike Ferry Method Italian Edition",
+  "name": "F1 Script Trainer — Acquisizione Immobiliare",
   "short_name": "F1 Scripts",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0f1311",
-  "theme_color": "#14a651",
-  "description": "Trainer mobile F1 Immobiliare per memorizzare script di prospecting, acquisizione e objection handling.",
+  "orientation": "any",
+  "background_color": "#0b0f0d",
+  "theme_color": "#16a34a",
+  "description": "Trainer F1 Immobiliare per memorizzazione, shadowing e role play del percorso di acquisizione.",
   "icons": [
     {
       "src": "./assets/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Corso Acquisizione",
+      "short_name": "Acquisizione",
+      "url": "./acquisition.html"
+    },
+    {
+      "name": "Simulatore",
+      "short_name": "Simulatore",
+      "url": "./simulator.html"
     }
   ]
 }
