@@ -1,0 +1,23 @@
+name: UGC Avatar Studio CI
+on:
+  push:
+    paths:
+      - 'ugc-avatar-studio/**'
+  pull_request:
+    paths:
+      - 'ugc-avatar-studio/**'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ugc-avatar-studio
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --upgrade pip
+      - run: pip install -r requirements.txt
+      - run: python -m compileall -q app services providers tests
+      - run: pytest -q

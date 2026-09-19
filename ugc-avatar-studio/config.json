@@ -1,0 +1,9 @@
+{
+  "app_name": "UGC AVATAR STUDIO",
+  "host": "127.0.0.1",
+  "port": 8787,
+  "ffmpeg": "ffmpeg",
+  "tts": {"provider":"piper","model":"models/tts/it_IT-paola-medium.onnx","config":"models/tts/it_IT-paola-medium.onnx.json"},
+  "avatar": {"provider":"sadtalker","python":"external/SadTalker/.venv/Scripts/python.exe","repo":"external/SadTalker","enhancer":"gfpgan"},
+  "musetalk": {"enabled":false,"python":"external/MuseTalk/.venv/Scripts/python.exe","repo":"external/MuseTalk"}
+}

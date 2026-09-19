@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+models/**/*.onnx
+models/**/*.pth
+models/**/*.pt
+models/**/*.safetensors
+external/SadTalker/
+external/MuseTalk/
+uploads/*
+renders/*
+projects/*.db
+!uploads/.gitkeep
+!renders/.gitkeep
+.pytest_cache/
