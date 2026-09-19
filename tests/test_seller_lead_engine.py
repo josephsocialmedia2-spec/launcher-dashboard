@@ -16,4 +16,8 @@ class TestSellerLeadEngine(unittest.TestCase):
     def test_public_rows_have_no_direct_contact_values(self):
         p,_=mod.build(self.cfg,{'tasks':[{'task_id':'3','priority':10}]},{})
         text=str(p).lower(); self.assertNotIn("'telefono':",text); self.assertNotIn("'email':",text)
+    def test_canonical_microzone_is_one_km(self):
+        p,_=mod.build(self.cfg,{'reference_hub':'Villar Dora','tasks':[{'task_id':'4','priority':50,'comune':'Condove','via':'Via Roma'}]},{'engine_version':'4','microzone_shape':'SQUARE','microzone_half_side_m':1000})
+        self.assertEqual(p['territory']['microzone_radius_m'],1000)
+        self.assertEqual(p['opportunities'][0]['radius_m'],1000)
 if __name__=='__main__':unittest.main()
