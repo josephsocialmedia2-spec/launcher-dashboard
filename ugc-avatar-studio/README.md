@@ -68,3 +68,16 @@ e richiede esclusivamente i GitHub Repository Secrets Modal:
 - `MODAL_TOKEN_SECRET`
 
 Hugging Face resta disponibile come implementazione precedente, ma non è più il percorso cloud predefinito.
+
+
+## AUTOMAZIONE POSTIZ END-TO-END
+
+Il percorso cloud Modal ora è progettato per richiedere soltanto due input: immagine e discorso.
+
+Pipeline:
+
+`IMMAGINE + TESTO -> Piper -> SadTalker -> FFmpeg -> copy automatico -> archivio -> Postiz -> scheduling/pubblicazione`
+
+L'app non richiede velocità, caption, hashtag, formato, account social o configurazioni operative per ogni job. Gli account supportati già collegati a Postiz vengono scoperti automaticamente.
+
+Il deployment è considerato pronto solo quando il workflow verifica sia Modal sia l'autenticazione Postiz e rileva almeno un canale supportato collegato.

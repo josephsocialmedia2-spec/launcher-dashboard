@@ -4,14 +4,22 @@ import modal
 
 APP_NAME = "ugc-avatar-studio"
 GPU_TYPE = "T4"
+DATA_ROOT = "/data/jobs"
+POSTIZ_API_URL = "https://api.postiz.com"
 
 app = modal.App(APP_NAME)
+data_volume = modal.Volume.from_name("ugc-avatar-studio-data", create_if_missing=True)
+runtime_secret = modal.Secret.from_name(
+    "ugc-avatar-studio-runtime",
+    required_keys=["POSTIZ_API_KEY"],
+)
 
 web_image = (
     modal.Image.debian_slim(python_version="3.10")
     .pip_install(
         "fastapi>=0.116,<1",
         "python-multipart==0.0.20",
+        "requests>=2.32,<3",
     )
 )
 
@@ -70,81 +78,87 @@ INDEX_HTML = r"""<!doctype html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>UGC Avatar Studio</title>
+  <title>UGC Avatar Studio · Automatico</title>
   <style>
-    :root{color-scheme:dark;background:#0b0d10;color:#f5f7fa;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
-    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top,#17211d 0,#0b0d10 42%);min-height:100vh}
-    main{max-width:1040px;margin:auto;padding:28px 18px 64px}
-    .hero{padding:22px 0 18px}.eyebrow{color:#71e69b;font-weight:800;letter-spacing:.12em;font-size:.78rem}
-    h1{font-size:clamp(2rem,6vw,4rem);margin:.25rem 0 .5rem;letter-spacing:-.045em}
-    .sub{color:#aab2bd;max-width:720px;line-height:1.55}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:760px){.grid{grid-template-columns:1fr}}
-    .card{background:#11161b;border:1px solid #273039;border-radius:18px;padding:18px;box-shadow:0 16px 50px #0006}
-    label{display:block;font-weight:700;margin:0 0 8px} input[type=file],textarea,input[type=range]{width:100%}
-    textarea{min-height:180px;resize:vertical;background:#0b0f13;color:#fff;border:1px solid #303a44;border-radius:12px;padding:14px;font:inherit}
-    input[type=file]{padding:12px;background:#0b0f13;border:1px dashed #40505d;border-radius:12px}
-    .row{display:flex;gap:12px;align-items:center;margin-top:16px}.row.spread{justify-content:space-between}
-    .consent{font-size:.92rem;color:#c3cad2;display:flex;gap:9px;align-items:flex-start}
-    button{width:100%;border:0;border-radius:12px;padding:15px 18px;background:#48d47c;color:#07110a;font-weight:900;font-size:1rem;cursor:pointer;margin-top:16px}
-    button:disabled{opacity:.5;cursor:not-allowed}.status{min-height:52px;color:#b8c1ca;line-height:1.45}
+    :root{color-scheme:dark;background:#090c0e;color:#f5f7fa;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#163323 0,#090c0e 44%);min-height:100vh}
+    main{max-width:1040px;margin:auto;padding:28px 18px 64px}.hero{padding:22px 0 18px}
+    .eyebrow{color:#72e69b;font-weight:900;letter-spacing:.13em;font-size:.76rem}
+    h1{font-size:clamp(2rem,6vw,4rem);margin:.28rem 0 .5rem;letter-spacing:-.045em}
+    .sub{color:#aab4bd;max-width:760px;line-height:1.55}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    @media(max-width:760px){.grid{grid-template-columns:1fr}}.card{background:#11171a;border:1px solid #28333a;border-radius:18px;padding:18px;box-shadow:0 16px 50px #0006}
+    label{display:block;font-weight:800;margin:0 0 8px}input[type=file],textarea{width:100%}
+    textarea{min-height:220px;resize:vertical;background:#0a0f12;color:#fff;border:1px solid #334047;border-radius:12px;padding:14px;font:inherit}
+    input[type=file]{padding:12px;background:#0a0f12;border:1px dashed #40535c;border-radius:12px}
+    button{width:100%;border:0;border-radius:12px;padding:16px 18px;background:#48d47c;color:#061108;font-weight:950;font-size:1rem;cursor:pointer;margin-top:16px}
+    button:disabled{opacity:.5;cursor:not-allowed}.status{min-height:62px;color:#bac4cc;line-height:1.5}
     video{width:100%;background:#050607;border-radius:14px;min-height:320px;max-height:620px}
-    a.download{display:none;text-decoration:none;text-align:center;margin-top:14px;padding:13px;border:1px solid #3d4a55;border-radius:12px;color:#fff;font-weight:800}
-    .fine{font-size:.8rem;color:#7f8a95;margin-top:16px}.ok{color:#71e69b}.err{color:#ff8d8d}
+    a.download{display:none;text-decoration:none;text-align:center;margin-top:14px;padding:13px;border:1px solid #3e4e57;border-radius:12px;color:#fff;font-weight:800}
+    .fine{font-size:.82rem;color:#818e97;margin-top:14px;line-height:1.45}.ok{color:#72e69b}.err{color:#ff9090}.job{font-size:.82rem;color:#8f9ba4;margin-top:8px;word-break:break-all}
   </style>
 </head>
 <body>
 <main>
   <section class="hero">
-    <div class="eyebrow">100% CLOUD · GPU SERVERLESS</div>
+    <div class="eyebrow">IMMAGINE + DISCORSO → VIDEO → POSTIZ</div>
     <h1>UGC Avatar Studio</h1>
-    <div class="sub">Carica una foto autorizzata, scrivi il testo e genera un video verticale parlante. Piper, SadTalker e FFmpeg vengono eseguiti nel cloud.</div>
+    <div class="sub">Fornisci soltanto una foto autorizzata e il discorso. Voce, avatar, sottotitoli, formato 1080×1920, caption, hashtag, archiviazione e pubblicazione Postiz vengono eseguiti automaticamente nel cloud.</div>
   </section>
   <section class="grid">
     <form id="form" class="card">
-      <label for="photo">Foto avatar</label>
+      <label for="photo">1. Immagine da animare</label>
       <input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp" required>
-      <div style="height:16px"></div>
-      <label for="script">Testo</label>
-      <textarea id="script" name="script" maxlength="1500" required placeholder="Scrivi qui ciò che deve dire l'avatar..."></textarea>
-      <div class="row spread"><label for="speed" style="margin:0">Velocità voce</label><output id="speedOut">1.00×</output></div>
-      <input id="speed" name="speed" type="range" min="0.85" max="1.15" step="0.05" value="1">
-      <div class="row">
-        <input id="consent" name="consent" type="checkbox" required>
-        <label class="consent" for="consent">Confermo di possedere i diritti e il consenso necessari per utilizzare questa immagine.</label>
-      </div>
-      <button id="generate" type="submit">GENERA VIDEO</button>
-      <div class="fine">Limiti: JPEG/PNG/WEBP, massimo 10 MB, testo massimo 1500 caratteri.</div>
+      <div style="height:18px"></div>
+      <label for="script">2. Discorso dell'avatar</label>
+      <textarea id="script" name="script" maxlength="1500" required placeholder="Scrivi qui esattamente ciò che deve dire l'avatar..."></textarea>
+      <button id="generate" type="submit">GENERA E PUBBLICA</button>
+      <div class="fine">Caricando l'immagine dichiari di avere i diritti e le autorizzazioni necessarie al suo utilizzo. Nessun altro dato operativo è richiesto.</div>
     </form>
     <div class="card">
-      <div id="status" class="status">Motore cloud pronto. La prima generazione può richiedere più tempo per l'avvio della GPU.</div>
+      <div id="status" class="status">Sistema pronto. Il processo è automatico: Piper → SadTalker → FFmpeg → copy → Postiz → pubblicazione.</div>
+      <div id="job" class="job"></div>
       <video id="video" controls playsinline></video>
-      <a id="download" class="download" download="VIDEO_UGC_001.mp4">SCARICA MP4</a>
+      <a id="download" class="download">SCARICA MP4 ARCHIVIATO</a>
     </div>
   </section>
 </main>
 <script>
-const form=document.getElementById('form'), btn=document.getElementById('generate'), statusEl=document.getElementById('status');
-const speed=document.getElementById('speed'), speedOut=document.getElementById('speedOut'), video=document.getElementById('video'), download=document.getElementById('download');
-let currentUrl=null;
-speed.addEventListener('input',()=>speedOut.textContent=Number(speed.value).toFixed(2)+'×');
+const form=document.getElementById('form');
+const btn=document.getElementById('generate');
+const statusEl=document.getElementById('status');
+const jobEl=document.getElementById('job');
+const video=document.getElementById('video');
+const download=document.getElementById('download');
+
 form.addEventListener('submit',async(e)=>{
   e.preventDefault();
-  if(currentUrl){URL.revokeObjectURL(currentUrl);currentUrl=null}
-  download.style.display='none'; video.removeAttribute('src'); video.load();
-  btn.disabled=true; btn.textContent='GENERAZIONE IN CORSO…'; statusEl.className='status'; statusEl.textContent='Coda GPU → Piper → SadTalker → FFmpeg. Non chiudere questa pagina.';
+  download.style.display='none';
+  video.removeAttribute('src');
+  video.load();
+  jobEl.textContent='';
+  btn.disabled=true;
+  btn.textContent='AUTOMAZIONE IN CORSO…';
+  statusEl.className='status';
+  statusEl.textContent='Generazione voce → animazione → montaggio → copy → upload Postiz → programmazione. Non sono richieste altre azioni.';
   try{
     const data=new FormData(form);
-    data.set('consent',document.getElementById('consent').checked?'true':'false');
     const res=await fetch('/api/render',{method:'POST',body:data});
-    if(!res.ok){let detail=await res.text();try{detail=JSON.parse(detail).detail||detail}catch{};throw new Error(detail)}
-    const blob=await res.blob();
-    currentUrl=URL.createObjectURL(blob);
-    video.src=currentUrl; download.href=currentUrl; download.style.display='block';
-    statusEl.className='status ok'; statusEl.textContent='Video generato nel cloud. Anteprima e download disponibili.';
+    let body=null;
+    try{body=await res.json()}catch{body={detail:await res.text()}}
+    if(!res.ok)throw new Error(body.detail||'Errore automazione');
+    jobEl.textContent='JOB '+body.job_id+' · '+body.postiz.status;
+    video.src=body.video_url;
+    download.href=body.video_url;
+    download.download='VIDEO_UGC_'+body.job_id+'.mp4';
+    download.style.display='block';
+    statusEl.className='status ok';
+    statusEl.textContent='Automazione completata: video creato, archiviato e inviato a Postiz per '+body.postiz.integrations_count+' canale/i. Pubblicazione: '+body.postiz.scheduled_at;
   }catch(err){
-    statusEl.className='status err'; statusEl.textContent='Errore: '+(err?.message||err);
+    statusEl.className='status err';
+    statusEl.textContent='Automazione non completata: '+(err?.message||err);
   }finally{
-    btn.disabled=false; btn.textContent='GENERA VIDEO';
+    btn.disabled=false;
+    btn.textContent='GENERA E PUBBLICA';
   }
 });
 </script>
@@ -316,6 +330,8 @@ def render_video(photo_bytes: bytes, script: str, speed: float) -> dict:
 
         return {
             "video": final.read_bytes(),
+            "audio": wav.read_bytes(),
+            "srt": srt.read_text(encoding="utf-8"),
             "duration": final_duration,
             "width": 1080,
             "height": 1920,
