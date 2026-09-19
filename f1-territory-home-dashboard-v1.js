@@ -1,6 +1,6 @@
 (()=>{
 'use strict';
-const VERSION='20260919-home-dashboard-v4';
+const VERSION='20260919-home-dashboard-v5';
 const INACTIVITY_MS=5*60*1000;
 const $=id=>document.getElementById(id);
 const qs=s=>document.querySelector(s);
@@ -16,7 +16,7 @@ function injectStyle(){
   .f1-home-dash{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
   .f1-home-tile{min-height:96px;border:1px solid var(--line);border-radius:16px;background:#fff;color:var(--ink);padding:12px;text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:8px;cursor:pointer;box-shadow:0 4px 14px rgba(12,43,27,.06)}
   .f1-home-tile strong{font-size:12px;font-weight:950;line-height:1.15}.f1-home-tile small{font-size:9px;color:var(--mut);font-weight:800;line-height:1.35}.f1-home-tile .ico{font-size:22px;line-height:1}
-  .f1-home-tile.resume{background:linear-gradient(180deg,#f5fff8,#e8f7ed);border-color:#9dceb0}.f1-home-tile.capture{background:linear-gradient(145deg,#063e25,#0b6f3d);border-color:#063e25;color:#fff}.f1-home-tile.capture small{color:#d6efe0}.f1-home-tile:disabled{opacity:.48;cursor:not-allowed}
+  .f1-home-tile.resume{background:linear-gradient(180deg,#f5fff8,#e8f7ed);border-color:#9dceb0}.f1-home-tile.capture{background:linear-gradient(145deg,#063e25,#0b6f3d);border-color:#063e25;color:#fff}.f1-home-tile.capture small{color:#d6efe0}.f1-home-tile.upload{background:#f7faf8;border-color:#9dceb0}.f1-home-tile.upload .ico{color:var(--g)}.f1-home-tile:disabled{opacity:.48;cursor:not-allowed}
   .f1-home-idle-note{margin-top:10px;padding:11px 12px;border:1px solid #d8e5dc;border-radius:14px;background:#f7faf8;color:var(--ink);font-size:9px;font-weight:850;line-height:1.35}.f1-home-idle-note .f1-last-label{display:block;color:var(--g);font-size:9px;font-weight:950;letter-spacing:.06em}.f1-home-idle-note .f1-last-place{display:block;margin-top:4px;font-size:12px;font-weight:950;color:var(--ink)}.f1-home-idle-note .f1-last-note{display:block;margin-top:4px;color:var(--mut);font-size:9px;font-weight:800}.f1-seller-system-btn{width:100%;min-height:58px;margin-top:9px;border:1px solid #0a6036;border-radius:15px;background:linear-gradient(135deg,#0a6338,#0f874a);color:#fff;padding:11px 13px;display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;font:inherit;font-weight:950;cursor:pointer;box-shadow:0 6px 18px rgba(6,64,34,.18)}.f1-seller-system-btn .f1-seller-system-main{font-size:12px;line-height:1.15}.f1-seller-system-btn .f1-seller-system-sub{display:block;margin-top:3px;color:#d9f0e3;font-size:9px;font-weight:800}.f1-seller-system-btn .f1-seller-system-arrow{font-size:21px;line-height:1}
   @media(max-width:720px){
     .f1-home-dashboard-v1 .top{grid-template-columns:auto minmax(0,1fr)!important;row-gap:6px!important;padding:7px 8px!important}
@@ -93,6 +93,17 @@ function openPrivateSign(){
   }
   alert('FUNZIONE CARTELLO NON ANCORA PRONTA. RIPROVA TRA UN ISTANTE.');
 }
+function openGallerySign(){
+  if(window.F1SignCapture?.pickGallery){
+    window.F1SignCapture.pickGallery({source:'HOME_CARICA_FOTO_CARTELLO'});
+    return;
+  }
+  if(window.F1SignCapture?.open){
+    window.F1SignCapture.open({source:'HOME_CARICA_FOTO_CARTELLO'});
+    return;
+  }
+  alert('FUNZIONE CARICA FOTO NON ANCORA PRONTA. RIPROVA TRA UN ISTANTE.');
+}
 function buildDashboard(){
   const screen=$('municipalities');
   const card=screen?.querySelector('.card');
@@ -107,7 +118,10 @@ function buildDashboard(){
       <span class="ico">▶</span><span><strong>RIPRENDI GIRO</strong><small id="f1HomeResumePlace">—</small></span>
     </button>
     <button id="f1HomePrivateSign" class="f1-home-tile capture" type="button">
-      <span class="ico">📷</span><span><strong>SCATTA CARTELLO PRIVATO</strong><small>Foto → notizia CRM → verifica proprietario</small></span>
+      <span class="ico">📷</span><span><strong>SCATTA CARTELLO PRIVATO</strong><small>Fotocamera → notizia CRM → verifica proprietario</small></span>
+    </button>
+    <button id="f1HomeUploadSign" class="f1-home-tile upload" type="button">
+      <span class="ico">🖼️</span><span><strong>CARICA FOTO CARTELLO</strong><small>Galleria → OCR → notizia CRM</small></span>
     </button>
     <button id="f1HomeToday" class="f1-home-tile" type="button">
       <span class="ico">✓</span><span><strong>OGGI</strong><small>Appuntamenti, follow-up e lettere</small></span>
@@ -132,6 +146,7 @@ function buildDashboard(){
     if(core&&!core.disabled)core.click();
   });
   $('f1HomePrivateSign').addEventListener('click',openPrivateSign);
+  $('f1HomeUploadSign').addEventListener('click',openGallerySign);
   $('f1HomeToday').addEventListener('click',()=>clickCore('oggi'));
   $('f1HomeCRM').addEventListener('click',()=>clickCore('crm'));
   $('f1SellerSystemButton').addEventListener('click',()=>{window.location.href='seller-lead-engine.html'});
