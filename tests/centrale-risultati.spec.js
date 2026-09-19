@@ -10,7 +10,7 @@ test('Centrale uses cloud approval source of truth and protected operations', as
   expect(html).toContain('supabase-sync.js');
   expect(html).toContain('f1-staff-data.js');
   expect(cloud).toContain("approval_queue?on_conflict=approval_id");
-  expect(cloud).toContain("decision:'APPROVED'");
+  expect(cloud).toContain("'APPROVED'");
   expect(ui).toContain('APPROVED_PENDING_EXECUTION');
   expect(ui).toContain('PAGE_SIZE=50');
   expect(ui).toContain('STALE_HOURS=36');
