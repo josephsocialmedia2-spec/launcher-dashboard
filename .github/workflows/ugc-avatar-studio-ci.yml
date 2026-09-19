@@ -1,13 +1,17 @@
 name: UGC Avatar Studio CI
+
 on:
   push:
     paths:
       - 'ugc-avatar-studio/**'
+      - '.github/workflows/ugc-avatar-studio-ci.yml'
   pull_request:
     paths:
       - 'ugc-avatar-studio/**'
+      - '.github/workflows/ugc-avatar-studio-ci.yml'
+
 jobs:
-  test:
+  unit-linux:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -19,5 +23,50 @@ jobs:
           python-version: '3.11'
       - run: python -m pip install --upgrade pip
       - run: pip install -r requirements.txt
-      - run: python -m compileall -q app services providers tests
+      - run: python -m compileall -q app services providers tests scripts
       - run: pytest -q
+      - run: python -m piper --help
+
+  integration-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ugc-avatar-studio
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Python dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Ensure FFmpeg
+        shell: pwsh
+        run: |
+          if (-not (Get-Command ffmpeg -ErrorAction SilentlyContinue)) {
+            choco install ffmpeg -y --no-progress
+          }
+          ffmpeg -version
+          ffprobe -version
+      - name: Download Italian Piper voice
+        shell: cmd
+        run: DOWNLOAD_MODELS.bat
+      - name: Python tests
+        shell: pwsh
+        run: |
+          python -m compileall -q app services providers tests scripts
+          pytest -q
+      - name: Real Piper WAV test
+        shell: pwsh
+        run: python scripts/verify_piper.py
+      - name: Real FFmpeg vertical MP4 test
+        shell: pwsh
+        run: python scripts/verify_ffmpeg.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ugc-avatar-studio-windows-selftest
+          path: ugc-avatar-studio/renders/_selftest/
+          if-no-files-found: error
+          retention-days: 7
