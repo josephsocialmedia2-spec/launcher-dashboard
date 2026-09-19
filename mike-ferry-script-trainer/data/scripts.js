@@ -96,10 +96,10 @@ window.F1_SCRIPTS = [
       "piano alternativo",
       "chiedi un appuntamento."
     ],
-    "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/product/mike-ferrys-real-estate-scripts-book-pdf-download/",
-    "sourceType": "fonte primaria/ufficiale",
-    "verificationStatus": "ADATTAMENTO BASATO SUL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_venditori_privati.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "fsbo",
       "primo",
@@ -125,10 +125,10 @@ window.F1_SCRIPTS = [
       "fai emergere il gap",
       "proponi confronto."
     ],
-    "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/product/mike-ferrys-real-estate-scripts-book-pdf-download/",
-    "sourceType": "fonte primaria/ufficiale",
-    "verificationStatus": "ADATTAMENTO BASATO SUL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_venditori_privati.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "fsbo",
       "follow-up",
@@ -152,10 +152,10 @@ window.F1_SCRIPTS = [
       "riduci il rischio percepito",
       "chiedi un micro-impegno."
     ],
-    "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/product/mike-ferrys-real-estate-scripts-book-pdf-download/",
-    "sourceType": "fonte primaria/ufficiale",
-    "verificationStatus": "ADATTAMENTO BASATO SUL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_venditori_privati.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "fsbo",
       "obiezione",
@@ -181,10 +181,10 @@ window.F1_SCRIPTS = [
       "non difendere la commissione troppo presto",
       "porta a un confronto numerico."
     ],
-    "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/product/mike-ferrys-real-estate-scripts-book-pdf-download/",
-    "sourceType": "fonte primaria/ufficiale",
-    "verificationStatus": "ADATTAMENTO BASATO SUL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_venditori_privati.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "fsbo",
       "provvigione",
@@ -209,10 +209,10 @@ window.F1_SCRIPTS = [
       "non attaccare l'acquirente",
       "resta piano B."
     ],
-    "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/product/mike-ferrys-real-estate-scripts-book-pdf-download/",
-    "sourceType": "fonte primaria/ufficiale",
-    "verificationStatus": "ADATTAMENTO BASATO SUL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_venditori_privati.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "fsbo",
       "obiezione",
@@ -239,10 +239,10 @@ window.F1_SCRIPTS = [
       "individua il problema",
       "proponi un piano diverso."
     ],
-    "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/product/mike-ferrys-real-estate-scripts-book-pdf-download/",
-    "sourceType": "fonte primaria/ufficiale",
-    "verificationStatus": "ADATTAMENTO BASATO SUL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_incarichi_scaduti.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "expired",
       "primo",
@@ -269,10 +269,10 @@ window.F1_SCRIPTS = [
       "lavora sui fatti",
       "prometti misurabilità, non miracoli."
     ],
-    "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/product/mike-ferrys-real-estate-scripts-book-pdf-download/",
-    "sourceType": "fonte primaria/ufficiale",
-    "verificationStatus": "ADATTAMENTO BASATO SUL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_incarichi_scaduti.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "expired",
       "obiezione",
@@ -297,10 +297,10 @@ window.F1_SCRIPTS = [
       "identifica il blocco",
       "proponi dati e piano."
     ],
-    "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/product/mike-ferrys-real-estate-scripts-book-pdf-download/",
-    "sourceType": "fonte primaria/ufficiale",
-    "verificationStatus": "ADATTAMENTO BASATO SUL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_incarichi_scaduti.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "expired",
       "follow-up",
@@ -324,10 +324,10 @@ window.F1_SCRIPTS = [
       "chiedi referral",
       "verifica anche il possibile seller."
     ],
-    "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/product/mike-ferrys-real-estate-scripts-book-pdf-download/",
-    "sourceType": "fonte primaria/ufficiale",
-    "verificationStatus": "ADATTAMENTO BASATO SUL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_incarichi_appena_acquisiti.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "just",
       "listed",
@@ -358,10 +358,10 @@ window.F1_SCRIPTS = [
       "referral",
       "follow-up con dati reali."
     ],
-    "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/product/mike-ferrys-real-estate-scripts-book-pdf-download/",
-    "sourceType": "fonte primaria/ufficiale",
-    "verificationStatus": "ADATTAMENTO BASATO SUL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_incarichi_appena_acquisiti.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "just",
       "listed",
@@ -593,10 +593,10 @@ window.F1_SCRIPTS = [
       "decisori",
       "concorrenza."
     ],
-    "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/blog/post/the-prequalifying-process-mftv/",
-    "sourceType": "fonte primaria/ufficiale",
-    "verificationStatus": "ADATTAMENTO BASATO SUL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_prequalifica_venditore.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "prequalification",
       "venditore",
@@ -1243,10 +1243,10 @@ window.F1_SCRIPTS = [
       "decisori",
       "processo finanziario."
     ],
-    "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/scripts/",
-    "sourceType": "fonte primaria/ufficiale",
-    "verificationStatus": "ADATTAMENTO BASATO SUL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Primo_Copione_Acquirenti.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "buyer",
       "prequalifica",
@@ -1417,10 +1417,10 @@ window.F1_SCRIPTS = [
       "venduto > richiesto",
       "correzioni motivate."
     ],
-    "source": "Contesto normativo/operativo italiano + metodo MFO",
-    "sourceUrl": "https://www.mikeferry.com/scripts/",
-    "sourceType": "adattamento F1",
-    "verificationStatus": "VERSIONE F1 ISPIRATA AL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_presentazione_con_analisi_comparativa.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "listing",
       "presentation",
@@ -1444,10 +1444,10 @@ window.F1_SCRIPTS = [
       "processo",
       "responsabilità."
     ],
-    "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/product/mike-ferrys-real-estate-scripts-book-pdf-download/",
-    "sourceType": "fonte primaria/ufficiale",
-    "verificationStatus": "ADATTAMENTO BASATO SUL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Copione_per_presentazione_da_un_minuto.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "listing",
       "presentation",
@@ -1587,10 +1587,10 @@ window.F1_SCRIPTS = [
       "decisori",
       "readiness."
     ],
-    "source": "Mike Ferry Organization",
-    "sourceUrl": "https://www.mikeferry.com/scripts/",
-    "sourceType": "fonte primaria/ufficiale",
-    "verificationStatus": "ADATTAMENTO BASATO SUL METODO MIKE FERRY",
+    "source": "Mike Ferry Italy / The Mike Ferry Organization — traduzione ufficiale italiana usata come riferimento",
+    "sourceUrl": "https://mikeferryitaly.com/wp-content/uploads/2022/04/MikeFerryItaly-Secondo_Copione_Acquirenti_prequalifica_motivazione.pdf",
+    "sourceType": "fonte ufficiale italiana di riferimento",
+    "verificationStatus": "ADATTAMENTO F1 SU TRADUZIONE UFFICIALE MFO ITALIA",
     "tags": [
       "buyer",
       "motivazione",
