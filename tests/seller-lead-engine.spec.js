@@ -3,7 +3,7 @@ test('seller lead engine loads, links valuation and exposes communication queue'
   await page.goto('/seller-lead-engine.html');
   await expect(page.getByRole('heading', { name: 'F1 SELLER LEAD ENGINE' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'VALUTAZIONE PROFESSIONALE GRATUITA' })).toHaveAttribute('href','https://www.agentpricing.com/j.malafronte');
-  await expect(page.getByText('COMUNICAZIONI')).toBeVisible();
+  await expect(page.locator('span.label').filter({ hasText: /^COMUNICAZIONI$/ })).toBeVisible();
   for (const path of ['/seller-radar-unico.html','/crm.html','/data/seller-lead-engine-public.json','/data/postiz-outbox.json','/data/communication-outbox.json']) {
     const res=await request.get(path); expect(res.ok(),path).toBeTruthy();
   }
