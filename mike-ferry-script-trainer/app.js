@@ -10,9 +10,21 @@ function toggleFav(id){ const i=state.favorites.indexOf(id); if(i>=0)state.favor
 function splitSentences(t){return t.replace(/\n+/g,' ').match(/[^.!?]+[.!?]+|[^.!?]+$/g)?.map(s=>s.trim()).filter(Boolean)||[t];}
 function openScript(id){current=S.find(x=>x.id===id); sentenceIdx=0; hidden=false; $('#dCategory').textContent=`${current.category} · ${current.subcategory}`; $('#dTitle').textContent=current.title; $('#dGoal').textContent=`Scopo: ${current.purpose} Quando usarlo: ${current.usage}`; $('#dScript').textContent=current.italianAdapted; $('#dMemory').innerHTML=current.memory.map(m=>`<li>${m}</li>`).join(''); $('#dClient').textContent=current.roleplayClient; $('#dAgent').textContent=current.roleplayAgent; $('#dSource').innerHTML=`${current.verificationStatus}<br><a style="color:#8fe0aa" target="_blank" rel="noopener" href="${current.sourceUrl}">${current.source}</a>`; updateDlgFav(); updateSentence(); $('#dlg').showModal(); }
 function updateDlgFav(){ $('#favDlg').textContent=state.favorites.includes(current.id)?'★ Preferito':'☆ Preferito'; $('#learned').textContent=state.learned.includes(current.id)?'✓ Memorizzato':'So a memoria'; $('#review').textContent=state.review.includes(current.id)?'✓ Da ripassare':'Da ripassare'; }
-let voices=[]; function pickVoice(){ voices=speechSynthesis.getVoices(); const it=voices.filter(v=>/^it(-|_)/i.test(v.lang)); const preferred=['elsa','alice','federica','isabella','female','italiana']; return preferred.map(p=>it.find(v=>v.name.toLowerCase().includes(p))).find(Boolean)||it[0]||voices[0]; }
-function voiceInfo(){const v=pickVoice(); $('#voiceStatus').textContent=v?`Voce attiva: ${v.name} (${v.lang}) · sintesi nativa dispositivo`:'Voce italiana non ancora disponibile: attendi qualche secondo o verifica le voci del dispositivo.';}
+let voices=[];
+function italianVoices(){voices=speechSynthesis.getVoices();return voices.filter(v=>/^it(-|_)/i.test(v.lang));}
+function defaultVoice(list){const preferred=['elsa','alice','federica','isabella','female','italiana'];return preferred.map(p=>list.find(v=>v.name.toLowerCase().includes(p))).find(Boolean)||list[0]||voices[0];}
+function pickVoice(){const list=italianVoices();if(state.voiceName){const saved=voices.find(v=>v.name===state.voiceName);if(saved)return saved;}return defaultVoice(list);}
+function voiceInfo(){
+ const list=italianVoices(), sel=$('#voiceSelect'), chosen=pickVoice();
+ if(sel){
+   const current=state.voiceName||chosen?.name||'';
+   sel.innerHTML=(list.length?list:voices).map(v=>`<option value="${v.name.replace(/"/g,'&quot;')}">${v.name} · ${v.lang}</option>`).join('');
+   if(current)sel.value=current;
+ }
+ $('#voiceStatus').textContent=chosen?`Voce attiva: ${chosen.name} (${chosen.lang}) · sintesi nativa dispositivo`:'Voce italiana non ancora disponibile: verifica le voci installate sul dispositivo.';
+}
 speechSynthesis.onvoiceschanged=voiceInfo; setTimeout(voiceInfo,200);
+$('#voiceSelect').onchange=()=>{state.voiceName=$('#voiceSelect').value;save();voiceInfo();};
 function speak(text,rate=1,onend){speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text.replace(/F1/g,'effe uno').replace(/FSBO/g,'effe esse bi o').replace(/Mike Ferry/g,'Maik Ferri')); u.lang='it-IT'; u.rate=rate; const v=pickVoice(); if(v)u.voice=v; u.onend=()=>{playing=false;if(onend)onend();}; u.onerror=()=>{playing=false}; lastUtterance={text,rate}; playing=true; speechSynthesis.speak(u); if(current){state.listenCount[current.id]=(state.listenCount[current.id]||0)+1; save();}}
 function playLoops(text,n){let c=0; const rate=Number($('#speed').value); const run=()=>{if(c>=n)return;c++;speak(text,rate,()=>{if(n===999||c<n)setTimeout(run,550)});};run();}
 function updateSentence(){if(!current)return; const arr=splitSentences(current.italianAdapted); sentenceIdx=Math.max(0,Math.min(sentenceIdx,arr.length-1)); $('#sentenceBox').textContent=hidden?'••••••••••••••••••••••':arr[sentenceIdx]; $('#sentenceProgress').style.width=`${((sentenceIdx+1)/arr.length)*100}%`; $('#hideText').textContent=hidden?'Mostra testo':'Nascondi testo';}
