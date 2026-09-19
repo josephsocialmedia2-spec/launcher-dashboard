@@ -7,7 +7,7 @@ on:
     paths:
       - '.github/workflows/f1-sync-current-radar-fast.yml'
       - 'scripts/territory_config.py'
-      - 'scripts/neighborhood_intelligence.py'
+      - 'scripts/neighborhood_intelligence_v4.py'
       - 'scripts/territory_orchestrator.py'
       - 'config/territory.json'
 
@@ -21,23 +21,23 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Load current Seller Radar without blocking on OSM enrichment
+      - name: Load current Seller Radar with canonical 1 km square microzone
         env:
-          F1_NEIGHBORHOOD_RADIUS: '500'
+          F1_NEIGHBORHOOD_HALF_SIDE: '1000'
           F1_NEIGHBORHOOD_MAX_ENRICH: '0'
-        run: python scripts/neighborhood_intelligence.py
+        run: python scripts/neighborhood_intelligence_v4.py
 
       - name: Build Territory Control
         run: python scripts/territory_orchestrator.py
 
       - name: Validate current output
         run: |
-          python -m py_compile scripts/territory_config.py scripts/neighborhood_intelligence.py scripts/territory_orchestrator.py
+          python -m py_compile scripts/territory_config.py scripts/neighborhood_intelligence_v4.py scripts/territory_orchestrator.py
           python - <<'PY'
           import json
           from pathlib import Path
@@ -45,6 +45,12 @@ jobs:
           n=json.loads(Path('data/neighborhood_intelligence.json').read_text(encoding='utf-8'))
           t=json.loads(Path('data/territory_operations.json').read_text(encoding='utf-8'))
           hub=cfg['reference_hub']
+          assert cfg['seller_radar']['microzone']['shape']=='SQUARE'
+          assert cfg['seller_radar']['microzone']['half_side_m']==1000
+          assert n['engine_version']=='4'
+          assert n['seller_radar_mode']=='DYNAMIC_WORK_COMMUNE'
+          assert n['microzone_shape']=='SQUARE'
+          assert n['microzone_half_side_m']==1000
           assert n['signals_count'] > 0
           assert t['summary']['signals_total'] > 0
           assert n['reference_hub'] == hub
@@ -53,7 +59,7 @@ jobs:
           assert t['ordering'] == 'DISTANZA_LINEA_ARIA_DAL_REFERENCE_HUB'
           assert any(c.get('is_hub') and c.get('comune') == hub for c in t['communes'])
           assert not any(c.get('side') == 'FUORI_LISTA' for c in t['communes'])
-          print('PASS FAST TERRITORY SYNC', hub, n['generated_at'], t['generated_at'])
+          print('PASS FAST TERRITORY SYNC V4 1KM', hub, n['generated_at'], t['generated_at'])
           PY
 
       - name: Publish current launcher data
@@ -67,7 +73,7 @@ jobs:
             echo 'No changes'
             exit 0
           fi
-          git commit -m 'Refresh launcher from configured territory model'
+          git commit -m 'Refresh launcher from canonical Seller Radar v4 1km model'
           for attempt in 1 2 3; do
             if git push origin HEAD:main; then exit 0; fi
             git fetch origin main
