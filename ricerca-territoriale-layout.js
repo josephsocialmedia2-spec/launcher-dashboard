@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const VERSION='20260919-layout-final1';
+const VERSION='20260919-layout-final2';
 if(window.F1TerritoryLayout?.version===VERSION)return;
 
 function ensureCssLast(){
