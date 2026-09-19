@@ -22,6 +22,7 @@ def main() -> None:
         repo_id=REPO_ID,
         repo_type="space",
         space_sdk="gradio",
+        space_hardware="zero-a10g",
         private=False,
         exist_ok=True,
     )
