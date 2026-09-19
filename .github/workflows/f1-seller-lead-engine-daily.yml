@@ -1,0 +1,49 @@
+name: F1 Seller Lead Engine Daily
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 5 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'config/seller-lead-engine.json'
+      - 'scripts/seller_lead_engine.py'
+      - 'data/acquisition-public.json'
+      - 'data/neighborhood_intelligence.json'
+      - '.github/workflows/f1-seller-lead-engine-daily.yml'
+permissions:
+  contents: write
+concurrency:
+  group: f1-seller-lead-engine-daily
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Build public orchestration feeds
+        run: |
+          python -m py_compile scripts/seller_lead_engine.py
+          python scripts/seller_lead_engine.py
+          python -m unittest tests/test_seller_lead_engine.py -v
+          python -m json.tool data/seller-lead-engine-public.json >/dev/null
+          python -m json.tool data/postiz-outbox.json >/dev/null
+      - name: Publish generated non-sensitive data
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'f1-seller-lead-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add data/seller-lead-engine-public.json data/postiz-outbox.json
+          if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
+          git commit -m 'Refresh F1 Seller Lead Engine feed'
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch origin main
+            git rebase origin/main
+            sleep $((attempt * 2))
+          done
+          exit 1

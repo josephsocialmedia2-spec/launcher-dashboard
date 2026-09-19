@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "name": "F1 Seller Lead Engine",
+  "agentpricing_url": "https://www.agentpricing.com/j.malafronte",
+  "valuation_label": "VALUTAZIONE PROFESSIONALE GRATUITA",
+  "territory_config": "config/territory.json",
+  "acquisition_feed": "data/acquisition-public.json",
+  "neighborhood_feed": "data/neighborhood_intelligence.json",
+  "crm_path": "crm.html",
+  "seller_radar_path": "seller-radar-unico.html",
+  "command_center_path": "oggi.html",
+  "microzone_radius_m": 1000,
+  "lead_bands": {"HOT":70,"WARM":45,"NURTURE":20,"INFORMATION_ONLY":0},
+  "communication_policy": {
+    "default_public_contact_state": "MANUAL_REVIEW",
+    "automatic_send_requires_eligibility": true,
+    "states": ["SEND","MANUAL_REVIEW","DO_NOT_SEND"],
+    "email_states": ["EMAIL_AUTOMATIC_ALLOWED","EMAIL_MANUAL_REQUIRED","EMAIL_NOT_ALLOWED"],
+    "whatsapp_states": ["WHATSAPP_AUTOMATIC_ALLOWED","WHATSAPP_MANUAL_REQUIRED","WHATSAPP_NOT_ALLOWED"],
+    "rule": "Un recapito pubblicamente visibile non e automaticamente idoneo a marketing. Il CRM autenticato deve fornire l'eleggibilita del canale prima di qualsiasi invio automatico."
+  },
+  "daily_windows": [
+    {"from":"08:30","to":"10:00","purpose":"HOT_INBOUND_AND_VALUATIONS"},
+    {"from":"10:00","to":"12:00","purpose":"ACTIVE_FOLLOW_UP"},
+    {"from":"12:00","to":"14:00","purpose":"NURTURE_AND_EMAIL"},
+    {"from":"15:00","to":"17:30","purpose":"SELLER_RADAR_AND_TERRITORY"},
+    {"from":"17:30","to":"19:30","purpose":"HIGH_PRIORITY_FOLLOW_UP"}
+  ],
+  "postiz": {
+    "mode": "DISCOVER_EXISTING_ONLY",
+    "repository_status": "NOT_FOUND",
+    "outbox": "data/postiz-outbox.json",
+    "rule": "Non creare credenziali o nuove integrazioni social. Produrre una outbox finche l'installazione Postiz esistente non e tecnicamente mappata."
+  }
+}

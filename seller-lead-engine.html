@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07120b">
+<title>F1 Seller Lead Engine</title>
+<style>
+:root{--bg:#07100a;--panel:#0d1710;--line:#26372a;--txt:#f3f7f4;--mut:#a6b1aa;--g:#39f28a;--amber:#f4c95d;--red:#ff7b7b;--blue:#78c7ff}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050806,#0b120d);color:var(--txt);font-family:Arial,Helvetica,sans-serif}.wrap{max-width:1260px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;flex-wrap:wrap}.ey{font-size:11px;font-weight:900;letter-spacing:.14em;color:var(--g)}h1{margin:4px 0 6px;font-size:clamp(30px,5vw,54px)}.sub{color:var(--mut);max-width:860px;line-height:1.45}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 13px;border-radius:10px;text-decoration:none;font-weight:900;font-size:12px;border:1px solid var(--line);background:#152019;color:#fff}.btn.primary{background:var(--g);color:#07100a;border-color:var(--g)}.grid{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:10px;margin:18px 0}.card,.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:14px}.card b{display:block;font-size:28px;margin-top:4px}.label{font-size:10px;color:var(--mut);font-weight:900;letter-spacing:.08em}.panel{margin:12px 0}.panel h2{margin:0 0 10px;font-size:19px}.statusGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.status{padding:10px;border-radius:10px;background:#111d14;border:1px solid var(--line);font-size:11px}.status strong{display:block;margin-bottom:3px;color:var(--g)}.tableWrap{overflow:auto;border-radius:12px;border:1px solid var(--line)}table{border-collapse:collapse;width:100%;min-width:1040px;background:#09110b}th,td{padding:10px;border-bottom:1px solid #203025;text-align:left;font-size:11px;vertical-align:top}th{background:#142019;color:var(--g);position:sticky;top:0}.tag{display:inline-block;padding:4px 7px;border-radius:999px;font-size:9px;font-weight:900;border:1px solid var(--line)}.HOT{color:#fff;background:#7b2222}.WARM{color:#07100a;background:var(--amber)}.NURTURE{color:#07100a;background:var(--blue)}.INFORMATION_ONLY{color:#d4ddd6;background:#182219}.mut{color:var(--mut)}.empty{text-align:center;color:var(--mut);padding:24px}.foot{color:var(--mut);font-size:10px;margin:18px 0 34px;line-height:1.45}@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.statusGrid{grid-template-columns:1fr}}@media(max-width:520px){.wrap{padding:12px}.grid{grid-template-columns:1fr 1fr}.card b{font-size:22px}.actions .btn{flex:1 1 46%}}
+</style>
+<script defer src="seller-lead-engine.js?v=20260919-1"></script>
+</head>
+<body>
+<main class="wrap">
+  <div class="top">
+    <div>
+      <div class="ey">F1 IMMOBILIARE · ACQUISIZIONE</div>
+      <h1>F1 SELLER LEAD ENGINE</h1>
+      <div class="sub">Orchestratore di Seller Radar, CRM, microzone da 1 km, follow-up, canali di comunicazione e contenuti. Il CRM unificato resta la fonte operativa privata.</div>
+    </div>
+    <div class="actions">
+      <a class="btn primary" id="valuationBtn" href="https://www.agentpricing.com/j.malafronte" target="_blank" rel="noopener">VALUTAZIONE PROFESSIONALE GRATUITA</a>
+      <a class="btn" href="oggi.html">COMMAND CENTER</a>
+      <a class="btn" href="seller-radar-unico.html">SELLER RADAR</a>
+      <a class="btn" href="crm.html">CRM</a>
+    </div>
+  </div>
+  <section class="grid">
+    <div class="card"><span class="label">OPPORTUNITÀ</span><b id="kTotal">–</b></div>
+    <div class="card"><span class="label">HOT</span><b id="kHot">–</b></div>
+    <div class="card"><span class="label">WARM</span><b id="kWarm">–</b></div>
+    <div class="card"><span class="label">NURTURE</span><b id="kNurture">–</b></div>
+    <div class="card"><span class="label">MICROZONA</span><b id="kRadius">1 km</b></div>
+  </section>
+  <section class="panel"><h2>Stato integrazioni</h2><div id="integrations" class="statusGrid"></div></section>
+  <section class="panel">
+    <h2>Priorità operative</h2>
+    <div class="tableWrap"><table><thead><tr><th>PRIORITÀ</th><th>COMUNE / VIA</th><th>SEGNALE</th><th>CAMPAGNA</th><th>COMUNICAZIONI</th><th>PROSSIMA AZIONE</th><th>FONTE</th></tr></thead><tbody id="rows"><tr><td colspan="7" class="empty">Caricamento…</td></tr></tbody></table></div>
+  </section>
+  <section class="panel"><h2>Regola canali</h2><div class="sub" id="policy">Caricamento…</div></section>
+  <div class="foot" id="meta">F1 Seller Lead Engine</div>
+</main>
+</body>
+</html>

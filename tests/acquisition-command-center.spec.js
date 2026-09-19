@@ -68,76 +68,65 @@ test('public acquisition feed exposes no private contact fields', async ({ reque
 
 test('cloud access page is login-only', async ({ page }) => {
   await page.goto('/setup-cloud.html');
-  await expect(page.getByRole('heading', { name: 'ACCESSO F1 · CLOUD' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'ACCEDI' })).toBeVisible();
-  await expect(page.getByRole('button', { name: /PRIMO ACCESSO/i })).toHaveCount(0);
-  await expect(page.getByText(/creazione account non è disponibile/i)).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'ACCESSO CLOUD' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'ENTRA' })).toBeVisible();
+  await expect(page.getByRole('button', { name: /CREA ACCOUNT · PRIMO ACCESSO/i })).toHaveCount(0);
+  await expect(page.getByText(/Autenticazione individuale necessaria/i)).toBeVisible();
 });
 
-test('CRM blocks phone actions while RPO is unverified', async ({ page }) => {
-  await page.addInitScript(() => {
-    localStorage.setItem('f1AcquisitionLeadsV1', JSON.stringify([{
-      lead_id:'qa-rpo-lead',pillar:1,source_type:'FSBO',source:'QA',source_url:'',created_at:new Date().toISOString(),
-      first_seen:new Date().toISOString(),last_seen:new Date().toISOString(),nome:'QA',cognome:'RPO',telefono:'390000000000',
-      email:'',comune:'Villar Dora',via:'Via Test',civico:'',zona:'',immobile_id:'',competitor_agency:'',lead_reason:'FSBO',
-      lead_score:80,confidence:'HIGH',status:'DA_VERIFICARE',last_contact:'',next_action:'Verifica RPO',next_action_date:'',
-      assigned_to:'',notes:'QA gate',privacy_basis:'QA',do_not_contact:false,rpo_status:'DA_VERIFICARE',created_by:'qa',
-      updated_at:new Date().toISOString(),deleted:false
-    }]));
-  });
-  await page.goto('/crm.html');
-  await expect(page.getByRole('heading', { name: 'LEAD · INTERAZIONI · TASK' })).toBeVisible();
-  const card = page.locator('.lead').filter({ hasText: 'QA RPO' });
-  await expect(card).toBeVisible();
-  await expect(card.getByText('RPO DA VERIFICARE', { exact: true })).toBeVisible();
-  await expect(card.getByRole('link', { name: 'CHIAMA' })).toHaveCount(0);
-  await expect(card.getByText('CONTATTO BLOCCATO FINO A VERIFICA RPO', { exact: true })).toBeVisible();
+test('core contact eligibility blocks unverified RPO and do-not-contact', async ({ page }) => {
+  await page.goto('/oggi.html');
+  await expect.poll(() => page.evaluate(() => typeof window.F1AcquisitionCore?.contactEligible)).toBe('function');
+  const gate = await page.evaluate(() => ({
+    unverified: F1AcquisitionCore.contactEligible({telefono:'390000000000',do_not_contact:false,status:'DA_VERIFICARE',rpo_status:'DA_VERIFICARE'}),
+    verified: F1AcquisitionCore.contactEligible({telefono:'390000000000',do_not_contact:false,status:'DA_CONTATTARE',rpo_status:'VERIFICATO_OK'}),
+    dnc: F1AcquisitionCore.contactEligible({telefono:'390000000000',do_not_contact:true,status:'DA_CONTATTARE',rpo_status:'VERIFICATO_OK'})
+  }));
+  expect(gate.unverified).toBeFalsy();
+  expect(gate.verified).toBeTruthy();
+  expect(gate.dnc).toBeFalsy();
 });
 
-test('Telefonate view keeps CALL task blocked until CRM contact eligibility is verified', async ({ page }) => {
+test('Telefonate view keeps its own RPO gate active', async ({ page }) => {
+  await page.goto('/telefonate-oggi.html');
+  await expect.poll(() => page.evaluate(() => typeof window.callAllowed)).toBe('function');
+  const gate = await page.evaluate(() => ({
+    unverified: callAllowed({telefono:'390000000001',do_not_contact:false,status:'DA_VERIFICARE',rpo_status:'DA_VERIFICARE'}),
+    verified: callAllowed({telefono:'390000000001',do_not_contact:false,status:'DA_CONTATTARE',rpo_status:'VERIFICATO_OK'}),
+    blocked: callAllowed({telefono:'390000000001',do_not_contact:false,status:'NON_CONTATTARE',rpo_status:'VERIFICATO_OK'})
+  }));
+  expect(gate.unverified).toBeFalsy();
+  expect(gate.verified).toBeTruthy();
+  expect(gate.blocked).toBeFalsy();
+  await expect(page.getByRole('link', { name: 'VERIFICA RPO' })).toBeVisible();
+});
+
+test('unauthenticated browser cache cannot become the CRM source of truth', async ({ page }) => {
   await page.addInitScript(() => {
-    const now = new Date().toISOString();
     localStorage.setItem('f1AcquisitionLeadsV1', JSON.stringify([{
-      lead_id:'qa-call-lead',pillar:1,source_type:'FSBO',source:'QA',created_at:now,nome:'QA',cognome:'CALL',telefono:'390000000001',
-      comune:'Villar Dora',via:'Via Test',lead_reason:'FSBO',lead_score:85,confidence:'HIGH',status:'DA_VERIFICARE',
-      do_not_contact:false,rpo_status:'DA_VERIFICARE',updated_at:now,deleted:false
+      lead_id:'qa-local-only',source_type:'PAST_CLIENT',nome:'QA',cognome:'LOCAL',telefono:'390000000002',
+      status:'DA_RICONTATTARE',rpo_status:'VERIFICATO_OK',next_action_date:'2000-01-01'
     }]));
     localStorage.setItem('f1AcquisitionTasksV1', JSON.stringify([{
-      task_id:'11111111-1111-4111-8111-111111111111',lead_id:'qa-call-lead',property_id:'',event_id:'',pillar:1,
-      task_type:'CALL',reason:'QA CALL gate',priority:85,due_date:now,assigned_to:'',status:'OPEN',created_at:now,completed_at:'',
-      outcome:'',metadata:{core_category:'FSBO'},updated_at:now
+      task_id:'22222222-2222-4222-8222-222222222222',lead_id:'qa-local-only',task_type:'CALL',status:'OPEN',due_date:'2000-01-01'
     }]));
-  });
-  await page.goto('/telefonate-oggi.html');
-  const card = page.locator('.call').filter({ hasText: 'QA CALL gate' });
-  await expect(card).toBeVisible();
-  await expect(card.getByText(/BLOCCATO · RPO DA_VERIFICARE/)).toBeVisible();
-  await expect(card.getByRole('link', { name: 'APRI CENTRALE PC' })).toHaveCount(0);
-  await expect(card.getByRole('link', { name: 'VERIFICA LEAD / RPO' })).toBeVisible();
-});
-
-test('Core4 creates a due VERIFY task only from an explicit next action date when contact is not eligible', async ({ page }) => {
-  await page.addInitScript(() => {
-    const now = new Date().toISOString();
-    localStorage.setItem('f1AcquisitionLeadsV1', JSON.stringify([{
-      lead_id:'qa-core4-due',pillar:2,source_type:'PAST_CLIENT',source:'QA',created_at:now,first_seen:now,last_seen:now,
-      nome:'QA',cognome:'CORE4',telefono:'390000000002',email:'',comune:'Villar Dora',via:'',civico:'',zona:'',immobile_id:'',
-      competitor_agency:'',lead_reason:'PAST_CLIENT',lead_score:70,confidence:'HIGH',status:'DA_RICONTATTARE',last_contact:'',
-      next_action:'Ricontatta cliente passato',next_action_date:'2000-01-01',assigned_to:'',notes:'QA Core4 due',privacy_basis:'QA',
-      do_not_contact:false,rpo_status:'DA_VERIFICARE',created_by:'qa',updated_at:now,deleted:false
-    }]));
-    localStorage.setItem('f1AcquisitionTasksV1', '[]');
   });
   await page.goto('/oggi.html');
-  await expect.poll(async () => page.evaluate(() => {
-    const tasks = JSON.parse(localStorage.getItem('f1AcquisitionTasksV1') || '[]');
-    return tasks.find(t => t.lead_id === 'qa-core4-due') || null;
-  })).toMatchObject({
-    lead_id:'qa-core4-due',
-    task_type:'VERIFY',
-    status:'OPEN',
-    metadata:{origin:'CORE4_DUE',core_category:'PAST_CLIENT',contact_gate:'RPO_OR_CONTACT_CHECK'}
+  const state = await page.evaluate(async () => {
+    let requireCloudMessage='';
+    try { F1AcquisitionData.requireCloud(); } catch (e) { requireCloudMessage=String(e.message||e); }
+    const d=await F1AcquisitionData.loadDashboardData();
+    return {
+      cloud:d.cloud,
+      leadCount:d.leads.length,
+      hasLocalTask:d.tasks.some(t=>String(t.lead_id)==='qa-local-only'),
+      requireCloudMessage
+    };
   });
+  expect(state.cloud).toBeFalsy();
+  expect(state.leadCount).toBe(0);
+  expect(state.hasLocalTask).toBeFalsy();
+  expect(state.requireCloudMessage).toMatch(/accesso cloud richiesto/i);
 });
 
 test('mobile command center remains usable', async ({ page }) => {
