@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const VERSION='20260919-sign-crm6';
+const VERSION='20260919-sign-crm7';
 const BUCKET='f1-territory-photos';
 const $=id=>document.getElementById(id), txt=v=>String(v??'').trim();
 let fileBlob=null, previewUrl='', ocrText='', ocrConfidence=0, context=null, duplicateOverride=false, busy=false;
@@ -47,7 +47,8 @@ function openDirectCamera(options={}){
     fileBlob=f;
     if(previewUrl)URL.revokeObjectURL(previewUrl);
     previewUrl=URL.createObjectURL(f);
-    renderPreview();
+    context=null;
+    renderLocationSetup();
   };
   input.addEventListener('cancel',cleanup,{once:true});
   try{input.click()}catch(e){
@@ -75,7 +76,8 @@ function openGalleryPicker(options={}){
     fileBlob=f;
     if(previewUrl)URL.revokeObjectURL(previewUrl);
     previewUrl=URL.createObjectURL(f);
-    renderPreview();
+    context=null;
+    renderLocationSetup();
   };
   input.addEventListener('cancel',cleanup,{once:true});
   try{input.click()}catch(e){
@@ -121,10 +123,135 @@ async function getContext(){
 }
 async function profile(){if(window.__f1SignProfile)return window.__f1SignProfile;if(!navigator.onLine)return null;if(!window.F1StaffData?.ready?.())return null;try{return window.__f1SignProfile=await F1StaffData.me()}catch(_){return null}}
 function renderCapture(){const b=$('f1SignBody');if(!b)return;b.innerHTML=`<div class="f1-sign-step"><div class="f1-sign-note">Acquisisci un cartello con la fotocamera oppure scegli una foto già presente sul telefono. F1 leggerà testo e numero; i dati vengono registrati nel flusso territoriale solo dopo la tua conferma.</div><div class="f1-sign-grid"><button id="f1SignTake" class="f1-sign-primary" type="button">📷 SCATTA FOTO</button><button id="f1SignGallery" class="f1-sign-secondary" type="button">🖼️ CARICA FOTO</button></div><div id="f1SignStatus" class="f1-sign-status"></div></div>`;$('f1SignTake').onclick=()=>openDirectCamera({source:'SIGN_OVERLAY_CAMERA'});$('f1SignGallery').onclick=()=>openGalleryPicker({source:'SIGN_OVERLAY_GALLERY'});}
-function renderPreview(){const b=$('f1SignBody');b.innerHTML=`<div class="f1-sign-step"><img class="f1-sign-preview" src="${previewUrl}" alt="Anteprima cartello"><div class="f1-sign-grid"><button id="f1SignRetake" class="f1-sign-secondary" type="button">RIFAI FOTO</button><button id="f1SignAnalyze" class="f1-sign-primary" type="button">ANALIZZA FOTO</button></div><div id="f1SignStatus" class="f1-sign-status"></div></div>`;$('f1SignRetake').onclick=renderCapture;$('f1SignAnalyze').onclick=analyze;}
+async function activeLocationDefaults(){
+  let st=null,p=null;
+  try{
+    if(window.F1NotiziereEngine?.load)st=await F1NotiziereEngine.load({force:false});
+    p=st?.territory?.progress||null;
+  }catch(_){}
+  if(!p){
+    try{
+      st=await window.F1MobileStore?.cachedState?.();
+      p=st?.territory?.progress||null;
+    }catch(_){}
+  }
+  const uiCivic=txt(document.getElementById('civicInput')?.value);
+  return{
+    state:st,
+    progress:p,
+    comune:txt(p?.comune),
+    zona:txt(p?.zona),
+    via:txt(p?.via),
+    civico:uiCivic||txt(p?.next_civic||p?.civic_start||p?.last_civic)
+  };
+}
+async function createContextFromLocation(loc,geo=null){
+  const base={progress:{progress_id:'',comune:loc.comune,zona:loc.zona,via:loc.via},civico:loc.civico,profile:await profile(),geo:geo||null};
+  if(!navigator.onLine||!window.F1StaffData?.ready?.())return base;
+  try{
+    const opened=await F1StaffData.rpc('f1_territory_open_street_v3',{
+      p_comune:loc.comune,
+      p_via:loc.via,
+      p_source:'CARTELLO',
+      p_source_ref:''
+    });
+    if(opened?.progress_id){
+      await F1StaffData.rpc('f1_territory_set_manual_civic_v3',{p_progress_id:opened.progress_id,p_civico:loc.civico}).catch(()=>{});
+      window.F1NotiziereEngine?.invalidate?.();
+      return{progress:{...opened,comune:loc.comune,zona:loc.zona||opened.zona||'',via:loc.via},civico:loc.civico,profile:await profile(),geo:geo||null};
+    }
+  }catch(e){console.warn('[F1 sign create context]',e)}
+  return base;
+}
+async function geolocateAndFill(){
+  const btn=$('f1SignGeo');
+  if(!navigator.geolocation||!isSecureContext){status('GEOLOCALIZZAZIONE NON DISPONIBILE SU QUESTO DISPOSITIVO.',true);return}
+  if(btn)btn.disabled=true;
+  status('CERCO LA POSIZIONE ATTUALE…');
+  try{
+    const pos=await new Promise((resolve,reject)=>navigator.geolocation.getCurrentPosition(resolve,reject,{enableHighAccuracy:true,timeout:12000,maximumAge:10000}));
+    const geo={latitude:pos.coords.latitude,longitude:pos.coords.longitude,accuracy:pos.coords.accuracy};
+    context=context||{};
+    context.geo=geo;
+    status('POSIZIONE TROVATA · CERCO INDIRIZZO…');
+    const u='https://nominatim.openstreetmap.org/reverse?format=jsonv2&addressdetails=1&zoom=18&lat='+encodeURIComponent(geo.latitude)+'&lon='+encodeURIComponent(geo.longitude);
+    const r=await fetch(u,{headers:{'Accept-Language':'it'}});
+    if(!r.ok)throw new Error('INDIRIZZO NON DISPONIBILE');
+    const j=await r.json(),a=j?.address||{};
+    const comune=txt(a.town||a.city||a.village||a.municipality||a.county);
+    const via=txt(a.road||a.pedestrian||a.residential||a.footway||a.path);
+    const civico=txt(a.house_number);
+    const zona=txt(a.suburb||a.neighbourhood||a.quarter||a.hamlet);
+    if($('f1LocComune')&&!$('f1LocComune').value)$('f1LocComune').value=comune;
+    if($('f1LocVia')&&!$('f1LocVia').value)$('f1LocVia').value=via;
+    if($('f1LocCivico')&&!$('f1LocCivico').value)$('f1LocCivico').value=civico;
+    if($('f1LocZona')&&!$('f1LocZona').value)$('f1LocZona').value=zona;
+    if(comune&&via)status('✓ POSIZIONE COMPILATA. CONTROLLA IL CIVICO E CONTINUA.');
+    else status('POSIZIONE TROVATA, MA COMPLETA MANUALMENTE I CAMPI MANCANTI.',true);
+  }catch(e){
+    status(e?.code===1?'PERMESSO POSIZIONE NEGATO. INSERISCI I DATI MANUALMENTE.':'NON RIESCO A COMPILARE L’INDIRIZZO. INSERISCILO MANUALMENTE.',true);
+  }finally{if(btn)btn.disabled=false}
+}
+async function renderLocationSetup(){
+  const b=$('f1SignBody');if(!b)return;
+  const d=await activeLocationDefaults();
+  b.innerHTML=`<form id="f1SignLocationForm" class="f1-sign-step">
+    <img class="f1-sign-preview" src="${previewUrl}" alt="Anteprima cartello">
+    <div class="f1-sign-ok"><b>DOVE SI TROVA IL CARTELLO?</b><br>Inserisci i dati oppure usa la posizione del telefono. Non serve aver aperto prima un giro territoriale.</div>
+    <button id="f1SignGeo" class="f1-sign-primary" type="button">📍 GEOLOCALIZZA E COMPILA</button>
+    <div class="f1-sign-grid">
+      <div><label class="f1-sign-label">COMUNE</label><input id="f1LocComune" class="f1-sign-field" required value="${esc(d.comune)}" placeholder="Es. Avigliana"></div>
+      <div><label class="f1-sign-label">ZONA</label><input id="f1LocZona" class="f1-sign-field" value="${esc(d.zona)}" placeholder="Facoltativa"></div>
+    </div>
+    <div class="f1-sign-grid">
+      <div><label class="f1-sign-label">VIA</label><input id="f1LocVia" class="f1-sign-field" required value="${esc(d.via)}" placeholder="Es. Via Felice Goffi"></div>
+      <div><label class="f1-sign-label">CIVICO</label><input id="f1LocCivico" class="f1-sign-field" required value="${esc(d.civico)}" placeholder="Es. 28"></div>
+    </div>
+    <div class="f1-sign-grid">
+      <button id="f1SignChangePhoto" class="f1-sign-secondary" type="button">CAMBIA FOTO</button>
+      <button class="f1-sign-primary" type="submit">✓ CONTINUA E ANALIZZA</button>
+    </div>
+    <div id="f1SignStatus" class="f1-sign-status"></div>
+  </form>`;
+  $('f1SignGeo').onclick=geolocateAndFill;
+  $('f1SignChangePhoto').onclick=renderCapture;
+  $('f1SignLocationForm').onsubmit=async ev=>{
+    ev.preventDefault();
+    const form=ev.currentTarget;if(!form.reportValidity())return;
+    const loc={comune:txt($('f1LocComune').value),zona:txt($('f1LocZona').value),via:txt($('f1LocVia').value),civico:txt($('f1LocCivico').value)};
+    status('PREPARO IL CARTELLO…');
+    const geo=context?.geo||null;
+    context=await createContextFromLocation(loc,geo);
+    await analyze();
+  };
+}
+function renderPreview(){renderLocationSetup();}
 async function loadTesseract(){if(window.Tesseract?.createWorker)return window.Tesseract;await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';s.onload=resolve;s.onerror=()=>reject(new Error('MOTORE OCR NON DISPONIBILE'));document.head.appendChild(s)});if(!window.Tesseract?.createWorker)throw new Error('MOTORE OCR NON DISPONIBILE');return window.Tesseract;}
 async function ocrPreparedImage(blob){try{const bmp=await createImageBitmap(blob,{imageOrientation:'from-image'}).catch(()=>createImageBitmap(blob)),max=1800,scale=Math.min(1,max/Math.max(bmp.width,bmp.height)),w=Math.max(1,Math.round(bmp.width*scale)),h=Math.max(1,Math.round(bmp.height*scale)),c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d',{willReadFrequently:true});x.drawImage(bmp,0,0,w,h);bmp.close?.();try{const d=x.getImageData(0,0,w,h),p=d.data;for(let i=0;i<p.length;i+=4){const g=.299*p[i]+.587*p[i+1]+.114*p[i+2],v=Math.max(0,Math.min(255,(g-128)*1.22+128));p[i]=p[i+1]=p[i+2]=v}x.putImageData(d,0,0)}catch(_){}return await new Promise(resolve=>c.toBlob(b=>resolve(b||blob),'image/jpeg',.92))}catch(_){return blob}}
-async function analyze(){if(!fileBlob)return;status('ANALIZZO IL CARTELLO…');let raw='',conf=0;try{if(!navigator.onLine)throw new Error('OFFLINE');const T=await loadTesseract(),prepared=await ocrPreparedImage(fileBlob);let worker=null;try{worker=await T.createWorker('ita',1,{logger:m=>{if(m.status==='recognizing text')status(`ANALIZZO IL CARTELLO… ${Math.round((m.progress||0)*100)}%`)}});const r=await worker.recognize(prepared);raw=txt(r?.data?.text);conf=Number(r?.data?.confidence||0)}finally{try{await worker?.terminate?.()}catch(_){}}if(!raw)status('OCR NON RIUSCITO · INSERISCI O CORREGGI IL TESTO',true);}catch(e){console.warn('[F1 OCR]',e);raw='';conf=0;status('OCR NON RIUSCITO · INSERISCI O CORREGGI IL TESTO',true);}ocrText=raw;ocrConfidence=conf;try{context=await getContext();renderReview(raw,conf);}catch(e){status(String(e?.message||e),true);}}
+async function analyze(){
+  if(!fileBlob)return;
+  if(!context?.progress||!txt(context?.civico)){await renderLocationSetup();return}
+  status('ANALIZZO IL CARTELLO…');
+  let raw='',conf=0;
+  try{
+    if(!navigator.onLine)throw new Error('OFFLINE');
+    const T=await loadTesseract(),prepared=await ocrPreparedImage(fileBlob);
+    let worker=null;
+    try{
+      worker=await T.createWorker('ita',1,{logger:m=>{if(m.status==='recognizing text')status(`ANALIZZO IL CARTELLO… ${Math.round((m.progress||0)*100)}%`)}});
+      const r=await worker.recognize(prepared);
+      raw=txt(r?.data?.text);
+      conf=Number(r?.data?.confidence||0);
+    }finally{try{await worker?.terminate?.()}catch(_){}}
+  }catch(e){
+    console.warn('[F1 OCR]',e);
+    raw='';
+    conf=0;
+  }
+  ocrText=raw;
+  ocrConfidence=conf;
+  renderReview(raw,conf);
+}
 function phoneCandidates(text){const out=[];const re=/(?:(?:\+\s*39|00\s*39)[\s.\-/]*)?(?:\d[\s.\-/]*){7,12}\d/g;for(const m of String(text||'').matchAll(re)){const raw=txt(m[0]),digits=raw.replace(/\D/g,'');if(digits.length<7||digits.length>14)continue;let normalized=digits;if(/^00\s*39/.test(raw.replace(/\s+/g,'')))normalized='+'+digits.slice(2);else if(/^\s*\+/.test(raw))normalized='+'+digits;if(!out.some(x=>x.normalized===normalized))out.push({raw,normalized});}return out;}
 function classify(text){const u=String(text||'').toUpperCase();let sign='ALTRO';if(/AGENZIA|IMMOBILIARE/.test(u))sign='CARTELLO_AGENZIA';else if(/VENDESI|VENDITA|IN VENDITA/.test(u))sign='CARTELLO_VENDESI';else if(/AFFITTASI|AFFITTO|IN AFFITTO/.test(u))sign='CARTELLO_AFFITTASI';else if(/PRIVATO/.test(u))sign='CARTELLO_PRIVATO';const props=['APPARTAMENTO','VILLA','CASA','TERRENO','BOX','LOCALE','NEGOZIO','CAPANNONE'];return{sign,property:props.find(x=>u.includes(x))||''};}
 function confLabel(conf,hasPhone){if(!hasPhone)return'';if(conf>=85)return'CERTO';if(conf>=65)return'PROBABILE';return'INCERTO';}
@@ -132,7 +259,7 @@ function renderReview(raw,conf){const p=context.progress,phones=phoneCandidates(
 async function getCoords(){if(!navigator.geolocation||!isSecureContext)return null;return new Promise(resolve=>navigator.geolocation.getCurrentPosition(p=>resolve({latitude:p.coords.latitude,longitude:p.coords.longitude,accuracy:p.coords.accuracy}),()=>resolve(null),{enableHighAccuracy:true,timeout:5000,maximumAge:30000}));}
 async function duplicates(data){if(!navigator.onLine||!window.F1StaffData?.ready?.())return[];try{return await F1StaffData.rpc('f1_territory_sign_duplicates',{p_phone_normalized:data.phone,p_comune:data.comune,p_via:data.via,p_civico:data.civico,p_sign_type:data.sign_type})||[]}catch(e){console.warn('[F1 sign duplicate]',e);return[]}}
 function showDuplicates(rows,form){const host=$('f1SignDuplicates');if(!host)return;const clean=rows.filter(r=>r.observation_id!==form.dataset.savedObservation);host.innerHTML=`<div class="f1-sign-warn"><b>⚠ POSSIBILE RECORD GIÀ PRESENTE</b><div class="f1-sign-dup">${clean.slice(0,5).map(r=>`<div><b>${esc(r.source_type==='LEAD'?'CRM':'CARTELLO')}</b> · ${esc([r.comune,r.via,r.civico].filter(Boolean).join(' '))}<br>${esc(r.phone||'')} · ${esc(r.status||'')}</div>`).join('')}</div><label class="f1-sign-check" style="margin-top:8px"><input id="f1SignDuplicateConfirm" type="checkbox"><span>Registra comunque come <b>nuova osservazione territoriale</b> mantenendo lo storico.</span></label></div>`;$('f1SignDuplicateConfirm').onchange=e=>{duplicateOverride=e.target.checked;};}
-async function saveSign(ev){ev.preventDefault();if(busy)return;const form=ev.currentTarget;if(!form.reportValidity())return;const fd=new FormData(form),phone=txt(fd.get('phone')),phoneConfirmed=fd.get('phone_confirmed')==='on';if(phone&&!phoneConfirmed){status('CONFERMA IL NUMERO OPPURE RIMUOVILO PRIMA DI SALVARE.',true);return}const data={comune:txt(fd.get('comune')),zona:txt(fd.get('zona')),via:txt(fd.get('via')),civico:txt(fd.get('civico')),sign_type:txt(fd.get('sign_type')),property_type:txt(fd.get('property_type')),phone,phone_confirmed:phoneConfirmed,ocr_raw:txt(fd.get('ocr_raw')),ocr_confirmed:txt(fd.get('ocr_confirmed')),notes:txt(fd.get('notes'))};if(!data.ocr_confirmed){status('CONFERMA IL TESTO DEL CARTELLO.',true);return}busy=true;status('CONTROLLO DUPLICATI…');try{if(!duplicateOverride){const d=await duplicates(data);if(d.length){showDuplicates(d,form);status('POSSIBILE DUPLICATO: CONTROLLA L’AVVISO.',true);return}}const geo=await getCoords();const payload={client_event_id:uuid(),progress_id:context.progress.progress_id,data,geo,captured_at:new Date().toISOString(),phone_confidence:data.phone?confLabel(ocrConfidence,true)||'DA_VERIFICARE':'',photo_name:'cartello.jpg'};if(!navigator.onLine){await queuePending(payload,fileBlob);finishQueued(data);return}status('SALVATAGGIO TERRITORIALE…');try{const obs=await saveOnline(payload,fileBlob);finishSaved(obs,data);}catch(e){if(/fetch|network|connessione|timeout|offline/i.test(String(e?.message||e))){await queuePending(payload,fileBlob);finishQueued(data);}else throw e;}}catch(e){status('SALVATAGGIO NON COMPLETATO · '+String(e?.message||e),true)}finally{busy=false;}}
+async function saveSign(ev){ev.preventDefault();if(busy)return;const form=ev.currentTarget;if(!form.reportValidity())return;const fd=new FormData(form),phone=txt(fd.get('phone')),phoneConfirmed=fd.get('phone_confirmed')==='on';if(phone&&!phoneConfirmed){status('CONFERMA IL NUMERO OPPURE RIMUOVILO PRIMA DI SALVARE.',true);return}const data={comune:txt(fd.get('comune')),zona:txt(fd.get('zona')),via:txt(fd.get('via')),civico:txt(fd.get('civico')),sign_type:txt(fd.get('sign_type')),property_type:txt(fd.get('property_type')),phone,phone_confirmed:phoneConfirmed,ocr_raw:txt(fd.get('ocr_raw')),ocr_confirmed:txt(fd.get('ocr_confirmed')),notes:txt(fd.get('notes'))};if(!data.ocr_confirmed){status('CONFERMA IL TESTO DEL CARTELLO.',true);return}busy=true;status('CONTROLLO DUPLICATI…');try{if(!duplicateOverride){const d=await duplicates(data);if(d.length){showDuplicates(d,form);status('POSSIBILE DUPLICATO: CONTROLLA L’AVVISO.',true);return}}const geo=context?.geo||await getCoords();const payload={client_event_id:uuid(),progress_id:txt(context?.progress?.progress_id),data,geo,captured_at:new Date().toISOString(),phone_confidence:data.phone?confLabel(ocrConfidence,true)||'DA_VERIFICARE':'',photo_name:'cartello.jpg'};if(!navigator.onLine){await queuePending(payload,fileBlob);finishQueued(data);return}status('SALVATAGGIO TERRITORIALE…');try{const obs=await saveOnline(payload,fileBlob);finishSaved(obs,data);}catch(e){if(/fetch|network|connessione|timeout|offline/i.test(String(e?.message||e))){await queuePending(payload,fileBlob);finishQueued(data);}else throw e;}}catch(e){status('SALVATAGGIO NON COMPLETATO · '+String(e?.message||e),true)}finally{busy=false;}}
 
 function waPhone(v){let d=String(v||'').replace(/\D/g,'');if(d.startsWith('00'))d=d.slice(2);if(!d.startsWith('39'))d='39'+d;return d}
 function telPhone(v){const s=txt(v);if(s.startsWith('+'))return'+'+s.replace(/\D/g,'');let d=s.replace(/\D/g,'');if(d.startsWith('0039'))return'+'+d.slice(2);return d}
@@ -140,6 +267,21 @@ function nextUsefulDate(){const parts=new Intl.DateTimeFormat('en-CA',{timeZone:
 function prettyDate(v){if(!v)return'';return new Intl.DateTimeFormat('it-IT',{timeZone:'Europe/Rome',weekday:'long',day:'numeric',month:'long'}).format(new Date(v+'T12:00:00Z'))}
 function signAddress(d){return[d.via,d.zona?('Zona '+d.zona):'',d.comune].filter(Boolean).join(' · ')}
 function signMessage(d,date,time){return'Buongiorno, sono Joseph Malafronte di F1 Immobiliare. Ho visto il Suo cartello vendesi in '+signAddress(d)+'.\n\nInvece di proporLe il solito "finto cliente", Le offro una promozione immobiliare completamente gratuita per il Suo immobile, studiata per trovare un acquirente reale e concludere la vendita nel minor tempo possibile.\n\nSarò in zona per alcuni appuntamenti questo '+prettyDate(date)+'. Che ne dice se ci incontriamo direttamente sul posto alle '+time+' per una breve chiacchierata e per spiegarLe come funziona?\n\nResto in attesa di un Suo riscontro. Buona giornata!\n\nF1 Immobiliare\nJoseph Malafronte\nhttps://f1immobiliare.com/'}
+async function ensurePayloadProgress(payload){
+  const d=payload.data;
+  if(txt(payload.progress_id))return payload;
+  if(!navigator.onLine||!window.F1StaffData?.ready?.())throw new Error('SERVE CONNESSIONE PER AGGANCIARE QUESTO CARTELLO AL TERRITORIO.');
+  const opened=await F1StaffData.rpc('f1_territory_open_street_v3',{p_comune:d.comune,p_via:d.via,p_source:'CARTELLO',p_source_ref:''});
+  if(!opened?.progress_id)throw new Error('NON RIESCO A CREARE IL CONTESTO TERRITORIALE.');
+  await F1StaffData.rpc('f1_territory_set_manual_civic_v3',{p_progress_id:opened.progress_id,p_civico:d.civico}).catch(()=>{});
+  payload.progress_id=opened.progress_id;
+  if(context){
+    context.progress={...opened,comune:d.comune,zona:d.zona||opened.zona||'',via:d.via};
+    context.civico=d.civico;
+  }
+  window.F1NotiziereEngine?.invalidate?.();
+  return payload;
+}
 async function ensureCivicRecordForSign(payload){
   const d=payload.data,crm=await F1StaffData.rpc('f1_territory_mobile_crm_v5',{p_limit:2000}).catch(()=>null),existing=crm?.civics?.find(r=>r.progress_id===payload.progress_id&&txt(r.via).toLowerCase()===txt(d.via).toLowerCase()&&txt(r.civico)===txt(d.civico));
   if(existing?.civic_record_id)return existing.civic_record_id;
@@ -155,11 +297,11 @@ async function saveSignCrmNote(payload,row,photoPath){
 }
 function syncToast(msg){let e=document.getElementById('f1SignSyncToast');if(!e){e=document.createElement('div');e.id='f1SignSyncToast';e.style.cssText='position:fixed;left:12px;right:12px;top:12px;z-index:200;background:#0b6f3d;color:#fff;padding:12px;border-radius:12px;font-weight:900;text-align:center;box-shadow:0 8px 26px #0005';document.body.appendChild(e)}e.textContent=msg;setTimeout(()=>e.remove(),3500)}
 
-async function saveOnline(payload,blob){const d=payload.data,g=payload.geo||{},row=await F1StaffData.rpc('f1_territory_sign_confirm',{p_progress_id:payload.progress_id,p_comune:d.comune,p_zona:d.zona,p_via:d.via,p_civico:d.civico,p_sign_type:d.sign_type,p_property_type:d.property_type,p_phone_ocr_raw:d.phone,p_phone_normalized:d.phone,p_phone_confirmed:!!d.phone_confirmed,p_phone_confidence:payload.phone_confidence,p_ocr_text_raw:d.ocr_raw,p_ocr_text_confirmed:d.ocr_confirmed,p_notes:d.notes,p_latitude:g.latitude??null,p_longitude:g.longitude??null,p_gps_accuracy:g.accuracy??null,p_captured_at:payload.captured_at,p_client_event_id:payload.client_event_id});if(!row?.observation_id)throw new Error('SALVATAGGIO CARTELLO NON CONFERMATO');let photoPath=txt(row.photo_storage_path);if(blob&&!photoPath)photoPath=await uploadAndAttach(row,payload,blob);const civicId=await saveSignCrmNote(payload,row,photoPath);window.F1NotiziereEngine?.invalidate?.();return{...row,photo_storage_path:photoPath,crm_note_saved:true,civic_record_id:civicId};}
+async function saveOnline(payload,blob){await ensurePayloadProgress(payload);const d=payload.data,g=payload.geo||{},row=await F1StaffData.rpc('f1_territory_sign_confirm',{p_progress_id:payload.progress_id,p_comune:d.comune,p_zona:d.zona,p_via:d.via,p_civico:d.civico,p_sign_type:d.sign_type,p_property_type:d.property_type,p_phone_ocr_raw:d.phone,p_phone_normalized:d.phone,p_phone_confirmed:!!d.phone_confirmed,p_phone_confidence:payload.phone_confidence,p_ocr_text_raw:d.ocr_raw,p_ocr_text_confirmed:d.ocr_confirmed,p_notes:d.notes,p_latitude:g.latitude??null,p_longitude:g.longitude??null,p_gps_accuracy:g.accuracy??null,p_captured_at:payload.captured_at,p_client_event_id:payload.client_event_id});if(!row?.observation_id)throw new Error('SALVATAGGIO CARTELLO NON CONFERMATO');let photoPath=txt(row.photo_storage_path);if(blob&&!photoPath)photoPath=await uploadAndAttach(row,payload,blob);const civicId=await saveSignCrmNote(payload,row,photoPath);window.F1NotiziereEngine?.invalidate?.();return{...row,photo_storage_path:photoPath,crm_note_saved:true,civic_record_id:civicId};}
 async function compressImage(blob){try{const bmp=await createImageBitmap(blob),max=1600,scale=Math.min(1,max/Math.max(bmp.width,bmp.height)),w=Math.round(bmp.width*scale),h=Math.round(bmp.height*scale),c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(bmp,0,0,w,h);bmp.close?.();return await new Promise(resolve=>c.toBlob(b=>resolve(b||blob),'image/jpeg',.8));}catch(_){return blob}}
 async function uploadAndAttach(row,payload,blob){const cfg=window.F1_SUPABASE||{},prof=context.profile||await profile();if(!cfg.url||!cfg.anonKey||!prof?.user_id)throw new Error('UPLOAD FOTO NON CONFIGURATO');const image=await compressImage(blob),path=`${prof.user_id}/${payload.progress_id}/${row.observation_id}-${Date.now()}.jpg`,encoded=path.split('/').map(encodeURIComponent).join('/'),token=await F1Sync.authToken();const res=await fetch(cfg.url.replace(/\/$/,'')+`/storage/v1/object/${BUCKET}/${encoded}`,{method:'POST',headers:{apikey:cfg.anonKey,Authorization:'Bearer '+token,'Content-Type':'image/jpeg','x-upsert':'false'},body:image});if(!res.ok)throw new Error('UPLOAD FOTO NON COMPLETATO: '+await res.text());const g=payload.geo||{};await F1StaffData.rpc('f1_territory_sign_attach_photo',{p_observation_id:row.observation_id,p_progress_id:payload.progress_id,p_civico:payload.data.civico,p_storage_path:path,p_mime_type:'image/jpeg',p_latitude:g.latitude??null,p_longitude:g.longitude??null});return path;}
 async function queuePending(payload,blob){const ids=await F1MobileStore.get('pendingSignIds')||[];if(!ids.includes(payload.client_event_id))ids.push(payload.client_event_id);await F1MobileStore.set('pendingSignIds',ids);await F1MobileStore.set('pendingSign:'+payload.client_event_id,{payload,blob,created_at:new Date().toISOString()});window.dispatchEvent(new CustomEvent('f1:outbox-change'));}
-async function flushPending(){if(!navigator.onLine||!window.F1MobileStore||!window.F1StaffData?.ready?.())return;const ids=await F1MobileStore.get('pendingSignIds')||[],keep=[];for(const id of ids){const item=await F1MobileStore.get('pendingSign:'+id);if(!item)continue;try{if(!context)context=await getContext();await saveOnline(item.payload,item.blob);await F1MobileStore.set('pendingSign:'+id,null);syncToast('✓ CARTELLO SINCRONIZZATO CON CRM');}catch(e){console.warn('[F1 pending sign]',e);keep.push(id);break;}}await F1MobileStore.set('pendingSignIds',keep);window.dispatchEvent(new CustomEvent('f1:outbox-change'));}
+async function flushPending(){if(!navigator.onLine||!window.F1MobileStore||!window.F1StaffData?.ready?.())return;const ids=await F1MobileStore.get('pendingSignIds')||[],keep=[];for(const id of ids){const item=await F1MobileStore.get('pendingSign:'+id);if(!item)continue;try{await saveOnline(item.payload,item.blob);await F1MobileStore.set('pendingSign:'+id,null);syncToast('✓ CARTELLO SINCRONIZZATO CON CRM');}catch(e){console.warn('[F1 pending sign]',e);keep.push(id);break;}}await F1MobileStore.set('pendingSignIds',keep);window.dispatchEvent(new CustomEvent('f1:outbox-change'));}
 function finishSaved(row,data){const b=$('f1SignBody'),hasPhone=/\d{7,}/.test(String(data.phone||'').replace(/\D/g,'')),isSale=data.sign_type==='CARTELLO_VENDESI',date=nextUsefulDate(),time='17:00';b.innerHTML=`<div class="f1-sign-step"><div class="f1-sign-ok"><b style="font-size:20px">✓ DATI ACQUISITI</b><br><br>Comune: ${esc(data.comune)}<br>Via: ${esc(data.via)}<br>Civico: ${esc(data.civico)}<br><br>Testo:<br>${esc(data.ocr_confirmed).replace(/\n/g,'<br>')}<br><br>Telefono: ${esc(data.phone||'NESSUN TELEFONO RILEVATO')}<br>Tipo cartello: ${esc(data.sign_type)}${data.property_type?'<br>Tipo immobile: '+esc(data.property_type):''}<br>Foto: ${row.photo_storage_path?'SALVATA':'NON DISPONIBILE'}<br>CRM: ${row.crm_note_saved?'NOTA SALVATA':'NOTA NON CONFERMATA'}</div>${hasPhone?'<button id="f1SignCall" class="f1-sign-primary" type="button">📞 CHIAMA SUBITO</button>':''}${hasPhone&&isSale?`<div class="f1-sign-grid"><div><label class="f1-sign-label">DATA APPUNTAMENTO</label><input id="f1SignDate" class="f1-sign-field" type="date" value="${date}"></div><div><label class="f1-sign-label">ORA APPUNTAMENTO</label><input id="f1SignTime" class="f1-sign-field" type="time" value="${time}"></div></div><div><label class="f1-sign-label">ANTEPRIMA MESSAGGIO</label><textarea id="f1SignMessage" class="f1-sign-field" style="min-height:190px"></textarea></div><button id="f1SignWa" class="f1-sign-primary" type="button">💬 INVIA MESSAGGIO WHATSAPP</button>`:''}<div class="f1-sign-note">PROSSIMA AZIONE: ${esc(row.next_action||'VERIFICA DATI / INSERISCI NEL CRM')}</div><button id="f1SignDone" class="f1-sign-secondary" type="button">CONTINUA GIRO</button></div>`;if(hasPhone)$('f1SignCall').onclick=()=>{location.href='tel:'+telPhone(data.phone)};if(hasPhone&&isSale){const update=()=>{$('f1SignMessage').value=signMessage(data,$('f1SignDate').value,$('f1SignTime').value||'17:00')};$('f1SignDate').onchange=update;$('f1SignTime').onchange=update;update();$('f1SignWa').onclick=()=>{location.href='https://wa.me/'+waPhone(data.phone)+'?text='+encodeURIComponent($('f1SignMessage').value)}}$('f1SignDone').onclick=closeOverlay;}
 function finishQueued(data){const b=$('f1SignBody'),hasPhone=/\d{7,}/.test(String(data.phone||'').replace(/\D/g,''));b.innerHTML=`<div class="f1-sign-step"><div class="f1-sign-ok"><b>✓ DATI ACQUISITI SUL TELEFONO</b><br>IN ATTESA DI SINCRONIZZAZIONE CRM.<br>${esc(data.via)} ${esc(data.civico)}${data.phone?'<br>Telefono: '+esc(data.phone):''}</div>${hasPhone?'<button id="f1SignCall" class="f1-sign-primary" type="button">📞 CHIAMA SUBITO</button>':''}<div class="f1-sign-note">La foto, il testo e i dati restano sul dispositivo. Al ritorno della rete F1 li sincronizzerà con osservazione territoriale e NOTA CRM.</div><button id="f1SignDone" class="f1-sign-secondary" type="button">CONTINUA GIRO</button></div>`;if(hasPhone)$('f1SignCall').onclick=()=>{location.href='tel:'+telPhone(data.phone)};$('f1SignDone').onclick=closeOverlay;}
 function injectButtons(){injectStyle();const quick=$('quickSign');if(quick){quick.onclick=openOverlay;return}const actions=document.querySelector('#civicSheet .actions');if(actions&&!$('f1SignCivicBtn')){const b=document.createElement('button');b.id='f1SignCivicBtn';b.type='button';b.className='btn f1-sign-btn';b.textContent='📷 LEGGI CARTELLO';b.onclick=openOverlay;actions.insertBefore(b,actions.querySelector('#propertyBtn')||actions.lastElementChild);}}
