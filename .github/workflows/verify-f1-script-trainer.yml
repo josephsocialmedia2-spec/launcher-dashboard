@@ -21,7 +21,7 @@ jobs:
           set -euo pipefail
           BASE="https://josephsocialmedia2-spec.github.io/launcher-dashboard/mike-ferry-script-trainer"
           ok=0
-          for i in {1..24}; do
+          for i in {1..30}; do
             if curl -fsSL --max-time 20 "$BASE/" -o /tmp/index.html; then
               ok=1
               break
@@ -30,18 +30,34 @@ jobs:
           done
           test "$ok" = "1"
           grep -q "F1 SCRIPT TRAINER" /tmp/index.html
+          grep -q "IMPARA L'ACQUISIZIONE" /tmp/index.html
+          grep -q "AVVIA SIMULATORE" /tmp/index.html
+          curl -fsSL --max-time 20 "$BASE/acquisition.html" -o /tmp/acquisition.html
+          curl -fsSL --max-time 20 "$BASE/acquisition.js" -o /tmp/acquisition.js
+          grep -q "CORSO ACQUISIZIONE" /tmp/acquisition.html
+          grep -q "Catena di memoria" /tmp/acquisition.html
+          grep -q "SpeechSynthesisUtterance" /tmp/acquisition.js
+          curl -fsSL --max-time 20 "$BASE/simulator.html" -o /tmp/simulator.html
+          curl -fsSL --max-time 20 "$BASE/simulator.js" -o /tmp/simulator.js
+          grep -q "SIMULATORE ROLE PLAY" /tmp/simulator.html
+          grep -q "ACCENDI TELECAMERA" /tmp/simulator.html
+          grep -q "SpeechRecognition" /tmp/simulator.js
+          grep -q "getUserMedia" /tmp/simulator.js
+          grep -q "MediaRecorder" /tmp/simulator.js
+          grep -q "FaceDetector" /tmp/simulator.js
           curl -fsSL --max-time 20 "$BASE/manifest.webmanifest" -o /tmp/manifest.webmanifest
           grep -q '"display": "standalone"' /tmp/manifest.webmanifest
           curl -fsSL --max-time 20 "$BASE/data/scripts.js" -o /tmp/scripts.js
           grep -q "window.F1_SCRIPTS" /tmp/scripts.js
+          grep -q "lp-02-tre-risultati" /tmp/scripts.js
+          grep -q "acq-03-prequalifica-completa" /tmp/scripts.js
           curl -fsSL --max-time 20 "$BASE/app.js" -o /tmp/app.js
-          grep -q "SpeechSynthesisUtterance" /tmp/app.js
           curl -fsSL --max-time 20 "$BASE/service-worker.js" -o /tmp/sw.js
-          grep -q "data/scripts.js" /tmp/sw.js
+          grep -q "simulator.js" /tmp/sw.js
+          grep -q "acquisition.js" /tmp/sw.js
           node --check /tmp/app.js
+          node --check /tmp/acquisition.js
+          node --check /tmp/simulator.js
           node --check /tmp/scripts.js
           python -m json.tool /tmp/manifest.webmanifest >/dev/null
-          grep -q "voiceSelect" /tmp/index.html
           printf 'PUBLIC_URL_OK=1\n'
-          printf 'INDEX_BYTES=%s\n' "$(wc -c < /tmp/index.html)"
-          printf 'DATA_BYTES=%s\n' "$(wc -c < /tmp/scripts.js)"
