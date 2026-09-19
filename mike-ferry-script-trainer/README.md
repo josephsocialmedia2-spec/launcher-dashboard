@@ -1,32 +1,52 @@
-# F1 Script Trainer
+# F1 Script Trainer 2.0
 
-Mobile-first PWA for learning real-estate prospecting and listing scripts by repetition.
+PWA mobile-first per memorizzare e simulare l'intero processo di acquisizione immobiliare, dalla creazione del lead alla firma dell'incarico.
 
-## Current build
+## Architettura
 
-- 61 Italian operational scripts covering prospecting, FSBO, expired, Just Listed/Just Sold, database, lead follow-up, seller prequalification, listing presentation, objections, price reduction, buyer, referral and appointment setting.
-- Source/status shown on every script.
-- On-device Italian speech synthesis. No paid TTS dependency is required.
-- Automatic preference for an available Italian voice; quality depends on the voices installed in iOS/Android/desktop OS.
-- Playback, pause/resume, repeat, speed 0.8x–1.1x, 1/3/5/continuous loops.
-- Sentence-by-sentence memorization, hidden text, memory test, role play.
-- Favorites, learned/review state, listen counters stored in localStorage.
-- Offline cache via Service Worker.
-- PWA manifest and iOS Home Screen metadata.
+- `index.html` — home, allenamento del giorno, libreria e progressi.
+- `acquisition.html` — corso lineare in 15 fasi con 17 moduli primari.
+- `simulator.html` — role play con cliente virtuale, microfono, trascrizione quando disponibile, telecamera/specchio e registrazione locale.
+- `data/scripts.js` — 78 schede strutturate con fonti, fasi, frasi, micro-frasi, parole chiave e mappe mentali.
+- `AUDIT.md` — inventario e audit script per script.
+- `SOURCES.md` — registro fonti MFO/Mike Ferry Italy e riferimenti italiani.
+- `service-worker.js` — cache offline delle risorse essenziali.
+- `manifest.webmanifest` — installazione PWA e scorciatoie.
 
-## Source hierarchy
+## Metodo di apprendimento
 
-Where an official Mike Ferry Italy translation is publicly available, the app uses it as the primary reference while keeping the trainer wording as an original F1 adaptation rather than reproducing the protected script verbatim.
+Ascolta → leggi → ripeti → nascondi → ripeti → role play → correggi → ripeti → simula → memorizza.
 
-## Copyright note
+Il corso implementa:
+- ascolto 1/3/5/10/loop;
+- shadowing 0.75x / 0.85x / 0.90x / 1.00x / 1.05x;
+- frase-per-frase;
+- catena di memoria;
+- parole chiave;
+- mappa mentale;
+- stati NUOVO / DA IMPARARE / IN APPRENDIMENTO / QUASI MEMORIZZATO / MEMORIZZATO / DA RIPASSARE;
+- contatori ascolti, ripetizioni, tentativi e role play;
+- simulazione guidata, assistita, memoria ed esame;
+- role play casuale sulle obiezioni;
+- appuntamento completo;
+- telecamera come specchio;
+- registrazione locale e download sessione.
 
-The application intentionally avoids reproducing complete copyrighted MFO scripts. It stores original Italian adaptations with explicit provenance/status labels. See SOURCES.md.
+## Telecamera e microfono
 
-## Best iPhone voice quality
+Sono richiesti solo dopo un comando esplicito dell'utente. I media non vengono caricati automaticamente. Se il browser supporta `FaceDetector`, il trainer può produrre solo indicatori osservabili di centratura/stabilità dell'inquadratura; non effettua riconoscimento di identità, diagnosi emotive o punteggi di personalità.
 
-For the best result, install an enhanced Italian female system voice in iOS Accessibility / Spoken Content voice settings if available. The PWA uses the system speech engine and does not upload script text to a subscription TTS provider.
+SpeechRecognition/Web Speech è usato quando disponibile. In caso contrario resta operativo il fallback: registrazione locale + trascrizione manuale.
 
-## Install
+## Copyright
 
-iPhone: open the GitHub Pages URL in Safari → Share → Add to Home Screen.
-Android: open in Chrome → menu → Install app / Add to Home screen.
+Il progetto non sostituisce né ripubblica il Mike Ferry Script Book. Le fonti ufficiali sono usate per verificare la struttura. I testi operativi dell'app sono adattamenti di allenamento marcati con stato di provenienza.
+
+## Uso legale in Italia
+
+Gli script di contatto non autorizzano di per sé attività di marketing. Verificare consenso/base giuridica, RPO e normativa applicabile prima di effettuare chiamate promozionali.
+
+## Installazione
+
+iPhone: Safari → Condividi → Aggiungi alla schermata Home.
+Android: Chrome → menu → Installa app / Aggiungi a schermata Home.
