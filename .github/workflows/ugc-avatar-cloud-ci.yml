@@ -1,0 +1,23 @@
+name: UGC Avatar Cloud CI
+on:
+  push:
+    paths:
+      - 'ugc-avatar-studio/cloud/hf-space/**'
+  pull_request:
+    paths:
+      - 'ugc-avatar-studio/cloud/hf-space/**'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ugc-avatar-studio/cloud/hf-space
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install --upgrade pip
+      - run: pip install "gradio==5.50.0" "fastapi>=0.116,<1" "uvicorn>=0.35,<1" "Pillow>=10.4,<12" "requests>=2.32,<3" httpx
+      - run: python -m py_compile app.py publish_space.py smoke_test.py
+      - run: UGC_SKIP_PREWARM=1 python smoke_test.py
