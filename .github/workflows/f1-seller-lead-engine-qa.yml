@@ -1,0 +1,42 @@
+name: F1 Seller Lead Engine QA
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'seller-lead-engine.html'
+      - 'seller-lead-engine.js'
+      - 'config/seller-lead-engine.json'
+      - 'scripts/seller_lead_engine.py'
+      - 'data/seller-lead-engine-public.json'
+      - 'data/postiz-outbox.json'
+      - 'tests/test_seller_lead_engine.py'
+      - 'tests/seller-lead-engine.spec.js'
+      - 'docs/FOLLOWUP_RULES.md'
+      - 'docs/F1_SELLER_LEAD_ENGINE_INTEGRATION.md'
+      - '.github/workflows/f1-seller-lead-engine-*.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: |
+          python -m py_compile scripts/seller_lead_engine.py
+          python -m json.tool config/seller-lead-engine.json >/dev/null
+          python -m unittest tests/test_seller_lead_engine.py -v
+          python scripts/seller_lead_engine.py
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: |
+          npm install
+          npx playwright install --with-deps chromium
+          node --check seller-lead-engine.js
+          npx playwright test tests/seller-lead-engine.spec.js --project=desktop-chromium --project=mobile-chromium
