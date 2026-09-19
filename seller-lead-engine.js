@@ -18,7 +18,7 @@ function distanceLabel(v){return Number.isFinite(v)?'≈ '+v.toLocaleString('it-
 function sortRowsByDistance(rows=[]){return [...rows].sort((a,b)=>{const ad=Number.isFinite(a._distanceKm)?a._distanceKm:Infinity;const bd=Number.isFinite(b._distanceKm)?b._distanceKm:Infinity;if(ad!==bd)return ad-bd;return Number(b.lead_score||0)-Number(a.lead_score||0)})}
 function renderRows(rows=[]){
  const sorted=sortRowsByDistance(rows);
- $('rows').innerHTML=sorted.length?sorted.slice(0,100).map(r=>'<tr><td><span class="tag '+esc(r.lead_status)+'">'+esc(r.lead_status)+'</span><div class="mut">score '+esc(r.lead_score)+'</div></td><td><b>'+esc(fmt(r.comune))+'</b><div>'+esc(fmt(r.via))+(r.civico?' '+esc(r.civico):'')+'</div></td><td>'+(r.source_url?'<a href="'+esc(r.source_url)+'" target="_blank" rel="noopener" style="color:#78c7ff">'+esc(fmt(r.source))+'</a>':esc(fmt(r.source)))+'</td></tr>').join(''):'<tr><td colspan="3" class="empty">Nessuna opportunità nel feed corrente.</td></tr>'
+ $('rows').innerHTML=sorted.length?sorted.slice(0,100).map(r=>'<tr><td><span class="tag '+esc(r.lead_status)+'">'+esc(r.lead_status)+'</span><div class="mut">score '+esc(r.lead_score)+'</div></td><td><b>'+esc(fmt(r.comune))+'</b><div>'+esc(fmt(r.via))+(r.civico?' '+esc(r.civico):'')+'</div></td><td>'+(r.source_url?'<a href="'+esc(r.source_url)+'" target="_blank" rel="noopener" style="color:#78c7ff;word-break:break-all">'+esc(r.source_url)+'</a>':'—')+'</td></tr>').join(''):'<tr><td colspan="3" class="empty">Nessuna opportunità nel feed corrente.</td></tr>'
 }
 function setGeoStatus(text,state=''){const el=$('geoSortStatus');if(!el)return;el.textContent=text;el.classList.remove('ok','bad');if(state)el.classList.add(state)}
 function getPosition(){return new Promise((resolve,reject)=>{if(!navigator.geolocation)return reject(new Error('Geolocalizzazione non disponibile'));navigator.geolocation.getCurrentPosition(p=>resolve({lat:p.coords.latitude,lng:p.coords.longitude,accuracy:p.coords.accuracy}),reject,{enableHighAccuracy:true,timeout:12000,maximumAge:60000})})}
@@ -47,7 +47,6 @@ async function applyDistanceSort(rows=[]){
    if(c){found++;for(const r of rows){if(normComune(r.comune)===normComune(comune))r._distanceKm=haversineKm(pos.lat,pos.lng,c.lat,c.lng)}}
    done++;
    setGeoStatus('📍 Ordinamento geografico: '+done+'/'+comuni.length+' Comuni elaborati…');
-   renderRows(rows);
    if(done<comuni.length&&!geoCache[normComune(comuni[done])])await sleep(1050);
  }
  setGeoStatus('📍 Priorità ordinate per distanza dalla tua posizione · '+found+'/'+comuni.length+' Comuni localizzati · distanza stimata dal centro del Comune.','ok');
@@ -59,7 +58,7 @@ async function boot(){try{
  $('kTotal').textContent=fmt(s.total);$('kHot').textContent=fmt(s.hot);$('kWarm').textContent=fmt(s.warm);$('kNurture').textContent=fmt(s.nurture);$('kQueue').textContent=fmt((q.items||[]).length);$('kRadius').textContent=((d.territory||{}).microzone_radius_m||1000)/1000+' km';
  renderIntegrations(d.integrations||{});
  const opportunities=d.opportunities||[];
- renderRows(opportunities);
+ $('rows').innerHTML='<tr><td colspan="3" class="empty">📍 Calcolo distanza dalla tua posizione…</td></tr>';
  $('policy').textContent=(d.communication_policy||{}).rule||'Ogni invio deve superare il gate di eleggibilità del canale.';
  $('meta').textContent='Ultimo run: '+fmt(d.generated_at)+' · hub: '+fmt((d.territory||{}).reference_hub)+' · coda comunicazioni: '+fmt((q.items||[]).length)+' · feed pubblico privo di recapiti personali.';
  if(d.valuation&&d.valuation.url)$('valuationBtn').href=d.valuation.url;
