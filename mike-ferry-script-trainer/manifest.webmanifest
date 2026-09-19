@@ -27,6 +27,11 @@
       "name": "Simulatore",
       "short_name": "Simulatore",
       "url": "./simulator.html"
+    },
+    {
+      "name": "Solo Audio",
+      "short_name": "Audio",
+      "url": "./audio.html"
     }
   ]
 }
