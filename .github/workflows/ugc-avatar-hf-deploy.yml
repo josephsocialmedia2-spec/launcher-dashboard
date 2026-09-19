@@ -1,12 +1,6 @@
 name: Deploy UGC Avatar Studio to Hugging Face
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'ugc-avatar-studio/cloud/hf-space/**'
-      - '.github/workflows/ugc-avatar-hf-deploy.yml'
   workflow_dispatch:
 
 jobs:
