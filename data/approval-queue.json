@@ -1,9 +1,29 @@
 {
   "version": 2,
-  "generated_at": "2026-09-19T06:05:26.026854+00:00",
+  "generated_at": "2026-09-19T10:32:40.319094+00:00",
   "pipeline": "F1_COMMON_APPROVAL_QUEUE",
   "crm_target": "Supabase public.approval_queue",
   "items": [
+    {
+      "approval_id": "social-optimization-2026-09-19T10-03-10Z",
+      "module": "SOCIAL_OPTIMIZATION",
+      "platform": "FACEBOOK · INSTAGRAM",
+      "comune": "",
+      "type": "KPI_REVIEW",
+      "subject": "Ottimizzazione social · controllo KPI e Insights",
+      "result": "Analisi automatica: PARTIAL_INSIGHTS_MISSING. Insights: NOT_AVAILABLE.",
+      "action_proposed": "APPROVA VERIFICA KPI",
+      "score": null,
+      "source_url": "",
+      "preview_url": "",
+      "created_at": "2026-09-19T10:03:10Z",
+      "origin": "open-social-scheduler/publisher/content_analysis.json",
+      "metadata": {
+        "analysis_status": "PARTIAL_INSIGHTS_MISSING",
+        "insights_status": "NOT_AVAILABLE"
+      },
+      "status": "DA_APPROVARE"
+    },
     {
       "approval_id": "ff101fcb-a7ce-593c-8047-a140f8d88ac4",
       "task_id": "ff101fcb-a7ce-593c-8047-a140f8d88ac4",
@@ -5022,26 +5042,6 @@
       "created_at": "2026-09-19T06:00:05+00:00",
       "origin": "data/acquisition-public.json",
       "metadata": {},
-      "status": "DA_APPROVARE"
-    },
-    {
-      "approval_id": "social-optimization-2026-09-18T22-07-50Z",
-      "module": "SOCIAL_OPTIMIZATION",
-      "platform": "FACEBOOK · INSTAGRAM",
-      "comune": "",
-      "type": "KPI_REVIEW",
-      "subject": "Ottimizzazione social · controllo KPI e Insights",
-      "result": "Analisi automatica: PARTIAL_INSIGHTS_MISSING. Insights: NOT_AVAILABLE.",
-      "action_proposed": "APPROVA VERIFICA KPI",
-      "score": null,
-      "source_url": "",
-      "preview_url": "",
-      "created_at": "2026-09-18T22:07:50Z",
-      "origin": "open-social-scheduler/publisher/content_analysis.json",
-      "metadata": {
-        "analysis_status": "PARTIAL_INSIGHTS_MISSING",
-        "insights_status": "NOT_AVAILABLE"
-      },
       "status": "DA_APPROVARE"
     },
     {
@@ -11385,26 +11385,6 @@
       "metadata": {}
     },
     {
-      "approval_id": "facebook-signal-FBS-BC52E9D88B",
-      "task_id": "facebook-signal-FBS-BC52E9D88B",
-      "lead_id": "",
-      "property_id": "",
-      "module": "FACEBOOK_NETWORK",
-      "platform": "FACEBOOK",
-      "comune": "Condove",
-      "type": "NETWORK_SIGNAL",
-      "subject": "Sei di Condove se... | Ciao a tutti! Sono un'insegnante ...",
-      "result": "Jul 20, 2026 · Ciao a tutti! Sono un'insegnante appena entrata di ruolo e lavorerò a Condove. Sto cercando un bilocale arredato in zona. Se qualcuno avesse notizie o conoscesse qualcuno che affitta, mi farebbe un...",
-      "action_proposed": "APPROVA ANALISI",
-      "score": null,
-      "source_url": "https://www.facebook.com/groups/comunedicondove/permalink/27941951625442744/",
-      "preview_url": "",
-      "created_at": "2026-09-06T09:31:15+00:00",
-      "origin": "open-social-scheduler/growth/signals.json",
-      "status": "DA_APPROVARE",
-      "metadata": {}
-    },
-    {
       "approval_id": "facebook-signal-FBS-477EF4EF35",
       "task_id": "facebook-signal-FBS-477EF4EF35",
       "lead_id": "",
@@ -16411,11 +16391,11 @@
     }
   ],
   "summary": {
-    "total": 819,
+    "total": 818,
     "seller_radar": 592,
     "social_content": 5,
     "facebook_groups": 195,
-    "facebook_network": 26,
+    "facebook_network": 25,
     "social_optimization": 1,
     "instagram_gate": 0
   }
