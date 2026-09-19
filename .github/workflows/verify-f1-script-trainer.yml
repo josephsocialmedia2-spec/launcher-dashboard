@@ -1,0 +1,39 @@
+name: Verify F1 Script Trainer
+
+on:
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify public trainer
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="https://josephsocialmedia2-spec.github.io/launcher-dashboard/mike-ferry-script-trainer"
+          ok=0
+          for i in {1..18}; do
+            if curl -fsSL --max-time 20 "$BASE/" -o /tmp/index.html; then
+              ok=1
+              break
+            fi
+            sleep 5
+          done
+          test "$ok" = "1"
+          grep -q "F1 SCRIPT TRAINER" /tmp/index.html
+          curl -fsSL --max-time 20 "$BASE/manifest.webmanifest" -o /tmp/manifest.webmanifest
+          grep -q '"display": "standalone"' /tmp/manifest.webmanifest
+          curl -fsSL --max-time 20 "$BASE/data/scripts.js" -o /tmp/scripts.js
+          grep -q "window.F1_SCRIPTS" /tmp/scripts.js
+          curl -fsSL --max-time 20 "$BASE/app.js" -o /tmp/app.js
+          curl -fsSL --max-time 20 "$BASE/service-worker.js" -o /tmp/sw.js
+          printf 'PUBLIC_URL_OK=1\n'
+          printf 'INDEX_BYTES=%s\n' "$(wc -c < /tmp/index.html)"
+          printf 'DATA_BYTES=%s\n' "$(wc -c < /tmp/scripts.js)"
