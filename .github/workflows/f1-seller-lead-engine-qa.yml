@@ -59,3 +59,23 @@ jobs:
           npx playwright install --with-deps chromium
           node --check seller-lead-engine.js
           npx playwright test tests/seller-lead-engine.spec.js --project=desktop-chromium --project=mobile-chromium
+  live:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [python, browser]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify GitHub Pages deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
+          ok=0
+          for i in $(seq 1 60); do
+            if curl -fsSL --max-time 20 "$base/seller-lead-engine.html?qa=$RANDOM" -o /tmp/seller.html               && curl -fsSL --max-time 20 "$base/seller-lead-engine.js?qa=$RANDOM" -o /tmp/seller.js               && curl -fsSL --max-time 20 "$base/data/seller-lead-engine-public.json?qa=$RANDOM" -o /tmp/feed.json               && curl -fsSL --max-time 20 "$base/data/communication-outbox.json?qa=$RANDOM" -o /tmp/comms.json               && grep -q 'F1 SELLER LEAD ENGINE' /tmp/seller.html               && grep -q 'COMUNICAZIONI' /tmp/seller.html               && grep -q 'communication_scheduler' /tmp/feed.json               && grep -q '"status": "QUEUE_READY"' /tmp/comms.json               && grep -q 'https://www.agentpricing.com/j.malafronte' /tmp/seller.html; then
+                ok=1
+                break
+            fi
+            sleep 5
+          done
+          test "$ok" = 1
+          echo 'PASS F1 Seller Lead Engine live GitHub Pages'
