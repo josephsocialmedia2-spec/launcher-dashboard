@@ -1,0 +1,39 @@
+name: UGC Avatar Cloud CI
+on:
+  push:
+    paths:
+      - 'ugc-avatar-studio/cloud/hf-space/**'
+  pull_request:
+    paths:
+      - 'ugc-avatar-studio/cloud/hf-space/**'
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ugc-avatar-studio/cloud/hf-space
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install --upgrade pip
+      - run: pip install "gradio==5.50.0" "fastapi>=0.116,<1" "uvicorn>=0.35,<1" "Pillow>=10.4,<12" "requests>=2.32,<3" httpx
+      - run: python -m py_compile app.py publish_space.py smoke_test.py
+      - run: UGC_SKIP_PREWARM=1 python smoke_test.py
+
+  runtime-deps:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ugc-avatar-studio/cloud/hf-space
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install --upgrade pip setuptools wheel
+      - run: pip install -r requirements.txt
+      - run: git clone --depth 1 https://github.com/OpenTalker/SadTalker.git /tmp/SadTalker
+      - run: python -c "import torch, torchvision, cv2, librosa, face_alignment, basicsr, facexlib, gfpgan; print('RUNTIME_IMPORTS_OK', torch.__version__, torchvision.__version__)"
+      - run: PYTHONPATH=/tmp/SadTalker python -c "from src.utils.preprocess import CropAndExtract; from src.facerender.animate import AnimateFromCoeff; print('SADTALKER_IMPORT_OK')"
