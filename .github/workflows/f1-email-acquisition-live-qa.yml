@@ -1,0 +1,39 @@
+name: F1 Email Acquisition Live QA
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "f1-email-radar.html"
+      - "f1-email-radar.js"
+      - ".github/workflows/f1-email-acquisition-live-qa.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify GitHub Pages acquisition UI
+        shell: bash
+        run: |
+          set -euo pipefail
+          PAGE='https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.html?v=20260920-acquisition1'
+          JS='https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.js?v=20260920-acquisition1'
+
+          ok=0
+          for n in $(seq 1 24); do
+            echo "Attempt $n"
+            if curl -LfsS "$PAGE" -o /tmp/page.html && curl -LfsS "$JS" -o /tmp/radar.js; then
+              if grep -Fq 'Acquisizione email B2B' /tmp/page.html                 && grep -Fq 'id="acqCycleBtn"' /tmp/page.html                 && grep -Fq 'f1-email-radar.js?v=20260920-acquisition1' /tmp/page.html                 && grep -Fq '/functions/v1/f1-email-acquisition-engine' /tmp/radar.js                 && grep -Fq 'loadAcquisition' /tmp/radar.js; then
+                ok=1
+                break
+              fi
+            fi
+            sleep 5
+          done
+
+          test "$ok" = "1"
+          echo 'F1_EMAIL_ACQUISITION_LIVE_QA_OK'
