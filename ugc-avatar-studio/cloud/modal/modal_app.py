@@ -416,6 +416,7 @@ def web():
     def render(
         photo: UploadFile = File(...),
         script: str = Form(...),
+        test_mode: bool = Form(False),
     ):
         if photo.content_type not in {"image/jpeg", "image/png", "image/webp"}:
             raise HTTPException(status_code=400, detail="Formato foto non supportato.")
@@ -439,6 +440,7 @@ def web():
             "client_id": DEFAULT_CLIENT_ID,
             "format": "reel",
             "video_made_with_ai": True,
+            "test_mode": bool(test_mode),
             "script": script,
         }
         save_report(path, report)
@@ -533,6 +535,7 @@ def web():
                 "platforms": item.get("platforms", ["facebook","instagram","linkedin"]),
                 "scheduled_at": item.get("scheduled_at"),
                 "video_made_with_ai": True,
+                "test_mode": bool(item.get("test_mode", False)),
                 "video_url": "/api/jobs/"+item["job_id"]+"/video",
                 "width": item.get("video", {}).get("width"),
                 "height": item.get("video", {}).get("height"),
