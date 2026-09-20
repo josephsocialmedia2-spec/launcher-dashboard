@@ -43,7 +43,7 @@ jobs:
         run: |
           set -euo pipefail
           BASE="https://joseph-socialmedia2--ugc-avatar-studio-web.modal.run"
-          HTTP_CODE="$(curl --silent --show-error --max-time 1800 \
+          HTTP_CODE="$(curl --silent --show-error --location --max-redirs 20 --max-time 1800 \
             -o response.json -w "%{http_code}" \
             -F "photo=@presenter.jpg;type=image/jpeg" \
             -F "script=Ciao, questo è un test automatico del sistema avatar e pubblicazione social." \
