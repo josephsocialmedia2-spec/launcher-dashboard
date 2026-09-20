@@ -3,7 +3,7 @@ from __future__ import annotations
 import modal
 
 APP_NAME = "ugc-avatar-studio"
-GPU_TYPE = "T4"
+GPU_TYPE = "CPU"
 DATA_ROOT = "/data/jobs"
 DEFAULT_CLIENT_ID = "f1-immobiliare"
 
@@ -202,8 +202,7 @@ def _make_srt(text: str, duration: float, out, max_words: int = 7):
 
 @app.function(
     image=gpu_image,
-    gpu=GPU_TYPE,
-    timeout=600,
+    timeout=1200,
     min_containers=0,
     max_containers=1,
     scaledown_window=30,
