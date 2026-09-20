@@ -84,13 +84,54 @@ async function renderSources(){
  ):'Nessuna scansione registrata per il comune.';
  $('sourceList').innerHTML=STATE.sources.map(s=>{const p=by.get(s.key);const st=p?.status||(s.automatic?'PRONTO':(s.provider_class||'OPZIONALE'));const cls=(st==='COMPLETED'||st==='INTERACTIVE_NOT_REQUIRED'||st==='OPTIONAL_NOT_CONFIGURED')?'ok':'warn';return '<div class="source"><div class="sourceTop"><b>'+esc(s.label)+'</b><span class="tag '+cls+'">'+esc(st)+'</span></div><div class="meta">'+esc(p?.provider_class||s.provider_class||'')+' · '+esc(s.mode)+' · '+esc(s.note||'')+'</div>'+(p?.error?'<div class="meta">'+esc(p.error)+'</div>':'')+(s.url?'<a href="'+esc(s.url)+'" target="_blank" rel="noopener">APRI FONTE</a>':'')+'</div>'}).join('');
 }
+async function acquisitionCall(action='STATUS'){
+ const token=await auth();
+ const r=await fetch(CFG().url.replace(/\/$/,'')+'/functions/v1/f1-email-acquisition-engine',{
+  method:'POST',
+  headers:{apikey:CFG().anonKey,Authorization:'Bearer '+token,'Content-Type':'application/json'},
+  body:JSON.stringify({action})
+ });
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok||!j.ok)throw new Error(j.detail||j.error||('HTTP '+r.status));
+ return j.result||{};
+}
+async function loadAcquisition(){
+ try{
+  const x=await acquisitionCall('STATUS'),c=x.counts||{},blocks=x.blockers||[];
+  [['kAcqContacts','contacts'],['kAcqReady','ready'],['kAcqConsent','consent_required'],['kAcqNoEmail','no_email'],['kAcqPec','pec_only'],['kAcqSuppressed','suppressed'],['kAcqVerified','verified_email']].forEach(([id,k])=>{const el=$(id);if(el)el.textContent=Number(c[k]||0).toLocaleString('it-IT')});
+  $('kAcqQuality').textContent=Number(x.avg_data_quality||0)+'%';
+  $('acqCampaignPill').textContent=x.campaign_check?.ready?'CAMPAGNA READY':'CAMPAGNA DA CONFIGURARE';
+  $('acqCampaignPill').className='pill '+(x.campaign_check?.ready?'ok':'warn');
+  $('acqProviderPill').textContent=x.provider?.configured?'MICROSOFT READY':'MICROSOFT DA COLLEGARE';
+  $('acqProviderPill').className='pill '+(x.provider?.configured?'ok':'warn');
+  $('acqEnginePill').textContent='ENGINE ATTIVO';
+  $('acqEnginePill').className='pill ok';
+  const ready=Number(c.ready||0),need=Number(c.consent_required||0),noemail=Number(c.no_email||0),pec=Number(c.pec_only||0);
+  $('acqNotice').className='notice '+(ready>0?'ok':'');
+  $('acqNotice').innerHTML='<b>COMPLIANCE GATE:</b> '+ready+' lead pronti · '+need+' email pubbliche non autorizzate al marketing · '+noemail+' senza email · '+pec+' solo PEC. Nessun invio parte se il gate non è superato.';
+  $('acqNext').textContent=blocks.length?'BLOCCHI OPERATIVI: '+blocks.join(' · '):'Nessun blocco operativo.';
+ }catch(e){
+  $('acqEnginePill').textContent='ENGINE ERRORE';$('acqEnginePill').className='pill bad';
+  $('acqNotice').className='notice';$('acqNotice').innerHTML='<b>ENGINE:</b> '+esc(e.message);
+ }
+}
+async function runAcquisition(){
+ const b=$('acqCycleBtn');b.disabled=true;b.textContent='AGGIORNAMENTO…';
+ try{
+  const x=await acquisitionCall('CYCLE');
+  toast('Acquisizione aggiornata: '+Number(x.processed||0)+' soggetti processati.');
+  await loadAcquisition();
+ }catch(e){toast('Acquisizione: '+e.message,'bad')}
+ finally{b.disabled=false;b.textContent='AGGIORNA ACQUISIZIONE B2B'}
+}
+
 async function loadQueue(){
  STATE.queue=await rest('f1_email_radar_municipality_queue?select=comune,lato,sort_order,status,last_run_at&order=sort_order.asc')||[];
  const done=STATE.queue.filter(x=>x.status==='DONE').length,errors=STATE.queue.filter(x=>x.status==='ERROR').length;
  $('queueMeta').textContent=done+' completati · '+errors+' errori · '+STATE.queue.length+' Comuni canonici';
  $('queueRows').innerHTML=STATE.queue.map((x,i)=>'<tr><td>'+esc(i+1)+'</td><td><b>'+esc(x.comune)+'</b></td><td>'+esc(x.lato)+'</td><td><span class="tag '+(x.status==='DONE'?'ok':'warn')+'">'+esc(x.status)+'</span></td><td>'+esc(x.last_run_at?new Date(x.last_run_at).toLocaleString('it-IT'):'—')+'</td></tr>').join('');
 }
-async function reload(){await Promise.all([loadStats(),loadEntities(),loadRun(),loadQueue()])}
+async function reload(){await Promise.all([loadStats(),loadEntities(),loadRun(),loadQueue(),loadAcquisition()])}
 function formPayload(form){const fd=new FormData(form),o={};for(const [k,v] of fd.entries())o[k]=String(v).trim();o.confidence_score=Number(o.confidence_score||0);return o}
 async function saveEntity(ev){
  ev.preventDefault();const btn=$('saveEntityBtn');btn.disabled=true;
@@ -176,6 +217,7 @@ $('pauseBtn').onclick=()=>pauseScan().catch(e=>toast(e.message,'bad'));
 $('retryBtn').onclick=()=>retryScan().catch(e=>toast(e.message,'bad'));
 $('stopBtn').onclick=()=>stopScan().catch(e=>toast(e.message,'bad'));
 $('atecoSyncBtn').onclick=syncAteco;
+$('acqCycleBtn').onclick=runAcquisition;
 $('csvBtn').onclick=exportCsv;$('xlsxBtn').onclick=exportXlsx;
 ['comuneFilter','typeFilter','contactFilter','verifyFilter'].forEach(id=>$(id).addEventListener('change',async()=>{if(id==='comuneFilter')await reload();else applyFilters()}));
 $('searchBox').addEventListener('input',applyFilters);$('atecoFilter').addEventListener('input',applyFilters);$('categoryFilter').addEventListener('input',applyFilters);
