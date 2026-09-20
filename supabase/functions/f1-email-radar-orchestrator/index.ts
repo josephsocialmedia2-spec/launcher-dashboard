@@ -26,7 +26,7 @@ async function authUser(req:Request,url:string,anon:string,service:string){
 }
 function sourceTemplates(env:any){
  const gp=!!env.GOOGLE_MAPS_API_KEY, brave=!!env.BRAVE_SEARCH_API_KEY;
- const ri=!!env.REGISTRO_IMPRESE_API_BASE&&!!env.REGISTRO_IMPRESE_SEARCH_PATH&&!!env.REGISTRO_IMPRESE_API_KEY&&!!env.REGISTRO_IMPRESE_API_KEY_HEADER;
+ const ri=!!env.REGISTRO_IMPRESE_API_BASE&&!!env.REGISTRO_IMPRESE_SEARCH_PATH&&!!env.REGISTRO_IMPRESE_API_KEY&&!!env.REGISTRO_IMPRESE_API_KEY_HEADER&&!!env.REGISTRO_IMPRESE_RESPONSE_ITEMS_PATH&&!!env.REGISTRO_IMPRESE_FIELD_DENOMINATION;
  return [
  {key:"REGISTRO_IMPRESE",label:"Registro Imprese / InfoCamere",status:ri?"PENDING":"CREDENTIALS_REQUIRED"},
  {key:"INI_PEC",label:"INI-PEC",status:"ACCESSO_NON_DISPONIBILE"},
@@ -129,7 +129,7 @@ async function braveDiscovery(dbUrl:string,service:string,run:any,actor:string){
 }
 async function googlePlacesDiscovery(dbUrl:string,service:string,run:any,actor:string){
  const key=Deno.env.get("GOOGLE_MAPS_API_KEY");if(!key)throw new Error("GOOGLE_MAPS_API_KEY non configurata");
- const batch=await atecoBatch(dbUrl,service,String(run.checkpoint?.google_last_ateco_code||""),3);let subjects=0,emails=0,pecs=0,phones=0;
+ const batch=await atecoBatch(dbUrl,service,String(run.checkpoint?.google_last_ateco_code||""),3);let subjects=0,emails=0,pecs=0,phones=0,duplicates=0;
  for(const a of batch||[]){
   const r=await fetch("https://places.googleapis.com/v1/places:searchText",{
    method:"POST",
@@ -148,6 +148,69 @@ async function googlePlacesDiscovery(dbUrl:string,service:string,run:any,actor:s
  }
  return {subjects_found:subjects,emails_found:emails,pec_found:pecs,phones_found:phones,duplicates,batch:(batch||[]).length};
 }
+
+function getPath(obj:any,path:string){
+ if(!path)return obj;
+ return path.split(".").filter(Boolean).reduce((v:any,k:string)=>v==null?undefined:v[k],obj);
+}
+function renderRiValue(v:string,run:any){
+ return String(v||"").replaceAll("{{comune}}",String(run.comune||"")).replaceAll("{{provincia}}","TO");
+}
+async function registroImpreseDiscovery(dbUrl:string,service:string,run:any,actor:string){
+ const env:any=Deno.env.toObject();
+ const required=["REGISTRO_IMPRESE_API_BASE","REGISTRO_IMPRESE_SEARCH_PATH","REGISTRO_IMPRESE_API_KEY","REGISTRO_IMPRESE_API_KEY_HEADER","REGISTRO_IMPRESE_RESPONSE_ITEMS_PATH","REGISTRO_IMPRESE_FIELD_DENOMINATION"];
+ const missing=required.filter(k=>!env[k]);if(missing.length)throw new Error("REGISTRO_IMPRESE_CONFIG_REQUIRED:"+missing.join(","));
+ const method=String(env.REGISTRO_IMPRESE_HTTP_METHOD||"POST").toUpperCase();
+ if(!["GET","POST"].includes(method))throw new Error("REGISTRO_IMPRESE_HTTP_METHOD_NOT_ALLOWED");
+ const base=String(env.REGISTRO_IMPRESE_API_BASE), rawPath=renderRiValue(String(env.REGISTRO_IMPRESE_SEARCH_PATH),run);
+ const endpoint=new URL(rawPath,base);
+ const headers:Record<string,string>={"Accept":"application/json",[String(env.REGISTRO_IMPRESE_API_KEY_HEADER)]:String(env.REGISTRO_IMPRESE_API_KEY)};
+ const init:RequestInit={method,headers};
+ if(method==="POST"){
+   headers["Content-Type"]="application/json";
+   let body:any={comune:run.comune,provincia:"TO"};
+   if(env.REGISTRO_IMPRESE_REQUEST_TEMPLATE){
+     try{
+       const rendered=renderRiValue(String(env.REGISTRO_IMPRESE_REQUEST_TEMPLATE),run);
+       body=JSON.parse(rendered);
+     }catch{throw new Error("REGISTRO_IMPRESE_REQUEST_TEMPLATE_INVALID")}
+   }
+   init.body=JSON.stringify(body);
+ }
+ const rr=await fetch(endpoint,init);if(!rr.ok)throw new Error("REGISTRO_IMPRESE_HTTP_"+rr.status);
+ const data=await rr.json();const items=getPath(data,String(env.REGISTRO_IMPRESE_RESPONSE_ITEMS_PATH));
+ if(!Array.isArray(items))throw new Error("REGISTRO_IMPRESE_ITEMS_PATH_INVALID");
+ let subjects=0,emails=0,pecs=0,phones=0,duplicates=0;
+ const field=(x:any,key:string)=>norm(getPath(x,String(env[key]||"")));
+ for(const x of items.slice(0,250)){
+   const denomination=field(x,"REGISTRO_IMPRESE_FIELD_DENOMINATION");if(!denomination)continue;
+   const comune=field(x,"REGISTRO_IMPRESE_FIELD_COMUNE")||run.comune;
+   if(comune && comune.toLowerCase()!==String(run.comune).toLowerCase())continue;
+   const payload:any={
+     subject_type:"AZIENDA",denomination,legal_name:field(x,"REGISTRO_IMPRESE_FIELD_LEGAL_NAME"),
+     category:"",profession:"",comune:run.comune,frazione:"",indirizzo:field(x,"REGISTRO_IMPRESE_FIELD_ADDRESS"),
+     civico:field(x,"REGISTRO_IMPRESE_FIELD_CIVICO"),cap:field(x,"REGISTRO_IMPRESE_FIELD_CAP"),provincia:"TO",
+     ateco_code:field(x,"REGISTRO_IMPRESE_FIELD_ATECO_CODE"),ateco_title:field(x,"REGISTRO_IMPRESE_FIELD_ATECO_TITLE"),
+     phone:field(x,"REGISTRO_IMPRESE_FIELD_PHONE"),mobile:"",email:field(x,"REGISTRO_IMPRESE_FIELD_EMAIL").toLowerCase(),
+     email_type:"EMAIL_NON_VERIFICATA",pec:field(x,"REGISTRO_IMPRESE_FIELD_PEC").toLowerCase(),
+     website:field(x,"REGISTRO_IMPRESE_FIELD_WEBSITE"),vat_number:field(x,"REGISTRO_IMPRESE_FIELD_VAT"),
+     primary_source_type:"REGISTRO_IMPRESE",primary_source_url:String(env.REGISTRO_IMPRESE_API_BASE),
+     verification_status:"VERIFICATO",confidence_score:100,activity_status:field(x,"REGISTRO_IMPRESE_FIELD_STATUS")||"DA_VERIFICARE",
+     marketing_status:"DA_VALUTARE",notes:"Dato acquisito tramite connettore Registro Imprese / InfoCamere autorizzato."
+   };
+   const up=await jfetch(dbUrl,service,"rpc/f1_email_radar_service_upsert_entity",{method:"POST",body:JSON.stringify({p_actor:actor,p_payload:payload})});
+   const id=up?.entity_id||"";if(!id)continue;
+   await jfetch(dbUrl,service,"f1_email_radar_sources",{method:"POST",body:JSON.stringify({
+     entity_id:id,created_by:actor,source_type:"REGISTRO_IMPRESE",source_url:String(env.REGISTRO_IMPRESE_API_BASE),
+     source_name:"Registro Imprese / InfoCamere autorizzato",
+     fields_found:{vat_number:!!payload.vat_number,ateco_code:!!payload.ateco_code,email:!!payload.email,pec:!!payload.pec,phone:!!payload.phone},
+     evidence:[],access_status:"OK",verified_at:new Date().toISOString()
+   }),prefer:"resolution=ignore-duplicates,return=minimal"}).catch(()=>{});
+   subjects++;if(payload.email)emails++;if(payload.pec)pecs++;if(payload.phone)phones++;if(up?.merged)duplicates++;
+ }
+ return {subjects_found:subjects,emails_found:emails,pec_found:pecs,phones_found:phones,duplicates};
+}
+
 async function processWebsites(url:string,service:string,run:any,actor:string){
  const entities=await jfetch(url,service,"f1_email_radar_entities?select=*&comune=eq."+encodeURIComponent(run.comune)+"&website=not.eq.&order=updated_at.asc&limit=20");
  let done=0,emails=0,pecs=0,phones=0;
@@ -230,7 +293,10 @@ async function processRun(url:string,service:string,run:any,actor:string){
     if(!Deno.env.get("BRAVE_SEARCH_API_KEY"))await updateProgress(url,service,run.run_id,next.source_key,"CREDENTIALS_REQUIRED",{},"BRAVE_SEARCH_API_KEY non configurata");
     else {const s=await braveDiscovery(url,service,run,actor);await updateProgress(url,service,run.run_id,next.source_key,"INCOMPLETE",s,"Batch ATECO eseguito; riprendere dal checkpoint fino a copertura categorie.")}
   } else if(next.source_key==="REGISTRO_IMPRESE"){
-    await updateProgress(url,service,run.run_id,next.source_key,"CREDENTIALS_REQUIRED",{},"Configurare endpoint/contratto Web Services autorizzato InfoCamere.");
+    const env:any=Deno.env.toObject();
+    const ready=!!env.REGISTRO_IMPRESE_API_BASE&&!!env.REGISTRO_IMPRESE_SEARCH_PATH&&!!env.REGISTRO_IMPRESE_API_KEY&&!!env.REGISTRO_IMPRESE_API_KEY_HEADER&&!!env.REGISTRO_IMPRESE_RESPONSE_ITEMS_PATH&&!!env.REGISTRO_IMPRESE_FIELD_DENOMINATION;
+    if(!ready)await updateProgress(url,service,run.run_id,next.source_key,"CREDENTIALS_REQUIRED",{},"Configurare contratto/API InfoCamere e mapping risposta; vedere supabase/.env.example.");
+    else {const s=await registroImpreseDiscovery(url,service,run,actor);await updateProgress(url,service,run.run_id,next.source_key,"COMPLETED",s)}
   } else await updateProgress(url,service,run.run_id,next.source_key,"INCOMPLETE",{},"Provider richiede adapter specifico o consultazione autorizzata.");
  }catch(e){await updateProgress(url,service,run.run_id,next.source_key,"FAILED",{},String((e as any)?.message||e))}
  return await finalizeIfIdle(url,service,run.run_id);
@@ -265,6 +331,6 @@ Deno.serve(async(req:Request)=>{
    await jfetch(url,service,"f1_email_radar_municipality_queue?comune=eq."+encodeURIComponent(comune),{method:"PATCH",body:JSON.stringify({last_run_id:run.run_id,last_run_at:new Date().toISOString(),updated_at:new Date().toISOString()}),prefer:"return=minimal"}).catch(()=>{});
   }
   const progress=run?await jfetch(url,service,"f1_email_radar_source_progress?select=*&run_id=eq."+run.run_id+"&order=source_key.asc"):[];
-  return reply({ok:true,action,run,progress,provider_runtime:{google_places:!!Deno.env.get("GOOGLE_MAPS_API_KEY"),search:!!Deno.env.get("BRAVE_SEARCH_API_KEY"),registro_imprese:!!Deno.env.get("REGISTRO_IMPRESE_API_BASE")&&!!Deno.env.get("REGISTRO_IMPRESE_API_KEY")}});
+  return reply({ok:true,action,run,progress,provider_runtime:{google_places:!!Deno.env.get("GOOGLE_MAPS_API_KEY"),search:!!Deno.env.get("BRAVE_SEARCH_API_KEY"),registro_imprese:!!Deno.env.get("REGISTRO_IMPRESE_API_BASE")&&!!Deno.env.get("REGISTRO_IMPRESE_SEARCH_PATH")&&!!Deno.env.get("REGISTRO_IMPRESE_API_KEY")&&!!Deno.env.get("REGISTRO_IMPRESE_API_KEY_HEADER")&&!!Deno.env.get("REGISTRO_IMPRESE_RESPONSE_ITEMS_PATH")&&!!Deno.env.get("REGISTRO_IMPRESE_FIELD_DENOMINATION")}});
  }catch(e){return reply({ok:false,error:"UNEXPECTED",detail:String((e as any)?.message||e)},500)}
 });
