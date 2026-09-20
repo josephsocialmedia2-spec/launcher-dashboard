@@ -113,7 +113,7 @@ function injectTerritoryExtras(){
   if(firstCard&&!$('v3AddNotes')){
     const wrap=document.createElement('div');wrap.className='v3-note-row';wrap.innerHTML='<button id="v3AddNotes" class="v3-note-btn" type="button">＋<br>AGGIUNGI<br>NOTE</button><div><strong id="v3NoteCount" class="v3-note-count">0 NOTE</strong><div class="mut" style="font-size:9px;margin-top:3px">Note scritte o audio collegate alla riga CRM.</div></div>';
     firstCard.appendChild(wrap);
-    const next=document.createElement('div');next.id='v3OperationalNext';next.className='v3-contact-context';next.style.marginTop='10px';next.innerHTML='<div class="ey">🤖 ORDINE OPERATIVO · PROSSIMA AZIONE</div><strong id="v3OperationalNextText">—</strong><div id="v3OperationalGoal" class="mut" style="font-size:9px;margin-top:3px"></div>';firstCard.appendChild(next);
+    const next=document.createElement('div');next.id='v3OperationalNext';next.className='v3-contact-context';next.style.marginTop='10px';next.innerHTML='<div class="ey">COSA STAI FACENDO</div><strong id="v3OperationalPlace">—</strong><div id="v3OperationalNextText" style="margin-top:4px;font-weight:950">—</div><div id="v3OperationalGoal" class="mut" style="font-size:9px;margin-top:3px"></div><div id="v3OperationalScript" class="v3-status" style="margin-top:6px"></div>';firstCard.appendChild(next);
   }
   const script=terr.querySelector('.scriptbox');
   if(script&&!$('v3SendBulletin')){
@@ -520,11 +520,13 @@ async function updateNoteCount(){
   if($('v3NoteCount'))$('v3NoteCount').textContent=n+' '+(n===1?'NOTA':'NOTE');
   const conv=(data.conversations||[]).filter(z=>z.progress_id===x.progress.progress_id&&txt(z.civico)===x.civic).sort((a,b)=>String(b.created_at||'').localeCompare(String(a.created_at||'')))[0];
   const engine=window.F1TerritoryAcquisitionDashboard,plan=engine?.getOperationalPlan?.(),task=plan?.tasks?.[0];
-  let next=conv?.next_action||r?.next_action||'NESSUNA AZIONE',goal='';
-  if(engine?.isInBasin&&!engine.isInBasin(x.progress.comune)){next='FUORI BACINO OPERATIVO · TORNA A '+(engine.basin||'CONDOVE → RIVERA DI ALMESE');goal='Il Notiziere deve lavorare il bacino operativo attuale.'}
-  else if(task){next=task.action+' · '+(task.place||engine?.basin||'');goal='OBIETTIVO: '+task.objective}
+  let next=conv?.next_action||r?.next_action||'NESSUNA AZIONE',goal='',place=[x.progress.comune,x.progress.via,x.civic].filter(Boolean).join(' · '),script='';
+  if(engine?.isInBasin&&!engine.isInBasin(x.progress.comune)){next='TORNA NEL BACINO OPERATIVO';goal='Lavora esclusivamente '+(engine.basin||'CONDOVE → RIVERA DI ALMESE');place=engine.basin||'CONDOVE → RIVERA DI ALMESE'}
+  else if(task){next='COSA FARE: '+task.action;goal='COSA OTTENERE: '+task.objective;place=task.place||place}
+  if($('v3OperationalPlace'))$('v3OperationalPlace').textContent=place||'—';
   if($('v3OperationalNextText'))$('v3OperationalNextText').textContent=next;
   if($('v3OperationalGoal'))$('v3OperationalGoal').textContent=goal;
+  if($('v3OperationalScript'))$('v3OperationalScript').textContent=script;
 }
 
 async function openCivicEditor(id){
