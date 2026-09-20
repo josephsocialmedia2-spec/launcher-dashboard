@@ -34,7 +34,7 @@ jobs:
           module = importlib.util.module_from_spec(spec)
           spec.loader.exec_module(module)
           assert module.APP_NAME == "ugc-avatar-studio"
-          assert module.GPU_TYPE == "CPU"
+          assert module.GPU_TYPE == "T4"
           print("MODAL_APP_IMPORT_OK")
           PY
 
@@ -116,5 +116,5 @@ jobs:
           echo "Health: $APP_URL/health" >> "$GITHUB_STEP_SUMMARY"
           echo "Diagnostics: $APP_URL/api/diagnostics" >> "$GITHUB_STEP_SUMMARY"
           echo "Outbox: $APP_URL/api/outbox" >> "$GITHUB_STEP_SUMMARY"
-          echo "Publisher: open-social-scheduler/Buffer" >> "$GITHUB_STEP_SUMMARY"
-          echo "Pipeline: image + script -> Piper -> SadTalker -> FFmpeg -> Modal outbox -> Buffer publisher" >> "$GITHUB_STEP_SUMMARY"
+          echo "Publisher: open-social-scheduler/direct_api" >> "$GITHUB_STEP_SUMMARY"
+          echo "Pipeline: image + script -> Piper -> SadTalker -> FFmpeg -> Modal outbox -> direct social publisher" >> "$GITHUB_STEP_SUMMARY"
