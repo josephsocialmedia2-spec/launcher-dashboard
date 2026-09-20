@@ -1,0 +1,19 @@
+{
+  "name": "Empatia Trainer",
+  "short_name": "Empatia",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#08111f",
+  "theme_color": "#0f172a",
+  "lang": "it",
+  "description": "Assistente vocale AI per allenamento quotidiano dell'empatia",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
