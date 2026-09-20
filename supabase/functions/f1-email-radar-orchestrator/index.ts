@@ -487,6 +487,24 @@ async function processRun(url:string,service:string,run:any,actor:string){
  }
  return await finalizeIfIdle(url,service,run.run_id);
 }
+async function drainMunicipality(url:string,service:string,actor:string,comune:string,maxSteps=8){
+ const started=Date.now();let run:any=null;let steps=0;
+ const prev=await jfetch(url,service,"f1_email_radar_runs?select=*&comune=eq."+encodeURIComponent(comune)+"&order=created_at.desc&limit=1");
+ const latest=prev?.[0];
+ if(latest&&["INCOMPLETE","PAUSED","FAILED","RUNNING"].includes(latest.status))run=await prepareResumeProviders(url,service,latest,false);
+ else if(latest?.status==="COMPLETED")return {run:latest,steps:0,already_completed:true};
+ else run=await startRun(url,service,actor,comune);
+ while(run&&run.status!=="COMPLETED"&&steps<maxSteps&&Date.now()-started<105000){
+   if(["INCOMPLETE","FAILED","PAUSED"].includes(run.status))run=await prepareResumeProviders(url,service,run,false);
+   run=await processRun(url,service,run,actor);
+   steps++;
+   if(run.status==="FAILED"){
+     run=await prepareResumeProviders(url,service,run,false);
+   }
+ }
+ await jfetch(url,service,"f1_email_radar_municipality_queue?comune=eq."+encodeURIComponent(comune),{method:"PATCH",body:JSON.stringify({last_run_id:run?.run_id||null,last_run_at:new Date().toISOString(),updated_at:new Date().toISOString()}),prefer:"return=minimal"}).catch(()=>{});
+ return {run,steps,already_completed:false};
+}
 Deno.serve(async(req:Request)=>{
  if(req.method==="OPTIONS")return new Response("ok",{headers:CORS});
  if(req.method!=="POST")return reply({ok:false,error:"METHOD_NOT_ALLOWED"},405);
@@ -505,6 +523,13 @@ Deno.serve(async(req:Request)=>{
    run=await prepareResumeProviders(url,service,run,false);
    if(action==="RETRY")await jfetch(url,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({retry_count:Number(run.retry_count||0)+1,updated_at:new Date().toISOString()}),prefer:"return=minimal"});
    run=await processRun(url,service,run,actor.id)
+  }
+  else if(action==="DRAIN"){
+   let comune=String(b.comune||"");
+   if(!comune){const q=await jfetch(url,service,"rpc/f1_email_radar_queue_next",{method:"POST",body:"{}"});comune=String(q||"")}
+   if(!comune)return reply({ok:true,action,done:true,message:"QUEUE_EMPTY"});
+   const drained=await drainMunicipality(url,service,actor.id,comune,Math.max(1,Math.min(12,Number(b.max_steps||8))));
+   run=drained.run;
   }
   else if(action==="CRON"){
    let comune=String(b.comune||"");
