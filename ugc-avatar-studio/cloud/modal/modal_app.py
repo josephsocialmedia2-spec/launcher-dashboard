@@ -394,6 +394,7 @@ def web():
             "resolution": "1080x1920",
             "storage": "modal-volume",
             "input_required": ["image", "script"],
+            "test_publish_control": True,
         }
 
     @api.get("/api/diagnostics")
