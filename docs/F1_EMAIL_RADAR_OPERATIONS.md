@@ -95,3 +95,27 @@ Il circuit breaker registra failure/retry; se tutte le istanze Overpass previste
 - PAUSE: PASS.
 - STOP da stato PAUSED: bug corretto e PASS su run temporaneo cancellato.
 - Edge Functions: orchestrator v16; ATECO sync v9 al momento di questo snapshot.
+
+
+## Motore autonomo di acquisizione B2B — 20/09/2026
+
+Edge Function: `f1-email-acquisition-engine`.
+
+Il motore riusa F1 Email Radar e il sistema campagne esistente senza trasferire automaticamente le email pubbliche nel database marketing.
+
+Pipeline: `RADAR → DATA QUALITY → COMPLIANCE → QUALIFICA → READY → CAMPAGNA → KPI`.
+
+Tabelle backend-only: `f1_email_acquisition_leads`, `f1_email_acquisition_events`, `f1_email_acquisition_kpi_snapshots`.
+
+Stato deterministico lead: `NEW → DATA_CHECK → QUALIFIED → COMPLIANCE_CHECK → READY → CONTACTED → FOLLOW_UP → REPLIED → QUALIFIED_REPLY → BOOKING → BOOKED → SHOWED → OPPORTUNITY → CUSTOMER`, con rami `INVALID / NOT_INTERESTED / DO_NOT_CONTACT / NO_SHOW / PAUSED`.
+
+Regole operative:
+- email pubblica trovata sul web non viene considerata consenso marketing;
+- PEC non viene trasformata in email marketing;
+- suppression / hard bounce / unsubscribe prevalgono sempre;
+- `READY` richiede un contatto F1 con consenso attivo, campagna B2B configurata, provider Microsoft disponibile e invio abilitato;
+- ICP, buyer persona, trigger, potenziale economico e priorità non vengono inventati quando la campagna o i dati non li supportano.
+
+Cron: `f1-email-acquisition-hourly-cycle`, minuto 35 di ogni ora, con token letto da Supabase Vault.
+
+Il pannello è integrato in `f1-email-radar.html` e mostra blocchi reali, lead READY, consenso richiesto, email assenti, PEC-only, soppressioni e qualità dati.
