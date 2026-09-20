@@ -1,6 +1,6 @@
 (()=> {
 'use strict';
-const VERSION='20260920-acquisition-dashboard-v3';
+const VERSION='20260920-acquisition-dashboard-v4';
 const DATA_URL='./data/seller-lead-engine-public.json';
 const GEO_CACHE_KEY='f1_seller_geo_comuni_v1';
 const CATEGORIES=[
@@ -118,7 +118,7 @@ function build(){
   <div id="f1AcqNewsGrid" class="f1-acq-news-grid"></div>
   <div id="f1AcqNewsList" class="f1-acq-news-list"></div>
  </section>`;
- stack.insertBefore(wrap,card);
+ basin.insertAdjacentElement('afterend',wrap);
  buildModal();
  bind();
  renderCategoryButtons();
