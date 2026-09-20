@@ -1,4 +1,4 @@
-name: F1 Email Acquisition Live QA
+name: F1 Email Radar Browser QA
 
 on:
   push:
@@ -6,6 +6,11 @@ on:
     paths:
       - "f1-email-radar.html"
       - "f1-email-radar.js"
+      - "supabase-config.js"
+      - "supabase-sync.js"
+      - "f1-dashboard-auth-guard.js"
+      - "config/territory.json"
+      - "data/email-radar-sources.json"
       - ".github/workflows/f1-email-acquisition-live-qa.yml"
   workflow_dispatch:
 
@@ -13,27 +18,151 @@ permissions:
   contents: read
 
 jobs:
-  live-qa:
+  browser-qa:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - name: Verify GitHub Pages acquisition UI
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install Playwright Chromium
         shell: bash
         run: |
           set -euo pipefail
-          PAGE='https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.html?v=20260920-acquisition1'
-          JS='https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.js?v=20260920-acquisition1'
+          mkdir -p /tmp/f1qa
+          cd /tmp/f1qa
+          npm init -y >/dev/null
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
 
-          ok=0
-          for n in $(seq 1 24); do
-            echo "Attempt $n"
-            if curl -LfsS "$PAGE" -o /tmp/page.html && curl -LfsS "$JS" -o /tmp/radar.js; then
-              if grep -Fq 'Acquisizione email B2B' /tmp/page.html                 && grep -Fq 'id="acqCycleBtn"' /tmp/page.html                 && grep -Fq 'f1-email-radar.js?v=20260920-acquisition1' /tmp/page.html                 && grep -Fq '/functions/v1/f1-email-acquisition-engine' /tmp/radar.js                 && grep -Fq 'loadAcquisition' /tmp/radar.js; then
-                ok=1
-                break
-              fi
-            fi
-            sleep 5
-          done
+      - name: Browser QA production
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd /tmp/f1qa
+          cat > qa.cjs <<'NODE'
+          const { chromium } = require('playwright');
+          const fs = require('fs');
 
-          test "$ok" = "1"
-          echo 'F1_EMAIL_ACQUISITION_LIVE_QA_OK'
+          const URL='https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.html?v=20260920-browserqa1';
+          const requiredIds=[
+            'cloudPill','territoryPill','atecoPill','updatedPill',
+            'acqCycleBtn','queueRows','sourceList','rows','comuneFilter'
+          ];
+
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const report={url:URL,runs:[]};
+            let failed=false;
+
+            for (const cfg of [
+              {name:'desktop',viewport:{width:1440,height:1000}},
+              {name:'mobile',viewport:{width:390,height:844}}
+            ]) {
+              const context=await browser.newContext({viewport:cfg.viewport});
+              const page=await context.newPage();
+              const consoleErrors=[],pageErrors=[],requestFailures=[],badResponses=[];
+
+              page.on('console',m=>{if(m.type()==='error')consoleErrors.push(m.text())});
+              page.on('pageerror',e=>pageErrors.push(String(e)));
+              page.on('requestfailed',r=>requestFailures.push({url:r.url(),error:r.failure()?.errorText||''}));
+              page.on('response',r=>{
+                if(r.status()>=400 && (
+                  r.url().includes('josephsocialmedia2-spec.github.io/launcher-dashboard/') ||
+                  r.url().includes('nqnmlsmeiynxbdojeyjt.supabase.co')
+                )) badResponses.push({url:r.url(),status:r.status()});
+              });
+
+              let response=null;
+              try {
+                response=await page.goto(URL,{waitUntil:'domcontentloaded',timeout:60000});
+                await page.waitForLoadState('networkidle',{timeout:15000}).catch(()=>{});
+                await page.waitForTimeout(2500);
+
+                const title=await page.title();
+                const finalUrl=page.url();
+                const missing=[];
+                for(const id of requiredIds){
+                  if(await page.locator('#'+id).count()!==1)missing.push(id);
+                }
+
+                const layout=await page.evaluate(()=>({
+                  scrollWidth:document.documentElement.scrollWidth,
+                  clientWidth:document.documentElement.clientWidth,
+                  scrollHeight:document.documentElement.scrollHeight,
+                  h1:document.querySelector('h1')?.textContent?.trim()||'',
+                  cloud:document.querySelector('#cloudPill')?.textContent?.trim()||'',
+                  territory:document.querySelector('#territoryPill')?.textContent?.trim()||'',
+                  acquisition:document.querySelector('#acqPanel h2')?.textContent?.trim()||''
+                }));
+
+                const publicConfig=await page.evaluate(async()=>{
+                  const [t,s,cfg]=await Promise.all([
+                    fetch('config/territory.json',{cache:'no-store'}).then(r=>({status:r.status,text:r.text()})),
+                    fetch('data/email-radar-sources.json',{cache:'no-store'}).then(r=>({status:r.status,text:r.text()})),
+                    fetch('supabase-config.js',{cache:'no-store'}).then(r=>({status:r.status,text:r.text()}))
+                  ]);
+                  const [tt,ss,cc]=await Promise.all([t.text,s.text,cfg.text]);
+                  let territory=null,sources=null;
+                  try{territory=JSON.parse(tt)}catch{}
+                  try{sources=JSON.parse(ss)}catch{}
+                  return {
+                    territoryStatus:t.status,sourcesStatus:s.status,configStatus:cfg.status,
+                    communes:(territory?.sinistra?.length||0)+(territory?.destra?.length||0),
+                    sourceCount:sources?.sources?.length||0,
+                    leakedSecret:/service[_-]?role|sb_secret_/i.test(cc)
+                  };
+                });
+
+                const rootOverflow=layout.scrollWidth>layout.clientWidth+2;
+                const criticalRequestFailures=requestFailures.filter(x=>
+                  x.url.includes('josephsocialmedia2-spec.github.io/launcher-dashboard/') ||
+                  x.url.includes('nqnmlsmeiynxbdojeyjt.supabase.co')
+                );
+                const run={
+                  name:cfg.name,status:response?.status()||0,title,finalUrl,missing,layout,publicConfig,
+                  consoleErrors,pageErrors,requestFailures:criticalRequestFailures,badResponses,rootOverflow
+                };
+                report.runs.push(run);
+
+                await page.screenshot({path:`f1-email-radar-${cfg.name}.png`,fullPage:true});
+
+                if((response?.status()||0)!==200)failed=true;
+                if(title!=='F1 Email Radar')failed=true;
+                if(!finalUrl.includes('/launcher-dashboard/f1-email-radar.html'))failed=true;
+                if(missing.length)failed=true;
+                if(layout.h1!=='F1 EMAIL RADAR')failed=true;
+                if(layout.acquisition!=='Acquisizione email B2B')failed=true;
+                if(publicConfig.territoryStatus!==200||publicConfig.sourcesStatus!==200||publicConfig.configStatus!==200)failed=true;
+                if(publicConfig.communes!==41)failed=true;
+                if(publicConfig.leakedSecret)failed=true;
+                if(rootOverflow)failed=true;
+                if(consoleErrors.length||pageErrors.length||criticalRequestFailures.length||badResponses.length)failed=true;
+              } catch(e) {
+                failed=true;
+                report.runs.push({name:cfg.name,fatal:String(e),consoleErrors,pageErrors,requestFailures,badResponses});
+              } finally {
+                await context.close();
+              }
+            }
+
+            fs.writeFileSync('browser-qa-report.json',JSON.stringify(report,null,2));
+            console.log(JSON.stringify(report,null,2));
+            await browser.close();
+            if(failed)process.exit(1);
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+          node qa.cjs
+
+      - name: Upload browser QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: f1-email-radar-browser-qa
+          path: |
+            /tmp/f1qa/browser-qa-report.json
+            /tmp/f1qa/f1-email-radar-desktop.png
+            /tmp/f1qa/f1-email-radar-mobile.png
+          if-no-files-found: warn
