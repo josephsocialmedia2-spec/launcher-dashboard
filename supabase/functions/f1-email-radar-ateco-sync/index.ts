@@ -3,7 +3,7 @@ import * as XLSX from "npm:xlsx@0.18.5";
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-f1-cron-token",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Content-Type": "application/json"
 };
@@ -12,6 +12,14 @@ const EXPECTED = { total: 3257, 1:22, 2:87, 3:287, 4:651, 5:920, 6:1290 };
 
 function reply(body: unknown, status=200){ return new Response(JSON.stringify(body),{status,headers:CORS}); }
 function s(v: unknown){ return String(v ?? "").trim(); }
+async function sha256(v:string){const d=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(v));return Array.from(new Uint8Array(d)).map(x=>x.toString(16).padStart(2,"0")).join("")}
+async function verifyCron(token:string,url:string,service:string){
+ if(!token)return null;
+ const r=await fetch(url+"/rest/v1/f1_email_radar_runtime_config?select=value&key=eq.cron_token_sha256&limit=1",{headers:{apikey:service,Authorization:"Bearer "+service}});
+ if(!r.ok)return null;const rows=await r.json();if(!rows?.[0]?.value)return null;
+ if(await sha256(token)!==rows[0].value)return null;
+ return {role:"CRON"};
+}
 
 async function verifyStaff(auth:string,url:string,anon:string,service:string){
   const u=await fetch(url+"/auth/v1/user",{headers:{apikey:anon,Authorization:auth}});
@@ -64,7 +72,8 @@ Deno.serve(async(req:Request)=>{
     const service=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")||"";
     if(!url||!anon||!service) return reply({ok:false,error:"SERVER_CONFIG_MISSING"},500);
     const auth=req.headers.get("authorization")||"";
-    const staff=await verifyStaff(auth,url,anon,service);
+    const cron=req.headers.get("x-f1-cron-token")||"";
+    const staff=(auth?await verifyStaff(auth,url,anon,service):null)||await verifyCron(cron,url,service);
     if(!staff) return reply({ok:false,error:"F1_AUTH_REQUIRED"},401);
 
     const src=await fetch(ISTAT_XLSX,{headers:{"User-Agent":"F1-Email-Radar/2.0"}});
