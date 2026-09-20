@@ -57,7 +57,7 @@ gpu_image = (
         "kornia==0.6.8",
         "yacs==0.1.8",
         "joblib==1.1.0",
-        "scikit-image>=0.21,<0.23",
+        "scikit-image==0.19.3",
         "face-alignment==1.3.5",
         "safetensors>=0.4,<1",
         "opencv-python-headless>=4.8,<5",
