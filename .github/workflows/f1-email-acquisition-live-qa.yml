@@ -15,19 +15,71 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   browser-qa:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Repair mobile table containment if needed
+        id: patch
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('f1-email-radar.html')
+          s=p.read_text(encoding='utf-8')
+          old='.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:1150px}'
+          new='.wrap,.panel,.grid2,.grid2>*{min-width:0}.panel{max-width:100%}.tablewrap{width:100%;max-width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:1150px}'
+          changed=False
+          if old in s:
+              s=s.replace(old,new,1)
+              p.write_text(s,encoding='utf-8')
+              changed=True
+          with open(Path(os.environ['GITHUB_OUTPUT']),'a',encoding='utf-8') as out:
+              out.write(f'changed={str(changed).lower()}\n')
+          PY
+        env:
+          PYTHONUNBUFFERED: "1"
+
+      - name: Commit mobile overflow repair
+        if: steps.patch.outputs.changed == 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add f1-email-radar.html
+          git commit -m "Fix F1 Email Radar mobile table overflow"
+          git push origin HEAD:main
+
+      - name: Wait for repaired GitHub Pages version
+        if: steps.patch.outputs.changed != 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          PAGE='https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.html?v=20260920-browserqa2'
+          ok=0
+          for n in $(seq 1 30); do
+            if curl -LfsS "$PAGE" -o /tmp/page.html && grep -Fq '.wrap,.panel,.grid2,.grid2>*{min-width:0}' /tmp/page.html; then
+              ok=1
+              break
+            fi
+            sleep 5
+          done
+          test "$ok" = "1"
+
       - name: Set up Node
+        if: steps.patch.outputs.changed != 'true'
         uses: actions/setup-node@v4
         with:
           node-version: "22"
 
       - name: Install Playwright Chromium
+        if: steps.patch.outputs.changed != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -38,6 +90,7 @@ jobs:
           npx playwright install --with-deps chromium
 
       - name: Browser QA production
+        if: steps.patch.outputs.changed != 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -46,7 +99,7 @@ jobs:
           const { chromium } = require('playwright');
           const fs = require('fs');
 
-          const URL='https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.html?v=20260920-browserqa1';
+          const URL='https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.html?v=20260920-browserqa2';
           const requiredIds=[
             'cloudPill','territoryPill','atecoPill','updatedPill',
             'acqCycleBtn','queueRows','sourceList','rows','comuneFilter'
@@ -157,7 +210,7 @@ jobs:
           node qa.cjs
 
       - name: Upload browser QA evidence
-        if: always()
+        if: always() && steps.patch.outputs.changed != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: f1-email-radar-browser-qa
