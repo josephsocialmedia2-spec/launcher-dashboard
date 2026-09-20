@@ -457,8 +457,8 @@ async function prepareResumeProviders(url:string,service:string,run:any,forceWeb
 }
 
 async function processRun(url:string,service:string,run:any,actor:string){
+ if(run.requested_action==="STOP"){await jfetch(url,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({status:"STOPPED",requested_action:"STOP",updated_at:new Date().toISOString()}),prefer:"return=minimal"});return {...run,status:"STOPPED",requested_action:"STOP"}}
  if(run.requested_action==="PAUSE"||run.status==="PAUSED")return run;
- if(run.requested_action==="STOP"){await jfetch(url,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({status:"STOPPED",updated_at:new Date().toISOString()}),prefer:"return=minimal"});return {...run,status:"STOPPED"}}
  const prog=await jfetch(url,service,"f1_email_radar_source_progress?select=*&run_id=eq."+run.run_id+"&order=sort_order.asc");
  const next=(prog||[]).find((p:any)=>p.provider_class==="REQUIRED_AUTOMATABLE"&&p.status==="PENDING");
  if(!next)return await finalizeIfIdle(url,service,run.run_id);
