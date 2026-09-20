@@ -24,7 +24,7 @@ async function loadConfig(){
 async function loadStats(){
  const comune=$('comuneFilter').value||null;
  STATE.stats=await rpc('f1_email_radar_dashboard',{p_comune:comune});
- [['kConfigured','configured_communes'],['kCompletedCommunes','completed_communes'],['kIncompleteCommunes','incomplete_communes'],['kSubjects','subjects'],['kCompanies','companies'],['kPros','professionals'],['kEmails','emails'],['kPec','pec'],['kPhones','phones'],['kWeb','websites'],['kVerified','verified'],['kToVerify','to_verify'],['kDup','duplicates_merged'],['kProvidersReady','providers_operational'],['kProvidersMissing','providers_not_configured'],['kAteco','ateco_catalog']].forEach(([id,k])=>{const el=$(id);if(el)el.textContent=Number(STATE.stats?.[k]||0).toLocaleString('it-IT')});
+ [['kConfigured','configured_communes'],['kCompletedCommunes','completed_communes'],['kIncompleteCommunes','incomplete_communes'],['kSubjects','subjects'],['kCompanies','companies'],['kPros','professionals'],['kEmails','emails'],['kPec','pec'],['kPhones','phones'],['kWeb','websites'],['kVerified','verified'],['kToVerify','to_verify'],['kDup','duplicates_merged'],['kProvidersReady','providers_operational'],['kProvidersPartial','providers_partial'],['kProvidersMissing','providers_not_configured'],['kAteco','ateco_catalog']].forEach(([id,k])=>{const el=$(id);if(el)el.textContent=Number(STATE.stats?.[k]||0).toLocaleString('it-IT')});
  $('atecoPill').textContent='ATECO '+Number(STATE.stats?.ateco_catalog||0).toLocaleString('it-IT');$('atecoPill').className='pill '+(Number(STATE.stats?.ateco_catalog||0)>=3000?'ok':'warn');const lu=STATE.stats?.last_updated?new Date(STATE.stats.last_updated):null;$('updatedPill').textContent=lu&&!Number.isNaN(lu.getTime())?'AGG. '+lu.toLocaleString('it-IT'):'AGGIORNAMENTO —';
 }
 async function loadEntities(){
@@ -69,8 +69,17 @@ async function loadRun(){
 async function renderSources(){
  let progress=[];if(STATE.latestRun){progress=await rest('f1_email_radar_source_progress?select=*&run_id=eq.'+encodeURIComponent(STATE.latestRun.run_id)+'&order=source_key')||[]}
  const by=new Map(progress.map(x=>[x.source_key,x]));
- $('runMeta').textContent=STATE.latestRun?('Ultima scansione: '+STATE.latestRun.status+' · '+new Date(STATE.latestRun.created_at).toLocaleString('it-IT')):'Nessuna scansione registrata per il comune.';
- $('sourceList').innerHTML=STATE.sources.map(s=>{const p=by.get(s.key);const st=p?.status||(s.automatic?'PRONTO':'DA_CONFIGURARE');return '<div class="source"><div class="sourceTop"><b>'+esc(s.label)+'</b><span class="tag '+(st==='COMPLETATA'?'ok':'warn')+'">'+esc(st)+'</span></div><div class="meta">'+esc(s.mode)+' · '+esc(s.note||'')+'</div>'+(s.url?'<a href="'+esc(s.url)+'" target="_blank" rel="noopener">APRI FONTE</a>':'')+'</div>'}).join('');
+ $('runMeta').textContent=STATE.latestRun?(
+  'Stato: '+STATE.latestRun.status+
+  ' · Fonti '+Number(STATE.latestRun.source_coverage||0).toFixed(1)+'%'+
+  ' · ATECO '+Number(STATE.latestRun.ateco_coverage||0).toFixed(1)+'%'+
+  ' · Contatti '+Number(STATE.latestRun.contact_coverage||0).toFixed(1)+'%'+
+  ' · Qualità '+Number(STATE.latestRun.data_quality||0).toFixed(1)+'%'+
+  ' · Territorio '+Number(STATE.latestRun.territorial_coverage||0).toFixed(1)+'%'+
+  ' · Agg. '+new Date(STATE.latestRun.updated_at||STATE.latestRun.created_at).toLocaleString('it-IT')+
+  (STATE.latestRun.last_ateco_code?' · Checkpoint ATECO '+STATE.latestRun.last_ateco_code:'')
+ ):'Nessuna scansione registrata per il comune.';
+ $('sourceList').innerHTML=STATE.sources.map(s=>{const p=by.get(s.key);const st=p?.status||(s.automatic?'PRONTO':'DA_CONFIGURARE');return '<div class="source"><div class="sourceTop"><b>'+esc(s.label)+'</b><span class="tag '+(st==='COMPLETED'?'ok':'warn')+'">'+esc(st)+'</span></div><div class="meta">'+esc(s.mode)+' · '+esc(s.note||'')+'</div>'+(s.url?'<a href="'+esc(s.url)+'" target="_blank" rel="noopener">APRI FONTE</a>':'')+'</div>'}).join('');
 }
 async function reload(){await Promise.all([loadStats(),loadEntities(),loadRun()])}
 function formPayload(form){const fd=new FormData(form),o={};for(const [k,v] of fd.entries())o[k]=String(v).trim();o.confidence_score=Number(o.confidence_score||0);return o}
