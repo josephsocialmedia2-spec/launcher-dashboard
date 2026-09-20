@@ -62,7 +62,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          PAGE='https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.html?v=20260920-browserqa2'
+          PAGE='https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.html?v=20260920-browserqa3'
           ok=0
           for n in $(seq 1 30); do
             if curl -LfsS "$PAGE" -o /tmp/page.html && grep -Fq '.wrap,.panel,.grid2,.grid2>*{min-width:0}' /tmp/page.html; then
@@ -100,7 +100,7 @@ jobs:
           const { chromium } = require('playwright');
           const fs = require('fs');
 
-          const URL='https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.html?v=20260920-browserqa2';
+          const URL='https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.html?v=20260920-browserqa3';
           const requiredIds=[
             'cloudPill','territoryPill','atecoPill','updatedPill',
             'acqCycleBtn','queueRows','sourceList','rows','comuneFilter'
