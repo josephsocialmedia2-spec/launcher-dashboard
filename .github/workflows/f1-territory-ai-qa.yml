@@ -21,11 +21,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: npm ci
+      - run: npm install --no-audit --no-fund
       - name: Compile Python uploader
         run: python -m py_compile windows-bridge/f1_chatgpt_uploader.py
       - name: Static and JavaScript syntax QA
