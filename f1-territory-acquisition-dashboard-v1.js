@@ -1,6 +1,6 @@
 (()=> {
 'use strict';
-const VERSION='20260920-acquisition-dashboard-v4';
+const VERSION='20260920-notiziere-guided-v5';
 const DATA_URL='./data/seller-lead-engine-public.json';
 const GEO_CACHE_KEY='f1_seller_geo_comuni_v1';
 const CATEGORIES=[
@@ -20,6 +20,7 @@ const txt=v=>String(v??'').trim();
 let crm={civics:[],conversations:[],news:[],territory_leads:[],letters:[]};
 let seller={opportunities:[]};
 let currentPosition=null;
+let lastOperationalPlan=null;
 let geoCache={};
 try{geoCache=JSON.parse(localStorage.getItem(GEO_CACHE_KEY)||'{}')||{}}catch(_){geoCache={}}
 
@@ -50,6 +51,15 @@ function injectStyle(){
  .f1-ai-queue{display:grid;gap:5px;margin-top:7px}.f1-ai-task{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:7px;align-items:center;border-top:1px solid #dce9e1;padding-top:5px;font-size:8px}.f1-ai-task:first-child{border-top:0;padding-top:0}.f1-ai-task .num{width:22px;height:22px;border-radius:999px;background:#0b6f3d;color:#fff;display:grid;place-items:center;font-weight:950}.f1-ai-task strong{display:block;font-size:10px;line-height:1.2}.f1-ai-task small{display:block;color:var(--mut);font-weight:750;margin-top:2px}.f1-ai-task .goal{font-size:8px;font-weight:950;color:#07502d;text-align:right}
  .f1-acq-panel{padding:8px!important;border-radius:12px!important}.f1-acq-dashboard{gap:6px!important;margin-bottom:7px!important}.f1-acq-head h2{font-size:14px!important}.f1-acq-sub{font-size:8px!important}.f1-acq-grid5{gap:5px!important;margin-top:6px!important}.f1-acq-metric{padding:6px!important;border-radius:9px!important}.f1-acq-metric span{font-size:7px!important;min-height:18px!important}.f1-acq-metric strong{font-size:14px!important}.f1-acq-progress{margin-top:4px!important;height:4px!important}.f1-acq-next{padding:7px!important}.f1-acq-news-grid{gap:5px!important;margin-top:6px!important}.f1-acq-news-cat{min-height:0!important;padding:7px!important}.f1-acq-news-cat small{display:none!important}.f1-acq-news-count{height:18px!important;min-width:18px!important;margin-top:4px!important}.f1-acq-radar{gap:4px!important;margin-top:6px!important}.f1-acq-radar-row{padding-top:5px!important;gap:5px!important}.f1-acq-note{padding:7px!important;font-size:9px!important}
  .f1-home-dashboard-v1 .f1-home-tile{min-height:58px!important;padding:7px 9px!important}.f1-home-dashboard-v1 .f1-home-tile .ico{font-size:20px!important}.f1-home-dashboard-v1 .f1-home-tile strong{font-size:10px!important}.f1-home-dashboard-v1 .f1-home-tile small{font-size:7px!important}.f1-home-dashboard-v1 .f1-home-dash{gap:5px!important}.f1-home-dashboard-v1 .f1-home-idle-note{padding:7px 10px!important}.f1-home-dashboard-v1 .f1-seller-system-btn{min-height:44px!important;padding:8px 10px!important}
+ .f1-notiziere-hero{border:2px solid #0b6f3d;border-radius:14px;background:#fff;padding:9px;margin:0 0 7px;box-shadow:0 6px 18px rgba(11,111,61,.08)}
+ .f1-notiziere-today{display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid #dce9e1;padding-bottom:7px;margin-bottom:7px}.f1-notiziere-today h2{font-size:13px;margin:0;font-weight:950}.f1-notiziere-today small{font-size:8px;color:var(--mut);font-weight:800}
+ .f1-current-action{border-radius:12px;background:#f2fbf6;padding:9px}.f1-action-top{display:flex;justify-content:space-between;gap:8px;align-items:center}.f1-action-counter{font-size:9px;font-weight:950;color:#07502d}.f1-action-kind{font-size:8px;font-weight:950;background:#fff;border:1px solid #b9dfc9;border-radius:999px;padding:4px 7px}
+ .f1-action-place{font-size:17px;font-weight:950;line-height:1.15;margin:7px 0}.f1-action-name{font-size:10px;font-weight:900;color:#425148;margin-bottom:7px}.f1-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.f1-action-block{border:1px solid #cfe4d7;background:#fff;border-radius:9px;padding:7px}.f1-action-block span{display:block;font-size:7px;font-weight:950;color:#68766e;letter-spacing:.06em}.f1-action-block strong{display:block;font-size:10px;line-height:1.3;margin-top:2px}.f1-action-script{margin-top:6px;border-left:3px solid #0b6f3d;background:#fff;padding:7px;border-radius:7px;font-size:9px;line-height:1.4}.f1-action-script b{display:block;font-size:7px;color:#526158;letter-spacing:.06em;margin-bottom:3px}
+ .f1-start-action{width:100%;min-height:45px;border:0;border-radius:10px;background:#08733e;color:#fff;font-weight:950;font-size:12px;margin-top:7px;cursor:pointer}.f1-start-action:disabled{opacity:.55}
+ .f1-after{margin-top:7px}.f1-after-title{font-size:8px;font-weight:950;color:#526158;margin-bottom:4px}.f1-after-row{display:grid;grid-template-columns:20px minmax(0,1fr);gap:6px;align-items:center;padding:4px 0;border-top:1px solid #dce9e1}.f1-after-row:first-of-type{border-top:0}.f1-after-row i{width:20px;height:20px;border-radius:999px;background:#eaf8ef;color:#07502d;display:grid;place-items:center;font-style:normal;font-size:8px;font-weight:950}.f1-after-row strong{font-size:9px;display:block}.f1-after-row small{font-size:7px;color:var(--mut);display:block}
+ .f1-secondary-tools{border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:6px;overflow:hidden}.f1-secondary-tools>summary{cursor:pointer;list-style:none;padding:9px 10px;font-size:9px;font-weight:950;display:flex;justify-content:space-between;align-items:center}.f1-secondary-tools>summary::-webkit-details-marker{display:none}.f1-secondary-tools>summary:after{content:'⌄';font-size:16px}.f1-secondary-tools[open]>summary:after{content:'⌃'}.f1-secondary-inner{display:grid;gap:6px;padding:0 7px 7px}
+ .f1-secondary-inner .f1-acq-panel{box-shadow:none!important;margin:0!important}.f1-secondary-inner .f1-acq-grid2{gap:6px!important}
+ @media(max-width:520px){.f1-action-grid{grid-template-columns:1fr}.f1-ai-task .goal{display:none}}
  @media(max-width:720px){.f1-acq-grid5{display:flex!important;overflow-x:auto;scrollbar-width:none}.f1-acq-grid5::-webkit-scrollbar{display:none}.f1-acq-grid5 .f1-acq-metric{flex:0 0 92px}.f1-acq-grid2{grid-template-columns:1fr}.f1-acq-news-grid{display:flex!important;overflow-x:auto;scrollbar-width:none}.f1-acq-news-grid::-webkit-scrollbar{display:none}.f1-acq-news-cat{flex:0 0 132px}.f1-acq-radar-row{grid-template-columns:62px 62px minmax(0,1fr)}.f1-acq-source{grid-column:1/-1}.f1-acq-form{grid-template-columns:1fr}}
  `;
  document.head.appendChild(s);
@@ -71,53 +81,63 @@ function build(){
  wrap.id='f1AcqDashboard';
  wrap.className='f1-acq-dashboard';
  wrap.innerHTML=`
- <section class="f1-acq-panel f1-ai-directive">
-  <div class="f1-acq-head"><div><h2>🤖 DIRETTIVA OPERATIVA · COSA FARE ADESSO</h2><div class="f1-acq-sub">KPI, CRM, Notizie Territoriali e Seller Radar del bacino ${BASIN_LABEL}.</div></div><button id="f1AiOpenTerritory" class="f1-acq-btn primary" type="button">APRI NOTIZIERE</button></div>
+ <section class="f1-notiziere-hero">
+  <div class="f1-notiziere-today">
+   <div><h2>OGGI DEVI OTTENERE</h2><small>Calcolato sul risultato reale e sui giorni operativi rimasti</small></div>
+   <button id="f1AcqRefresh" class="f1-acq-btn" type="button">AGGIORNA</button>
+  </div>
   <div id="f1AiTargets" class="f1-ai-targets"></div>
-  <div id="f1AiQueue" class="f1-ai-queue"><div class="f1-acq-sub">Calcolo priorità operative…</div></div>
- </section>
- <section class="f1-acq-panel">
-  <div class="f1-acq-head"><div><h2>🎯 OBIETTIVO 4 INCARICHI / MESE</h2><div class="f1-acq-sub">KPI reali dal CRM F1 · target operativo mensile</div></div><div id="f1AcqMonth" class="ey">—</div></div>
-  <div class="f1-acq-grid5">
-   <div class="f1-acq-metric"><span>INCARICHI</span><strong id="f1Mmandates">— / 4</strong><div class="f1-acq-progress"><i id="f1Pmandates"></i></div></div>
-   <div class="f1-acq-metric"><span>APPUNTAMENTI</span><strong id="f1Mappointments">— / 16</strong><div class="f1-acq-progress"><i id="f1Pappointments"></i></div></div>
-   <div class="f1-acq-metric"><span>PROPRIETARI QUALIFICATI</span><strong id="f1Mqualified">— / 40</strong><div class="f1-acq-progress"><i id="f1Pqualified"></i></div></div>
-   <div class="f1-acq-metric"><span>CONVERSAZIONI</span><strong id="f1Mconversations">— / 200</strong><div class="f1-acq-progress"><i id="f1Pconversations"></i></div></div>
-   <div class="f1-acq-metric"><span>TENTATIVI DI CONTATTO</span><strong id="f1Mattempts">— / 600</strong><div class="f1-acq-progress"><i id="f1Pattempts"></i></div></div>
+  <div class="f1-current-action">
+   <div class="f1-action-top"><span id="f1ActionCounter" class="f1-action-counter">AZIONE 1</span><span id="f1ActionKind" class="f1-action-kind">—</span></div>
+   <div id="f1ActionPlace" class="f1-action-place">Calcolo prossima azione…</div>
+   <div id="f1ActionName" class="f1-action-name"></div>
+   <div class="f1-action-grid">
+    <div class="f1-action-block"><span>COSA FARE</span><strong id="f1ActionDo">—</strong></div>
+    <div class="f1-action-block"><span>COSA DEVI OTTENERE</span><strong id="f1ActionGoal">—</strong></div>
+   </div>
+   <div id="f1ActionScriptWrap" class="f1-action-script" hidden><b>COSA DIRE</b><span id="f1ActionScript"></span></div>
+   <button id="f1StartCurrentAction" class="f1-start-action" type="button">INIZIA QUESTA AZIONE</button>
+   <div class="f1-after"><div class="f1-after-title">DOPO</div><div id="f1AiQueue"></div></div>
   </div>
  </section>
- <div class="f1-acq-grid2">
-  <section class="f1-acq-panel">
-   <div class="f1-acq-head"><div><h2>📊 KPI GIORNALIERI</h2><div class="f1-acq-sub">Le azioni registrate oggi nel CRM.</div></div><div class="ey">OGGI</div></div>
-   <div class="f1-acq-grid5">
-    <div class="f1-acq-metric"><span>CONTATTI</span><strong id="f1Dcontacts">— / 30</strong></div>
-    <div class="f1-acq-metric"><span>CONVERSAZIONI</span><strong id="f1Dconversations">— / 10</strong></div>
-    <div class="f1-acq-metric"><span>QUALIFICATI</span><strong id="f1Dqualified">— / 2</strong></div>
-    <div class="f1-acq-metric"><span>APPUNTAMENTI</span><strong id="f1Dappointments">— / 1</strong></div>
-    <div class="f1-acq-metric"><span>FOLLOW-UP</span><strong id="f1Dfollowups">— / 20</strong></div>
+
+ <details class="f1-secondary-tools">
+  <summary>DATI E STRUMENTI <span>apri solo se servono</span></summary>
+  <div class="f1-secondary-inner">
+   <section class="f1-acq-panel">
+    <div class="f1-acq-head"><div><h2>🎯 OBIETTIVO 4 INCARICHI / MESE</h2><div class="f1-acq-sub">Dati di controllo, non decisioni da prendere.</div></div><div id="f1AcqMonth" class="ey">—</div></div>
+    <div class="f1-acq-grid5">
+     <div class="f1-acq-metric"><span>INCARICHI</span><strong id="f1Mmandates">— / 4</strong><div class="f1-acq-progress"><i id="f1Pmandates"></i></div></div>
+     <div class="f1-acq-metric"><span>APPUNTAMENTI</span><strong id="f1Mappointments">— / 16</strong><div class="f1-acq-progress"><i id="f1Pappointments"></i></div></div>
+     <div class="f1-acq-metric"><span>QUALIFICATI</span><strong id="f1Mqualified">— / 40</strong><div class="f1-acq-progress"><i id="f1Pqualified"></i></div></div>
+     <div class="f1-acq-metric"><span>CONVERSAZIONI</span><strong id="f1Mconversations">— / 200</strong><div class="f1-acq-progress"><i id="f1Pconversations"></i></div></div>
+     <div class="f1-acq-metric"><span>CONTATTI</span><strong id="f1Mattempts">— / 600</strong><div class="f1-acq-progress"><i id="f1Pattempts"></i></div></div>
+    </div>
+   </section>
+   <div class="f1-acq-grid2">
+    <section class="f1-acq-panel">
+     <div class="f1-acq-head"><div><h2>📊 RISULTATI DI OGGI</h2></div><div class="ey">OGGI</div></div>
+     <div class="f1-acq-grid5">
+      <div class="f1-acq-metric"><span>CONTATTI</span><strong id="f1Dcontacts">—</strong></div>
+      <div class="f1-acq-metric"><span>CONVERSAZIONI</span><strong id="f1Dconversations">—</strong></div>
+      <div class="f1-acq-metric"><span>QUALIFICATI</span><strong id="f1Dqualified">—</strong></div>
+      <div class="f1-acq-metric"><span>APPUNTAMENTI</span><strong id="f1Dappointments">—</strong></div>
+      <div class="f1-acq-metric"><span>FOLLOW-UP</span><strong id="f1Dfollowups">—</strong></div>
+     </div>
+    </section>
+    <section class="f1-acq-panel"><div class="f1-acq-head"><h2>📈 RITMO 4 INCARICHI</h2></div><div id="f1AcqPace" class="f1-acq-note">Caricamento…</div></section>
    </div>
-  </section>
-  <section class="f1-acq-panel">
-   <div class="f1-acq-head"><div><h2>📈 RITMO 4 INCARICHI</h2><div class="f1-acq-sub">Confronto tra target e risultati reali.</div></div></div>
-   <div id="f1AcqPace" class="f1-acq-note">Caricamento KPI…</div>
-  </section>
- </div>
- <div class="f1-acq-grid2">
-  <section class="f1-acq-panel">
-   <div class="f1-acq-head"><div><h2>⚡ PROSSIMA AZIONE</h2><div class="f1-acq-sub">Priorità da CRM, follow-up e notizie.</div></div><button id="f1AcqRefresh" class="f1-acq-btn" type="button">AGGIORNA</button></div>
-   <div id="f1AcqNext" class="f1-acq-next" style="margin-top:9px"><small>Caricamento…</small></div>
-  </section>
-  <section class="f1-acq-panel">
-   <div class="f1-acq-head"><div><h2>📡 SELLER RADAR — VICINO A ME</h2><div class="f1-acq-sub">Ordine: PRIORITÀ · DISTANZA · COMUNE/VIA · FONTE</div></div><button id="f1AcqGps" class="f1-acq-btn primary" type="button">USA GPS</button></div>
-   <div id="f1AcqGeoState" class="f1-acq-sub" style="margin-top:7px">Attiva GPS per ordinare i risultati dalla zona più vicina.</div>
-   <div id="f1AcqRadar" class="f1-acq-radar"></div>
-  </section>
- </div>
- <section class="f1-acq-panel">
-  <div class="f1-acq-head"><div><h2>📰 NOTIZIE TERRITORIALI</h2><div class="f1-acq-sub">Le sei categorie sono autonome e collegate al CRM.</div></div><button id="f1AcqAddNews" class="f1-acq-btn primary" type="button">+ AGGIUNGI NOTIZIA</button></div>
-  <div id="f1AcqNewsGrid" class="f1-acq-news-grid"></div>
-  <div id="f1AcqNewsList" class="f1-acq-news-list"></div>
- </section>`;
+   <section class="f1-acq-panel">
+    <div class="f1-acq-head"><div><h2>📡 SELLER RADAR</h2><div class="f1-acq-sub">Il motore usa questi dati; aprili solo per controllo.</div></div><button id="f1AcqGps" class="f1-acq-btn" type="button">GPS</button></div>
+    <div id="f1AcqGeoState" class="f1-acq-sub"></div><div id="f1AcqRadar" class="f1-acq-radar"></div>
+   </section>
+   <section class="f1-acq-panel">
+    <div class="f1-acq-head"><div><h2>📰 NOTIZIE TERRITORIALI</h2></div><button id="f1AcqAddNews" class="f1-acq-btn primary" type="button">+ AGGIUNGI</button></div>
+    <div id="f1AcqNewsGrid" class="f1-acq-news-grid"></div><div id="f1AcqNewsList" class="f1-acq-news-list"></div>
+   </section>
+   <div id="f1AcqNext" hidden></div>
+  </div>
+ </details>`
  basin.insertAdjacentElement('afterend',wrap);
  buildModal();
  bind();
@@ -151,7 +171,7 @@ function buildModal(){
 
 function bind(){
  $('f1AcqRefresh')?.addEventListener('click',()=>loadData(true));
- $('f1AiOpenTerritory')?.addEventListener('click',()=>document.querySelector('.topnav[data-screen="terr"]')?.click());
+ $('f1StartCurrentAction')?.addEventListener('click',startCurrentAction);
  $('f1AcqGps')?.addEventListener('click',activateGps);
  $('f1AcqAddNews')?.addEventListener('click',()=>openNewsForm());
  $('f1AcqCloseNews')?.addEventListener('click',()=>closeNewsForm());
@@ -180,13 +200,52 @@ function kpiSnapshot(){
 function taskCategoryWeight(category){return ({'RICHIESTA VALORE CASA':115,'VECCHIO INCARICO SCADUTO':108,'CARTELLO PRIVATO':102,'TRASFERIMENTO':96,'SUCCESSIONE':90,'APPARTAMENTO VUOTO':82})[category]||68}
 function operationalPlan(){
  const snap=kpiSnapshot(),tasks=[],now=Date.now();
- for(const x of basinRows(crm.conversations||[])){const out=u(x.outcome),st=u(x.status);let score=0,action='',objective='';if(out==='POSSIBILE VENDITA'){score=145;action=txt(x.phone)?'CHIAMA ORA':'COMPLETA IL RECAPITO';objective='FISSA APPUNTAMENTO / VALUTAZIONE'}else if(out==='DA RICONTATTARE'||['RICHIAMO','FOLLOW_UP','DA_RICONTATTARE'].includes(st)){score=138;action=txt(x.phone)?'RICHIAMA ORA':'RECUPERA IL RECAPITO';objective='TRASFORMA IL FOLLOW-UP IN APPUNTAMENTO'}else if(out==='APPUNTAMENTO'){score=118;action='PREPARA E CONFERMA APPUNTAMENTO';objective='PORTA L’APPUNTAMENTO VERSO L’INCARICO'}else continue;if(txt(x.phone))score+=12;const due=x.next_action_at?new Date(x.next_action_at).getTime():NaN;if(Number.isFinite(due)&&due<=now)score+=30;tasks.push({kind:'CRM',score,name:txt(x.person_name||x.target_type)||'CONTATTO CRM',place:[x.comune,x.via,x.civico].filter(Boolean).join(' · '),phone:txt(x.phone),action,objective,source:'CRM'})}
- for(const n of dedupeNews(basinRows(crm.news||[]))){if(u(n.status)==='CHIUSA'||u(n.office_status)==='RISOLTA')continue;const cat=catFor(n)||'NOTIZIA DA CLASSIFICARE';let score=taskCategoryWeight(cat);if(u(n.priority)==='ALTA')score+=18;if(txt(n.phone_normalized))score+=12;const due=n.next_action_at?new Date(n.next_action_at).getTime():NaN;if(Number.isFinite(due)&&due<=now)score+=25;const hasOwner=txt(n.person_name)||['SI','SÌ','CONFERMATO'].includes(u(n.owner_status));let action=txt(n.next_action)||'VERIFICA NOTIZIA',objective='IDENTIFICA PROPRIETARIO E RECAPITO';if(hasOwner&&txt(n.phone_normalized)){action='CHIAMA / QUALIFICA';objective='VERIFICA INTENZIONE E FISSA APPUNTAMENTO'}else if(hasOwner){action='TROVA / COMPLETA RECAPITO';objective='PORTA IL PROPRIETARIO A CONTATTO'}tasks.push({kind:'NEWS',score,name:txt(n.person_name)||cat,category:cat,place:[n.comune,n.via,n.civico].filter(Boolean).join(' · '),phone:txt(n.phone_normalized),action,objective,source:'NOTIZIA'})}
- for(const r of basinRows(seller.opportunities||[])){if(!['HOT','WARM'].includes(u(r.lead_status)))continue;let score=u(r.lead_status)==='HOT'?92:62;score+=Math.min(20,Math.round(Number(r.lead_score||0)/5));tasks.push({kind:'SELLER',score,name:(r.lead_status||'SELLER RADAR')+' · '+(r.source||'FONTE'),place:[r.comune,r.via,r.civico].filter(Boolean).join(' · '),action:'VERIFICA FONTE E CHI PUBBLICA',objective:'SE È PRIVATO, CREA CONTATTO E QUALIFICA',sourceUrl:r.source_url||'',source:'SELLER RADAR'})}
+ for(const x of basinRows(crm.conversations||[])){const out=u(x.outcome),st=u(x.status);let score=0,action='',objective='';if(out==='POSSIBILE VENDITA'){score=145;action=txt(x.phone)?'CHIAMA ORA':'COMPLETA IL RECAPITO';objective='FISSA APPUNTAMENTO / VALUTAZIONE'}else if(out==='DA RICONTATTARE'||['RICHIAMO','FOLLOW_UP','DA_RICONTATTARE'].includes(st)){score=138;action=txt(x.phone)?'RICHIAMA ORA':'RECUPERA IL RECAPITO';objective='TRASFORMA IL FOLLOW-UP IN APPUNTAMENTO'}else if(out==='APPUNTAMENTO'){score=118;action='PREPARA E CONFERMA APPUNTAMENTO';objective='PORTA L’APPUNTAMENTO VERSO L’INCARICO'}else continue;if(txt(x.phone))score+=12;const due=x.next_action_at?new Date(x.next_action_at).getTime():NaN;if(Number.isFinite(due)&&due<=now)score+=30;tasks.push({kind:'CRM',id:x.conversation_id||'',score,name:txt(x.person_name||x.target_type)||'CONTATTO CRM',place:[x.comune,x.via,x.civico].filter(Boolean).join(' · '),phone:txt(x.phone),action,objective,source:'CRM',record:x})}
+ for(const n of dedupeNews(basinRows(crm.news||[]))){if(u(n.status)==='CHIUSA'||u(n.office_status)==='RISOLTA')continue;const cat=catFor(n)||'NOTIZIA DA CLASSIFICARE';let score=taskCategoryWeight(cat);if(u(n.priority)==='ALTA')score+=18;if(txt(n.phone_normalized))score+=12;const due=n.next_action_at?new Date(n.next_action_at).getTime():NaN;if(Number.isFinite(due)&&due<=now)score+=25;const hasOwner=txt(n.person_name)||['SI','SÌ','CONFERMATO'].includes(u(n.owner_status));let action=txt(n.next_action)||'VERIFICA NOTIZIA',objective='IDENTIFICA PROPRIETARIO E RECAPITO';if(hasOwner&&txt(n.phone_normalized)){action='CHIAMA / QUALIFICA';objective='VERIFICA INTENZIONE E FISSA APPUNTAMENTO'}else if(hasOwner){action='TROVA / COMPLETA RECAPITO';objective='PORTA IL PROPRIETARIO A CONTATTO'}tasks.push({kind:'NEWS',id:n.observation_id||'',score,name:txt(n.person_name)||cat,category:cat,place:[n.comune,n.via,n.civico].filter(Boolean).join(' · '),phone:txt(n.phone_normalized),action,objective,source:'NOTIZIA',record:n})}
+ for(const r of basinRows(seller.opportunities||[])){if(!['HOT','WARM'].includes(u(r.lead_status)))continue;let score=u(r.lead_status)==='HOT'?92:62;score+=Math.min(20,Math.round(Number(r.lead_score||0)/5));tasks.push({kind:'SELLER',id:r.id||r.source_url||'',score,name:'ANNUNCIO DA VERIFICARE',place:[r.comune,r.via,r.civico].filter(Boolean).join(' · '),action:'VERIFICA CHI STA PUBBLICANDO',objective:'CAPIRE SE È UN PRIVATO; SE SÌ, CREA IL CONTATTO',sourceUrl:r.source_url||'',source:'FONTE ONLINE',record:r})}
  tasks.sort((a,b)=>b.score-a.score);if(!tasks.length)tasks.push({kind:'TERRITORY',score:10,name:'GIRO TERRITORIALE',place:BASIN_LABEL,action:'APRI IL NOTIZIERE E LAVORA LA ZONA ASSEGNATA',objective:'GENERA NUOVE NOTIZIE E CONVERSAZIONI',source:'F1 TERRITORY'});
  return {basin:BASIN_LABEL,snapshot:snap,tasks};
 }
-function renderAIDirective(){const box=$('f1AiQueue'),targets=$('f1AiTargets');if(!box||!targets)return;const p=operationalPlan(),d=p.snapshot.daily;targets.innerHTML=[['AZIONI CONTATTO',d.attempts],['CONVERSAZIONI',d.conversations],['QUALIFICATI',d.qualified],['APPUNTAMENTI',d.appointments],['FOLLOW-UP',d.followups]].map(x=>'<div class="f1-ai-target"><span>'+x[0]+'</span><strong>'+x[1]+'</strong><span>oggi</span></div>').join('');box.innerHTML=p.tasks.slice(0,3).map((t,i)=>'<div class="f1-ai-task"><span class="num">'+(i+1)+'</span><div><strong>'+esc(t.name)+'</strong><small>'+esc(t.place||BASIN_LABEL)+' · '+esc(t.action)+'</small></div><div class="goal">'+esc(t.objective)+'</div></div>').join('')}
+function scriptForTask(t){
+ if(!t)return'';
+ if(t.kind==='CRM'){
+  if(/RICHIAM/i.test(t.action||''))return'Buongiorno, la ricontatto come concordato. Vorrei capire se possiamo fissare un momento per approfondire la situazione dell’immobile.';
+  if(/APPUNTAMENTO/i.test(t.objective||''))return'Buongiorno, la contatto per proseguire il confronto sull’immobile. Possiamo fissare un momento preciso per vederci e verificare i dati?';
+ }
+ const cat=u(t.category||'');
+ if(cat==='RICHIESTA VALORE CASA')return'Buongiorno, la contatto in merito alla richiesta sul valore dell’immobile. Possiamo verificare insieme i dati e fissare un momento per una valutazione più precisa?';
+ if(cat==='CARTELLO PRIVATO')return'Buongiorno, ho visto il cartello relativo all’immobile. Sto verificando direttamente le informazioni: è lei la persona corretta con cui parlare?';
+ if(cat==='TRASFERIMENTO')return'Buongiorno, sto verificando alcune informazioni immobiliari della zona. Posso chiederle se il trasferimento comporta anche una decisione sull’immobile?';
+ if(cat==='SUCCESSIONE')return'Buongiorno, sto verificando un’informazione relativa a questo immobile. Posso sapere chi è la persona corretta con cui parlare della proprietà?';
+ if(cat==='APPARTAMENTO VUOTO')return'Buongiorno, sto verificando un’informazione relativa a questo immobile. Sa indicarmi chi è la persona corretta con cui parlare?';
+ if(cat==='VECCHIO INCARICO SCADUTO')return'Buongiorno, sto verificando la situazione attuale dell’immobile. È ancora in vendita oppure la situazione è cambiata?';
+ if(t.kind==='TERRITORY')return'Buongiorno, F1 Immobiliare. Sto lavorando specificamente questa zona. Sa se qualcuno qui vicino sta pensando di vendere nei prossimi mesi?';
+ return'';
+}
+function taskKindLabel(t){if(!t)return'—';if(t.kind==='NEWS')return t.category||'NOTIZIA DA VERIFICARE';if(t.kind==='SELLER')return'FONTE DA VERIFICARE';if(t.kind==='CRM')return'CONTATTO / FOLLOW-UP';return'GIRO TERRITORIALE'}
+function startCurrentAction(){
+ const p=lastOperationalPlan||operationalPlan(),t=p?.tasks?.[0];if(!t)return;
+ if(t.kind==='NEWS'&&t.id&&window.F1TerritoryOpenNews){window.F1TerritoryOpenNews(t.id);return}
+ if(t.kind==='SELLER'&&t.sourceUrl){window.open(t.sourceUrl,'_blank','noopener');return}
+ if(t.kind==='CRM'&&t.phone){location.href='tel:'+t.phone.replace(/\s+/g,'');return}
+ if(t.kind==='CRM'){window.F1TerritoryShow?.('crm');document.querySelector('.topnav[data-screen="crm"]')?.click();return}
+ window.F1TerritoryShow?.('terr');document.querySelector('.topnav[data-screen="terr"]')?.click();
+}
+function renderAIDirective(){
+ const p=operationalPlan(),d=p.snapshot.daily,t=p.tasks[0];lastOperationalPlan=p;
+ const targets=$('f1AiTargets'),queue=$('f1AiQueue');
+ if(targets)targets.innerHTML=[['CONVERSAZIONI',d.conversations],['QUALIFICATI',d.qualified],['APPUNTAMENTI',d.appointments]].map(x=>'<div class="f1-ai-target"><span>'+x[0]+'</span><strong>'+x[1]+'</strong><span>oggi</span></div>').join('');
+ if(!t)return;
+ if($('f1ActionCounter'))$('f1ActionCounter').textContent='AZIONE 1 DI '+p.tasks.length;
+ if($('f1ActionKind'))$('f1ActionKind').textContent=taskKindLabel(t);
+ if($('f1ActionPlace'))$('f1ActionPlace').textContent=t.place||BASIN_LABEL;
+ if($('f1ActionName'))$('f1ActionName').textContent=t.name||'';
+ if($('f1ActionDo'))$('f1ActionDo').textContent=t.action||'VERIFICA';
+ if($('f1ActionGoal'))$('f1ActionGoal').textContent=t.objective||'REGISTRA UN ESITO UTILE';
+ const script=scriptForTask(t),sw=$('f1ActionScriptWrap');if(sw){sw.hidden=!script;if($('f1ActionScript'))$('f1ActionScript').textContent=script}
+ const btn=$('f1StartCurrentAction');if(btn){btn.disabled=false;btn.textContent=t.kind==='SELLER'?'APRI E VERIFICA LA FONTE':t.kind==='CRM'&&t.phone?'CHIAMA ORA':'INIZIA QUESTA AZIONE'}
+ if(queue)queue.innerHTML=p.tasks.slice(1,3).map((x,i)=>'<div class="f1-after-row"><i>'+(i+2)+'</i><div><strong>'+esc(x.place||x.name||BASIN_LABEL)+'</strong><small>'+esc(x.action)+'</small></div></div>').join('')||'<div class="f1-acq-sub">Nessuna seconda azione: completa quella attuale e F1 ricalcolerà.</div>';
+}
 function dateKey(v){
  if(!v)return'';
  const d=new Date(v);if(Number.isNaN(d.getTime()))return'';
@@ -210,7 +269,7 @@ function catFor(n){
 function pct(n,t){return Math.max(0,Math.min(100,Math.round((Number(n||0)/t)*100)))}
 function setMetric(id,n,t,pid){const el=$(id);if(el)el.textContent=`${n} / ${t}`;if(pid&&$(pid))$(pid).style.width=pct(n,t)+'%'}
 function renderKpis(){const s=kpiSnapshot();setMetric('f1Dcontacts',s.unique.size,s.daily.attempts);setMetric('f1Dconversations',s.convToday.length,s.daily.conversations);setMetric('f1Dqualified',s.dQualified,s.daily.qualified);setMetric('f1Dappointments',s.dAppointments,s.daily.appointments);setMetric('f1Dfollowups',s.dFollow,s.daily.followups);setMetric('f1Mmandates',s.mMandates,TARGETS.mandates,'f1Pmandates');setMetric('f1Mappointments',s.mAppointments,TARGETS.appointments,'f1Pappointments');setMetric('f1Mqualified',s.mQualified,TARGETS.qualified,'f1Pqualified');setMetric('f1Mconversations',s.convMonth.length,TARGETS.conversations,'f1Pconversations');setMetric('f1Mattempts',s.convMonth.length,TARGETS.attempts,'f1Pattempts');if($('f1AcqMonth'))$('f1AcqMonth').textContent=new Intl.DateTimeFormat('it-IT',{month:'long',year:'numeric',timeZone:'Europe/Rome'}).format(new Date()).toUpperCase();const missing=Math.max(0,TARGETS.appointments-s.mAppointments);$('f1AcqPace').innerHTML='<strong>'+missing+' appuntamenti mancanti al target mensile.</strong><br>'+s.days+' giornate operative rimaste · obiettivo da oggi: '+s.daily.appointments+' appuntamenti/giorno.';renderAIDirective();}
-function renderNextAction(){const t=operationalPlan().tasks[0],box=$('f1AcqNext');if(!box)return;if(!t){box.innerHTML='<small>Nessuna azione prioritaria disponibile.</small>';return}box.innerHTML='<span class="priority">PRIORITÀ OPERATIVA</span><strong>'+esc(t.name)+'</strong><small>'+esc(t.place||BASIN_LABEL)+' · '+esc(t.source||'F1')+'</small><div><b>AZIONE:</b> '+esc(t.action)+'</div><div><b>OBIETTIVO:</b> '+esc(t.objective)+'</div><div class="f1-acq-actions">'+(t.phone?'<a class="f1-acq-btn primary" href="tel:'+esc(t.phone.replace(/\\s+/g,''))+'">CHIAMA ORA</a>':'')+(t.sourceUrl?'<a class="f1-acq-btn" href="'+esc(t.sourceUrl)+'" target="_blank" rel="noopener">APRI FONTE</a>':'')+'<button id="f1AcqOpenTerr" class="f1-acq-btn" type="button">APRI NOTIZIERE</button></div>';$('f1AcqOpenTerr')?.addEventListener('click',()=>document.querySelector('.topnav[data-screen="terr"]')?.click());}
+function renderNextAction(){const box=$('f1AcqNext');if(!box)return;const t=(lastOperationalPlan||operationalPlan()).tasks[0];box.textContent=t?[t.place,t.action,t.objective].filter(Boolean).join(' · '):'';}
 function renderNewsCounts(){
  const news=dedupeNews(basinRows(Array.isArray(crm.news)?crm.news:[]));
  const open=news.filter(n=>u(n.status)!=='CHIUSA'&&u(n.office_status)!=='RISOLTA');
