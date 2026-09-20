@@ -1,45 +1,24 @@
 {
-  "version": 2,
+  "version": 3,
   "updated_at": "2026-09-20",
   "sources": [
     {
-      "key": "REGISTRO_IMPRESE",
-      "label": "Registro Imprese / InfoCamere",
-      "url": "https://www.registroimprese.it/",
-      "mode": "AUTHORIZED_CONNECTOR",
-      "automatic": false,
-      "secret_names": [
-        "REGISTRO_IMPRESE_API_BASE",
-        "REGISTRO_IMPRESE_API_KEY"
-      ],
-      "note": "Adapter server-side predisposto; richiede endpoint/contratto Web Services autorizzato."
+      "key": "OSM_DIRECTORY",
+      "label": "OpenStreetMap / Overpass",
+      "url": "https://www.openstreetmap.org/",
+      "mode": "PUBLIC_API_ZERO_CREDENTIAL",
+      "automatic": true,
+      "provider_class": "REQUIRED_AUTOMATABLE",
+      "note": "Discovery territoriale seriale e a basso volume. Coordinate direttamente dagli elementi OSM. Attribution: © OpenStreetMap contributors, ODbL."
     },
     {
-      "key": "INI_PEC",
-      "label": "INI-PEC",
-      "url": "https://www.inipec.gov.it/",
-      "mode": "PUBLIC_INTERACTIVE_OR_AUTHORIZED_CONNECTOR",
-      "automatic": false,
-      "secret_names": [],
-      "note": "PEC separata dall'email commerciale; nessun uso marketing automatico. Nessun bypass di consultazione interattiva."
-    },
-    {
-      "key": "INAD",
-      "label": "INAD",
-      "url": "https://domiciliodigitale.gov.it/",
-      "mode": "PUBLIC_INTERACTIVE_OR_AUTHORIZED_CONNECTOR",
-      "automatic": false,
-      "secret_names": [],
-      "note": "Domicili digitali separati dal marketing; integrazione automatica solo tramite modalità autorizzate."
-    },
-    {
-      "key": "ALBI_PROFESSIONALI",
-      "label": "Ordini e albi professionali",
+      "key": "FONTI_LOCALI",
+      "label": "Fonti locali / Comune",
       "url": "",
-      "mode": "ADAPTER_SET",
-      "automatic": false,
-      "secret_names": [],
-      "note": "Adapter manifest predisposto; ogni albo va verificato per modalità pubblica/API specifica."
+      "mode": "PUBLIC_WEB_ZERO_CREDENTIAL",
+      "automatic": true,
+      "provider_class": "REQUIRED_AUTOMATABLE",
+      "note": "Individua il sito istituzionale tramite Wikidata e scopre fonti territoriali usando link pubblici, robots.txt e sitemap."
     },
     {
       "key": "SITI_UFFICIALI",
@@ -47,39 +26,71 @@
       "url": "",
       "mode": "PUBLIC_WEB",
       "automatic": true,
-      "secret_names": [],
-      "note": "Crawler operativo: Home e pagine contatti/chi siamo/privacy/legal/dove siamo. Non genera indirizzi email."
+      "provider_class": "REQUIRED_AUTOMATABLE",
+      "note": "Crawler con JSON-LD/Schema.org, mailto, tel, VAT, pagine contatti/privacy/legal/dove siamo. Non genera email."
+    },
+    {
+      "key": "ATECO_ANALYSIS",
+      "label": "Analisi copertura ATECO",
+      "url": "",
+      "mode": "INTERNAL",
+      "automatic": true,
+      "provider_class": "REQUIRED_AUTOMATABLE",
+      "note": "Analizza le 87 divisioni ATECO 2025 sui soggetti scoperti e distingue divisioni con/senza risultati."
     },
     {
       "key": "SEARCH_PROVIDER",
-      "label": "Search Provider · Brave Search API",
+      "label": "Brave Search · enrichment opzionale",
       "url": "https://api.search.brave.com/",
-      "mode": "API",
+      "mode": "OPTIONAL_API",
       "automatic": false,
-      "secret_names": [
-        "BRAVE_SEARCH_API_KEY"
-      ],
-      "note": "Batch ATECO server-side; i risultati sono discovery e vengono salvati solo dopo verifica sul sito ufficiale."
+      "provider_class": "OPTIONAL_NOT_CONFIGURED",
+      "note": "Arricchimento opzionale. L'assenza della chiave non blocca il censimento autonomo."
     },
     {
       "key": "GOOGLE_PLACES",
-      "label": "Google Places API (New)",
+      "label": "Google Places · enrichment opzionale",
       "url": "https://places.googleapis.com/",
-      "mode": "API_DISCOVERY_ONLY",
+      "mode": "OPTIONAL_API_DISCOVERY",
       "automatic": false,
-      "secret_names": [
-        "GOOGLE_MAPS_API_KEY"
-      ],
-      "note": "Text Search server-side per discovery. Nessun contenuto Google viene usato come record territoriale definitivo; verifica sul sito ufficiale."
+      "provider_class": "OPTIONAL_NOT_CONFIGURED",
+      "note": "Arricchimento opzionale. L'assenza della chiave non blocca il censimento autonomo."
     },
     {
-      "key": "FONTI_LOCALI",
-      "label": "Comuni / associazioni / Pro Loco / consorzi",
-      "url": "",
-      "mode": "PUBLIC_WEB",
+      "key": "REGISTRO_IMPRESE",
+      "label": "Registro Imprese / InfoCamere",
+      "url": "https://www.registroimprese.it/",
+      "mode": "OPTIONAL_AUTHORIZED_CONNECTOR",
       "automatic": false,
-      "secret_names": [],
-      "note": "Fonti territoriali pubbliche; provider specifici da attivare per Comune/ente."
+      "provider_class": "OPTIONAL_NOT_CONFIGURED",
+      "note": "Fonte prioritaria se esiste un contratto/API autorizzata; non è requisito per il completion engine zero-credential."
+    },
+    {
+      "key": "ALBI_PROFESSIONALI",
+      "label": "Ordini e albi professionali",
+      "url": "",
+      "mode": "INTERACTIVE_NOT_REQUIRED",
+      "automatic": false,
+      "provider_class": "INTERACTIVE_NOT_REQUIRED",
+      "note": "Fonti ufficiali catalogate. Automazione solo quando consentita; non blocca COMPLETED."
+    },
+    {
+      "key": "INI_PEC",
+      "label": "INI-PEC",
+      "url": "https://www.inipec.gov.it/",
+      "mode": "INTERACTIVE_NOT_REQUIRED",
+      "automatic": false,
+      "provider_class": "INTERACTIVE_NOT_REQUIRED",
+      "note": "PEC separata dall'email commerciale. Nessun bypass; non blocca COMPLETED."
+    },
+    {
+      "key": "INAD",
+      "label": "INAD",
+      "url": "https://domiciliodigitale.gov.it/",
+      "mode": "INTERACTIVE_NOT_REQUIRED",
+      "automatic": false,
+      "provider_class": "INTERACTIVE_NOT_REQUIRED",
+      "note": "Domicilio digitale separato dal marketing. Nessun accesso improprio; non blocca COMPLETED."
     }
   ]
 }
