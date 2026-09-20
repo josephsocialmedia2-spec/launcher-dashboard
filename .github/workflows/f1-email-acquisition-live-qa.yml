@@ -31,6 +31,7 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import os
           p=Path('f1-email-radar.html')
           s=p.read_text(encoding='utf-8')
           old='.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px}table{width:100%;border-collapse:collapse;min-width:1150px}'
