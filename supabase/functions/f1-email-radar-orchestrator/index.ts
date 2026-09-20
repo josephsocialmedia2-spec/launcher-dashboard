@@ -237,7 +237,13 @@ Deno.serve(async(req:Request)=>{
   else if(action==="PAUSE"&&run){await jfetch(url,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({status:"PAUSED",requested_action:"PAUSE",updated_at:new Date().toISOString()}),prefer:"return=minimal"});run={...run,status:"PAUSED"}}
   else if(action==="STOP"&&run){await jfetch(url,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({requested_action:"STOP",updated_at:new Date().toISOString()}),prefer:"return=minimal"});run=await processRun(url,service,{...run,requested_action:"STOP"},actor.id)}
   else if((action==="RESUME"||action==="RETRY")&&run){if(action==="RETRY")await jfetch(url,service,"f1_email_radar_source_progress?run_id=eq."+run.run_id+"&status=eq.FAILED",{method:"PATCH",body:JSON.stringify({status:"PENDING",error:"",updated_at:new Date().toISOString()}),prefer:"return=minimal"});await jfetch(url,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({status:"RUNNING",requested_action:"",retry_count:Number(run.retry_count||0)+(action==="RETRY"?1:0),updated_at:new Date().toISOString()}),prefer:"return=minimal"});run=await processRun(url,service,{...run,status:"RUNNING",requested_action:""},actor.id)}
-  else if(action==="CRON"){let comune=String(b.comune||"");if(!comune){const es=await jfetch(url,service,"f1_email_radar_entities?select=comune,updated_at&order=updated_at.asc&limit=1");comune=es?.[0]?.comune||"Avigliana"}run=await startRun(url,service,actor.id,comune);run=await processRun(url,service,run,actor.id)}
+  else if(action==="CRON"){
+   let comune=String(b.comune||"");
+   if(!comune){const q=await jfetch(url,service,"rpc/f1_email_radar_queue_next",{method:"POST",body:"{}"});comune=String(q||"Avigliana")}
+   run=await startRun(url,service,actor.id,comune);
+   run=await processRun(url,service,run,actor.id);
+   await jfetch(url,service,"f1_email_radar_municipality_queue?comune=eq."+encodeURIComponent(comune),{method:"PATCH",body:JSON.stringify({last_run_id:run.run_id,last_run_at:new Date().toISOString(),updated_at:new Date().toISOString()}),prefer:"return=minimal"}).catch(()=>{});
+  }
   const progress=run?await jfetch(url,service,"f1_email_radar_source_progress?select=*&run_id=eq."+run.run_id+"&order=source_key.asc"):[];
   return reply({ok:true,action,run,progress,provider_runtime:{google_places:!!Deno.env.get("GOOGLE_MAPS_API_KEY"),search:!!Deno.env.get("BRAVE_SEARCH_API_KEY"),registro_imprese:!!Deno.env.get("REGISTRO_IMPRESE_API_BASE")&&!!Deno.env.get("REGISTRO_IMPRESE_API_KEY")}});
  }catch(e){return reply({ok:false,error:"UNEXPECTED",detail:String((e as any)?.message||e)},500)}
