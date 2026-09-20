@@ -407,9 +407,11 @@ async function startRun(url:string,service:string,actor:string,comune:string){
 
 async function updateProgress(url:string,service:string,runId:string,key:string,status:string,stats:any={},error=""){
  const terminal=["COMPLETED","NON_APPLICABILE","OPTIONAL_NOT_CONFIGURED","INTERACTIVE_NOT_REQUIRED"];
- await jfetch(url,service,"f1_email_radar_source_progress?run_id=eq."+runId+"&source_key=eq."+key,{method:"PATCH",body:JSON.stringify({status,...stats,error,completed_at:terminal.includes(status)?new Date().toISOString():null,updated_at:new Date().toISOString()}),prefer:"return=minimal"});
+ const allowed=["subjects_found","emails_found","pec_found","phones_found","duplicates","failure_count","last_failure_at","next_retry_at","last_started_at"];
+ const patch:any={status,error,completed_at:terminal.includes(status)?new Date().toISOString():null,updated_at:new Date().toISOString()};
+ for(const k of allowed)if(stats[k]!==undefined)patch[k]=stats[k];
+ await jfetch(url,service,"f1_email_radar_source_progress?run_id=eq."+runId+"&source_key=eq."+key,{method:"PATCH",body:JSON.stringify(patch),prefer:"return=minimal"});
 }
-
 async function recalc(url:string,service:string,runId:string){return await jfetch(url,service,"rpc/f1_email_radar_recalc_run",{method:"POST",body:JSON.stringify({p_run_id:runId})})}
 async function finalizeIfIdle(url:string,service:string,runId:string){
  const progress=await jfetch(url,service,"f1_email_radar_source_progress?select=*&run_id=eq."+runId+"&order=sort_order.asc");
