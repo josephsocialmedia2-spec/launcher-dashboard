@@ -30,7 +30,6 @@ if errorlevel 1 (
 
 >"%ROOT%\AVVIA_BRIDGE.cmd" echo @echo off
 >>"%ROOT%\AVVIA_BRIDGE.cmd" echo start "F1 Bridge" /min "%VENV%\Scripts\pythonw.exe" "%ROOT%\f1_ollama_bridge.py" --watch
-start "F1 ChatGPT Uploader" /min "%VENV%\Scripts\pythonw.exe" "%ROOT%\f1_chatgpt_uploader.py" --serve
 >>"%ROOT%\AVVIA_BRIDGE.cmd" echo start "F1 ChatGPT Uploader" /min "%VENV%\Scripts\pythonw.exe" "%ROOT%\f1_chatgpt_uploader.py" --serve
 
 >"%ROOT%\CONFIGURA_BRIDGE.cmd" echo @echo off
@@ -45,6 +44,7 @@ if not exist "%USERPROFILE%\Documents\F1_Bridge\IMPORTA_CONTATTI" mkdir "%USERPR
 
 start "F1 Config" "%VENV%\Scripts\pythonw.exe" "%ROOT%\configura_bridge.pyw"
 start "F1 Bridge" /min "%VENV%\Scripts\pythonw.exe" "%ROOT%\f1_ollama_bridge.py" --watch
+start "F1 ChatGPT Uploader" /min "%VENV%\Scripts\pythonw.exe" "%ROOT%\f1_chatgpt_uploader.py" --serve
 
 echo.
 echo INSTALLAZIONE COMPLETATA.
