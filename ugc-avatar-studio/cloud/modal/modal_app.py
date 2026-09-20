@@ -404,6 +404,7 @@ def web():
     def render(
         photo: UploadFile = File(...),
         script: str = Form(...),
+        publish: str = Form("true"),
     ):
         if photo.content_type not in {"image/jpeg", "image/png", "image/webp"}:
             raise HTTPException(status_code=400, detail="Formato foto non supportato.")
@@ -455,8 +456,9 @@ def web():
 
         copy = _auto_copy(script)
         (path / "caption.txt").write_text(copy["caption"], encoding="utf-8")
+        should_publish = str(publish).lower() not in {"false", "0", "no", "off"}
         report.update({
-            "state": "ready_for_publisher",
+            "state": "ready_for_publisher" if should_publish else "test_completed",
             "completed_at": datetime.now(timezone.utc).isoformat(),
             "copy": copy,
             "video": {
@@ -490,7 +492,7 @@ def web():
         return {
             "job_id": job_id,
             "state": report["state"],
-            "publication_status": "READY_FOR_DIRECT_API",
+            "publication_status": "READY_FOR_DIRECT_API" if should_publish else "TEST_ONLY",
             "video_url": "/api/jobs/" + job_id + "/video",
             "report_url": "/api/jobs/" + job_id,
             "caption": copy["caption"],
