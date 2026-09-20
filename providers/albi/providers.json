@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "normalized_schema": [
+    "nome",
+    "cognome",
+    "professione",
+    "ordine",
+    "comune",
+    "indirizzo",
+    "telefono",
+    "email",
+    "pec",
+    "sito",
+    "numero_iscrizione",
+    "fonte_url",
+    "stato_verifica"
+  ],
+  "providers": [
+    {
+      "key": "GEOMETRI",
+      "profession": "Geometra",
+      "territory": "Torino",
+      "status": "SOURCE_CONFIGURATION_REQUIRED"
+    },
+    {
+      "key": "ARCHITETTI",
+      "profession": "Architetto",
+      "territory": "Torino",
+      "status": "SOURCE_CONFIGURATION_REQUIRED"
+    },
+    {
+      "key": "INGEGNERI",
+      "profession": "Ingegnere",
+      "territory": "Torino",
+      "status": "SOURCE_CONFIGURATION_REQUIRED"
+    },
+    {
+      "key": "COMMERCIALISTI",
+      "profession": "Commercialista",
+      "territory": "Torino",
+      "status": "SOURCE_CONFIGURATION_REQUIRED"
+    },
+    {
+      "key": "AVVOCATI",
+      "profession": "Avvocato",
+      "territory": "Torino",
+      "status": "SOURCE_CONFIGURATION_REQUIRED"
+    },
+    {
+      "key": "CONSULENTI_LAVORO",
+      "profession": "Consulente del lavoro",
+      "territory": "Torino",
+      "status": "SOURCE_CONFIGURATION_REQUIRED"
+    },
+    {
+      "key": "SANITARI",
+      "profession": "Professionista sanitario",
+      "territory": "Torino",
+      "status": "SOURCE_CONFIGURATION_REQUIRED"
+    }
+  ]
+}
