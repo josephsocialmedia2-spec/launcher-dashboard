@@ -59,6 +59,7 @@ gpu_image = (
         "pip install --no-deps facexlib==0.3.0",
         "git clone --depth 1 https://github.com/OpenTalker/SadTalker.git /opt/SadTalker",
         "sed -i '/from gfpgan import GFPGANer/d' /opt/SadTalker/src/utils/face_enhancer.py",
+        "sed -i \"s/trans_params = np.array(\\[w0, h0, s, t\\[0\\], t\\[1\\]\\])/trans_params = np.array([w0, h0, float(s), float(np.asarray(t[0]).reshape(-1)[0]), float(np.asarray(t[1]).reshape(-1)[0])])/g\" /opt/SadTalker/src/face3d/util/preprocess.py",
         "sed -i 's/preds.astype(np.float, copy=False)/preds.astype(float, copy=False)/g' /opt/SadTalker/src/face3d/util/my_awing_arch.py",
         "cd /opt/SadTalker && bash scripts/download_models.sh",
         "mkdir -p /opt/piper",
