@@ -178,8 +178,8 @@ async function processWebsites(url:string,service:string,run:any,actor:string){
  return {subjects_found:done,emails_found:emails,pec_found:pecs,phones_found:phones};
 }
 async function startRun(url:string,service:string,actor:string,comune:string){
- const ateco=await jfetch(url,service,"f1_ateco_2025?select=code&level=eq.6");
- const rows=await jfetch(url,service,"f1_email_radar_runs",{method:"POST",body:JSON.stringify({created_by:actor,comune,status:"RUNNING",ateco_total:(ateco||[]).length,started_at:new Date().toISOString(),checkpoint:{phase:"providers",provider_index:0}})});
+ const atecoTotal=await jfetch(url,service,"rpc/f1_email_radar_ateco_leaf_count",{method:"POST",body:"{}"});
+ const rows=await jfetch(url,service,"f1_email_radar_runs",{method:"POST",body:JSON.stringify({created_by:actor,comune,status:"RUNNING",ateco_total:Number(atecoTotal||0),started_at:new Date().toISOString(),checkpoint:{phase:"providers",provider_index:0}})});
  const run=rows[0]; const env:any=Deno.env.toObject(); const sources=sourceTemplates(env);
  await jfetch(url,service,"f1_email_radar_source_progress",{method:"POST",body:JSON.stringify(sources.map(s=>({run_id:run.run_id,created_by:actor,source_key:s.key,source_label:s.label,status:s.status}))),prefer:"return=minimal"});
  return run;
@@ -188,19 +188,26 @@ async function updateProgress(url:string,service:string,runId:string,key:string,
  await jfetch(url,service,"f1_email_radar_source_progress?run_id=eq."+runId+"&source_key=eq."+key,{method:"PATCH",body:JSON.stringify({status,...stats,error,completed_at:["COMPLETED","ACCESSO_NON_DISPONIBILE"].includes(status)?new Date().toISOString():null,updated_at:new Date().toISOString()}),prefer:"return=minimal"});
 }
 async function recalc(url:string,service:string,runId:string){return await jfetch(url,service,"rpc/f1_email_radar_recalc_run",{method:"POST",body:JSON.stringify({p_run_id:runId})})}
+async function finalizeIfIdle(url:string,service:string,runId:string){
+ const progress=await jfetch(url,service,"f1_email_radar_source_progress?select=*&run_id=eq."+runId+"&order=source_key.asc");
+ const fresh=await recalc(url,service,runId);
+ if((progress||[]).some((p:any)=>p.status==="PENDING"||p.status==="RUNNING"))return fresh;
+ const unresolved=(progress||[]).filter((p:any)=>!["COMPLETED","ACCESSO_NON_DISPONIBILE","NON_APPLICABILE"].includes(p.status));
+ const complete=unresolved.length===0 && Number(fresh?.ateco_coverage||0)>=100;
+ await jfetch(url,service,"f1_email_radar_runs?run_id=eq."+runId,{method:"PATCH",body:JSON.stringify({
+   status:complete?"COMPLETED":"INCOMPLETE",
+   completed_at:complete?new Date().toISOString():null,
+   updated_at:new Date().toISOString()
+ }),prefer:"return=minimal"});
+ const rows=await jfetch(url,service,"f1_email_radar_runs?select=*&run_id=eq."+runId+"&limit=1");
+ return rows?.[0]||fresh;
+}
 async function processRun(url:string,service:string,run:any,actor:string){
  if(run.requested_action==="PAUSE"||run.status==="PAUSED")return run;
  if(run.requested_action==="STOP"){await jfetch(url,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({status:"STOPPED",updated_at:new Date().toISOString()}),prefer:"return=minimal"});return {...run,status:"STOPPED"}}
  const prog=await jfetch(url,service,"f1_email_radar_source_progress?select=*&run_id=eq."+run.run_id+"&order=source_key.asc");
  const next=(prog||[]).find((p:any)=>p.status==="PENDING");
- if(!next){
-   const fresh=await recalc(url,service,run.run_id);
-   const unresolved=(prog||[]).filter((p:any)=>!["COMPLETED","ACCESSO_NON_DISPONIBILE","NON_APPLICABILE"].includes(p.status));
-   const complete=unresolved.length===0 && Number(fresh?.ateco_coverage||0)>=100;
-   await jfetch(url,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({status:complete?"COMPLETED":"INCOMPLETE",completed_at:complete?new Date().toISOString():null,updated_at:new Date().toISOString()}),prefer:"return=minimal"});
-   const rr=await jfetch(url,service,"f1_email_radar_runs?select=*&run_id=eq."+run.run_id+"&limit=1");
-   return rr?.[0]||fresh;
- }
+ if(!next)return await finalizeIfIdle(url,service,run.run_id);
  await updateProgress(url,service,run.run_id,next.source_key,"RUNNING",{last_started_at:new Date().toISOString()});
  try{
   if(next.source_key==="SITI_UFFICIALI"){const s=await processWebsites(url,service,run,actor);await updateProgress(url,service,run.run_id,next.source_key,"COMPLETED",s)}
@@ -214,7 +221,7 @@ async function processRun(url:string,service:string,run:any,actor:string){
     await updateProgress(url,service,run.run_id,next.source_key,"CREDENTIALS_REQUIRED",{},"Configurare endpoint/contratto Web Services autorizzato InfoCamere.");
   } else await updateProgress(url,service,run.run_id,next.source_key,"INCOMPLETE",{},"Provider richiede adapter specifico o consultazione autorizzata.");
  }catch(e){await updateProgress(url,service,run.run_id,next.source_key,"FAILED",{},String((e as any)?.message||e))}
- return await recalc(url,service,run.run_id);
+ return await finalizeIfIdle(url,service,run.run_id);
 }
 Deno.serve(async(req:Request)=>{
  if(req.method==="OPTIONS")return new Response("ok",{headers:CORS});
