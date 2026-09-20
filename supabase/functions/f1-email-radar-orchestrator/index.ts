@@ -478,7 +478,12 @@ async function processRun(url:string,service:string,run:any,actor:string){
  }catch(e){
    const p=await jfetch(url,service,"f1_email_radar_source_progress?select=failure_count&run_id=eq."+run.run_id+"&source_key=eq."+next.source_key+"&limit=1");
    const n=Number(p?.[0]?.failure_count||0)+1,delay=Math.min(3600000,30000*Math.pow(2,Math.min(n-1,7)));
-   await updateProgress(url,service,run.run_id,next.source_key,n>=3?"COOLDOWN":"FAILED",{failure_count:n,last_failure_at:new Date().toISOString(),next_retry_at:new Date(Date.now()+delay).toISOString()},String((e as any)?.message||e));
+   const err=String((e as any)?.message||e);
+   if(next.source_key==="OSM_DIRECTORY"){
+     await updateProgress(url,service,run.run_id,next.source_key,"NON_APPLICABILE",{failure_count:n,last_failure_at:new Date().toISOString(),next_retry_at:new Date(Date.now()+delay).toISOString()},"Fallback Overpass esauriti per questo run: "+err);
+   }else{
+     await updateProgress(url,service,run.run_id,next.source_key,n>=3?"COOLDOWN":"FAILED",{failure_count:n,last_failure_at:new Date().toISOString(),next_retry_at:new Date(Date.now()+delay).toISOString()},err);
+   }
  }
  return await finalizeIfIdle(url,service,run.run_id);
 }
