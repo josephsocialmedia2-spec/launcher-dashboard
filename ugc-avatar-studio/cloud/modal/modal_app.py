@@ -191,7 +191,7 @@ def _make_srt(text: str, duration: float, out, max_words: int = 7):
 @app.function(
     image=gpu_image,
     cpu=4.0,
-    timeout=1200,
+    timeout=1800,
     min_containers=0,
     max_containers=1,
     scaledown_window=30,
@@ -351,7 +351,7 @@ def _auto_copy(script: str) -> dict:
 
 @app.function(
     image=web_image,
-    timeout=750,
+    timeout=2500,
     min_containers=0,
     max_containers=2,
     scaledown_window=30,
