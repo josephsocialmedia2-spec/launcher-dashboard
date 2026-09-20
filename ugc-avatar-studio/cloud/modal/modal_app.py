@@ -3,7 +3,7 @@ from __future__ import annotations
 import modal
 
 APP_NAME = "ugc-avatar-studio"
-GPU_TYPE = "CPU"
+GPU_TYPE = "T4"
 DATA_ROOT = "/data/jobs"
 DEFAULT_CLIENT_ID = "f1-immobiliare"
 
@@ -32,45 +32,33 @@ gpu_image = (
         "fonts-dejavu-core",
     )
     .pip_install(
-        "pip<26",
-        "setuptools<70",
-        "wheel",
-        "cython<3",
-        "numpy==1.23.5",
-    )
-    .pip_install(
-        "torch==2.0.1",
-        "torchvision==0.15.2",
-        "torchaudio==2.0.2",
-    )
-    .pip_install(
         "piper-tts==1.8.0",
         "Pillow>=10.4,<12",
         "requests>=2.32,<3",
+        "numpy==1.26.4",
         "scipy==1.10.1",
-        "librosa==0.9.2",
-        "numba>=0.57,<0.59",
-        "resampy==0.3.1",
+        "librosa==0.10.2.post1",
+        "numba>=0.60,<0.62",
+        "resampy>=0.4,<0.5",
         "pydub==0.25.1",
-        "imageio==2.19.3",
-        "imageio-ffmpeg==0.4.7",
-        "kornia==0.6.8",
+        "imageio>=2.34,<3",
+        "imageio-ffmpeg>=0.5,<1",
+        "kornia>=0.7,<0.9",
         "yacs==0.1.8",
-        "joblib==1.1.0",
-        "scikit-image==0.19.3",
-        "face-alignment==1.3.5",
+        "joblib>=1.4,<2",
+        "scikit-image>=0.22,<0.26",
+        "face-alignment>=1.4,<2",
         "safetensors>=0.4,<1",
-        "opencv-python-headless>=4.8,<5",
-        "av>=10,<13",
-        "lmdb>=1.4,<2",
-        "PyYAML>=6,<7",
-        "tqdm>=4.65,<5",
-        "yapf>=0.40,<1",
-        "addict>=2.4,<3",
+        "opencv-python-headless>=4.10,<5",
+        "git+https://github.com/XPixelGroup/BasicSR.git",
+        "facexlib==0.3.0",
+        "gfpgan==1.3.8",
+        "av>=12,<16",
+        "torch==2.8.0",
+        "torchvision==0.23.0",
+        "torchaudio==2.8.0",
     )
     .run_commands(
-        "python -m pip install --no-build-isolation --no-deps basicsr==1.4.2",
-        "python -m pip install --no-build-isolation facexlib==0.3.0 gfpgan==1.3.8",
         "git clone --depth 1 https://github.com/OpenTalker/SadTalker.git /opt/SadTalker",
         "sed -i 's/preds.astype(np.float, copy=False)/preds.astype(float, copy=False)/g' /opt/SadTalker/src/face3d/util/my_awing_arch.py",
         "cd /opt/SadTalker && bash scripts/download_models.sh",
@@ -202,7 +190,8 @@ def _make_srt(text: str, duration: float, out, max_words: int = 7):
 
 @app.function(
     image=gpu_image,
-    timeout=1200,
+    gpu=GPU_TYPE,
+    timeout=600,
     min_containers=0,
     max_containers=1,
     scaledown_window=30,
@@ -335,31 +324,34 @@ def render_video(photo_bytes: bytes, script: str, speed: float) -> dict:
         }
 
 
-
 def _auto_copy(script: str) -> dict:
     import re
     clean = " ".join((script or "").strip().split())
     sentences = re.split(r"(?<=[.!?])\s+", clean)
     title = (sentences[0] if sentences else clean).strip(" .!?")[:90] or "Nuovo video"
-    stop = {"della","delle","degli","dello","dalla","dalle","dallo","dai","dei","del","con","che","per","una","uno","sono","come","questo","questa","questi","queste","anche","più","non","nel","nella","nelle","gli","alla","alle","allo","tra","fra","sul","sulla","sulle","hai","abbiamo","avere","essere","video","oggi","qui"}
+    stop = {
+        "della","delle","degli","dello","dalla","dalle","dallo","dai","dei","del","con","che","per","una","uno",
+        "sono","come","questo","questa","questi","queste","anche","più","non","nel","nella","nelle","gli","alla",
+        "alle","allo","tra","fra","sul","sulla","sulle","hai","abbiamo","avere","essere","video","oggi","qui"
+    }
+    words = re.findall(r"[A-Za-zÀ-ÖØ-öø-ÿ0-9]{4,}", clean.lower())
     ranked = []
-    for word in re.findall(r"[A-Za-zÀ-ÖØ-öø-ÿ0-9]{4,}", clean.lower()):
-        key = re.sub(r"[^a-zà-öø-ÿ0-9]", "", word)
-        if key and key not in stop and key not in ranked:
-            ranked.append(key)
+    for word in words:
+        if word not in stop and word not in ranked:
+            ranked.append(word)
         if len(ranked) >= 6:
             break
-    tags = ["#"+w[:1].upper()+w[1:] for w in ranked]
-    for fallback in ["#F1Immobiliare", "#Video"]:
+    tags = ["#"+re.sub(r"[^A-Za-zÀ-ÖØ-öø-ÿ0-9]", "", w).capitalize() for w in ranked]
+    for fallback in ["#F1Immobiliare", "#UGC", "#Video"]:
         if fallback not in tags:
             tags.append(fallback)
-    core = clean if len(clean) <= 900 else clean[:897].rstrip()+"..."
-    return {"title": title, "caption": core+"\n\n"+" ".join(tags[:8]), "hashtags": tags[:8]}
+    core = clean if len(clean) <= 900 else clean[:897].rstrip() + "..."
+    return {"title": title, "caption": core + "\n\n" + " ".join(tags[:8]), "hashtags": tags[:8]}
 
 
 @app.function(
     image=web_image,
-    timeout=1300,
+    timeout=750,
     min_containers=0,
     max_containers=2,
     scaledown_window=30,
@@ -369,7 +361,7 @@ def _auto_copy(script: str) -> dict:
 def web():
     import json
     import uuid
-    from datetime import datetime, timedelta, timezone
+    from datetime import datetime, timezone
     from pathlib import Path
     from fastapi import FastAPI, File, Form, HTTPException, UploadFile
     from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
@@ -383,7 +375,10 @@ def web():
 
     def save_report(path: Path, report: dict):
         path.mkdir(parents=True, exist_ok=True)
-        (path / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
+        (path / "report.json").write_text(
+            json.dumps(report, ensure_ascii=False, indent=2, default=str),
+            encoding="utf-8",
+        )
         data_volume.commit()
 
     @api.get("/", response_class=HTMLResponse)
@@ -396,27 +391,22 @@ def web():
             "status": "ok",
             "app": APP_NAME,
             "backend": "modal",
-            "compute": GPU_TYPE,
-            "pipeline": ["piper", "sadtalker", "ffmpeg", "buffer-bridge"],
+            "publisher": "open-social-scheduler/direct_api",
+            "gpu": GPU_TYPE,
+            "pipeline": ["piper", "sadtalker", "ffmpeg", "modal_outbox", "direct_api"],
             "resolution": "1080x1920",
             "storage": "modal-volume",
-            "publisher": "open-social-scheduler/buffer",
             "input_required": ["image", "script"],
         }
 
     @api.get("/api/diagnostics")
     def diagnostics():
-        data = health()
-        root = Path(DATA_ROOT)
-        data_volume.reload()
-        data["jobs"] = sum(1 for p in root.iterdir() if p.is_dir()) if root.exists() else 0
-        return data
+        return health()
 
     @api.post("/api/render")
     def render(
         photo: UploadFile = File(...),
         script: str = Form(...),
-        test_mode: bool = Form(False),
     ):
         if photo.content_type not in {"image/jpeg", "image/png", "image/webp"}:
             raise HTTPException(status_code=400, detail="Formato foto non supportato.")
@@ -430,50 +420,53 @@ def web():
         job_id = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:8]
         path = job_dir(job_id)
         path.mkdir(parents=True, exist_ok=False)
-        suffix = {"image/png": ".png", "image/webp": ".webp"}.get(photo.content_type, ".jpg")
-        (path / ("source"+suffix)).write_bytes(payload)
+        ext = { "image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp" }[photo.content_type]
+        (path / ("source" + ext)).write_bytes(payload)
         (path / "script.txt").write_text(script, encoding="utf-8")
+
         report = {
             "job_id": job_id,
             "created_at": datetime.now(timezone.utc).isoformat(),
             "state": "processing",
+            "source_filename": photo.filename,
             "client_id": DEFAULT_CLIENT_ID,
             "format": "reel",
             "video_made_with_ai": True,
-            "test_mode": bool(test_mode),
-            "script": script,
+            "retries": {"render": 0},
         }
         save_report(path, report)
 
-        try:
-            result = render_video.remote(payload, script, 1.0)
-        except Exception as exc:
+        result = None
+        last = None
+        for attempt in range(1, 3):
+            try:
+                result = render_video.remote(payload, script, 1.0)
+                report["retries"]["render"] = attempt - 1
+                break
+            except Exception as exc:
+                last = exc
+                report["retries"]["render"] = attempt
+        if result is None:
             report["state"] = "error"
-            report["error"] = str(exc)
+            report["error"] = "Generazione fallita dopo retry: " + str(last)
             save_report(path, report)
-            raise HTTPException(status_code=500, detail="Generazione fallita: "+str(exc))
+            raise HTTPException(status_code=500, detail=report["error"])
 
         (path / "voice.wav").write_bytes(result["audio"])
         (path / "captions.srt").write_text(result["srt"], encoding="utf-8")
         (path / "VIDEO_UGC_001.mp4").write_bytes(result["video"])
+
         copy = _auto_copy(script)
         (path / "caption.txt").write_text(copy["caption"], encoding="utf-8")
-
-        scheduled = datetime.now(timezone.utc) + timedelta(minutes=15)
         report.update({
-            "state": "ready_for_buffer",
-            "ready_at": datetime.now(timezone.utc).isoformat(),
-            "title": copy["title"],
-            "caption": copy["caption"],
-            "hashtags": copy["hashtags"],
-            "scheduled_at": scheduled.isoformat(),
-            "platforms": ["facebook", "instagram", "linkedin"],
+            "state": "ready_for_publisher",
+            "completed_at": datetime.now(timezone.utc).isoformat(),
+            "copy": copy,
             "video": {
                 "width": result["width"],
                 "height": result["height"],
                 "duration": result["duration"],
-                "bytes": len(result["video"]),
-                "compute": result["gpu"],
+                "gpu": result["gpu"],
             },
             "quality": {
                 "video_stream": True,
@@ -481,15 +474,29 @@ def web():
                 "resolution": "1080x1920",
                 "duration_positive": result["duration"] > 0,
             },
+            "publisher_job": {
+                "id": "ugc-" + job_id,
+                "client_id": DEFAULT_CLIENT_ID,
+                "title": copy["title"],
+                "caption": copy["caption"],
+                "format": "reel",
+                "platforms": ["facebook", "instagram", "tiktok", "linkedin", "youtube"],
+                "scheduled_at": datetime.now(timezone.utc).isoformat(),
+                "status": "ready",
+                "video_made_with_ai": True,
+                "source": "ugc-avatar-studio",
+                "modal_job_id": job_id,
+            },
         })
         save_report(path, report)
 
         return {
             "job_id": job_id,
             "state": report["state"],
-            "publication_status": "BUFFER_QUEUE_READY",
-            "video_url": "/api/jobs/"+job_id+"/video",
-            "report_url": "/api/jobs/"+job_id,
+            "publication_status": "READY_FOR_DIRECT_API",
+            "video_url": "/api/jobs/" + job_id + "/video",
+            "report_url": "/api/jobs/" + job_id,
+            "caption": copy["caption"],
         }
 
     @api.get("/api/jobs/{job_id}")
@@ -509,41 +516,41 @@ def web():
         return FileResponse(final, media_type="video/mp4", filename="VIDEO_UGC_"+job_id+".mp4")
 
     @api.get("/api/outbox")
-    def outbox(limit: int = 20):
+    def outbox(limit: int = 50):
         data_volume.reload()
         root = Path(DATA_ROOT)
         if not root.exists():
             return {"jobs": []}
-        jobs = []
-        for directory in sorted(root.iterdir(), key=lambda p: p.name, reverse=True):
-            report_path = directory / "report.json"
-            video_path = directory / "VIDEO_UGC_001.mp4"
-            if not report_path.exists() or not video_path.exists():
+        rows = []
+        for directory in sorted(root.iterdir(), key=lambda p: p.name):
+            report = directory / "report.json"
+            if not report.exists():
                 continue
             try:
-                item = json.loads(report_path.read_text(encoding="utf-8"))
+                data = json.loads(report.read_text(encoding="utf-8"))
             except Exception:
                 continue
-            if item.get("state") != "ready_for_buffer":
-                continue
-            jobs.append({
-                "job_id": item["job_id"],
-                "client_id": item.get("client_id", DEFAULT_CLIENT_ID),
-                "title": item.get("title", "UGC Avatar"),
-                "caption": item.get("caption", ""),
-                "format": "reel",
-                "platforms": item.get("platforms", ["facebook","instagram","linkedin"]),
-                "scheduled_at": item.get("scheduled_at"),
-                "video_made_with_ai": True,
-                "test_mode": bool(item.get("test_mode", False)),
-                "video_url": "/api/jobs/"+item["job_id"]+"/video",
-                "width": item.get("video", {}).get("width"),
-                "height": item.get("video", {}).get("height"),
-                "duration": item.get("video", {}).get("duration"),
-            })
-            if len(jobs) >= max(1, min(limit, 100)):
+            if data.get("state") == "ready_for_publisher" and data.get("publisher_job"):
+                row = dict(data["publisher_job"])
+                row["video_url"] = "/api/jobs/" + data["job_id"] + "/video"
+                row["report_url"] = "/api/jobs/" + data["job_id"]
+                rows.append(row)
+            if len(rows) >= max(1, min(limit, 100)):
                 break
-        return {"jobs": jobs}
+        return {"jobs": rows}
+
+    @api.post("/api/jobs/{job_id}/ack")
+    def acknowledge(job_id: str, status: str = Form("published")):
+        data_volume.reload()
+        path = job_dir(job_id)
+        report_path = path / "report.json"
+        if not report_path.exists():
+            raise HTTPException(status_code=404, detail="Job non trovato.")
+        data = json.loads(report_path.read_text(encoding="utf-8"))
+        data["state"] = "published" if status == "published" else status
+        data["publisher_ack_at"] = datetime.now(timezone.utc).isoformat()
+        save_report(path, data)
+        return {"ok": True, "job_id": job_id, "state": data["state"]}
 
     @api.get("/api/history")
     def history(limit: int = 30):
@@ -557,7 +564,16 @@ def web():
             if report.exists():
                 try:
                     data = json.loads(report.read_text(encoding="utf-8"))
-                    rows.append({"job_id": data.get("job_id"), "created_at": data.get("created_at"), "state": data.get("state")})
+                    rows.append({
+                        "job_id": data.get("job_id"),
+                        "created_at": data.get("created_at"),
+                        "state": data.get("state"),
+                        "publication_status": (
+                            "PUBLISHED" if data.get("state") == "published"
+                            else "READY_FOR_DIRECT_API" if data.get("state") == "ready_for_publisher"
+                            else data.get("state")
+                        ),
+                    })
                 except Exception:
                     pass
             if len(rows) >= max(1, min(limit, 100)):
