@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import modal
 
 APP_NAME = "ugc-avatar-studio"
