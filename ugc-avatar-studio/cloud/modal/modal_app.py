@@ -5,14 +5,10 @@ import modal
 APP_NAME = "ugc-avatar-studio"
 GPU_TYPE = "T4"
 DATA_ROOT = "/data/jobs"
-POSTIZ_API_URL = "https://api.postiz.com"
+DEFAULT_CLIENT_ID = "f1-immobiliare"
 
 app = modal.App(APP_NAME)
 data_volume = modal.Volume.from_name("ugc-avatar-studio-data", create_if_missing=True)
-runtime_secret = modal.Secret.from_name(
-    "ugc-avatar-studio-runtime",
-    required_keys=["POSTIZ_API_KEY"],
-)
 
 web_image = (
     modal.Image.debian_slim(python_version="3.10")
@@ -78,14 +74,14 @@ INDEX_HTML = r"""<!doctype html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>UGC Avatar Studio · Automatico</title>
+  <title>UGC Avatar Studio</title>
   <style>
     :root{color-scheme:dark;background:#090c0e;color:#f5f7fa;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
     *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#163323 0,#090c0e 44%);min-height:100vh}
     main{max-width:1040px;margin:auto;padding:28px 18px 64px}.hero{padding:22px 0 18px}
     .eyebrow{color:#72e69b;font-weight:900;letter-spacing:.13em;font-size:.76rem}
     h1{font-size:clamp(2rem,6vw,4rem);margin:.28rem 0 .5rem;letter-spacing:-.045em}
-    .sub{color:#aab4bd;max-width:760px;line-height:1.55}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .sub{color:#aab4bd;max-width:780px;line-height:1.55}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
     @media(max-width:760px){.grid{grid-template-columns:1fr}}.card{background:#11171a;border:1px solid #28333a;border-radius:18px;padding:18px;box-shadow:0 16px 50px #0006}
     label{display:block;font-weight:800;margin:0 0 8px}input[type=file],textarea{width:100%}
     textarea{min-height:220px;resize:vertical;background:#0a0f12;color:#fff;border:1px solid #334047;border-radius:12px;padding:14px;font:inherit}
@@ -100,9 +96,9 @@ INDEX_HTML = r"""<!doctype html>
 <body>
 <main>
   <section class="hero">
-    <div class="eyebrow">IMMAGINE + DISCORSO → VIDEO → POSTIZ</div>
+    <div class="eyebrow">IMMAGINE + DISCORSO → VIDEO → PUBLISHER SOCIAL</div>
     <h1>UGC Avatar Studio</h1>
-    <div class="sub">Fornisci soltanto una foto autorizzata e il discorso. Voce, avatar, sottotitoli, formato 1080×1920, caption, hashtag, archiviazione e pubblicazione Postiz vengono eseguiti automaticamente nel cloud.</div>
+    <div class="sub">Fornisci soltanto una foto autorizzata e il discorso. Voce, avatar, sottotitoli, MP4 1080×1920, caption, hashtag, archiviazione e consegna al publisher social esistente vengono eseguiti automaticamente nel cloud.</div>
   </section>
   <section class="grid">
     <form id="form" class="card">
@@ -115,7 +111,7 @@ INDEX_HTML = r"""<!doctype html>
       <div class="fine">Caricando l'immagine dichiari di avere i diritti e le autorizzazioni necessarie al suo utilizzo. Nessun altro dato operativo è richiesto.</div>
     </form>
     <div class="card">
-      <div id="status" class="status">Sistema pronto. Il processo è automatico: Piper → SadTalker → FFmpeg → copy → Postiz → pubblicazione.</div>
+      <div id="status" class="status">Sistema pronto: Piper → SadTalker → FFmpeg → archivio → publisher social esistente.</div>
       <div id="job" class="job"></div>
       <video id="video" controls playsinline></video>
       <a id="download" class="download">SCARICA MP4 ARCHIVIATO</a>
@@ -129,36 +125,25 @@ const statusEl=document.getElementById('status');
 const jobEl=document.getElementById('job');
 const video=document.getElementById('video');
 const download=document.getElementById('download');
-
 form.addEventListener('submit',async(e)=>{
   e.preventDefault();
-  download.style.display='none';
-  video.removeAttribute('src');
-  video.load();
-  jobEl.textContent='';
-  btn.disabled=true;
-  btn.textContent='AUTOMAZIONE IN CORSO…';
+  download.style.display='none'; video.removeAttribute('src'); video.load(); jobEl.textContent='';
+  btn.disabled=true; btn.textContent='AUTOMAZIONE IN CORSO…';
   statusEl.className='status';
-  statusEl.textContent='Generazione voce → animazione → montaggio → copy → upload Postiz → programmazione. Non sono richieste altre azioni.';
+  statusEl.textContent='Generazione voce → animazione → montaggio → copy → archiviazione → coda social.';
   try{
-    const data=new FormData(form);
-    const res=await fetch('/api/render',{method:'POST',body:data});
-    let body=null;
-    try{body=await res.json()}catch{body={detail:await res.text()}}
+    const res=await fetch('/api/render',{method:'POST',body:new FormData(form)});
+    let body=null; try{body=await res.json()}catch{body={detail:await res.text()}}
     if(!res.ok)throw new Error(body.detail||'Errore automazione');
-    jobEl.textContent='JOB '+body.job_id+' · '+body.postiz.status;
-    video.src=body.video_url;
-    download.href=body.video_url;
-    download.download='VIDEO_UGC_'+body.job_id+'.mp4';
-    download.style.display='block';
+    jobEl.textContent='JOB '+body.job_id+' · '+body.publication_status;
+    video.src=body.video_url; download.href=body.video_url;
+    download.download='VIDEO_UGC_'+body.job_id+'.mp4'; download.style.display='block';
     statusEl.className='status ok';
-    statusEl.textContent='Automazione completata: video creato, archiviato e inviato a Postiz per '+body.postiz.integrations_count+' canale/i. Pubblicazione: '+body.postiz.scheduled_at;
+    statusEl.textContent='Video creato e archiviato. Il job è pronto per il publisher social automatico.';
   }catch(err){
-    statusEl.className='status err';
-    statusEl.textContent='Automazione non completata: '+(err?.message||err);
+    statusEl.className='status err'; statusEl.textContent='Automazione non completata: '+(err?.message||err);
   }finally{
-    btn.disabled=false;
-    btn.textContent='GENERA E PUBBLICA';
+    btn.disabled=false; btn.textContent='GENERA E PUBBLICA';
   }
 });
 </script>
