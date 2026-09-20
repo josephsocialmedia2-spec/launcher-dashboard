@@ -372,7 +372,19 @@ async function processWebsites(url:string,service:string,run:any,actor:string){
  let done=0,emails=0,pecs=0,phones=0;
  for(const e of entities||[]){
    let base:string;try{base=new URL(/^https?:/i.test(e.website)?e.website:"https://"+e.website).href}catch{continue}
-   const first=await crawlPage(base); if(!first) continue;
+   const first=await crawlPage(base);
+   if(!first){
+     await jfetch(url,service,"f1_email_radar_entities?entity_id=eq."+e.entity_id,{method:"PATCH",body:JSON.stringify({
+       last_verified_at:new Date().toISOString(),
+       notes:(String(e.notes||"")+"\nVerifica sito: URL non raggiungibile o contenuto non HTML al "+new Date().toISOString()).trim(),
+       updated_at:new Date().toISOString()
+     }),prefer:"return=minimal"});
+     await jfetch(url,service,"f1_email_radar_sources",{method:"POST",body:JSON.stringify({
+       entity_id:e.entity_id,created_by:actor,source_type:"SITO_UFFICIALE",source_url:base,source_name:"Website crawler",
+       fields_found:{},evidence:[],access_status:"NON_RAGGIUNGIBILE",verified_at:new Date().toISOString()
+     }),prefer:"resolution=ignore-duplicates,return=minimal"}).catch(()=>{});
+     done++;continue;
+   }
    const pages:any[]=[{url:first.finalUrl,data:first}];
    const ld=firstJsonLd(first);
    let origin="";try{origin=new URL(first.finalUrl).origin}catch{}
