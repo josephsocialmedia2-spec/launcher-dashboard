@@ -1,14 +1,18 @@
 {
-  "version": 1,
+  "version": 2,
   "updated_at": "2026-09-20",
   "sources": [
     {
       "key": "REGISTRO_IMPRESE",
-      "label": "Registro Imprese / dati camerali",
+      "label": "Registro Imprese / InfoCamere",
       "url": "https://www.registroimprese.it/",
-      "mode": "CONNECTOR_REQUIRED",
+      "mode": "AUTHORIZED_CONNECTOR",
       "automatic": false,
-      "note": "Usare API/servizio autorizzato. Non aggirare login, CAPTCHA o paywall."
+      "secret_names": [
+        "REGISTRO_IMPRESE_API_BASE",
+        "REGISTRO_IMPRESE_API_KEY"
+      ],
+      "note": "Adapter server-side predisposto; richiede endpoint/contratto Web Services autorizzato."
     },
     {
       "key": "INI_PEC",
@@ -16,7 +20,8 @@
       "url": "https://www.inipec.gov.it/",
       "mode": "PUBLIC_INTERACTIVE_OR_AUTHORIZED_CONNECTOR",
       "automatic": false,
-      "note": "PEC separata dall'email commerciale. Nessun uso marketing automatico."
+      "secret_names": [],
+      "note": "PEC separata dall'email commerciale; nessun uso marketing automatico. Nessun bypass di consultazione interattiva."
     },
     {
       "key": "INAD",
@@ -24,47 +29,57 @@
       "url": "https://domiciliodigitale.gov.it/",
       "mode": "PUBLIC_INTERACTIVE_OR_AUTHORIZED_CONNECTOR",
       "automatic": false,
-      "note": "Domicili digitali: usare solo secondo modalità consentite."
+      "secret_names": [],
+      "note": "Domicili digitali separati dal marketing; integrazione automatica solo tramite modalità autorizzate."
     },
     {
       "key": "ALBI_PROFESSIONALI",
       "label": "Ordini e albi professionali",
       "url": "",
-      "mode": "MULTI_PUBLIC_SOURCES",
+      "mode": "ADAPTER_SET",
       "automatic": false,
-      "note": "Fonti territoriali variabili per professione."
+      "secret_names": [],
+      "note": "Adapter manifest predisposto; ogni albo va verificato per modalità pubblica/API specifica."
     },
     {
       "key": "SITI_UFFICIALI",
       "label": "Siti ufficiali aziende/professionisti",
       "url": "",
       "mode": "PUBLIC_WEB",
-      "automatic": false,
-      "note": "Home, Contatti, Chi siamo, Footer, Privacy, Dove siamo."
+      "automatic": true,
+      "secret_names": [],
+      "note": "Crawler operativo: Home e pagine contatti/chi siamo/privacy/legal/dove siamo. Non genera indirizzi email."
     },
     {
-      "key": "SEARCH_ENGINE",
-      "label": "Motori di ricerca",
-      "url": "https://www.google.com/",
-      "mode": "AUTHORIZED_SEARCH_PROVIDER_REQUIRED",
+      "key": "SEARCH_PROVIDER",
+      "label": "Search Provider · Brave Search API",
+      "url": "https://api.search.brave.com/",
+      "mode": "API",
       "automatic": false,
-      "note": "Per automazione server-side configurare un provider/API conforme alle condizioni applicabili."
+      "secret_names": [
+        "BRAVE_SEARCH_API_KEY"
+      ],
+      "note": "Batch ATECO server-side; i risultati sono discovery e vengono salvati solo dopo verifica sul sito ufficiale."
     },
     {
-      "key": "MAPS_DIRECTORY",
-      "label": "Mappe / directory attività",
-      "url": "https://www.google.com/maps",
-      "mode": "AUTHORIZED_PROVIDER_REQUIRED",
+      "key": "GOOGLE_PLACES",
+      "label": "Google Places API (New)",
+      "url": "https://places.googleapis.com/",
+      "mode": "API_DISCOVERY_ONLY",
       "automatic": false,
-      "note": "Discovery e controllo territoriale; non assumere automaticamente attendibile ogni dato."
+      "secret_names": [
+        "GOOGLE_MAPS_API_KEY"
+      ],
+      "note": "Text Search server-side per discovery. Nessun contenuto Google viene usato come record territoriale definitivo; verifica sul sito ufficiale."
     },
     {
-      "key": "COMUNI_ASSOCIAZIONI",
+      "key": "FONTI_LOCALI",
       "label": "Comuni / associazioni / Pro Loco / consorzi",
       "url": "",
       "mode": "PUBLIC_WEB",
       "automatic": false,
-      "note": "Fonti istituzionali e territoriali."
+      "secret_names": [],
+      "note": "Fonti territoriali pubbliche; provider specifici da attivare per Comune/ente."
     }
   ]
 }
