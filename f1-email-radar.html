@@ -21,7 +21,7 @@ dialog{width:min(900px,95vw);background:#0e1510;color:#fff;border:1px solid var(
 <script defer src="supabase-sync.js?v=20260920-emailradar1"></script>
 <script defer src="f1-dashboard-auth-guard.js?v=20260920-emailradar1"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script defer src="f1-email-radar.js?v=20260920-autonomous1"></script>
+<script defer src="f1-email-radar.js?v=20260920-acquisition1"></script>
 </head>
 <body>
 <main class="wrap">
@@ -42,6 +42,8 @@ dialog{width:min(900px,95vw);background:#0e1510;color:#fff;border:1px solid var(
     <button class="btn alt" id="atecoSyncBtn">SINCRONIZZA ATECO ISTAT</button>
     <button class="btn alt" id="csvBtn">ESPORTA CSV</button>
     <button class="btn alt" id="xlsxBtn">ESPORTA XLSX</button>
+    <button class="btn gold" id="acqCycleBtn">AGGIORNA ACQUISIZIONE B2B</button>
+    <a class="btn alt" href="https://josephsocialmedia2-spec.github.io/DIGITALSTRATEGIST/campagna-email-f1/index.html" target="_blank" rel="noopener">PROGRAMMA EMAIL F1</a>
     <a class="btn alt" href="crm.html">CRM F1</a>
   </div>
 
@@ -68,6 +70,25 @@ dialog{width:min(900px,95vw);background:#0e1510;color:#fff;border:1px solid var(
     <div class="stat"><b id="kProvidersRequired">0</b><span>FONTI AUTONOME RICHIESTE</span></div>
     <div class="stat"><b id="kAteco">0</b><span>ATECO UFFICIALI</span></div>
   </div>
+
+  <section class="panel" id="acqPanel">
+    <div class="top">
+      <div><div class="ey">AUTONOMOUS ACQUISITION ENGINE</div><h2>Acquisizione email B2B</h2><div class="meta">Radar → qualità dati → compliance → priorità → campagna → follow-up → risposta → appuntamento → KPI.</div></div>
+      <div class="status"><span class="pill" id="acqCampaignPill">CAMPAGNA…</span><span class="pill" id="acqProviderPill">INVIO…</span><span class="pill" id="acqEnginePill">ENGINE…</span></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="kAcqContacts">0</b><span>PROSPECT TRACCIATI</span></div>
+      <div class="stat"><b id="kAcqReady">0</b><span>READY TO CONTACT</span></div>
+      <div class="stat"><b id="kAcqConsent">0</b><span>CONSENSO RICHIESTO</span></div>
+      <div class="stat"><b id="kAcqNoEmail">0</b><span>SENZA EMAIL</span></div>
+      <div class="stat"><b id="kAcqPec">0</b><span>SOLO PEC</span></div>
+      <div class="stat"><b id="kAcqQuality">0</b><span>QUALITÀ DATI MEDIA</span></div>
+      <div class="stat"><b id="kAcqSuppressed">0</b><span>SOPPRESSI / DNC</span></div>
+      <div class="stat"><b id="kAcqVerified">0</b><span>EMAIL VERIFICATE</span></div>
+    </div>
+    <div class="notice" id="acqNotice"><b>STATO:</b> caricamento motore acquisizione…</div>
+    <div class="meta" id="acqNext" style="margin-top:8px"></div>
+  </section>
 
   <section class="panel">
     <h2>Ricerca e filtri</h2>
