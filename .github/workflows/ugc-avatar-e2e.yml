@@ -43,12 +43,15 @@ jobs:
         run: |
           set -euo pipefail
           BASE="https://joseph-socialmedia2--ugc-avatar-studio-web.modal.run"
-          curl --fail-with-body --max-time 1800 \
+          HTTP_CODE="$(curl --silent --show-error --max-time 1800 \
+            -o response.json -w "%{http_code}" \
             -F "photo=@presenter.jpg;type=image/jpeg" \
             -F "script=Ciao, questo è un test automatico del sistema avatar e pubblicazione social." \
             -F "publish=false" \
-            "$BASE/api/render" > response.json
-          cat response.json
+            "$BASE/api/render" || true)"
+          echo "HTTP_CODE=$HTTP_CODE"
+          cat response.json || true
+          test "$HTTP_CODE" = "200"
           JOB_ID="$(python -c 'import json; print(json.load(open("response.json"))["job_id"])')"
           STATE="$(python -c 'import json; print(json.load(open("response.json"))["state"])')"
           PUB="$(python -c 'import json; print(json.load(open("response.json"))["publication_status"])')"
