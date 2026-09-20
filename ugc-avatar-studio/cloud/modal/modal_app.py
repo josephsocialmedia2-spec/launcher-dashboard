@@ -50,7 +50,7 @@ gpu_image = (
         "face-alignment>=1.4,<2",
         "safetensors>=0.4,<1",
         "opencv-python-headless>=4.10,<5",
-        "git+https://github.com/XPixelGroup/BasicSR.git",
+        "basicsr==1.4.2",
         "facexlib==0.3.0",
         "gfpgan==1.3.8",
         "av>=12,<16",
