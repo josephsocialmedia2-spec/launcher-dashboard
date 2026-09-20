@@ -66,7 +66,7 @@ gpu_image = (
         "wget -q https://huggingface.co/rhasspy/piper-voices/resolve/main/it/it_IT/paola/medium/it_IT-paola-medium.onnx -O /opt/piper/it_IT-paola-medium.onnx",
         "wget -q https://huggingface.co/rhasspy/piper-voices/resolve/main/it/it_IT/paola/medium/it_IT-paola-medium.onnx.json -O /opt/piper/it_IT-paola-medium.onnx.json",
     )
-    .env({"TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD": "1"})
+    .env({"TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD": "1", "OMP_NUM_THREADS": "8", "MKL_NUM_THREADS": "8", "OPENBLAS_NUM_THREADS": "8"})
 )
 
 INDEX_HTML = r"""<!doctype html>
@@ -190,7 +190,7 @@ def _make_srt(text: str, duration: float, out, max_words: int = 7):
 
 @app.function(
     image=gpu_image,
-    cpu=4.0,
+    cpu=8.0,
     timeout=1800,
     min_containers=0,
     max_containers=1,
