@@ -268,8 +268,10 @@ async function providerFailure(dbUrl:string,service:string,key:string,error:any)
 async function osmDiscovery(dbUrl:string,service:string,run:any,actor:string){
  const state=await providerState(dbUrl,service,"OSM_DIRECTORY");
  if(state?.next_retry_at&&Date.parse(state.next_retry_at)>Date.now())return {cooldown:true,retry_at:state.next_retry_at};
- const q=`[out:json][timeout:35];
- area["boundary"="administrative"]["admin_level"="8"]["name"="${String(run.comune).replace(/"/g,'\\"')}"]->.a;
+ const wd=await wikidataMunicipality(run.comune);
+ if(!wd?.qid)throw new Error("WIKIDATA_MUNICIPALITY_NOT_FOUND");
+ const q=`[out:json][timeout:25];
+ area["wikidata"="${wd.qid}"]->.a;
  (
   nwr(area.a)["name"]["shop"];
   nwr(area.a)["name"]["office"];
@@ -280,44 +282,54 @@ async function osmDiscovery(dbUrl:string,service:string,run:any,actor:string){
   nwr(area.a)["name"]["industrial"];
  );
  out center tags;`;
- const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),45000);
- try{
-  const rr=await fetch("https://overpass-api.de/api/interpreter",{method:"POST",signal:ctl.signal,headers:{"Content-Type":"application/x-www-form-urlencoded","User-Agent":"F1-Email-Radar/3.0 (+https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.html)"},body:"data="+encodeURIComponent(q)});
-  if(!rr.ok)throw new Error("OVERPASS_"+rr.status);
-  const data=await rr.json();let subjects=0,emails=0,pecs=0,phones=0,duplicates=0;
-  const titleRows=await jfetch(dbUrl,service,"f1_ateco_2025?select=code,title_it&level=eq.2");
-  const titles=new Map((titleRows||[]).map((x:any)=>[String(x.code),String(x.title_it)]));
-  for(const el of (data?.elements||[]).slice(0,500)){
-   const t=el.tags||{},name=norm(t.name);if(!name)continue;
-   const lat=Number(el.lat??el.center?.lat),lon=Number(el.lon??el.center?.lon);
-   const email=norm(t.email||t["contact:email"]).toLowerCase();
-   const pec=pecLike(email)?email:norm(t.pec||t["contact:pec"]).toLowerCase();
-   const ordinary=pecLike(email)?"":email;
-   const phone=norm(t.phone||t["contact:phone"]||t.mobile);
-   const website=norm(t.website||t["contact:website"]||t.url);
-   const addr=[t["addr:street"],t["addr:housenumber"]].filter(Boolean).join(" ");
-   const inferred=inferAtecoFromOsm(t);
-   const category=norm(t.shop||t.office||t.craft||t.amenity||t.tourism||t.healthcare||t.industrial);
-   const sourceUid="osm:"+String(el.type)+":"+String(el.id);
-   const osmUrl="https://www.openstreetmap.org/"+String(el.type)+"/"+String(el.id);
-   const payload:any={subject_type:"AZIENDA",denomination:name,legal_name:"",category,profession:"",comune:run.comune,frazione:"",
-    indirizzo:addr,civico:norm(t["addr:housenumber"]),cap:norm(t["addr:postcode"]),provincia:"TO",
-    latitude:Number.isFinite(lat)?lat:null,longitude:Number.isFinite(lon)?lon:null,
-    geocoder:"OSM_ELEMENT",geocoded_at:new Date().toISOString(),geocode_precision:el.type==="node"?"POI_POINT":"OSM_CENTER",
-    phone,mobile:"",email:ordinary,email_type:ordinary?"EMAIL_GENERICA_AZIENDALE":"EMAIL_NON_VERIFICATA",pec,website,vat_number:"",
-    ateco_code:inferred.code,ateco_title:titles.get(inferred.code)||"",ateco_status:inferred.status,
-    primary_source_type:"OSM_DIRECTORY",primary_source_url:osmUrl,source_uid:sourceUid,
-    verification_status:"PARZIALMENTE_VERIFICATO",confidence_score:60,activity_status:"DA_VERIFICARE",marketing_status:"DA_VALUTARE",
-    field_provenance:{osm:{source_url:osmUrl,provider:"OpenStreetMap",license:"ODbL",observed_at:new Date().toISOString()}},
-    notes:"Discovery OpenStreetMap/Overpass. Dati OSM sotto ODbL; fonte di discovery, non prova camerale."};
-   const up=await jfetch(dbUrl,service,"rpc/f1_email_radar_service_upsert_entity",{method:"POST",body:JSON.stringify({p_actor:actor,p_payload:payload})});
-   const id=up?.entity_id;if(!id)continue;
-   await jfetch(dbUrl,service,"f1_email_radar_sources",{method:"POST",body:JSON.stringify({entity_id:id,created_by:actor,source_type:"OSM_DIRECTORY",source_url:osmUrl,source_name:"OpenStreetMap",fields_found:{name:true,address:!!addr,email:!!ordinary,pec:!!pec,phone:!!phone,website:!!website,geo:Number.isFinite(lat)&&Number.isFinite(lon)},evidence:[{osm_type:el.type,osm_id:el.id,tags:t,license:"ODbL"}],access_status:"OK",verified_at:new Date().toISOString()}),prefer:"resolution=ignore-duplicates,return=minimal"}).catch(()=>{});
-   subjects++;if(ordinary)emails++;if(pec)pecs++;if(phone)phones++;if(up?.merged)duplicates++;
-  }
-  await providerSuccess(dbUrl,service,"OSM_DIRECTORY");
-  return {subjects_found:subjects,emails_found:emails,pec_found:pecs,phones_found:phones,duplicates};
- }catch(e){const delay=await providerFailure(dbUrl,service,"OSM_DIRECTORY",e);throw new Error(String((e as any)?.message||e)+"; retry_ms="+delay)}finally{clearTimeout(timer)}
+ const endpoints=[
+   "https://overpass-api.de/api/interpreter",
+   "https://overpass.private.coffee/api/interpreter",
+   "https://maps.mail.ru/osm/tools/overpass/api/interpreter"
+ ];
+ let data:any=null,lastError:any=null,usedEndpoint="";
+ for(const endpoint of endpoints){
+  const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),32000);
+  try{
+   const rr=await fetch(endpoint,{method:"POST",signal:ctl.signal,headers:{"Content-Type":"application/x-www-form-urlencoded","User-Agent":"F1-Email-Radar/3.1 (+https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.html)"},body:"data="+encodeURIComponent(q)});
+   if(!rr.ok){lastError=new Error("OVERPASS_"+rr.status+"_"+endpoint);continue}
+   data=await rr.json();usedEndpoint=endpoint;break;
+  }catch(e){lastError=e}finally{clearTimeout(timer)}
+ }
+ if(!data){const delay=await providerFailure(dbUrl,service,"OSM_DIRECTORY",lastError||"OVERPASS_ALL_FAILED");throw new Error(String((lastError as any)?.message||lastError||"OVERPASS_ALL_FAILED")+"; retry_ms="+delay)}
+ let subjects=0,emails=0,pecs=0,phones=0,duplicates=0;
+ const titleRows=await jfetch(dbUrl,service,"f1_ateco_2025?select=code,title_it&level=eq.2");
+ const titles=new Map((titleRows||[]).map((x:any)=>[String(x.code),String(x.title_it)]));
+ for(const el of (data?.elements||[]).slice(0,500)){
+  const t=el.tags||{},name=norm(t.name);if(!name)continue;
+  const lat=Number(el.lat??el.center?.lat),lon=Number(el.lon??el.center?.lon);
+  const email=norm(t.email||t["contact:email"]).toLowerCase();
+  const pec=pecLike(email)?email:norm(t.pec||t["contact:pec"]).toLowerCase();
+  const ordinary=pecLike(email)?"":email;
+  const phone=norm(t.phone||t["contact:phone"]||t.mobile);
+  const website=norm(t.website||t["contact:website"]||t.url);
+  const addr=[t["addr:street"],t["addr:housenumber"]].filter(Boolean).join(" ");
+  const inferred=inferAtecoFromOsm(t);
+  const category=norm(t.shop||t.office||t.craft||t.amenity||t.tourism||t.healthcare||t.industrial);
+  const sourceUid="osm:"+String(el.type)+":"+String(el.id);
+  const osmUrl="https://www.openstreetmap.org/"+String(el.type)+"/"+String(el.id);
+  const payload:any={subject_type:"AZIENDA",denomination:name,legal_name:"",category,profession:"",comune:run.comune,frazione:"",
+   indirizzo:addr,civico:norm(t["addr:housenumber"]),cap:norm(t["addr:postcode"]),provincia:"TO",
+   latitude:Number.isFinite(lat)?lat:null,longitude:Number.isFinite(lon)?lon:null,
+   geocoder:"OSM_ELEMENT",geocoded_at:new Date().toISOString(),geocode_precision:el.type==="node"?"POI_POINT":"OSM_CENTER",
+   phone,mobile:"",email:ordinary,email_type:ordinary?"EMAIL_GENERICA_AZIENDALE":"EMAIL_NON_VERIFICATA",pec,website,vat_number:"",
+   ateco_code:inferred.code,ateco_title:titles.get(inferred.code)||"",ateco_status:inferred.status,
+   primary_source_type:"OSM_DIRECTORY",primary_source_url:osmUrl,source_uid:sourceUid,
+   verification_status:"PARZIALMENTE_VERIFICATO",confidence_score:60,activity_status:"DA_VERIFICARE",marketing_status:"DA_VALUTARE",
+   field_provenance:{osm:{source_url:osmUrl,provider:"OpenStreetMap",overpass_endpoint:usedEndpoint,license:"ODbL",observed_at:new Date().toISOString()}},
+   notes:"Discovery OpenStreetMap/Overpass. Dati OSM sotto ODbL; fonte di discovery, non prova camerale."};
+  const up=await jfetch(dbUrl,service,"rpc/f1_email_radar_service_upsert_entity",{method:"POST",body:JSON.stringify({p_actor:actor,p_payload:payload})});
+  const id=up?.entity_id;if(!id)continue;
+  await jfetch(dbUrl,service,"f1_email_radar_sources",{method:"POST",body:JSON.stringify({entity_id:id,created_by:actor,source_type:"OSM_DIRECTORY",source_url:osmUrl,source_name:"OpenStreetMap",fields_found:{name:true,address:!!addr,email:!!ordinary,pec:!!pec,phone:!!phone,website:!!website,geo:Number.isFinite(lat)&&Number.isFinite(lon)},evidence:[{osm_type:el.type,osm_id:el.id,tags:t,license:"ODbL",overpass_endpoint:usedEndpoint}],access_status:"OK",verified_at:new Date().toISOString()}),prefer:"resolution=ignore-duplicates,return=minimal"}).catch(()=>{});
+  subjects++;if(ordinary)emails++;if(pec)pecs++;if(phone)phones++;if(up?.merged)duplicates++;
+ }
+ await providerSuccess(dbUrl,service,"OSM_DIRECTORY");
+ return {subjects_found:subjects,emails_found:emails,pec_found:pecs,phones_found:phones,duplicates,overpass_endpoint:usedEndpoint,wikidata_qid:wd.qid};
 }
 async function wikidataMunicipality(comune:string){
  const api=new URL("https://www.wikidata.org/w/api.php");api.searchParams.set("action","wbsearchentities");api.searchParams.set("search",comune);api.searchParams.set("language","it");api.searchParams.set("format","json");api.searchParams.set("origin","*");api.searchParams.set("limit","8");
