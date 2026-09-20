@@ -1,6 +1,6 @@
 (()=> {
 'use strict';
-const VERSION='20260920-acquisition-dashboard-v2';
+const VERSION='20260920-acquisition-dashboard-v3';
 const DATA_URL='./data/seller-lead-engine-public.json';
 const GEO_CACHE_KEY='f1_seller_geo_comuni_v1';
 const CATEGORIES=[
@@ -12,6 +12,8 @@ const CATEGORIES=[
   {key:'VECCHIO INCARICO SCADUTO',desc:'Immobile precedentemente affidato a un intermediario con incarico terminato.'}
 ];
 const TARGETS={mandates:4,appointments:16,qualified:40,conversations:200,attempts:600,contactsDay:30,conversationsDay:10,qualifiedDay:2,appointmentsDay:1,followupsDay:20};
+const BASIN_LABEL='CONDOVE → RIVERA DI ALMESE';
+const BASIN_COMUNI=new Set(['condove','caprie','villar dora','almese','rivera di almese','rivera']);
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const txt=v=>String(v??'').trim();
@@ -42,7 +44,7 @@ function injectStyle(){
  .f1-acq-news-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:10px}.f1-acq-news-cat{min-height:92px;border:1px solid var(--line);border-radius:12px;background:#fff;padding:9px;text-align:left;cursor:pointer}.f1-acq-news-cat strong{display:block;font-size:10px;font-weight:950;line-height:1.2}.f1-acq-news-cat small{display:block;margin-top:5px;font-size:8px;color:var(--mut);font-weight:750;line-height:1.35}.f1-acq-news-count{display:inline-flex;min-width:22px;height:22px;align-items:center;justify-content:center;border-radius:999px;background:#eef9f2;color:#07502d;font-size:9px;font-weight:950;margin-top:7px}
  .f1-acq-news-list{display:grid;gap:6px;margin-top:10px}.f1-acq-news-row{border:1px solid var(--line);border-radius:10px;padding:8px;background:#f8fbf9;font-size:9px;line-height:1.4}.f1-acq-news-row strong{display:block;font-size:10px}
  .f1-acq-modal{position:fixed;inset:0;z-index:120;background:rgba(0,0,0,.55);display:none;align-items:flex-end;justify-content:center}.f1-acq-modal.open{display:flex}.f1-acq-sheet{width:min(100%,760px);max-height:92dvh;overflow:auto;background:#fff;border-radius:18px 18px 0 0;padding:12px}.f1-acq-form{display:grid;grid-template-columns:1fr 1fr;gap:8px}.f1-acq-field{display:grid;gap:4px}.f1-acq-field.full{grid-column:1/-1}.f1-acq-field label{font-size:9px;font-weight:950;color:var(--mut)}.f1-acq-field input,.f1-acq-field select,.f1-acq-field textarea{width:100%;border:1px solid var(--line);border-radius:9px;padding:9px;font:inherit;font-size:12px;background:#fff}.f1-acq-field textarea{min-height:76px;resize:vertical}.f1-acq-msg{font-size:9px;font-weight:900;color:var(--g);margin-top:7px}.f1-acq-msg.bad{color:var(--red)}
- @media(max-width:720px){.f1-acq-grid5{grid-template-columns:repeat(2,minmax(0,1fr))}.f1-acq-grid2{grid-template-columns:1fr}.f1-acq-news-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.f1-acq-radar-row{grid-template-columns:62px 62px minmax(0,1fr)}.f1-acq-source{grid-column:1/-1}.f1-acq-form{grid-template-columns:1fr}}
+ @media(max-width:720px){.f1-acq-grid5{display:flex!important;overflow-x:auto;scrollbar-width:none}.f1-acq-grid5::-webkit-scrollbar{display:none}.f1-acq-grid5 .f1-acq-metric{flex:0 0 92px}.f1-acq-grid2{grid-template-columns:1fr}.f1-acq-news-grid{display:flex!important;overflow-x:auto;scrollbar-width:none}.f1-acq-news-grid::-webkit-scrollbar{display:none}.f1-acq-news-cat{flex:0 0 132px}.f1-acq-radar-row{grid-template-columns:62px 62px minmax(0,1fr)}.f1-acq-source{grid-column:1/-1}.f1-acq-form{grid-template-columns:1fr}}
  `;
  document.head.appendChild(s);
 }
@@ -54,10 +56,20 @@ function build(){
  if(!screen||!stack||!card)return false;
  if($('f1AcqDashboard'))return true;
  injectStyle();
+ const basin=document.createElement('div');
+ basin.id='f1BasinBanner';
+ basin.className='f1-basin-banner';
+ basin.innerHTML='<div><span class="label">BACINO OPERATIVO ATTUALE</span><strong>'+BASIN_LABEL+'</strong><small>Ogni priorità, Seller Radar, notizia e ordine operativo viene filtrato su questo bacino.</small></div><span style="font-size:20px">◎</span>';
+ stack.prepend(basin);
  const wrap=document.createElement('div');
  wrap.id='f1AcqDashboard';
  wrap.className='f1-acq-dashboard';
  wrap.innerHTML=`
+ <section class="f1-acq-panel f1-ai-directive">
+  <div class="f1-acq-head"><div><h2>🤖 DIRETTIVA OPERATIVA · COSA FARE ADESSO</h2><div class="f1-acq-sub">KPI, CRM, Notizie Territoriali e Seller Radar del bacino ${BASIN_LABEL}.</div></div><button id="f1AiOpenTerritory" class="f1-acq-btn primary" type="button">APRI NOTIZIERE</button></div>
+  <div id="f1AiTargets" class="f1-ai-targets"></div>
+  <div id="f1AiQueue" class="f1-ai-queue"><div class="f1-acq-sub">Calcolo priorità operative…</div></div>
+ </section>
  <section class="f1-acq-panel">
   <div class="f1-acq-head"><div><h2>🎯 OBIETTIVO 4 INCARICHI / MESE</h2><div class="f1-acq-sub">KPI reali dal CRM F1 · target operativo mensile</div></div><div id="f1AcqMonth" class="ey">—</div></div>
   <div class="f1-acq-grid5">
@@ -133,6 +145,7 @@ function buildModal(){
 
 function bind(){
  $('f1AcqRefresh')?.addEventListener('click',()=>loadData(true));
+ $('f1AiOpenTerritory')?.addEventListener('click',()=>document.querySelector('.topnav[data-screen="terr"]')?.click());
  $('f1AcqGps')?.addEventListener('click',activateGps);
  $('f1AcqAddNews')?.addEventListener('click',()=>openNewsForm());
  $('f1AcqCloseNews')?.addEventListener('click',()=>closeNewsForm());
@@ -147,6 +160,27 @@ function renderCategoryButtons(){
  box.querySelectorAll('[data-f1-news-cat]').forEach(b=>b.addEventListener('click',()=>renderNewsList(b.dataset.f1NewsCat)));
 }
 
+function normalizePlace(v){return txt(v).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim()}
+function inBasin(x){const n=typeof x==='string'?{comune:x}:x||{},cc=normalizePlace(n.comune),z=normalizePlace(n.zona||n.quartiere||'');if(BASIN_COMUNI.has(cc))return true;return cc==='almese'&&(/rivera/.test(z)||!z)}
+function basinRows(rows=[]){return (rows||[]).filter(inBasin)}
+function dedupeNews(rows=[]){const seen=new Set(),out=[];for(const n of [...rows].sort((a,b)=>String(b.updated_at||b.observed_at||'').localeCompare(String(a.updated_at||a.observed_at||'')))){const key=[normalizePlace(n.comune),normalizePlace(n.via),txt(n.civico),catFor(n)||u(n.news_type||n.observation_type),normalizePlace(n.person_name)].join('|');if(seen.has(key))continue;seen.add(key);out.push(n)}return out}
+function workingDaysRemaining(){const now=new Date(),end=new Date(now.getFullYear(),now.getMonth()+1,0),d=new Date(now.getFullYear(),now.getMonth(),now.getDate());let n=0;for(;d<=end;d.setDate(d.getDate()+1)){const day=d.getDay();if(day!==0)n++}return Math.max(1,n)}
+function kpiSnapshot(){
+ const conv=basinRows(Array.isArray(crm.conversations)?crm.conversations:[]),news=basinRows(Array.isArray(crm.news)?crm.news:[]),leads=basinRows(Array.isArray(crm.territory_leads)?crm.territory_leads:[]);
+ const today=nowKey(),month=today.slice(0,7),convToday=conv.filter(x=>dateKey(x.created_at||x.updated_at)===today),convMonth=conv.filter(x=>monthKey(x.created_at||x.updated_at)===month),newsToday=news.filter(x=>dateKey(x.observed_at||x.created_at||x.updated_at)===today),newsMonth=news.filter(x=>monthKey(x.observed_at||x.created_at||x.updated_at)===month),leadMonth=leads.filter(x=>monthKey(x.created_at||x.updated_at)===month);
+ const unique=new Set(convToday.map(x=>txt(x.phone)||[txt(x.person_name),txt(x.comune),txt(x.via),txt(x.civico)].join('|')).filter(Boolean)),dQualified=convToday.filter(isQualified).length+newsToday.filter(isQualified).length,mQualified=convMonth.filter(isQualified).length+newsMonth.filter(isQualified).length,dAppointments=convToday.filter(x=>u(x.outcome)==='APPUNTAMENTO').length,mAppointments=convMonth.filter(x=>u(x.outcome)==='APPUNTAMENTO').length,dFollow=convToday.filter(x=>u(x.outcome)==='DA RICONTATTARE'||['RICHIAMO','FOLLOW_UP','DA_RICONTATTARE'].includes(u(x.status))).length,mMandates=[...convMonth,...newsMonth,...leadMonth].filter(isMandate).length,days=workingDaysRemaining(),need=(target,actual)=>Math.max(0,Math.ceil((target-actual)/days));
+ return {today,month,days,convToday,convMonth,newsToday,newsMonth,leadMonth,unique,dQualified,mQualified,dAppointments,mAppointments,dFollow,mMandates,daily:{attempts:need(TARGETS.attempts,convMonth.length),conversations:need(TARGETS.conversations,convMonth.length),qualified:need(TARGETS.qualified,mQualified),appointments:need(TARGETS.appointments,mAppointments),followups:TARGETS.followupsDay}};
+}
+function taskCategoryWeight(category){return ({'RICHIESTA VALORE CASA':115,'VECCHIO INCARICO SCADUTO':108,'CARTELLO PRIVATO':102,'TRASFERIMENTO':96,'SUCCESSIONE':90,'APPARTAMENTO VUOTO':82})[category]||68}
+function operationalPlan(){
+ const snap=kpiSnapshot(),tasks=[],now=Date.now();
+ for(const x of basinRows(crm.conversations||[])){const out=u(x.outcome),st=u(x.status);let score=0,action='',objective='';if(out==='POSSIBILE VENDITA'){score=145;action=txt(x.phone)?'CHIAMA ORA':'COMPLETA IL RECAPITO';objective='FISSA APPUNTAMENTO / VALUTAZIONE'}else if(out==='DA RICONTATTARE'||['RICHIAMO','FOLLOW_UP','DA_RICONTATTARE'].includes(st)){score=138;action=txt(x.phone)?'RICHIAMA ORA':'RECUPERA IL RECAPITO';objective='TRASFORMA IL FOLLOW-UP IN APPUNTAMENTO'}else if(out==='APPUNTAMENTO'){score=118;action='PREPARA E CONFERMA APPUNTAMENTO';objective='PORTA L’APPUNTAMENTO VERSO L’INCARICO'}else continue;if(txt(x.phone))score+=12;const due=x.next_action_at?new Date(x.next_action_at).getTime():NaN;if(Number.isFinite(due)&&due<=now)score+=30;tasks.push({kind:'CRM',score,name:txt(x.person_name||x.target_type)||'CONTATTO CRM',place:[x.comune,x.via,x.civico].filter(Boolean).join(' · '),phone:txt(x.phone),action,objective,source:'CRM'})}
+ for(const n of dedupeNews(basinRows(crm.news||[]))){if(u(n.status)==='CHIUSA'||u(n.office_status)==='RISOLTA')continue;const cat=catFor(n)||'NOTIZIA DA CLASSIFICARE';let score=taskCategoryWeight(cat);if(u(n.priority)==='ALTA')score+=18;if(txt(n.phone_normalized))score+=12;const due=n.next_action_at?new Date(n.next_action_at).getTime():NaN;if(Number.isFinite(due)&&due<=now)score+=25;const hasOwner=txt(n.person_name)||['SI','SÌ','CONFERMATO'].includes(u(n.owner_status));let action=txt(n.next_action)||'VERIFICA NOTIZIA',objective='IDENTIFICA PROPRIETARIO E RECAPITO';if(hasOwner&&txt(n.phone_normalized)){action='CHIAMA / QUALIFICA';objective='VERIFICA INTENZIONE E FISSA APPUNTAMENTO'}else if(hasOwner){action='TROVA / COMPLETA RECAPITO';objective='PORTA IL PROPRIETARIO A CONTATTO'}tasks.push({kind:'NEWS',score,name:txt(n.person_name)||cat,category:cat,place:[n.comune,n.via,n.civico].filter(Boolean).join(' · '),phone:txt(n.phone_normalized),action,objective,source:'NOTIZIA'})}
+ for(const r of basinRows(seller.opportunities||[])){if(!['HOT','WARM'].includes(u(r.lead_status)))continue;let score=u(r.lead_status)==='HOT'?92:62;score+=Math.min(20,Math.round(Number(r.lead_score||0)/5));tasks.push({kind:'SELLER',score,name:(r.lead_status||'SELLER RADAR')+' · '+(r.source||'FONTE'),place:[r.comune,r.via,r.civico].filter(Boolean).join(' · '),action:'VERIFICA FONTE E CHI PUBBLICA',objective:'SE È PRIVATO, CREA CONTATTO E QUALIFICA',sourceUrl:r.source_url||'',source:'SELLER RADAR'})}
+ tasks.sort((a,b)=>b.score-a.score);if(!tasks.length)tasks.push({kind:'TERRITORY',score:10,name:'GIRO TERRITORIALE',place:BASIN_LABEL,action:'APRI IL NOTIZIERE E LAVORA LA ZONA ASSEGNATA',objective:'GENERA NUOVE NOTIZIE E CONVERSAZIONI',source:'F1 TERRITORY'});
+ return {basin:BASIN_LABEL,snapshot:snap,tasks};
+}
+function renderAIDirective(){const box=$('f1AiQueue'),targets=$('f1AiTargets');if(!box||!targets)return;const p=operationalPlan(),d=p.snapshot.daily;targets.innerHTML=[['AZIONI CONTATTO',d.attempts],['CONVERSAZIONI',d.conversations],['QUALIFICATI',d.qualified],['APPUNTAMENTI',d.appointments],['FOLLOW-UP',d.followups]].map(x=>'<div class="f1-ai-target"><span>'+x[0]+'</span><strong>'+x[1]+'</strong><span>oggi</span></div>').join('');box.innerHTML=p.tasks.slice(0,3).map((t,i)=>'<div class="f1-ai-task"><span class="num">'+(i+1)+'</span><div><strong>'+esc(t.name)+'</strong><small>'+esc(t.place||BASIN_LABEL)+' · '+esc(t.action)+'</small></div><div class="goal">'+esc(t.objective)+'</div></div>').join('')}
 function dateKey(v){
  if(!v)return'';
  const d=new Date(v);if(Number.isNaN(d.getTime()))return'';
@@ -169,72 +203,10 @@ function catFor(n){
 }
 function pct(n,t){return Math.max(0,Math.min(100,Math.round((Number(n||0)/t)*100)))}
 function setMetric(id,n,t,pid){const el=$(id);if(el)el.textContent=`${n} / ${t}`;if(pid&&$(pid))$(pid).style.width=pct(n,t)+'%'}
-function renderKpis(){
- const conv=Array.isArray(crm.conversations)?crm.conversations:[];
- const news=Array.isArray(crm.news)?crm.news:[];
- const leads=Array.isArray(crm.territory_leads)?crm.territory_leads:[];
- const today=nowKey(),month=today.slice(0,7);
- const convToday=conv.filter(x=>dateKey(x.created_at||x.updated_at)===today);
- const convMonth=conv.filter(x=>monthKey(x.created_at||x.updated_at)===month);
- const newsToday=news.filter(x=>dateKey(x.observed_at||x.created_at||x.updated_at)===today);
- const newsMonth=news.filter(x=>monthKey(x.observed_at||x.created_at||x.updated_at)===month);
- const leadMonth=leads.filter(x=>monthKey(x.created_at||x.updated_at)===month);
- const unique=new Set(convToday.map(x=>txt(x.phone)||[txt(x.person_name),txt(x.comune),txt(x.via),txt(x.civico)].join('|')).filter(Boolean));
- const dQualified=convToday.filter(isQualified).length+newsToday.filter(isQualified).length;
- const mQualified=convMonth.filter(isQualified).length+newsMonth.filter(isQualified).length;
- const dAppointments=convToday.filter(x=>u(x.outcome)==='APPUNTAMENTO').length;
- const mAppointments=convMonth.filter(x=>u(x.outcome)==='APPUNTAMENTO').length;
- const dFollow=convToday.filter(x=>u(x.outcome)==='DA RICONTATTARE'||['RICHIAMO','FOLLOW_UP','DA_RICONTATTARE'].includes(u(x.status))).length;
- const mMandates=[...convMonth,...newsMonth,...leadMonth].filter(isMandate).length;
- setMetric('f1Dcontacts',unique.size,TARGETS.contactsDay);
- setMetric('f1Dconversations',convToday.length,TARGETS.conversationsDay);
- setMetric('f1Dqualified',dQualified,TARGETS.qualifiedDay);
- setMetric('f1Dappointments',dAppointments,TARGETS.appointmentsDay);
- setMetric('f1Dfollowups',dFollow,TARGETS.followupsDay);
- setMetric('f1Mmandates',mMandates,TARGETS.mandates,'f1Pmandates');
- setMetric('f1Mappointments',mAppointments,TARGETS.appointments,'f1Pappointments');
- setMetric('f1Mqualified',mQualified,TARGETS.qualified,'f1Pqualified');
- setMetric('f1Mconversations',convMonth.length,TARGETS.conversations,'f1Pconversations');
- setMetric('f1Mattempts',convMonth.length,TARGETS.attempts,'f1Pattempts');
- if($('f1AcqMonth'))$('f1AcqMonth').textContent=new Intl.DateTimeFormat('it-IT',{month:'long',year:'numeric',timeZone:'Europe/Rome'}).format(new Date()).toUpperCase();
- const now=new Date(),days=new Date(now.getFullYear(),now.getMonth()+1,0).getDate(),day=Number(today.slice(-2));
- const expected=Math.ceil(TARGETS.appointments*day/days);
- const gap=Math.max(0,expected-mAppointments);
- $('f1AcqPace').innerHTML=gap>0?`<strong>Mancano ${gap} appuntamenti rispetto al ritmo necessario a oggi.</strong><br>Registrati ${mAppointments}/${TARGETS.appointments} appuntamenti nel mese.`:`<strong>Obiettivo appuntamenti in linea con il ritmo di oggi.</strong><br>Registrati ${mAppointments}/${TARGETS.appointments} appuntamenti nel mese.`;
- const attemptsEl=$('f1Mattempts');if(attemptsEl)attemptsEl.title='Dato basato sulle interazioni/conversazioni effettivamente registrate nel CRM; i tentativi senza registrazione non sono conteggiati.';
-}
-
-function renderNextAction(){
- const conv=Array.isArray(crm.conversations)?crm.conversations:[];
- const news=Array.isArray(crm.news)?crm.news:[];
- const now=Date.now();
- const candidates=[];
- conv.forEach(x=>{
-  let score=0;const out=u(x.outcome),st=u(x.status);
-  if(out==='POSSIBILE VENDITA')score+=80;
-  if(out==='DA RICONTATTARE'||['RICHIAMO','FOLLOW_UP','DA_RICONTATTARE'].includes(st))score+=70;
-  if(out==='APPUNTAMENTO')score+=50;
-  const due=x.next_action_at?new Date(x.next_action_at).getTime():NaN;if(Number.isFinite(due)&&due<=now)score+=50;
-  if(txt(x.phone))score+=15;
-  if(score)candidates.push({score,type:'CONTATTO',name:txt(x.person_name||x.target_type)||'Contatto',phone:txt(x.phone),place:[x.comune,x.via,x.civico].filter(Boolean).join(' · '),action:txt(x.next_action)||out,updated:x.updated_at||x.created_at});
- });
- news.forEach(x=>{
-  if(u(x.status)==='CHIUSA'||u(x.office_status)==='RISOLTA')return;
-  let score=u(x.priority)==='ALTA'?60:30;
-  if(u(x.owner_status)==='SÌ'||u(x.owner_status)==='SI')score+=25;
-  const due=x.next_action_at?new Date(x.next_action_at).getTime():NaN;if(Number.isFinite(due)&&due<=now)score+=50;
-  if(txt(x.phone_normalized))score+=15;
-  candidates.push({score,type:catFor(x)||txt(x.news_type)||'NOTIZIA',name:txt(x.person_name)||catFor(x)||txt(x.news_type)||'Notizia',phone:txt(x.phone_normalized),place:[x.comune,x.via,x.civico].filter(Boolean).join(' · '),action:txt(x.next_action)||'VERIFICA NOTIZIA',updated:x.updated_at||x.observed_at});
- });
- candidates.sort((a,b)=>b.score-a.score||String(a.updated||'').localeCompare(String(b.updated||'')));
- const c=candidates[0],box=$('f1AcqNext');if(!box)return;
- if(!c){box.innerHTML='<small>Nessuna azione prioritaria aperta nei dati CRM caricati.</small>';return}
- box.innerHTML=`<span class="priority">PRIORITÀ ${c.score>=100?'ALTA':'OPERATIVA'}</span><strong>${esc(c.name)}</strong><small>${esc(c.type)} · ${esc(c.place||'Posizione non disponibile')}</small><div>${esc(c.action)}</div><div class="f1-acq-actions">${c.phone?'<a class="f1-acq-btn primary" href="tel:'+esc(c.phone.replace(/\s+/g,''))+'">CHIAMA ORA</a>':''}<button id="f1AcqOpenCRM" class="f1-acq-btn" type="button">APRI CRM</button></div>`;
- $('f1AcqOpenCRM')?.addEventListener('click',()=>document.querySelector('.topnav[data-screen="crm"]')?.click());
-}
-
+function renderKpis(){const s=kpiSnapshot();setMetric('f1Dcontacts',s.unique.size,s.daily.attempts);setMetric('f1Dconversations',s.convToday.length,s.daily.conversations);setMetric('f1Dqualified',s.dQualified,s.daily.qualified);setMetric('f1Dappointments',s.dAppointments,s.daily.appointments);setMetric('f1Dfollowups',s.dFollow,s.daily.followups);setMetric('f1Mmandates',s.mMandates,TARGETS.mandates,'f1Pmandates');setMetric('f1Mappointments',s.mAppointments,TARGETS.appointments,'f1Pappointments');setMetric('f1Mqualified',s.mQualified,TARGETS.qualified,'f1Pqualified');setMetric('f1Mconversations',s.convMonth.length,TARGETS.conversations,'f1Pconversations');setMetric('f1Mattempts',s.convMonth.length,TARGETS.attempts,'f1Pattempts');if($('f1AcqMonth'))$('f1AcqMonth').textContent=new Intl.DateTimeFormat('it-IT',{month:'long',year:'numeric',timeZone:'Europe/Rome'}).format(new Date()).toUpperCase();const missing=Math.max(0,TARGETS.appointments-s.mAppointments);$('f1AcqPace').innerHTML='<strong>'+missing+' appuntamenti mancanti al target mensile.</strong><br>'+s.days+' giornate operative rimaste · obiettivo da oggi: '+s.daily.appointments+' appuntamenti/giorno.';renderAIDirective();}
+function renderNextAction(){const t=operationalPlan().tasks[0],box=$('f1AcqNext');if(!box)return;if(!t){box.innerHTML='<small>Nessuna azione prioritaria disponibile.</small>';return}box.innerHTML='<span class="priority">PRIORITÀ OPERATIVA</span><strong>'+esc(t.name)+'</strong><small>'+esc(t.place||BASIN_LABEL)+' · '+esc(t.source||'F1')+'</small><div><b>AZIONE:</b> '+esc(t.action)+'</div><div><b>OBIETTIVO:</b> '+esc(t.objective)+'</div><div class="f1-acq-actions">'+(t.phone?'<a class="f1-acq-btn primary" href="tel:'+esc(t.phone.replace(/\\s+/g,''))+'">CHIAMA ORA</a>':'')+(t.sourceUrl?'<a class="f1-acq-btn" href="'+esc(t.sourceUrl)+'" target="_blank" rel="noopener">APRI FONTE</a>':'')+'<button id="f1AcqOpenTerr" class="f1-acq-btn" type="button">APRI NOTIZIERE</button></div>';$('f1AcqOpenTerr')?.addEventListener('click',()=>document.querySelector('.topnav[data-screen="terr"]')?.click());}
 function renderNewsCounts(){
- const news=Array.isArray(crm.news)?crm.news:[];
+ const news=dedupeNews(basinRows(Array.isArray(crm.news)?crm.news:[]));
  const open=news.filter(n=>u(n.status)!=='CHIUSA'&&u(n.office_status)!=='RISOLTA');
  for(const c of CATEGORIES){
   const n=open.filter(x=>catFor(x)===c.key).length;
@@ -243,7 +215,7 @@ function renderNewsCounts(){
 }
 function renderNewsList(category){
  const list=$('f1AcqNewsList');if(!list)return;
- const rows=(crm.news||[]).filter(n=>catFor(n)===category&&u(n.status)!=='CHIUSA').sort((a,b)=>String(b.updated_at||b.observed_at||'').localeCompare(String(a.updated_at||a.observed_at||''))).slice(0,8);
+ const rows=dedupeNews(basinRows(crm.news||[])).filter(n=>catFor(n)===category&&u(n.status)!=='CHIUSA').sort((a,b)=>String(b.updated_at||b.observed_at||'').localeCompare(String(a.updated_at||a.observed_at||''))).slice(0,8);
  list.innerHTML=rows.length?`<div class="ey">${esc(category)} · NOTIZIE APERTE</div>`+rows.map(n=>`<div class="f1-acq-news-row"><strong>${esc([n.comune,n.via,n.civico].filter(Boolean).join(' · ')||'Posizione non disponibile')}</strong>${n.person_name?esc(n.person_name)+' · ':''}${esc(n.next_action||'VERIFICA NOTIZIA')}${n.market_source_url?'<br><a href="'+esc(n.market_source_url)+'" target="_blank" rel="noopener">FONTE</a>':''}</div>`).join(''):`<div class="f1-acq-news-row">Nessuna notizia aperta nella categoria <strong>${esc(category)}</strong>.</div>`;
 }
 function openNewsForm(category=''){if(category&&CATEGORIES.some(c=>c.key===category))$('f1AcqCategory').value=category;$('f1AcqFormMsg').textContent='';$('f1AcqNewsModal').classList.add('open')}
@@ -281,6 +253,7 @@ async function saveCategorizedNews(e){
   p_gps_accuracy:currentPosition?.accuracy??null
  };
  if(!payload.p_comune||!payload.p_via){msg.className='f1-acq-msg bad';msg.textContent='Comune e Via sono obbligatori.';return}
+ if(!inBasin(payload.p_comune)){msg.className='f1-acq-msg bad';msg.textContent='Comune fuori dal bacino operativo '+BASIN_LABEL+'.';return}
  try{
   await window.F1StaffData.rpc('f1_territory_add_categorized_news_v1',payload);
   msg.textContent='✓ Notizia salvata nel CRM.';
@@ -295,7 +268,7 @@ async function fetchSeller(){
 }
 function renderRadar(rows){
  const box=$('f1AcqRadar');if(!box)return;
- const list=(rows||[]).slice(0,6);
+ const list=basinRows(rows||[]).slice(0,3);
  box.innerHTML=list.length?list.map(r=>`<div class="f1-acq-radar-row"><div class="f1-acq-priority ${esc(u(r.lead_status))}">${esc(r.lead_status||'—')}</div><div class="f1-acq-distance">${Number.isFinite(r._distanceKm)?'≈ '+r._distanceKm.toLocaleString('it-IT',{minimumFractionDigits:r._distanceKm<10?1:0,maximumFractionDigits:1})+' km':'—'}</div><div><strong>${esc(r.comune||'—')}</strong><br>${esc([r.via,r.civico].filter(Boolean).join(' ')||'Indirizzo da verificare')}</div><div class="f1-acq-source">${r.source_url?'<a href="'+esc(r.source_url)+'" target="_blank" rel="noopener">'+esc(r.source||'FONTE')+'</a>':'—'}</div></div>`).join(''):'<div class="f1-acq-news-row">Nessun risultato Seller Radar disponibile.</div>';
 }
 function normComune(v){return txt(v).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
@@ -311,7 +284,7 @@ async function activateGps(){
  const st=$('f1AcqGeoState'),btn=$('f1AcqGps');btn.disabled=true;st.textContent='Acquisizione GPS…';
  try{
   currentPosition=await getPosition();st.textContent='GPS acquisito. Calcolo distanza dei Comuni Seller Radar…';
-  const rows=sellerPrioritySort(seller.opportunities||[]);
+  const rows=sellerPrioritySort(basinRows(seller.opportunities||[]));
   const comuni=[...new Set(rows.map(r=>txt(r.comune)).filter(Boolean))];
   let done=0;
   for(const comune of comuni){
@@ -332,7 +305,7 @@ async function loadData(force=false){
  try{crm=await window.F1StaffData.rpc('f1_territory_mobile_crm_v5',{p_limit:700})||crm}catch(e){console.warn('F1 Acquisition KPI CRM',e)}
  await fetchSeller();
  renderKpis();renderNextAction();renderNewsCounts();
- renderRadar(sellerPrioritySort(seller.opportunities||[]));
+ renderRadar(sellerPrioritySort(basinRows(seller.opportunities||[])));
 }
 
 function boot(){
@@ -343,10 +316,10 @@ function boot(){
    clearInterval(t);
    loadData(true);
    window.addEventListener('focus',()=>loadData(true),{passive:true});
-   setInterval(()=>loadData(false),60000);
+   setInterval(()=>loadData(false),30000);
   }else if(tries>180)clearInterval(t);
  },50);
 }
-window.F1TerritoryAcquisitionDashboard={version:VERSION,refresh:()=>loadData(true),openNews:openNewsForm};
+window.addEventListener('f1:crm-updated',e=>{if(e.detail){crm=e.detail;renderKpis();renderNextAction();renderNewsCounts();renderAIDirective()}});window.F1TerritoryAcquisitionDashboard={version:VERSION,refresh:()=>loadData(true),openNews:openNewsForm,getOperationalPlan:operationalPlan,isInBasin:inBasin,basin:BASIN_LABEL};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
