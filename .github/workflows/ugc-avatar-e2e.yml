@@ -1,4 +1,5 @@
 name: UGC Avatar Studio E2E
+# CPU4 certification
 
 on:
   workflow_dispatch:
