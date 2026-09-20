@@ -413,7 +413,8 @@ async function finalizeIfIdle(url:string,service:string,runId:string){
    if(String(run.comune).toLowerCase()==="avigliana")await jfetch(url,service,"f1_email_radar_municipality_queue?status=eq.WAITING_PILOT",{method:"PATCH",body:JSON.stringify({status:"READY",updated_at:new Date().toISOString()}),prefer:"return=minimal"}).catch(()=>{});
  }
  return run;
-}\n
+}
+
 
 async function prepareResumeProviders(url:string,service:string,run:any,forceWebsite=false){
  const now=Date.now();const progress=await jfetch(url,service,"f1_email_radar_source_progress?select=*&run_id=eq."+run.run_id+"&order=sort_order.asc");
@@ -454,7 +455,7 @@ async function processRun(url:string,service:string,run:any,actor:string){
    await updateProgress(url,service,run.run_id,next.source_key,n>=3?"COOLDOWN":"FAILED",{failure_count:n,last_failure_at:new Date().toISOString(),next_retry_at:new Date(Date.now()+delay).toISOString()},String((e as any)?.message||e));
  }
  return await finalizeIfIdle(url,service,run.run_id);
-}\nDeno.serve(async(req:Request)=>{
+}
 Deno.serve(async(req:Request)=>{
  if(req.method==="OPTIONS")return new Response("ok",{headers:CORS});
  if(req.method!=="POST")return reply({ok:false,error:"METHOD_NOT_ALLOWED"},405);
