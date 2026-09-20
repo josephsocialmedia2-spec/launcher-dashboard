@@ -324,19 +324,62 @@ def render_video(photo_bytes: bytes, script: str, speed: float) -> dict:
         }
 
 
+def _auto_copy(script: str) -> dict:
+    import re
+    clean = " ".join((script or "").strip().split())
+    sentences = re.split(r"(?<=[.!?])\s+", clean)
+    title = (sentences[0] if sentences else clean).strip(" .!?")[:90] or "Nuovo video"
+    stop = {
+        "della","delle","degli","dello","dalla","dalle","dallo","dai","dei","del","con","che","per","una","uno",
+        "sono","come","questo","questa","questi","queste","anche","più","non","nel","nella","nelle","gli","alla",
+        "alle","allo","tra","fra","sul","sulla","sulle","hai","abbiamo","avere","essere","video","oggi","qui"
+    }
+    words = re.findall(r"[A-Za-zÀ-ÖØ-öø-ÿ0-9]{4,}", clean.lower())
+    ranked = []
+    for word in words:
+        if word not in stop and word not in ranked:
+            ranked.append(word)
+        if len(ranked) >= 6:
+            break
+    tags = ["#"+re.sub(r"[^A-Za-zÀ-ÖØ-öø-ÿ0-9]", "", w).capitalize() for w in ranked]
+    for fallback in ["#F1Immobiliare", "#UGC", "#Video"]:
+        if fallback not in tags:
+            tags.append(fallback)
+    core = clean if len(clean) <= 900 else clean[:897].rstrip() + "..."
+    return {"title": title, "caption": core + "\n\n" + " ".join(tags[:8]), "hashtags": tags[:8]}
+
+
 @app.function(
     image=web_image,
-    timeout=650,
+    timeout=750,
     min_containers=0,
     max_containers=2,
     scaledown_window=30,
+    volumes={"/data": data_volume},
 )
 @modal.asgi_app()
 def web():
+    import json
+    import uuid
+    from datetime import datetime, timezone
+    from pathlib import Path
     from fastapi import FastAPI, File, Form, HTTPException, UploadFile
-    from fastapi.responses import HTMLResponse, JSONResponse, Response
+    from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
     api = FastAPI(title="UGC Avatar Studio")
+
+    def job_dir(job_id: str) -> Path:
+        if not job_id or any(ch not in "abcdefghijklmnopqrstuvwxyz0123456789-" for ch in job_id.lower()):
+            raise HTTPException(status_code=400, detail="Job ID non valido.")
+        return Path(DATA_ROOT) / job_id
+
+    def save_report(path: Path, report: dict):
+        path.mkdir(parents=True, exist_ok=True)
+        (path / "report.json").write_text(
+            json.dumps(report, ensure_ascii=False, indent=2, default=str),
+            encoding="utf-8",
+        )
+        data_volume.commit()
 
     @api.get("/", response_class=HTMLResponse)
     def home():
@@ -348,10 +391,12 @@ def web():
             "status": "ok",
             "app": APP_NAME,
             "backend": "modal",
+            "publisher": "open-social-scheduler/direct_api",
             "gpu": GPU_TYPE,
-            "pipeline": ["piper", "sadtalker", "ffmpeg"],
+            "pipeline": ["piper", "sadtalker", "ffmpeg", "modal_outbox", "direct_api"],
             "resolution": "1080x1920",
-            "storage": "temporary",
+            "storage": "modal-volume",
+            "input_required": ["image", "script"],
         }
 
     @api.get("/api/diagnostics")
@@ -362,30 +407,178 @@ def web():
     def render(
         photo: UploadFile = File(...),
         script: str = Form(...),
-        speed: float = Form(1.0),
-        consent: str = Form("false"),
     ):
-        if consent.lower() not in {"true", "1", "yes", "on"}:
-            raise HTTPException(status_code=400, detail="Devi confermare il consenso per l'immagine.")
         if photo.content_type not in {"image/jpeg", "image/png", "image/webp"}:
             raise HTTPException(status_code=400, detail="Formato foto non supportato.")
+        script = (script or "").strip()
+        if len(script) < 3 or len(script) > 1500:
+            raise HTTPException(status_code=400, detail="Il discorso deve contenere da 3 a 1500 caratteri.")
         payload = photo.file.read(10 * 1024 * 1024 + 1)
-        if len(payload) > 10 * 1024 * 1024:
-            raise HTTPException(status_code=413, detail="La foto supera il limite di 10 MB.")
-        try:
-            result = render_video.remote(payload, script, float(speed))
-        except Exception as exc:
-            raise HTTPException(status_code=500, detail=f"Generazione fallita: {exc}") from exc
-        return Response(
-            content=result["video"],
-            media_type="video/mp4",
-            headers={
-                "Content-Disposition": 'attachment; filename="VIDEO_UGC_001.mp4"',
-                "X-UGC-Width": str(result["width"]),
-                "X-UGC-Height": str(result["height"]),
-                "X-UGC-GPU": str(result["gpu"]),
+        if not payload or len(payload) > 10 * 1024 * 1024:
+            raise HTTPException(status_code=413, detail="Foto non valida o superiore a 10 MB.")
+
+        job_id = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:8]
+        path = job_dir(job_id)
+        path.mkdir(parents=True, exist_ok=False)
+        ext = { "image/jpeg": ".jpg", "image/png": ".png", "image/webp": ".webp" }[photo.content_type]
+        (path / ("source" + ext)).write_bytes(payload)
+        (path / "script.txt").write_text(script, encoding="utf-8")
+
+        report = {
+            "job_id": job_id,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "state": "processing",
+            "source_filename": photo.filename,
+            "client_id": DEFAULT_CLIENT_ID,
+            "format": "reel",
+            "video_made_with_ai": True,
+            "retries": {"render": 0},
+        }
+        save_report(path, report)
+
+        result = None
+        last = None
+        for attempt in range(1, 3):
+            try:
+                result = render_video.remote(payload, script, 1.0)
+                report["retries"]["render"] = attempt - 1
+                break
+            except Exception as exc:
+                last = exc
+                report["retries"]["render"] = attempt
+        if result is None:
+            report["state"] = "error"
+            report["error"] = "Generazione fallita dopo retry: " + str(last)
+            save_report(path, report)
+            raise HTTPException(status_code=500, detail=report["error"])
+
+        (path / "voice.wav").write_bytes(result["audio"])
+        (path / "captions.srt").write_text(result["srt"], encoding="utf-8")
+        (path / "VIDEO_UGC_001.mp4").write_bytes(result["video"])
+
+        copy = _auto_copy(script)
+        (path / "caption.txt").write_text(copy["caption"], encoding="utf-8")
+        report.update({
+            "state": "ready_for_publisher",
+            "completed_at": datetime.now(timezone.utc).isoformat(),
+            "copy": copy,
+            "video": {
+                "width": result["width"],
+                "height": result["height"],
+                "duration": result["duration"],
+                "gpu": result["gpu"],
             },
-        )
+            "quality": {
+                "video_stream": True,
+                "audio_stream": True,
+                "resolution": "1080x1920",
+                "duration_positive": result["duration"] > 0,
+            },
+            "publisher_job": {
+                "id": "ugc-" + job_id,
+                "client_id": DEFAULT_CLIENT_ID,
+                "title": copy["title"],
+                "caption": copy["caption"],
+                "format": "reel",
+                "platforms": ["facebook", "instagram", "tiktok", "linkedin", "youtube"],
+                "scheduled_at": datetime.now(timezone.utc).isoformat(),
+                "status": "ready",
+                "video_made_with_ai": True,
+                "source": "ugc-avatar-studio",
+                "modal_job_id": job_id,
+            },
+        })
+        save_report(path, report)
+
+        return {
+            "job_id": job_id,
+            "state": report["state"],
+            "publication_status": "READY_FOR_DIRECT_API",
+            "video_url": "/api/jobs/" + job_id + "/video",
+            "report_url": "/api/jobs/" + job_id,
+            "caption": copy["caption"],
+        }
+
+    @api.get("/api/jobs/{job_id}")
+    def get_job(job_id: str):
+        data_volume.reload()
+        report = job_dir(job_id) / "report.json"
+        if not report.exists():
+            raise HTTPException(status_code=404, detail="Job non trovato.")
+        return JSONResponse(content=json.loads(report.read_text(encoding="utf-8")))
+
+    @api.get("/api/jobs/{job_id}/video")
+    def get_video(job_id: str):
+        data_volume.reload()
+        final = job_dir(job_id) / "VIDEO_UGC_001.mp4"
+        if not final.exists():
+            raise HTTPException(status_code=404, detail="Video non trovato.")
+        return FileResponse(final, media_type="video/mp4", filename="VIDEO_UGC_"+job_id+".mp4")
+
+    @api.get("/api/outbox")
+    def outbox(limit: int = 50):
+        data_volume.reload()
+        root = Path(DATA_ROOT)
+        if not root.exists():
+            return {"jobs": []}
+        rows = []
+        for directory in sorted(root.iterdir(), key=lambda p: p.name):
+            report = directory / "report.json"
+            if not report.exists():
+                continue
+            try:
+                data = json.loads(report.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            if data.get("state") == "ready_for_publisher" and data.get("publisher_job"):
+                row = dict(data["publisher_job"])
+                row["video_url"] = "/api/jobs/" + data["job_id"] + "/video"
+                row["report_url"] = "/api/jobs/" + data["job_id"]
+                rows.append(row)
+            if len(rows) >= max(1, min(limit, 100)):
+                break
+        return {"jobs": rows}
+
+    @api.post("/api/jobs/{job_id}/ack")
+    def acknowledge(job_id: str, status: str = Form("published")):
+        data_volume.reload()
+        path = job_dir(job_id)
+        report_path = path / "report.json"
+        if not report_path.exists():
+            raise HTTPException(status_code=404, detail="Job non trovato.")
+        data = json.loads(report_path.read_text(encoding="utf-8"))
+        data["state"] = "published" if status == "published" else status
+        data["publisher_ack_at"] = datetime.now(timezone.utc).isoformat()
+        save_report(path, data)
+        return {"ok": True, "job_id": job_id, "state": data["state"]}
+
+    @api.get("/api/history")
+    def history(limit: int = 30):
+        data_volume.reload()
+        root = Path(DATA_ROOT)
+        if not root.exists():
+            return {"jobs": []}
+        rows = []
+        for directory in sorted(root.iterdir(), key=lambda p: p.name, reverse=True):
+            report = directory / "report.json"
+            if report.exists():
+                try:
+                    data = json.loads(report.read_text(encoding="utf-8"))
+                    rows.append({
+                        "job_id": data.get("job_id"),
+                        "created_at": data.get("created_at"),
+                        "state": data.get("state"),
+                        "publication_status": (
+                            "PUBLISHED" if data.get("state") == "published"
+                            else "READY_FOR_DIRECT_API" if data.get("state") == "ready_for_publisher"
+                            else data.get("state")
+                        ),
+                    })
+                except Exception:
+                    pass
+            if len(rows) >= max(1, min(limit, 100)):
+                break
+        return {"jobs": rows}
 
     @api.exception_handler(Exception)
     async def unhandled(_, exc: Exception):
