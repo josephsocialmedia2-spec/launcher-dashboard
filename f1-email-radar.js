@@ -19,7 +19,7 @@ async function loadConfig(){
  STATE.territory=t;STATE.sources=s.sources||[];STATE.communes=[...(t.sinistra||[]),...(t.destra||[])];
  const opts=STATE.communes.map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('');
  $('comuneFilter').insertAdjacentHTML('beforeend',opts);$('comuniList').innerHTML=opts;
- $('territoryPill').textContent=STATE.communes.length+' COMUNI CONFIGURATI';$('territoryPill').className='pill '+(STATE.communes.length===40?'ok':'warn');
+ $('territoryPill').textContent=STATE.communes.length+' COMUNI CONFIGURATI';$('territoryPill').className='pill ok';
 }
 async function loadStats(){
  const comune=$('comuneFilter').value||null;
@@ -121,18 +121,21 @@ async function importFile(file){
  }
  toast('Import completato: '+saved+' salvati, '+merged+' unificati, '+skipped+' saltati.');await reload();
 }
-async function startScan(){
- const comune=$('comuneFilter').value;if(!comune){toast('Seleziona prima un Comune.','bad');return}
- const rows=await rest('f1_email_radar_runs',{method:'POST',body:JSON.stringify([{comune,status:'INCOMPLETE',sources_total:STATE.sources.length,ateco_total:Number(STATE.stats?.ateco_catalog||0),started_at:new Date().toISOString(),error:'Fonti automatiche esterne non configurate: usare connettori/API autorizzati.'}])});
- const run=rows?.[0];if(!run)throw new Error('RUN NON CREATO');
- const progress=STATE.sources.map(s=>({run_id:run.run_id,source_key:s.key,source_label:s.label,source_url:s.url||'',status:s.automatic?'DA_CONTROLLARE':'DA_CONFIGURARE',error:s.automatic?'':'Connettore/API autorizzato non configurato'}));
- await rest('f1_email_radar_source_progress',{method:'POST',body:JSON.stringify(progress),prefer:'return=minimal'});
- toast('Scansione registrata. Le fonti senza connettore sono marcate DA CONFIGURARE.');await loadRun();
+async function orchestrate(action){
+ const comune=$('comuneFilter').value;if(!comune&&action==='START')throw new Error('Seleziona prima un Comune.');
+ const token=await auth();const body={action,comune};if(STATE.latestRun?.run_id)body.run_id=STATE.latestRun.run_id;
+ const r=await fetch(CFG().url.replace(/\/$/,'')+'/functions/v1/f1-email-radar-orchestrator',{method:'POST',headers:{apikey:CFG().anonKey,Authorization:'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify(body)});
+ const x=await r.json();if(!r.ok||!x.ok)throw new Error(x.error+(x.detail?' · '+x.detail:''));
+ await reload();return x;
 }
-async function continueScan(){const c=$('comuneFilter').value;if(!c){toast('Seleziona un Comune.','bad');return}await loadRun();if(!STATE.latestRun){return startScan()}toast('Stato scansione ripristinato da '+new Date(STATE.latestRun.updated_at).toLocaleString('it-IT')+'.')}
+async function startScan(){const x=await orchestrate('START');toast('Scansione server avviata: '+(x.run?.status||'RUNNING')+'.')}
+async function continueScan(){await loadRun();if(!STATE.latestRun)return startScan();const x=await orchestrate('RESUME');toast('Scansione ripresa dal checkpoint: '+(x.run?.current_source_key||'provider successivo')+'.')}
+async function pauseScan(){if(!STATE.latestRun)throw new Error('Nessuna scansione attiva.');await orchestrate('PAUSE');toast('Scansione in pausa.')}
+async function retryScan(){if(!STATE.latestRun)throw new Error('Nessuna scansione attiva.');await orchestrate('RETRY');toast('Errori rimessi in coda e nuovo tentativo eseguito.')}
+async function stopScan(){if(!STATE.latestRun)throw new Error('Nessuna scansione attiva.');await orchestrate('STOP');toast('Scansione fermata.','bad')}
 async function syncAteco(){
  const b=$('atecoSyncBtn');b.disabled=true;b.textContent='SINCRONIZZAZIONE…';
- try{const token=await auth();const r=await fetch(CFG().url.replace(/\/$/,'')+'/functions/v1/f1-email-radar-ateco-sync',{method:'POST',headers:{apikey:CFG().anonKey,Authorization:'Bearer '+token,'Content-Type':'application/json'},body:'{}'});const j=await r.json();if(!r.ok||!j.ok)throw new Error(j.error+(j.parsed?' · '+j.parsed+' righe':'')+(j.detail?' · '+j.detail:''));toast('ATECO ISTAT sincronizzato: '+j.saved+' codici.');await loadStats()}catch(e){toast('ATECO: '+e.message,'bad')}finally{b.disabled=false;b.textContent='SINCRONIZZA ATECO ISTAT'}
+ try{const token=await auth();const r=await fetch(CFG().url.replace(/\/$/,'')+'/functions/v1/f1-email-radar-ateco-sync',{method:'POST',headers:{apikey:CFG().anonKey,Authorization:'Bearer '+token,'Content-Type':'application/json'},body:'{}'});const j=await r.json();if(!r.ok||!j.ok)throw new Error(j.error+(j.parsed?' · '+j.parsed+' righe':'')+(j.detail?' · '+j.detail:''));toast('ATECO ISTAT sincronizzato: '+(j.total||j.saved||0)+' codici.');await loadStats()}catch(e){toast('ATECO: '+e.message,'bad')}finally{b.disabled=false;b.textContent='SINCRONIZZA ATECO ISTAT'}
 }
 function exportRows(){return STATE.filtered.map(r=>({ID:r.entity_id,COMUNE:r.comune,FRAZIONE:r.frazione,DENOMINAZIONE:r.denomination,RAGIONE_SOCIALE:r.legal_name,TIPO_SOGGETTO:r.subject_type,CATEGORIA:r.category,PROFESSIONE:r.profession,CODICE_ATECO:r.ateco_code,DESCRIZIONE_ATECO:r.ateco_title,INDIRIZZO:r.indirizzo,CIVICO:r.civico,CAP:r.cap,PROVINCIA:r.provincia,LATITUDINE:r.latitude,LONGITUDINE:r.longitude,TELEFONO:r.phone,CELLULARE:r.mobile,EMAIL_ORDINARIA:r.email,TIPO_EMAIL:r.email_type,PEC:r.pec,SITO_WEB:r.website,PARTITA_IVA:r.vat_number,FONTE_PRINCIPALE:r.primary_source_type,URL_FONTE:r.primary_source_url,STATO_VERIFICA:r.verification_status,CONFIDENCE:r.confidence_score,STATO_ATTIVITA:r.activity_status,MARKETING_STATUS:r.marketing_status,ULTIMA_VERIFICA:r.last_verified_at,NOTE:r.notes}))}
 function exportCsv(){const rows=exportRows();if(!rows.length)return toast('Nessun dato da esportare.','bad');const h=Object.keys(rows[0]);const csv=[h.join(','),...rows.map(r=>h.map(k=>csvCell(r[k])).join(','))].join('\r\n');downloadBlob(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),'F1_EMAIL_RADAR_'+($('comuneFilter').value||'TUTTI').replace(/\s+/g,'_')+'.csv')}
@@ -151,6 +154,9 @@ $('importBtn').onclick=()=>$('importFile').click();
 $('importFile').onchange=async e=>{const f=e.target.files?.[0];if(!f)return;try{await importFile(f)}catch(err){toast(err.message,'bad')}finally{e.target.value=''}};
 $('scanBtn').onclick=()=>startScan().catch(e=>toast(e.message,'bad'));
 $('continueBtn').onclick=()=>continueScan().catch(e=>toast(e.message,'bad'));
+$('pauseBtn').onclick=()=>pauseScan().catch(e=>toast(e.message,'bad'));
+$('retryBtn').onclick=()=>retryScan().catch(e=>toast(e.message,'bad'));
+$('stopBtn').onclick=()=>stopScan().catch(e=>toast(e.message,'bad'));
 $('atecoSyncBtn').onclick=syncAteco;
 $('csvBtn').onclick=exportCsv;$('xlsxBtn').onclick=exportXlsx;
 ['comuneFilter','typeFilter','contactFilter','verifyFilter'].forEach(id=>$(id).addEventListener('change',async()=>{if(id==='comuneFilter')await reload();else applyFilters()}));
