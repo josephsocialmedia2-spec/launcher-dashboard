@@ -1,7 +1,7 @@
 (()=>{'use strict';
 const CFG=()=>window.F1_SUPABASE||{};
 const $=id=>document.getElementById(id);
-let STATE={territory:null,communes:[],sources:[],entities:[],filtered:[],stats:{},latestRun:null};
+let STATE={territory:null,communes:[],sources:[],entities:[],filtered:[],stats:{},latestRun:null,queue:[]};
 
 function esc(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function toast(msg,kind='ok'){const el=$('toast');el.textContent=msg;el.className='toast '+kind;el.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>el.style.display='none',4500)}
@@ -24,7 +24,7 @@ async function loadConfig(){
 async function loadStats(){
  const comune=$('comuneFilter').value||null;
  STATE.stats=await rpc('f1_email_radar_dashboard',{p_comune:comune});
- [['kConfigured','configured_communes'],['kCompletedCommunes','completed_communes'],['kIncompleteCommunes','incomplete_communes'],['kSubjects','subjects'],['kCompanies','companies'],['kPros','professionals'],['kEmails','emails'],['kPec','pec'],['kPhones','phones'],['kWeb','websites'],['kVerified','verified'],['kToVerify','to_verify'],['kDup','duplicates_merged'],['kProvidersReady','providers_operational'],['kProvidersPartial','providers_partial'],['kProvidersMissing','providers_not_configured'],['kAteco','ateco_catalog']].forEach(([id,k])=>{const el=$(id);if(el)el.textContent=Number(STATE.stats?.[k]||0).toLocaleString('it-IT')});
+ [['kConfigured','configured_communes'],['kCompletedCommunes','completed_communes'],['kIncompleteCommunes','incomplete_communes'],['kErrorCommunes','error_communes'],['kSubjects','subjects'],['kCompanies','companies'],['kPros','professionals'],['kEmails','emails'],['kPec','pec'],['kPhones','phones'],['kWeb','websites'],['kVerified','verified'],['kToVerify','to_verify'],['kDup','duplicates_merged'],['kProvidersReady','providers_operational'],['kProvidersPartial','providers_partial'],['kProvidersMissing','providers_not_configured'],['kProvidersRequired','providers_required'],['kAteco','ateco_catalog']].forEach(([id,k])=>{const el=$(id);if(el)el.textContent=Number(STATE.stats?.[k]||0).toLocaleString('it-IT')});
  $('atecoPill').textContent='ATECO '+Number(STATE.stats?.ateco_catalog||0).toLocaleString('it-IT');$('atecoPill').className='pill '+(Number(STATE.stats?.ateco_catalog||0)>=3000?'ok':'warn');const lu=STATE.stats?.last_updated?new Date(STATE.stats.last_updated):null;$('updatedPill').textContent=lu&&!Number.isNaN(lu.getTime())?'AGG. '+lu.toLocaleString('it-IT'):'AGGIORNAMENTO —';
 }
 async function loadEntities(){
@@ -69,11 +69,12 @@ async function loadRun(){
  STATE.latestRun=runs[0]||null;renderSources();
 }
 async function renderSources(){
- let progress=[];if(STATE.latestRun){progress=await rest('f1_email_radar_source_progress?select=*&run_id=eq.'+encodeURIComponent(STATE.latestRun.run_id)+'&order=source_key')||[]}
+ let progress=[];if(STATE.latestRun){progress=await rest('f1_email_radar_source_progress?select=*&run_id=eq.'+encodeURIComponent(STATE.latestRun.run_id)+'&order=sort_order.asc')||[]}
  const by=new Map(progress.map(x=>[x.source_key,x]));
  $('runMeta').textContent=STATE.latestRun?(
   'Stato: '+STATE.latestRun.status+
-  ' · Fonti '+Number(STATE.latestRun.source_coverage||0).toFixed(1)+'%'+
+  ' · Discovery '+Number(STATE.latestRun.discovery_completeness||0).toFixed(1)+'%'+
+  ' · Fonti richieste '+Number(STATE.latestRun.source_coverage||0).toFixed(1)+'%'+
   ' · ATECO '+Number(STATE.latestRun.ateco_coverage||0).toFixed(1)+'%'+
   ' · Contatti '+Number(STATE.latestRun.contact_coverage||0).toFixed(1)+'%'+
   ' · Qualità '+Number(STATE.latestRun.data_quality||0).toFixed(1)+'%'+
@@ -81,9 +82,15 @@ async function renderSources(){
   ' · Agg. '+new Date(STATE.latestRun.updated_at||STATE.latestRun.created_at).toLocaleString('it-IT')+
   (STATE.latestRun.last_ateco_code?' · Checkpoint ATECO '+STATE.latestRun.last_ateco_code:'')
  ):'Nessuna scansione registrata per il comune.';
- $('sourceList').innerHTML=STATE.sources.map(s=>{const p=by.get(s.key);const st=p?.status||(s.automatic?'PRONTO':'DA_CONFIGURARE');return '<div class="source"><div class="sourceTop"><b>'+esc(s.label)+'</b><span class="tag '+(st==='COMPLETED'?'ok':'warn')+'">'+esc(st)+'</span></div><div class="meta">'+esc(s.mode)+' · '+esc(s.note||'')+'</div>'+(s.url?'<a href="'+esc(s.url)+'" target="_blank" rel="noopener">APRI FONTE</a>':'')+'</div>'}).join('');
+ $('sourceList').innerHTML=STATE.sources.map(s=>{const p=by.get(s.key);const st=p?.status||(s.automatic?'PRONTO':(s.provider_class||'OPZIONALE'));const cls=(st==='COMPLETED'||st==='INTERACTIVE_NOT_REQUIRED'||st==='OPTIONAL_NOT_CONFIGURED')?'ok':'warn';return '<div class="source"><div class="sourceTop"><b>'+esc(s.label)+'</b><span class="tag '+cls+'">'+esc(st)+'</span></div><div class="meta">'+esc(p?.provider_class||s.provider_class||'')+' · '+esc(s.mode)+' · '+esc(s.note||'')+'</div>'+(p?.error?'<div class="meta">'+esc(p.error)+'</div>':'')+(s.url?'<a href="'+esc(s.url)+'" target="_blank" rel="noopener">APRI FONTE</a>':'')+'</div>'}).join('');
 }
-async function reload(){await Promise.all([loadStats(),loadEntities(),loadRun()])}
+async function loadQueue(){
+ STATE.queue=await rest('f1_email_radar_municipality_queue?select=comune,lato,sort_order,status,last_run_at&order=sort_order.asc')||[];
+ const done=STATE.queue.filter(x=>x.status==='DONE').length,errors=STATE.queue.filter(x=>x.status==='ERROR').length;
+ $('queueMeta').textContent=done+' completati · '+errors+' errori · '+STATE.queue.length+' Comuni canonici';
+ $('queueRows').innerHTML=STATE.queue.map((x,i)=>'<tr><td>'+esc(i+1)+'</td><td><b>'+esc(x.comune)+'</b></td><td>'+esc(x.lato)+'</td><td><span class="tag '+(x.status==='DONE'?'ok':'warn')+'">'+esc(x.status)+'</span></td><td>'+esc(x.last_run_at?new Date(x.last_run_at).toLocaleString('it-IT'):'—')+'</td></tr>').join('');
+}
+async function reload(){await Promise.all([loadStats(),loadEntities(),loadRun(),loadQueue()])}
 function formPayload(form){const fd=new FormData(form),o={};for(const [k,v] of fd.entries())o[k]=String(v).trim();o.confidence_score=Number(o.confidence_score||0);return o}
 async function saveEntity(ev){
  ev.preventDefault();const btn=$('saveEntityBtn');btn.disabled=true;
@@ -148,7 +155,7 @@ async function syncAteco(){
  const b=$('atecoSyncBtn');b.disabled=true;b.textContent='SINCRONIZZAZIONE…';
  try{const token=await auth();const r=await fetch(CFG().url.replace(/\/$/,'')+'/functions/v1/f1-email-radar-ateco-sync',{method:'POST',headers:{apikey:CFG().anonKey,Authorization:'Bearer '+token,'Content-Type':'application/json'},body:'{}'});const j=await r.json();if(!r.ok||!j.ok)throw new Error(j.error+(j.parsed?' · '+j.parsed+' righe':'')+(j.detail?' · '+j.detail:''));toast('ATECO ISTAT sincronizzato: '+(j.total||j.saved||0)+' codici.');await loadStats()}catch(e){toast('ATECO: '+e.message,'bad')}finally{b.disabled=false;b.textContent='SINCRONIZZA ATECO ISTAT'}
 }
-function exportRows(){return STATE.filtered.map(r=>({ID:r.entity_id,COMUNE:r.comune,FRAZIONE:r.frazione,DENOMINAZIONE:r.denomination,RAGIONE_SOCIALE:r.legal_name,TIPO_SOGGETTO:r.subject_type,CATEGORIA:r.category,PROFESSIONE:r.profession,CODICE_ATECO:r.ateco_code,DESCRIZIONE_ATECO:r.ateco_title,INDIRIZZO:r.indirizzo,CIVICO:r.civico,CAP:r.cap,PROVINCIA:r.provincia,LATITUDINE:r.latitude,LONGITUDINE:r.longitude,TELEFONO:r.phone,CELLULARE:r.mobile,EMAIL_ORDINARIA:r.email,TIPO_EMAIL:r.email_type,PEC:r.pec,SITO_WEB:r.website,PARTITA_IVA:r.vat_number,FONTE_PRINCIPALE:r.primary_source_type,URL_FONTE:r.primary_source_url,STATO_VERIFICA:r.verification_status,CONFIDENCE:r.confidence_score,STATO_ATTIVITA:r.activity_status,MARKETING_STATUS:r.marketing_status,ULTIMA_VERIFICA:r.last_verified_at,NOTE:r.notes}))}
+function exportRows(){return STATE.filtered.map(r=>({ID:r.entity_id,COMUNE:r.comune,FRAZIONE:r.frazione,DENOMINAZIONE:r.denomination,RAGIONE_SOCIALE:r.legal_name,TIPO_SOGGETTO:r.subject_type,CATEGORIA:r.category,PROFESSIONE:r.profession,CODICE_ATECO:r.ateco_code,ATECO_STATUS:r.ateco_status,DESCRIZIONE_ATECO:r.ateco_title,INDIRIZZO:r.indirizzo,CIVICO:r.civico,CAP:r.cap,PROVINCIA:r.provincia,LATITUDINE:r.latitude,LONGITUDINE:r.longitude,GEOCODER:r.geocoder,GEOCODE_PRECISION:r.geocode_precision,TELEFONO:r.phone,CELLULARE:r.mobile,EMAIL_ORDINARIA:r.email,TIPO_EMAIL:r.email_type,PEC:r.pec,SITO_WEB:r.website,PARTITA_IVA:r.vat_number,FONTE_PRINCIPALE:r.primary_source_type,URL_FONTE:r.primary_source_url,STATO_VERIFICA:r.verification_status,CONFIDENCE:r.confidence_score,STATO_ATTIVITA:r.activity_status,MARKETING_STATUS:r.marketing_status,ULTIMA_VERIFICA:r.last_verified_at,NOTE:r.notes}))}
 function exportCsv(){const rows=exportRows();if(!rows.length)return toast('Nessun dato da esportare.','bad');const h=Object.keys(rows[0]);const csv=[h.join(','),...rows.map(r=>h.map(k=>csvCell(r[k])).join(','))].join('\r\n');downloadBlob(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}),'F1_EMAIL_RADAR_'+($('comuneFilter').value||'TUTTI').replace(/\s+/g,'_')+'.csv')}
 function exportXlsx(){if(!window.XLSX)return toast('Libreria XLSX non disponibile.','bad');const rows=exportRows();if(!rows.length)return toast('Nessun dato da esportare.','bad');const ws=XLSX.utils.json_to_sheet(rows),wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Email Radar');XLSX.writeFile(wb,'F1_EMAIL_RADAR_'+($('comuneFilter').value||'TUTTI').replace(/\s+/g,'_')+'.xlsx')}
 async function init(){
