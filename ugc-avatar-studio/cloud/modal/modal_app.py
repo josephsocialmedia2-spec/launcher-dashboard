@@ -43,6 +43,8 @@ gpu_image = (
         "imageio-ffmpeg>=0.5,<1",
         "kornia>=0.7,<0.9",
         "yacs==0.1.8",
+        "tqdm>=4.66,<5",
+        "PyYAML>=6,<7",
         "joblib>=1.4,<2",
         "scikit-image>=0.22,<0.26",
         "face-alignment>=1.4,<2",
@@ -54,6 +56,7 @@ gpu_image = (
         "torchaudio==2.8.0",
     )
     .run_commands(
+        "pip install --no-deps facexlib==0.3.0",
         "git clone --depth 1 https://github.com/OpenTalker/SadTalker.git /opt/SadTalker",
         "sed -i '/from gfpgan import GFPGANer/d' /opt/SadTalker/src/utils/face_enhancer.py",
         "sed -i 's/preds.astype(np.float, copy=False)/preds.astype(float, copy=False)/g' /opt/SadTalker/src/face3d/util/my_awing_arch.py",
