@@ -1,6 +1,6 @@
 (()=> {
 'use strict';
-const VERSION='20260920-acquisition-dashboard-v1';
+const VERSION='20260920-acquisition-dashboard-v2';
 const DATA_URL='./data/seller-lead-engine-public.json';
 const GEO_CACHE_KEY='f1_seller_geo_comuni_v1';
 const CATEGORIES=[
@@ -49,8 +49,9 @@ function injectStyle(){
 
 function build(){
  const screen=$('municipalities');
- const card=screen?.querySelector('.card');
- if(!screen||!card)return false;
+ const stack=screen?.querySelector('.stack')||screen;
+ const card=stack?.querySelector('.card');
+ if(!screen||!stack||!card)return false;
  if($('f1AcqDashboard'))return true;
  injectStyle();
  const wrap=document.createElement('div');
@@ -99,7 +100,7 @@ function build(){
   <div id="f1AcqNewsGrid" class="f1-acq-news-grid"></div>
   <div id="f1AcqNewsList" class="f1-acq-news-list"></div>
  </section>`;
- screen.insertBefore(wrap,card);
+ stack.insertBefore(wrap,card);
  buildModal();
  bind();
  renderCategoryButtons();
