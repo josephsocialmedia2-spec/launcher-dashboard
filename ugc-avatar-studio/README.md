@@ -70,14 +70,19 @@ e richiede esclusivamente i GitHub Repository Secrets Modal:
 Hugging Face resta disponibile come implementazione precedente, ma non è più il percorso cloud predefinito.
 
 
-## AUTOMAZIONE POSTIZ END-TO-END
+## AUTOMAZIONE SOCIAL END-TO-END
 
-Il percorso cloud Modal ora è progettato per richiedere soltanto due input: immagine e discorso.
+Il percorso cloud Modal richiede soltanto due input: immagine e discorso.
 
 Pipeline:
 
-`IMMAGINE + TESTO -> Piper -> SadTalker -> FFmpeg -> copy automatico -> archivio -> Postiz -> scheduling/pubblicazione`
+`IMMAGINE + TESTO -> Piper -> SadTalker -> FFmpeg -> copy automatico -> archivio Modal -> outbox -> open-social-scheduler/direct_api -> social`
 
-L'app non richiede velocità, caption, hashtag, formato, account social o configurazioni operative per ogni job. Gli account supportati già collegati a Postiz vengono scoperti automaticamente.
+Postiz non è un requisito del deploy. Il publisher primario dichiarato dai client F1 e Real Media Pro nel repository `open-social-scheduler` è `direct_api`; Buffer resta una pipeline secondaria separata.
 
-Il deployment è considerato pronto solo quando il workflow verifica sia Modal sia l'autenticazione Postiz e rileva almeno un canale supportato collegato.
+Il deployment Modal richiede soltanto:
+
+- `MODAL_TOKEN_ID`
+- `MODAL_TOKEN_SECRET`
+
+L'endpoint `/api/outbox` espone i job video pronti al bridge social esistente senza duplicare OAuth o token social dentro Modal.
