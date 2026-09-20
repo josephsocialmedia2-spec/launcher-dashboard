@@ -190,7 +190,8 @@ def _make_srt(text: str, duration: float, out, max_words: int = 7):
 
 @app.function(
     image=gpu_image,
-    timeout=600,
+    cpu=4.0,
+    timeout=1200,
     min_containers=0,
     max_containers=1,
     scaledown_window=30,
