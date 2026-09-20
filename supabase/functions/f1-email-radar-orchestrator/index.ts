@@ -67,7 +67,7 @@ async function crawlPage(url:string){
   return {finalUrl:r.url,title,textSample,emails,tels,vats,links,allLinks,jsonld,metas};
  }catch{return null}finally{clearTimeout(timer)}
 }
-async function officialSiteCandidate
+
 async function officialSiteCandidate(dbUrl:string,service:string,actor:string,run:any,website:string,ateco:any,discoveryProvider:string){
  let base:string;try{base=new URL(/^https?:/i.test(website)?website:"https://"+website).href}catch{return {saved:false}}
  const first=await crawlPage(base);if(!first)return {saved:false};
@@ -392,12 +392,12 @@ async function startRun(url:string,service:string,actor:string,comune:string){
  await jfetch(url,service,"f1_email_radar_source_progress",{method:"POST",body:JSON.stringify(sources.map(s=>({run_id:run.run_id,created_by:actor,source_key:s.key,source_label:s.label,status:s.status,provider_class:s.provider_class,sort_order:s.sort_order}))),prefer:"return=minimal"});
  return run;
 }
-async function updateProgress
+
 async function updateProgress(url:string,service:string,runId:string,key:string,status:string,stats:any={},error=""){
  const terminal=["COMPLETED","NON_APPLICABILE","OPTIONAL_NOT_CONFIGURED","INTERACTIVE_NOT_REQUIRED"];
  await jfetch(url,service,"f1_email_radar_source_progress?run_id=eq."+runId+"&source_key=eq."+key,{method:"PATCH",body:JSON.stringify({status,...stats,error,completed_at:terminal.includes(status)?new Date().toISOString():null,updated_at:new Date().toISOString()}),prefer:"return=minimal"});
 }
-async function recalc
+
 async function recalc(url:string,service:string,runId:string){return await jfetch(url,service,"rpc/f1_email_radar_recalc_run",{method:"POST",body:JSON.stringify({p_run_id:runId})})}
 async function finalizeIfIdle(url:string,service:string,runId:string){
  const progress=await jfetch(url,service,"f1_email_radar_source_progress?select=*&run_id=eq."+runId+"&order=sort_order.asc");
@@ -414,7 +414,7 @@ async function finalizeIfIdle(url:string,service:string,runId:string){
  }
  return run;
 }\n
-async function prepareResumeProviders
+
 async function prepareResumeProviders(url:string,service:string,run:any,forceWebsite=false){
  const now=Date.now();const progress=await jfetch(url,service,"f1_email_radar_source_progress?select=*&run_id=eq."+run.run_id+"&order=sort_order.asc");
  for(const p of progress||[]){
@@ -428,7 +428,7 @@ async function prepareResumeProviders(url:string,service:string,run:any,forceWeb
  await jfetch(url,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({status:"RUNNING",requested_action:"",updated_at:new Date().toISOString()}),prefer:"return=minimal"});
  const rr=await jfetch(url,service,"f1_email_radar_runs?select=*&run_id=eq."+run.run_id+"&limit=1");return rr?.[0]||run;
 }
-async function processRun
+
 async function processRun(url:string,service:string,run:any,actor:string){
  if(run.requested_action==="PAUSE"||run.status==="PAUSED")return run;
  if(run.requested_action==="STOP"){await jfetch(url,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({status:"STOPPED",updated_at:new Date().toISOString()}),prefer:"return=minimal"});return {...run,status:"STOPPED"}}
