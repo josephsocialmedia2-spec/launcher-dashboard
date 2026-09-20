@@ -28,3 +28,21 @@ revoke all on public.f1_email_radar_runtime_config from anon,authenticated;
 
 -- Il token Cron NON è nel repository. Generarlo nel DB e conservarlo in Supabase Vault.
 -- Le credenziali provider vanno configurate come Edge Function Secrets.
+
+
+-- Explicit client deny policy: runtime config is service-role only.
+drop policy if exists "email radar runtime deny client" on public.f1_email_radar_runtime_config;
+create policy "email radar runtime deny client"
+on public.f1_email_radar_runtime_config
+for all to authenticated
+using (false)
+with check (false);
+
+create or replace function public.f1_email_radar_ateco_leaf_count()
+returns integer
+language sql
+stable
+security invoker
+set search_path=public,pg_temp
+as $$ select count(*)::integer from public.f1_ateco_2025 where level=6 $$;
+grant execute on function public.f1_email_radar_ateco_leaf_count() to authenticated,service_role;
