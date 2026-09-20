@@ -69,3 +69,29 @@ Per l'Ordine Ingegneri Torino è applicato `NON_USARE_MARKETING` perché la font
 
 ## Stato rollout
 La queue contiene 41 Comuni canonici. Avigliana resta `PILOT`; gli altri restano `WAITING_PILOT` finché il pilot non raggiunge realmente `COMPLETED`.
+
+
+## Autonomous zero-credential pipeline — 20/09/2026
+
+Provider obbligatori per `COMPLETED`:
+1. `OSM_DIRECTORY` — OpenStreetMap/Overpass con area Wikidata e fallback fra istanze pubbliche documentate.
+2. `FONTI_LOCALI` — sito comunale da Wikidata + robots.txt + sitemap + link territoriali.
+3. `SITI_UFFICIALI` — crawler incrementale con JSON-LD/Schema.org, mailto/tel/VAT, provenance e gestione URL non raggiungibili.
+4. `ATECO_ANALYSIS` — analisi delle 87 divisioni ATECO 2025 sui soggetti scoperti.
+
+Brave Search, Google Places e Registro Imprese/InfoCamere sono enrichment opzionali. INI-PEC, INAD e albi interattivi sono `INTERACTIVE_NOT_REQUIRED`; nessuno di questi provider può bloccare il completion engine.
+
+OpenStreetMap è usato a basso volume, in modo seriale e con attribution ODbL. Il sistema usa direttamente le coordinate OSM/JSON-LD e non dipende dal bulk geocoding Nominatim.
+
+Il circuit breaker registra failure/retry; se tutte le istanze Overpass previste falliscono in un run, quel provider diventa `NON_APPLICABILE` per il run e la pipeline continua. Le scansioni future potranno ritentarlo.
+
+## QA produzione
+
+- ATECO cron auth: PASS, 3257 record (22/87/287/651/920/1290).
+- Avigliana: COMPLETED con pipeline autonoma.
+- Villar Dora: COMPLETED con la pipeline generica.
+- Queue: dopo Avigliana è stata sbloccata e il CRON è avanzato autonomamente a Villar Dora e poi Chianocco.
+- START/RESUME/RETRY/CRON: verificati in produzione.
+- PAUSE: PASS.
+- STOP da stato PAUSED: bug corretto e PASS su run temporaneo cancellato.
+- Edge Functions: orchestrator v16; ATECO sync v9 al momento di questo snapshot.
