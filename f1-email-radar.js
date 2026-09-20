@@ -33,12 +33,14 @@ async function loadEntities(){
  STATE.entities=await rest(q)||[];applyFilters();
 }
 function applyFilters(){
- const type=$('typeFilter').value,contact=$('contactFilter').value,verify=$('verifyFilter').value,s=$('searchBox').value.trim().toLowerCase();
+ const type=$('typeFilter').value,contact=$('contactFilter').value,verify=$('verifyFilter').value,ateco=$('atecoFilter').value.trim().toLowerCase(),category=$('categoryFilter').value.trim().toLowerCase(),s=$('searchBox').value.trim().toLowerCase();
  STATE.filtered=STATE.entities.filter(r=>{
    if(type==='AZIENDA'&&!['AZIENDA','IMPRESA','SOCIETA','IMPRESA_INDIVIDUALE','ATTIVITA'].includes(String(r.subject_type).toUpperCase()))return false;
    if(type==='PROFESSIONISTA'&&!['PROFESSIONISTA','STUDIO_PROFESSIONALE','AMMINISTRATORE_CONDOMINIO'].includes(String(r.subject_type).toUpperCase()))return false;
    if(contact==='EMAIL'&&!r.email)return false;if(contact==='NO_EMAIL'&&r.email)return false;if(contact==='PEC'&&!r.pec)return false;if(contact==='PHONE'&&!(r.phone||r.mobile))return false;if(contact==='WEB'&&!r.website)return false;
    if(verify&&r.verification_status!==verify)return false;
+   if(ateco&&!String(r.ateco_code||'').toLowerCase().startsWith(ateco))return false;
+   if(category&&!([r.category,r.profession,r.ateco_title].join(' ').toLowerCase().includes(category)))return false;
    if(s){const hay=[r.denomination,r.legal_name,r.comune,r.frazione,r.indirizzo,r.civico,r.email,r.pec,r.phone,r.mobile,r.website,r.ateco_code,r.ateco_title,r.category,r.profession].join(' ').toLowerCase();if(!hay.includes(s))return false}
    return true;
  });
@@ -169,6 +171,6 @@ $('stopBtn').onclick=()=>stopScan().catch(e=>toast(e.message,'bad'));
 $('atecoSyncBtn').onclick=syncAteco;
 $('csvBtn').onclick=exportCsv;$('xlsxBtn').onclick=exportXlsx;
 ['comuneFilter','typeFilter','contactFilter','verifyFilter'].forEach(id=>$(id).addEventListener('change',async()=>{if(id==='comuneFilter')await reload();else applyFilters()}));
-$('searchBox').addEventListener('input',applyFilters);
+$('searchBox').addEventListener('input',applyFilters);$('atecoFilter').addEventListener('input',applyFilters);$('categoryFilter').addEventListener('input',applyFilters);
 window.addEventListener('load',init);
 })();
