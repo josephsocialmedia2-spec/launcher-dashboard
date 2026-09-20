@@ -45,7 +45,6 @@ jobs:
     env:
       MODAL_TOKEN_ID: ${{ secrets.MODAL_TOKEN_ID }}
       MODAL_TOKEN_SECRET: ${{ secrets.MODAL_TOKEN_SECRET }}
-      POSTIZ_API_KEY: ${{ secrets.POSTIZ_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -62,18 +61,12 @@ jobs:
             echo "MODAL_TOKEN_SECRET_MISSING"
             MISSING=1
           fi
-          if [ -z "$POSTIZ_API_KEY" ]; then
-            echo "POSTIZ_API_KEY_MISSING"
-            MISSING=1
-          fi
           if [ "$MISSING" -ne 0 ]; then
             exit 1
           fi
           echo "DEPLOYMENT_CREDENTIALS_PRESENT"
       - name: Install Modal SDK
         run: pip install "modal>=1.5,<2"
-      - name: Synchronize Postiz runtime secret
-        run: modal secret create ugc-avatar-studio-runtime POSTIZ_API_KEY="$POSTIZ_API_KEY" --force
       - name: Deploy Modal application
         run: modal deploy ugc-avatar-studio/cloud/modal/modal_app.py --name ugc-avatar-studio
       - name: Resolve public URL
@@ -113,29 +106,6 @@ jobs:
               time.sleep(10)
           raise SystemExit(f"MODAL_HEALTH_TIMEOUT: {last}")
           PY
-      - name: Verify Postiz authentication and connected targets
-        env:
-          APP_URL: ${{ steps.modal_url.outputs.url }}
-        run: |
-          python - <<'PY'
-          import json, os, time, urllib.request
-          url = os.environ["APP_URL"].rstrip("/") + "/api/diagnostics"
-          last = None
-          for attempt in range(12):
-              try:
-                  with urllib.request.urlopen(url, timeout=30) as r:
-                      data = json.loads(r.read().decode("utf-8", "replace"))
-                      print(json.dumps(data, ensure_ascii=False)[:3000])
-                      postiz = data.get("postiz", {})
-                      if r.status == 200 and postiz.get("authenticated") and int(postiz.get("selected_count") or 0) > 0:
-                          print("POSTIZ_AUTOMATION_READY")
-                          raise SystemExit(0)
-                      last = "Postiz non autenticato o nessun canale supportato collegato"
-              except Exception as exc:
-                  last = str(exc)
-              time.sleep(5)
-          raise SystemExit("POSTIZ_AUTOMATION_NOT_READY: " + str(last))
-          PY
       - name: Publish URL in workflow summary
         env:
           APP_URL: ${{ steps.modal_url.outputs.url }}
@@ -145,4 +115,6 @@ jobs:
           echo "Public app: $APP_URL" >> "$GITHUB_STEP_SUMMARY"
           echo "Health: $APP_URL/health" >> "$GITHUB_STEP_SUMMARY"
           echo "Diagnostics: $APP_URL/api/diagnostics" >> "$GITHUB_STEP_SUMMARY"
-          echo "Pipeline: image + script -> Piper -> SadTalker -> FFmpeg -> archive -> Postiz" >> "$GITHUB_STEP_SUMMARY"
+          echo "Outbox: $APP_URL/api/outbox" >> "$GITHUB_STEP_SUMMARY"
+          echo "Publisher: open-social-scheduler/direct_api" >> "$GITHUB_STEP_SUMMARY"
+          echo "Pipeline: image + script -> Piper -> SadTalker -> FFmpeg -> Modal outbox -> direct social publisher" >> "$GITHUB_STEP_SUMMARY"
