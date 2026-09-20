@@ -50,9 +50,9 @@ Il deploy viene eseguito con:
 Dopo il deploy il workflow recupera il vero URL pubblico Modal e verifica `/health`.
 
 
-## Automazione end-to-end con Postiz
+## Automazione end-to-end con publisher social esistente
 
-Input operativo richiesto all'utente:
+Input operativo:
 
 1. immagine avatar;
 2. discorso/testo.
@@ -67,35 +67,23 @@ Il backend esegue automaticamente:
 - controllo stream audio/video e durata;
 - generazione automatica titolo, caption e hashtag;
 - archiviazione persistente su Modal Volume;
-- discovery degli account collegati a Postiz;
-- upload MP4 a Postiz;
-- configurazione specifica per Instagram, TikTok, YouTube e Facebook;
-- scheduling automatico;
-- storico e report per job;
-- retry per rendering e richieste Postiz.
+- creazione job `ready_for_publish`;
+- esposizione outbox per `open-social-scheduler`.
 
 Endpoint:
 
 - `POST /api/render`: accetta soltanto `photo` e `script`.
 - `GET /api/jobs/{job_id}`: report completo.
 - `GET /api/jobs/{job_id}/video`: MP4 archiviato.
+- `GET /api/outbox`: job pronti al publisher.
 - `GET /api/history`: storico.
-- `GET /api/diagnostics`: stato Postiz e canali rilevati.
+- `GET /api/diagnostics`: stato pipeline.
 
 ### Secrets
 
-GitHub Actions richiede:
+GitHub Actions richiede soltanto:
 
 - `MODAL_TOKEN_ID`
 - `MODAL_TOKEN_SECRET`
-- `POSTIZ_API_KEY`
 
-Il workflow sincronizza `POSTIZ_API_KEY` nel Modal Secret `ugc-avatar-studio-runtime` senza inserirla nel repository.
-
-### Pubblicazione
-
-Per default vengono selezionati automaticamente gli account Postiz collegati con provider:
-
-`instagram, instagram-standalone, tiktok, youtube, facebook`
-
-Il post viene schedulato automaticamente alcuni minuti dopo il completamento del render. Non è richiesta una selezione manuale per singolo contenuto.
+I token social restano nel repository `open-social-scheduler`, dove il backend dichiarato è `direct_api`. Non vengono copiati in Modal.
