@@ -371,7 +371,7 @@ def web():
     import uuid
     from datetime import datetime, timedelta, timezone
     from pathlib import Path
-    from fastapi import FastAPI, File, Form, HTTPException, UploadFile
+    from fastapi import FastAPI, File, Form, HTTPException
     from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
     api = FastAPI(title="UGC Avatar Studio")
@@ -414,23 +414,21 @@ def web():
 
     @api.post("/api/render")
     def render(
-        photo: UploadFile = File(...),
+        photo: bytes = File(...),
         script: str = Form(...),
         test_mode: bool = Form(False),
     ):
-        if photo.content_type not in {"image/jpeg", "image/png", "image/webp"}:
-            raise HTTPException(status_code=400, detail="Formato foto non supportato.")
         script = (script or "").strip()
         if len(script) < 3 or len(script) > 1500:
             raise HTTPException(status_code=400, detail="Il discorso deve contenere da 3 a 1500 caratteri.")
-        payload = photo.file.read(10 * 1024 * 1024 + 1)
+        payload = photo
         if not payload or len(payload) > 10 * 1024 * 1024:
             raise HTTPException(status_code=413, detail="Foto non valida o superiore a 10 MB.")
 
         job_id = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:8]
         path = job_dir(job_id)
         path.mkdir(parents=True, exist_ok=False)
-        suffix = {"image/png": ".png", "image/webp": ".webp"}.get(photo.content_type, ".jpg")
+        suffix = ".bin"
         (path / ("source"+suffix)).write_bytes(payload)
         (path / "script.txt").write_text(script, encoding="utf-8")
         report = {
