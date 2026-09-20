@@ -1,0 +1,35 @@
+name: F1 Email Radar Mobile Footer Fix
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/f1-email-radar-footer-fix.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch mobile footer containment
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path("f1-email-radar.html")
+          s=p.read_text(encoding="utf-8")
+          old='@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:1fr}.filters .wide{grid-column:auto}.formgrid{grid-template-columns:1fr}.span2,.span3{grid-column:auto}.wrap{padding:15px 10px 90px}}'
+          new='@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:1fr}.filters .wide{grid-column:auto}.formgrid{grid-template-columns:1fr}.span2,.span3{grid-column:auto}.wrap{padding:15px 10px 20px}.foot{position:static}.footin{padding:10px 10px 14px}}'
+          if old not in s:
+              raise SystemExit("TARGET_NOT_FOUND_OR_ALREADY_PATCHED")
+          p.write_text(s.replace(old,new,1),encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add f1-email-radar.html
+          git commit -m "Fix F1 Email Radar mobile fixed footer overlap"
+          git push origin HEAD:main
