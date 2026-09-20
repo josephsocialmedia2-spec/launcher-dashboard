@@ -24,7 +24,7 @@ async function loadConfig(){
 async function loadStats(){
  const comune=$('comuneFilter').value||null;
  STATE.stats=await rpc('f1_email_radar_dashboard',{p_comune:comune});
- [['kSubjects','subjects'],['kCompanies','companies'],['kPros','professionals'],['kEmails','emails'],['kPec','pec'],['kPhones','phones'],['kWeb','websites'],['kVerified','verified'],['kToVerify','to_verify'],['kDup','duplicates_merged']].forEach(([id,k])=>$(id).textContent=Number(STATE.stats?.[k]||0).toLocaleString('it-IT'));
+ [['kConfigured','configured_communes'],['kCompletedCommunes','completed_communes'],['kIncompleteCommunes','incomplete_communes'],['kSubjects','subjects'],['kCompanies','companies'],['kPros','professionals'],['kEmails','emails'],['kPec','pec'],['kPhones','phones'],['kWeb','websites'],['kVerified','verified'],['kToVerify','to_verify'],['kDup','duplicates_merged'],['kProvidersReady','providers_operational'],['kProvidersMissing','providers_not_configured'],['kAteco','ateco_catalog']].forEach(([id,k])=>{const el=$(id);if(el)el.textContent=Number(STATE.stats?.[k]||0).toLocaleString('it-IT')});
  $('atecoPill').textContent='ATECO '+Number(STATE.stats?.ateco_catalog||0).toLocaleString('it-IT');$('atecoPill').className='pill '+(Number(STATE.stats?.ateco_catalog||0)>=3000?'ok':'warn');const lu=STATE.stats?.last_updated?new Date(STATE.stats.last_updated):null;$('updatedPill').textContent=lu&&!Number.isNaN(lu.getTime())?'AGG. '+lu.toLocaleString('it-IT'):'AGGIORNAMENTO —';
 }
 async function loadEntities(){
