@@ -25,7 +25,8 @@ async function authUser(req:Request,url:string,anon:string,service:string){
  return null;
 }
 function sourceTemplates(env:any){
- const gp=!!env.GOOGLE_MAPS_API_KEY, brave=!!env.BRAVE_SEARCH_API_KEY, ri=!!env.REGISTRO_IMPRESE_API_BASE&&!!env.REGISTRO_IMPRESE_API_KEY;
+ const gp=!!env.GOOGLE_MAPS_API_KEY, brave=!!env.BRAVE_SEARCH_API_KEY;
+ const ri=!!env.REGISTRO_IMPRESE_API_BASE&&!!env.REGISTRO_IMPRESE_SEARCH_PATH&&!!env.REGISTRO_IMPRESE_API_KEY&&!!env.REGISTRO_IMPRESE_API_KEY_HEADER;
  return [
  {key:"REGISTRO_IMPRESE",label:"Registro Imprese / InfoCamere",status:ri?"PENDING":"CREDENTIALS_REQUIRED"},
  {key:"INI_PEC",label:"INI-PEC",status:"ACCESSO_NON_DISPONIBILE"},
@@ -72,31 +73,22 @@ async function officialSiteCandidate(dbUrl:string,service:string,actor:string,ru
  const pec=allEmails.find(pecLike)||"",email=allEmails.find(x=>!pecLike(x))||"";
  if(!email&&!pec&&!allTels[0]&&!vats[0])return {saved:false};
  const site=new URL(first.finalUrl).origin;
- const existing=await jfetch(dbUrl,service,"f1_email_radar_entities?select=*&comune=eq."+encodeURIComponent(run.comune)+"&limit=1000");
- let e=(existing||[]).find((x:any)=>{
-   try{return x.website&&new URL(/^https?:/i.test(x.website)?x.website:"https://"+x.website).origin===site}catch{return false}
- })||(existing||[]).find((x:any)=>email&&String(x.email||"").toLowerCase()===email);
  const denom=(first.title||site.replace(/^https?:\/\/(www\.)?/,"")).split(/[|–—]/)[0].trim().slice(0,180);
  const payload:any={
-   denomination:denom||site,comune:run.comune,ateco_code:ateco?.code||"",ateco_title:ateco?.title_it||"",
-   website:site,email,email_type:email?"EMAIL_GENERICA_AZIENDALE":"EMAIL_NON_VERIFICATA",pec,phone:allTels[0]||"",vat_number:vats[0]||"",
+   subject_type:"AZIENDA",denomination:denom||site,legal_name:"",category:"",profession:"",
+   comune:run.comune,frazione:"",indirizzo:"",civico:"",cap:"",provincia:"TO",
+   ateco_code:ateco?.code||"",ateco_title:ateco?.title_it||"",
+   latitude:null,longitude:null,mobile:"",website:site,email,email_type:email?"EMAIL_GENERICA_AZIENDALE":"EMAIL_NON_VERIFICATA",
+   pec,phone:allTels[0]||"",vat_number:vats[0]||"",activity_status:"DA_VERIFICARE",
    primary_source_type:"SITO_UFFICIALE",primary_source_url:first.finalUrl,verification_status:"PARZIALMENTE_VERIFICATO",
    confidence_score:75,marketing_status:"DA_VALUTARE",
    notes:"Scoperto da "+discoveryProvider+"; contatti salvati solo dopo verifica sul sito ufficiale."
  };
- const wasExisting=!!e;
- if(e){
-   const patch:any={updated_at:new Date().toISOString(),confidence_score:Math.max(Number(e.confidence_score||0),75)};
-   for(const k of ["email","pec","phone","vat_number","ateco_code","ateco_title"]){if(!e[k]&&payload[k])patch[k]=payload[k]}
-   if(!e.website)patch.website=site;
-   await jfetch(dbUrl,service,"f1_email_radar_entities?entity_id=eq."+e.entity_id,{method:"PATCH",body:JSON.stringify(patch),prefer:"return=minimal"});
- }else{
-   const rows=await jfetch(dbUrl,service,"f1_email_radar_entities",{method:"POST",body:JSON.stringify({
-     created_by:actor,subject_type:"AZIENDA",legal_name:"",category:"",profession:"",frazione:"",indirizzo:"",civico:"",cap:"",
-     provincia:"TO",latitude:null,longitude:null,mobile:"",activity_status:"DA_VERIFICARE",...payload
-   })});
-   e=rows?.[0];
- }
+ const up=await jfetch(dbUrl,service,"rpc/f1_email_radar_service_upsert_entity",{method:"POST",body:JSON.stringify({p_actor:actor,p_payload:payload})});
+ const entityId=up?.entity_id||"";
+ const wasExisting=!!up?.merged;
+ const rows=entityId?await jfetch(dbUrl,service,"f1_email_radar_entities?select=*&entity_id=eq."+encodeURIComponent(entityId)+"&limit=1"):[];
+ let e=rows?.[0]||null;
  if(e?.entity_id){
    await jfetch(dbUrl,service,"f1_email_radar_sources",{method:"POST",body:JSON.stringify({
      entity_id:e.entity_id,created_by:actor,source_type:"SITO_UFFICIALE",source_url:first.finalUrl,
@@ -106,7 +98,7 @@ async function officialSiteCandidate(dbUrl:string,service:string,actor:string,ru
      access_status:"OK",verified_at:new Date().toISOString()
    }),prefer:"resolution=ignore-duplicates,return=minimal"}).catch(()=>{});
  }
- return {saved:true,newEntity:!wasExisting,email:!!email,pec:!!pec,phone:!!allTels[0]};
+ return {saved:true,newEntity:!wasExisting,duplicate:wasExisting,email:!!email,pec:!!pec,phone:!!allTels[0]};
 }
 async function atecoBatch(dbUrl:string,service:string,lastCode:string,limit=5){
  let path="f1_ateco_2025?select=code,title_it&level=eq.6&order=code.asc&limit="+limit;
@@ -115,7 +107,7 @@ async function atecoBatch(dbUrl:string,service:string,lastCode:string,limit=5){
 }
 async function braveDiscovery(dbUrl:string,service:string,run:any,actor:string){
  const key=Deno.env.get("BRAVE_SEARCH_API_KEY");if(!key)throw new Error("BRAVE_SEARCH_API_KEY non configurata");
- const batch=await atecoBatch(dbUrl,service,run.last_ateco_code||"",5);let subjects=0,emails=0,pecs=0,phones=0;
+ const batch=await atecoBatch(dbUrl,service,run.last_ateco_code||"",5);let subjects=0,emails=0,pecs=0,phones=0,duplicates=0;
  for(const a of batch||[]){
   const q='"'+a.title_it+'" "'+run.comune+'" contatti';
   const u=new URL("https://api.search.brave.com/res/v1/web/search");
@@ -126,14 +118,14 @@ async function braveDiscovery(dbUrl:string,service:string,run:any,actor:string){
   for(const hit of (b?.web?.results||[]).slice(0,10)){
    if(!hit?.url)continue;
    const x=await officialSiteCandidate(dbUrl,service,actor,run,hit.url,a,"BRAVE_SEARCH");
-   if(x.saved){subjects++;if(x.email)emails++;if(x.pec)pecs++;if(x.phone)phones++}
+   if(x.saved){subjects++;if(x.email)emails++;if(x.pec)pecs++;if(x.phone)phones++;if(x.duplicate)duplicates++}
   }
   run.last_ateco_code=a.code;run.ateco_analyzed=Number(run.ateco_analyzed||0)+1;
   await jfetch(dbUrl,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({
     last_ateco_code:a.code,ateco_analyzed:run.ateco_analyzed,checkpoint:{phase:"search",provider:"SEARCH_PROVIDER",last_ateco_code:a.code},updated_at:new Date().toISOString()
   }),prefer:"return=minimal"});
  }
- return {subjects_found:subjects,emails_found:emails,pec_found:pecs,phones_found:phones,batch:(batch||[]).length};
+ return {subjects_found:subjects,emails_found:emails,pec_found:pecs,phones_found:phones,duplicates,batch:(batch||[]).length};
 }
 async function googlePlacesDiscovery(dbUrl:string,service:string,run:any,actor:string){
  const key=Deno.env.get("GOOGLE_MAPS_API_KEY");if(!key)throw new Error("GOOGLE_MAPS_API_KEY non configurata");
@@ -149,12 +141,12 @@ async function googlePlacesDiscovery(dbUrl:string,service:string,run:any,actor:s
   for(const p of b?.places||[]){
    if(!p?.websiteUri)continue;
    const x=await officialSiteCandidate(dbUrl,service,actor,run,p.websiteUri,a,"GOOGLE_PLACES");
-   if(x.saved){subjects++;if(x.email)emails++;if(x.pec)pecs++;if(x.phone)phones++}
+   if(x.saved){subjects++;if(x.email)emails++;if(x.pec)pecs++;if(x.phone)phones++;if(x.duplicate)duplicates++}
   }
   run.checkpoint={...(run.checkpoint||{}),phase:"google_places",google_last_ateco_code:a.code};
   await jfetch(dbUrl,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({checkpoint:run.checkpoint,updated_at:new Date().toISOString()}),prefer:"return=minimal"});
  }
- return {subjects_found:subjects,emails_found:emails,pec_found:pecs,phones_found:phones,batch:(batch||[]).length};
+ return {subjects_found:subjects,emails_found:emails,pec_found:pecs,phones_found:phones,duplicates,batch:(batch||[]).length};
 }
 async function processWebsites(url:string,service:string,run:any,actor:string){
  const entities=await jfetch(url,service,"f1_email_radar_entities?select=*&comune=eq."+encodeURIComponent(run.comune)+"&website=not.eq.&order=updated_at.asc&limit=20");
