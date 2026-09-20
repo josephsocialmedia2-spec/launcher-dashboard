@@ -37,10 +37,10 @@ Autenticazione:
 - SITI_UFFICIALI: operativo.
 - BRAVE SEARCH: chiamata API implementata, richiede `BRAVE_SEARCH_API_KEY`.
 - GOOGLE PLACES (NEW): chiamata Text Search implementata, richiede `GOOGLE_MAPS_API_KEY`. Usata solo per discovery; il record viene salvato dopo verifica sul sito ufficiale.
-- REGISTRO IMPRESE / INFOCAMERE: contratto/credenziali richiesti (`REGISTRO_IMPRESE_API_BASE`, `REGISTRO_IMPRESE_API_KEY`).
+- REGISTRO IMPRESE / INFOCAMERE: connettore contrattuale operativo a configurazione completata. Richiede base/path/API key/header e mapping risposta indicati in `supabase/.env.example`; nessun endpoint o schema contrattuale viene inventato.
 - INI-PEC: consultazione pubblica; automazione massiva non dichiarata disponibile senza modalità autorizzata.
 - INAD: consultazione pubblica; automazione esterna non dichiarata disponibile senza modalità autorizzata.
-- ALBI PROFESSIONALI: architettura adapter-based predisposta; singole fonti da configurare.
+- ALBI PROFESSIONALI: architettura adapter-based + catalogo `f1_email_radar_public_sources`. Sono registrate le fonti ufficiali Torino per Geometri, Architetti, Ingegneri, Commercialisti e Avvocati; restano `READY_PARTIAL` quando la fonte è interattiva e non offre un connettore massivo documentato.
 - FONTI LOCALI: provider parziale; richiede configurazione per ente/comune.
 
 ## Sicurezza e marketing
@@ -56,3 +56,16 @@ Il job invoca l'orchestratore con token letto da Supabase Vault.
 ## Pilot Avigliana
 Il pilot resta INCOMPLETE finché fonti/categorie applicabili non sono completate.
 I KPI non devono trasformare un campione QA in una dichiarazione di censimento completo.
+
+
+## Deduplicazione server-side
+La discovery automatica usa `f1_email_radar_service_upsert_entity`, RPC eseguibile soltanto dal `service_role`.
+Ordine di riconciliazione: P.IVA → PEC → email+Comune → dominio+Comune → denominazione+Comune+indirizzo.
+Le fonti restano storicizzate separatamente; il database marketing non viene alimentato automaticamente.
+
+## Fonti professionali ufficiali
+La tabella `f1_email_radar_public_sources` contiene il catalogo delle fonti professionali verificate.
+Per l'Ordine Ingegneri Torino è applicato `NON_USARE_MARKETING` perché la fonte stessa limita i contatti pubblicati alle comunicazioni professionali e non promozionali.
+
+## Stato rollout
+La queue contiene 41 Comuni canonici. Avigliana resta `PILOT`; gli altri restano `WAITING_PILOT` finché il pilot non raggiunge realmente `COMPLETED`.
