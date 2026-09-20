@@ -39,7 +39,8 @@ function sourceTemplates(env:any){
   {key:"INI_PEC",label:"INI-PEC",status:"INTERACTIVE_NOT_REQUIRED",provider_class:"INTERACTIVE_NOT_REQUIRED",sort_order:100},
   {key:"INAD",label:"INAD",status:"INTERACTIVE_NOT_REQUIRED",provider_class:"INTERACTIVE_NOT_REQUIRED",sort_order:110}
  ];
-}\nasync function crawlPage(url:string){
+}
+async function crawlPage(url:string){
  const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),9000);
  try{
   const r=await fetch(url,{redirect:"follow",signal:ctl.signal,headers:{"User-Agent":"F1-Email-Radar/3.0 (+https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.html)","Accept":"text/html,application/xhtml+xml"}});
@@ -65,7 +66,8 @@ function sourceTemplates(env:any){
   for(const m of html.matchAll(/<meta[^>]+content=["']([^"']*)["'][^>]+(?:property|name)=["']([^"']+)["'][^>]*>/gi))metas[String(m[2]).toLowerCase()]=m[1];
   return {finalUrl:r.url,title,textSample,emails,tels,vats,links,allLinks,jsonld,metas};
  }catch{return null}finally{clearTimeout(timer)}
-}\nasync function officialSiteCandidate
+}
+async function officialSiteCandidate
 async function officialSiteCandidate(dbUrl:string,service:string,actor:string,run:any,website:string,ateco:any,discoveryProvider:string){
  let base:string;try{base=new URL(/^https?:/i.test(website)?website:"https://"+website).href}catch{return {saved:false}}
  const first=await crawlPage(base);if(!first)return {saved:false};
@@ -389,11 +391,13 @@ async function startRun(url:string,service:string,actor:string,comune:string){
  const run=rows[0],env:any=Deno.env.toObject(),sources=sourceTemplates(env);
  await jfetch(url,service,"f1_email_radar_source_progress",{method:"POST",body:JSON.stringify(sources.map(s=>({run_id:run.run_id,created_by:actor,source_key:s.key,source_label:s.label,status:s.status,provider_class:s.provider_class,sort_order:s.sort_order}))),prefer:"return=minimal"});
  return run;
-}\nasync function updateProgress
+}
+async function updateProgress
 async function updateProgress(url:string,service:string,runId:string,key:string,status:string,stats:any={},error=""){
  const terminal=["COMPLETED","NON_APPLICABILE","OPTIONAL_NOT_CONFIGURED","INTERACTIVE_NOT_REQUIRED"];
  await jfetch(url,service,"f1_email_radar_source_progress?run_id=eq."+runId+"&source_key=eq."+key,{method:"PATCH",body:JSON.stringify({status,...stats,error,completed_at:terminal.includes(status)?new Date().toISOString():null,updated_at:new Date().toISOString()}),prefer:"return=minimal"});
-}\nasync function recalc
+}
+async function recalc
 async function recalc(url:string,service:string,runId:string){return await jfetch(url,service,"rpc/f1_email_radar_recalc_run",{method:"POST",body:JSON.stringify({p_run_id:runId})})}
 async function finalizeIfIdle(url:string,service:string,runId:string){
  const progress=await jfetch(url,service,"f1_email_radar_source_progress?select=*&run_id=eq."+runId+"&order=sort_order.asc");
@@ -409,7 +413,8 @@ async function finalizeIfIdle(url:string,service:string,runId:string){
    if(String(run.comune).toLowerCase()==="avigliana")await jfetch(url,service,"f1_email_radar_municipality_queue?status=eq.WAITING_PILOT",{method:"PATCH",body:JSON.stringify({status:"READY",updated_at:new Date().toISOString()}),prefer:"return=minimal"}).catch(()=>{});
  }
  return run;
-}\n\nasync function prepareResumeProviders
+}\n
+async function prepareResumeProviders
 async function prepareResumeProviders(url:string,service:string,run:any,forceWebsite=false){
  const now=Date.now();const progress=await jfetch(url,service,"f1_email_radar_source_progress?select=*&run_id=eq."+run.run_id+"&order=sort_order.asc");
  for(const p of progress||[]){
@@ -422,7 +427,8 @@ async function prepareResumeProviders(url:string,service:string,run:any,forceWeb
  }
  await jfetch(url,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({status:"RUNNING",requested_action:"",updated_at:new Date().toISOString()}),prefer:"return=minimal"});
  const rr=await jfetch(url,service,"f1_email_radar_runs?select=*&run_id=eq."+run.run_id+"&limit=1");return rr?.[0]||run;
-}\nasync function processRun
+}
+async function processRun
 async function processRun(url:string,service:string,run:any,actor:string){
  if(run.requested_action==="PAUSE"||run.status==="PAUSED")return run;
  if(run.requested_action==="STOP"){await jfetch(url,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({status:"STOPPED",updated_at:new Date().toISOString()}),prefer:"return=minimal"});return {...run,status:"STOPPED"}}
