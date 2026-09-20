@@ -119,3 +119,11 @@ Regole operative:
 Cron: `f1-email-acquisition-hourly-cycle`, minuto 35 di ogni ora, con token letto da Supabase Vault.
 
 Il pannello è integrato in `f1-email-radar.html` e mostra blocchi reali, lead READY, consenso richiesto, email assenti, PEC-only, soppressioni e qualità dati.
+
+
+## Tracking e-mail privacy-by-default — 20/09/2026
+
+Il percorso di invio F1 usa ora il link diretto al modulo Agent Pricing e non genera eventi di click individuali tramite `campaign-click-f1`.
+Il pixel `{{OPEN_PIXEL_URL}}` è stato rimosso dal template attivo e `campaign-admin-f1` non lo valorizza.
+
+Motivo operativo: il tracciamento occulto delle aperture resta disabilitato finché non esiste una gestione del consenso/informativa e della revoca granulare specificamente adeguata al tracking. Le metriche operative prioritarie restano invio, bounce, risposta, booking, show, opportunità e cliente.
