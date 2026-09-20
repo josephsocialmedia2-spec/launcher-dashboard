@@ -21,7 +21,7 @@ dialog{width:min(900px,95vw);background:#0e1510;color:#fff;border:1px solid var(
 <script defer src="supabase-sync.js?v=20260920-emailradar1"></script>
 <script defer src="f1-dashboard-auth-guard.js?v=20260920-emailradar1"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script defer src="f1-email-radar.js?v=20260920-1"></script>
+<script defer src="f1-email-radar.js?v=20260920-autonomous1"></script>
 </head>
 <body>
 <main class="wrap">
@@ -45,12 +45,13 @@ dialog{width:min(900px,95vw);background:#0e1510;color:#fff;border:1px solid var(
     <a class="btn alt" href="crm.html">CRM F1</a>
   </div>
 
-  <div class="notice" id="legalNotice"><b>REGOLA:</b> email pubblica ≠ consenso marketing. I record di Email Radar sono intelligence territoriale; nessun contatto viene inserito automaticamente nel database marketing.</div>
+  <div class="notice ok" id="legalNotice"><b>AUTONOMIA:</b> il censimento usa una pipeline zero‑credential (OpenStreetMap/Overpass, fonti comunali/Wikidata, siti ufficiali e analisi ATECO). Brave, Google Places e InfoCamere sono arricchimenti opzionali e non bloccano la queue. Email pubblica ≠ consenso marketing; PEC resta separata. <span class="meta">Dati OSM: © OpenStreetMap contributors, ODbL.</span></div>
 
   <div class="stats">
     <div class="stat"><b id="kConfigured">0</b><span>COMUNI CONFIGURATI</span></div>
     <div class="stat"><b id="kCompletedCommunes">0</b><span>COMUNI COMPLETATI</span></div>
-    <div class="stat"><b id="kIncompleteCommunes">0</b><span>COMUNI INCOMPLETI</span></div>
+    <div class="stat"><b id="kIncompleteCommunes">0</b><span>COMUNI IN CORSO / ATTESA</span></div>
+    <div class="stat"><b id="kErrorCommunes">0</b><span>COMUNI IN ERRORE</span></div>
     <div class="stat"><b id="kSubjects">0</b><span>SOGGETTI</span></div>
     <div class="stat"><b id="kCompanies">0</b><span>AZIENDE</span></div>
     <div class="stat"><b id="kPros">0</b><span>PROFESSIONISTI</span></div>
@@ -63,7 +64,8 @@ dialog{width:min(900px,95vw);background:#0e1510;color:#fff;border:1px solid var(
     <div class="stat"><b id="kDup">0</b><span>DUPLICATI UNITI</span></div>
     <div class="stat"><b id="kProvidersReady">0</b><span>FONTI OPERATIVE</span></div>
     <div class="stat"><b id="kProvidersPartial">0</b><span>FONTI PARZIALI</span></div>
-    <div class="stat"><b id="kProvidersMissing">0</b><span>FONTI NON CONFIGURATE</span></div>
+    <div class="stat"><b id="kProvidersMissing">0</b><span>FONTI OPZIONALI NON CONFIG.</span></div>
+    <div class="stat"><b id="kProvidersRequired">0</b><span>FONTI AUTONOME RICHIESTE</span></div>
     <div class="stat"><b id="kAteco">0</b><span>ATECO UFFICIALI</span></div>
   </div>
 
@@ -91,9 +93,14 @@ dialog{width:min(900px,95vw);background:#0e1510;color:#fff;border:1px solid var(
       <h2>Fonti e copertura</h2>
       <div class="meta" id="runMeta">Nessuna scansione selezionata.</div>
       <div class="sourceList" id="sourceList"></div>
-      <div class="notice" style="margin-top:10px"><b>NESSUNA SIMULAZIONE:</b> una fonte che richiede credenziali/API resta “DA CONFIGURARE” finché non esiste un connettore autorizzato.</div>
+      <div class="notice" style="margin-top:10px"><b>COMPLETION ENGINE:</b> solo i provider <code>REQUIRED_AUTOMATABLE</code> determinano il completamento. Le fonti interattive o commerciali restano opzionali e tracciate senza bloccare il Comune.</div>
     </aside>
   </div>
+  <section class="panel">
+    <h2>Queue autonoma dei Comuni</h2>
+    <div class="meta" id="queueMeta">Caricamento queue…</div>
+    <div class="tablewrap"><table style="min-width:720px"><thead><tr><th>ORDINE</th><th>COMUNE</th><th>LATO</th><th>STATO</th><th>ULTIMO RUN</th></tr></thead><tbody id="queueRows"></tbody></table></div>
+  </section>
 </main>
 
 <dialog id="entityDialog">
