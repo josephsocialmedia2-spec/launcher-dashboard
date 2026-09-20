@@ -50,9 +50,6 @@ gpu_image = (
         "face-alignment>=1.4,<2",
         "safetensors>=0.4,<1",
         "opencv-python-headless>=4.10,<5",
-        "basicsr==1.4.2",
-        "facexlib==0.3.0",
-        "gfpgan==1.3.8",
         "av>=12,<16",
         "torch==2.8.0",
         "torchvision==0.23.0",
@@ -60,6 +57,7 @@ gpu_image = (
     )
     .run_commands(
         "git clone --depth 1 https://github.com/OpenTalker/SadTalker.git /opt/SadTalker",
+        "sed -i '/from gfpgan import GFPGANer/d' /opt/SadTalker/src/utils/face_enhancer.py",
         "sed -i 's/preds.astype(np.float, copy=False)/preds.astype(float, copy=False)/g' /opt/SadTalker/src/face3d/util/my_awing_arch.py",
         "cd /opt/SadTalker && bash scripts/download_models.sh",
         "mkdir -p /opt/piper",
