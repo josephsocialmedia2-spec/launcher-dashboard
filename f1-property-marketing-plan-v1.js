@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const VERSION='20260921-property-marketing-plan-v1';
+const VERSION='20260921-property-marketing-magazine-v3';
 const $=id=>document.getElementById(id),txt=v=>String(v??'').trim(),up=v=>txt(v).toUpperCase();
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 let ctx=null,plan={},pdfBlob=null,pdfName='',signedUrl='';
@@ -30,7 +30,177 @@ async function analyzeLocation(){const r=ctx.record||{},address=[r.via,r.civico,
 async function analyze(){status('Analisi completa immobile…');collect();await analyzeLocation();if(plan.source_url)await fetchSource();plan.target_analysis=plan.target_analysis||{};plan.target_analysis.targets=targetFor();render();await save(false);status('✓ Piano aggiornato: posizione, target, strategia e 3 appuntamenti pronti.')}
 function page(doc,y,n=22){if(y+n>282){doc.addPage();return 18}return y}
 function write(doc,t,x,y,w=174,size=9,bold=false){doc.setFont('helvetica',bold?'bold':'normal');doc.setFontSize(size);const a=doc.splitTextToSize(txt(t)||'—',w);doc.text(a,x,y);return y+a.length*(size*.42)+2}
-async function createPdf(){collect();if(!window.jspdf?.jsPDF)throw new Error('PDF non disponibile');const J=window.jspdf.jsPDF,doc=new J({unit:'mm',format:'a4'}),r=ctx.record||{},m=marketNews();let y=17;doc.setTextColor(11,111,61);doc.setFont('helvetica','bold');doc.setFontSize(19);doc.text('F1 IMMOBILIARE',18,y);y+=8;doc.setTextColor(30);doc.setFontSize(16);doc.text('PIANO DI MARKETING PERSONALIZZATO',18,y);y+=8;y=write(doc,[r.via,r.civico,r.comune].filter(Boolean).join(' · '),18,y,174,12,true);y=write(doc,(r.property_type||'Tipologia da confermare')+(m?.market_price?' · Prezzo rilevato € '+m.market_price:''),18,y,174,9);const sec=t=>{y=page(doc,y,16);doc.setTextColor(201,20,31);doc.setFont('helvetica','bold');doc.setFontSize(12);doc.text(t,18,y);doc.setTextColor(30);y+=6};sec('1. IMMOBILE E POSIZIONAMENTO');y=write(doc,plan.marketing_description,18,y);if(plan.source_title)y=write(doc,'Fonte online consultata: '+plan.source_title,18,y,174,8);sec('2. ANALISI DELLA POSIZIONE');y=write(doc,locationText(plan.location_analysis),18,y);sec('3. TARGET');for(const t of plan.target_analysis?.targets||[]){y=page(doc,y,8);y=write(doc,'• '+t,20,y,170)}sec('4. COME PROPONIAMO L’IMMOBILE');for(const t of plan.strategy?.channels||STRATEGY){y=page(doc,y,8);y=write(doc,'• '+t,20,y,170)}sec('5. VERIFICA DOCUMENTALE');for(const d of DOCS){y=page(doc,y,8);y=write(doc,'• '+d[1]+' — '+(plan.documents?.[d[0]]||'DA_VERIFICARE'),20,y,170,8)}sec('6. I 3 APPUNTAMENTI');for(const a of Object.values(plan.appointments||{})){y=page(doc,y,12);y=write(doc,a.title,20,y,170,9,true);y=write(doc,(a.datetime?new Date(a.datetime).toLocaleString('it-IT'):'DATA DA CONCORDARE')+' · '+(a.status||'DA_FISSARE'),20,y,170,8);y=write(doc,a.note||'',20,y,170,8)}sec('7. PERCORSO DI LANCIO');y=write(doc,'PRE-LANCIO → CONTROLLO DOCUMENTI → FOTOGRAFO/VIDEO → MATERIALI → PUBBLICAZIONE E PROMOZIONE → OPEN HOUSE → FOLLOW-UP E REPORT PROPRIETARIO.',18,y,174,9,true);if(plan.plan_notes){sec('NOTE');y=write(doc,plan.plan_notes,18,y)}y=page(doc,y,22);doc.setDrawColor(210);doc.line(18,y,192,y);y+=7;doc.setFontSize(8);doc.setTextColor(90);doc.text('F1 Immobiliare · f1immobiliaresusa@outlook.it',18,y);y+=5;doc.text('Le verifiche tecniche e documentali sono confermate dai professionisti competenti. Il piano promozionale non costituisce garanzia di vendita o di tempi di vendita.',18,y,{maxWidth:174});const safe=([r.comune,r.via,r.civico].filter(Boolean).join('_')||'Immobile').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9_-]+/g,'_').slice(0,70);pdfName='F1_Piano_Marketing_'+safe+'.pdf';pdfBlob=doc.output('blob');return{doc,blob:pdfBlob,name:pdfName}}
+async function createPdf(){
+ collect();
+ if(!window.jspdf?.jsPDF)throw new Error('PDF non disponibile');
+ const J=window.jspdf.jsPDF,doc=new J({unit:'mm',format:'a4'}),r=ctx.record||{},m=marketNews(),A4W=210,A4H=297;
+ const G=[7,72,43],R=[194,18,28],INK=[23,31,27],MUT=[95,105,99],PALE=[245,248,246],WARM=[250,247,242],LINE=[220,227,222];
+ const safeText=v=>txt(v)||'DATO NON DISPONIBILE';
+ const first=(...vals)=>{for(const v of vals){if(txt(v))return txt(v)}return'DATO NON DISPONIBILE'};
+ const addr=[r.via,r.civico,r.comune].filter(Boolean).join(' · ')||'IMMOBILE';
+ const propertyType=first(r.property_type,r.tipologia,r.type);
+ const owner=first(plan.owner_name);
+ const surface=first(r.superficie,r.surface,r.mq,r.square_meters);
+ const rooms=first(r.locali,r.rooms,r.vani);
+ const floor=first(r.piano,r.floor);
+ const condition=first(r.stato_immobile,r.condition);
+ const energy=first(r.classe_energetica,r.energy_class);
+ const features=Array.isArray(r.signals)&&r.signals.length?r.signals.join(', '):'DATO NON DISPONIBILE';
+ const sourceTitle=plan.source_title||'';
+ const loc=plan.location_analysis||{},targets=plan.target_analysis?.targets||targetFor(),channels=plan.strategy?.channels||STRATEGY,appts=plan.appointments||apptsDefault(),docs=plan.documents||docsDefault();
+
+ function setFill(rgb){doc.setFillColor(rgb[0],rgb[1],rgb[2])}
+ function setText(rgb){doc.setTextColor(rgb[0],rgb[1],rgb[2])}
+ function rect(x,y,w,h,radius=0,fill=true,stroke=false){
+  if(fill) setFill(PALE); if(stroke) doc.setDrawColor(LINE[0],LINE[1],LINE[2]);
+  if(radius) doc.roundedRect(x,y,w,h,radius,radius,fill&&stroke?'FD':fill?'F':'S');
+  else doc.rect(x,y,w,h,fill&&stroke?'FD':fill?'F':'S');
+ }
+ function line(x1,y1,x2,y2,color=LINE,width=.35){doc.setDrawColor(...color);doc.setLineWidth(width);doc.line(x1,y1,x2,y2)}
+ function t(text,x,y,size=9,bold=false,color=INK,maxW=null){
+  doc.setFont('helvetica',bold?'bold':'normal');doc.setFontSize(size);setText(color);
+  const lines=maxW?doc.splitTextToSize(String(text),maxW):[String(text)];
+  doc.text(lines,x,y);return y+lines.length*(size*.42)+1.2;
+ }
+ function kicker(text,x,y){doc.setFont('helvetica','bold');doc.setFontSize(7);setText(MUT);doc.text(String(text).toUpperCase(),x,y);return y+5}
+ function brand(pageNo,label='PIANO DI MARKETING'){
+  setFill(G);doc.rect(0,0,A4W,7,'F');doc.setFont('helvetica','bold');doc.setFontSize(8);setText(G);doc.text('F1 IMMOBILIARE',15,14);
+  doc.setFont('helvetica','normal');doc.setFontSize(6.5);setText(MUT);doc.text(label,195,14,{align:'right'});
+  line(15,282,195,282,LINE,.3);doc.setFontSize(6.5);setText(MUT);doc.text('F1 IMMOBILIARE · PERSONE · CASE · VALORI',15,288);doc.text(String(pageNo).padStart(2,'0'),195,288,{align:'right'});
+ }
+ function pageHead(pageNo,title,sub,label='MODELLO STANDARD'){
+  if(pageNo>1)doc.addPage();
+  brand(pageNo);
+  kicker(label,15,25);let y=32;
+  doc.setFont('helvetica','bold');doc.setFontSize(24);setText(G);
+  const lines=doc.splitTextToSize(title,180);doc.text(lines,15,y);y+=lines.length*9.5;
+  if(sub){doc.setFont('helvetica','normal');doc.setFontSize(10);setText(INK);const s=doc.splitTextToSize(sub,180);doc.text(s,15,y);y+=s.length*4.5+4}
+  line(15,y,52,y,R,1.1);return y+7;
+ }
+ function chip(text,x,y,w,color=G){
+  doc.setFillColor(color[0],color[1],color[2]);doc.roundedRect(x,y,w,7,2,2,'F');doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255);doc.text(String(text),x+w/2,y+4.7,{align:'center'});
+ }
+ function card(x,y,w,h,title,body,accent=G){
+  doc.setFillColor(250,252,250);doc.setDrawColor(...LINE);doc.roundedRect(x,y,w,h,2.2,2.2,'FD');
+  doc.setFillColor(...accent);doc.rect(x,y,3,h,'F');t(title,x+7,y+8,9,true,accent,w-12);t(body,x+7,y+14,7.6,false,INK,w-12);
+ }
+ function statusBadge(text,x,y,w=30){
+  const u=up(text);let color=[166,112,0],bg=[255,246,214],label=text;
+  if(u==='DISPONIBILE'||u==='COMPLETATO'||u==='VERIFICATO'){color=[28,122,69];bg=[228,246,234]}
+  else if(u==='DA_RICHIEDERE'||u==='DA_RIPROGRAMMARE'){color=[177,38,38];bg=[255,231,231]}
+  else if(u==='NON_APPLICABILE'){color=[95,105,99];bg=[240,242,241]}
+  doc.setFillColor(...bg);doc.roundedRect(x,y,w,6,2,2,'F');doc.setFont('helvetica','bold');doc.setFontSize(5.7);doc.setTextColor(...color);doc.text(String(label).replaceAll('_',' '),x+w/2,y+4.1,{align:'center'});
+ }
+ function bullets(items,x,y,w,size=8,gap=6){
+  for(const item of items){doc.setFillColor(...R);doc.circle(x,y-1.5,1.1,'F');y=t(item,x+5,y,size,false,INK,w-5)+gap-3}
+  return y;
+ }
+ function infoRow(label,value,x,y,w){
+  t(label.toUpperCase(),x,y,6.4,true,MUT,w*.38);t(safeText(value),x+w*.4,y,8.1,true,INK,w*.6);line(x,y+4.2,x+w,y+4.2,LINE,.25);return y+9;
+ }
+ function miniStep(n,title,body,x,y,w){
+  doc.setFillColor(...R);doc.circle(x+5,y+5,4,'F');doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(255);doc.text(String(n),x+5,y+7,{align:'center'});
+  t(title,x+12,y+4.5,8.5,true,G,w-14);t(body,x+12,y+10,6.8,false,INK,w-14);
+ }
+
+ // 01 COPERTINA
+ brand(1,'DOSSIER PROPRIETARIO');
+ setFill(WARM);doc.rect(0,20,A4W,262,'F');
+ kicker('MODELLO STANDARD PERSONALIZZATO',15,31);
+ doc.setFont('helvetica','bold');doc.setFontSize(31);setText(G);doc.text('PIANO DI',15,48);setText(R);doc.text('MARKETING',15,61);doc.text('IMMOBILIARE',15,74);
+ t('Come F1 presenta, prepara e promuove realmente il tuo immobile.',15,86,11,false,INK,115);
+ rect(15,101,180,48,3,true,true);
+ kicker('IMMOBILE',22,111);t(addr,22,120,16,true,G,165);t(propertyType+(m?.market_price?' · € '+m.market_price:''),22,130,9,true,INK,165);
+ if(owner!=='DATO NON DISPONIBILE')t('Preparato per: '+owner,22,139,8,false,MUT,165);
+ chip('DOCUMENTI',15,164,31,G);chip('FOTO / VIDEO',49,164,33,G);chip('PROMOZIONE',85,164,34,R);chip('OPEN HOUSE',122,164,31,G);chip('FOLLOW-UP',156,164,30,G);
+ t(plan.marketing_description||baseDescription(),15,182,9,false,INK,180);
+ rect(15,232,180,30,2,true,false);t('ALL’INTERNO',21,241,7,true,MUT);t('Carta d’Identità · Analisi posizione e target · Verifica documentale · Produzione contenuti · Promozione · 3 appuntamenti · Mandato e proposta · Mutuo e notaio',21,249,8.1,true,G,165);
+
+ // 02 CARTA IDENTITA
+ let y=pageHead(2,'CARTA D’IDENTITÀ DELL’IMMOBILE','Il profilo sintetico costruito dai documenti verificati e dalle informazioni raccolte.','UN IMMOBILE · TUTTE LE INFORMAZIONI');
+ card(15,y,180,24,'DAI DOCUMENTI NASCE UNA SCHEDA CHIARA','F1 raccoglie, ordina e sintetizza i dati utili per presentare l’immobile in modo coerente. Le verifiche tecniche restano affidate ai professionisti competenti.',G);y+=31;
+ rect(15,y,116,104,3,true,true);kicker('DATI IMMOBILE',22,y+10);let ry=y+19;
+ for(const [lab,val] of [['Comune',r.comune],['Via',first(r.via)+(txt(r.civico)?' '+r.civico:'')],['Tipologia',propertyType],['Superficie',surface],['Locali',rooms],['Piano',floor],['Stato immobile',condition],['Classe energetica',energy],['Elementi / segnali',features]])ry=infoRow(lab,val,22,ry,101);
+ rect(137,y,58,104,3,true,true);kicker('COME VIENE COSTRUITA',143,y+10);miniStep(1,'Raccogliamo','documenti e informazioni disponibili',143,y+18,45);miniStep(2,'Verifichiamo','completezza e coerenza',143,y+40,45);miniStep(3,'Organizziamo','dati leggibili e confrontabili',143,y+62,45);miniStep(4,'Presentiamo','una scheda chiara per clienti e professionisti',143,y+84,45);
+ y+=111;card(15,y,180,28,'RISULTATO PER IL PROPRIETARIO','Una Carta d’Identità aggiornata, leggibile e pronta ad accompagnare la promozione, le visite e il percorso verso la compravendita.',R);
+
+ // 03 POSIZIONE E TARGET
+ y=pageHead(3,'ANALISI DELLA POSIZIONE E DEL TARGET','Prima di comunicare, F1 definisce il contesto dell’immobile e chi può essere realmente interessato.','PRIMA CAPIAMO · POI PROMUOVIAMO');
+ card(15,y,180,30,'POSIZIONE',locationText(loc),G);y+=37;
+ kicker('TARGET PRINCIPALI',15,y);y+=5;
+ const tg=targets.length?targets:['Target da definire dopo conferma di tipologia, metratura, prezzo e caratteristiche.'];
+ for(let i=0;i<Math.min(5,tg.length);i++){const col=i%2,row=Math.floor(i/2);card(15+col*91,y+row*31,88,27,'TARGET '+(i+1),tg[i],i===0?R:G)}
+ y+=Math.ceil(Math.min(5,tg.length)/2)*31+4;
+ card(15,y,180,29,'COME USIAMO QUESTA ANALISI','Il messaggio, i canali e il materiale vengono adattati alle caratteristiche dell’immobile. Non tutti i canali parlano allo stesso pubblico.',R);
+
+ // 04 VERIFICA DOCUMENTALE
+ y=pageHead(4,'VERIFICA DOCUMENTALE','Sicurezza, chiarezza e preparazione prima della promozione dell’immobile.','PRIMA DI PUBBLICARE');
+ const dRows=DOCS.slice(0,9);let dy=y;
+ for(const d of dRows){doc.setFillColor(250,252,250);doc.roundedRect(15,dy,180,13,1.5,1.5,'F');t(d[1],21,dy+8,7.8,true,INK,125);statusBadge(docs[d[0]]||'DA_VERIFICARE',155,dy+3.5,34);dy+=15}
+ y=dy+2;card(15,y,87,37,'PERCHÉ È IMPORTANTE','Riduce errori, aiuta a presentare correttamente l’immobile, fa emergere criticità prima della promozione e rende più chiari i passaggi successivi.',G);
+ card(108,y,87,37,'COSA FA F1','Organizza la checklist, segnala cosa manca, coordina la raccolta e prepara i dati utili alla presentazione. Le verifiche tecniche e legali spettano ai professionisti competenti.',R);
+ y+=44;card(15,y,180,25,'OUTPUT','Dalla documentazione verificata nasce la Carta d’Identità dell’Immobile mostrata nella pagina precedente.',G);
+
+ // 05 PRODUZIONE CONTENUTI
+ y=pageHead(5,'PRODUZIONE DEI CONTENUTI','Come F1 prepara la presentazione visiva e narrativa dell’immobile.','NON BASTA PUBBLICARE UN ANNUNCIO');
+ const contents=[
+  ['FOTO','Servizio fotografico professionale per valorizzare ambienti, luce e punti di forza.'],
+  ['VIDEO','Riprese e montaggi per raccontare spazi, atmosfera e percorso della casa.'],
+  ['REEL','Contenuti verticali per social e distribuzione mobile.'],
+  ['TESTI','Descrizioni chiare per portali, social, WhatsApp ed email.'],
+  ['BROCHURE','Presentazione digitale ordinata e condivisibile.'],
+  ['PLANIMETRIA','Materiale pulito e leggibile quando disponibile e verificato.']
+ ];
+ for(let i=0;i<contents.length;i++){const col=i%3,row=Math.floor(i/3);card(15+col*61,y+row*56,57,50,contents[i][0],contents[i][1],i===1?R:G)}
+ y+=119;card(15,y,180,31,'IL NOSTRO METODO','Sopralluogo visivo → selezione punti di forza → produzione foto/video/testi → rifinitura dei materiali → approvazione e lancio.',R);
+
+ // 06 PROMOZIONE
+ y=pageHead(6,'PROMOZIONE DELL’IMMOBILE','Dove e come F1 porta l’immobile davanti al pubblico giusto.','PIÙ VISIBILITÀ · PIÙ OPPORTUNITÀ');
+ const promo=['Portali immobiliari disponibili','Social media','Database contatti compatibili','WhatsApp','Email','Promozione geolocalizzata','Attività di zona','Open House'];
+ for(let i=0;i<promo.length;i++){const col=i%4,row=Math.floor(i/4);card(15+col*45.5,y+row*39,42,34,String(i+1).padStart(2,'0')+' · '+promo[i],i===0?'Presentazione completa e coerente sui canali immobiliari scelti.':i===5?'Campagne e contenuti mirati sul territorio.':'Messaggio adattato al canale e al pubblico.',i===6?R:G)}
+ y+=84;kicker('DAL CONTENUTO ALLA RICHIESTA',15,y);y+=5;
+ miniStep(1,'Contenuti','foto, video, descrizione',15,y,43);miniStep(2,'Pubblicazione','canali selezionati',60,y,43);miniStep(3,'Visibilità','pubblico coerente',105,y,43);miniStep(4,'Contatto','interesse e richieste',150,y,43);
+ y+=25;card(15,y,180,31,'COME MISURIAMO','Raccogliamo richieste, visite, feedback e segnali di interesse. Il proprietario riceve aggiornamenti e il piano viene adattato ai risultati reali.',R);
+
+ // 07 3 APPUNTAMENTI
+ y=pageHead(7,'I 3 APPUNTAMENTI FONDAMENTALI','Il percorso operativo che F1 organizza per preparare e promuovere l’immobile.','UN PERCORSO CHIARO');
+ const apArr=[appts.documents,appts.photographer,appts.openhouse];
+ for(let i=0;i<3;i++){const a=apArr[i]||{};const x=15+i*61;doc.setFillColor(...(i===2?R:G));doc.circle(x+6,y+6,5,'F');doc.setTextColor(255);doc.setFont('helvetica','bold');doc.setFontSize(8);doc.text(String(i+1),x+6,y+8,{align:'center'});t(a.title||['CONTROLLO DOCUMENTI','FOTOGRAFO / VIDEO','OPEN HOUSE'][i],x,y+20,10,true,G,55);t(a.note||'',x,y+31,7.4,false,INK,55);statusBadge(a.status||'DA_FISSARE',x,y+52,30);t(a.datetime?new Date(a.datetime).toLocaleString('it-IT'):'DATA DA CONCORDARE',x,y+64,6.6,true,MUT,55)}
+ y+=84;card(15,y,180,36,'DOPO I 3 APPUNTAMENTI','Pubblicazione → raccolta richieste → visite → follow-up → report al proprietario → gestione delle proposte → percorso verso preliminare e rogito.',R);
+ y+=43;kicker('COSA RICEVE IL PROPRIETARIO',15,y);y+=5;
+ bullets(['Carta d’Identità dell’Immobile','Piano di Marketing personalizzato','Brochure digitale','Aggiornamenti e report','Invio via WhatsApp ed Email'],18,y,170,8,6);
+
+ // 08 MANDATO E PROPOSTA
+ y=pageHead(8,'MANDATO DI INCARICO E PROPOSTA DI ACQUISTO','Gli strumenti che danno struttura, chiarezza e tracciabilità alla trattativa.','FASE CONTRATTUALE');
+ card(15,y,86,75,'MANDATO DI INCARICO','Definisce obiettivi, attività promozionali, durata, modalità operative, documentazione e aggiornamenti. Il documento contrattuale viene gestito dal soggetto/professionista abilitato che segue l’intermediazione.',G);
+ card(109,y,86,75,'PROPOSTA DI ACQUISTO','Raccoglie dati delle parti, prezzo e condizioni, caparra, tempistiche, eventuale mutuo, documenti allegati e passaggi successivi. La gestione formale è affidata al professionista abilitato.',R);
+ y+=84;kicker('COSA VIENE CONTROLLATO',15,y);y+=5;
+ const proposal=['Dati delle parti','Prezzo e condizioni','Caparra','Tempistiche','Eventuale mutuo','Documenti allegati','Passaggi successivi'];
+ for(let i=0;i<proposal.length;i++){const col=i%4,row=Math.floor(i/4);card(15+col*45.5,y+row*34,42,29,proposal[i],i===4?'Presenza e condizioni della clausola/iter mutuo, quando previsto.':'Informazioni organizzate e verificabili.',i===4?R:G)}
+ y+=73;card(15,y,180,30,'COSA FA F1','Coordina i passaggi operativi, mantiene ordinata la documentazione, prepara il materiale utile alla trattativa e accompagna il cliente nel confronto con i professionisti competenti.',G);
+
+ // 09 MUTUO E NOTAIO
+ y=pageHead(9,'DAL MUTUO AL NOTAIO','L’accompagnamento prosegue fino alla conclusione del percorso.','VENDITORI E ACQUIRENTI · SEMPRE AL FIANCO');
+ card(15,y,86,72,'ASSISTENZA MUTUO','F1 accompagna il cliente nella raccolta dei documenti utili per banca o consulente del credito, coordina i passaggi e monitora le tempistiche. Valutazione creditizia e delibera restano di competenza degli istituti/professionisti.',G);
+ card(109,y,86,72,'VERSO IL NOTAIO','F1 organizza il percorso verso il rogito: riepilogo documenti, coordinamento appuntamenti, allineamento con le parti e supporto fino all’atto. Le verifiche notarili restano di competenza del notaio.',R);
+ y+=82;kicker('COME ACCOMPAGNIAMO',15,y);y+=6;
+ miniStep(1,'Documenti','raccolta e ordine',15,y,34);miniStep(2,'Banca / credito','presentazione pratica',51,y,34);miniStep(3,'Delibera / verifica','monitoraggio tempi',87,y,34);miniStep(4,'Notaio','organizzazione e coordinamento',123,y,34);miniStep(5,'Rogito','firma e conclusione',159,y,34);
+ y+=30;card(15,y,180,42,'COSA RICEVE IL CLIENTE','Supporto organizzativo · aggiornamenti chiari · documenti ordinati · passaggi spiegati · coordinamento dei professionisti · affiancamento fino alla conclusione.',G);
+
+ // 10 CHIUSURA
+ y=pageHead(10,'IL PERCORSO F1 PER IL TUO IMMOBILE','Un unico dossier per capire cosa facciamo, quando lo facciamo e come vieni aggiornato.','DALLA PRIMA ANALISI AL ROGITO');
+ const road=['Analisi immobile','Documenti','Carta d’Identità','Foto / video','Target e posizionamento','Promozione','Open House','Follow-up','Proposta','Mutuo / notaio','Rogito'];
+ y=bullets(road,18,y,80,8.3,5);
+ card(108,45,87,73,'CONTATTI PROPRIETARIO','Nome: '+safeText(plan.owner_name)+'\nTelefono: '+safeText(plan.owner_phone)+'\nEmail: '+safeText(plan.owner_email),R);
+ card(108,126,87,50,'FONTE / ANNUNCIO',sourceTitle?safeText(sourceTitle):'Nessuna fonte online confermata. Il piano resta legato alla scheda reale dell’immobile.',G);
+ if(plan.plan_notes)card(108,184,87,48,'NOTE DEL PIANO',plan.plan_notes,G);
+ card(15,223,180,39,'F1 IMMOBILIARE','Un processo chiaro, visivo e organizzato per valorizzare ogni immobile. Le attività riservate di mediazione, le verifiche tecniche, creditizie, legali e notarili vengono svolte dai soggetti abilitati competenti.',R);
+
+ const safe=(addr||'Immobile').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Za-z0-9_-]+/g,'_').slice(0,70);
+ pdfName='F1_Dossier_Marketing_'+safe+'.pdf';
+ pdfBlob=doc.output('blob');
+ return{doc,blob:pdfBlob,name:pdfName,pages:10};
+}
 async function uploadPdf(){if(!pdfBlob)await createPdf();const cfg=window.F1_SUPABASE,token=await window.F1Sync.authToken(),me=await window.F1StaffData.me(),base=cfg.url.replace(/\/$/,''),path=(me.user_id||'user')+'/'+ctx.record.civic_record_id+'/'+Date.now()+'-'+pdfName,upres=await fetch(base+'/storage/v1/object/f1-marketing-brochures/'+path,{method:'POST',headers:{apikey:cfg.anonKey,Authorization:'Bearer '+token,'Content-Type':'application/pdf','x-upsert':'true'},body:pdfBlob});if(!upres.ok)throw new Error(await upres.text());const sg=await fetch(base+'/storage/v1/object/sign/f1-marketing-brochures/'+path,{method:'POST',headers:{apikey:cfg.anonKey,Authorization:'Bearer '+token,'content-type':'application/json'},body:JSON.stringify({expiresIn:604800})}),sj=await sg.json();if(!sg.ok)throw new Error(sj.message||'signed url');const su=sj.signedURL||sj.signedUrl||sj.signed_url||'';signedUrl=su.startsWith('http')?su:base+'/storage/v1'+su;plan.brochure_path=path;plan.brochure_generated_at=new Date().toISOString();await save(false);return signedUrl}
 async function generatePdf(download=true){status('Generazione brochure PDF…');await save(false);const p=await createPdf();if(download)p.doc.save(p.name);try{await uploadPdf();status('✓ Brochure PDF generata e link privato valido 7 giorni.')}catch(e){status('✓ PDF generato. Link online non disponibile: '+(e?.message||e),true)}return p}
 async function sharePdf(){try{if(!pdfBlob)await generatePdf(false);const file=new File([pdfBlob],pdfName,{type:'application/pdf'}),msg='Piano di Marketing personalizzato per '+[ctx.record.via,ctx.record.civico,ctx.record.comune].filter(Boolean).join(' ')+'.';if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share({title:'F1 Immobiliare · Piano di Marketing',text:msg,files:[file]});status('✓ Menu di condivisione aperto.')}else status('Condivisione file non supportata: usa WHATSAPP o EMAIL con il link.',true)}catch(e){status('Condivisione non disponibile: '+(e?.message||e),true)}}
