@@ -1,6 +1,6 @@
 (()=> {
 'use strict';
-const VERSION='20260921-notiziere-accordion-v6';
+const VERSION='20260921-notiziere-marketing-both-v7';
 const DATA_URL='./data/seller-lead-engine-public.json';
 const GEO_CACHE_KEY='f1_seller_geo_comuni_v1';
 const CATEGORIES=[
@@ -55,7 +55,7 @@ function injectStyle(){
  .f1-notiziere-today{display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid #dce9e1;padding-bottom:7px;margin-bottom:7px}.f1-notiziere-today h2{font-size:13px;margin:0;font-weight:950}.f1-notiziere-today small{font-size:8px;color:var(--mut);font-weight:800}
  .f1-current-action{border-radius:12px;background:#f2fbf6;padding:9px}.f1-action-top{display:flex;justify-content:space-between;gap:8px;align-items:center}.f1-action-counter{font-size:9px;font-weight:950;color:#07502d}.f1-action-kind{font-size:8px;font-weight:950;background:#fff;border:1px solid #b9dfc9;border-radius:999px;padding:4px 7px}
  .f1-action-place{font-size:17px;font-weight:950;line-height:1.15;margin:7px 0}.f1-action-name{font-size:10px;font-weight:900;color:#425148;margin-bottom:7px}.f1-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.f1-action-block{border:1px solid #cfe4d7;background:#fff;border-radius:9px;padding:7px}.f1-action-block span{display:block;font-size:7px;font-weight:950;color:#68766e;letter-spacing:.06em}.f1-action-block strong{display:block;font-size:10px;line-height:1.3;margin-top:2px}.f1-action-script{margin-top:6px;border-left:3px solid #0b6f3d;background:#fff;padding:7px;border-radius:7px;font-size:9px;line-height:1.4}.f1-action-script b{display:block;font-size:7px;color:#526158;letter-spacing:.06em;margin-bottom:3px}
- .f1-start-action{width:100%;min-height:45px;border:0;border-radius:10px;background:#08733e;color:#fff;font-weight:950;font-size:12px;margin-top:7px;cursor:pointer}.f1-start-action:disabled{opacity:.55}
+ .f1-start-action{width:100%;min-height:45px;border:0;border-radius:10px;background:#08733e;color:#fff;font-weight:950;font-size:12px;margin-top:7px;cursor:pointer}.f1-start-action:disabled{opacity:.55}.f1-action-marketing{display:none;width:100%;min-height:43px;border:0;border-radius:10px;background:#c9141f;color:#fff;font-weight:950;font-size:10px;margin:0 0 7px;cursor:pointer}.f1-action-marketing.show{display:block}
  .f1-after{margin-top:7px}.f1-after-title{font-size:8px;font-weight:950;color:#526158;margin-bottom:4px}.f1-after-row{display:grid;grid-template-columns:20px minmax(0,1fr);gap:6px;align-items:center;padding:4px 0;border-top:1px solid #dce9e1}.f1-after-row:first-of-type{border-top:0}.f1-after-row i{width:20px;height:20px;border-radius:999px;background:#eaf8ef;color:#07502d;display:grid;place-items:center;font-style:normal;font-size:8px;font-weight:950}.f1-after-row strong{font-size:9px;display:block}.f1-after-row small{font-size:7px;color:var(--mut);display:block}
  .f1-secondary-tools{border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:6px;overflow:hidden}.f1-secondary-tools>summary{cursor:pointer;list-style:none;padding:9px 10px;font-size:9px;font-weight:950;display:flex;justify-content:space-between;align-items:center}.f1-secondary-tools>summary::-webkit-details-marker{display:none}.f1-secondary-tools>summary:after{content:'⌄';font-size:16px}.f1-secondary-tools[open]>summary:after{content:'⌃'}.f1-secondary-inner{display:grid;gap:6px;padding:0 7px 7px}
  .f1-secondary-inner .f1-acq-panel{box-shadow:none!important;margin:0!important}.f1-secondary-inner .f1-acq-grid2{gap:6px!important}
@@ -90,6 +90,7 @@ function build(){
   <div class="f1-current-action">
    <div class="f1-action-top"><span id="f1ActionCounter" class="f1-action-counter">AZIONE 1</span><span id="f1ActionKind" class="f1-action-kind">—</span></div>
    <div id="f1ActionPlace" class="f1-action-place">Calcolo prossima azione…</div>
+   <button id="f1ActionMarketingPlan" class="f1-action-marketing" type="button">📕 PIANO DI MARKETING · MOSTRA AL CLIENTE</button>
    <div id="f1ActionName" class="f1-action-name"></div>
    <div class="f1-action-grid">
     <div class="f1-action-block"><span>COSA FARE</span><strong id="f1ActionDo">—</strong></div>
@@ -172,6 +173,7 @@ function buildModal(){
 function bind(){
  $('f1AcqRefresh')?.addEventListener('click',()=>loadData(true));
  $('f1StartCurrentAction')?.addEventListener('click',startCurrentAction);
+ $('f1ActionMarketingPlan')?.addEventListener('click',openMarketingForCurrentTask);
  $('f1AcqGps')?.addEventListener('click',activateGps);
  $('f1AcqAddNews')?.addEventListener('click',()=>openNewsForm());
  $('f1AcqCloseNews')?.addEventListener('click',()=>closeNewsForm());
@@ -223,6 +225,27 @@ function scriptForTask(t){
  return'';
 }
 function taskKindLabel(t){if(!t)return'—';if(t.kind==='NEWS')return t.category||'NOTIZIA DA VERIFICARE';if(t.kind==='SELLER')return'FONTE DA VERIFICARE';if(t.kind==='CRM')return'CONTATTO / FOLLOW-UP';return'GIRO TERRITORIALE'}
+function taskCivicRecord(t){
+ const direct=txt(t?.record?.civic_record_id);
+ if(direct){const r=(crm.civics||[]).find(x=>txt(x.civic_record_id)===direct);if(r)return r}
+ const rr=t?.record||{},comune=normalizePlace(rr.comune||t?.comune),via=normalizePlace(rr.via||t?.via),civico=txt(rr.civico||t?.civico);
+ if(!comune&&!via&&!civico)return null;
+ return (crm.civics||[]).find(x=>normalizePlace(x.comune)===comune&&normalizePlace(x.via)===via&&txt(x.civico)===civico)||null;
+}
+function marketingContextForTask(t){
+ const r=taskCivicRecord(t);if(!r)return null;
+ const same=x=>txt(x?.civic_record_id)===txt(r.civic_record_id)||(normalizePlace(x?.comune)===normalizePlace(r.comune)&&normalizePlace(x?.via)===normalizePlace(r.via)&&txt(x?.civico)===txt(r.civico));
+ const news=(crm.news||[]).filter(same),conversations=(crm.conversations||[]).filter(same),notes=(crm.notes||[]).filter(same),letters=(crm.letters||[]).filter(same);
+ const market=news.find(n=>n.market_publisher||n.market_price||n.market_agency||n.market_time_on_market)||null,fsbo=news.find(n=>u(n.market_publisher)==='PRIVATO')||null;
+ return {record:r,news,conversations,notes,letters,market,fsbo};
+}
+function openMarketingForCurrentTask(){
+ const t=(lastOperationalPlan||operationalPlan()).tasks?.[0];if(!t)return;
+ const context=marketingContextForTask(t);
+ if(!context){alert('SCHEDA IMMOBILE NON ANCORA DISPONIBILE PER QUESTA AZIONE.');return}
+ if(!window.F1PropertyMarketingPlan?.open){alert('PIANO DI MARKETING NON ANCORA PRONTO. RICARICA LA PAGINA.');return}
+ window.F1PropertyMarketingPlan.open(context);
+}
 function startCurrentAction(){
  const p=lastOperationalPlan||operationalPlan(),t=p?.tasks?.[0];if(!t)return;
  if(window.F1GuidedAction?.open){window.F1GuidedAction.open(t);return}
@@ -240,6 +263,7 @@ function renderAIDirective(){
  if($('f1ActionCounter'))$('f1ActionCounter').textContent='AZIONE 1 DI '+p.tasks.length;
  if($('f1ActionKind'))$('f1ActionKind').textContent=taskKindLabel(t);
  if($('f1ActionPlace'))$('f1ActionPlace').textContent=t.place||BASIN_LABEL;
+ const mkt=$('f1ActionMarketingPlan');if(mkt)mkt.classList.toggle('show',!!taskCivicRecord(t)&&(t.kind==='CRM'||t.kind==='NEWS'));
  if($('f1ActionName'))$('f1ActionName').textContent=t.name||'';
  if($('f1ActionDo'))$('f1ActionDo').textContent=t.action||'VERIFICA';
  if($('f1ActionGoal'))$('f1ActionGoal').textContent=t.objective||'REGISTRA UN ESITO UTILE';
