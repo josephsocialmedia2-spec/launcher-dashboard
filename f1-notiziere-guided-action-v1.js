@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const VERSION='20260921-guided-action-v2';
+const VERSION='20260921-guided-action-v3-marketing-head';
 const $=id=>document.getElementById(id);
 const txt=v=>String(v??'').trim();
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -32,7 +32,7 @@ function injectStyle(){
  .f1-guided-modal{position:fixed;inset:0;z-index:180;background:rgba(5,20,12,.62);display:none;align-items:flex-end;justify-content:center}.f1-guided-modal.open{display:flex}
  .f1-guided-sheet{width:min(100%,760px);max-height:96dvh;overflow:auto;background:#f6f8f7;border-radius:18px 18px 0 0;padding:10px;box-shadow:0 -12px 40px rgba(0,0,0,.22)}
  .f1-guided-head{position:sticky;top:-10px;z-index:4;background:#f6f8f7;padding:8px 0 9px;border-bottom:1px solid #dce6df;display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
- .f1-guided-head .ey{font-size:8px;font-weight:950;color:#68766e;letter-spacing:.08em}.f1-guided-head h2{font-size:16px;margin:2px 0 0;font-weight:950}.f1-guided-close{width:34px;height:34px;border:1px solid #cbd8d0;border-radius:9px;background:#fff;font-size:20px;font-weight:900}
+ .f1-guided-head .ey{font-size:8px;font-weight:950;color:#68766e;letter-spacing:.08em}.f1-guided-head h2{font-size:16px;margin:2px 0 0;font-weight:950}.f1-guide-marketing-head{display:none;width:100%;margin-top:7px;min-height:42px;border:0;border-radius:9px;background:#c9141f;color:#fff;font-size:10px;font-weight:950;padding:8px;cursor:pointer}.f1-guide-marketing-head.show{display:block}.f1-guided-close{width:34px;height:34px;border:1px solid #cbd8d0;border-radius:9px;background:#fff;font-size:20px;font-weight:900}
  .f1-guided-progress{display:flex;gap:3px;margin:8px 0}.f1-guided-progress i{height:4px;flex:1;background:#dce6df;border-radius:999px}.f1-guided-progress i.done,.f1-guided-progress i.active{background:#08733e}
  .f1-guide-step{border:1px solid #cbd8d0;border-radius:11px;background:#fff;margin:5px 0;overflow:hidden}.f1-guide-step summary{list-style:none;cursor:pointer;padding:9px 10px;font-size:10px;font-weight:950;display:flex;align-items:center;justify-content:space-between;gap:8px}.f1-guide-step summary::-webkit-details-marker{display:none}.f1-guide-step summary span{font-size:8px;color:#68766e}.f1-guide-step[open]{border-color:#0b7a43;box-shadow:0 4px 14px rgba(11,111,61,.07)}.f1-guide-step[open] summary{background:#edf8f1}
  .f1-guide-body{padding:0 10px 10px}.f1-guide-place{font-size:18px;font-weight:950;line-height:1.15}.f1-guide-kind{display:inline-block;margin-top:5px;border:1px solid #b9dfc9;border-radius:999px;padding:4px 7px;font-size:8px;font-weight:950;color:#07502d;background:#f4fbf7}
@@ -51,7 +51,7 @@ function ensureModal(){
  injectStyle();
  const m=document.createElement('div');m.id='f1GuidedModal';m.className='f1-guided-modal';
  m.innerHTML=`<div class="f1-guided-sheet">
-  <div class="f1-guided-head"><div><div class="ey">F1 TERRITORY · NOTIZIERE GUIDATO</div><h2 id="f1GuideTitle">AZIONE OPERATIVA</h2></div><button id="f1GuideClose" class="f1-guided-close" type="button">×</button></div>
+  <div class="f1-guided-head"><div style="min-width:0;flex:1"><div class="ey">F1 TERRITORY · NOTIZIERE GUIDATO</div><h2 id="f1GuideTitle">AZIONE OPERATIVA</h2><button id="f1GuideMarketingHead" class="f1-guide-marketing-head" type="button">📕 PIANO DI MARKETING · MOSTRA AL CLIENTE</button></div><button id="f1GuideClose" class="f1-guided-close" type="button">×</button></div>
   <div id="f1GuideProgress" class="f1-guided-progress"></div>
   <div id="f1GuideSteps"></div>
   <div id="f1GuideResult" class="f1-guide-result"><h3>✓ RISULTATO REGISTRATO</h3><div id="f1GuideSaved"></div><strong id="f1GuideNext">Ricalcolo prossima azione…</strong><button id="f1GuideMarketingBtn" class="f1-guide-btn" style="margin-top:8px;background:#c9141f;color:#fff;border-color:#c9141f;display:none" type="button">PIANO DI MARKETING · MOSTRA AL CLIENTE</button><button id="f1GuideNextBtn" class="f1-guide-btn primary" style="margin-top:6px" type="button">VAI ALLA PROSSIMA AZIONE</button></div>
@@ -264,6 +264,20 @@ async function save(){
   $('f1GuideSteps').style.display='none';$('f1GuideProgress').style.display='none';$('f1GuideResult').classList.add('show');const mb=$('f1GuideMarketingBtn');if(mb&&civicId){mb.style.display='block';mb.onclick=()=>openMarketingForCivic(civicId)};
  }catch(e){status.className='f1-guide-status bad';status.textContent='ERRORE: '+(e?.message||e);$('f1GuideSave').disabled=false}
 }
+async function civicIdForTask(task){
+ const direct=txt(task?.record?.civic_record_id);if(direct)return direct;
+ const data=await window.F1StaffData.rpc('f1_territory_mobile_crm_v5',{p_limit:700})||{},r=task?.record||{};
+ const comune=txt(r.comune||task?.comune).toLowerCase(),via=txt(r.via||task?.via).toLowerCase(),civico=txt(r.civico||task?.civico);
+ const rec=(data.civics||[]).find(x=>txt(x.comune).toLowerCase()===comune&&txt(x.via).toLowerCase()===via&&txt(x.civico)===civico);
+ return txt(rec?.civic_record_id);
+}
+async function openMarketingForTask(task){
+ try{
+  const id=await civicIdForTask(task);
+  if(!id)throw new Error('SCHEDA IMMOBILE NON ANCORA DISPONIBILE');
+  await openMarketingForCivic(id);
+ }catch(e){alert(e?.message||e)}
+}
 async function openMarketingForCivic(civicId){
  try{
   const data=await window.F1StaffData.rpc('f1_territory_mobile_crm_v5',{p_limit:700})||{},record=(data.civics||[]).find(x=>txt(x.civic_record_id)===txt(civicId));
@@ -289,6 +303,7 @@ function open(task){
  ensureModal();activeTask=task;selectedOutcome='';
  $('f1GuideResult').classList.remove('show');$('f1GuideSteps').style.display='block';$('f1GuideProgress').style.display='flex';
  $('f1GuideTitle').textContent=(task.place||'AZIONE')+' · '+kindLabel(task);
+ const mh=$('f1GuideMarketingHead');if(mh){mh.classList.add('show');mh.onclick=()=>openMarketingForTask(task)}
  buildSteps(task);$('f1GuidedModal').classList.add('open');document.body.style.overflow='hidden';
 }
 function close(){try{recognition?.stop()}catch(_){};$('f1GuidedModal')?.classList.remove('open');document.body.style.overflow='';activeTask=null}
