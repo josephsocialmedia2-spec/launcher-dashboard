@@ -318,10 +318,32 @@ async function openMarketingForRecord(r){
   window.F1PropertyMarketingPlan.open(context);
 }
 async function openCurrentMarketingPlan(){
+  if(!window.F1PropertyMarketingPlan?.open){
+    alert('PIANO DI MARKETING NON ANCORA PRONTO. RICARICA LA PAGINA.');
+    return;
+  }
   try{
-    const r=await ensureCurrentCivicRecord();
-    await openMarketingForRecord(r);
-  }catch(e){toast(e?.message||e,true)}
+    let r=null;
+    const p=progress(),cv=civic();
+    if(p?.progress_id&&cv){
+      try{r=await ensureCurrentCivicRecord()}catch(_){}
+    }
+    if(!r){
+      const last=state.crm?.last_position||{};
+      r=(state.crm?.civics||[]).find(x=>txt(x.civic_record_id)===txt(last.civic_record_id))||
+        (state.crm?.civics||[]).find(x=>txt(x.comune).toLowerCase()===txt(last.comune).toLowerCase()&&txt(x.via).toLowerCase()===txt(last.via).toLowerCase()&&txt(x.civico)===txt(last.civico))||null;
+    }
+    if(r){
+      await openMarketingForRecord(r);
+      return;
+    }
+    window.F1TerritoryCurrentProperty={record:{civic_record_id:'',comune:'',via:'',civico:cv||'',property_type:''},news:[],conversations:[],notes:[],letters:[],market:null,fsbo:null};
+    window.F1PropertyMarketingPlan.open(window.F1TerritoryCurrentProperty);
+  }catch(e){
+    console.warn('[F1 marketing plan open]',e);
+    window.F1TerritoryCurrentProperty={record:{civic_record_id:'',comune:'',via:'',civico:civic()||'',property_type:''},news:[],conversations:[],notes:[],letters:[],market:null,fsbo:null};
+    window.F1PropertyMarketingPlan.open(window.F1TerritoryCurrentProperty);
+  }
 }
 async function createLetter(r){try{const l=await rpc('f1_territory_letter_create_record_v3',{p_civic_record_id:r.civic_record_id});await refreshCRM();modal('excelModal',false);modal('propertyModal',false);await openLetter(l.letter_id,true)}catch(e){alert(e.message||e)}}
 async function openLetter(id,verify=false){const l=state.crm.letters.find(x=>x.letter_id===id)||await (async()=>{await refreshCRM(false);return state.crm.letters.find(x=>x.letter_id===id)})();if(!l)return;state.activeLetterId=l.letter_id;$('letterDate').textContent=new Date(l.created_at||Date.now()).toLocaleDateString('it-IT',{day:'2-digit',month:'long',year:'numeric'});$('letterOperator').textContent=l.operator_name||'Funzionario F1';$('letterSignName').textContent=l.operator_name||'Funzionario F1';$('letterPhone').textContent=l.operator_phone||'—';$('letterAddress').textContent=l.address_text||`${l.via} ${l.civico}, ${l.comune}`;$('addressState').textContent=l.address_verified_at?'✓ INDIRIZZO VERIFICATO ONLINE':'Indirizzo CRM pronto.';modal('letterModal');if(verify&&!l.address_verified_at)verifyLetterAddress()}
@@ -355,7 +377,7 @@ async function boot(){wire();if(!await ensureAuth())return;await load(true);cons
 <script src="f1-territory-home-dashboard-v1.js?v=20260919-home-dashboard-v5"></script>
 <script src="f1-territory-acquisition-dashboard-v1.js?v=20260921-notiziere-marketing-both-v7"></script>
 <script src="f1-notiziere-guided-action-v1.js?v=20260921-guided-action-v3-marketing-head"></script>
-<script src="f1-property-marketing-plan-v1.js?v=20260921-protected-magazine-12p-v5"></script>
+<script src="f1-property-marketing-plan-v1.js?v=20260921-protected-magazine-12p-v6"></script>
 <script src="f1-territory-needs-radar-v1.js?v=20260920-needs-radar-v1"></script>
 </body>
 </html>
