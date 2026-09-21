@@ -78,7 +78,6 @@ def supabase_rpc(config: dict[str, Any], function_name: str, payload: dict[str, 
         headers={
             "Content-Type": "application/json",
             "apikey": key,
-            "Authorization": f"Bearer {key}",
         },
     )
     try:
