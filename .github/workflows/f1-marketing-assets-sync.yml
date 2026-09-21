@@ -1,0 +1,39 @@
+name: F1 Marketing Assets Sync
+on:
+  push:
+    paths:
+      - '.github/workflows/f1-marketing-assets-sync.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download F1 magazine pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/f1-marketing-magazine
+          curl -L --fail --retry 3 'https://s3.amazonaws.com/document-export-us1.canva.com/F3GZA/DAHVziF3GZA/1/thumbnail/0001.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUHVZ3RB6IW%2F20260920%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260920T101037Z&X-Amz-Expires=78068&X-Amz-Signature=2706683f584c357e4a2e330457e5c4f3090708377cabe11820ca29f024bbba7c&X-Amz-SignedHeaders=host&response-expires=Mon%2C%2021%20Sep%202026%2007%3A51%3A45%20GMT' -o 'assets/f1-marketing-magazine/01-copertina.png'
+          curl -L --fail --retry 3 'https://s3.amazonaws.com/document-export-us1.canva.com/F3GZA/DAHVziF3GZA/1/thumbnail/0002.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUHVZ3RB6IW%2F20260920%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260920T151429Z&X-Amz-Expires=59836&X-Amz-Signature=d7aedd7f884a5c264341779fcfc542e7e0c92460cb1b98cc6e703204975f7923&X-Amz-SignedHeaders=host&response-expires=Mon%2C%2021%20Sep%202026%2007%3A51%3A45%20GMT' -o 'assets/f1-marketing-magazine/02-carta-identita.png'
+          curl -L --fail --retry 3 'https://s3.amazonaws.com/document-export-us1.canva.com/F3GZA/DAHVziF3GZA/1/thumbnail/0003.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUHVZ3RB6IW%2F20260920%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260920T072322Z&X-Amz-Expires=88103&X-Amz-Signature=a83c63e82270e497a38ad73d7010d4deb031f2dac599ac9e61e694bbabf124e2&X-Amz-SignedHeaders=host&response-expires=Mon%2C%2021%20Sep%202026%2007%3A51%3A45%20GMT' -o 'assets/f1-marketing-magazine/03-verifica-documentale.png'
+          curl -L --fail --retry 3 'https://s3.amazonaws.com/document-export-us1.canva.com/F3GZA/DAHVziF3GZA/1/thumbnail/0004.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUHVZ3RB6IW%2F20260920%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260920T075119Z&X-Amz-Expires=86426&X-Amz-Signature=9c78ae721785bb1d91baa82992a5caa4fa82ddfeba5d5d18338d0691e7966746&X-Amz-SignedHeaders=host&response-expires=Mon%2C%2021%20Sep%202026%2007%3A51%3A45%20GMT' -o 'assets/f1-marketing-magazine/04-produzione-contenuti.png'
+          curl -L --fail --retry 3 'https://s3.amazonaws.com/document-export-us1.canva.com/F3GZA/DAHVziF3GZA/1/thumbnail/0005.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUHVZ3RB6IW%2F20260920%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260920T173636Z&X-Amz-Expires=51309&X-Amz-Signature=31b711f60c5aecdfe5959a634b0eaad9ea0d5b7f61b5dd942037ac0741874a08&X-Amz-SignedHeaders=host&response-expires=Mon%2C%2021%20Sep%202026%2007%3A51%3A45%20GMT' -o 'assets/f1-marketing-magazine/05-promozione.png'
+          curl -L --fail --retry 3 'https://s3.amazonaws.com/document-export-us1.canva.com/F3GZA/DAHVziF3GZA/1/thumbnail/0006.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUHVZ3RB6IW%2F20260920%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260920T111543Z&X-Amz-Expires=74162&X-Amz-Signature=6af37cd2df8fe93f6e92d69886b7f96bb137d0de6b289367ff628756643e81df&X-Amz-SignedHeaders=host&response-expires=Mon%2C%2021%20Sep%202026%2007%3A51%3A45%20GMT' -o 'assets/f1-marketing-magazine/06-tre-appuntamenti.png'
+          curl -L --fail --retry 3 'https://s3.amazonaws.com/document-export-us1.canva.com/F3GZA/DAHVziF3GZA/1/thumbnail/0007.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUHVZ3RB6IW%2F20260920%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260920T193909Z&X-Amz-Expires=43956&X-Amz-Signature=c51c3be570a38f21442469000f09f975319440f81a72512ced7e8efa9464a0d5&X-Amz-SignedHeaders=host&response-expires=Mon%2C%2021%20Sep%202026%2007%3A51%3A45%20GMT' -o 'assets/f1-marketing-magazine/07-mandato-proposta.png'
+          curl -L --fail --retry 3 'https://s3.amazonaws.com/document-export-us1.canva.com/F3GZA/DAHVziF3GZA/1/thumbnail/0008.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUHVZ3RB6IW%2F20260920%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260920T215047Z&X-Amz-Expires=36058&X-Amz-Signature=c3043f757eb86dc86fd9a8f7785ebfd7dd3f95cb412a2c48053b498bc9fff8cf&X-Amz-SignedHeaders=host&response-expires=Mon%2C%2021%20Sep%202026%2007%3A51%3A45%20GMT' -o 'assets/f1-marketing-magazine/08-mutuo-notaio.png'
+          ls -lh assets/f1-marketing-magazine
+      - name: Commit assets
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/f1-marketing-magazine
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+          git commit -m "assets: add F1 marketing magazine graphics"
+          git push
