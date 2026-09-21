@@ -34,7 +34,7 @@ if errorlevel 1 (
 >>"%ROOT%\AVVIA_BRIDGE.cmd" echo start "F1 ChatGPT Uploader" /min "%VENV%\Scripts\pythonw.exe" "%ROOT%\f1_chatgpt_uploader.py" --serve
 
 >"%ROOT%\AGGIORNA_BRIDGE.cmd" echo @echo off
->>"%ROOT%\AGGIORNA_BRIDGE.cmd" echo taskkill /IM pythonw.exe /F ^>nul 2^>nul
+>>"%ROOT%\AGGIORNA_BRIDGE.cmd" echo powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-CimInstance Win32_Process ^| Where-Object { $_.CommandLine -like '*f1_chatgpt_uploader.py*' -or $_.CommandLine -like '*f1_ollama_bridge.py*' } ^| ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"
 >>"%ROOT%\AGGIORNA_BRIDGE.cmd" echo powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -UseBasicParsing '%RAW%/f1_chatgpt_uploader.py' -OutFile '%ROOT%\f1_chatgpt_uploader.py'; Invoke-WebRequest -UseBasicParsing '%RAW%/f1_ollama_bridge.py' -OutFile '%ROOT%\f1_ollama_bridge.py'"
 >>"%ROOT%\AGGIORNA_BRIDGE.cmd" echo call "%ROOT%\AVVIA_BRIDGE.cmd"
 
