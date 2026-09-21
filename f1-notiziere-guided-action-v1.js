@@ -213,7 +213,6 @@ async function saveNewsTask(d,t,civicId,leadId){
   p_market_time_on_market:txt(r.market_time_on_market),p_market_source_url:txt(r.market_source_url),
   p_seller_qualification:d
  });
- if(d.outcome==='NOTIZIA_ERRATA')await window.F1StaffData.rpc('f1_territory_news_resolve_v2',{p_observation_id:r.observation_id||t.id});
  if(civicId){
   await window.F1StaffData.rpc('f1_territory_note_add_v4',{p_civic_record_id:civicId,p_note_type:'NOTIZIERE_GUIDATO',p_note_text:compiledNote(d,t),p_audio_path:'',p_audio_mime:'',p_audio_duration_seconds:null,p_photo_path:'',p_source_file_name:''});
   await window.F1StaffData.rpc('f1_territory_conversation_add_record_v4',{
@@ -223,6 +222,7 @@ async function saveNewsTask(d,t,civicId,leadId){
    p_appointment_at:d.outcome==='APPUNTAMENTO_PRESO'&&d.appointment_at?new Date(d.appointment_at).toISOString():null
   });
  }
+ if(civicId||d.outcome==='NOTIZIA_ERRATA')await window.F1StaffData.rpc('f1_territory_news_resolve_v2',{p_observation_id:r.observation_id||t.id});
 }
 async function saveCrmTask(d,t,civicId,leadId){
  if(!civicId)throw new Error('RECORD IMMOBILE NON DISPONIBILE: registra almeno la nota nella scheda CRM.');
