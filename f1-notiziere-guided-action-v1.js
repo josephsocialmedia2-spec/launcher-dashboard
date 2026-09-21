@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const VERSION='20260921-guided-action-v1';
+const VERSION='20260921-guided-action-v2';
 const $=id=>document.getElementById(id);
 const txt=v=>String(v??'').trim();
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -54,7 +54,7 @@ function ensureModal(){
   <div class="f1-guided-head"><div><div class="ey">F1 TERRITORY · NOTIZIERE GUIDATO</div><h2 id="f1GuideTitle">AZIONE OPERATIVA</h2></div><button id="f1GuideClose" class="f1-guided-close" type="button">×</button></div>
   <div id="f1GuideProgress" class="f1-guided-progress"></div>
   <div id="f1GuideSteps"></div>
-  <div id="f1GuideResult" class="f1-guide-result"><h3>✓ RISULTATO REGISTRATO</h3><div id="f1GuideSaved"></div><strong id="f1GuideNext">Ricalcolo prossima azione…</strong><button id="f1GuideNextBtn" class="f1-guide-btn primary" style="margin-top:8px" type="button">VAI ALLA PROSSIMA AZIONE</button></div>
+  <div id="f1GuideResult" class="f1-guide-result"><h3>✓ RISULTATO REGISTRATO</h3><div id="f1GuideSaved"></div><strong id="f1GuideNext">Ricalcolo prossima azione…</strong><button id="f1GuideMarketingBtn" class="f1-guide-btn" style="margin-top:8px;background:#c9141f;color:#fff;border-color:#c9141f;display:none" type="button">PIANO DI MARKETING · MOSTRA AL CLIENTE</button><button id="f1GuideNextBtn" class="f1-guide-btn primary" style="margin-top:6px" type="button">VAI ALLA PROSSIMA AZIONE</button></div>
  </div>`;
  document.body.appendChild(m);
  $('f1GuideClose').onclick=close;
@@ -261,8 +261,18 @@ async function save(){
   const plan=window.F1TerritoryAcquisitionDashboard?.getOperationalPlan?.(),next=plan?.tasks?.[0];
   $('f1GuideSaved').textContent='Esito: '+d.outcome.replaceAll('_',' ')+' · '+(t.place||'');
   $('f1GuideNext').textContent=next?'ORA FAI: '+(next.place||next.name||'PROSSIMA AZIONE')+' · '+next.action:'Nessuna altra azione prioritaria disponibile.';
-  $('f1GuideSteps').style.display='none';$('f1GuideProgress').style.display='none';$('f1GuideResult').classList.add('show');
+  $('f1GuideSteps').style.display='none';$('f1GuideProgress').style.display='none';$('f1GuideResult').classList.add('show');const mb=$('f1GuideMarketingBtn');if(mb&&civicId){mb.style.display='block';mb.onclick=()=>openMarketingForCivic(civicId)};
  }catch(e){status.className='f1-guide-status bad';status.textContent='ERRORE: '+(e?.message||e);$('f1GuideSave').disabled=false}
+}
+async function openMarketingForCivic(civicId){
+ try{
+  const data=await window.F1StaffData.rpc('f1_territory_mobile_crm_v5',{p_limit:700})||{},record=(data.civics||[]).find(x=>txt(x.civic_record_id)===txt(civicId));
+  if(!record)throw new Error('SCHEDA IMMOBILE NON TROVATA');
+  const same=x=>txt(x?.civic_record_id)===txt(civicId)||(txt(x?.comune).toLowerCase()===txt(record.comune).toLowerCase()&&txt(x?.via).toLowerCase()===txt(record.via).toLowerCase()&&txt(x?.civico)===txt(record.civico));
+  const context={record,news:(data.news||[]).filter(same),conversations:(data.conversations||[]).filter(same),notes:(data.notes||[]).filter(same),letters:(data.letters||[]).filter(same)};
+  if(!window.F1PropertyMarketingPlan?.open)throw new Error('MODULO PIANO DI MARKETING NON PRONTO');
+  close();window.F1PropertyMarketingPlan.open(context);
+ }catch(e){alert(e?.message||e)}
 }
 function startDictation(){
  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
