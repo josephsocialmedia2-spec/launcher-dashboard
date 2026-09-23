@@ -1,0 +1,42 @@
+name: F1 Funnel Builder online smoke test
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "f1-funnel-builder/**"
+      - ".github/workflows/f1-funnel-online-smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for GitHub Pages and verify F1 Funnel Builder
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-funnel-builder/"
+          echo "Checking $URL"
+          ok=0
+          for i in $(seq 1 30); do
+            if curl -fsSL --connect-timeout 10 --max-time 30 "$URL" -o /tmp/f1.html; then
+              if grep -q 'F1_FUNNEL_DEPLOY_20260923' /tmp/f1.html \
+                && grep -q '1. APPUNTI / TESTO ESTRATTO' /tmp/f1.html \
+                && grep -q '2. PARTI SALIENTI' /tmp/f1.html \
+                && grep -q '3. SCHEMA A CASCATA AUTOMATICO' /tmp/f1.html \
+                && grep -q '4. PREVIEW DEL LAVORO FINITO' /tmp/f1.html \
+                && grep -q 'localStorage' /tmp/f1.html \
+                && grep -q 'AGGIUNGI SELEZIONE' /tmp/f1.html; then
+                ok=1
+                break
+              fi
+            fi
+            echo "Not ready yet: attempt $i/30"
+            sleep 10
+          done
+          test "$ok" -eq 1
+          echo "ONLINE_OK=$URL"
