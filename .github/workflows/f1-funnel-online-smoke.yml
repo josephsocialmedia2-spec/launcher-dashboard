@@ -32,6 +32,8 @@ jobs:
                 && grep -q 'localStorage' /tmp/f1.html \
                 && grep -q 'AGGIUNGI SELEZIONE' /tmp/f1.html \
                 && grep -q 'pdfjs-dist@3.11.174/build/pdf.min.js' /tmp/f1.html \
+                && grep -q 'tesseract.js@5/dist/tesseract.min.js' /tmp/f1.html \
+                && grep -q 'PDF immagine rilevato. OCR pagina' /tmp/f1.html \
                 && ! grep -q 'pdf.min.mjs' /tmp/f1.html; then
                 ok=1
                 break
