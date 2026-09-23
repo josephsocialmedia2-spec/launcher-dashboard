@@ -58,8 +58,8 @@
     else s=s.replace(',','.');
     return Number(s);
   }
-  function euro(n){return new Intl.NumberFormat('it-IT',{maximumFractionDigits:0}).format(Math.round(n))+' €';}
-  function pct(n){return new Intl.NumberFormat('it-IT',{maximumFractionDigits:2}).format(n)+'%';}
+  function euro(n){const s=String(Math.round(Number(n)||0)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');return s+' €';}
+  function pct(n){const v=Math.round(Number(n)*100)/100;return String(v).replace('.',',')+'%';}
   function moneyValues(text){
     const out=[]; let m;
     const re=/(?:€\s*)?(\d{1,3}(?:[.\s]\d{3})+(?:,\d+)?|\d{4,})\s*(?:€|euro)?/gi;
