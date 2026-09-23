@@ -35,7 +35,9 @@ jobs:
                 && grep -q 'tesseract.js@5/dist/tesseract.min.js' /tmp/f1.html \
                 && grep -q 'PDF immagine rilevato. OCR pagina' /tmp/f1.html \
                 && grep -q 'mnemonicLabel' /tmp/f1.html \
-                && grep -q 'parole-chiave mnemoniche' /tmp/f1.html \
+                && grep -q 'commissionChain' /tmp/f1.html \
+                && grep -q 'CATENA LOGICA MNEMONICA' /tmp/f1.html \
+                && grep -q '2 TRANSAZIONI' /tmp/f1.html \
                 && ! grep -q 'pdf.min.mjs' /tmp/f1.html; then
                 ok=1
                 break
