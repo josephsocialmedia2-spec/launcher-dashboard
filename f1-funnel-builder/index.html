@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0b0c">
+<title>F1 Funnel Builder</title>
+<style>
+:root{--bg:#0b0b0c;--panel:#17181b;--panel2:#090a0b;--line:#2c3035;--line2:#565c64;--text:#fff;--muted:#c8ccd3;--green:#00e85b;--gsoft:#082b15;--gborder:#087a34;--danger:#7e1313}
+*{box-sizing:border-box}html{color-scheme:dark}body{margin:0;background:radial-gradient(circle at top right,#101510 0,var(--bg) 38%,#080808 100%);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+button,textarea,input{font:inherit}.shell{width:min(1220px,calc(100% - 28px));margin:auto;padding:18px 0 44px}.head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:16px}
+h1{margin:0 0 7px;font-size:clamp(24px,4vw,32px)}.head p{margin:0;color:var(--muted);font-weight:700}.live{display:flex;align-items:center;gap:7px;border:1px solid var(--gborder);border-radius:999px;padding:8px 11px;color:#caffd9;font-size:12px;font-weight:900}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px rgba(0,232,91,.8)}.status{margin-bottom:16px;padding:13px 15px;border:1px solid var(--gborder);border-radius:12px;background:#07170c;color:#d8ffe3;font-size:14px}.status.err{border-color:#a64141;background:#210b0b;color:#ffd8d8}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:stretch}.panel{min-width:0;min-height:390px;background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:18px 16px;box-shadow:0 12px 28px rgba(0,0,0,.24);display:flex;flex-direction:column}
+.panel h2{margin:0 0 12px;font-size:18px}.panel p{margin:0 0 14px;color:var(--muted);line-height:1.4;font-size:15px}.rowhead{display:flex;justify-content:space-between;gap:12px}.counter{flex:0 0 auto;padding:7px 9px;border-radius:999px;background:var(--gsoft);border:1px solid var(--gborder);color:#caffd9;font-size:12px;font-weight:900}
+label{display:block;margin:8px 0 5px;font-size:13px;font-weight:900}textarea,input[type=text]{width:100%;background:var(--panel2);color:#edf0f5;border:1px solid var(--line2);border-radius:12px;outline:none}textarea:focus,input:focus{border-color:var(--gborder);box-shadow:0 0 0 3px rgba(0,232,91,.08)}
+textarea{min-height:205px;padding:14px;resize:vertical;line-height:1.45}input[type=text]{min-height:46px;padding:0 13px}.buttons{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.btn{min-height:46px;border:0;border-radius:12px;padding:11px 17px;cursor:pointer;font-weight:900;font-size:14px}.light{background:#f4f4f4;color:#080a0c}.dark{background:var(--gsoft);color:#fff;border:1px solid var(--gborder)}.danger{background:var(--danger);color:#fff;border:1px solid #c94242}
+.addrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;margin-top:13px}.meta{display:flex;justify-content:space-between;gap:14px;margin-top:10px;color:#90dfa8;font-size:12px;font-weight:700}.helper{margin-top:10px!important;color:#8f979f!important;font-size:12px!important}.cascade{flex:1;min-height:250px;max-height:430px;overflow:auto;padding-right:4px}.node{background:#090e0a;border:1px solid #22663b;border-radius:12px;padding:12px 13px;color:#fff;font-size:14px;line-height:1.4}.node b{color:var(--green)}.arrow{text-align:center;color:var(--green);font-size:22px;line-height:26px;font-weight:900}.empty{border:1px dashed #46504a;border-radius:12px;color:#89948c;padding:18px;text-align:center;font-size:13px}
+.preview{flex:1;min-height:250px;background:var(--panel2);border:1px solid var(--line2);border-radius:12px;padding:14px;color:#e9ecf2;line-height:1.45}.ptitle{color:var(--green);font-weight:900;font-size:13px;letter-spacing:.4px;margin-bottom:8px}.pitem{border-bottom:1px solid #25282c;padding:9px 0}.pitem:last-child{border-bottom:0}
+.modalbg{position:fixed;inset:0;background:rgba(0,0,0,.72);display:grid;place-items:center;padding:20px;z-index:20}.modal{width:min(430px,100%);background:#17181b;border:1px solid #3b4046;border-radius:17px;padding:18px}.modal h2{margin:0 0 8px}.modal p{color:var(--muted)}[hidden]{display:none!important}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.head{align-items:center}.panel{min-height:auto}.addrow{grid-template-columns:1fr}.meta{flex-direction:column;gap:4px}}
+</style>
+</head>
+<body data-deploy="F1_FUNNEL_DEPLOY_20260923">
+<main class="shell">
+<header class="head"><div><h1>F1 FUNNEL BUILDER</h1><p>Appunti → Parti salienti → Schema a cascata → Preview finale</p></div><div class="live"><span class="dot"></span>LIVE</div></header>
+<section id="statusBar" class="status" role="status" aria-live="polite">Sistema pronto. Carica un file nel Blocco 1 oppure incolla direttamente il testo.</section>
+<section class="grid" aria-label="Dashboard F1 Funnel Builder">
+<article class="panel" id="block1"><h2>1. APPUNTI / TESTO ESTRATTO</h2><p>Carica il file: il programma apre la cartella, legge il documento e inserisce automaticamente qui sotto tutto il testo estratto.</p>
+<label for="sourceText">TESTO ESTRATTO</label><textarea id="sourceText" spellcheck="true" placeholder="Il testo completo comparirà qui automaticamente. Puoi anche incollare o modificare manualmente gli appunti."></textarea>
+<input id="fileInput" type="file" hidden accept=".txt,.md,.csv,.json,.html,.htm,.pdf,.docx">
+<div class="buttons"><button id="loadFileBtn" class="btn light">CARICA FILE</button><button id="sendSelectionBtn" class="btn light">AGGIUNGI SELEZIONE → BLOCCO 2</button><button id="clearSourceBtn" class="btn dark">PULISCI</button></div>
+<div class="meta"><span id="filenameLabel">Nessun file caricato</span><span id="sourceCount">0 caratteri</span></div><p class="helper">Evidenzia nel testo una frase, un paragrafo o più righe e premi <b>AGGIUNGI SELEZIONE → BLOCCO 2</b>.</p></article>
+
+<article class="panel" id="block2"><div class="rowhead"><div><h2>2. PARTI SALIENTI</h2><p>Qui raccogli solo le nozioni utili. Puoi ricevere le selezioni dal Blocco 1 e aggiungere nuove informazioni manualmente.</p></div><span id="itemCounter" class="counter">0 elementi</span></div>
+<label for="selectedText">NOZIONI SELEZIONATE</label><textarea id="selectedText" spellcheck="true" placeholder="Le parti selezionate dal Blocco 1 verranno aggiunte qui senza sostituire quelle già presenti."></textarea>
+<div class="addrow"><input id="extraNote" type="text" placeholder="Scrivi una nuova nozione..." autocomplete="off"><button id="addNoteBtn" class="btn light">AGGIUNGI</button></div>
+<div class="buttons"><button id="pasteBtn" class="btn light">INCOLLA</button><button id="clearSelectedBtn" class="btn dark">PULISCI</button></div><p class="helper">Ogni riga non vuota diventa automaticamente un passaggio del Blocco 3.</p></article>
+
+<article class="panel" id="block3"><h2>3. SCHEMA A CASCATA AUTOMATICO</h2><p>Lo schema si costruisce automaticamente man mano che aggiungi, modifichi o elimini elementi nel Blocco 2.</p>
+<div id="cascade" class="cascade"><div class="empty">Aggiungi almeno una nozione nel Blocco 2.</div></div><div class="buttons"><button id="copyCascadeBtn" class="btn light">COPIA SCHEMA</button><button id="reverseBtn" class="btn dark">INVERTI ORDINE</button></div></article>
+
+<article class="panel" id="block4"><h2>4. PREVIEW DEL LAVORO FINITO</h2><p>Anteprima aggiornata automaticamente del risultato finale, nello stesso ordine dello schema a cascata.</p>
+<div id="preview" class="preview"><div class="ptitle">ANTEPRIMA FINALE</div><div class="empty">Il risultato comparirà qui mentre lavori.</div></div>
+<div class="buttons"><button id="copyPreviewBtn" class="btn light">COPIA PREVIEW</button><button id="downloadBtn" class="btn light">SCARICA TXT</button><button id="resetBtn" class="btn dark">RESET COMPLETO</button></div></article>
+</section>
+</main>
+
+<div id="resetModal" class="modalbg" hidden><section class="modal" role="dialog" aria-modal="true"><h2>Cancellare tutto il lavoro?</h2><p>Verranno svuotati tutti e quattro i blocchi e il salvataggio locale.</p><div class="buttons"><button id="cancelResetBtn" class="btn light">ANNULLA</button><button id="confirmResetBtn" class="btn danger">CONFERMA</button></div></section></div>
+
+<script>
+(() => {
+'use strict';
+const MAX=25*1024*1024, KEY='f1-funnel-builder-v1';
+const $=id=>document.getElementById(id);
+const source=$('sourceText'), selected=$('selectedText'), extra=$('extraNote'), input=$('fileInput'), status=$('statusBar'), filename=$('filenameLabel'), counter=$('itemCounter'), cascade=$('cascade'), preview=$('preview'), modal=$('resetModal');
+let reverse=false;
+function setStatus(msg,err=false){status.textContent=msg;status.classList.toggle('err',!!err)}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+function items(){
+  const raw=selected.value.replace(/\r/g,'').split(/\n+/).map(s=>s.trim()).filter(Boolean);
+  const seen=new Set(), out=[];
+  for(const x of raw){const k=x.toLocaleLowerCase('it');if(!seen.has(k)){seen.add(k);out.push(x)}}
+  return reverse?[...out].reverse():out;
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({source:source.value,selected:selected.value,reverse,filename:filename.textContent}))}catch(e){setStatus('Impossibile salvare localmente: '+e.message,true)}}
+function render(){
+  const arr=items(); counter.textContent=arr.length+' '+(arr.length===1?'elemento':'elementi'); $('sourceCount').textContent=source.value.length+' caratteri';
+  if(!arr.length){cascade.innerHTML='<div class="empty">Aggiungi almeno una nozione nel Blocco 2.</div>';preview.innerHTML='<div class="ptitle">ANTEPRIMA FINALE</div><div class="empty">Il risultato comparirà qui mentre lavori.</div>'}
+  else{cascade.innerHTML=arr.map((x,i)=>'<div class="node"><b>PASSAGGIO '+(i+1)+'</b><br>'+esc(x)+'</div>'+(i<arr.length-1?'<div class="arrow">↓</div>':'')).join('');
+    preview.innerHTML='<div class="ptitle">ANTEPRIMA FINALE</div>'+arr.map((x,i)=>'<div class="pitem"><b>'+(i+1)+'.</b> '+esc(x)+'</div>').join('')}
+  save();
+}
+function addText(t){t=String(t||'').trim();if(!t)return;selected.value=(selected.value.trim()?selected.value.trim()+'\n':'')+t;render()}
+function ext(name){const a=String(name).toLowerCase().split('.');return a.length>1?a.pop():''}
+async function loadPdf(file){
+  const pdfjs=await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs');
+  pdfjs.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
+  const pdf=await pdfjs.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise;const pages=[];
+  for(let n=1;n<=pdf.numPages;n++){const p=await pdf.getPage(n),c=await p.getTextContent();let t='';for(const it of c.items){if('str' in it){t+=it.str+(it.hasEOL?'\n':' ')}}pages.push(t.replace(/[ \t]+\n/g,'\n').replace(/ {2,}/g,' ').trim())}
+  const t=pages.filter(Boolean).join('\n\n').trim();if(!t)throw new Error('PDF senza testo estraibile. Potrebbe richiedere OCR.');return t;
+}
+function mammothLib(){
+  return new Promise((resolve,reject)=>{if(window.mammoth?.extractRawText)return resolve(window.mammoth);const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js';s.onload=()=>window.mammoth?.extractRawText?resolve(window.mammoth):reject(new Error('Mammoth.js non disponibile'));s.onerror=()=>reject(new Error('Mammoth.js non disponibile'));document.head.appendChild(s)})
+}
+async function loadDocx(file){const m=await mammothLib(),r=await m.extractRawText({arrayBuffer:await file.arrayBuffer()}),t=String(r.value||'').trim();if(!t)throw new Error('DOCX senza testo estraibile.');return t}
+async function extract(file){
+  if(!file)throw new Error('Nessun file selezionato.');if(!file.size)throw new Error('Il file è vuoto.');if(file.size>MAX)throw new Error('File troppo grande. Limite: 25 MB.');
+  const e=ext(file.name);
+  if(['txt','md','csv','json'].includes(e)){const t=await file.text();if(!t.trim())throw new Error('Il file non contiene testo leggibile.');return t}
+  if(['html','htm'].includes(e)){const h=await file.text(),d=new DOMParser().parseFromString(h,'text/html');d.querySelectorAll('script,style,noscript').forEach(n=>n.remove());const t=(d.body?.innerText||d.body?.textContent||'').trim();if(!t)throw new Error('HTML senza testo leggibile.');return t}
+  if(e==='pdf')return loadPdf(file);if(e==='docx')return loadDocx(file);throw new Error('Formato .'+(e||'?')+' non supportato.');
+}
+$('loadFileBtn').onclick=()=>input.click();
+input.onchange=async()=>{const f=input.files?.[0];if(!f)return;setStatus('Caricamento ed estrazione automatica...');try{const t=await extract(f);source.value=t;filename.textContent=f.name;render();setStatus('Testo estratto. Ora evidenzia le parti utili.')}catch(e){setStatus(e.message||'Errore durante il caricamento.',true)}finally{input.value=''}};
+$('sendSelectionBtn').onclick=()=>{const t=source.value.slice(source.selectionStart,source.selectionEnd).trim();if(!t){setStatus('Prima evidenzia una parte del testo nel Blocco 1.',true);source.focus();return}addText(t);setStatus('Selezione aggiunta. Schema e preview aggiornati automaticamente.')};
+$('clearSourceBtn').onclick=()=>{source.value='';filename.textContent='Nessun file caricato';render();setStatus('Blocco 1 pulito.')};
+$('addNoteBtn').onclick=()=>{if(!extra.value.trim())return;addText(extra.value);extra.value='';extra.focus();setStatus('Nozione aggiunta. Schema e preview aggiornati automaticamente.')};
+extra.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();$('addNoteBtn').click()}};
+$('pasteBtn').onclick=async()=>{try{const t=await navigator.clipboard.readText();if(t)addText(t);else setStatus('Gli appunti sono vuoti.',true)}catch(e){setStatus('Accesso agli appunti non disponibile. Incolla manualmente nel riquadro.',true);selected.focus()}};
+$('clearSelectedBtn').onclick=()=>{selected.value='';render();setStatus('Blocco 2 pulito. Schema e preview aggiornati.')};
+$('reverseBtn').onclick=()=>{reverse=!reverse;render();setStatus('Ordine dello schema invertito.')};
+async function copyText(t,ok){try{await navigator.clipboard.writeText(t);setStatus(ok)}catch(e){setStatus('Copia automatica non disponibile nel browser.',true)}}
+$('copyCascadeBtn').onclick=()=>copyText(items().map((x,i)=>(i+1)+'. '+x).join('\n↓\n'),'Schema copiato.');
+$('copyPreviewBtn').onclick=()=>copyText(items().map((x,i)=>(i+1)+'. '+x).join('\n'),'Preview copiata.');
+$('downloadBtn').onclick=()=>{const body='F1 FUNNEL BUILDER\nPREVIEW FINALE\n\n'+items().map((x,i)=>(i+1)+'. '+x).join('\n\n↓\n\n');const b=new Blob([body],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='F1_Funnel_Preview.txt';a.click();URL.revokeObjectURL(u);setStatus('File TXT generato.')};
+$('resetBtn').onclick=()=>modal.hidden=false;$('cancelResetBtn').onclick=()=>modal.hidden=true;$('confirmResetBtn').onclick=()=>{source.value='';selected.value='';extra.value='';reverse=false;filename.textContent='Nessun file caricato';try{localStorage.removeItem(KEY)}catch{}modal.hidden=true;render();setStatus('Dashboard azzerata. Sistema pronto.')};
+modal.onclick=e=>{if(e.target===modal)modal.hidden=true};document.onkeydown=e=>{if(e.key==='Escape')modal.hidden=true};
+source.oninput=render;selected.oninput=render;
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s){source.value=s.source||'';selected.value=s.selected||'';reverse=!!s.reverse;filename.textContent=s.filename||'Nessun file caricato'}}catch{}
+render();
+})();
+</script>
+</body>
+</html>
