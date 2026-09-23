@@ -30,7 +30,9 @@ jobs:
                 && grep -q '3. SCHEMA A CASCATA AUTOMATICO' /tmp/f1.html \
                 && grep -q '4. PREVIEW DEL LAVORO FINITO' /tmp/f1.html \
                 && grep -q 'localStorage' /tmp/f1.html \
-                && grep -q 'AGGIUNGI SELEZIONE' /tmp/f1.html; then
+                && grep -q 'AGGIUNGI SELEZIONE' /tmp/f1.html \
+                && grep -q 'pdfjs-dist@3.11.174/build/pdf.min.js' /tmp/f1.html \
+                && ! grep -q 'pdf.min.mjs' /tmp/f1.html; then
                 ok=1
                 break
               fi
