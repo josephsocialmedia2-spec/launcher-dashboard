@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - "f1-funnel-builder/**"
+      - "research/cascade-*.md"
       - ".github/workflows/f1-funnel-online-smoke.yml"
   workflow_dispatch:
 
@@ -15,37 +16,38 @@ jobs:
   smoke:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Test evidence-based cascade engine
+        run: node f1-funnel-builder/tests/cascade-engine.test.cjs
+
+      - name: Verify research documents
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s research/cascade-research.md
+          test -s research/cascade-principles.md
+          grep -q 'Novak' research/cascade-research.md
+          grep -q 'Progressive disclosure' research/cascade-principles.md
+          grep -q 'Tracciabilità' research/cascade-principles.md
+
       - name: Wait for GitHub Pages and verify F1 Funnel Builder
         shell: bash
         run: |
           set -euo pipefail
           URL="https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-funnel-builder/"
+          ENGINE="$URL/cascade-engine.js"
           echo "Checking $URL"
           ok=0
-          for i in $(seq 1 30); do
-            if curl -fsSL --connect-timeout 10 --max-time 30 "$URL" -o /tmp/f1.html; then
-              if grep -q 'F1_FUNNEL_DEPLOY_20260923' /tmp/f1.html \
-                && grep -q '1. APPUNTI / TESTO ESTRATTO' /tmp/f1.html \
-                && grep -q '2. PARTI SALIENTI' /tmp/f1.html \
-                && grep -q '3. SCHEMA A CASCATA AUTOMATICO' /tmp/f1.html \
-                && grep -q '4. PREVIEW DEL LAVORO FINITO' /tmp/f1.html \
-                && grep -q 'localStorage' /tmp/f1.html \
-                && grep -q 'AGGIUNGI SELEZIONE' /tmp/f1.html \
-                && grep -q 'pdfjs-dist@3.11.174/build/pdf.min.js' /tmp/f1.html \
-                && grep -q 'tesseract.js@5/dist/tesseract.min.js' /tmp/f1.html \
-                && grep -q 'PDF immagine rilevato. OCR pagina' /tmp/f1.html \
-                && grep -q 'mnemonicLabel' /tmp/f1.html \
-                && grep -q 'commissionChain' /tmp/f1.html \
-                && grep -q 'globalConceptChain' /tmp/f1.html \
-                && grep -q 'elementi del Blocco 2 analizzati insieme' /tmp/f1.html \
-                && grep -q 'ANALISI COMPLESSIVA DEL BLOCCO 2' /tmp/f1.html \
-                && grep -q '2 TRANSAZIONI' /tmp/f1.html \
-                && ! grep -q 'pdf.min.mjs' /tmp/f1.html; then
+          for i in $(seq 1 36); do
+            if curl -fsSL --connect-timeout 10 --max-time 30 "$URL" -o /tmp/f1.html               && curl -fsSL --connect-timeout 10 --max-time 30 "$ENGINE" -o /tmp/cascade-engine.js; then
+              if grep -q 'F1_EVIDENCE_GRAPH_20260923' /tmp/f1.html                 && grep -q '1. APPUNTI / TESTO ESTRATTO' /tmp/f1.html                 && grep -q '2. PARTI SALIENTI' /tmp/f1.html                 && grep -q '3. MAPPA LOGICA MNEMONICA' /tmp/f1.html                 && grep -q '4. PREVIEW DEL LAVORO FINITO' /tmp/f1.html                 && grep -q 'ESSENZIALE' /tmp/f1.html                 && grep -q 'DETTAGLIO' /tmp/f1.html                 && grep -q 'FONTI' /tmp/f1.html                 && grep -q 'tracePanel' /tmp/f1.html                 && grep -q 'pdfjs-dist@3.11.174/build/pdf.min.js' /tmp/f1.html                 && grep -q 'tesseract.js@5/dist/tesseract.min.js' /tmp/f1.html                 && ! grep -q 'pdf.min.mjs' /tmp/f1.html                 && grep -q 'evidence-graph-1' /tmp/cascade-engine.js                 && grep -q 'sourceIds' /tmp/cascade-engine.js                 && grep -q 'SPLITS_INTO' /tmp/cascade-engine.js                 && grep -q 'SUMS_TO' /tmp/cascade-engine.js; then
                 ok=1
                 break
               fi
             fi
-            echo "Not ready yet: attempt $i/30"
+            echo "Not ready yet: attempt $i/36"
             sleep 10
           done
           test "$ok" -eq 1
