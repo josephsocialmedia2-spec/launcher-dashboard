@@ -103,6 +103,88 @@ async function ensurePdfJs(){
   }
   throw new Error('PDF.js non disponibile. Controlla la connessione internet e riprova.'+(lastErr?' '+lastErr.message:''));
 }
+function textLayerToText(content){
+  const items=(content?.items||[]).filter(it=>it && typeof it.str==='string' && it.str.length);
+  if(!items.length)return '';
+  let out='', prev=null;
+  for(const it of items){
+    const tr=it.transform||[];
+    const x=Number(tr[4]||0), y=Number(tr[5]||0);
+    const font=Math.max(6,Math.abs(Number(tr[3]||tr[0]||10)));
+    const width=Math.max(0,Number(it.width||0));
+    if(prev){
+      const sameLine=Math.abs(y-prev.y)<=Math.max(2,font*0.45);
+      if(!sameLine){
+        if(!out.endsWith('\n'))out+='\n';
+      }else{
+        const gap=x-prev.endX;
+        if(gap>Math.max(1.5,font*0.18) && !out.endsWith(' ') && !out.endsWith('\n'))out+=' ';
+      }
+    }
+    out+=it.str;
+    if(it.hasEOL && !out.endsWith('\n'))out+='\n';
+    prev={y,endX:x+(width||Math.max(font*0.45,it.str.length*font*0.42))};
+  }
+  return out.replace(/[ \t]+\n/g,'\n').replace(/ {2,}/g,' ').replace(/\n{3,}/g,'\n\n').trim();
+}
+function hasUsefulPdfText(t){
+  const s=String(t||'').trim();
+  const alnum=(s.match(/[A-Za-zÀ-ÖØ-öø-ÿ0-9]/g)||[]).length;
+  const words=(s.match(/[A-Za-zÀ-ÖØ-öø-ÿ0-9]{2,}/g)||[]).length;
+  return alnum>=55 && words>=8;
+}
+async function ensureTesseract(){
+  if(window.Tesseract?.createWorker)return window.Tesseract;
+  const sources=[
+    'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js',
+    'https://unpkg.com/tesseract.js@5/dist/tesseract.min.js'
+  ];
+  let lastErr;
+  for(const src of sources){
+    try{
+      await loadClassicScript(src);
+      if(window.Tesseract?.createWorker)return window.Tesseract;
+    }catch(e){lastErr=e}
+  }
+  throw new Error('OCR non disponibile. Controlla la connessione internet e riprova.'+(lastErr?' '+lastErr.message:''));
+}
+async function createItalianOcrWorker(){
+  const T=await ensureTesseract();
+  try{
+    return await T.createWorker('ita',1,{
+      langPath:'https://tessdata.projectnaptha.com/4.0.0',
+      logger:m=>{
+        if(m && m.status==='recognizing text' && typeof m.progress==='number'){
+          const pc=Math.round(m.progress*100);
+          setStatus('OCR in corso... '+pc+'%');
+        }
+      }
+    });
+  }catch(e){
+    try{
+      return await T.createWorker('eng',1,{logger:m=>{
+        if(m && m.status==='recognizing text' && typeof m.progress==='number'){
+          setStatus('OCR in corso... '+Math.round(m.progress*100)+'%');
+        }
+      }});
+    }catch(e2){
+      throw new Error('Impossibile avviare OCR: '+(e2?.message||e2));
+    }
+  }
+}
+async function ocrPdfPage(page,worker,pageNo,total){
+  setStatus('PDF immagine rilevato. OCR pagina '+pageNo+'/'+total+'...');
+  const viewport=page.getViewport({scale:1.8});
+  const canvas=document.createElement('canvas');
+  canvas.width=Math.ceil(viewport.width);
+  canvas.height=Math.ceil(viewport.height);
+  const ctx=canvas.getContext('2d',{alpha:false});
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);
+  await page.render({canvasContext:ctx,viewport}).promise;
+  const result=await worker.recognize(canvas);
+  canvas.width=1;canvas.height=1;
+  return String(result?.data?.text||'').replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').trim();
+}
 async function loadPdf(file){
   const pdfjs=await ensurePdfJs();
   let pdf;
@@ -112,16 +194,27 @@ async function loadPdf(file){
     throw new Error('Impossibile leggere il PDF: '+(e?.message||e));
   }
   const pages=[];
-  for(let n=1;n<=pdf.numPages;n++){
-    const p=await pdf.getPage(n),content=await p.getTextContent();
-    let t='';
-    for(const it of content.items){
-      if('str' in it)t+=it.str+(it.hasEOL?'\n':' ');
+  let worker=null, ocrPages=0;
+  try{
+    for(let n=1;n<=pdf.numPages;n++){
+      setStatus('Lettura PDF pagina '+n+'/'+pdf.numPages+'...');
+      const page=await pdf.getPage(n);
+      const content=await page.getTextContent();
+      let t=textLayerToText(content);
+      if(!hasUsefulPdfText(t)){
+        if(!worker)worker=await createItalianOcrWorker();
+        const ocr=await ocrPdfPage(page,worker,n,pdf.numPages);
+        if(ocr && ocr.replace(/\s/g,'').length>t.replace(/\s/g,'').length)t=ocr;
+        ocrPages++;
+      }
+      if(t.trim())pages.push('--- PAGINA '+n+' ---\n'+t.trim());
     }
-    pages.push(t.replace(/[ \t]+\n/g,'\n').replace(/ {2,}/g,' ').trim());
+  }finally{
+    if(worker){try{await worker.terminate()}catch{}}
   }
-  const t=pages.filter(Boolean).join('\n\n').trim();
-  if(!t)throw new Error('PDF senza testo estraibile. Potrebbe richiedere OCR.');
+  const t=pages.join('\n\n').trim();
+  if(!t)throw new Error('PDF senza testo estraibile, anche dopo OCR.');
+  if(ocrPages)setStatus('PDF estratto: '+pdf.numPages+' pagine, OCR usato su '+ocrPages+' pagine.');
   return t;
 }
 function mammothLib(){
