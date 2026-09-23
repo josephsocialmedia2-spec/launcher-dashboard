@@ -69,7 +69,7 @@ function testEconomy(){
     '12.000 euro di fatturato complessivo.'
   ].join('\n');
   const g=engine.analyze(txt);
-  const labels=g.essentialNodes.map(n=>n.label);
+  const labels=g.essentialNodes.map(n=>n.label); console.log('ECON_LABELS',labels);
   assert(labels.some(x=>x.includes('200.000')&&x.includes('IMMOBILE')));
   assert(labels.some(x=>x.includes('6.000')&&x.includes('VENDITORE')));
   assert(labels.some(x=>x.includes('6.000')&&x.includes('ACQUIRENTE')));
