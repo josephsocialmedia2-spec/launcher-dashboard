@@ -35,12 +35,12 @@ textarea{min-height:205px;padding:14px;resize:vertical;line-height:1.45}input[ty
 <article class="panel" id="block2"><div class="rowhead"><div><h2>2. PARTI SALIENTI</h2><p>Qui raccogli solo le nozioni utili. Puoi ricevere le selezioni dal Blocco 1 e aggiungere nuove informazioni manualmente.</p></div><span id="itemCounter" class="counter">0 elementi</span></div>
 <label for="selectedText">NOZIONI SELEZIONATE</label><textarea id="selectedText" spellcheck="true" placeholder="Le parti selezionate dal Blocco 1 verranno aggiunte qui senza sostituire quelle già presenti."></textarea>
 <div class="addrow"><input id="extraNote" type="text" placeholder="Scrivi una nuova nozione..." autocomplete="off"><button id="addNoteBtn" class="btn light">AGGIUNGI</button></div>
-<div class="buttons"><button id="pasteBtn" class="btn light">INCOLLA</button><button id="clearSelectedBtn" class="btn dark">PULISCI</button></div><p class="helper">Ogni riga non vuota viene trasformata automaticamente in 1–4 parole-chiave mnemoniche nel Blocco 3.</p></article>
+<div class="buttons"><button id="pasteBtn" class="btn light">INCOLLA</button><button id="clearSelectedBtn" class="btn dark">PULISCI</button></div><p class="helper">Il Blocco 3 ricostruisce la logica del concetto: dato iniziale → passaggi → risultato, mantenendo numeri, percentuali e relazioni importanti.</p></article>
 
-<article class="panel" id="block3"><h2>3. SCHEMA A CASCATA AUTOMATICO</h2><p>Lo schema trasforma automaticamente ogni nozione in poche parole-chiave mnemoniche che richiamano il concetto, senza ripetere intere frasi.</p>
+<article class="panel" id="block3"><h2>3. SCHEMA A CASCATA AUTOMATICO</h2><p>Lo schema ricostruisce il concetto in forma mnemonica: CAUSA / DATO → CONSEGUENZA → RISULTATO. Non estrae parole casuali.</p>
 <div id="cascade" class="cascade"><div class="empty">Aggiungi almeno una nozione nel Blocco 2.</div></div><div class="buttons"><button id="copyCascadeBtn" class="btn light">COPIA SCHEMA</button><button id="reverseBtn" class="btn dark">INVERTI ORDINE</button></div></article>
 
-<article class="panel" id="block4"><h2>4. PREVIEW DEL LAVORO FINITO</h2><p>Anteprima aggiornata automaticamente: mostra la sequenza mnemonica e mantiene il collegamento con le nozioni originali.</p>
+<article class="panel" id="block4"><h2>4. PREVIEW DEL LAVORO FINITO</h2><p>Anteprima aggiornata automaticamente: mostra la catena logica mnemonica e mantiene il collegamento con il testo originale.</p>
 <div id="preview" class="preview"><div class="ptitle">ANTEPRIMA FINALE</div><div class="empty">Il risultato comparirà qui mentre lavori.</div></div>
 <div class="buttons"><button id="copyPreviewBtn" class="btn light">COPIA PREVIEW</button><button id="downloadBtn" class="btn light">SCARICA TXT</button><button id="resetBtn" class="btn dark">RESET COMPLETO</button></div></article>
 </section>
@@ -66,43 +66,142 @@ function items(){
 function save(){try{localStorage.setItem(KEY,JSON.stringify({source:source.value,selected:selected.value,reverse,filename:filename.textContent}))}catch(e){setStatus('Impossibile salvare localmente: '+e.message,true)}}
 const STOPWORDS=new Set(('a ad al alla alle allo ai agli anche ancora avere abbiamo avete aveva avevi avevano che chi ci cioè con come da dal dalla dalle dallo dei del della delle dello dentro di e ed è era erano essere fa fai fanno fare fino fra gli ha hai hanno ho i il in io la le lei li lo lui ma mi mia mie miei mio ne nei nel nella nelle nello no non noi o ogni per perché piu più può quando quale quali quanto questa queste questi questo se sei senza si sia siamo sono su sul sulla sulle tra tu tua tue tuoi tuo un una uno vi voi'.split(/\s+/)));
 const WEAK=new Set(('cliente persona persone cosa cose lavoro lavorare lavorato fare fatto fatta fatti oggi giorno giorni volta modo parte punto primo prima dopo dove serve usare avere essere viene vengono andare molto solo sempre nuovo nuova nuovi nuove'.split(/\s+/)));
+
+function parseItalianNumber(raw){
+  let s=String(raw||'').toLowerCase().replace(/\s+/g,'').replace(/€/g,'').replace(/euro/g,'');
+  if(!s)return NaN;
+  if(/^\d{1,3}(\.\d{3})+(,\d+)?$/.test(s)) s=s.replace(/\./g,'').replace(',','.');
+  else if(/^\d{1,3}(,\d{3})+(\.\d+)?$/.test(s)) s=s.replace(/,/g,'');
+  else s=s.replace(',','.');
+  return Number(s);
+}
+function euro(n){
+  if(!Number.isFinite(n))return '';
+  return new Intl.NumberFormat('it-IT',{maximumFractionDigits:0}).format(Math.round(n))+' €';
+}
+function pct(n){
+  if(!Number.isFinite(n))return '';
+  return new Intl.NumberFormat('it-IT',{maximumFractionDigits:2}).format(n)+'%';
+}
+function moneyValues(text){
+  const out=[];
+  const re=/(?:€\s*)?(\d{1,3}(?:[.\s]\d{3})+(?:,\d+)?|\d{4,}|\d+(?:,\d+)?)\s*(?:€|euro|euros)?/gi;
+  let m;
+  while((m=re.exec(String(text||'')))){
+    const n=parseItalianNumber(m[1]);
+    const ctx=String(text||'').slice(Math.max(0,m.index-22),Math.min(String(text||'').length,re.lastIndex+22)).toLowerCase();
+    if(Number.isFinite(n) && n>=100 && (/[€]|euro/.test(m[0].toLowerCase()) || /prezzo|casa|immobile|fatturato|provvig|commission|vendit|acquir|operazione|transaz/.test(ctx))) out.push(n);
+  }
+  return [...new Set(out.map(n=>Math.round(n)))];
+}
+function percentageValues(text){
+  const out=[]; let m;
+  const re=/(\d+(?:[.,]\d+)?)\s*%/g;
+  while((m=re.exec(String(text||'')))){const n=parseItalianNumber(m[1]);if(Number.isFinite(n))out.push(n)}
+  return [...new Set(out)];
+}
 function mnemonicLabel(text){
   let s=String(text||'').replace(/^[\s•▪◾■\-–—→\d.)]+/,'').trim();
   if(!s)return 'CONCETTO';
-  const dashParts=s.split(/\s+[—–:-]\s+/).map(x=>x.trim()).filter(Boolean);
-  if(dashParts.length>1 && dashParts[0].length<32) s=dashParts.slice(1).join(' ');
-  const tokens=(s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').match(/[A-Za-z0-9]+/g)||[]);
+  const tokens=(s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').match(/[A-Za-zÀ-ÖØ-öø-ÿ0-9%€.,]+/g)||[]);
   const picked=[], seen=new Set();
   for(const raw of tokens){
-    const w=raw.toLowerCase();
-    if(w.length<3 || STOPWORDS.has(w) || WEAK.has(w) || /^capitolo$|^attivita$|^passaggio$/.test(w)) continue;
-    if(seen.has(w))continue;
-    seen.add(w);picked.push(raw.toUpperCase());
+    const w=raw.toLowerCase().replace(/[.,]+$/,'');
+    if(/^\d/.test(w)){if(!seen.has(w)){seen.add(w);picked.push(raw.toUpperCase())}}
+    else if(w.length>=3 && !STOPWORDS.has(w) && !WEAK.has(w) && !/^capitolo$|^attivita$|^passaggio$/.test(w) && !seen.has(w)){
+      seen.add(w);picked.push(raw.toUpperCase());
+    }
     if(picked.length>=4)break;
   }
-  if(!picked.length){
-    const fallback=tokens.filter(x=>x.length>=2).slice(0,3).map(x=>x.toUpperCase());
-    return fallback.join(' • ')||'CONCETTO';
+  return picked.join(' • ')||'CONCETTO';
+}
+function splitLogic(text){
+  return String(text||'')
+    .replace(/\s+/g,' ')
+    .split(/\s*(?:→|⇒|=>| quindi | perciò | pertanto | così | di conseguenza | porta a | significa che | l'obiettivo è | obiettivo: )\s*/i)
+    .map(x=>x.trim()).filter(x=>x.length>2);
+}
+function commissionChain(text){
+  const s=String(text||''), low=s.toLowerCase();
+  const realEstate=/compravend|immobil|casa|provvig|commission|venditore|acquirente|fatturato|transazion/.test(low);
+  if(!realEstate)return null;
+  const vals=moneyValues(s).sort((a,b)=>b-a);
+  const percs=percentageValues(s);
+  const hasTwo=/due\s+transazion|2\s+transazion/.test(low);
+  const hasSeller=/venditore/.test(low), hasBuyer=/acquirente/.test(low);
+  if(!vals.length)return null;
+
+  const property=vals[0];
+  let total=vals.find(v=>v<property && v/property>=0.005 && v/property<=0.20) || null;
+  let sellerPct=null, buyerPct=null;
+  if(percs.length>=2){sellerPct=percs[0];buyerPct=percs[1]}
+  else if(percs.length===1 && (hasTwo || (hasSeller&&hasBuyer))){sellerPct=percs[0];buyerPct=percs[0]}
+
+  let seller=null,buyer=null;
+  if(sellerPct!=null && buyerPct!=null){
+    seller=property*sellerPct/100;
+    buyer=property*buyerPct/100;
+    if(total==null)total=seller+buyer;
+  }else if(total!=null && (hasTwo || (hasSeller&&hasBuyer) || /due\s+lati|entrambi\s+i\s+lati/.test(low))){
+    seller=buyer=total/2;
+  }else if(total!=null && Math.abs((total/property)-0.06)<0.005 && /provvig|commission|fatturato/.test(low)){
+    seller=buyer=total/2;
   }
-  return picked.join(' • ');
+
+  const nodes=[{label:euro(property)+' IMMOBILE',kind:'DATO'}];
+  if(hasTwo || (seller!=null&&buyer!=null))nodes.push({label:'2 TRANSAZIONI',kind:'STRUTTURA'});
+  if(seller!=null){
+    const p=sellerPct!=null?' ('+pct(sellerPct)+')':'';
+    nodes.push({label:euro(seller)+' VENDITORE'+p,kind:'LATO 1'});
+  }
+  if(buyer!=null){
+    const p=buyerPct!=null?' ('+pct(buyerPct)+')':'';
+    nodes.push({label:euro(buyer)+' ACQUIRENTE'+p,kind:'LATO 2'});
+  }
+  if(total!=null)nodes.push({label:euro(total)+' FATTURATO',kind:'RISULTATO'});
+  if(nodes.length<2)return null;
+  return nodes.map(n=>({...n,text:s}));
 }
-function mnemonicItems(){
-  return items().map((text,i)=>({text,label:mnemonicLabel(text),index:i+1}));
+function logicChain(){
+  const rawItems=items();
+  const joined=rawItems.join(' ');
+  let nodes=commissionChain(joined);
+  if(!nodes){
+    nodes=[];
+    for(const text of rawItems){
+      const parts=splitLogic(text);
+      if(parts.length>1){
+        for(let i=0;i<parts.length;i++){
+          nodes.push({label:mnemonicLabel(parts[i]),kind:i===0?'DATO':(i===parts.length-1?'RISULTATO':'PASSAGGIO'),text});
+        }
+      }else{
+        nodes.push({label:mnemonicLabel(text),kind:'CONCETTO',text});
+      }
+    }
+  }
+  const dedup=[], seen=new Set();
+  for(const n of nodes){
+    const k=n.label.toLocaleLowerCase('it');
+    if(!seen.has(k)){seen.add(k);dedup.push(n)}
+  }
+  return reverse?[...dedup].reverse():dedup;
 }
+
 function render(){
-  const arr=items(), mem=mnemonicItems();
+  const arr=items(), chain=logicChain();
   counter.textContent=arr.length+' '+(arr.length===1?'elemento':'elementi');
   $('sourceCount').textContent=source.value.length+' caratteri';
   if(!arr.length){
     cascade.innerHTML='<div class="empty">Aggiungi almeno una nozione nel Blocco 2.</div>';
     preview.innerHTML='<div class="ptitle">ANTEPRIMA FINALE</div><div class="empty">Il risultato comparirà qui mentre lavori.</div>';
   }else{
-    cascade.innerHTML=mem.map((m,i)=>
-      '<div class="node"><b>PASSAGGIO '+(i+1)+'</b><br><span style="font-size:18px;font-weight:900;letter-spacing:.4px">'+esc(m.label)+'</span></div>'+
-      (i<mem.length-1?'<div class="arrow">↓</div>':'')
+    cascade.innerHTML=chain.map((m,i)=>
+      '<div class="node"><b>'+esc(m.kind)+' '+(i+1)+'</b><br><span style="font-size:18px;font-weight:900;letter-spacing:.4px">'+esc(m.label)+'</span></div>'+
+      (i<chain.length-1?'<div class="arrow">↓</div>':'')
     ).join('');
-    preview.innerHTML='<div class="ptitle">ANTEPRIMA FINALE</div>'+
-      mem.map((m,i)=>'<div class="pitem"><b>'+(i+1)+'. '+esc(m.label)+'</b><br><span style="color:#aeb5bd;font-size:13px">'+esc(m.text)+'</span></div>').join('');
+    preview.innerHTML='<div class="ptitle">CATENA LOGICA MNEMONICA</div>'+
+      chain.map((m,i)=>'<div class="pitem"><b>'+(i+1)+'. '+esc(m.label)+'</b><br><span style="color:#aeb5bd;font-size:13px">'+esc(m.kind)+'</span></div>').join('')+
+      '<div class="pitem"><span style="color:#8f979f;font-size:12px"><b>TESTO ORIGINALE</b><br>'+esc(arr.join(' '))+'</span></div>';
   }
   save();
 }
@@ -273,9 +372,9 @@ $('pasteBtn').onclick=async()=>{try{const t=await navigator.clipboard.readText()
 $('clearSelectedBtn').onclick=()=>{selected.value='';render();setStatus('Blocco 2 pulito. Schema e preview aggiornati.')};
 $('reverseBtn').onclick=()=>{reverse=!reverse;render();setStatus('Ordine dello schema invertito.')};
 async function copyText(t,ok){try{await navigator.clipboard.writeText(t);setStatus(ok)}catch(e){setStatus('Copia automatica non disponibile nel browser.',true)}}
-$('copyCascadeBtn').onclick=()=>copyText(mnemonicItems().map((m,i)=>(i+1)+'. '+m.label).join('\n↓\n'),'Schema mnemonico copiato.');
-$('copyPreviewBtn').onclick=()=>copyText(mnemonicItems().map((m,i)=>(i+1)+'. '+m.label+' — '+m.text).join('\n'),'Preview copiata.');
-$('downloadBtn').onclick=()=>{const body='F1 FUNNEL BUILDER\nSCHEMA MNEMONICO\n\n'+mnemonicItems().map((m,i)=>(i+1)+'. '+m.label+'\n   '+m.text).join('\n\n↓\n\n');const b=new Blob([body],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='F1_Funnel_Preview.txt';a.click();URL.revokeObjectURL(u);setStatus('File TXT generato.')};
+$('copyCascadeBtn').onclick=()=>copyText(logicChain().map((m,i)=>(i+1)+'. '+m.label).join('\n↓\n'),'Catena logica copiata.');
+$('copyPreviewBtn').onclick=()=>copyText(logicChain().map((m,i)=>(i+1)+'. '+m.label+' ['+m.kind+']').join('\n'),'Preview copiata.');
+$('downloadBtn').onclick=()=>{const body='F1 FUNNEL BUILDER\nCATENA LOGICA MNEMONICA\n\n'+logicChain().map((m,i)=>(i+1)+'. '+m.label+' ['+m.kind+']').join('\n\n↓\n\n')+'\n\nTESTO ORIGINALE\n'+items().join(' ');const b=new Blob([body],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='F1_Funnel_Preview.txt';a.click();URL.revokeObjectURL(u);setStatus('File TXT generato.')};
 $('resetBtn').onclick=()=>modal.hidden=false;$('cancelResetBtn').onclick=()=>modal.hidden=true;$('confirmResetBtn').onclick=()=>{source.value='';selected.value='';extra.value='';reverse=false;filename.textContent='Nessun file caricato';try{localStorage.removeItem(KEY)}catch{}modal.hidden=true;render();setStatus('Dashboard azzerata. Sistema pronto.')};
 modal.onclick=e=>{if(e.target===modal)modal.hidden=true};document.onkeydown=e=>{if(e.key==='Escape')modal.hidden=true};
 source.oninput=render;selected.oninput=render;
