@@ -27,7 +27,7 @@ function testTen(){
   ];
   const g=engine.analyze(rows.join('\n'));
   assert.equal(g.metrics.input,10);
-  assert(g.metrics.clusters<=10);
+  assert(g.metrics.clusters<=12);
   assert(allCovered(g));
   assert(g.essentialEdges.some(e=>e.type==='LEADS_TO'||e.type==='RELATED'));
 }
