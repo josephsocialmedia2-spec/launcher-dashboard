@@ -222,6 +222,7 @@ function mergeCloudIntoLocal(bundle){
   }
   db.people.forEach(p=>{if(!p.updatedAt)p.updatedAt=p.createdAt||nowIso();try{syncNextContact(p)}catch(_){}});
   saveCache();
+  try{window.F1NetworkEngine?.afterMutation?.()}catch(_){}
   try{localStorage.setItem('f1NotizieOfficial',JSON.stringify(db.settings||{}))}catch(_){}
   try{renderAll();loadOfficialSettingsIntoForm();checkDueTouchpoints()}catch(_){}
 }
