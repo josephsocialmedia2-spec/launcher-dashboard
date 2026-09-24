@@ -99,6 +99,21 @@ button{cursor:pointer}
 .coach-body{font-size:12px;line-height:1.45;color:#d7e3ea;margin:8px 0 10px}.coach-goal{font-size:10px;color:#9fb2bf;margin-bottom:10px}.coach-action{width:100%;border:0;border-radius:10px;padding:9px 11px;background:#19b95c;color:#fff;font-weight:900;letter-spacing:.03em}
 .coach-tag{display:inline-block;font-size:9px;font-weight:900;letter-spacing:.08em;color:#7ee9a7;margin-bottom:6px}
 @media(max-width:700px){.coach-popup{right:10px;bottom:10px;width:calc(100vw - 20px)}}
+
+/* ===== PROMEMORIA 3 MINUTI · NUOVO CONTATTO ===== */
+.incoming-contact-pop{position:fixed;left:50%;top:90px;transform:translateX(-50%);width:min(360px,calc(100vw - 24px));z-index:135;background:linear-gradient(180deg,#10281c,#09150f);border:2px solid #39f28a;border-radius:16px;box-shadow:0 0 0 0 rgba(57,242,138,.55),0 18px 50px rgba(0,0,0,.5);padding:13px 14px;display:none}
+.incoming-contact-pop.open{display:block;animation:incomingBlink .72s ease-in-out infinite}
+@keyframes incomingBlink{0%,100%{box-shadow:0 0 0 0 rgba(57,242,138,.62),0 18px 50px rgba(0,0,0,.5);border-color:#39f28a}50%{box-shadow:0 0 0 10px rgba(57,242,138,0),0 0 28px rgba(57,242,138,.75);border-color:#baffd1}}
+.incoming-contact-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.incoming-contact-kicker{font-size:9px;font-weight:900;letter-spacing:.1em;color:#8effb6}
+.incoming-contact-name{font-size:18px;font-weight:950;color:#fff;margin-top:3px;line-height:1.1}
+.incoming-contact-meta{font-size:10px;color:#b8c8bd;margin-top:5px;line-height:1.4}
+.incoming-contact-goal{font-size:10px;color:#d7f7e3;background:#0d1f15;border:1px solid #2e6846;border-radius:9px;padding:7px 8px;margin:10px 0}
+.incoming-contact-actions{display:flex;gap:7px}
+.incoming-contact-actions button{flex:1;border:0;border-radius:9px;padding:9px 10px;font-weight:900;font-size:10px}
+.incoming-contact-open{background:#39f28a;color:#041208}.incoming-contact-later{background:#233229;color:#dce8df}
+.incoming-contact-close{border:0;background:#24342a;color:#fff;border-radius:8px;padding:4px 7px;font-size:11px}
+@media(max-width:700px){.incoming-contact-pop{top:70px}}
 </style>
 </head>
 <body>
@@ -329,6 +344,18 @@ button{cursor:pointer}
 </div>
 
 <div class="toast" id="toast"></div>
+<div class="incoming-contact-pop" id="incomingContactPop" role="dialog" aria-live="assertive" aria-label="Nuovo contatto da gestire">
+  <div class="incoming-contact-head">
+    <div><div class="incoming-contact-kicker">📞 NUOVO CONTATTO · PROMEMORIA 3 MINUTI</div><div class="incoming-contact-name" id="incomingContactName">DA CONTATTARE</div><div class="incoming-contact-meta" id="incomingContactMeta"></div></div>
+    <button class="incoming-contact-close" type="button" onclick="closeIncomingContactPop()">✕</button>
+  </div>
+  <div class="incoming-contact-goal">Obiettivo: 30–50 contatti al giorno per fissare appuntamenti e raccogliere notizie.</div>
+  <div class="incoming-contact-actions">
+    <button class="incoming-contact-open" id="incomingContactOpen" type="button">APRI CONTATTO</button>
+    <button class="incoming-contact-later" type="button" onclick="closeIncomingContactPop()">TRA 3 MINUTI</button>
+  </div>
+</div>
+
 <div class="coach-popup" id="coachPopup" role="dialog" aria-live="polite" aria-label="Coach operativo">
   <div class="coach-top"><div><div class="coach-tag" id="coachTag">COACH OPERATIVO</div><div class="coach-title" id="coachTitle"></div></div><button class="coach-close" type="button" onclick="closeCoachPopup()">✕</button></div>
   <div class="coach-body" id="coachBody"></div>
@@ -530,6 +557,57 @@ function coachOnContactRecorded(){
  else if(n===50)showCoachPopup({id:'threshold-50',tag:'🏁 TELEFONO',title:'50 contatti raggiunti',body:'Soglia alta completata. Ora concentra l’attenzione su notizie e appuntamenti emersi.',goal:'Obiettivo: trasformare quantità in opportunità concrete.',cta:'VEDI I RISULTATI',action:'risultati'},true);
 }
 function coachRegisterActivity(){coachLastActivity=Date.now()}
+
+const INCOMING_CONTACT_INTERVAL_MS=3*60*1000;
+let incomingContactTimer=null,incomingContactPersonId=null;
+function incomingContactCandidate(){
+ const all=(db.people||[]).filter(function(p){return p.id!=='root'});
+ if(!all.length)return null;
+ const untouched=all.filter(function(p){return p.stage==='Nome'});
+ const pool=untouched.length?untouched:all.filter(function(p){return STAGES.indexOf(p.stage)<4});
+ if(!pool.length)return all[0]||null;
+ const st=coachState(),last=st.lastIncomingPersonId||'';
+ const different=pool.filter(function(p){return p.id!==last});
+ const use=different.length?different:pool;
+ return use[Math.floor(Math.random()*use.length)]||null;
+}
+function closeIncomingContactPop(){
+ const el=document.getElementById('incomingContactPop');if(el)el.classList.remove('open');
+ incomingContactPersonId=null;
+}
+function openIncomingContact(){
+ const p=incomingContactCandidate();
+ const nameEl=document.getElementById('incomingContactName');
+ const metaEl=document.getElementById('incomingContactMeta');
+ const openBtn=document.getElementById('incomingContactOpen');
+ if(!nameEl||!metaEl||!openBtn)return;
+ const st=coachState();
+ if(p){
+   incomingContactPersonId=p.id;
+   st.lastIncomingPersonId=p.id;saveCoachState(st);
+   nameEl.textContent=upperName([p.name,p.surname].filter(Boolean).join(' '))||'CONTATTO DA GESTIRE';
+   const src=SOURCES.find(function(x){return x.id===p.source});
+   const cat=CATEGORIES.find(function(x){return x.id===p.category});
+   metaEl.textContent=[p.town||'',src?src.name:'',cat?cat.name:'',p.stage||'Nome'].filter(Boolean).join(' · ');
+   openBtn.textContent='APRI CONTATTO';
+   openBtn.onclick=function(){closeIncomingContactPop();openPerson(p.id)};
+ }else{
+   incomingContactPersonId=null;
+   nameEl.textContent='NUOVO CONTATTO DA INSERIRE';
+   metaEl.textContent='La rete è vuota o non ci sono nominativi disponibili. Aggiungi un nome all’albero.';
+   openBtn.textContent='+ AGGIUNGI CONTATTO';
+   openBtn.onclick=function(){closeIncomingContactPop();openNewRootChild()};
+ }
+ document.getElementById('incomingContactPop').classList.add('open');
+}
+function startIncomingContactReminder(){
+ clearInterval(incomingContactTimer);
+ incomingContactTimer=setInterval(function(){
+   closeCoachPopup();
+   openIncomingContact();
+ },INCOMING_CONTACT_INTERVAL_MS);
+}
+
 function startCoachSystem(){
  ['click','keydown','touchstart','scroll'].forEach(function(ev){window.addEventListener(ev,coachRegisterActivity,{passive:true})});
  setTimeout(function(){temporalCoach(false)},1600);
@@ -537,7 +615,7 @@ function startCoachSystem(){
  coachTimer=setInterval(function(){
    if(coachCurrent)return;
    temporalCoach(true);
- },5*60*1000);
+ },3*60*1000);
 }
 
 function init(){
@@ -568,6 +646,7 @@ function init(){
  checkDueTouchpoints();
  const qp=new URLSearchParams(location.search).get('person');if(qp&&db.people.some(x=>x.id===qp))setTimeout(()=>openPerson(qp),80);
  startCoachSystem();
+ startIncomingContactReminder();
  try{window.F1TreeCloud?.boot?.()}catch(_){ }
 }
 function renderAll(){renderMetrics();renderTree()}
