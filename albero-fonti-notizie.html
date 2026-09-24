@@ -78,6 +78,15 @@ button{cursor:pointer}
 .person .badge.trigger-badge{background:#6e4310;color:#ffe0a9;border:1px solid #aa6f1d}
 @media(max-width:700px){.life-trigger-grid{grid-template-columns:1fr}}
 
+
+.cloud-sync-state{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:7px 10px;border-radius:999px;border:1px solid #355064;background:#14222d;color:#b7c5cf;font-size:9px;font-weight:900;letter-spacing:.04em;white-space:nowrap}
+.cloud-sync-state.ok{border-color:#2d7b55;background:#123326;color:#9ff0c8}
+.cloud-sync-state.syncing{border-color:#7b682e;background:#342c12;color:#ffe09a}
+.cloud-sync-state.offline{border-color:#805050;background:#351d1d;color:#ffc0c0}
+.life-trigger-card .trigger-status{display:inline-flex;border:1px solid #5b7286;border-radius:999px;padding:3px 6px;margin:0 0 6px;font-size:8px;font-weight:900;color:#cfe0ea}
+.life-trigger-card .trigger-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.life-trigger-card .trigger-actions button{border:0;border-radius:8px;padding:7px 9px;font-size:9px;font-weight:900;background:#17854c;color:#fff}
+.life-trigger-card .trigger-actions button.converted{background:#294355;color:#9ff0c8}
 </style>
 </head>
 <body>
@@ -123,6 +132,7 @@ button{cursor:pointer}
       <select id="stageFilter"><option value="">Tutte le fasi</option></select>
       <select id="sourceFilter"><option value="">Tutte le fonti</option></select>
       <button class="btn news-launcher" onclick="openNewsDashboard()" title="Apri la dashboard Ricerca Territoriale">NOTIZIE</button>
+      <span id="cloudSyncState" class="cloud-sync-state syncing">● SINCRONIZZAZIONE...</span>
       <button class="btn primary" onclick="openNewRootChild()">+ Nuova persona</button>
     </div>
 
@@ -305,6 +315,9 @@ button{cursor:pointer}
 </div>
 
 <div class="toast" id="toast"></div>
+<script src="supabase-config.js?v=20260924-tree1"></script>
+<script src="supabase-sync.js?v=20260924-tree1"></script>
+<script src="f1-tree-cloud.js?v=20260924-tree1"></script>
 
 <script>
 const SOURCES = [
@@ -413,10 +426,10 @@ try{const shared=JSON.parse(localStorage.getItem('f1NotizieOfficial')||'null');i
 normalizeDBNames(db);
 
 function defaultDB(){
- return {people:[{id:'root',parentId:null,name:'IO',surname:'',phone:'',email:'',category:'',source:'',stage:'Nome',town:'',notes:'Punto di partenza della rete personale',influence:false,firstContact:'',lastContact:'',nextContact:'',touchpointHistory:{},socialSearchHistory:{},lifeTriggers:[],lifeTriggerHistory:[],createdAt:new Date().toISOString(),contactDates:[]}], dailyTarget:40, settings:{officialName:'',officialPhone:'',officialEmail:'',automationWebhook:''}};
+ return {people:[{id:'root',parentId:null,name:'IO',surname:'',phone:'',email:'',category:'',source:'',stage:'Nome',town:'',notes:'Punto di partenza della rete personale',influence:false,firstContact:'',lastContact:'',nextContact:'',touchpointHistory:{},socialSearchHistory:{},lifeTriggers:[],lifeTriggerHistory:[],lifeTriggerStatus:{},lifeTriggerNews:{},createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),contactDates:[]}], dailyTarget:40, settings:{officialName:'',officialPhone:'',officialEmail:'',automationWebhook:''}};
 }
-function loadDB(){try{const x=JSON.parse(localStorage.getItem('alberoFontiNotizie'));if(!(x&&x.people))return defaultDB();x.settings=x.settings||{officialName:'',officialPhone:'',officialEmail:'',automationWebhook:''};x.people.forEach(p=>{p.touchpointHistory=p.touchpointHistory||{};p.socialSearchHistory=p.socialSearchHistory||{};p.lifeTriggers=Array.isArray(p.lifeTriggers)?p.lifeTriggers:[];p.lifeTriggerHistory=Array.isArray(p.lifeTriggerHistory)?p.lifeTriggerHistory:[];p.firstContact=p.firstContact||((p.contactDates||[])[0]||'');syncNextContact(p)});return x}catch(e){return defaultDB()}}
-function persist(){localStorage.setItem('alberoFontiNotizie',JSON.stringify(db))}
+function loadDB(){try{const x=JSON.parse(localStorage.getItem('alberoFontiNotizie'));if(!(x&&x.people))return defaultDB();x.settings=x.settings||{officialName:'',officialPhone:'',officialEmail:'',automationWebhook:''};x.people.forEach(p=>{p.touchpointHistory=p.touchpointHistory||{};p.socialSearchHistory=p.socialSearchHistory||{};p.lifeTriggers=Array.isArray(p.lifeTriggers)?p.lifeTriggers:[];p.lifeTriggerHistory=Array.isArray(p.lifeTriggerHistory)?p.lifeTriggerHistory:[];p.lifeTriggerStatus=p.lifeTriggerStatus||{};p.lifeTriggerNews=p.lifeTriggerNews||{};p.updatedAt=p.updatedAt||p.createdAt||new Date().toISOString();p.firstContact=p.firstContact||((p.contactDates||[])[0]||'');syncNextContact(p)});return x}catch(e){return defaultDB()}}
+function persist(){localStorage.setItem('alberoFontiNotizie',JSON.stringify(db));try{window.F1TreeCloud?.schedulePush?.()}catch(_){}}
 function uid(){return 'p_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7)}
 function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function opt(arr,valueKey='id',labelKey='name'){return arr.map(x=>`<option value="${esc(typeof x==='string'?x:x[valueKey])}">${esc(typeof x==='string'?x:x[labelKey])}</option>`).join('')}
@@ -453,6 +466,7 @@ function init(){
  renderAll();
  checkDueTouchpoints();
  const qp=new URLSearchParams(location.search).get('person');if(qp&&db.people.some(x=>x.id===qp))setTimeout(()=>openPerson(qp),80);
+ try{window.F1TreeCloud?.boot?.()}catch(_){ }
 }
 function renderAll(){renderMetrics();renderTree()}
 function renderMetrics(){
@@ -494,6 +508,20 @@ function renderNode(p,allowed){
  const cat=CATEGORIES.find(c=>c.id===p.category);const src=SOURCES.find(s=>s.id===p.source);
  return `<div class="${cls.join(' ')}" onclick="openPerson('${p.id}')"><div class="name">${esc(upperName([p.name,p.surname].filter(Boolean).join(' ')))}</div><div class="meta">${esc(p.town||'')}${p.phone?'<br>'+esc(p.phone):''}</div><div class="badges">${p.influence?'<span class="badge">★ influenza</span>':''}${(p.lifeTriggers||[]).length?`<span class="badge trigger-badge">⚡ ${(p.lifeTriggers||[]).length} trigger</span>`:''}${cat?`<span class="badge">${esc(cat.name)}</span>`:''}${src?`<span class="badge">${esc(src.name)}</span>`:''}<span class="badge">${esc(p.stage)}</span></div><div class="node-actions"><button onclick="event.stopPropagation();openAddChild('${p.id}','Chi altro conosco attraverso questa persona?')">+ ramo</button>${p.id!=='root'?`<button onclick="event.stopPropagation();markContact('${p.id}')">contatto oggi</button><button class="node-delete" onclick="event.stopPropagation();requestDelete('${p.id}')">elimina</button>`:''}</div></div>${children.length?`<ul>${children.map(c=>`<li>${renderNode(c,allowed)}</li>`).join('')}</ul>`:''}`;
 }
+function getCurrentLifeTriggerStatus(){
+ if(drawerMode==='edit'){
+   const p=db.people.find(x=>x.id===document.getElementById('personId').value);
+   return {...((p&&p.lifeTriggerStatus)||{})};
+ }
+ return {};
+}
+function getCurrentLifeTriggerNews(){
+ if(drawerMode==='edit'){
+   const p=db.people.find(x=>x.id===document.getElementById('personId').value);
+   return {...((p&&p.lifeTriggerNews)||{})};
+ }
+ return {};
+}
 function getFormLifeTriggers(){
  try{const v=JSON.parse(document.getElementById('pLifeTriggers').value||'[]');return Array.isArray(v)?v:[]}catch(_){return []}
 }
@@ -511,10 +539,14 @@ function renderLifeTriggerPanel(p){
    summary.innerHTML='<div class="life-trigger-empty">Nessun cambiamento di vita segnalato. Quando emerge un evento concreto, selezionalo qui per vedere cosa può essere utile verificare.</div>';
    return;
  }
+ const statuses=(p&&p.lifeTriggerStatus)||{};
+ const newsMap=(p&&p.lifeTriggerNews)||{};
  summary.innerHTML=[...active].map(id=>{
    const t=lifeTriggerById(id);if(!t)return '';
    const hist=(p&&Array.isArray(p.lifeTriggerHistory)?p.lifeTriggerHistory:[]).filter(h=>h.id===id).slice(-1)[0];
-   return `<div class="life-trigger-card"><div class="possible">POSSIBILE NOTIZIA DA VERIFICARE${hist&&hist.date?' · RILEVATO '+esc(formatDate(hist.date)):''}</div><h4>${esc(t.label)}</h4><p>${esc(t.need)}</p><ul>${t.questions.map(q=>`<li>${esc(q)}</li>`).join('')}</ul></div>`;
+   const status=statuses[id]||'RILEVATO';
+   const converted=status==='TRASFORMATO_IN_NOTIZIA'||!!newsMap[id];
+   return `<div class="life-trigger-card"><div class="possible">POSSIBILE NOTIZIA DA VERIFICARE${hist&&hist.date?' · RILEVATO '+esc(formatDate(hist.date)):''}</div><div class="trigger-status">${esc(status.replaceAll('_',' '))}</div><h4>${esc(t.label)}</h4><p>${esc(t.need)}</p><ul>${t.questions.map(q=>`<li>${esc(q)}</li>`).join('')}</ul><div class="trigger-actions"><button type="button" class="${converted?'converted':''}" onclick="convertLifeTriggerToNews('${id}')">${converted?'✓ GIÀ TRASFORMATO IN NOTIZIA':'TRASFORMA IN NOTIZIA'}</button></div></div>`;
  }).join('');
 }
 function toggleLifeTrigger(id){
@@ -528,28 +560,45 @@ function toggleLifeTrigger(id){
    if(p){
      p.lifeTriggers=[...arr];
      p.lifeTriggerHistory=Array.isArray(p.lifeTriggerHistory)?p.lifeTriggerHistory:[];
-     if(adding)p.lifeTriggerHistory.push({id,date:localISODate(new Date())});
+     p.lifeTriggerStatus=p.lifeTriggerStatus||{};
+     p.lifeTriggerNews=p.lifeTriggerNews||{};
+     if(adding){p.lifeTriggerHistory.push({id,date:localISODate(new Date())});p.lifeTriggerStatus[id]='RILEVATO'}
+     else p.lifeTriggerStatus[id]='ARCHIVIATO';
+     try{window.F1TreeCloud?.touchLocal?.(p)}catch(_){p.updatedAt=new Date().toISOString()}
      persist();renderAll();
    }
  }
  renderLifeTriggerPanel(p||formPersonSnapshot('draft'));
  if(adding)toast('Trigger segnato: verifica il possibile bisogno immobiliare');
 }
+async function convertLifeTriggerToNews(id){
+ const parentId=ensureCurrentPersonSaved();if(!parentId)return;
+ const p=db.people.find(x=>x.id===parentId);if(!p||p.id==='root')return toast('Seleziona una persona');
+ if((p.lifeTriggerNews||{})[id])return toast('Questo trigger è già collegato a una notizia');
+ if(!confirm('Confermi di aver verificato questo trigger e di volerlo trasformare in una possibile notizia immobiliare?'))return;
+ p.lifeTriggerStatus=p.lifeTriggerStatus||{};p.lifeTriggerStatus[id]='VERIFICATO';
+ try{window.F1TreeCloud?.touchLocal?.(p)}catch(_){p.updatedAt=new Date().toISOString()}
+ persist();renderLifeTriggerPanel(p);
+ try{
+   if(!window.F1TreeCloud?.convertTriggerToNews)throw new Error('Cloud non disponibile');
+   await window.F1TreeCloud.convertTriggerToNews(p.id,id);
+ }catch(err){toast('Notizia accodata/localmente: '+String(err?.message||err))}
+}
 function formPersonSnapshot(id='draft'){
- return {id,parentId:drawerMode==='new'?draftParentId:null,name:upperName(document.getElementById('pName').value),surname:upperName(document.getElementById('pSurname').value),phone:document.getElementById('pPhone').value.trim(),email:document.getElementById('pEmail').value.trim(),category:document.getElementById('pCategory').value,source:document.getElementById('pSource').value,stage:document.getElementById('pStage').value||'Nome',town:document.getElementById('pTown').value.trim(),notes:document.getElementById('pNotes').value.trim(),influence:document.getElementById('pInfluence').checked,lifeTriggers:getFormLifeTriggers(),lifeTriggerHistory:[],firstContact:document.getElementById('pFirstContact').value,lastContact:document.getElementById('pLastContact').value,nextContact:document.getElementById('pNextContact').value,touchpointHistory:{},socialSearchHistory:{}};
+ return {id,parentId:drawerMode==='new'?draftParentId:null,name:upperName(document.getElementById('pName').value),surname:upperName(document.getElementById('pSurname').value),phone:document.getElementById('pPhone').value.trim(),email:document.getElementById('pEmail').value.trim(),category:document.getElementById('pCategory').value,source:document.getElementById('pSource').value,stage:document.getElementById('pStage').value||'Nome',town:document.getElementById('pTown').value.trim(),notes:document.getElementById('pNotes').value.trim(),influence:document.getElementById('pInfluence').checked,lifeTriggers:getFormLifeTriggers(),lifeTriggerHistory:[],lifeTriggerStatus:getCurrentLifeTriggerStatus(),lifeTriggerNews:getCurrentLifeTriggerNews(),firstContact:document.getElementById('pFirstContact').value,lastContact:document.getElementById('pLastContact').value,nextContact:document.getElementById('pNextContact').value,touchpointHistory:{},socialSearchHistory:{}};
 }
 function refreshDraftInvestigator(){if(drawerMode==='new')renderInvestigatorPlan(formPersonSnapshot('draft'))}
 function setDrawerFooterState(){const del=document.getElementById('deletePersonBtn');const save=document.getElementById('savePersonBtn');del.style.display=(drawerMode==='new'||document.getElementById('personId').value==='root')?'none':'inline-block';save.textContent=drawerMode==='new'?'SALVA PERSONA E CREA RAMO':'SALVA'}
-function openPerson(id){const p=db.people.find(x=>x.id===id);if(!p)return;drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource='';syncNextContact(p);document.getElementById('drawerTitle').textContent=p.id==='root'?'Punto di partenza':'Scheda persona';document.getElementById('personId').value=p.id;document.getElementById('pName').value=upperName(p.name);document.getElementById('pSurname').value=upperName(p.surname);document.getElementById('pPhone').value=p.phone||'';document.getElementById('pEmail').value=p.email||'';document.getElementById('pCategory').value=p.category||'';document.getElementById('pSource').value=p.source||'';document.getElementById('pStage').value=p.stage||'Nome';document.getElementById('pTown').value=p.town||'';document.getElementById('pInfluence').checked=!!p.influence;document.getElementById('pFirstContact').value=p.firstContact||'';document.getElementById('pLastContact').value=p.lastContact||'';document.getElementById('pNextContact').value=p.nextContact||'';document.getElementById('pNotes').value=p.notes||'';setFormLifeTriggers(p.lifeTriggers||[]);loadOfficialSettingsIntoForm();renderLifeTriggerPanel(p);renderInvestigatorPlan(p);renderSocialSearchPanel(p);renderTouchpoints(p);setDrawerFooterState();document.getElementById('drawer').classList.add('open')}
+function openPerson(id){const p=db.people.find(x=>x.id===id);if(!p)return;drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource='';syncNextContact(p);document.getElementById('drawerTitle').textContent=p.id==='root'?'Punto di partenza':'Scheda persona';document.getElementById('personId').value=p.id;document.getElementById('pName').value=upperName(p.name);document.getElementById('pSurname').value=upperName(p.surname);document.getElementById('pPhone').value=p.phone||'';document.getElementById('pEmail').value=p.email||'';document.getElementById('pCategory').value=p.category||'';document.getElementById('pSource').value=p.source||'';document.getElementById('pStage').value=p.stage||'Nome';document.getElementById('pTown').value=p.town||'';document.getElementById('pInfluence').checked=!!p.influence;document.getElementById('pFirstContact').value=p.firstContact||'';document.getElementById('pLastContact').value=p.lastContact||'';document.getElementById('pNextContact').value=p.nextContact||'';document.getElementById('pNotes').value=p.notes||'';setFormLifeTriggers(p.lifeTriggers||[]);p.lifeTriggerStatus=p.lifeTriggerStatus||{};p.lifeTriggerNews=p.lifeTriggerNews||{};loadOfficialSettingsIntoForm();renderLifeTriggerPanel(p);renderInvestigatorPlan(p);renderSocialSearchPanel(p);renderTouchpoints(p);setDrawerFooterState();document.getElementById('drawer').classList.add('open')}
 function openNewPersonSheet(parentId,question,presetSource=''){drawerMode='new';draftParentId=parentId||'root';draftQuestion=question||'Chi altro conosco attraverso questa persona?';draftPresetSource=presetSource||selectedSource||'';document.getElementById('drawerTitle').textContent='Scheda persona';document.getElementById('personId').value='';document.getElementById('pName').value='';document.getElementById('pSurname').value='';document.getElementById('pPhone').value='';document.getElementById('pEmail').value='';document.getElementById('pCategory').value='';document.getElementById('pSource').value=draftPresetSource;document.getElementById('pStage').value='Nome';document.getElementById('pTown').value='';document.getElementById('pInfluence').checked=false;document.getElementById('pFirstContact').value='';document.getElementById('pLastContact').value='';document.getElementById('pNextContact').value='';document.getElementById('pNotes').value='';setFormLifeTriggers([]);loadOfficialSettingsIntoForm();renderLifeTriggerPanel(formPersonSnapshot('draft'));renderInvestigatorPlan(formPersonSnapshot('draft'));renderSocialSearchPanel(formPersonSnapshot('draft'));renderTouchpoints(formPersonSnapshot('draft'));setDrawerFooterState();document.getElementById('drawer').classList.add('open');setTimeout(()=>document.getElementById('pName').focus(),100)}
 function closeDrawer(){document.getElementById('drawer').classList.remove('open');if(drawerMode==='new'){drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource=''}}
-function savePerson(silent=false){const name=document.getElementById('pName').value.trim();if(!name){toast('Inserisci il nome');return null}if(drawerMode==='new'){const snap=formPersonSnapshot(uid());snap.parentId=draftParentId||'root';snap.createdAt=new Date().toISOString();snap.contactDates=[];snap.touchpointHistory={};snap.socialSearchHistory={};snap.lifeTriggerHistory=(snap.lifeTriggers||[]).map(id=>({id,date:localISODate(new Date())}));syncNextContact(snap);if(draftQuestion){snap.notes=[snap.notes,`Origine ramo: ${draftQuestion}`].filter(Boolean).join(' · ')}db.people.push(snap);persist();renderAll();drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource='';document.getElementById('personId').value=snap.id;setDrawerFooterState();renderLifeTriggerPanel(snap);renderInvestigatorPlan(snap);renderSocialSearchPanel(snap);renderTouchpoints(snap);if(!silent)toast('Persona salvata e ramo creato');return snap.id}const id=document.getElementById('personId').value;const p=db.people.find(x=>x.id===id);if(!p)return null;const snap=formPersonSnapshot(id);const previousTriggers=new Set(p.lifeTriggers||[]);const existingTriggerHistory=p.lifeTriggerHistory||[];Object.assign(p,snap,{parentId:p.parentId,createdAt:p.createdAt,contactDates:p.contactDates||[],touchpointHistory:p.touchpointHistory||{},socialSearchHistory:p.socialSearchHistory||{},lifeTriggerHistory:existingTriggerHistory});(p.lifeTriggers||[]).forEach(tid=>{if(!previousTriggers.has(tid))p.lifeTriggerHistory.push({id:tid,date:localISODate(new Date())})});syncNextContact(p);document.getElementById('pNextContact').value=p.nextContact||'';persist();renderAll();renderLifeTriggerPanel(p);renderInvestigatorPlan(p);renderSocialSearchPanel(p);renderTouchpoints(p);if(!silent)toast('Scheda salvata');return p.id}
+function savePerson(silent=false){const name=document.getElementById('pName').value.trim();if(!name){toast('Inserisci il nome');return null}if(drawerMode==='new'){const snap=formPersonSnapshot(uid());snap.parentId=draftParentId||'root';snap.createdAt=new Date().toISOString();snap.contactDates=[];snap.touchpointHistory={};snap.socialSearchHistory={};snap.lifeTriggerHistory=(snap.lifeTriggers||[]).map(id=>({id,date:localISODate(new Date())}));snap.lifeTriggerStatus=snap.lifeTriggerStatus||{};(snap.lifeTriggers||[]).forEach(id=>snap.lifeTriggerStatus[id]=snap.lifeTriggerStatus[id]||'RILEVATO');snap.lifeTriggerNews=snap.lifeTriggerNews||{};snap.updatedAt=new Date().toISOString();syncNextContact(snap);if(draftQuestion){snap.notes=[snap.notes,`Origine ramo: ${draftQuestion}`].filter(Boolean).join(' · ')}db.people.push(snap);persist();renderAll();drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource='';document.getElementById('personId').value=snap.id;setDrawerFooterState();renderLifeTriggerPanel(snap);renderInvestigatorPlan(snap);renderSocialSearchPanel(snap);renderTouchpoints(snap);if(!silent)toast('Persona salvata e ramo creato');return snap.id}const id=document.getElementById('personId').value;const p=db.people.find(x=>x.id===id);if(!p)return null;const snap=formPersonSnapshot(id);const previousTriggers=new Set(p.lifeTriggers||[]);const existingTriggerHistory=p.lifeTriggerHistory||[];Object.assign(p,snap,{parentId:p.parentId,createdAt:p.createdAt,contactDates:p.contactDates||[],touchpointHistory:p.touchpointHistory||{},socialSearchHistory:p.socialSearchHistory||{},lifeTriggerHistory:existingTriggerHistory,lifeTriggerStatus:{...(p.lifeTriggerStatus||{}),...(snap.lifeTriggerStatus||{})},lifeTriggerNews:{...(p.lifeTriggerNews||{}),...(snap.lifeTriggerNews||{})},updatedAt:new Date().toISOString()});(p.lifeTriggers||[]).forEach(tid=>{if(!previousTriggers.has(tid))p.lifeTriggerHistory.push({id:tid,date:localISODate(new Date())})});syncNextContact(p);document.getElementById('pNextContact').value=p.nextContact||'';persist();renderAll();renderLifeTriggerPanel(p);renderInvestigatorPlan(p);renderSocialSearchPanel(p);renderTouchpoints(p);if(!silent)toast('Scheda salvata');return p.id}
 function deleteCurrentPerson(){const id=document.getElementById('personId').value;requestDelete(id)}
 function descendantsOf(id){const ids=new Set([id]);let changed=true;while(changed){changed=false;db.people.forEach(x=>{if(x.parentId&&ids.has(x.parentId)&&!ids.has(x.id)){ids.add(x.id);changed=true}})}return ids}
 function requestDelete(id){if(!id)return toast('Nessun contatto selezionato');if(id==='root')return toast('La radice IO non si elimina');const p=db.people.find(x=>x.id===id);if(!p)return toast('Contatto non trovato');currentDeleteId=id;const ids=descendantsOf(id);document.getElementById('deleteMessage').innerHTML=`Stai per eliminare <b>${esc(upperName([p.name,p.surname].filter(Boolean).join(' ')))}</b>${ids.size>1?` e altri <b>${ids.size-1}</b> nominativi discendenti`:''}.`;document.getElementById('deleteModal').classList.add('open')}
 function closeDeleteModal(){document.getElementById('deleteModal').classList.remove('open');currentDeleteId=null}
-function confirmDeleteBranch(){const id=currentDeleteId;if(!id)return;const ids=descendantsOf(id);db.people=db.people.filter(x=>!ids.has(x.id));persist();document.getElementById('deleteModal').classList.remove('open');currentDeleteId=null;closeDrawer();renderAll();toast(ids.size===1?'Contatto eliminato':`${ids.size} contatti eliminati`)}
-function markContact(id){const p=db.people.find(x=>x.id===id);if(!p)return;const today=localISODate(new Date());p.contactDates=p.contactDates||[];p.contactDates.push(today);p.lastContact=today;if(!p.firstContact)p.firstContact=today;if(p.stage==='Nome')p.stage='Contatto';syncNextContact(p);persist();renderAll();toast('Contatto registrato - piano 20 touch point aggiornato')}
+function confirmDeleteBranch(){const id=currentDeleteId;if(!id)return;const ids=descendantsOf(id);try{window.F1TreeCloud?.queueDeleteLegacyIds?.([...ids])}catch(_){}db.people=db.people.filter(x=>!ids.has(x.id));persist();document.getElementById('deleteModal').classList.remove('open');currentDeleteId=null;closeDrawer();renderAll();toast(ids.size===1?'Contatto eliminato':`${ids.size} contatti eliminati`)}
+function markContact(id){const p=db.people.find(x=>x.id===id);if(!p)return;try{window.F1TreeCloud?.touchLocal?.(p)}catch(_){p.updatedAt=new Date().toISOString()}const today=localISODate(new Date());p.contactDates=p.contactDates||[];p.contactDates.push(today);p.lastContact=today;if(!p.firstContact)p.firstContact=today;if(p.stage==='Nome')p.stage='Contatto';syncNextContact(p);persist();renderAll();toast('Contatto registrato - piano 20 touch point aggiornato')}
 function openAddChild(parentId,question,presetSource=''){openNewPersonSheet(parentId,question,presetSource)}
 function ensureCurrentPersonSaved(){if(drawerMode==='new')return savePerson(true);return document.getElementById('personId').value||null}
 function openAddChildFromDrawer(i){const source=document.getElementById('pSource').value;const parentId=ensureCurrentPersonSaved();if(!parentId)return;openNewPersonSheet(parentId,PROMPTS[i],source)}
@@ -557,7 +606,7 @@ function openAddChildFromQuestion(question){const source=document.getElementById
 function openNewRootChild(){openNewPersonSheet('root','Chi conosci personalmente? Inserisci un primo nome senza giudicare se venderà mai casa.',selectedSource||'')}
 function openSourcePerson(sourceId){selectedSource=sourceId;document.querySelectorAll('.source-btn').forEach(b=>b.classList.toggle('active',b.dataset.source===sourceId));const src=SOURCES.find(s=>s.id===sourceId);openNewPersonSheet('root',`Nuovo nominativo dalla fonte principale: ${src?src.name:sourceId}`,sourceId)}
 function closeModal(){document.getElementById('addModal').classList.remove('open')}
-function createChildFromModal(){const name=document.getElementById('mName').value.trim();if(!name)return toast('Inserisci almeno il nome');db.people.push({id:uid(),parentId:currentParentId,name:upperName(name),surname:upperName(document.getElementById('mSurname').value),phone:'',email:'',category:document.getElementById('mCategory').value,source:document.getElementById('mSource').value,stage:'Nome',town:'',notes:[document.getElementById('mNotes').value.trim(),currentQuestion?`Origine ramo: ${currentQuestion}`:''].filter(Boolean).join(' · '),influence:false,firstContact:'',lastContact:'',nextContact:'',touchpointHistory:{},socialSearchHistory:{},lifeTriggers:[],lifeTriggerHistory:[],createdAt:new Date().toISOString(),contactDates:[]});persist();closeModal();renderAll();toast('Persona aggiunta: ora espandi anche questo nome')}
+function createChildFromModal(){const name=document.getElementById('mName').value.trim();if(!name)return toast('Inserisci almeno il nome');db.people.push({id:uid(),parentId:currentParentId,name:upperName(name),surname:upperName(document.getElementById('mSurname').value),phone:'',email:'',category:document.getElementById('mCategory').value,source:document.getElementById('mSource').value,stage:'Nome',town:'',notes:[document.getElementById('mNotes').value.trim(),currentQuestion?`Origine ramo: ${currentQuestion}`:''].filter(Boolean).join(' · '),influence:false,firstContact:'',lastContact:'',nextContact:'',touchpointHistory:{},socialSearchHistory:{},lifeTriggers:[],lifeTriggerHistory:[],lifeTriggerStatus:{},lifeTriggerNews:{},createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),contactDates:[]});persist();closeModal();renderAll();toast('Persona aggiunta: ora espandi anche questo nome')}
 
 function socialQueryFor(p,network){
  const full=upperName([p&&p.name,p&&p.surname].filter(Boolean).join(' ')).trim();
@@ -590,6 +639,7 @@ function openDrawerSocialSearch(network){
  if(drawerMode!=='new'&&p.id&&p.id!=='draft'){
   p.socialSearchHistory=p.socialSearchHistory||{};
   p.socialSearchHistory[network]=new Date().toISOString();
+  try{window.F1TreeCloud?.touchLocal?.(p)}catch(_){p.updatedAt=new Date().toISOString()}
   persist();renderSocialSearchPanel(p);
  }
 }
@@ -616,6 +666,7 @@ function openTouchpointSocialSearch(personId,tpId,network){
  p.touchpointHistory[tpId]=row;
  p.socialSearchHistory=p.socialSearchHistory||{};
  p.socialSearchHistory[network]=row.socialSearches[network];
+ try{window.F1TreeCloud?.touchLocal?.(p)}catch(_){p.updatedAt=new Date().toISOString()}
  persist();renderSocialSearchPanel(p);renderTouchpoints(p);
 }
 function refreshTouchpointDraft(){const p=formPersonSnapshot(drawerMode==='new'?'draft':document.getElementById('personId').value||'draft');if(drawerMode!=='new'){const old=db.people.find(x=>x.id===p.id);p.touchpointHistory=(old&&old.touchpointHistory)||{};p.socialSearchHistory=(old&&old.socialSearchHistory)||{}}syncNextContact(p);document.getElementById('pNextContact').value=p.nextContact||'';renderSocialSearchPanel(p);renderTouchpoints(p)}
@@ -645,7 +696,7 @@ function renderTouchpoints(p){
  holder.innerHTML=`<div class="touchpoint-current"><div class="touchpoint-top"><div><div class="touchpoint-title">${tp.index}. ${esc(tp.title)}</div><div class="touchpoint-cat">${esc(tp.cat)}</div></div><div class="touchpoint-date">${formatDateIT(tp.date)}</div></div><div class="touchpoint-send-label">${esc(statusLabel)}</div><div class="touchpoint-main-message"><b>INVIA AL CLIENTE:</b><br>${esc(tp.desc)}</div><div class="touchpoint-desc"><b>Fonte da consultare:</b> ${esc(tp.source)}</div><div class="touchpoint-actions">${sourceLink}<button class="pdf" type="button" onclick="generateTouchpointPDF('${p.id}','${tp.id}')">PDF F1</button><button class="mail" type="button" onclick="prepareEmailTouchpoint('${p.id}','${tp.id}')">EMAIL</button><button class="wa" type="button" onclick="prepareWhatsAppTouchpoint('${p.id}','${tp.id}')">WHATSAPP</button><button type="button" onclick="shareTouchpointPDF('${p.id}','${tp.id}')">CONDIVIDI PDF</button><button class="donebtn" type="button" onclick="toggleTouchpointDone('${p.id}','${tp.id}')">SEGNA INVIATO</button></div><details class="touchpoint-social-details"><summary>RIFAI RICERCA SOCIAL PER QUESTA DATA · ${esc(socialStatus)}</summary><div class="social-actions">${socialButtons}</div><div class="social-research-detail">Google cercherà usando solo i dati disponibili: <b>${esc(socialQueryFor(p,'[SOCIAL]'))}</b><br>Non è necessario avere telefono, email o altri dati. ${socialDetail}</div></details>${nextAfter?`<div class="touchpoint-next-hint">Dopo questo: ${formatDateIT(nextAfter.date)} - ${esc(nextAfter.title)}</div>`:''}</div>`;
 }
 function getPersonTouchpoint(personId,tpId){const p=db.people.find(x=>x.id===personId);if(!p)return {};const tp=buildTouchpointsForPerson(p).find(x=>x.id===tpId);return {p,tp}}
-function toggleTouchpointDone(personId,tpId){const {p,tp}=getPersonTouchpoint(personId,tpId);if(!p||!tp)return;p.touchpointHistory=p.touchpointHistory||{};const current=p.touchpointHistory[tpId]||{};const done=!current.done;p.touchpointHistory[tpId]={...current,done,sentAt:done?new Date().toLocaleString('it-IT'):''};if(done){p.lastContact=localISODate(new Date());p.contactDates=p.contactDates||[];p.contactDates.push(p.lastContact)}syncNextContact(p);persist();renderAll();openPerson(p.id);toast(done?'Touch point segnato come inviato':'Touch point riaperto')}
+function toggleTouchpointDone(personId,tpId){const {p,tp}=getPersonTouchpoint(personId,tpId);if(!p||!tp)return;p.touchpointHistory=p.touchpointHistory||{};const current=p.touchpointHistory[tpId]||{};const done=!current.done;p.touchpointHistory[tpId]={...current,done,sentAt:done?new Date().toISOString():''};try{window.F1TreeCloud?.touchLocal?.(p)}catch(_){p.updatedAt=new Date().toISOString()};if(done){p.lastContact=localISODate(new Date());p.contactDates=p.contactDates||[];p.contactDates.push(p.lastContact)}syncNextContact(p);persist();renderAll();openPerson(p.id);toast(done?'Touch point segnato come inviato':'Touch point riaperto')}
 function pdfSafeName(p,tp){const who=upperName([p.name,p.surname].filter(Boolean).join('_')).replace(/[^A-Z0-9_À-Ü]/g,'_');return `F1_IMMOBILIARE_${who}_${tp.date}_${tp.index}.pdf`}
 function makeTouchpointPdfBlob(p,tp){
  if(!(window.jspdf&&window.jspdf.jsPDF)){toast('Motore PDF non disponibile. Controlla la connessione Internet.');return null}
@@ -715,8 +766,8 @@ function useMemorySource(name){document.getElementById('memoryTitle').textConten
 function exportData(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});download(blob,'albero-fonti-notizie.json')}
 function exportCSV(){const rows=[['Nome','Cognome','Telefono','Email','Categoria','Fonte','Fase','Comune','Centro influenza','Primo contatto','Ultimo contatto','Prossimo ricontatto','Touchpoint completati anno','Note','ParentID']];db.people.filter(p=>p.id!=='root').forEach(p=>rows.push([p.name,p.surname,p.phone,p.email,p.category,p.source,p.stage,p.town,p.influence?'SI':'NO',p.firstContact,p.lastContact,p.nextContact,buildTouchpointsForPerson(p).filter(x=>x.done).length,p.notes,p.parentId]));const csv=rows.map(r=>r.map(v=>'"'+String(v||'').replace(/"/g,'""')+'"').join(';')).join('\n');download(new Blob([csv],{type:'text/csv;charset=utf-8'}),'albero-fonti-notizie.csv')}
 function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const obj=JSON.parse(r.result);if(!obj.people)throw new Error();db=obj;db.settings=db.settings||{officialName:'',officialPhone:'',officialEmail:'',automationWebhook:''};db.people.forEach(p=>{p.touchpointHistory=p.touchpointHistory||{};p.socialSearchHistory=p.socialSearchHistory||{};p.firstContact=p.firstContact||((p.contactDates||[])[0]||'');syncNextContact(p)});normalizeDBNames(db);persist();renderAll();toast('Dati importati')}catch(err){alert('File JSON non valido')}};r.readAsText(f);e.target.value=''}
-function resetApp(){if(!confirm('Azzerare tutto l’albero e ripartire da IO?'))return;db=defaultDB();persist();renderAll();toast('Dati azzerati')}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const obj=JSON.parse(r.result);if(!obj.people)throw new Error();db=obj;db.settings=db.settings||{officialName:'',officialPhone:'',officialEmail:'',automationWebhook:''};db.people.forEach(p=>{p.touchpointHistory=p.touchpointHistory||{};p.socialSearchHistory=p.socialSearchHistory||{};p.lifeTriggers=Array.isArray(p.lifeTriggers)?p.lifeTriggers:[];p.lifeTriggerHistory=Array.isArray(p.lifeTriggerHistory)?p.lifeTriggerHistory:[];p.lifeTriggerStatus=p.lifeTriggerStatus||{};p.lifeTriggerNews=p.lifeTriggerNews||{};p.updatedAt=new Date().toISOString();p.firstContact=p.firstContact||((p.contactDates||[])[0]||'');syncNextContact(p)});normalizeDBNames(db);persist();renderAll();toast('Dati importati')}catch(err){alert('File JSON non valido')}};r.readAsText(f);e.target.value=''}
+function resetApp(){if(!confirm('Azzerare tutto l’albero e ripartire da IO?'))return;try{window.F1TreeCloud?.queueReset?.()}catch(_){}db=defaultDB();persist();renderAll();toast('Dati azzerati')}
 init();
 </script>
 </body>
