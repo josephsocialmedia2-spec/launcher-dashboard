@@ -65,7 +65,7 @@ function migrate(){
      ['superiori',/\bSUPERIOR/],['primi_lavori',/\bPRIMI LAVOR/]
    ];
    const found=map.filter(x=>x[1].test(hay)).map(x=>x[0]);
-   if(found.length){p.periodContexts=uniq([...p.periodContexts,...found]);changed=true}
+   if(found.length){p.periodContexts=uniq([...p.periodContexts,...found]);p.updatedAt=now();changed=true}
  });
  if(changed){log('Migrazione dati v2 completata senza eliminare i dati esistenti');saveDirect()}
  return changed;
