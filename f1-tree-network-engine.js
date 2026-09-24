@@ -116,9 +116,20 @@ function chooseMnemonicQuestion(){
  const people=stats[period.id]||[];
  if(!people.length){
    if(period.id==='asilo'){
-     const hasAsiloPlace=(db.places||[]).some(x=>x.periodId==='asilo');
-     if(!hasAsiloPlace)return {id:'q_'+Date.now(),periodId:'asilo',answerType:'place',text:'Come si chiamava l’asilo?',anchorId:null};
-     return {id:'q_'+Date.now(),periodId:'asilo',answerType:'person',text:'Ricordi qualche bambino o maestra dell’asilo?',anchorId:null};
+     const done=(db.mnemonic.answerHistory||[]).filter(x=>x.periodId==='asilo').length;
+     const seq=[
+       {answerType:'place',text:'Come si chiamava l’asilo?'},
+       {answerType:'place',text:'In quale Comune si trovava l’asilo?'},
+       {answerType:'person',text:'Ricordi qualche maestra dell’asilo?'},
+       {answerType:'person',text:'Con chi giocavi all’asilo?'},
+       {answerType:'person',text:'Ricordi qualche bambino dell’asilo?'},
+       {answerType:'person',text:'Chi ti accompagnava all’asilo?'},
+       {answerType:'person',text:'A casa di quali bambini andavi?'},
+       {answerType:'memory',text:'Ricordi compleanni, recite o gite dell’asilo?'},
+       {answerType:'memory',text:'Ricordi fotografie di gruppo dell’asilo?'}
+     ];
+     const q=seq[Math.min(done,seq.length-1)];
+     return {id:'q_'+Date.now(),periodId:'asilo',answerType:q.answerType,text:q.text,anchorId:null};
    }
    const text={
      oggi:'Chi frequenti oggi e non hai ancora inserito?',
@@ -334,7 +345,7 @@ function runEngine(reason){
  ensureQuestion(false);
  if(reason==='boot'){
    log('Analizzate '+allPeople().length+' persone');
-   log('Trovati '+(db.duplicateCandidates||[]).length+' possibili duplicati');
+   log('Trovati '+(db.duplicateCandidates||[]).length+' possibili duplicati');log('Collegamenti attivi '+((db.relations||[]).length+allPeople().filter(p=>p.parentId&&p.parentId!=='root').length));
    const stats=periodStats(),weak=PERIODS.filter(x=>(stats[x.id]||[]).length<3);
    if(weak[0])log(periodLabel(weak[0].id)+' classificato come ramo incompleto');
  }
