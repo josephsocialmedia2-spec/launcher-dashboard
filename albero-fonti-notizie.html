@@ -620,13 +620,13 @@ function openIncomingContact(){
    const cat=CATEGORIES.find(function(x){return x.id===p.category});
    metaEl.textContent=[p.town||'',src?src.name:'',cat?cat.name:'',p.stage||'Nome'].filter(Boolean).join(' · ');
    openBtn.textContent='APRI CONTATTO';
-   openBtn.onclick=function(){closeIncomingContactPop();openPerson(p.id)};
+   openBtn.onclick=function(){closeIncomingContactPop();openPerson(p.id)};try{window.F1NetworkEngine?.recordLog?.('Mostrato contatto '+nameEl.textContent)}catch(_){}
  }else{
    incomingContactPersonId=null;
    nameEl.textContent='NUOVO CONTATTO DA INSERIRE';
    metaEl.textContent='Non ci sono nominativi reali disponibili. Usa il motore mnemonico per ricordare una persona reale.';
    openBtn.textContent='RICORDA UN NOME';
-   openBtn.onclick=function(){window.F1NetworkEngine?.focusMnemonic?.()};
+   openBtn.onclick=function(){window.F1NetworkEngine?.focusMnemonic?.()};try{window.F1NetworkEngine?.recordLog?.('Nessun contatto disponibile: proposta domanda mnemonica')}catch(_){}
  }
  document.getElementById('incomingContactPop').classList.add('open');
 }
