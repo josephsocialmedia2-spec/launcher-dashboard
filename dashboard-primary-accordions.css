@@ -1,0 +1,111 @@
+/* F1 Dashboard — accordion principali */
+.f1pa-toggle{
+  width:calc(100% - 36px);
+  max-width:1380px;
+  min-height:54px;
+  margin:12px auto 0;
+  padding:0 16px;
+  border:1px solid #dce7e0;
+  border-radius:14px;
+  background:linear-gradient(180deg,#ffffff 0%,#f7f9f8 100%);
+  box-shadow:0 7px 20px rgba(9,45,27,.08);
+  color:#173a29;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-align:left;
+  cursor:pointer;
+  font-family:Inter,system-ui,sans-serif;
+  transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease,background .18s ease;
+}
+.f1pa-toggle:hover{
+  border-color:#b8d2c1;
+  box-shadow:0 9px 24px rgba(9,45,27,.11);
+}
+.f1pa-toggle:focus-visible{
+  outline:3px solid rgba(11,125,72,.22);
+  outline-offset:2px;
+}
+.f1pa-title{
+  font-size:12px;
+  line-height:1.2;
+  font-weight:950;
+  letter-spacing:-.01em;
+  text-transform:uppercase;
+}
+.f1pa-meta{
+  margin-left:auto;
+  color:#718078;
+  font-size:8px;
+  line-height:1.2;
+  font-weight:800;
+  text-align:right;
+}
+.f1pa-icon{
+  flex:0 0 28px;
+  width:28px;
+  height:28px;
+  display:grid;
+  place-items:center;
+  color:#078247;
+  font-size:22px;
+  line-height:1;
+  font-weight:900;
+}
+.f1pa-toggle.is-open{
+  border-color:#a9cbb7;
+  box-shadow:0 10px 28px rgba(9,45,27,.12);
+}
+.f1pa-content{
+  animation:f1paReveal .18s ease;
+}
+.f1pa-content.f1pa-collapsed{
+  display:none!important;
+}
+body.f1-content-production-day .f1pa-toggle[data-accordion-id="content"]{
+  background:linear-gradient(135deg,#b91c1c,#dc2626 62%,#991b1b);
+  border-color:#991b1b;
+  color:#fff;
+  box-shadow:0 10px 28px rgba(153,27,27,.18);
+}
+body.f1-content-production-day .f1pa-toggle[data-accordion-id="content"] .f1pa-meta,
+body.f1-content-production-day .f1pa-toggle[data-accordion-id="content"] .f1pa-icon{
+  color:#fff;
+}
+.f1pa-toggle + #f1ContentProductionMount{
+  margin-top:0!important;
+}
+.f1pa-toggle + .steps,
+.f1pa-toggle + .main-grid,
+.f1pa-toggle + .territory-grid,
+.f1pa-toggle + .bottom-grid,
+.f1pa-toggle + #f1Academy,
+.f1pa-toggle + .support-grid{
+  margin-top:10px!important;
+}
+@keyframes f1paReveal{
+  from{opacity:.35;transform:translateY(-3px)}
+  to{opacity:1;transform:none}
+}
+@media(max-width:700px){
+  .f1pa-toggle{
+    width:calc(100% - 14px);
+    min-height:52px;
+    margin-top:8px;
+    padding:0 13px;
+    border-radius:12px;
+  }
+  .f1pa-title{
+    font-size:11px;
+  }
+  .f1pa-meta{
+    display:none;
+  }
+  .f1pa-icon{
+    margin-left:auto;
+    flex-basis:30px;
+    width:30px;
+    height:30px;
+    font-size:24px;
+  }
+}
