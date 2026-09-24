@@ -8,7 +8,7 @@ const PROTECTED_SCRIPTS=[
   'f1-tour-admin-dashboard.js?v=20260916-tour1',
   'f1-staff-access-panel.js?v=20260916-access1',
   'f1-realtime.js?v=20260916-mobile1',
-  'f1-desktop-mobile-bridge.js?v=20260916-mobile1',
+  'f1-desktop-mobile-bridge.js?v=20260924-social-publisher1',
   'f1-territory-admin-v4.js?v=20260919-territory-admin-v5',
   'ricerca-territoriale-layout.js?v=20260919-layout-final1'
 ];
