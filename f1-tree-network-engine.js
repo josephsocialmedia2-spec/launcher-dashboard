@@ -230,7 +230,7 @@ function mergePeople(primaryId,duplicateId){
  a.lifeTriggerNews={...(b.lifeTriggerNews||{}),...(a.lifeTriggerNews||{})};
  db.people.forEach(p=>{if(p.parentId===b.id)p.parentId=a.id});
  db.relations=(db.relations||[]).map(r=>({...r,sourceId:r.sourceId===b.id?a.id:r.sourceId,targetId:r.targetId===b.id?a.id:r.targetId})).filter(r=>r.sourceId!==r.targetId);
- db.people=db.people.filter(x=>x.id!==b.id);a.updatedAt=now();
+ db.people=db.people.filter(x=>x.id!==b.id);try{window.F1TreeCloud?.queueDeleteLegacyIds?.([b.id])}catch(_){}a.updatedAt=now();
  log('Unificati due record persona su conferma utente: '+upperName([a.name,a.surname].join(' ')));
  computeDuplicates();saveDirect();renderAll();toast('Persone unificate');
 }
@@ -267,7 +267,7 @@ function renderChronology(){
  const cards=PERIODS.map(period=>{
    const list=stats[period.id]||[],weak=list.length<3;
    const names=list.slice(0,6).map(p=>'<button onclick="openPerson(\''+p.id+'\')">'+esc(upperName([p.name,p.surname].filter(Boolean).join(' ')))+'</button>').join('');
-   return '<div class="period-node '+(weak?'weak':'')+'"><div class="period-node-title">'+esc(period.label)+'</div><div class="period-node-count">'+list.length+' persone</div><div class="period-node-people">'+(names||'<span>ramo da sviluppare</span>')+'</div><button class="period-question" onclick="F1NetworkEngine.usePeriod(\''+period.id+'\')">PROSSIMA DOMANDA</button></div>';
+   return '<div class="period-node kind-'+period.kind+' '+(weak?'weak':'')+'"><div class="period-node-title">'+esc(period.label)+'</div><div class="period-node-count">'+list.length+' persone</div><div class="period-node-people">'+(names||'<span>ramo da sviluppare</span>')+'</div><button class="period-question" onclick="F1NetworkEngine.usePeriod(\''+period.id+'\')">PROSSIMA DOMANDA</button></div>';
  }).join('');
  el.innerHTML='<div class="chrono-root">IO</div><div class="chrono-line"></div><div class="period-grid">'+cards+'</div>'+(unclassified.length?'<div class="unclassified">DA CLASSIFICARE: '+unclassified.length+' persone già presenti</div>':'');
 }
