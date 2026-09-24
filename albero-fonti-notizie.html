@@ -705,7 +705,7 @@ function filterPeople(){
  const source=document.getElementById('sourceFilter').value;
  return db.people.filter(p=>{
   if(p.id==='root')return true;
-  const triggerText=(p.lifeTriggers||[]).map(id=>{const t=lifeTriggerById(id);return t?t.label:''}).join(' ');const hay=[p.name,p.surname,p.phone,p.email,p.town,p.notes,triggerText].join(' ').toLowerCase();
+  const triggerText=(p.lifeTriggers||[]).map(id=>{const t=lifeTriggerById(id);return t?t.label:''}).join(' ');const contextText=[...(p.periodContexts||[]),...(p.places||[]),...(p.memories||[]),...(p.schools||[]),...(p.companies||[])].join(' ');const hay=[p.name,p.surname,p.phone,p.email,p.town,p.notes,triggerText,contextText].join(' ').toLowerCase();
   return (!q||hay.includes(q)) && (!stage||p.stage===stage) && (!source||p.source===source);
  });
 }
