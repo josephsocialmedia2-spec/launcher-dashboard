@@ -491,7 +491,7 @@ function showCoachPopup(msg,force){
  st[key]=new Date().toISOString();saveCoachState(st);
  return true;
 }
-function temporalCoach(){
+function temporalCoach(force){
  if(coachCurrent)return;
  const h=new Date().getHours(),contacts=todayContactCount(),added=peopleAddedToday(),infl=influenceCount();
  let msg=null;
@@ -512,7 +512,7 @@ function temporalCoach(){
       ?{id:'evening-30',tag:'✅ OBIETTIVO MINIMO',title:'Hai raggiunto i 30 contatti',body:'Sei a '+contacts+'. Puoi ancora consolidare la giornata con qualche contatto mirato.',goal:'Obiettivo: chiudere la giornata con notizie e appuntamenti concreti.',cta:'CONTINUA',action:'telefono'}
       :{id:'evening-under30',tag:'📞 ULTIMO BLOCCO',title:'Chiudi la giornata con azione',body:'Sei a '+contacts+' contatti. Scegli il prossimo nome e fai un ultimo blocco operativo.',goal:'Obiettivo: avvicinarti a 30 contatti senza giudicarti.',cta:'PROSSIMO CONTATTO',action:'telefono'};
  }
- if(msg)showCoachPopup(msg,false);
+ if(msg)showCoachPopup(msg,!!force);
 }
 function coachOnPersonSaved(p,isNew){
  if(!p||!isNew)return;
@@ -532,17 +532,11 @@ function coachOnContactRecorded(){
 function coachRegisterActivity(){coachLastActivity=Date.now()}
 function startCoachSystem(){
  ['click','keydown','touchstart','scroll'].forEach(function(ev){window.addEventListener(ev,coachRegisterActivity,{passive:true})});
- setTimeout(temporalCoach,1600);
+ setTimeout(function(){temporalCoach(false)},1600);
  clearInterval(coachTimer);
  coachTimer=setInterval(function(){
    if(coachCurrent)return;
-   if(Date.now()-coachLastActivity>15*60*1000){
-     const h=new Date().getHours();
-     const msg=h<14
-       ?{id:'inactive-phone',tag:'⏱ RIPARTI',title:'Scegli una sola azione',body:'Apri il prossimo contatto e fai una chiamata. Poi decidi il passo successivo.',goal:'Obiettivo: mantenere il blocco operativo senza complicarlo.',cta:'PROSSIMO CONTATTO',action:'telefono'}
-       :{id:'inactive-rubrica',tag:'⏱ RIPARTI',title:'Riattiva l’albero',body:'Aggiungi un nome oppure apri un ramo esistente. Una sola azione adesso.',goal:'Obiettivo: continuare a generare relazioni e notizie.',cta:'+ AGGIUNGI UN NOME',action:'rubrica'};
-     if(showCoachPopup(msg,false))coachLastActivity=Date.now();
-   }else temporalCoach();
+   temporalCoach(true);
  },5*60*1000);
 }
 
