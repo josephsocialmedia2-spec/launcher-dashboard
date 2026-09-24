@@ -90,6 +90,20 @@ async function fetchOwn(table,query){
   const out=await rest(table,q,{method:'GET'});
   return Array.isArray(out)?out:[];
 }
+async function rpc(name,body){
+  return rest('rpc/'+name,'',{method:'POST',headers:{Prefer:'return=representation'},body:body||{}});
+}
+function safeIso(v){
+  if(!v)return null;
+  const d=new Date(v);
+  if(!Number.isNaN(d.getTime()))return d.toISOString();
+  const m=String(v).match(/(\d{1,2})\/(\d{1,2})\/(\d{4})(?:,?\s*(\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
+  if(m){
+    const d2=new Date(Number(m[3]),Number(m[2])-1,Number(m[1]),Number(m[4]||12),Number(m[5]||0),Number(m[6]||0));
+    if(!Number.isNaN(d2.getTime()))return d2.toISOString();
+  }
+  return null;
+}
 function triggerDef(id){try{return LIFE_TRIGGERS.find(x=>x.id===id)||null}catch(_){return null}}
 function socialQuery(p,network){
   try{return socialQueryFor(p,network)}catch(_){
@@ -269,7 +283,7 @@ function buildTouchRows(p,contactId){
     const cycle=Number(String(tp.id).split('-')[0])||new Date().getFullYear();
     return {
       user_id:user.id,contact_id:contactId,touchpoint_key:tp.id,cycle_year:cycle,numero_touchpoint:tp.index,
-      data_prevista:tp.date,data_effettiva:h.done?(h.sentAt?new Date(h.sentAt).toISOString():nowIso()):null,
+      data_prevista:tp.date,data_effettiva:h.done?(safeIso(h.sentAt)||nowIso()):null,
       titolo:tp.title||'',categoria:tp.cat||'',contenuto:tp.desc||'',fonte:tp.source||'',url_fonte:tp.url||'',
       stato:h.done?'INVIATO':(tp.date<=today?'IN_SCADENZA':'DA_FARE'),canale:'',pdf_url:'',social_searches:h.socialSearches||{}
     };
@@ -306,11 +320,11 @@ async function processDeleteQueue(){
   const queue=readJson(DELETE_QUEUE,[]);
   if(!Array.isArray(queue)||!queue.length)return;
   if(queue.includes('*')){
-    await rest('network_contacts','app_scope=eq.'+encodeURIComponent(SCOPE),{method:'DELETE',headers:{Prefer:'return=minimal'}});
+    await rpc('f1_tree_reset_v1',{});
     writeJson(DELETE_QUEUE,[]);return;
   }
   for(const legacy of [...new Set(queue)]){
-    await rest('network_contacts','app_scope=eq.'+encodeURIComponent(SCOPE)+'&legacy_id=eq.'+encodeURIComponent(legacy),{method:'DELETE',headers:{Prefer:'return=minimal'}});
+    await rpc('f1_tree_delete_branch_v1',{p_legacy_id:legacy});
   }
   writeJson(DELETE_QUEUE,[]);
 }
@@ -419,40 +433,15 @@ async function convertTriggerToNews(legacyId,triggerType,fromQueue){
   }
   await authContext();
   if(!contactMap.get(legacyId))await pushSnapshot();
-  const cid=contactMap.get(legacyId);
-  if(!cid)throw new Error('Contatto cloud non disponibile');
-  const tr=await fetchOwn('f1_network_life_triggers','contact_id=eq.'+encodeURIComponent(cid)+'&trigger_type=eq.'+encodeURIComponent(triggerType));
-  let trigger=tr[0];
-  if(!trigger){
-    const rows=buildTriggerRows(p,cid).filter(x=>x.trigger_type===triggerType);
-    const ins=await upsert('f1_network_life_triggers','user_id,contact_id,trigger_type',rows);
-    trigger=ins[0]||null;
-  }
-  if(!trigger)throw new Error('Trigger cloud non disponibile');
-  const def=triggerDef(triggerType)||{label:triggerType,need:''};
-  const ref=legacyId+':'+triggerType;
-  let existing=await fetchOwn('f1_real_estate_news','source=eq.ALB ERO_FONTI_NOTIZIE'.replace(/ /g,'')+'&source_reference=eq.'+encodeURIComponent(ref));
-  let news=existing[0]||null;
-  if(!news){
-    const body=[{
-      user_id:user.id,network_contact_id:cid,origin_trigger_id:trigger.trigger_id,lead_id:'',property_id:'',
-      level:'N1',title:def.label||triggerType,detail:def.need||'',source:'ALBERO_FONTI_NOTIZIE',source_reference:ref,
-      comune:p.town||'',zona:p.town||'',justification:'Trigger di cambiamento di vita verificato nella rete relazionale',
-      status:'ACTIVE',usable:false,tree_status:'DA_VERIFICARE'
-    }];
-    const inserted=await rest('f1_real_estate_news','',{method:'POST',headers:{Prefer:'return=representation'},body});
-    news=Array.isArray(inserted)?inserted[0]:null;
-  }
-  if(news){
-    await patchRows('f1_network_life_triggers','trigger_id=eq.'+encodeURIComponent(trigger.trigger_id),{status:'TRASFORMATO_IN_NOTIZIA',news_id:news.news_id,active:true});
-    p.lifeTriggerStatus=p.lifeTriggerStatus||{};p.lifeTriggerStatus[triggerType]='TRASFORMATO_IN_NOTIZIA';
-    p.lifeTriggerNews=p.lifeTriggerNews||{};p.lifeTriggerNews[triggerType]=news.news_id;
-    const si=typeof STAGES!=='undefined'?STAGES.indexOf(p.stage):-1;
-    if(si>=0&&si<STAGES.indexOf('Notizia'))p.stage='Notizia';
-    touchLocal(p);saveCache();try{renderAll();openPerson(p.id)}catch(_){}
-    if(!fromQueue&&typeof toast==='function')toast('Trigger trasformato in notizia e salvato nel CRM cloud');
-  }
-  return news;
+  const out=await rpc('f1_tree_convert_trigger_news_v1',{p_legacy_id:legacyId,p_trigger_type:triggerType});
+  const newsId=out&&out.news_id?out.news_id:null;
+  p.lifeTriggerStatus=p.lifeTriggerStatus||{};p.lifeTriggerStatus[triggerType]='TRASFORMATO_IN_NOTIZIA';
+  p.lifeTriggerNews=p.lifeTriggerNews||{};if(newsId)p.lifeTriggerNews[triggerType]=newsId;
+  const si=typeof STAGES!=='undefined'?STAGES.indexOf(p.stage):-1;
+  if(si>=0&&si<STAGES.indexOf('Notizia'))p.stage='Notizia';
+  touchLocal(p);saveCache();try{renderAll();openPerson(p.id)}catch(_){}
+  if(!fromQueue&&typeof toast==='function')toast('Trigger trasformato in notizia e salvato nel CRM cloud');
+  return out;
 }
 async function boot(){
   if(booted)return;
