@@ -87,6 +87,9 @@ button{cursor:pointer}
 .life-trigger-card .trigger-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .life-trigger-card .trigger-actions button{border:0;border-radius:8px;padding:7px 9px;font-size:9px;font-weight:900;background:#17854c;color:#fff}
 .life-trigger-card .trigger-actions button.converted{background:#294355;color:#9ff0c8}
+
+.crm-download-btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:#0d6b42!important;border-color:#31db82!important;color:#fff!important;font-weight:900;white-space:nowrap}
+.crm-download-btn:hover{background:#118b56!important}
 </style>
 </head>
 <body>
@@ -131,6 +134,8 @@ button{cursor:pointer}
       <div class="search"><input id="searchInput" placeholder="Cerca nome, telefono, comune, nota..." /></div>
       <select id="stageFilter"><option value="">Tutte le fasi</option></select>
       <select id="sourceFilter"><option value="">Tutte le fonti</option></select>
+      <a class="btn" href="ricerca-territoriale.html" title="Torna alla dashboard iniziale F1">DASHBOARD F1</a>
+      <a class="btn crm-download-btn" href="crm.html?download=csv" title="Scarica il CRM unificato in CSV">SCARICA CRM</a>
       <button class="btn news-launcher" onclick="openNewsDashboard()" title="Apri la dashboard Ricerca Territoriale">NOTIZIE</button>
       <span id="cloudSyncState" class="cloud-sync-state syncing">● SINCRONIZZAZIONE...</span>
       <button class="btn primary" onclick="openNewRootChild()">+ Nuova persona</button>
