@@ -114,6 +114,21 @@ button{cursor:pointer}
 .incoming-contact-open{background:#39f28a;color:#041208}.incoming-contact-later{background:#233229;color:#dce8df}
 .incoming-contact-close{border:0;background:#24342a;color:#fff;border-radius:8px;padding:4px 7px;font-size:11px}
 @media(max-width:700px){.incoming-contact-pop{top:70px}}
+
+/* ===== MOTORE RELAZIONALE / MNEMONICO V2 ===== */
+.mnemonic-panel,.confirm-panel{background:linear-gradient(180deg,#13212c,#0e1820);border:1px solid #3a5364;border-radius:14px;padding:13px;margin:12px 0}
+.mnemonic-panel{border-left:5px solid #7cb8ff}.confirm-panel{border-left:5px solid #f4c95d}
+.mnemonic-head{display:flex;justify-content:space-between;gap:10px;align-items:center}.mnemonic-head h3,.confirm-panel h3{margin:0;font-size:12px;letter-spacing:.06em}
+.mnemonic-period{font-size:9px;font-weight:900;border:1px solid #44617a;border-radius:999px;padding:4px 7px;color:#a9d0ff}
+.mnemonic-question{font-size:17px;font-weight:900;line-height:1.35;color:#fff;margin:10px 0}
+.mnemonic-answer-row{display:grid;grid-template-columns:1fr auto;gap:7px}.mnemonic-answer-row input{width:100%;background:#091219;color:#fff;border:1px solid #365064;border-radius:9px;padding:10px}.mnemonic-answer-row button{border:0;border-radius:9px;background:#2b76d2;color:#fff;font-weight:900;padding:9px 12px}
+.mnemonic-dup-review{display:none;margin-top:10px;background:#241d0e;border:1px solid #775d20;border-radius:10px;padding:9px;font-size:10px}.dup-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.dup-actions button{border:0;border-radius:8px;background:#2a4252;color:#fff;padding:7px 9px;font-size:9px;font-weight:900}
+.okline{font-size:10px;color:#98dab6}.dup-score{font-size:9px;color:#f4c95d;font-weight:900}.dup-pair{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:7px 0;font-size:11px}
+.network-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:10px 0 14px}.network-kpi{background:#101a22;border:1px solid #2f4454;border-radius:10px;padding:8px}.network-kpi b{display:block;font-size:17px;color:#fff}.network-kpi span{font-size:8px;color:#95a8b5;font-weight:800;letter-spacing:.04em}
+.chronology-graph{margin:10px 0 16px;overflow-x:auto;padding-bottom:4px}.chrono-root{width:max-content;margin:0 auto;background:#233a4a;border:2px solid #72b5e8;color:#fff;border-radius:999px;padding:7px 17px;font-size:11px;font-weight:900}.chrono-line{width:2px;height:18px;background:#466276;margin:0 auto}.period-grid{display:grid;grid-template-columns:repeat(5,minmax(155px,1fr));gap:8px;min-width:860px}.period-node{background:#17232d;border:1px solid #405565;border-radius:11px;padding:9px}.period-node.weak{border-style:dashed;border-color:#8b6e2d}.period-node-title{font-size:9px;font-weight:900;color:#dce7ee}.period-node-count{font-size:9px;color:#91a5b3;margin:3px 0 6px}.period-node-people{display:grid;gap:4px;min-height:34px}.period-node-people button{border:0;background:#213440;color:#fff;text-align:left;border-radius:6px;padding:4px 5px;font-size:8px}.period-node-people span{font-size:8px;color:#caa95d}.period-question{margin-top:7px;width:100%;border:0;background:#2b5271;color:#fff;border-radius:7px;padding:6px;font-size:8px;font-weight:900}.unclassified{margin-top:8px;font-size:9px;color:#e0b766}
+.context-box{background:#121e27;border:1px solid #364e5f;border-radius:12px;padding:11px;margin:10px 0}.context-box h3{margin:0 0 8px;font-size:11px}.period-checks{display:grid;grid-template-columns:1fr 1fr;gap:5px}.period-check{font-size:9px;color:#c7d5dd;background:#0d171e;border-radius:7px;padding:6px}.period-check input{width:auto;margin-right:5px}.relation-pills{display:flex;gap:5px;flex-wrap:wrap}.relation-pill{border:0;border-radius:999px;background:#243d4c;color:#dfeaf0;padding:5px 7px;font-size:8px}
+.automation-log{margin-top:10px}.automation-log summary{cursor:pointer;font-size:9px;color:#91a7b7}.automation-log-body{display:grid;gap:4px;margin-top:7px}.automation-log-body div{display:grid;grid-template-columns:45px 1fr;gap:7px;font-size:8px;color:#9daeb9}.automation-log-body time{color:#72b5e8}
+@media(max-width:760px){.network-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.mnemonic-answer-row{grid-template-columns:1fr}.period-checks{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -170,6 +185,14 @@ button{cursor:pointer}
         <div><b>RICERCA TERRITORIALE → FONTI DI NOTIZIE</b><span>Apri la dashboard, cerca segnali territoriali e poi registra qui ogni nominativo come nodo dell'albero.</span></div>
         <button class="btn news-launcher" onclick="openNewsDashboard()">NOTIZIE</button>
       </div>
+      <section class="mnemonic-panel" id="mnemonicPanel">
+        <div class="mnemonic-head"><h3>PROSSIMA DOMANDA</h3><span class="mnemonic-period" id="mnemonicPeriod">RETE</span></div>
+        <div class="mnemonic-question" id="mnemonicQuestion">Sto analizzando i rami della tua rete...</div>
+        <div class="mnemonic-answer-row"><input id="mnemonicAnswer" placeholder="Scrivi un nome, luogo o ricordo..." /><button type="button" onclick="F1NetworkEngine.saveMnemonicAnswer()">SALVA RISPOSTA</button></div>
+        <div class="mnemonic-dup-review" id="mnemonicDuplicateReview"></div>
+      </section>
+      <section class="confirm-panel"><h3>SOLO TU PUOI CONFERMARE QUESTO</h3><div id="duplicatePanel"></div></section>
+      <section class="network-kpis" id="networkKpis"></section>
       <section class="metrics" id="metrics"></section>
 
       <section class="kpi">
@@ -187,8 +210,10 @@ button{cursor:pointer}
       </section>
 
       <section class="tree-wrap">
-        <div class="tree-title"><div><h2>Albero verticale delle relazioni</h2><p>Ogni persona è una porta su altri nomi. Espandi i rami senza giudicare in anticipo chi venderà.</p></div><div class="legend"><span>★ centro di influenza</span><span>verde = notizia</span><span>blu = appuntamento</span></div></div>
+        <div class="tree-title"><div><h2>Albero verticale delle relazioni</h2><p>IO → periodo della vita → persona → persone collegate → ricordi → nuovi rami.</p></div><div class="legend"><span>★ centro di influenza</span><span>verde = notizia</span><span>blu = appuntamento</span></div></div>
+        <div class="chronology-graph" id="chronologyGraph"></div>
         <div class="tree" id="tree"></div>
+        <details class="automation-log"><summary>REGISTRO AUTOMATICO DEL MOTORE</summary><div class="automation-log-body" id="automationLog"></div></details>
       </section>
 
       <section class="guide">
@@ -251,6 +276,13 @@ button{cursor:pointer}
     <div class="field"><label>Prossimo ricontatto - AUTO: 20 TOUCH POINT ALL'ANNO DALLA DATA DI PRIMO CONTATTO</label><input id="pNextContact" class="auto-date" type="date" readonly /><div class="next-touchpoint-preview" id="nextTouchpointPreview">Inserisci la data di primo contatto per generare il piano annuale.</div></div>
     <div class="field"><label><input id="pInfluence" type="checkbox" style="width:auto;margin-right:7px" /> Centro di influenza / persona che parla con molte persone</label></div>
     <div class="field"><label>Nota / informazione emersa</label><textarea id="pNotes" placeholder="Scrivi cosa sai, chi potrebbe conoscere, eventuali segnali di vendita..."></textarea></div>
+    <div class="context-box">
+      <h3>RELAZIONE / CONTESTO NELL'ALBERO</h3>
+      <div class="field"><label>Periodi della vita</label><div class="period-checks" id="pPeriodContexts"></div></div>
+      <div class="grid2"><div class="field"><label>Luoghi / contesti</label><textarea id="pPlaces" placeholder="Un luogo per riga"></textarea></div><div class="field"><label>Ricordi</label><textarea id="pMemories" placeholder="Un ricordo per riga"></textarea></div></div>
+      <div class="grid2"><div class="field"><label>Scuole</label><textarea id="pSchools" placeholder="Una scuola per riga"></textarea></div><div class="field"><label>Aziende / lavori</label><textarea id="pCompanies" placeholder="Un'azienda o lavoro per riga"></textarea></div></div>
+      <div class="field"><label>Collegamenti contestuali</label><div class="relation-pills" id="personRelations"></div></div>
+    </div>
 
     <div class="life-trigger-box" id="lifeTriggerBox">
       <h3>TRIGGER DI CAMBIAMENTO DI VITA</h3>
@@ -365,6 +397,7 @@ button{cursor:pointer}
 <script src="supabase-config.js?v=20260924-tree1"></script>
 <script src="supabase-sync.js?v=20260924-tree1"></script>
 <script src="f1-tree-cloud.js?v=20260924-tree1"></script>
+<script src="f1-tree-network-engine.js?v=20260924-network2"></script>
 
 <script>
 const SOURCES = [
