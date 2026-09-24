@@ -1,5 +1,161 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#070907"><title>F1 — Telefonate di oggi · Task CALL</title><style>:root{--p:#101510;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--gold:#f4c95d;--red:#ff7777}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt);font-family:Arial,sans-serif}.wrap{max-width:980px;margin:auto;padding:18px 12px 90px}.ey{color:var(--g);font-size:10px;font-weight:900;letter-spacing:.15em}h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}.meta{color:var(--mut);font-size:12px;line-height:1.55}.panel,.call{background:var(--p);border:1px solid var(--line);border-radius:14px;padding:13px;margin:10px 0}.call.blocked{border-color:#593636}.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat{text-align:center;font-size:9px;color:var(--mut)}.stat b{display:block;color:var(--g);font-size:24px}.stat.red b{color:var(--red)}.actions{display:flex;gap:7px;flex-wrap:wrap}.btn{display:inline-block;padding:10px 11px;border-radius:9px;background:var(--g);color:#07100a;text-decoration:none;font-size:10px;font-weight:900;border:0;cursor:pointer}.btn.alt{background:#182019;color:#fff;border:1px solid var(--line)}.btn.gold{background:#2b2414;color:var(--gold);border:1px solid #66552a}.btn.red{background:#211616;color:#ffb3b3;border:1px solid #593636}.top{display:flex;justify-content:space-between;gap:10px}.reason{font-weight:900;font-size:14px}.score{color:var(--g);border:1px solid #35513d;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:900;white-space:nowrap}.why{font-size:11px;line-height:1.55;margin:8px 0}.notice{border:1px solid #6a592a;background:#1a170e;color:#e1d59f;border-radius:12px;padding:11px;font-size:11px;line-height:1.5}.gate{color:#ffb3b3;font-weight:900}.ready{color:var(--g);font-weight:900}.empty{color:var(--mut);padding:16px}@media(max-width:650px){.top{display:block}.summary{grid-template-columns:1fr 1fr 1fr}.score{display:inline-block;margin-top:6px}}</style><script defer src="supabase-config.js"></script><script defer src="supabase-sync.js?v=20260913-auth1"></script><script defer src="f1-acquisition-core.js"></script><script defer src="f1-acquisition-data.js"></script></head><body><main class="wrap"><div class="ey">F1 ACQUISITION ENGINE · TASK VIEW</div><h1>TELEFONATE DI OGGI</h1><p class="meta" id="territory">Caricamento territorio…</p><div class="notice"><b>Gate operativo:</b> un task CALL non autorizza da solo il contatto. La centrale di chiamata si apre soltanto quando il record CRM collegato non è marcato “non contattare” e lo stato RPO è verificato o non applicabile. Se manca il lead CRM, il task resta bloccato in verifica.</div><section class="panel"><div class="actions"><a class="btn alt" href="directory-radar-mobile.html">DIRECTORY</a><a class="btn gold" target="_blank" rel="noopener" href="https://operatore.registrodelleopposizioni.it/area_riservata/?lang=it">VERIFICA RPO</a><a class="btn alt" href="crm.html">CRM / ESITI</a><a class="btn alt" href="oggi.html#tasks">COMMAND CENTER</a></div></section><section class="panel"><div class="summary"><div class="stat"><b id="tot">0</b>CALL DOVUTE</div><div class="stat"><b id="ready">0</b>PRONTE</div><div class="stat red"><b id="blocked">0</b>BLOCCATE</div></div></section><section id="list"><div class="empty">Caricamento task CALL…</div></section></main><script>
-let ROWS=[],LEADS=[];const $=id=>document.getElementById(id);function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}function safeUrl(u){try{const x=new URL(String(u||''),location.href);return['http:','https:'].includes(x.protocol)?x.href:''}catch(_){return''}}function leadFor(t){return LEADS.find(l=>String(l.lead_id)===String(t.lead_id||''))||null}function callAllowed(l){if(!l||!l.telefono||l.do_not_contact||l.status==='NON_CONTATTARE')return false;return['VERIFICATO_OK','NON_APPLICABILE','OK','VERIFICATO'].includes(String(l.rpo_status||'').toUpperCase())}
-function render(){const open=ROWS.filter(t=>!['DONE','CANCELLED'].includes(String(t.status||'OPEN').toUpperCase())&&F1AcquisitionCore.isDue(t));const prepared=open.filter(t=>callAllowed(leadFor(t)));$('tot').textContent=open.length;$('ready').textContent=prepared.length;$('blocked').textContent=open.length-prepared.length;$('list').innerHTML=open.length?open.sort((a,b)=>Number(callAllowed(leadFor(b)))-Number(callAllowed(leadFor(a)))||(+b.priority||0)-(+a.priority||0)).map(t=>{const src=safeUrl(t.source_url),where=[t.comune,t.via].filter(Boolean).join(' — '),lead=leadFor(t),allowed=callAllowed(lead),whyBlocked=!lead?'LEAD CRM NON COLLEGATO':lead.do_not_contact||lead.status==='NON_CONTATTARE'?'NON CONTATTARE':!lead.telefono?'TELEFONO ASSENTE':'RPO '+esc(lead.rpo_status||'DA_VERIFICARE');return `<article class="call ${allowed?'':'blocked'}"><div class="top"><div><div class="reason">${esc(t.reason||'Telefonata da eseguire')}</div><div class="meta">PILLAR ${esc(t.pillar)}${where?' · '+esc(where):''}${t.core_category?' · CORE '+esc(t.core_category):''}</div></div><div class="score">PRIORITÀ ${esc(t.priority||0)}</div></div><div class="why"><b>PERCHÉ STO CHIAMANDO?</b><br>${esc(t.lead_reason||t.reason||'Follow-up da task queue')}<br>${allowed?`<span class="ready">PRONTO · RPO ${esc(lead.rpo_status)} · ${esc(lead.telefono)}</span>`:`<span class="gate">BLOCCATO · ${whyBlocked}</span>`}</div><div class="actions">${src?`<a class="btn alt" href="${esc(src)}" target="_blank" rel="noopener">FONTE</a>`:''}${allowed?'<a class="btn" href="http://127.0.0.1:8766/">APRI CENTRALE PC</a><a class="btn alt" href="http://f1-radar.local:8766/">CENTRALE MOBILE LAN</a>':'<a class="btn red" href="crm.html">VERIFICA LEAD / RPO</a>'}<a class="btn alt" href="crm.html">REGISTRA ESITO NEL CRM</a></div></article>`}).join(''):'<div class="empty">Nessun task CALL dovuto oggi.</div>'}
-async function load(){try{const d=await F1AcquisitionData.loadDashboardData(),t=d.cfg.territory;$('territory').textContent=`Centro: ${t.reference_hub} · ${t.policy} · task CALL da Acquisition Engine`;ROWS=d.tasks.filter(x=>String(x.task_type||'').toUpperCase()==='CALL');LEADS=d.leads||[];render()}catch(e){$('list').innerHTML='<div class="empty">Impossibile caricare la task queue: '+esc(e.message)+'</div>'}}window.addEventListener('load',load);
-</script></body></html>
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070907">
+<title>F1 — 50 telefonate di oggi</title>
+<style>
+:root{--p:#101510;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--gold:#f4c95d;--red:#ff7777}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt);font-family:Arial,sans-serif}
+.wrap{max-width:980px;margin:auto;padding:18px 12px 90px}
+.ey{color:var(--g);font-size:10px;font-weight:900;letter-spacing:.15em}
+h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
+.meta{color:var(--mut);font-size:12px;line-height:1.55}
+.panel,.call{background:var(--p);border:1px solid var(--line);border-radius:14px;padding:13px;margin:10px 0}
+.call.done{opacity:.62}
+.call.next{border-color:var(--g);box-shadow:0 0 0 1px rgba(57,242,138,.16)}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{text-align:center;font-size:9px;color:var(--mut)}
+.stat b{display:block;color:var(--g);font-size:24px}
+.stat.gold b{color:var(--gold)}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.btn{display:inline-block;padding:10px 11px;border-radius:9px;background:var(--g);color:#07100a;text-decoration:none;font-size:10px;font-weight:900;border:0;cursor:pointer}
+.btn.alt{background:#182019;color:#fff;border:1px solid var(--line)}
+.btn.gold{background:#2b2414;color:var(--gold);border:1px solid #66552a}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.top{display:flex;justify-content:space-between;gap:10px}
+.reason{font-weight:900;font-size:14px}
+.score{color:var(--g);border:1px solid #35513d;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:900;white-space:nowrap}
+.why{font-size:11px;line-height:1.55;margin:8px 0}
+.notice{border:1px solid #35513d;background:#0d1b11;color:#d8f7e4;border-radius:12px;padding:11px;font-size:11px;line-height:1.55}
+.goal{font-weight:900;color:var(--g)}
+.empty{color:var(--mut);padding:16px}
+.rank{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:999px;background:#172119;border:1px solid #35513d;color:var(--g);font-size:10px;font-weight:900;margin-right:7px}
+.search{width:100%;padding:11px;border-radius:10px;border:1px solid var(--line);background:#0d120e;color:#fff}
+.toolbar{display:grid;grid-template-columns:1fr auto;gap:8px}
+@media(max-width:650px){.top{display:block}.summary{grid-template-columns:1fr 1fr 1fr}.score{display:inline-block;margin-top:6px}.toolbar{grid-template-columns:1fr}}
+</style>
+<script defer src="supabase-config.js?v=20260924-calls50"></script>
+<script defer src="supabase-sync.js?v=20260924-calls50"></script>
+<script defer src="f1-acquisition-core.js?v=20260924-no-rpo-block1"></script>
+<script defer src="f1-acquisition-data.js?v=20260924-calls50"></script>
+</head>
+<body>
+<main class="wrap">
+  <div class="ey">F1 ACQUISITION ENGINE · ACQUISIZIONE IMMOBILI</div>
+  <h1>50 TELEFONATE DI OGGI</h1>
+  <p class="meta">Lista giornaliera CRM dedicata esclusivamente alla ricerca di immobili in vendita.</p>
+
+  <div class="notice">
+    <span class="goal">OBIETTIVO: 50 TELEFONATE.</span><br>
+    Prima vengono selezionati privati/FSBO, possibili venditori e contatti con segnali di vendita; poi contatti territoriali e relazioni utili alla prospezione. Servono telefono presente e contatto non marcato “NON CONTATTARE”. <b>Il controllo RPO non blocca più la chiamata.</b>
+  </div>
+
+  <section class="panel">
+    <div class="actions">
+      <a class="btn alt" href="crm.html#contatti">CONTATTI CRM</a>
+      <a class="btn alt" href="crm.html#attivita">ATTIVITÀ CRM</a>
+      <a class="btn alt" href="ricerca-territoriale.html">DASHBOARD</a>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="summary">
+      <div class="stat"><b id="target">50</b>OBIETTIVO</div>
+      <div class="stat gold"><b id="remaining">0</b>DA CHIAMARE</div>
+      <div class="stat"><b id="done">0</b>COMPLETATE</div>
+    </div>
+  </section>
+
+  <section class="panel toolbar">
+    <input id="search" class="search" placeholder="Cerca nome, telefono, Comune, via...">
+    <button id="reloadBtn" class="btn alt">AGGIORNA</button>
+  </section>
+
+  <section id="list"><div class="empty">Preparazione delle 50 telefonate…</div></section>
+</main>
+
+<script>
+let STATE={rows:[],target:50,total:0,done:0,remaining:0};
+const $=id=>document.getElementById(id);
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function phone(s){let d=String(s||'').replace(/\D/g,'');if(d.startsWith('39')&&d.length>10)d=d.slice(2);return d}
+function nameOf(r){return [r.nome,r.cognome].filter(Boolean).join(' ').trim()||'Contatto senza nome'}
+function placeOf(r){return [r.comune,r.via,r.civico].filter(Boolean).join(' · ')}
+function isDone(r){return String(r.status||'OPEN').toUpperCase()==='DONE'}
+function filteredRows(){
+  const q=String($('search')?.value||'').trim().toLowerCase();
+  if(!q)return STATE.rows;
+  return STATE.rows.filter(r=>[r.nome,r.cognome,r.telefono,r.comune,r.via,r.civico,r.selection_reason,r.source].join(' ').toLowerCase().includes(q));
+}
+function render(){
+  $('target').textContent=STATE.target||50;
+  $('remaining').textContent=STATE.remaining||0;
+  $('done').textContent=STATE.done||0;
+  const rows=filteredRows();
+  const firstOpenIndex=STATE.rows.findIndex(r=>!isDone(r));
+  $('list').innerHTML=rows.length?rows.map(r=>{
+    const originalIndex=STATE.rows.indexOf(r);
+    const done=isDone(r),next=originalIndex===firstOpenIndex&&!done,p=phone(r.telefono);
+    return `<article class="call ${done?'done':''} ${next?'next':''}">
+      <div class="top">
+        <div>
+          <div class="reason"><span class="rank">${originalIndex+1}</span>${esc(nameOf(r))}</div>
+          <div class="meta">${esc(placeOf(r)||'Località non indicata')} · ${esc(r.telefono||'Telefono assente')}</div>
+        </div>
+        <div class="score">${done?'FATTA':'PRIORITÀ '+esc(r.priority||0)}</div>
+      </div>
+      <div class="why">
+        <b>SCOPO DELLA CHIAMATA</b><br>
+        Ricerca di immobili in vendita · ${esc(r.selection_reason||'PROSPEZIONE CRM')}
+      </div>
+      <div class="actions">
+        ${!done&&r.telefono?`<a class="btn" href="tel:${esc(r.telefono)}">CHIAMA</a>`:''}
+        ${!done&&p?`<a class="btn alt" target="_blank" rel="noopener" href="https://wa.me/39${p}">WHATSAPP</a>`:''}
+        ${!done?'<a class="btn gold" href="http://127.0.0.1:8766/">CENTRALE PC</a>':''}
+        ${!done?`<button class="btn alt" data-done="${esc(r.task_id)}">SEGNA FATTA</button>`:''}
+        <a class="btn alt" href="crm.html#contatti">CRM</a>
+      </div>
+    </article>`
+  }).join(''):'<div class="empty">Nessun contatto corrisponde alla ricerca.</div>';
+  document.querySelectorAll('[data-done]').forEach(b=>b.onclick=()=>completeTask(b.dataset.done,b));
+}
+async function completeTask(taskId,btn){
+  btn.disabled=true;
+  try{
+    await F1AcquisitionData.setTaskStatus(taskId,'DONE','Telefonata acquisizione effettuata');
+    await load();
+  }catch(e){
+    alert(e.message||e);
+    btn.disabled=false;
+  }
+}
+async function load(){
+  $('list').innerHTML='<div class="empty">Caricamento lista giornaliera…</div>';
+  try{
+    const data=await F1AcquisitionData.rest('rpc/f1_daily_seller_calls_v1',{
+      method:'POST',
+      body:JSON.stringify({p_target_count:50})
+    })||{};
+    STATE={
+      rows:Array.isArray(data.rows)?data.rows:[],
+      target:Number(data.target)||50,
+      total:Number(data.total)||0,
+      done:Number(data.done)||0,
+      remaining:Number(data.remaining)||0
+    };
+    render();
+  }catch(e){
+    $('list').innerHTML='<div class="empty">Impossibile caricare le 50 telefonate: '+esc(e.message||e)+'</div>';
+  }
+}
+window.addEventListener('load',()=>{
+  $('search').addEventListener('input',render);
+  $('reloadBtn').onclick=load;
+  load();
+});
+</script>
+</body>
+</html>
