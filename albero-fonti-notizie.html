@@ -90,6 +90,15 @@ button{cursor:pointer}
 
 .crm-download-btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:#0d6b42!important;border-color:#31db82!important;color:#fff!important;font-weight:900;white-space:nowrap}
 .crm-download-btn:hover{background:#118b56!important}
+
+/* ===== COACH OPERATIVO CAPITOLO 4 ===== */
+.coach-popup{position:fixed;right:18px;bottom:18px;width:min(380px,calc(100vw - 36px));z-index:120;background:linear-gradient(180deg,#172733,#0f1922);border:1px solid #3d5a6d;border-left:5px solid #39f28a;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.42);padding:14px;display:none}
+.coach-popup.open{display:block;animation:coachIn .22s ease-out}
+@keyframes coachIn{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
+.coach-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.coach-title{font-size:14px;font-weight:900;letter-spacing:.02em}.coach-close{border:0;background:#263b49;color:#fff;border-radius:8px;padding:4px 7px;font-size:11px}
+.coach-body{font-size:12px;line-height:1.45;color:#d7e3ea;margin:8px 0 10px}.coach-goal{font-size:10px;color:#9fb2bf;margin-bottom:10px}.coach-action{width:100%;border:0;border-radius:10px;padding:9px 11px;background:#19b95c;color:#fff;font-weight:900;letter-spacing:.03em}
+.coach-tag{display:inline-block;font-size:9px;font-weight:900;letter-spacing:.08em;color:#7ee9a7;margin-bottom:6px}
+@media(max-width:700px){.coach-popup{right:10px;bottom:10px;width:calc(100vw - 20px)}}
 </style>
 </head>
 <body>
@@ -320,6 +329,12 @@ button{cursor:pointer}
 </div>
 
 <div class="toast" id="toast"></div>
+<div class="coach-popup" id="coachPopup" role="dialog" aria-live="polite" aria-label="Coach operativo">
+  <div class="coach-top"><div><div class="coach-tag" id="coachTag">COACH OPERATIVO</div><div class="coach-title" id="coachTitle"></div></div><button class="coach-close" type="button" onclick="closeCoachPopup()">✕</button></div>
+  <div class="coach-body" id="coachBody"></div>
+  <div class="coach-goal" id="coachGoal"></div>
+  <button class="coach-action" id="coachAction" type="button"></button>
+</div>
 <script src="supabase-config.js?v=20260924-tree1"></script>
 <script src="supabase-sync.js?v=20260924-tree1"></script>
 <script src="f1-tree-cloud.js?v=20260924-tree1"></script>
@@ -444,6 +459,93 @@ function normalizeDBNames(data){if(!data||!Array.isArray(data.people))return;dat
 function openNewsDashboard(){window.open(DASHBOARD_URL,'_blank','noopener,noreferrer')}
 function currentPerson(){if(drawerMode==='new')return formPersonSnapshot('draft');const id=document.getElementById('personId').value;return db.people.find(x=>x.id===id)||db.people.find(x=>x.id==='root')}
 
+
+const COACH_STORAGE_KEY='f1TreeCoachState';
+let coachCurrent=null,coachTimer=null,coachLastActivity=Date.now();
+function coachState(){try{return JSON.parse(localStorage.getItem(COACH_STORAGE_KEY)||'{}')}catch(_){return {}}}
+function saveCoachState(v){try{localStorage.setItem(COACH_STORAGE_KEY,JSON.stringify(v||{}))}catch(_){}}
+function todayLocalKey(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function todayContactCount(){const day=todayLocalKey();return (db.people||[]).filter(function(p){return p.id!=='root'}).reduce(function(n,p){return n+(p.contactDates||[]).filter(function(x){return String(x).slice(0,10)===day}).length},0)}
+function peopleAddedToday(){const day=todayLocalKey();return (db.people||[]).filter(function(p){return p.id!=='root'&&String(p.createdAt||'').slice(0,10)===day}).length}
+function influenceCount(){return (db.people||[]).filter(function(p){return p.id!=='root'&&(p.influence||p.source==='influenza'||p.category==='professionisti')}).length}
+function firstUncontacted(){return (db.people||[]).find(function(p){return p.id!=='root'&&p.stage==='Nome'})}
+function coachActionRun(kind){
+ closeCoachPopup();
+ if(kind==='rubrica'){openNewRootChild();return}
+ if(kind==='telefono'){const p=firstUncontacted();if(p)openPerson(p.id);else openNewRootChild();return}
+ if(kind==='influenza'){openSourcePerson('influenza');return}
+ if(kind==='risultati'){const el=document.getElementById('metrics');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});return}
+}
+function closeCoachPopup(){const el=document.getElementById('coachPopup');if(el)el.classList.remove('open');coachCurrent=null}
+function showCoachPopup(msg,force){
+ if(!msg||coachCurrent)return false;
+ const st=coachState(),key=todayLocalKey()+':'+msg.id;
+ if(!force&&st[key])return false;
+ coachCurrent=msg.id;
+ document.getElementById('coachTag').textContent=msg.tag||'COACH OPERATIVO';
+ document.getElementById('coachTitle').textContent=msg.title;
+ document.getElementById('coachBody').textContent=msg.body;
+ document.getElementById('coachGoal').textContent=msg.goal||'';
+ const btn=document.getElementById('coachAction');btn.textContent=msg.cta;btn.onclick=function(){coachActionRun(msg.action)};
+ document.getElementById('coachPopup').classList.add('open');
+ st[key]=new Date().toISOString();saveCoachState(st);
+ return true;
+}
+function temporalCoach(){
+ if(coachCurrent)return;
+ const h=new Date().getHours(),contacts=todayContactCount(),added=peopleAddedToday(),infl=influenceCount();
+ let msg=null;
+ if(h>=7&&h<10){
+   msg={id:'morning-rubrica',tag:'📒 RUBRICA',title:'Apri la tua rete',body:added?'Hai già iniziato. Aggiungi ancora un nome e chiediti: chi altro conosco attraverso questa persona?':'Parti dai nomi che hai già in testa. Non giudicare chi venderà: costruisci la lista.',goal:'Obiettivo: ampliare la rubrica e generare nuovi rami.',cta:'+ AGGIUNGI UN NOME',action:'rubrica'};
+ }else if(h>=10&&h<13){
+   msg={id:'morning-phone',tag:'📞 TELEFONO',title:'Ora contatti, non perfezione',body:'Hai registrato '+contacts+' contatti oggi. Porta avanti il blocco telefonate e raccogli notizie.',goal:'Obiettivo: 30–50 contatti al giorno per fissare appuntamenti e raccogliere notizie.',cta:'INIZIA / CONTINUA I CONTATTI',action:'telefono'};
+ }else if(h>=13&&h<16){
+   msg=contacts>=30
+    ?{id:'midday-30',tag:'✅ SOGLIA RAGGIUNTA',title:'Hai superato i 30 contatti',body:'Sei a '+contacts+'. Mantieni il ritmo e usa le conversazioni per far emergere notizie.',goal:'Obiettivo: arrivare fino a 50 senza perdere qualità.',cta:'CONTINUA FINO A 50',action:'telefono'}
+    :{id:'midday-phone',tag:'📞 METÀ GIORNATA',title:'Controlla il ritmo',body:'Sei a '+contacts+' contatti. Riparti dal prossimo nome disponibile.',goal:'Obiettivo: raggiungere almeno 30 contatti oggi.',cta:'PROSSIMO CONTATTO',action:'telefono'};
+ }else if(h>=16&&h<19){
+   msg={id:'afternoon-influence',tag:'🤝 CENTRI DI INFLUENZA',title:'Apri una porta che parla con molte persone',body:infl?'Hai '+infl+' contatti ad alta rete. Aggiungine un altro tra baristi, edicolanti, parrucchieri, commercialisti o professionisti.':'Inserisci almeno un centro di influenza: una persona che incontra molte persone ogni giorno.',goal:'Obiettivo: farti ricordare quando qualcuno dice “devo vendere casa”.',cta:'+ CENTRO DI INFLUENZA',action:'influenza'};
+ }else if(h>=19){
+   msg=contacts>=50
+    ?{id:'evening-50',tag:'🏁 GIORNATA COMPLETA',title:'50 contatti raggiunti',body:'Hai completato la soglia alta della giornata. Guarda i nomi generati e le notizie emerse.',goal:'Obiettivo: trasformare conversazioni in notizie e appuntamenti.',cta:'VEDI I RISULTATI',action:'risultati'}
+    :contacts>=30
+      ?{id:'evening-30',tag:'✅ OBIETTIVO MINIMO',title:'Hai raggiunto i 30 contatti',body:'Sei a '+contacts+'. Puoi ancora consolidare la giornata con qualche contatto mirato.',goal:'Obiettivo: chiudere la giornata con notizie e appuntamenti concreti.',cta:'CONTINUA',action:'telefono'}
+      :{id:'evening-under30',tag:'📞 ULTIMO BLOCCO',title:'Chiudi la giornata con azione',body:'Sei a '+contacts+' contatti. Scegli il prossimo nome e fai un ultimo blocco operativo.',goal:'Obiettivo: avvicinarti a 30 contatti senza giudicarti.',cta:'PROSSIMO CONTATTO',action:'telefono'};
+ }
+ if(msg)showCoachPopup(msg,false);
+}
+function coachOnPersonSaved(p,isNew){
+ if(!p||!isNew)return;
+ const total=(db.people||[]).filter(function(x){return x.id!=='root'}).length;
+ if(p.influence||p.source==='influenza'||p.category==='professionisti'){
+   showCoachPopup({id:'saved-influence-'+p.id,tag:'🤝 CENTRO DI INFLUENZA',title:'Nuovo centro di influenza inserito',body:'Ora il valore sta nel farti ricordare: una conversazione utile, poi mantieni il contatto.',goal:'Obiettivo: essere la persona a cui pensano quando sentono “devo vendere casa”.',cta:'AGGIUNGI UN ALTRO NOME',action:'rubrica'},true);return;
+ }
+ if(total>0&&total%10===0){
+   showCoachPopup({id:'rubrica-'+total,tag:'📒 RUBRICA',title:total+' persone nella rete',body:'La lista cresce. Ogni nome deve aprire una nuova domanda: chi altro conosco attraverso questa persona?',goal:'Obiettivo: ampliare l’albero, non fermarti al primo livello.',cta:'+ NUOVO NOME',action:'rubrica'},true);
+ }
+}
+function coachOnContactRecorded(){
+ const n=todayContactCount();
+ if(n===30)showCoachPopup({id:'threshold-30',tag:'✅ TELEFONO',title:'30 contatti raggiunti',body:'Hai raggiunto la soglia minima operativa. Continua se hai ancora ritmo.',goal:'Obiettivo: 30–50 contatti per appuntamenti e notizie.',cta:'CONTINUA',action:'telefono'},true);
+ else if(n===50)showCoachPopup({id:'threshold-50',tag:'🏁 TELEFONO',title:'50 contatti raggiunti',body:'Soglia alta completata. Ora concentra l’attenzione su notizie e appuntamenti emersi.',goal:'Obiettivo: trasformare quantità in opportunità concrete.',cta:'VEDI I RISULTATI',action:'risultati'},true);
+}
+function coachRegisterActivity(){coachLastActivity=Date.now()}
+function startCoachSystem(){
+ ['click','keydown','touchstart','scroll'].forEach(function(ev){window.addEventListener(ev,coachRegisterActivity,{passive:true})});
+ setTimeout(temporalCoach,1600);
+ clearInterval(coachTimer);
+ coachTimer=setInterval(function(){
+   if(coachCurrent)return;
+   if(Date.now()-coachLastActivity>15*60*1000){
+     const h=new Date().getHours();
+     const msg=h<14
+       ?{id:'inactive-phone',tag:'⏱ RIPARTI',title:'Scegli una sola azione',body:'Apri il prossimo contatto e fai una chiamata. Poi decidi il passo successivo.',goal:'Obiettivo: mantenere il blocco operativo senza complicarlo.',cta:'PROSSIMO CONTATTO',action:'telefono'}
+       :{id:'inactive-rubrica',tag:'⏱ RIPARTI',title:'Riattiva l’albero',body:'Aggiungi un nome oppure apri un ramo esistente. Una sola azione adesso.',goal:'Obiettivo: continuare a generare relazioni e notizie.',cta:'+ AGGIUNGI UN NOME',action:'rubrica'};
+     if(showCoachPopup(msg,false))coachLastActivity=Date.now();
+   }else temporalCoach();
+ },5*60*1000);
+}
+
 function init(){
  document.getElementById('sourceGrid').innerHTML=SOURCES.map(s=>`<div class="source-card"><button class="source-btn" data-source="${s.id}" onclick="filterSourceQuick('${s.id}')"><strong>${s.name}</strong><span>${s.desc}</span></button><button class="source-add" onclick="openSourcePerson('${s.id}')">+ nominativo da ${s.name}</button></div>`).join('');
  document.getElementById('categoryList').innerHTML=CATEGORIES.map(c=>`<div class="cat"><span><b>${c.name}</b><br><small style="color:#8fa2b1">${c.examples}</small></span><button onclick="openMemory('${c.id}')">Apri</button></div>`).join('');
@@ -471,6 +573,7 @@ function init(){
  renderAll();
  checkDueTouchpoints();
  const qp=new URLSearchParams(location.search).get('person');if(qp&&db.people.some(x=>x.id===qp))setTimeout(()=>openPerson(qp),80);
+ startCoachSystem();
  try{window.F1TreeCloud?.boot?.()}catch(_){ }
 }
 function renderAll(){renderMetrics();renderTree()}
@@ -597,13 +700,13 @@ function setDrawerFooterState(){const del=document.getElementById('deletePersonB
 function openPerson(id){const p=db.people.find(x=>x.id===id);if(!p)return;drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource='';syncNextContact(p);document.getElementById('drawerTitle').textContent=p.id==='root'?'Punto di partenza':'Scheda persona';document.getElementById('personId').value=p.id;document.getElementById('pName').value=upperName(p.name);document.getElementById('pSurname').value=upperName(p.surname);document.getElementById('pPhone').value=p.phone||'';document.getElementById('pEmail').value=p.email||'';document.getElementById('pCategory').value=p.category||'';document.getElementById('pSource').value=p.source||'';document.getElementById('pStage').value=p.stage||'Nome';document.getElementById('pTown').value=p.town||'';document.getElementById('pInfluence').checked=!!p.influence;document.getElementById('pFirstContact').value=p.firstContact||'';document.getElementById('pLastContact').value=p.lastContact||'';document.getElementById('pNextContact').value=p.nextContact||'';document.getElementById('pNotes').value=p.notes||'';setFormLifeTriggers(p.lifeTriggers||[]);p.lifeTriggerStatus=p.lifeTriggerStatus||{};p.lifeTriggerNews=p.lifeTriggerNews||{};loadOfficialSettingsIntoForm();renderLifeTriggerPanel(p);renderInvestigatorPlan(p);renderSocialSearchPanel(p);renderTouchpoints(p);setDrawerFooterState();document.getElementById('drawer').classList.add('open')}
 function openNewPersonSheet(parentId,question,presetSource=''){drawerMode='new';draftParentId=parentId||'root';draftQuestion=question||'Chi altro conosco attraverso questa persona?';draftPresetSource=presetSource||selectedSource||'';document.getElementById('drawerTitle').textContent='Scheda persona';document.getElementById('personId').value='';document.getElementById('pName').value='';document.getElementById('pSurname').value='';document.getElementById('pPhone').value='';document.getElementById('pEmail').value='';document.getElementById('pCategory').value='';document.getElementById('pSource').value=draftPresetSource;document.getElementById('pStage').value='Nome';document.getElementById('pTown').value='';document.getElementById('pInfluence').checked=false;document.getElementById('pFirstContact').value='';document.getElementById('pLastContact').value='';document.getElementById('pNextContact').value='';document.getElementById('pNotes').value='';setFormLifeTriggers([]);loadOfficialSettingsIntoForm();renderLifeTriggerPanel(formPersonSnapshot('draft'));renderInvestigatorPlan(formPersonSnapshot('draft'));renderSocialSearchPanel(formPersonSnapshot('draft'));renderTouchpoints(formPersonSnapshot('draft'));setDrawerFooterState();document.getElementById('drawer').classList.add('open');setTimeout(()=>document.getElementById('pName').focus(),100)}
 function closeDrawer(){document.getElementById('drawer').classList.remove('open');if(drawerMode==='new'){drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource=''}}
-function savePerson(silent=false){const name=document.getElementById('pName').value.trim();if(!name){toast('Inserisci il nome');return null}if(drawerMode==='new'){const snap=formPersonSnapshot(uid());snap.parentId=draftParentId||'root';snap.createdAt=new Date().toISOString();snap.contactDates=[];snap.touchpointHistory={};snap.socialSearchHistory={};snap.lifeTriggerHistory=(snap.lifeTriggers||[]).map(id=>({id,date:localISODate(new Date())}));snap.lifeTriggerStatus=snap.lifeTriggerStatus||{};(snap.lifeTriggers||[]).forEach(id=>snap.lifeTriggerStatus[id]=snap.lifeTriggerStatus[id]||'RILEVATO');snap.lifeTriggerNews=snap.lifeTriggerNews||{};snap.updatedAt=new Date().toISOString();syncNextContact(snap);if(draftQuestion){snap.notes=[snap.notes,`Origine ramo: ${draftQuestion}`].filter(Boolean).join(' · ')}db.people.push(snap);persist();renderAll();drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource='';document.getElementById('personId').value=snap.id;setDrawerFooterState();renderLifeTriggerPanel(snap);renderInvestigatorPlan(snap);renderSocialSearchPanel(snap);renderTouchpoints(snap);if(!silent)toast('Persona salvata e ramo creato');return snap.id}const id=document.getElementById('personId').value;const p=db.people.find(x=>x.id===id);if(!p)return null;const snap=formPersonSnapshot(id);const previousTriggers=new Set(p.lifeTriggers||[]);const existingTriggerHistory=p.lifeTriggerHistory||[];Object.assign(p,snap,{parentId:p.parentId,createdAt:p.createdAt,contactDates:p.contactDates||[],touchpointHistory:p.touchpointHistory||{},socialSearchHistory:p.socialSearchHistory||{},lifeTriggerHistory:existingTriggerHistory,lifeTriggerStatus:{...(p.lifeTriggerStatus||{}),...(snap.lifeTriggerStatus||{})},lifeTriggerNews:{...(p.lifeTriggerNews||{}),...(snap.lifeTriggerNews||{})},updatedAt:new Date().toISOString()});(p.lifeTriggers||[]).forEach(tid=>{if(!previousTriggers.has(tid))p.lifeTriggerHistory.push({id:tid,date:localISODate(new Date())})});syncNextContact(p);document.getElementById('pNextContact').value=p.nextContact||'';persist();renderAll();renderLifeTriggerPanel(p);renderInvestigatorPlan(p);renderSocialSearchPanel(p);renderTouchpoints(p);if(!silent)toast('Scheda salvata');return p.id}
+function savePerson(silent=false){const name=document.getElementById('pName').value.trim();if(!name){toast('Inserisci il nome');return null}if(drawerMode==='new'){const snap=formPersonSnapshot(uid());snap.parentId=draftParentId||'root';snap.createdAt=new Date().toISOString();snap.contactDates=[];snap.touchpointHistory={};snap.socialSearchHistory={};snap.lifeTriggerHistory=(snap.lifeTriggers||[]).map(id=>({id,date:localISODate(new Date())}));snap.lifeTriggerStatus=snap.lifeTriggerStatus||{};(snap.lifeTriggers||[]).forEach(id=>snap.lifeTriggerStatus[id]=snap.lifeTriggerStatus[id]||'RILEVATO');snap.lifeTriggerNews=snap.lifeTriggerNews||{};snap.updatedAt=new Date().toISOString();syncNextContact(snap);if(draftQuestion){snap.notes=[snap.notes,`Origine ramo: ${draftQuestion}`].filter(Boolean).join(' · ')}db.people.push(snap);persist();renderAll();drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource='';document.getElementById('personId').value=snap.id;setDrawerFooterState();renderLifeTriggerPanel(snap);renderInvestigatorPlan(snap);renderSocialSearchPanel(snap);renderTouchpoints(snap);coachOnPersonSaved(snap,true);if(!silent)toast('Persona salvata e ramo creato');return snap.id}const id=document.getElementById('personId').value;const p=db.people.find(x=>x.id===id);if(!p)return null;const snap=formPersonSnapshot(id);const previousTriggers=new Set(p.lifeTriggers||[]);const existingTriggerHistory=p.lifeTriggerHistory||[];Object.assign(p,snap,{parentId:p.parentId,createdAt:p.createdAt,contactDates:p.contactDates||[],touchpointHistory:p.touchpointHistory||{},socialSearchHistory:p.socialSearchHistory||{},lifeTriggerHistory:existingTriggerHistory,lifeTriggerStatus:{...(p.lifeTriggerStatus||{}),...(snap.lifeTriggerStatus||{})},lifeTriggerNews:{...(p.lifeTriggerNews||{}),...(snap.lifeTriggerNews||{})},updatedAt:new Date().toISOString()});(p.lifeTriggers||[]).forEach(tid=>{if(!previousTriggers.has(tid))p.lifeTriggerHistory.push({id:tid,date:localISODate(new Date())})});syncNextContact(p);document.getElementById('pNextContact').value=p.nextContact||'';persist();renderAll();renderLifeTriggerPanel(p);renderInvestigatorPlan(p);renderSocialSearchPanel(p);renderTouchpoints(p);if(!silent)toast('Scheda salvata');return p.id}
 function deleteCurrentPerson(){const id=document.getElementById('personId').value;requestDelete(id)}
 function descendantsOf(id){const ids=new Set([id]);let changed=true;while(changed){changed=false;db.people.forEach(x=>{if(x.parentId&&ids.has(x.parentId)&&!ids.has(x.id)){ids.add(x.id);changed=true}})}return ids}
 function requestDelete(id){if(!id)return toast('Nessun contatto selezionato');if(id==='root')return toast('La radice IO non si elimina');const p=db.people.find(x=>x.id===id);if(!p)return toast('Contatto non trovato');currentDeleteId=id;const ids=descendantsOf(id);document.getElementById('deleteMessage').innerHTML=`Stai per eliminare <b>${esc(upperName([p.name,p.surname].filter(Boolean).join(' ')))}</b>${ids.size>1?` e altri <b>${ids.size-1}</b> nominativi discendenti`:''}.`;document.getElementById('deleteModal').classList.add('open')}
 function closeDeleteModal(){document.getElementById('deleteModal').classList.remove('open');currentDeleteId=null}
 function confirmDeleteBranch(){const id=currentDeleteId;if(!id)return;const ids=descendantsOf(id);try{window.F1TreeCloud?.queueDeleteLegacyIds?.([...ids])}catch(_){}db.people=db.people.filter(x=>!ids.has(x.id));persist();document.getElementById('deleteModal').classList.remove('open');currentDeleteId=null;closeDrawer();renderAll();toast(ids.size===1?'Contatto eliminato':`${ids.size} contatti eliminati`)}
-function markContact(id){const p=db.people.find(x=>x.id===id);if(!p)return;try{window.F1TreeCloud?.touchLocal?.(p)}catch(_){p.updatedAt=new Date().toISOString()}const today=localISODate(new Date());p.contactDates=p.contactDates||[];p.contactDates.push(today);p.lastContact=today;if(!p.firstContact)p.firstContact=today;if(p.stage==='Nome')p.stage='Contatto';syncNextContact(p);persist();renderAll();toast('Contatto registrato - piano 20 touch point aggiornato')}
+function markContact(id){const p=db.people.find(x=>x.id===id);if(!p)return;try{window.F1TreeCloud?.touchLocal?.(p)}catch(_){p.updatedAt=new Date().toISOString()}const today=localISODate(new Date());p.contactDates=p.contactDates||[];p.contactDates.push(today);p.lastContact=today;if(!p.firstContact)p.firstContact=today;if(p.stage==='Nome')p.stage='Contatto';syncNextContact(p);persist();renderAll();coachOnContactRecorded();toast('Contatto registrato - piano 20 touch point aggiornato')}
 function openAddChild(parentId,question,presetSource=''){openNewPersonSheet(parentId,question,presetSource)}
 function ensureCurrentPersonSaved(){if(drawerMode==='new')return savePerson(true);return document.getElementById('personId').value||null}
 function openAddChildFromDrawer(i){const source=document.getElementById('pSource').value;const parentId=ensureCurrentPersonSaved();if(!parentId)return;openNewPersonSheet(parentId,PROMPTS[i],source)}
@@ -611,7 +714,7 @@ function openAddChildFromQuestion(question){const source=document.getElementById
 function openNewRootChild(){openNewPersonSheet('root','Chi conosci personalmente? Inserisci un primo nome senza giudicare se venderà mai casa.',selectedSource||'')}
 function openSourcePerson(sourceId){selectedSource=sourceId;document.querySelectorAll('.source-btn').forEach(b=>b.classList.toggle('active',b.dataset.source===sourceId));const src=SOURCES.find(s=>s.id===sourceId);openNewPersonSheet('root',`Nuovo nominativo dalla fonte principale: ${src?src.name:sourceId}`,sourceId)}
 function closeModal(){document.getElementById('addModal').classList.remove('open')}
-function createChildFromModal(){const name=document.getElementById('mName').value.trim();if(!name)return toast('Inserisci almeno il nome');db.people.push({id:uid(),parentId:currentParentId,name:upperName(name),surname:upperName(document.getElementById('mSurname').value),phone:'',email:'',category:document.getElementById('mCategory').value,source:document.getElementById('mSource').value,stage:'Nome',town:'',notes:[document.getElementById('mNotes').value.trim(),currentQuestion?`Origine ramo: ${currentQuestion}`:''].filter(Boolean).join(' · '),influence:false,firstContact:'',lastContact:'',nextContact:'',touchpointHistory:{},socialSearchHistory:{},lifeTriggers:[],lifeTriggerHistory:[],lifeTriggerStatus:{},lifeTriggerNews:{},createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),contactDates:[]});persist();closeModal();renderAll();toast('Persona aggiunta: ora espandi anche questo nome')}
+function createChildFromModal(){const name=document.getElementById('mName').value.trim();if(!name)return toast('Inserisci almeno il nome');db.people.push({id:uid(),parentId:currentParentId,name:upperName(name),surname:upperName(document.getElementById('mSurname').value),phone:'',email:'',category:document.getElementById('mCategory').value,source:document.getElementById('mSource').value,stage:'Nome',town:'',notes:[document.getElementById('mNotes').value.trim(),currentQuestion?`Origine ramo: ${currentQuestion}`:''].filter(Boolean).join(' · '),influence:false,firstContact:'',lastContact:'',nextContact:'',touchpointHistory:{},socialSearchHistory:{},lifeTriggers:[],lifeTriggerHistory:[],lifeTriggerStatus:{},lifeTriggerNews:{},createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),contactDates:[]});persist();closeModal();renderAll();coachOnPersonSaved(db.people[db.people.length-1],true);toast('Persona aggiunta: ora espandi anche questo nome')}
 
 function socialQueryFor(p,network){
  const full=upperName([p&&p.name,p&&p.surname].filter(Boolean).join(' ')).trim();
