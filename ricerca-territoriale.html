@@ -36,6 +36,30 @@
   </style>
   <link rel="stylesheet" href="content-production-week.css?v=20260924-content-production-v2" />
   <link rel="stylesheet" href="dashboard-primary-accordions.css?v=20260924-primary-accordion1" />
+
+  <style id="f1NotizieLauncherStyles">
+    @keyframes f1NotiziePulse{
+      0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(25,207,91,.62),0 0 18px rgba(25,207,91,.22)}
+      50%{transform:scale(1.045);box-shadow:0 0 0 10px rgba(25,207,91,0),0 0 28px rgba(25,207,91,.48)}
+    }
+    .f1-notizie-pulse{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      min-height:38px;padding:9px 16px;border:2px solid #83ffab;border-radius:10px;
+      background:linear-gradient(180deg,#20cf62 0%,#0e9f45 100%);
+      color:#fff!important;text-decoration:none!important;font-size:12px;font-weight:900;
+      letter-spacing:.08em;white-space:nowrap;
+      animation:f1NotiziePulse 1.15s ease-in-out infinite;
+      box-shadow:0 0 18px rgba(25,207,91,.28);
+    }
+    .f1-notizie-pulse:hover{background:linear-gradient(180deg,#29df70 0%,#12b550 100%);transform:translateY(-1px)}
+    .f1-notizie-pulse i{font-size:13px}
+    .side-item.f1-notizie-side{color:#8dffb1!important;font-weight:900}
+    .side-item.f1-notizie-side i{color:#29d96b!important}
+    @media(max-width:760px){
+      .f1-notizie-pulse{padding:8px 11px;font-size:10px}
+      .f1-notizie-pulse span{display:inline}
+    }
+  </style>
 </head>
 <body>
   <header class="topbar">
@@ -46,6 +70,7 @@
       <nav class="micro-nav"><span>TERRITORIO</span><span>|</span><span>PERSONE</span><span>|</span><span>VALORE</span></nav>
     </a>
     <div class="topbar-right">
+      <a id="f1NotizieLauncher" class="f1-notizie-pulse" href="albero-fonti-notizie.html" title="Apri Albero delle Fonti di Notizie"><i class="fa-solid fa-bullhorn"></i><span>NOTIZIE</span></a>
       <div class="top-item"><i class="fa-regular fa-calendar-days"></i><span id="todayDate">—</span></div>
       <div class="top-item"><i class="fa-regular fa-clock"></i><span id="topClock">--:--</span></div>
       <div id="cloudPill" class="status-pill"><span class="live-dot"></span> VERIFICA</div>
@@ -59,6 +84,7 @@
   <aside class="sidebar" aria-label="Navigazione principale">
     <a class="side-item active" href="ricerca-territoriale.html"><i class="fa-solid fa-table-columns"></i><span>Dashboard</span></a>
     <a class="side-item active-secondary" href="ricerca-territoriale.html#territorio"><i class="fa-solid fa-location-dot"></i><span>Ricerca territoriale</span></a>
+    <a class="side-item f1-notizie-side" href="albero-fonti-notizie.html"><i class="fa-solid fa-bullhorn"></i><span>Notizie</span></a>
     <a class="side-item" href="crm.html#immobili"><i class="fa-solid fa-house"></i><span>Immobili</span></a>
     <a class="side-item" href="crm.html#contatti"><i class="fa-solid fa-user-group"></i><span>Contatti</span></a>
     <a class="side-item" href="crm.html"><i class="fa-solid fa-database"></i><span>CRM</span></a>\n    <a class="side-item" href="f1-email-radar.html"><i class="fa-solid fa-at"></i><span>Email Radar</span></a>
