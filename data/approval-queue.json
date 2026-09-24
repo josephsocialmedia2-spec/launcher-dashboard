@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "generated_at": "2026-09-24T17:19:15.094734+00:00",
+  "generated_at": "2026-09-24T20:40:43.154752+00:00",
   "pipeline": "F1_COMMON_APPROVAL_QUEUE",
   "crm_target": "Supabase public.approval_queue",
   "items": [
     {
-      "approval_id": "social-optimization-2026-09-24T15-05-25Z",
+      "approval_id": "social-optimization-2026-09-24T17-37-16Z",
       "module": "SOCIAL_OPTIMIZATION",
       "platform": "FACEBOOK · INSTAGRAM",
       "comune": "",
@@ -16,7 +16,7 @@
       "score": null,
       "source_url": "",
       "preview_url": "",
-      "created_at": "2026-09-24T15:05:25Z",
+      "created_at": "2026-09-24T17:37:16Z",
       "origin": "open-social-scheduler/publisher/content_analysis.json",
       "metadata": {
         "analysis_status": "PARTIAL_INSIGHTS_MISSING",
