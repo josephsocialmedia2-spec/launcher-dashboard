@@ -139,6 +139,12 @@ function cloudContactToLocal(c,idByContact,triggers,touchpoints,socials){
     lifeTriggerHistory:[],
     lifeTriggerStatus:{},
     lifeTriggerNews:{},
+    periodContexts:Array.isArray(meta.periodContexts)?meta.periodContexts:[],
+    places:Array.isArray(meta.places)?meta.places:[],
+    memories:Array.isArray(meta.memories)?meta.memories:[],
+    schools:Array.isArray(meta.schools)?meta.schools:[],
+    companies:Array.isArray(meta.companies)?meta.companies:[],
+    contextTags:Array.isArray(meta.contextTags)?meta.contextTags:[],
     createdAt:c.created_at||nowIso(),
     updatedAt:c.updated_at||c.created_at||nowIso(),
     contactDates:Array.isArray(c.contact_dates)?c.contact_dates:[]
@@ -187,7 +193,7 @@ function mergeCloudIntoLocal(bundle){
   const root=(db.people||[]).find(p=>p.id==='root')||{
     id:'root',parentId:null,name:'IO',surname:'',phone:'',email:'',category:'',source:'',stage:'Nome',town:'',
     notes:'Punto di partenza della rete personale',influence:false,firstContact:'',lastContact:'',nextContact:'',
-    touchpointHistory:{},socialSearchHistory:{},lifeTriggers:[],lifeTriggerHistory:[],createdAt:nowIso(),updatedAt:nowIso(),contactDates:[]
+    touchpointHistory:{},socialSearchHistory:{},lifeTriggers:[],lifeTriggerHistory:[],periodContexts:[],places:[],memories:[],schools:[],companies:[],contextTags:[],createdAt:nowIso(),updatedAt:nowIso(),contactDates:[]
   };
   const localMap=new Map((db.people||[]).filter(p=>p.id!=='root').map(p=>[p.id,p]));
   bundle.people.forEach(cp=>{
@@ -199,6 +205,15 @@ function mergeCloudIntoLocal(bundle){
   db.settings=db.settings||{};
   if(bundle.settings&&bundle.settings.daily_target)db.dailyTarget=Number(bundle.settings.daily_target)||db.dailyTarget||40;
   if(bundle.settings&&bundle.settings.automation_webhook!==undefined)db.settings.automationWebhook=bundle.settings.automation_webhook||'';
+  if(bundle.settings&&bundle.settings.graph_meta&&typeof bundle.settings.graph_meta==='object'){
+    const g=bundle.settings.graph_meta;
+    db.dataVersion=Number(bundle.settings.data_version||g.dataVersion||db.dataVersion||1);
+    db.relations=Array.isArray(g.relations)?g.relations:(db.relations||[]);
+    db.places=Array.isArray(g.places)?g.places:(db.places||[]);
+    db.memories=Array.isArray(g.memories)?g.memories:(db.memories||[]);
+    db.automationLog=Array.isArray(g.automationLog)?g.automationLog:(db.automationLog||[]);
+    db.mnemonic=g.mnemonic&&typeof g.mnemonic==='object'?g.mnemonic:(db.mnemonic||{});
+  }
   if(bundle.profile){
     const name=[bundle.profile.first_name,bundle.profile.last_name].filter(Boolean).join(' ');
     if(name)db.settings.officialName=name.toLocaleUpperCase('it-IT');
@@ -237,6 +252,7 @@ function contactPayload(p,parentCloudId){
     tree_meta:{
       category:p.category||'',source:p.source||'',stage:p.stage||'Nome',
       lifeTriggerStatus:p.lifeTriggerStatus||{},lifeTriggerNews:p.lifeTriggerNews||{},
+      periodContexts:p.periodContexts||[],places:p.places||[],memories:p.memories||[],schools:p.schools||[],companies:p.companies||[],contextTags:p.contextTags||[],
       createdAt:p.createdAt||stamp,updatedAt:stamp
     },
     updated_at:stamp,
@@ -306,7 +322,7 @@ function buildSocialRows(p,contactId){
 async function pushSettings(){
   const settings=db.settings||{};
   await upsert('f1_tree_settings','owner_id',[{
-    owner_id:user.id,daily_target:Number(db.dailyTarget||40),automation_webhook:settings.automationWebhook||''
+    owner_id:user.id,daily_target:Number(db.dailyTarget||40),automation_webhook:settings.automationWebhook||'',data_version:Number(db.dataVersion||1),graph_meta:{dataVersion:Number(db.dataVersion||1),relations:db.relations||[],places:db.places||[],memories:db.memories||[],automationLog:(db.automationLog||[]).slice(0,60),mnemonic:db.mnemonic||{}}
   }]);
   const profilePatch={};
   if(settings.officialName){Object.assign(profilePatch,splitOfficialName(settings.officialName))}
@@ -343,7 +359,7 @@ async function pushSnapshot(){
       if(r&&newer(r.updated_at,personStamp(p))){
         const idMap=new Map(remote.map(x=>[x.contact_id,x.legacy_id]));
         const cp=cloudContactToLocal(r,idMap,[],[],[]);
-        Object.assign(p,{...p,...cp,touchpointHistory:p.touchpointHistory||{},socialSearchHistory:p.socialSearchHistory||{},lifeTriggers:p.lifeTriggers||[],lifeTriggerHistory:p.lifeTriggerHistory||[],lifeTriggerStatus:p.lifeTriggerStatus||{},lifeTriggerNews:p.lifeTriggerNews||{}});
+        Object.assign(p,{...p,...cp,touchpointHistory:p.touchpointHistory||{},socialSearchHistory:p.socialSearchHistory||{},lifeTriggers:p.lifeTriggers||[],lifeTriggerHistory:p.lifeTriggerHistory||[],lifeTriggerStatus:p.lifeTriggerStatus||{},lifeTriggerNews:p.lifeTriggerNews||{},periodContexts:cp.periodContexts||p.periodContexts||[],places:cp.places||p.places||[],memories:cp.memories||p.memories||[],schools:cp.schools||p.schools||[],companies:cp.companies||p.companies||[],contextTags:cp.contextTags||p.contextTags||[]});
         localChangedFromCloud=true;
       }
     });
