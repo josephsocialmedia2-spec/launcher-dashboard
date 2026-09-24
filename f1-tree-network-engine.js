@@ -380,7 +380,7 @@ function boot(){
 window.F1NetworkEngine={
  DATA_VERSION,PERIODS,boot,afterMutation,renderAllExtensions,formFields,loadPersonFields,renderPersonRelations,
  saveMnemonicAnswer,resolvePendingDuplicate,mergePeople,ignoreDuplicate,usePeriod,bestOperationalContact,focusMnemonic,
- triggerNewContactPopup:function(){try{closeCoachPopup()}catch(_){}try{openIncomingContact()}catch(_){}}
+ recordLog:function(message){log(message);saveDirect();renderAutomationLog()},triggerNewContactPopup:function(){try{closeCoachPopup()}catch(_){}try{openIncomingContact()}catch(_){}}
 };
 window.triggerNewContactPopup=function(){return window.F1NetworkEngine.triggerNewContactPopup()};
 })();
