@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Albero delle Fonti di Notizie - F1 Immobiliare</title>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+<style>
+:root{
+  --bg:#111a24; --panel:#172432; --panel2:#1f3040; --line:#c9d4dd;
+  --text:#f7fafc; --muted:#a9b8c6; --accent:#ff8a00;
+  --pink:#e91561; --rose:#b83d73; --teal:#15918e; --blue:#4662ff;
+  --green:#19a974; --yellow:#f3c941; --red:#e95d5d; --card:#223545;
+  --shadow:0 14px 35px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{min-height:100vh;display:grid;grid-template-columns:330px 1fr}
+.sidebar{background:#0d151e;border-right:1px solid #2b3d4c;padding:18px;position:sticky;top:0;height:100vh;overflow:auto}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:18px}.brandbar{width:7px;height:34px;border-radius:4px;background:var(--accent)}
+.brand h1{font-size:18px;margin:0}.brand small{display:block;color:var(--muted);margin-top:2px}
+.panel{background:var(--panel);border:1px solid #2a3d4c;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:var(--shadow)}
+.panel h3{font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin:0 0 10px;color:#dce6ed}
+.definition{border-left:4px solid var(--yellow);padding-left:10px;color:#dce6ed;font-size:13px;line-height:1.45}
+.source-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.source-card{border:1px solid #385064;background:#1b2a38;border-radius:10px;overflow:hidden}.source-btn{border:0;background:#1b2a38;color:#fff;border-radius:0;padding:10px;text-align:left;width:100%}.source-btn strong{display:block;font-size:13px}.source-btn span{display:block;font-size:11px;color:var(--muted);margin-top:3px}.source-btn.active{outline:2px solid var(--accent);outline-offset:-2px}.source-add{width:100%;border:0;border-top:1px solid #385064;background:#143126;color:#a7f3c7;padding:7px 8px;font-size:10px;font-weight:800;text-transform:uppercase}
+.cat{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #283b4a}.cat:last-child{border-bottom:0}.cat span{font-size:12px}.cat button{border:0;background:#243747;color:#fff;border-radius:8px;padding:6px 8px}
+.more-list{display:flex;flex-wrap:wrap;gap:6px}.pill{border:1px solid #385064;border-radius:999px;padding:6px 9px;font-size:11px;color:#dce6ed;background:#1b2b39}
+.tip{font-size:12px;color:var(--muted);line-height:1.45}
+.small-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn{border:0;border-radius:10px;padding:9px 11px;background:#2a3e50;color:#fff}.btn.primary{background:var(--accent);color:#161616;font-weight:700}.btn.danger{background:#6f2a2a}.btn.blue{background:var(--blue)}
+.name,#pName,#pSurname,#mName,#mSurname{text-transform:uppercase}
+@keyframes notiziePulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(35,220,92,.65),0 0 18px rgba(35,220,92,.28)}50%{transform:scale(1.05);box-shadow:0 0 0 10px rgba(35,220,92,0),0 0 30px rgba(35,220,92,.6)}}
+.news-launcher{border:2px solid #7dff9f!important;background:#14b84f!important;color:#fff!important;font-weight:900!important;letter-spacing:.08em;animation:notiziePulse 1.15s infinite;white-space:nowrap}
+.news-launcher:hover{background:#19cf5b!important}
+.investigator-box{background:linear-gradient(180deg,#132d28,#10231f);border:1px solid #2f745e;border-radius:12px;padding:12px;margin:12px 0}.investigator-box h3{font-size:12px;margin:0 0 6px;color:#9ef1c8}.investigator-intro{font-size:11px;line-height:1.45;color:#c7ddd4;margin-bottom:9px}.investigator-step{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:start;padding:8px 0;border-bottom:1px dashed #285044}.investigator-step:last-child{border-bottom:0}.investigator-num{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#1b7656;color:#fff;font-size:10px;font-weight:800}.investigator-step b{display:block;font-size:11px;color:#fff;margin-bottom:2px}.investigator-step span{display:block;font-size:10px;line-height:1.4;color:#b9cec6}.investigator-step button{border:0;border-radius:7px;padding:5px 7px;background:#1d5f49;color:#fff;font-size:9px}.privacy-note{margin-top:9px;font-size:10px;line-height:1.4;color:#9bb2a9}.dashboard-strip{display:flex;gap:8px;align-items:center;justify-content:space-between;background:#102a20;border:1px solid #2c7355;border-radius:12px;padding:10px;margin-bottom:12px}.dashboard-strip div{min-width:0}.dashboard-strip b{font-size:12px;display:block}.dashboard-strip span{font-size:10px;color:#a7c7b8;display:block;margin-top:2px}.node-delete{background:rgba(160,25,25,.72)!important}
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{padding:16px 20px;background:#13202b;border-bottom:1px solid #2a3d4c;display:flex;gap:10px;align-items:center;position:sticky;top:0;z-index:20}
+.search{flex:1;min-width:180px}.search input{width:100%;border:1px solid #365064;background:#0f1922;color:#fff;border-radius:10px;padding:10px 12px}.topbar select{background:#0f1922;color:#fff;border:1px solid #365064;border-radius:10px;padding:10px}
+.content{padding:18px;overflow:auto}
+.metrics{display:grid;grid-template-columns:repeat(6,minmax(115px,1fr));gap:10px;margin-bottom:14px}.metric{background:var(--panel);border:1px solid #2b3d4c;border-radius:12px;padding:12px}.metric b{font-size:24px;display:block}.metric span{font-size:11px;color:var(--muted)}
+.kpi{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}.kpi .panel{margin:0}.progress{height:10px;border-radius:999px;background:#0b131a;overflow:hidden;margin:8px 0}.progress i{display:block;height:100%;background:var(--accent);width:0}.journey{display:flex;gap:5px;flex-wrap:wrap}.stage{font-size:10px;padding:5px 7px;border-radius:999px;background:#243747;color:#dbe6ee}.stage.active{background:var(--green);color:white}
+.tree-wrap{background:linear-gradient(180deg,#1a2a37 0%,#12202c 100%);border:1px solid #2d4557;border-radius:16px;padding:22px;min-height:560px;overflow:auto;box-shadow:var(--shadow)}
+.tree-title{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}.tree-title h2{margin:0;font-size:20px}.tree-title p{margin:4px 0 0;color:var(--muted);font-size:12px}.legend{display:flex;gap:7px;flex-wrap:wrap}.legend span{font-size:10px;border-radius:999px;padding:5px 7px;background:#233747}
+.tree{min-width:1100px;text-align:center;padding:10px 0 30px}.tree ul{padding-top:38px;position:relative;display:flex;justify-content:center;margin:0;padding-left:0}.tree li{list-style:none;text-align:center;position:relative;padding:38px 10px 0}.tree li::before,.tree li::after{content:"";position:absolute;top:0;right:50%;border-top:2px solid var(--line);width:50%;height:38px}.tree li::after{right:auto;left:50%;border-left:2px solid var(--line)}.tree li:only-child::after,.tree li:only-child::before{display:none}.tree li:only-child{padding-top:0}.tree li:first-child::before,.tree li:last-child::after{border:0}.tree li:last-child::before{border-right:2px solid var(--line);border-radius:0 8px 0 0}.tree li:first-child::after{border-radius:8px 0 0 0}.tree ul ul::before{content:"";position:absolute;top:0;left:50%;border-left:2px solid var(--line);height:38px}
+.person{min-width:190px;max-width:210px;background:var(--card);border:1px solid #456072;border-radius:12px;padding:11px 12px;display:inline-block;box-shadow:0 9px 22px rgba(0,0,0,.25);position:relative;text-align:left}.person:hover{transform:translateY(-2px)}.person.root{background:var(--accent);color:#141414;border:0}.person.influence{outline:3px solid var(--yellow);outline-offset:2px}.person.news{background:#0f6d59}.person.appointment{background:#3556b8}.person .name{font-weight:800;font-size:14px;margin-bottom:5px}.person .meta{font-size:10px;opacity:.85;line-height:1.35}.person .badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px}.badge{font-size:9px;border-radius:999px;padding:3px 6px;background:rgba(255,255,255,.14)}.person.root .badge{background:rgba(0,0,0,.12)}.person .node-actions{display:flex;gap:4px;margin-top:8px}.person .node-actions button{border:0;border-radius:7px;padding:5px 6px;background:rgba(0,0,0,.22);color:#fff;font-size:10px}.person.root .node-actions button{color:#111;background:rgba(255,255,255,.55)}
+.empty{color:var(--muted);font-size:13px;padding:40px}
+.drawer{position:fixed;right:0;top:0;height:100vh;width:min(560px,100vw);background:#101b25;border-left:1px solid #31485b;box-shadow:-18px 0 40px rgba(0,0,0,.35);z-index:50;transform:translateX(100%);transition:.25s;overflow:auto}.drawer.open{transform:translateX(0)}.drawer-head{padding:16px;border-bottom:1px solid #2b3e4e;display:flex;justify-content:space-between;align-items:center}.drawer-head h2{margin:0;font-size:17px}.drawer-body{padding:16px}.drawer .close{border:0;background:#283b4a;color:#fff;border-radius:8px;padding:7px 10px}.field{margin-bottom:11px}.field label{display:block;font-size:11px;color:#b7c5cf;margin-bottom:5px}.field input,.field select,.field textarea{width:100%;background:#0a131b;color:#fff;border:1px solid #355064;border-radius:9px;padding:9px}.field textarea{min-height:78px;resize:vertical}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}.prompt-box{background:#162633;border:1px solid #31495b;border-radius:12px;padding:12px;margin:12px 0}.prompt-box h3{font-size:12px;margin:0 0 8px}.prompt{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center;padding:6px 0;border-bottom:1px dashed #2c4253}.prompt:last-child{border-bottom:0}.prompt span{font-size:12px;color:#dce6ed}.prompt button{border:0;background:#2a4254;color:#fff;border-radius:8px;padding:5px 8px;font-size:10px}.drawer-foot{display:flex;gap:8px;position:sticky;bottom:0;background:#101b25;padding:14px 16px;border-top:1px solid #2b3e4e}.drawer-foot .btn{flex:1}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:80;padding:20px}.modal.open{display:flex}.modal-card{width:min(760px,96vw);max-height:90vh;overflow:auto;background:#13212d;border:1px solid #355064;border-radius:16px;box-shadow:var(--shadow)}.modal-head{padding:16px;border-bottom:1px solid #304657;display:flex;justify-content:space-between;gap:10px;align-items:center}.modal-body{padding:16px}.modal-head h2{font-size:17px;margin:0}.question-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.question-card{background:#1a2b38;border:1px solid #31495b;border-radius:12px;padding:12px}.question-card h4{margin:0 0 7px;font-size:12px}.question-card p{font-size:11px;color:var(--muted);margin:0 0 8px}.question-card button{border:0;background:var(--accent);border-radius:8px;padding:7px 9px;font-weight:700}
+.guide{margin-top:14px}.guide details{background:#152631;border:1px solid #2c4456;border-radius:11px;margin-bottom:8px;padding:10px}.guide summary{cursor:pointer;font-weight:700;font-size:12px}.guide p,.guide li{font-size:11px;color:#c2cdd5;line-height:1.45}.guide table{width:100%;border-collapse:collapse;font-size:11px}.guide td{padding:6px;border-bottom:1px solid #2c4353;vertical-align:top}.guide td:first-child{width:110px;color:#8fa4ff;font-weight:700}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#061019;color:#fff;border:1px solid #385368;border-radius:10px;padding:10px 14px;z-index:100;display:none}.toast.show{display:block}
+@media(max-width:1000px){.app{grid-template-columns:1fr}.sidebar{position:relative;height:auto;border-right:0;border-bottom:1px solid #2b3d4c}.metrics{grid-template-columns:repeat(3,1fr)}.kpi{grid-template-columns:1fr}.drawer{width:min(420px,100vw)}}
+
+/* ===== TOUCH POINT F1 IMMOBILIARE ===== */
+.touchpoint-box{background:linear-gradient(180deg,#16263a,#111f2e);border:1px solid #365c78;border-radius:14px;padding:13px;margin:12px 0}
+.touchpoint-box h3{margin:0 0 5px;font-size:12px;letter-spacing:.06em}.touchpoint-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.touchpoint-head .counter{font-size:10px;color:#b7c7d4;background:#0d1720;border:1px solid #355064;border-radius:999px;padding:5px 8px;white-space:nowrap}
+.touchpoint-note{font-size:10px;color:#a9b8c6;line-height:1.45;margin:5px 0 10px}.touchpoint-grid{display:grid;gap:8px;padding-right:0}.touchpoint-current{border:2px solid #ff9f1c;background:#13222f;border-radius:14px;padding:14px;box-shadow:0 0 18px rgba(255,159,28,.14)}.touchpoint-send-label{font-size:10px;font-weight:900;letter-spacing:.08em;color:#ffcf8a;margin:8px 0 5px}.touchpoint-main-message{font-size:12px;line-height:1.5;color:#f3f7fa;background:#0f1b25;border:1px solid #30495c;border-radius:10px;padding:10px;margin-bottom:8px}.touchpoint-next-hint{font-size:9px;color:#91a7b7;margin-top:8px}.touchpoint-social-details{margin-top:10px;border-top:1px dashed #365064;padding-top:8px}.touchpoint-social-details summary{cursor:pointer;font-size:9px;font-weight:800;color:#cfe8dd;list-style:none}.touchpoint-social-details summary::-webkit-details-marker{display:none}.touchpoint-social-details[open] summary{margin-bottom:8px}.touchpoint-item{border:1px solid #30495c;background:#13222f;border-radius:11px;padding:10px}.touchpoint-item.due{outline:2px solid #ff9f1c;box-shadow:0 0 16px rgba(255,159,28,.16)}.touchpoint-item.done{opacity:.62}.touchpoint-top{display:flex;gap:9px;justify-content:space-between;align-items:flex-start}.touchpoint-date{min-width:79px;font-size:10px;font-weight:800;color:#97e6bf}.touchpoint-title{font-size:11px;font-weight:800;color:#fff;line-height:1.25}.touchpoint-cat{font-size:9px;color:#8ea6b8;text-transform:uppercase;letter-spacing:.06em;margin-top:2px}.touchpoint-desc{font-size:10px;color:#c1d0db;line-height:1.4;margin:7px 0}.touchpoint-actions{display:flex;gap:5px;flex-wrap:wrap}.touchpoint-actions button,.touchpoint-actions a{border:0;text-decoration:none;border-radius:7px;padding:5px 7px;font-size:9px;background:#294355;color:#fff}.touchpoint-actions .pdf{background:#b63434}.touchpoint-actions .mail{background:#365fba}.touchpoint-actions .wa{background:#17854c}.touchpoint-actions .donebtn{background:#765c12}.touchpoint-actions .source{background:#34414b}.touchpoint-status{font-size:9px;margin-top:7px;color:#86dcae}
+.auto-date{background:#0f241d!important;border-color:#2f745e!important;color:#a7f3c7!important;font-weight:700}.due-summary{background:#291e0f;border:1px solid #7a5620;border-radius:10px;padding:9px;margin-bottom:10px;font-size:10px;line-height:1.4;color:#f4d39c}.official-box{background:#171f2a;border:1px solid #45576a;border-radius:12px;padding:11px;margin:10px 0}.official-box h3{margin:0 0 7px;font-size:11px}.official-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.official-row input{width:100%;background:#0a131b;color:#fff;border:1px solid #355064;border-radius:8px;padding:8px}.official-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.official-actions button{border:0;border-radius:8px;padding:7px 9px;background:#1b7656;color:#fff;font-size:10px}.automation-warning{font-size:9px;color:#e6c17a;line-height:1.4;margin-top:8px}.next-touchpoint-preview{font-size:10px;color:#9ecbb8;margin-top:5px;line-height:1.4}
+.social-search-box{background:linear-gradient(180deg,#172a35,#12212b);border:1px solid #3c5d70;border-radius:13px;padding:12px;margin:12px 0}.social-search-box h3{margin:0 0 5px;font-size:12px;letter-spacing:.05em}.social-search-note{font-size:10px;color:#a9bbc7;line-height:1.45;margin-bottom:9px}.social-search-query{font-size:10px;color:#d7e5ee;background:#0d1820;border:1px solid #2f4656;border-radius:8px;padding:7px 8px;margin-bottom:8px;word-break:break-word}.social-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.social-actions button{border:0;border-radius:8px;padding:8px 6px;color:#fff;font-size:9px;font-weight:800;letter-spacing:.03em}.social-actions .facebook{background:#2851a3}.social-actions .instagram{background:#8f3c75}.social-actions .tiktok{background:#252525}.social-actions .youtube{background:#b52b2b}.social-last{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px;margin-top:8px}.social-last span{font-size:9px;color:#9fb2bf;background:#0d1820;border-radius:7px;padding:5px 6px}.touch-social{margin-top:9px;border-top:1px dashed #365064;padding-top:8px}.touch-social-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:6px}.touch-social-head b{font-size:9px;color:#cfe8dd}.touch-social-state{font-size:8px;border-radius:999px;padding:4px 6px;background:#4c3213;color:#ffd596;white-space:nowrap}.touch-social-state.ok{background:#153f2d;color:#9ff0c8}.touch-social .social-actions{grid-template-columns:repeat(4,minmax(0,1fr))}.touch-social .social-actions button{padding:6px 4px;font-size:8px}.social-research-detail{font-size:8px;color:#879ba9;line-height:1.35;margin-top:5px}@media(max-width:700px){.social-actions,.touch-social .social-actions{grid-template-columns:1fr 1fr}}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brandbar"></div><div><h1>ALBERO DELLE FONTI DI NOTIZIE</h1><small>Rete personale → relazioni → notizie immobiliari</small></div></div>
+
+    <div class="panel">
+      <h3>Che cos'è una notizia</h3>
+      <div class="definition">Il nome e il contatto di una persona che vuole vendere casa. Il programma serve a trovare <b>fonti</b>, persone e relazioni da cui possono emergere notizie.</div>
+    </div>
+
+    <div class="panel">
+      <h3>4 fonti principali</h3>
+      <div class="source-grid" id="sourceGrid"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Checklist: 50 porte</h3>
+      <div id="categoryList"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Non ti vengono più nomi?</h3>
+      <div class="more-list" id="moreSources"></div>
+      <p class="tip">Usa queste fonti come promemoria mnemonico. Quando trovi un nome, inseriscilo nell'albero e chiediti subito: <b>“Chi altro conosco attraverso questa persona?”</b></p>
+    </div>
+
+    <div class="panel">
+      <h3>Dati</h3>
+      <div class="small-actions">
+        <button class="btn" onclick="exportData()">Esporta JSON</button>
+        <label class="btn" style="text-align:center">Importa JSON<input id="importFile" type="file" accept="application/json" hidden></label>
+        <button class="btn" onclick="exportCSV()">Esporta CSV</button>
+        <button class="btn danger" onclick="resetApp()">Azzera dati</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="search"><input id="searchInput" placeholder="Cerca nome, telefono, comune, nota..." /></div>
+      <select id="stageFilter"><option value="">Tutte le fasi</option></select>
+      <select id="sourceFilter"><option value="">Tutte le fonti</option></select>
+      <button class="btn news-launcher" onclick="openNewsDashboard()" title="Apri la dashboard Ricerca Territoriale">NOTIZIE</button>
+      <button class="btn primary" onclick="openNewRootChild()">+ Nuova persona</button>
+    </div>
+
+    <div class="content">
+      <div class="dashboard-strip">
+        <div><b>RICERCA TERRITORIALE → FONTI DI NOTIZIE</b><span>Apri la dashboard, cerca segnali territoriali e poi registra qui ogni nominativo come nodo dell'albero.</span></div>
+        <button class="btn news-launcher" onclick="openNewsDashboard()">NOTIZIE</button>
+      </div>
+      <section class="metrics" id="metrics"></section>
+
+      <section class="kpi">
+        <div class="panel">
+          <h3>Obiettivo giornaliero contatti</h3>
+          <div style="display:flex;justify-content:space-between;gap:10px;align-items:end"><div><b id="todayContacts" style="font-size:24px">0</b><span class="tip"> contatti registrati oggi</span></div><select id="dailyTarget" style="background:#0f1922;color:#fff;border:1px solid #365064;border-radius:8px;padding:7px"><option>30</option><option selected>40</option><option>50</option></select></div>
+          <div class="progress"><i id="dailyProgress"></i></div>
+          <div class="tip">Il PDF indica 30–50 contatti al giorno. L'obiettivo non è “chiudere” al telefono: è fissare appuntamenti e raccogliere notizie.</div>
+        </div>
+        <div class="panel">
+          <h3>Catena operativa</h3>
+          <div class="journey" id="journey"></div>
+          <p class="tip">Nome → contatto → conversazione → informazione → notizia → proprietario → appuntamento → incarico.</p>
+        </div>
+      </section>
+
+      <section class="tree-wrap">
+        <div class="tree-title"><div><h2>Albero verticale delle relazioni</h2><p>Ogni persona è una porta su altri nomi. Espandi i rami senza giudicare in anticipo chi venderà.</p></div><div class="legend"><span>★ centro di influenza</span><span>verde = notizia</span><span>blu = appuntamento</span></div></div>
+        <div class="tree" id="tree"></div>
+      </section>
+
+      <section class="guide">
+        <details>
+          <summary>Routine del PDF: agenda a blocchi</summary>
+          <table>
+            <tr><td>08:30–09:00</td><td>Riscaldamento e role play: prepara le conversazioni a voce alta.</td></tr>
+            <tr><td>09:00–12:00</td><td>Telefonate e ricerca in zona. È il blocco più importante.</td></tr>
+            <tr><td>12:00–13:00</td><td>Sviluppo delle notizie e amministrazione.</td></tr>
+            <tr><td>14:00–14:30</td><td>Formazione breve.</td></tr>
+            <tr><td>14:30–16:00</td><td>Telefonate e ricontatto: richiama, fissa appuntamenti.</td></tr>
+            <tr><td>16:00–18:00</td><td>Ricerca in zona e appuntamenti.</td></tr>
+            <tr><td>18:00–19:30</td><td>Appuntamenti: preview e prese incarico.</td></tr>
+            <tr><td>Sabato mattina</td><td>Conta chiamate, appuntamenti e notizie della settimana.</td></tr>
+          </table>
+        </details>
+        <details>
+          <summary>Promemoria conversazione: 5 errori da evitare</summary>
+          <ol>
+            <li>Parlare subito di casa prima che la persona sia pronta.</li>
+            <li>Parlare troppo invece di ascoltare e fare domande.</li>
+            <li>Difendersi quando il cliente attacca: abbassa la tensione e torna al concreto.</li>
+            <li>Prendere freddezza e diffidenza sul personale.</li>
+            <li>Cercare di convincere invece di capire cosa la persona teme e desidera.</li>
+          </ol>
+        </details>
+        <details>
+          <summary>Principio guida</summary>
+          <p><b>Azioni giuste ogni giorno → numeri → incarichi.</b> La rete non serve a prevedere chi venderà: serve a creare abbastanza conversazioni, relazioni e fonti perché le notizie emergano.</p>
+        </details>
+      </section>
+    </div>
+  </main>
+</div>
+
+<div class="drawer" id="drawer">
+  <div class="drawer-head"><h2 id="drawerTitle">Persona</h2><button class="close" onclick="closeDrawer()">Chiudi</button></div>
+  <div class="drawer-body">
+    <input type="hidden" id="personId" />
+    <div class="grid2">
+      <div class="field"><label>Nome *</label><input id="pName" /></div>
+      <div class="field"><label>Cognome</label><input id="pSurname" /></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Telefono</label><input id="pPhone" /></div>
+      <div class="field"><label>Email</label><input id="pEmail" type="email" /></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Categoria relazione</label><select id="pCategory"></select></div>
+      <div class="field"><label>Fonte della notizia</label><select id="pSource"></select></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Fase</label><select id="pStage"></select></div>
+      <div class="field"><label>Comune / paese / zona</label><input id="pTown" /></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Data primo contatto</label><input id="pFirstContact" type="date" /></div>
+      <div class="field"><label>Ultimo contatto</label><input id="pLastContact" type="date" /></div>
+    </div>
+    <div class="field"><label>Prossimo ricontatto - AUTO: 20 TOUCH POINT ALL'ANNO DALLA DATA DI PRIMO CONTATTO</label><input id="pNextContact" class="auto-date" type="date" readonly /><div class="next-touchpoint-preview" id="nextTouchpointPreview">Inserisci la data di primo contatto per generare il piano annuale.</div></div>
+    <div class="field"><label><input id="pInfluence" type="checkbox" style="width:auto;margin-right:7px" /> Centro di influenza / persona che parla con molte persone</label></div>
+    <div class="field"><label>Nota / informazione emersa</label><textarea id="pNotes" placeholder="Scrivi cosa sai, chi potrebbe conoscere, eventuali segnali di vendita..."></textarea></div>
+
+    <div class="social-search-box" id="socialSearchBox">
+      <h3>RICERCA SOCIAL DEL CONTATTO</h3>
+      <div class="social-search-note">Ogni pulsante apre Google con la ricerca automatica <b>NOME + COGNOME + COMUNE/PAESE + SOCIAL</b>. Serve a ritrovare esclusivamente profili e contenuti pubblici utili a contestualizzare la relazione.</div>
+      <div class="social-search-query" id="socialSearchQueryPreview">Inserisci nome, cognome e Comune/zona.</div>
+      <div class="social-actions">
+        <button type="button" class="facebook" onclick="openDrawerSocialSearch('Facebook')">FACEBOOK</button>
+        <button type="button" class="instagram" onclick="openDrawerSocialSearch('Instagram')">INSTAGRAM</button>
+        <button type="button" class="tiktok" onclick="openDrawerSocialSearch('TikTok')">TIK TOK</button>
+        <button type="button" class="youtube" onclick="openDrawerSocialSearch('YouTube')">YOU TUBE</button>
+      </div>
+      <div class="social-last" id="socialSearchLast"></div>
+    </div>
+
+    <div class="touchpoint-box" id="touchpointBox">
+      <div class="touchpoint-head"><div><h3>PROSSIMO RICONTATTO - COSA INVIARE</h3><div class="touchpoint-note">Qui compare <b>un solo touch point alla volta</b>: quello da gestire adesso oppure il prossimo in calendario. Dopo <b>SEGNA INVIATO</b>, il sistema passa automaticamente al successivo.</div></div><div class="counter" id="touchpointCounter">0 / 20</div></div>
+      <div id="touchpointDueSummary"></div>
+      <div class="touchpoint-grid" id="touchpointList"></div>
+    </div>
+
+    <div class="official-box">
+      <h3>FUNZIONARIO - NOTIZIE</h3>
+      <div class="official-row"><input id="officialName" placeholder="NOME FUNZIONARIO" /><input id="officialPhone" placeholder="WHATSAPP ES. 393461234567" /></div>
+      <div class="official-row" style="margin-top:8px"><input id="officialEmail" type="email" placeholder="EMAIL FUNZIONARIO" /><input id="automationWebhook" placeholder="WEBHOOK AUTOMAZIONE (opzionale)" /></div>
+      <div class="official-actions"><button type="button" onclick="saveOfficialSettings()">SALVA FUNZIONARIO</button><button type="button" onclick="contactOfficialWhatsApp()">WHATSAPP FUNZIONARIO</button><button type="button" onclick="openNewsDashboard()">APRI NOTIZIE</button></div>
+      <div class="automation-warning">Il numero del funzionario resta salvato nel browser. Se questa pagina e la pagina NOTIZIE sono pubblicate sullo stesso dominio GitHub Pages, possono condividere la stessa configurazione locale.</div>
+    </div>
+
+    <div class="prompt-box">
+      <h3>ESPANDI QUESTA PERSONA</h3>
+      <div class="tip" style="margin-bottom:7px">Ogni domanda può generare un nuovo nodo figlio. La domanda centrale resta: “Chi altro conosco attraverso questa persona?”</div>
+      <div id="promptList"></div>
+    </div>
+
+    <div class="investigator-box">
+      <h3>PIANO INVESTIGATIVO AUTOMATICO</h3>
+      <div class="investigator-intro" id="investigatorIntro"></div>
+      <div id="investigatorPlan"></div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:10px">
+        <button class="btn news-launcher" onclick="openNewsDashboard()">NOTIZIE</button>
+      </div>
+      <div class="privacy-note">Usa solo fonti pubbliche, professionali o già appartenenti alla tua rete. Non cercare numeri privati non pubblicati, dati riservati, credenziali o informazioni ottenute aggirando impostazioni di privacy. Per i privati, privilegia presentazioni, consenso e contatto diretto.</div>
+    </div>
+  </div>
+  <div class="drawer-foot"><button id="deletePersonBtn" class="btn danger" type="button" onclick="deleteCurrentPerson()">ELIMINA CONTATTO / RAMO</button><button id="savePersonBtn" class="btn primary" type="button" onclick="savePerson()">Salva</button></div>
+</div>
+
+<div class="modal" id="addModal">
+  <div class="modal-card">
+    <div class="modal-head"><h2 id="modalTitle">Aggiungi nomi</h2><button class="close" onclick="closeModal()">Chiudi</button></div>
+    <div class="modal-body">
+      <p class="tip" id="modalQuestion"></p>
+      <div class="grid2">
+        <div class="field"><label>Nome</label><input id="mName" placeholder="es. Maria" /></div>
+        <div class="field"><label>Cognome</label><input id="mSurname" /></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>Categoria</label><select id="mCategory"></select></div>
+        <div class="field"><label>Fonte</label><select id="mSource"></select></div>
+      </div>
+      <div class="field"><label>Nota iniziale</label><input id="mNotes" placeholder="es. amica di mamma, vive ad Avigliana" /></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="closeModal()">Annulla</button><button class="btn primary" onclick="createChildFromModal()">Aggiungi al ramo</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="memoryModal">
+  <div class="modal-card">
+    <div class="modal-head"><h2 id="memoryTitle">Aiuto memoria</h2><button class="close" onclick="document.getElementById('memoryModal').classList.remove('open')">Chiudi</button></div>
+    <div class="modal-body"><div class="question-grid" id="memoryGrid"></div></div>
+  </div>
+</div>
+
+<div class="modal" id="deleteModal">
+  <div class="modal-card" style="max-width:520px">
+    <div class="modal-head"><h2>Conferma eliminazione</h2><button class="close" onclick="closeDeleteModal()">Chiudi</button></div>
+    <div class="modal-body">
+      <p id="deleteMessage" style="line-height:1.5;margin-top:0"></p>
+      <p class="tip">L'eliminazione comprende anche tutti i nominativi collegati sotto questo contatto. L'operazione viene salvata subito nel browser.</p>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:16px"><button class="btn" onclick="closeDeleteModal()">Annulla</button><button class="btn danger" onclick="confirmDeleteBranch()">Elimina definitivamente</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SOURCES = [
+  {id:'zona',name:'Zona',desc:'Porta a porta, persone che abitano nella zona'},
+  {id:'telefono',name:'Telefono',desc:'Rubrica e liste di proprietari'},
+  {id:'influenza',name:'Centri di influenza',desc:'Persone che incontrano e conoscono molte persone'},
+  {id:'segnalazione',name:'Segnalazioni',desc:'Persone che si fidano e presentano altri contatti'}
+];
+const CATEGORIES = [
+  {id:'famiglia',name:'Famiglia e parenti',examples:'genitori, fratelli/sorelle, cugini, zii, cognati, parenti acquisiti'},
+  {id:'amici',name:'Amici e conoscenze',examples:'amici attuali, ex amici, amici degli amici, vicini, vacanze'},
+  {id:'scuola',name:'Scuola e formazione',examples:'compagni di scuola, università, corsi'},
+  {id:'lavoro',name:'Lavoro',examples:'ex colleghi, vecchi clienti, fornitori, professionisti'},
+  {id:'sport',name:'Sport e hobby',examples:'squadra, allenatori, palestra, associazioni'},
+  {id:'professionisti',name:'Commercianti e professionisti',examples:'medico, farmacista, commercialista, avvocato, assicuratore, edicolante, benzinaio, barista, parrucchiere, estetista, negozi'}
+];
+const MORE = ['Rubrica cellulare','Facebook','Instagram','LinkedIn','WhatsApp','Vecchie fotografie','Agenda cartacea','Biglietti da visita'];
+const STAGES = ['Nome','Contatto','Conversazione','Informazione','Notizia','Proprietario','Appuntamento','Incarico'];
+const PROMPTS = [
+ 'Chi altro conosci attraverso questa persona?',
+ 'Chi conosce personalmente?',
+ 'Chi frequenta oggi?',
+ 'Chi ha conosciuto in passato?',
+ 'Chi ha nella sua rubrica?',
+ 'Chi sono i suoi amici attuali?',
+ 'Chi frequentava cinque anni fa?',
+ 'Chi frequentava dieci anni fa?',
+ 'Quali amici ha perso di vista?',
+ 'Quali parenti puoi ricordare attraverso questa persona?',
+ 'Quali commercianti o professionisti frequenta?',
+ 'Quali persone potrebbero aprire altre relazioni?'
+];
+const SOCIAL_NETWORKS = ['Facebook','Instagram','TikTok','YouTube'];
+
+const TOUCHPOINTS = [
+ {cat:'Informazioni sul Mercato & Valore',title:'Report di inizio anno',desc:'Invia una sintesi del mercato immobiliare territoriale e dei principali indicatori utili al proprietario.',source:'Osservatorio del Mercato Immobiliare - Agenzia delle Entrate',url:'https://www.agenziaentrate.gov.it/portale/aree-tematiche/osservatorio-del-mercato-immobiliare-omi'},
+ {cat:'Informazioni sul Mercato & Valore',title:'Aggiornamento semestrale sui prezzi',desc:'Aggiorna il cliente sui valori al metro quadro del suo Comune/zona e spiega come interpretarli.',source:'Banca dati quotazioni immobiliari - Agenzia delle Entrate',url:'https://www1.agenziaentrate.gov.it/servizi/Consultazione/ricerca.htm'},
+ {cat:'Informazioni sul Mercato & Valore',title:'Focus tassi e mutui',desc:'Invia un aggiornamento semplice su Euribor, Eurirs e impatto indicativo sul costo del credito.',source:'Facile.it Mutui - news tassi',url:'https://www.facile.it/mutui/news.html'},
+ {cat:'Informazioni sul Mercato & Valore',title:'Novità fiscali / Bonus casa',desc:'Segnala le principali agevolazioni fiscali e invita a verificare requisiti e limiti con il professionista competente.',source:'Agenzia delle Entrate - Agevolazioni',url:'https://www.agenziaentrate.gov.it/portale/cittadini/agevolazioni'},
+ {cat:'Informazioni sul Mercato & Valore',title:'Il termometro del quartiere',desc:'Raccogli una novità locale: lavori, viabilità, servizi, piani o varianti urbanistiche che possono interessare chi possiede casa in zona.',source:'Albo Pretorio / sito ufficiale del Comune',url:''},
+ {cat:'Consigli Utili & Gestione Casa',title:'Checklist di primavera',desc:'Invia una checklist breve di manutenzione ordinaria per preparare casa alla nuova stagione.',source:'Cose di Casa',url:'https://www.cosedicasa.com/'},
+ {cat:'Consigli Utili & Gestione Casa',title:'Home Staging / Decluttering',desc:'Invia consigli pratici per ordinare, alleggerire e valorizzare gli ambienti in vista di fotografie, visite o futura vendita.',source:'Home Staging Lovers',url:'https://www.homestaginglovers.it/'},
+ {cat:'Consigli Utili & Gestione Casa',title:'Guida al risparmio energetico',desc:'Invia una pillola su efficienza energetica, comportamenti e strumenti utili per comprendere la prestazione dell’edificio.',source:'Portale Nazionale Prestazione Energetica - ENEA',url:'https://pnpe2.enea.it/'},
+ {cat:'Consigli Utili & Gestione Casa',title:'Pillola burocratica energetica',desc:'Spiega in modo semplice dove vengono raccolti i dati degli attestati energetici e perché sono utili.',source:'SIAPE - ENEA',url:'https://siape.enea.it/'},
+ {cat:'Consigli Utili & Gestione Casa',title:'Contatti utili del territorio',desc:'Condividi come verificare professionisti abilitati e ordini professionali quando servono pratiche o verifiche tecniche.',source:'Consiglio Nazionale Geometri',url:'https://www.cng.it/'},
+ {cat:'Relazione & Ricorrenze',title:'Compleanno del cliente',desc:'Invia un messaggio personale e non commerciale. La relazione viene prima della proposta immobiliare.',source:'CRM / dati anagrafici autorizzati',url:''},
+ {cat:'Relazione & Ricorrenze',title:'Anniversario dell’acquisto/vendita',desc:'Ricorda l’anniversario della compravendita e proponi, se utile, un aggiornamento sul valore attuale dell’immobile.',source:'Archivio pratica / Sister Agenzia delle Entrate',url:'https://sister.agenziaentrate.gov.it/'},
+ {cat:'Relazione & Ricorrenze',title:'Auguri di Pasqua / Primavera',desc:'Invia un saluto breve e personale collegato alla stagione, senza pressione commerciale.',source:'Calendario festività',url:''},
+ {cat:'Relazione & Ricorrenze',title:'Saluto pre-vacanze estive',desc:'Invia un saluto prima dell’estate e ricorda come contattarti durante il periodo di apertura/chiusura.',source:'Google Business Profile',url:'https://www.google.com/business/'},
+ {cat:'Relazione & Ricorrenze',title:'Auguri di Natale e Buon Anno',desc:'Invia un messaggio di relazione con grafica F1 personalizzata e ringraziamento per il rapporto mantenuto durante l’anno.',source:'Canva',url:'https://www.canva.com/'},
+ {cat:'Novità dell’Agenzia & Coinvolgimento',title:'Invito a Open House o Evento',desc:'Invita il cliente a un evento coerente con i suoi interessi immobiliari o con il territorio.',source:'Eventbrite',url:'https://www.eventbrite.it/'},
+ {cat:'Novità dell’Agenzia & Coinvolgimento',title:'Case history di successo',desc:'Racconta un caso reale in forma anonima o autorizzata: problema, strategia, risultato e lezione utile per il proprietario.',source:'Sito / archivio F1 Immobiliare',url:''},
+ {cat:'Novità dell’Agenzia & Coinvolgimento',title:'Richiesta feedback / recensione',desc:'Se il rapporto lo consente, chiedi un feedback o invia il collegamento alla recensione Google dell’attività.',source:'Google Maps / profilo attività',url:'https://maps.google.com/'},
+ {cat:'Novità dell’Agenzia & Coinvolgimento',title:'Programma “Segnala un amico”',desc:'Ricorda che può presentarti una persona che ha espresso un bisogno immobiliare. Evita richieste di liste o dati di terzi senza consenso.',source:'Newsletter / pagina F1 Immobiliare',url:''},
+ {cat:'Novità dell’Agenzia & Coinvolgimento',title:'Il Caffè dell’Agente',desc:'Proponi un incontro informale per aggiornarsi sul territorio e raccogliere eventuali esigenze o notizie immobiliari.',source:'Calendly',url:'https://calendly.com/'}
+];
+const DAY_MS=86400000;
+function localISODate(d){const x=new Date(d.getTime()-d.getTimezoneOffset()*60000);return x.toISOString().slice(0,10)}
+function parseLocalDate(s){if(!s)return null;const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d,12,0,0,0)}
+function addDays(date,n){const d=new Date(date);d.setDate(d.getDate()+n);return d}
+function annualCycleStart(first,ref=new Date()){if(!first)return null;const f=parseLocalDate(first);if(!f)return null;let year=ref.getFullYear();let c=new Date(year,f.getMonth(),f.getDate(),12);if(c>ref)c=new Date(year-1,f.getMonth(),f.getDate(),12);return c}
+function buildTouchpointsForPerson(p,ref=new Date()){
+ if(!p||!p.firstContact)return [];
+ const base=annualCycleStart(p.firstContact,ref); if(!base)return [];
+ const cycleYear=base.getFullYear();
+ return TOUCHPOINTS.map((tp,i)=>{const day=Math.round((365/20)*(i+1));const date=addDays(base,day);const id=`${cycleYear}-${i+1}`;const hist=(p.touchpointHistory||{})[id]||{};return {...tp,index:i+1,id,date:localISODate(date),done:!!hist.done,sentAt:hist.sentAt||'',note:hist.note||'',socialSearches:hist.socialSearches||{}}});
+}
+function nextTouchpointFor(p){const list=buildTouchpointsForPerson(p);const today=localISODate(new Date());return list.find(x=>!x.done && x.date>=today)||list.find(x=>!x.done)||null}
+function syncNextContact(p){if(!p)return;const n=nextTouchpointFor(p);p.nextContact=n?n.date:''}
+function formatDateIT(s){if(!s)return '—';const d=parseLocalDate(s);return d?d.toLocaleDateString('it-IT'):'—'}
+
+const DASHBOARD_URL='https://josephsocialmedia2-spec.github.io/launcher-dashboard/ricerca-territoriale.html?utm_source=chatgpt.com';
+let selectedSource='';
+let currentParentId=null;
+let currentQuestion='';
+let currentDeleteId=null;
+let drawerMode='edit';
+let draftParentId=null;
+let draftQuestion='';
+let draftPresetSource='';
+let db = loadDB();
+try{const shared=JSON.parse(localStorage.getItem('f1NotizieOfficial')||'null');if(shared)db.settings={...(db.settings||{}),...shared}}catch(_){}
+normalizeDBNames(db);
+
+function defaultDB(){
+ return {people:[{id:'root',parentId:null,name:'IO',surname:'',phone:'',email:'',category:'',source:'',stage:'Nome',town:'',notes:'Punto di partenza della rete personale',influence:false,firstContact:'',lastContact:'',nextContact:'',touchpointHistory:{},socialSearchHistory:{},createdAt:new Date().toISOString(),contactDates:[]}], dailyTarget:40, settings:{officialName:'',officialPhone:'',officialEmail:'',automationWebhook:''}};
+}
+function loadDB(){try{const x=JSON.parse(localStorage.getItem('alberoFontiNotizie'));if(!(x&&x.people))return defaultDB();x.settings=x.settings||{officialName:'',officialPhone:'',officialEmail:'',automationWebhook:''};x.people.forEach(p=>{p.touchpointHistory=p.touchpointHistory||{};p.socialSearchHistory=p.socialSearchHistory||{};p.firstContact=p.firstContact||((p.contactDates||[])[0]||'');syncNextContact(p)});return x}catch(e){return defaultDB()}}
+function persist(){localStorage.setItem('alberoFontiNotizie',JSON.stringify(db))}
+function uid(){return 'p_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7)}
+function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function opt(arr,valueKey='id',labelKey='name'){return arr.map(x=>`<option value="${esc(typeof x==='string'?x:x[valueKey])}">${esc(typeof x==='string'?x:x[labelKey])}</option>`).join('')}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+function upperName(v){return String(v||'').trim().toLocaleUpperCase('it-IT')}
+function normalizeDBNames(data){if(!data||!Array.isArray(data.people))return;data.people.forEach(p=>{p.name=upperName(p.name);p.surname=upperName(p.surname)})}
+function openNewsDashboard(){window.open(DASHBOARD_URL,'_blank','noopener,noreferrer')}
+function currentPerson(){if(drawerMode==='new')return formPersonSnapshot('draft');const id=document.getElementById('personId').value;return db.people.find(x=>x.id===id)||db.people.find(x=>x.id==='root')}
+
+function init(){
+ document.getElementById('sourceGrid').innerHTML=SOURCES.map(s=>`<div class="source-card"><button class="source-btn" data-source="${s.id}" onclick="filterSourceQuick('${s.id}')"><strong>${s.name}</strong><span>${s.desc}</span></button><button class="source-add" onclick="openSourcePerson('${s.id}')">+ nominativo da ${s.name}</button></div>`).join('');
+ document.getElementById('categoryList').innerHTML=CATEGORIES.map(c=>`<div class="cat"><span><b>${c.name}</b><br><small style="color:#8fa2b1">${c.examples}</small></span><button onclick="openMemory('${c.id}')">Apri</button></div>`).join('');
+ document.getElementById('moreSources').innerHTML=MORE.map(x=>`<button class="pill" onclick="useMemorySource('${x.replace(/'/g,"\\'")}')">${x}</button>`).join('');
+ document.getElementById('pCategory').innerHTML='<option value="">—</option>'+opt(CATEGORIES);
+ document.getElementById('mCategory').innerHTML='<option value="">—</option>'+opt(CATEGORIES);
+ document.getElementById('pSource').innerHTML='<option value="">—</option>'+opt(SOURCES);
+ document.getElementById('mSource').innerHTML='<option value="">—</option>'+opt(SOURCES);
+ document.getElementById('pStage').innerHTML=opt(STAGES);
+ document.getElementById('stageFilter').innerHTML='<option value="">Tutte le fasi</option>'+opt(STAGES);
+ document.getElementById('sourceFilter').innerHTML='<option value="">Tutte le fonti</option>'+opt(SOURCES);
+ document.getElementById('dailyTarget').value=String(db.dailyTarget||40);
+ document.getElementById('promptList').innerHTML=PROMPTS.map((p,i)=>`<div class="prompt"><span>${esc(p)}</span><button onclick="openAddChildFromDrawer(${i})">+ nome</button></div>`).join('');
+ document.getElementById('journey').innerHTML=STAGES.map(s=>`<span class="stage" data-journey="${s}">${s}</span>`).join('');
+ document.getElementById('searchInput').addEventListener('input',renderAll);
+ document.getElementById('stageFilter').addEventListener('change',renderAll);
+ document.getElementById('sourceFilter').addEventListener('change',renderAll);
+ document.getElementById('dailyTarget').addEventListener('change',e=>{db.dailyTarget=Number(e.target.value);persist();renderMetrics()});
+ document.getElementById('importFile').addEventListener('change',importData);
+ ['pName','pSurname','mName','mSurname'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{const pos=e.target.selectionStart;e.target.value=e.target.value.toLocaleUpperCase('it-IT');try{e.target.setSelectionRange(pos,pos)}catch(_){ }if(id==='pName'||id==='pSurname')refreshDraftInvestigator();}));
+ ['pCategory','pSource','pTown','pPhone','pEmail','pInfluence'].forEach(id=>document.getElementById(id).addEventListener('change',refreshDraftInvestigator));
+ ['pName','pSurname','pTown'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{refreshDraftInvestigator();refreshSocialSearchDraft();}));
+ document.getElementById('pFirstContact').addEventListener('change',refreshTouchpointDraft);
+ loadOfficialSettingsIntoForm();
+ renderAll();
+ checkDueTouchpoints();
+ const qp=new URLSearchParams(location.search).get('person');if(qp&&db.people.some(x=>x.id===qp))setTimeout(()=>openPerson(qp),80);
+}
+function renderAll(){renderMetrics();renderTree()}
+function renderMetrics(){
+ const people=db.people.filter(p=>p.id!=='root');
+ const contacted=people.filter(p=>STAGES.indexOf(p.stage)>=1).length;
+ const toContact=people.filter(p=>p.stage==='Nome').length;
+ const news=people.filter(p=>STAGES.indexOf(p.stage)>=4).length;
+ const appts=people.filter(p=>STAGES.indexOf(p.stage)>=6).length;
+ const generated=people.filter(p=>p.parentId && p.parentId!=='root').length;
+ const items=[['Persone inserite',people.length],['Contattate',contacted],['Da contattare',toContact],['Nuovi nomi generati',generated],['Notizie',news],['Appuntamenti',appts]];
+ document.getElementById('metrics').innerHTML=items.map(([l,v])=>`<div class="metric"><b>${v}</b><span>${l}</span></div>`).join('');
+ const today=new Date().toISOString().slice(0,10);
+ const todayCount=people.reduce((n,p)=>n+(p.contactDates||[]).filter(d=>String(d).slice(0,10)===today).length,0);
+ document.getElementById('todayContacts').textContent=todayCount;
+ const target=db.dailyTarget||40;document.getElementById('dailyProgress').style.width=Math.min(100,(todayCount/target)*100)+'%';
+ document.querySelectorAll('[data-journey]').forEach(el=>{const stage=el.dataset.journey;el.classList.toggle('active',people.some(p=>STAGES.indexOf(p.stage)>=STAGES.indexOf(stage)))});
+}
+function filterPeople(){
+ const q=document.getElementById('searchInput').value.trim().toLowerCase();
+ const stage=document.getElementById('stageFilter').value;
+ const source=document.getElementById('sourceFilter').value;
+ return db.people.filter(p=>{
+  if(p.id==='root')return true;
+  const hay=[p.name,p.surname,p.phone,p.email,p.town,p.notes].join(' ').toLowerCase();
+  return (!q||hay.includes(q)) && (!stage||p.stage===stage) && (!source||p.source===source);
+ });
+}
+function renderTree(){
+ const visible=filterPeople();const allowed=new Set(visible.map(p=>p.id));
+ const q=document.getElementById('searchInput').value.trim();const sf=document.getElementById('stageFilter').value;const so=document.getElementById('sourceFilter').value;
+ if(q||sf||so){visible.forEach(p=>{let cur=p;while(cur&&cur.parentId){allowed.add(cur.parentId);cur=db.people.find(x=>x.id===cur.parentId)}})}
+ const root=db.people.find(p=>p.id==='root');
+ const html=root?`<ul><li>${renderNode(root,allowed)}</li></ul>`:'<div class="empty">Nessuna radice.</div>';
+ document.getElementById('tree').innerHTML=html;
+}
+function renderNode(p,allowed){
+ const children=db.people.filter(x=>x.parentId===p.id && allowed.has(x.id));
+ const cls=['person'];if(p.id==='root')cls.push('root');if(p.influence)cls.push('influence');if(STAGES.indexOf(p.stage)>=4)cls.push('news');if(STAGES.indexOf(p.stage)>=6)cls.push('appointment');
+ const cat=CATEGORIES.find(c=>c.id===p.category);const src=SOURCES.find(s=>s.id===p.source);
+ return `<div class="${cls.join(' ')}" onclick="openPerson('${p.id}')"><div class="name">${esc(upperName([p.name,p.surname].filter(Boolean).join(' ')))}</div><div class="meta">${esc(p.town||'')}${p.phone?'<br>'+esc(p.phone):''}</div><div class="badges">${p.influence?'<span class="badge">★ influenza</span>':''}${cat?`<span class="badge">${esc(cat.name)}</span>`:''}${src?`<span class="badge">${esc(src.name)}</span>`:''}<span class="badge">${esc(p.stage)}</span></div><div class="node-actions"><button onclick="event.stopPropagation();openAddChild('${p.id}','Chi altro conosco attraverso questa persona?')">+ ramo</button>${p.id!=='root'?`<button onclick="event.stopPropagation();markContact('${p.id}')">contatto oggi</button><button class="node-delete" onclick="event.stopPropagation();requestDelete('${p.id}')">elimina</button>`:''}</div></div>${children.length?`<ul>${children.map(c=>`<li>${renderNode(c,allowed)}</li>`).join('')}</ul>`:''}`;
+}
+function formPersonSnapshot(id='draft'){
+ return {id,parentId:drawerMode==='new'?draftParentId:null,name:upperName(document.getElementById('pName').value),surname:upperName(document.getElementById('pSurname').value),phone:document.getElementById('pPhone').value.trim(),email:document.getElementById('pEmail').value.trim(),category:document.getElementById('pCategory').value,source:document.getElementById('pSource').value,stage:document.getElementById('pStage').value||'Nome',town:document.getElementById('pTown').value.trim(),notes:document.getElementById('pNotes').value.trim(),influence:document.getElementById('pInfluence').checked,firstContact:document.getElementById('pFirstContact').value,lastContact:document.getElementById('pLastContact').value,nextContact:document.getElementById('pNextContact').value,touchpointHistory:{},socialSearchHistory:{}};
+}
+function refreshDraftInvestigator(){if(drawerMode==='new')renderInvestigatorPlan(formPersonSnapshot('draft'))}
+function setDrawerFooterState(){const del=document.getElementById('deletePersonBtn');const save=document.getElementById('savePersonBtn');del.style.display=(drawerMode==='new'||document.getElementById('personId').value==='root')?'none':'inline-block';save.textContent=drawerMode==='new'?'SALVA PERSONA E CREA RAMO':'SALVA'}
+function openPerson(id){const p=db.people.find(x=>x.id===id);if(!p)return;drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource='';syncNextContact(p);document.getElementById('drawerTitle').textContent=p.id==='root'?'Punto di partenza':'Scheda persona';document.getElementById('personId').value=p.id;document.getElementById('pName').value=upperName(p.name);document.getElementById('pSurname').value=upperName(p.surname);document.getElementById('pPhone').value=p.phone||'';document.getElementById('pEmail').value=p.email||'';document.getElementById('pCategory').value=p.category||'';document.getElementById('pSource').value=p.source||'';document.getElementById('pStage').value=p.stage||'Nome';document.getElementById('pTown').value=p.town||'';document.getElementById('pInfluence').checked=!!p.influence;document.getElementById('pFirstContact').value=p.firstContact||'';document.getElementById('pLastContact').value=p.lastContact||'';document.getElementById('pNextContact').value=p.nextContact||'';document.getElementById('pNotes').value=p.notes||'';loadOfficialSettingsIntoForm();renderInvestigatorPlan(p);renderSocialSearchPanel(p);renderTouchpoints(p);setDrawerFooterState();document.getElementById('drawer').classList.add('open')}
+function openNewPersonSheet(parentId,question,presetSource=''){drawerMode='new';draftParentId=parentId||'root';draftQuestion=question||'Chi altro conosco attraverso questa persona?';draftPresetSource=presetSource||selectedSource||'';document.getElementById('drawerTitle').textContent='Scheda persona';document.getElementById('personId').value='';document.getElementById('pName').value='';document.getElementById('pSurname').value='';document.getElementById('pPhone').value='';document.getElementById('pEmail').value='';document.getElementById('pCategory').value='';document.getElementById('pSource').value=draftPresetSource;document.getElementById('pStage').value='Nome';document.getElementById('pTown').value='';document.getElementById('pInfluence').checked=false;document.getElementById('pFirstContact').value='';document.getElementById('pLastContact').value='';document.getElementById('pNextContact').value='';document.getElementById('pNotes').value='';loadOfficialSettingsIntoForm();renderInvestigatorPlan(formPersonSnapshot('draft'));renderSocialSearchPanel(formPersonSnapshot('draft'));renderTouchpoints(formPersonSnapshot('draft'));setDrawerFooterState();document.getElementById('drawer').classList.add('open');setTimeout(()=>document.getElementById('pName').focus(),100)}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');if(drawerMode==='new'){drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource=''}}
+function savePerson(silent=false){const name=document.getElementById('pName').value.trim();if(!name){toast('Inserisci il nome');return null}if(drawerMode==='new'){const snap=formPersonSnapshot(uid());snap.parentId=draftParentId||'root';snap.createdAt=new Date().toISOString();snap.contactDates=[];snap.touchpointHistory={};snap.socialSearchHistory={};syncNextContact(snap);if(draftQuestion){snap.notes=[snap.notes,`Origine ramo: ${draftQuestion}`].filter(Boolean).join(' · ')}db.people.push(snap);persist();renderAll();drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource='';document.getElementById('personId').value=snap.id;setDrawerFooterState();renderInvestigatorPlan(snap);renderSocialSearchPanel(snap);renderTouchpoints(snap);if(!silent)toast('Persona salvata e ramo creato');return snap.id}const id=document.getElementById('personId').value;const p=db.people.find(x=>x.id===id);if(!p)return null;const snap=formPersonSnapshot(id);Object.assign(p,snap,{parentId:p.parentId,createdAt:p.createdAt,contactDates:p.contactDates||[],touchpointHistory:p.touchpointHistory||{},socialSearchHistory:p.socialSearchHistory||{}});syncNextContact(p);document.getElementById('pNextContact').value=p.nextContact||'';persist();renderAll();renderInvestigatorPlan(p);renderSocialSearchPanel(p);renderTouchpoints(p);if(!silent)toast('Scheda salvata');return p.id}
+function deleteCurrentPerson(){const id=document.getElementById('personId').value;requestDelete(id)}
+function descendantsOf(id){const ids=new Set([id]);let changed=true;while(changed){changed=false;db.people.forEach(x=>{if(x.parentId&&ids.has(x.parentId)&&!ids.has(x.id)){ids.add(x.id);changed=true}})}return ids}
+function requestDelete(id){if(!id)return toast('Nessun contatto selezionato');if(id==='root')return toast('La radice IO non si elimina');const p=db.people.find(x=>x.id===id);if(!p)return toast('Contatto non trovato');currentDeleteId=id;const ids=descendantsOf(id);document.getElementById('deleteMessage').innerHTML=`Stai per eliminare <b>${esc(upperName([p.name,p.surname].filter(Boolean).join(' ')))}</b>${ids.size>1?` e altri <b>${ids.size-1}</b> nominativi discendenti`:''}.`;document.getElementById('deleteModal').classList.add('open')}
+function closeDeleteModal(){document.getElementById('deleteModal').classList.remove('open');currentDeleteId=null}
+function confirmDeleteBranch(){const id=currentDeleteId;if(!id)return;const ids=descendantsOf(id);db.people=db.people.filter(x=>!ids.has(x.id));persist();document.getElementById('deleteModal').classList.remove('open');currentDeleteId=null;closeDrawer();renderAll();toast(ids.size===1?'Contatto eliminato':`${ids.size} contatti eliminati`)}
+function markContact(id){const p=db.people.find(x=>x.id===id);if(!p)return;const today=localISODate(new Date());p.contactDates=p.contactDates||[];p.contactDates.push(today);p.lastContact=today;if(!p.firstContact)p.firstContact=today;if(p.stage==='Nome')p.stage='Contatto';syncNextContact(p);persist();renderAll();toast('Contatto registrato - piano 20 touch point aggiornato')}
+function openAddChild(parentId,question,presetSource=''){openNewPersonSheet(parentId,question,presetSource)}
+function ensureCurrentPersonSaved(){if(drawerMode==='new')return savePerson(true);return document.getElementById('personId').value||null}
+function openAddChildFromDrawer(i){const source=document.getElementById('pSource').value;const parentId=ensureCurrentPersonSaved();if(!parentId)return;openNewPersonSheet(parentId,PROMPTS[i],source)}
+function openAddChildFromQuestion(question){const source=document.getElementById('pSource').value;const parentId=ensureCurrentPersonSaved();if(!parentId)return;openNewPersonSheet(parentId,question,source)}
+function openNewRootChild(){openNewPersonSheet('root','Chi conosci personalmente? Inserisci un primo nome senza giudicare se venderà mai casa.',selectedSource||'')}
+function openSourcePerson(sourceId){selectedSource=sourceId;document.querySelectorAll('.source-btn').forEach(b=>b.classList.toggle('active',b.dataset.source===sourceId));const src=SOURCES.find(s=>s.id===sourceId);openNewPersonSheet('root',`Nuovo nominativo dalla fonte principale: ${src?src.name:sourceId}`,sourceId)}
+function closeModal(){document.getElementById('addModal').classList.remove('open')}
+function createChildFromModal(){const name=document.getElementById('mName').value.trim();if(!name)return toast('Inserisci almeno il nome');db.people.push({id:uid(),parentId:currentParentId,name:upperName(name),surname:upperName(document.getElementById('mSurname').value),phone:'',email:'',category:document.getElementById('mCategory').value,source:document.getElementById('mSource').value,stage:'Nome',town:'',notes:[document.getElementById('mNotes').value.trim(),currentQuestion?`Origine ramo: ${currentQuestion}`:''].filter(Boolean).join(' · '),influence:false,firstContact:'',lastContact:'',nextContact:'',touchpointHistory:{},socialSearchHistory:{},createdAt:new Date().toISOString(),contactDates:[]});persist();closeModal();renderAll();toast('Persona aggiunta: ora espandi anche questo nome')}
+
+function socialQueryFor(p,network){
+ const full=upperName([p&&p.name,p&&p.surname].filter(Boolean).join(' ')).trim();
+ const town=((p&&p.town)||'').trim();
+ return [full,town,network].filter(Boolean).join(' ');
+}
+function googleSearchUrl(query){return `https://www.google.com/search?q=${encodeURIComponent(query)}`}
+function socialTimestampLabel(ts){if(!ts)return 'mai';try{return new Date(ts).toLocaleString('it-IT')}catch(_){return 'mai'}}
+function renderSocialSearchPanel(p){
+ const preview=document.getElementById('socialSearchQueryPreview');
+ const last=document.getElementById('socialSearchLast');
+ if(!preview||!last)return;
+ const full=upperName([p&&p.name,p&&p.surname].filter(Boolean).join(' ')).trim();
+ const town=((p&&p.town)||'').trim();
+ preview.textContent=(full||'NOME COGNOME')+(town?' '+town:'')+' + [FACEBOOK / INSTAGRAM / TIKTOK / YOUTUBE] · usa solo i dati già presenti';
+ const hist=(p&&p.socialSearchHistory)||{};
+ last.innerHTML=SOCIAL_NETWORKS.map(n=>`<span><b>${esc(n.toUpperCase())}</b>: ${esc(socialTimestampLabel(hist[n]))}</span>`).join('');
+}
+function currentDrawerPerson(){
+ if(drawerMode==='new')return formPersonSnapshot('draft');
+ const id=document.getElementById('personId').value;
+ return db.people.find(x=>x.id===id)||formPersonSnapshot('draft');
+}
+function refreshSocialSearchDraft(){renderSocialSearchPanel(currentDrawerPerson())}
+function openDrawerSocialSearch(network){
+ const p=currentDrawerPerson();
+ const query=socialQueryFor(p,network);
+ if(!String(p.name||'').trim()&&!String(p.surname||'').trim())return toast('Inserisci almeno il nome del contatto');
+ window.open(googleSearchUrl(query),'_blank','noopener');
+ if(drawerMode!=='new'&&p.id&&p.id!=='draft'){
+  p.socialSearchHistory=p.socialSearchHistory||{};
+  p.socialSearchHistory[network]=new Date().toISOString();
+  persist();renderSocialSearchPanel(p);
+ }
+}
+function touchpointSocialSearchValid(tp,ts){
+ if(!ts)return false;
+ const d=localISODate(new Date(ts));
+ return d>=tp.date;
+}
+function touchpointSocialState(p,tp){
+ const hist=(((p.touchpointHistory||{})[tp.id]||{}).socialSearches)||{};
+ const valid=SOCIAL_NETWORKS.filter(n=>touchpointSocialSearchValid(tp,hist[n])).length;
+ const today=localISODate(new Date());
+ return {hist,valid,isDue:tp.date<=today,complete:valid===SOCIAL_NETWORKS.length};
+}
+function openTouchpointSocialSearch(personId,tpId,network){
+ const {p,tp}=getPersonTouchpoint(personId,tpId);if(!p||!tp)return;
+ if(!String(p.name||'').trim()&&!String(p.surname||'').trim())return toast('Inserisci almeno il nome del contatto');
+ const query=socialQueryFor(p,network);
+ window.open(googleSearchUrl(query),'_blank','noopener');
+ p.touchpointHistory=p.touchpointHistory||{};
+ const row=p.touchpointHistory[tpId]||{};
+ row.socialSearches=row.socialSearches||{};
+ row.socialSearches[network]=new Date().toISOString();
+ p.touchpointHistory[tpId]=row;
+ p.socialSearchHistory=p.socialSearchHistory||{};
+ p.socialSearchHistory[network]=row.socialSearches[network];
+ persist();renderSocialSearchPanel(p);renderTouchpoints(p);
+}
+function refreshTouchpointDraft(){const p=formPersonSnapshot(drawerMode==='new'?'draft':document.getElementById('personId').value||'draft');if(drawerMode!=='new'){const old=db.people.find(x=>x.id===p.id);p.touchpointHistory=(old&&old.touchpointHistory)||{};p.socialSearchHistory=(old&&old.socialSearchHistory)||{}}syncNextContact(p);document.getElementById('pNextContact').value=p.nextContact||'';renderSocialSearchPanel(p);renderTouchpoints(p)}
+function renderTouchpoints(p){
+ const list=buildTouchpointsForPerson(p);const holder=document.getElementById('touchpointList');const summary=document.getElementById('touchpointDueSummary');const counter=document.getElementById('touchpointCounter');const preview=document.getElementById('nextTouchpointPreview');
+ if(!holder)return;
+ if(!p||p.id==='root'){holder.innerHTML='<div class="touchpoint-note">Il piano touch point si applica ai contatti, non alla radice IO.</div>';summary.innerHTML='';counter.textContent='0 / 20';preview.textContent='';return}
+ if(!p.firstContact){holder.innerHTML='<div class="touchpoint-note">Inserisci la <b>Data primo contatto</b> oppure usa “contatto oggi”. Il sistema creerà automaticamente i 20 ricontatti annuali, ma qui te ne mostrerà sempre <b>uno solo alla volta</b>.</div>';summary.innerHTML='';counter.textContent='0 / 20';preview.textContent='Inserisci la data di primo contatto per generare il piano annuale.';return}
+ const today=localISODate(new Date());
+ const done=list.filter(x=>x.done).length;
+ const overdue=list.filter(x=>!x.done&&x.date<=today);
+ const current=overdue[0] || list.find(x=>!x.done&&x.date>today) || null;
+ counter.textContent=current?`TOUCH ${current.index}/20`:`20 / 20`;
+ document.getElementById('pNextContact').value=current?current.date:'';
+ preview.textContent=current?`Ricontatto: ${formatDateIT(current.date)} - ${current.title}`:'Ciclo annuale completato.';
+ if(!current){summary.innerHTML='';holder.innerHTML='<div class="touchpoint-note"><b>Ciclo annuale completato.</b> Tutti i 20 touch point risultano gestiti.</div>';return}
+ const remainingOverdue=Math.max(0,overdue.length-1);
+ summary.innerHTML='';
+ const tp=current;
+ const sourceLink=tp.url?`<a class="source" href="${esc(tp.url)}" target="_blank" rel="noopener">APRI FONTE</a>`:`<button class="source" type="button" onclick="toast('Usa la fonte indicata: ${String(tp.source).replace(/'/g,"\\'")}')">FONTE</button>`;
+ const ss=touchpointSocialState(p,tp);
+ const socialStatus=ss.complete?'RICERCA SOCIAL COMPLETA':(ss.isDue?`RIFAI ORA ${ss.valid}/4`:`DA RIFARE IL ${formatDateIT(tp.date)}`);
+ const socialButtons=SOCIAL_NETWORKS.map(n=>{const ok=touchpointSocialSearchValid(tp,ss.hist[n]);const cls=n==='Facebook'?'facebook':n==='Instagram'?'instagram':n==='TikTok'?'tiktok':'youtube';return `<button class="${cls}" type="button" onclick="openTouchpointSocialSearch('${p.id}','${tp.id}','${n}')">${ok?'✓ ':''}${esc(n.toUpperCase())}</button>`}).join('');
+ const socialDetail=SOCIAL_NETWORKS.map(n=>`${esc(n)}: ${touchpointSocialSearchValid(tp,ss.hist[n])?esc(socialTimestampLabel(ss.hist[n])):'da rifare'}`).join(' · ');
+ const statusLabel=tp.date<today?'SCADUTO - DA INVIARE ORA':(tp.date===today?'DA INVIARE OGGI':`DA INVIARE IL ${formatDateIT(tp.date)}`);
+ const nextAfter=list.find(x=>!x.done&&x.id!==tp.id&&x.date>tp.date);
+ holder.innerHTML=`<div class="touchpoint-current"><div class="touchpoint-top"><div><div class="touchpoint-title">${tp.index}. ${esc(tp.title)}</div><div class="touchpoint-cat">${esc(tp.cat)}</div></div><div class="touchpoint-date">${formatDateIT(tp.date)}</div></div><div class="touchpoint-send-label">${esc(statusLabel)}</div><div class="touchpoint-main-message"><b>INVIA AL CLIENTE:</b><br>${esc(tp.desc)}</div><div class="touchpoint-desc"><b>Fonte da consultare:</b> ${esc(tp.source)}</div><div class="touchpoint-actions">${sourceLink}<button class="pdf" type="button" onclick="generateTouchpointPDF('${p.id}','${tp.id}')">PDF F1</button><button class="mail" type="button" onclick="prepareEmailTouchpoint('${p.id}','${tp.id}')">EMAIL</button><button class="wa" type="button" onclick="prepareWhatsAppTouchpoint('${p.id}','${tp.id}')">WHATSAPP</button><button type="button" onclick="shareTouchpointPDF('${p.id}','${tp.id}')">CONDIVIDI PDF</button><button class="donebtn" type="button" onclick="toggleTouchpointDone('${p.id}','${tp.id}')">SEGNA INVIATO</button></div><details class="touchpoint-social-details"><summary>RIFAI RICERCA SOCIAL PER QUESTA DATA · ${esc(socialStatus)}</summary><div class="social-actions">${socialButtons}</div><div class="social-research-detail">Google cercherà usando solo i dati disponibili: <b>${esc(socialQueryFor(p,'[SOCIAL]'))}</b><br>Non è necessario avere telefono, email o altri dati. ${socialDetail}</div></details>${nextAfter?`<div class="touchpoint-next-hint">Dopo questo: ${formatDateIT(nextAfter.date)} - ${esc(nextAfter.title)}</div>`:''}</div>`;
+}
+function getPersonTouchpoint(personId,tpId){const p=db.people.find(x=>x.id===personId);if(!p)return {};const tp=buildTouchpointsForPerson(p).find(x=>x.id===tpId);return {p,tp}}
+function toggleTouchpointDone(personId,tpId){const {p,tp}=getPersonTouchpoint(personId,tpId);if(!p||!tp)return;p.touchpointHistory=p.touchpointHistory||{};const current=p.touchpointHistory[tpId]||{};const done=!current.done;p.touchpointHistory[tpId]={...current,done,sentAt:done?new Date().toLocaleString('it-IT'):''};if(done){p.lastContact=localISODate(new Date());p.contactDates=p.contactDates||[];p.contactDates.push(p.lastContact)}syncNextContact(p);persist();renderAll();openPerson(p.id);toast(done?'Touch point segnato come inviato':'Touch point riaperto')}
+function pdfSafeName(p,tp){const who=upperName([p.name,p.surname].filter(Boolean).join('_')).replace(/[^A-Z0-9_À-Ü]/g,'_');return `F1_IMMOBILIARE_${who}_${tp.date}_${tp.index}.pdf`}
+function makeTouchpointPdfBlob(p,tp){
+ if(!(window.jspdf&&window.jspdf.jsPDF)){toast('Motore PDF non disponibile. Controlla la connessione Internet.');return null}
+ const {jsPDF}=window.jspdf;const doc=new jsPDF({unit:'mm',format:'a4'});const W=210;const margin=18;const full=upperName([p.name,p.surname].filter(Boolean).join(' '));
+ doc.setFillColor(19,32,43);doc.rect(0,0,W,38,'F');doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(20);doc.text('F1 IMMOBILIARE',margin,17);doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text('INFORMAZIONI UTILI PER IL PROPRIETARIO',margin,25);doc.text(`Touch point ${tp.index}/20 - ${formatDateIT(tp.date)}`,W-margin,25,{align:'right'});
+ doc.setTextColor(28,39,49);doc.setFont('helvetica','bold');doc.setFontSize(13);doc.text(full||'CLIENTE',margin,51);doc.setFontSize(10);doc.setFont('helvetica','normal');if(p.town)doc.text(`Comune / zona: ${p.town}`,margin,58);
+ doc.setDrawColor(210,218,224);doc.line(margin,64,W-margin,64);doc.setFont('helvetica','bold');doc.setFontSize(16);const titleLines=doc.splitTextToSize(tp.title,W-margin*2);doc.text(titleLines,margin,78);let y=78+titleLines.length*7+3;
+ doc.setFont('helvetica','normal');doc.setFontSize(11);const desc=doc.splitTextToSize(tp.desc,W-margin*2);doc.text(desc,margin,y);y+=desc.length*6+8;
+ doc.setFillColor(244,247,249);doc.roundedRect(margin,y,W-margin*2,28,3,3,'F');doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text('FONTE DA CONSULTARE',margin+5,y+8);doc.setFont('helvetica','normal');const src=doc.splitTextToSize(tp.source,W-margin*2-10);doc.text(src,margin+5,y+15);if(tp.url){doc.setTextColor(36,89,154);doc.textWithLink('Apri fonte ufficiale / di settore',margin+5,y+23,{url:tp.url});doc.setTextColor(28,39,49)}y+=37;
+ doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text('PERCHÉ TE LO INVIAMO',margin,y);doc.setFont('helvetica','normal');doc.setFontSize(10);const reason=doc.splitTextToSize('F1 Immobiliare mantiene un contatto periodico con informazioni utili su mercato, casa, territorio e relazione. L’obiettivo è offrirti contenuti pratici senza pressioni commerciali.',W-margin*2);doc.text(reason,margin,y+7);y+=reason.length*5+15;
+ if(p.notes){doc.setFont('helvetica','bold');doc.text('NOTA PERSONALIZZATA',margin,y);doc.setFont('helvetica','normal');const n=doc.splitTextToSize(p.notes,W-margin*2);doc.text(n,margin,y+7);y+=n.length*5+10}
+ doc.setFillColor(20,184,79);doc.rect(0,282,W,15,'F');doc.setTextColor(255,255,255);doc.setFontSize(8);doc.text('F1 IMMOBILIARE - Contatto informativo personalizzato',margin,291);doc.text('Dati/fonti da verificare alla data di invio.',W-margin,291,{align:'right'});
+ return doc.output('blob')
+}
+function generateTouchpointPDF(personId,tpId){const {p,tp}=getPersonTouchpoint(personId,tpId);if(!p||!tp)return;const blob=makeTouchpointPdfBlob(p,tp);if(!blob)return;download(blob,pdfSafeName(p,tp));toast('PDF F1 generato')}
+function touchpointMessage(p,tp){const full=upperName([p.name,p.surname].filter(Boolean).join(' '));return `Buongiorno ${full},\n\nle invio un aggiornamento F1 Immobiliare: ${tp.title}.\n${tp.desc}\n\nFonte: ${tp.source}${tp.url?`\n${tp.url}`:''}\n\nResto a disposizione.\nF1 Immobiliare`}
+function prepareEmailTouchpoint(personId,tpId){const {p,tp}=getPersonTouchpoint(personId,tpId);if(!p||!tp)return;if(!p.email)return toast('Inserisci prima l’email del cliente');generateTouchpointPDF(personId,tpId);const sub=encodeURIComponent(`F1 Immobiliare - ${tp.title}`);const body=encodeURIComponent(touchpointMessage(p,tp)+'\n\nIl PDF F1 è stato generato: allegalo al messaggio prima dell’invio.');window.location.href=`mailto:${encodeURIComponent(p.email)}?subject=${sub}&body=${body}`}
+function normalizeWaNumber(v){return String(v||'').replace(/\D/g,'').replace(/^00/,'')}
+function prepareWhatsAppTouchpoint(personId,tpId){const {p,tp}=getPersonTouchpoint(personId,tpId);if(!p||!tp)return;const num=normalizeWaNumber(p.phone);if(!num)return toast('Inserisci prima il numero WhatsApp del cliente');generateTouchpointPDF(personId,tpId);const msg=encodeURIComponent(touchpointMessage(p,tp)+'\n\nHo preparato anche il PDF F1: allegalo nella chat.');window.open(`https://wa.me/${num}?text=${msg}`,'_blank','noopener')}
+async function shareTouchpointPDF(personId,tpId){const {p,tp}=getPersonTouchpoint(personId,tpId);if(!p||!tp)return;const blob=makeTouchpointPdfBlob(p,tp);if(!blob)return;const file=new File([blob],pdfSafeName(p,tp),{type:'application/pdf'});if(navigator.canShare&&navigator.canShare({files:[file]})){try{await navigator.share({title:`F1 Immobiliare - ${tp.title}`,text:touchpointMessage(p,tp),files:[file]});return}catch(e){if(e&&e.name==='AbortError')return}}download(blob,file.name);toast('PDF scaricato. Condivisione diretta non disponibile su questo dispositivo.')}
+function loadOfficialSettingsIntoForm(){db.settings=db.settings||{};const m={officialName:'officialName',officialPhone:'officialPhone',officialEmail:'officialEmail',automationWebhook:'automationWebhook'};Object.entries(m).forEach(([k,id])=>{const el=document.getElementById(id);if(el)el.value=db.settings[k]||''})}
+function saveOfficialSettings(){db.settings=db.settings||{};db.settings.officialName=upperName(document.getElementById('officialName').value);db.settings.officialPhone=normalizeWaNumber(document.getElementById('officialPhone').value);db.settings.officialEmail=document.getElementById('officialEmail').value.trim();db.settings.automationWebhook=document.getElementById('automationWebhook').value.trim();localStorage.setItem('f1NotizieOfficial',JSON.stringify(db.settings));persist();loadOfficialSettingsIntoForm();toast('Funzionario NOTIZIE salvato')}
+function contactOfficialWhatsApp(){saveOfficialSettings();const num=normalizeWaNumber(db.settings.officialPhone);if(!num)return toast('Inserisci il numero WhatsApp del funzionario');const p=currentPerson();const name=p?upperName([p.name,p.surname].filter(Boolean).join(' ')):'CONTATTO';const next=p?nextTouchpointFor(p):null;const msg=encodeURIComponent(`F1 NOTIZIE - ${name}${next?`\nProssimo touch point: ${formatDateIT(next.date)} - ${next.title}`:''}\nApri la dashboard NOTIZIE per gestire il contatto.`);window.open(`https://wa.me/${num}?text=${msg}`,'_blank','noopener')}
+function checkDueTouchpoints(){const today=localISODate(new Date());const due=[];db.people.filter(p=>p.id!=='root'&&p.firstContact).forEach(p=>buildTouchpointsForPerson(p).filter(tp=>!tp.done&&tp.date<=today).forEach(tp=>due.push({p,tp})));if(due.length){setTimeout(()=>toast(`${due.length} touch point scaduti/da gestire oggi`),500)}return due}
+async function sendDueTouchpointWebhook(personId,tpId){const {p,tp}=getPersonTouchpoint(personId,tpId);const url=(db.settings&&db.settings.automationWebhook)||'';if(!url)return toast('Configura prima il webhook automazione');if(!p||!tp)return;try{const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({event:'f1_touchpoint_due',person:{id:p.id,name:p.name,surname:p.surname,email:p.email,phone:p.phone,town:p.town},touchpoint:tp,official:db.settings})});if(!res.ok)throw new Error('HTTP '+res.status);toast('Touch point inviato al webhook')}catch(e){toast('Webhook non raggiungibile: '+e.message)}}
+
+function investigationStepsFor(p){
+ const full=upperName([p.name,p.surname].filter(Boolean).join(' '))||'QUESTA PERSONA';
+ const steps=[];
+ if(p.id==='root'){
+  steps.push(['PARTI DAI CERCHI PIÙ VICINI','Scrivi prima famiglia, amici, ex colleghi, scuola, sport, commercianti e professionisti che frequenti.']);
+  steps.push(['USA LE TUE FONTI MNEMONICHE','Rubrica, WhatsApp, social, fotografie, agende e biglietti da visita: servono a ricordare nomi già appartenenti alla tua rete.']);
+  steps.push(['ESPANDI OGNI NOME','Per ogni persona inserita chiediti subito chi conosci attraverso di lei.']);
+  return steps;
+ }
+ steps.push(['RICOSTRUISCI IL LEGAME',`Come hai conosciuto ${full}? Chi vi ha presentati? Quali persone erano presenti nello stesso ambiente?`]);
+ const cat=p.category;
+ const categoryMap={
+  famiglia:['APRI IL RAMO FAMILIARE','Coniuge/partner, fratelli, sorelle, genitori, figli adulti, cognati, cugini e parenti acquisiti che tu conosci realmente attraverso questa persona.'],
+  amici:['RICOSTRUISCI LE CERCHIE SOCIALI','Amici attuali, ex amici, vicini, amici degli amici, persone di vacanze, cene, gruppi e ricorrenze.'],
+  scuola:['TORNA AI GRUPPI DI FORMAZIONE','Compagni di classe/corso, docenti, gruppi di studio e persone conosciute tramite quelle esperienze.'],
+  lavoro:['MAPPA L’ECOSISTEMA DI LAVORO','Ex colleghi, clienti già tuoi, fornitori, collaboratori e professionisti conosciuti direttamente nel contesto lavorativo.'],
+  sport:['MAPPA SPORT E HOBBY','Compagni, allenatori, dirigenti, palestra, associazioni, club e persone viste con continuità.'],
+  professionisti:['USA IL CENTRO DI INFLUENZA','Chiedi presentazioni o segnalazioni consensuali. Non chiedere liste clienti o dati riservati; punta su persone che abbiano espresso apertamente un bisogno immobiliare.']
+ };
+ if(categoryMap[cat])steps.push(categoryMap[cat]);
+ const sourceMap={zona:['SVILUPPA LA FONTE ZONA','Ricostruisci vie, condomìni, attività, vicini, associazioni ed eventi che conosci già in quella micro-zona. Cerca conversazioni e presentazioni, non dati privati.'],telefono:['SVILUPPA LA FONTE TELEFONO','Parti dalla rubrica o dal contatto già disponibile: chiedi chi conosce nella zona, chi ha cambiato casa di recente e chi potrebbe avere un bisogno immobiliare espresso apertamente.'],influenza:['SVILUPPA IL CENTRO DI INFLUENZA','Individua le cerchie che questa persona incontra per lavoro o abitudine. Chiedi presentazioni consensuali e fatti ricordare quando emerge un bisogno immobiliare.'],segnalazione:['SVILUPPA LA SEGNALAZIONE','Ricostruisci chi ha fatto la presentazione, perché si fida e quali altre persone potrebbe presentarti direttamente. Mantieni visibile la catena della relazione.']};
+ if(sourceMap[p.source])steps.push(sourceMap[p.source]);
+ if(!p.phone && !p.email)steps.push(['RECUPERA UN RECAPITO LECITO','Prima chiedi a chi vi ha presentati o usa un canale pubblico/professionale: sito aziendale, pagina attività, profilo professionale, pulsante contatto pubblico. Evita numeri privati non pubblicati.']);
+ else steps.push(['USA IL RECAPITO CHE HAI GIÀ','Contatta direttamente la persona e fai domande di rete invece di cercare nuovi dati personali.']);
+ if(p.town)steps.push(['INCROCIA IL TERRITORIO',`Parti da ${p.town}: luoghi frequentati, attività, associazioni, eventi e relazioni locali che la persona ti ha già fatto conoscere. Poi apri NOTIZIE per lavorare sulla ricerca territoriale.`]);
+ else steps.push(['AGGIUNGI IL CONTESTO TERRITORIALE','Chiedi in quale comune/quartiere vive o lavora: la geografia aiuta a ricordare vicini, negozi, professionisti, associazioni ed eventi.']);
+ steps.push(['CERCA SOLO TRACCE PUBBLICHE','Se serve, verifica esclusivamente profili e pagine pubbliche/professionali per capire ruolo, attività o associazioni. Usa i risultati per formulare domande, non per raccogliere dati privati.']);
+ steps.push(['CHIUDI CON 3 NUOVI NOMI',`Obiettivo pratico: da ${full} prova a generare tre nominativi reali e inseriscili come rami. Non serve prevedere chi venderà; serve aumentare le fonti di conversazione.`]);
+ return steps;
+}
+function renderInvestigatorPlan(p){
+ const full=upperName([p.name,p.surname].filter(Boolean).join(' '))||'IO';
+ document.getElementById('investigatorIntro').innerHTML=p.id==='root'?'<b>Obiettivo:</b> far emergere nomi dalla tua memoria e dalla tua rete.':'<b>Obiettivo:</b> usare <b>'+esc(full)+'</b> come punto di accesso ad altri nominativi e fonti di notizie, senza cercare dati riservati.';
+ const steps=investigationStepsFor(p);
+ document.getElementById('investigatorPlan').innerHTML=steps.map((x,i)=>`<div class="investigator-step"><div class="investigator-num">${i+1}</div><div><b>${esc(x[0])}</b><span>${esc(x[1])}</span></div><button onclick="openAddChild('${p.id}','${String(x[0]).replace(/'/g,"\\'")} — ${String(x[1]).replace(/'/g,"\\'")}')">+ nome</button></div>`).join('');
+}
+function filterSourceQuick(id){selectedSource=selectedSource===id?'':id;document.getElementById('sourceFilter').value=selectedSource;document.querySelectorAll('.source-btn').forEach(b=>b.classList.toggle('active',b.dataset.source===selectedSource));renderAll()}
+function openMemory(categoryId){const c=CATEGORIES.find(x=>x.id===categoryId);document.getElementById('memoryTitle').textContent=c.name;const prompts=memoryPrompts(categoryId);document.getElementById('memoryGrid').innerHTML=prompts.map(p=>`<div class="question-card"><h4>${esc(p.title)}</h4><p>${esc(p.help)}</p><button onclick="document.getElementById('memoryModal').classList.remove('open');openAddChild('root','${p.title.replace(/'/g,"\\'")}')">Inserisci un nome</button></div>`).join('');document.getElementById('memoryModal').classList.add('open')}
+function memoryPrompts(id){const map={famiglia:[['Genitori','Mamma, papà e relative conoscenze.'],['Fratelli e sorelle','Anche i loro amici, colleghi, suoceri, vicini.'],['Cugini e zii','Ricorda i rami familiari meno frequentati.'],['Cognati e parenti acquisiti','Ogni legame apre un altro gruppo di persone.']],amici:[['Amici attuali','Chi senti o frequenti oggi?'],['Ex amici','Chi frequentavi cinque o dieci anni fa?'],['Amici degli amici','Chi hai conosciuto tramite un amico?'],['Vicini e vacanze','Persone del quartiere o conosciute in viaggio.']],scuola:[['Scuola','Compagni di classe, insegnanti, genitori di compagni.'],['Università','Compagni, docenti, gruppi di studio.'],['Corsi','Formazione, hobby, corsi professionali.']],lavoro:[['Ex colleghi','Persone dei lavori passati.'],['Vecchi clienti','Clienti con cui c’era fiducia.'],['Fornitori','Chi ti vendeva beni o servizi.'],['Professionisti','Consulenti e collaboratori.']],sport:[['Squadra','Compagni, allenatori, dirigenti.'],['Palestra','Persone viste abitualmente.'],['Associazioni','Club, circoli, gruppi locali.']],professionisti:[['Professionisti','Medico, farmacista, commercialista, avvocato, assicuratore.'],['Commercianti','Edicolante, benzinaio, barista, parrucchiere, estetista.'],['Negozi','Titolari e dipendenti dei negozi che frequenti.'],['Centri di influenza','Chi parla ogni giorno con molte persone.']]};return (map[id]||[]).map(([title,help])=>({title,help}))}
+function useMemorySource(name){document.getElementById('memoryTitle').textContent=name;document.getElementById('memoryGrid').innerHTML=`<div class="question-card"><h4>Apri ${esc(name)}</h4><p>Scorri con calma e trascrivi i nomi che riconosci. Non giudicare se venderanno mai casa.</p><button onclick="document.getElementById('memoryModal').classList.remove('open');openAddChild('root','Nome ricordato da ${name.replace(/'/g,"\\'")}')">Inserisci un nome</button></div><div class="question-card"><h4>Secondo passaggio</h4><p>Per ogni nome inserito chiediti subito: “Chi altro conosco attraverso questa persona?”</p></div>`;document.getElementById('memoryModal').classList.add('open')}
+function exportData(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});download(blob,'albero-fonti-notizie.json')}
+function exportCSV(){const rows=[['Nome','Cognome','Telefono','Email','Categoria','Fonte','Fase','Comune','Centro influenza','Primo contatto','Ultimo contatto','Prossimo ricontatto','Touchpoint completati anno','Note','ParentID']];db.people.filter(p=>p.id!=='root').forEach(p=>rows.push([p.name,p.surname,p.phone,p.email,p.category,p.source,p.stage,p.town,p.influence?'SI':'NO',p.firstContact,p.lastContact,p.nextContact,buildTouchpointsForPerson(p).filter(x=>x.done).length,p.notes,p.parentId]));const csv=rows.map(r=>r.map(v=>'"'+String(v||'').replace(/"/g,'""')+'"').join(';')).join('\n');download(new Blob([csv],{type:'text/csv;charset=utf-8'}),'albero-fonti-notizie.csv')}
+function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const obj=JSON.parse(r.result);if(!obj.people)throw new Error();db=obj;db.settings=db.settings||{officialName:'',officialPhone:'',officialEmail:'',automationWebhook:''};db.people.forEach(p=>{p.touchpointHistory=p.touchpointHistory||{};p.socialSearchHistory=p.socialSearchHistory||{};p.firstContact=p.firstContact||((p.contactDates||[])[0]||'');syncNextContact(p)});normalizeDBNames(db);persist();renderAll();toast('Dati importati')}catch(err){alert('File JSON non valido')}};r.readAsText(f);e.target.value=''}
+function resetApp(){if(!confirm('Azzerare tutto l’albero e ripartire da IO?'))return;db=defaultDB();persist();renderAll();toast('Dati azzerati')}
+init();
+</script>
+</body>
+</html>
