@@ -90,11 +90,11 @@ body.focus-active .notice{border-color:#2b6b43}
 
 <main class="wrap">
   <div class="ey">F1 ACQUISITION ENGINE · ACQUISIZIONE IMMOBILI</div>
-  <h1>50 TELEFONATE DI OGGI</h1>
+  <h1>100 TELEFONATE DI OGGI</h1>
   <p class="meta">Dalle 09:30 alle 12:30 il sistema entra in modalità chiamate: un contatto alla volta, esito, contatto successivo.</p>
 
   <div class="notice">
-    <span class="goal">OBIETTIVO: 50 TELEFONATE.</span><br>
+    <span class="goal">OBIETTIVO: 100 TELEFONATE.</span><br>
     Ogni chiamata deve avere un motivo immobiliare verificabile: privato/FSBO, segnale venditore oppure un annuncio attivo nella stessa via.
   </div>
 
@@ -108,7 +108,7 @@ body.focus-active .notice{border-color:#2b6b43}
 
   <section class="panel">
     <div class="summary">
-      <div class="stat"><b id="target">50</b>OBIETTIVO</div>
+      <div class="stat"><b id="target">100</b>OBIETTIVO</div>
       <div class="stat gold"><b id="remaining">0</b>DA CHIAMARE</div>
       <div class="stat"><b id="done">0</b>COMPLETATE</div>
     </div>
@@ -119,11 +119,11 @@ body.focus-active .notice{border-color:#2b6b43}
     <button id="reloadBtn" class="btn alt">AGGIORNA</button>
   </section>
 
-  <section id="list"><div class="empty">Preparazione delle 50 telefonate…</div></section>
+  <section id="list"><div class="empty">Preparazione delle 100 telefonate…</div></section>
 </main>
 
 <script>
-let STATE={rows:[],target:50,total:0,done:0,remaining:0};
+let STATE={rows:[],target:100,total:0,done:0,remaining:0};
 let ACTIVE_TASK=localStorage.getItem('f1_active_call_task')||'';
 const FROM_TERRITORY_APP=new URLSearchParams(location.search).get('source')==='f1-territory-app';
 let WAS_ACTIVE_FROM_APP=FROM_TERRITORY_APP;
@@ -185,7 +185,7 @@ function outcomeButtons(r,enabled){
   </div>`;
 }
 function render(){
-  $('target').textContent=STATE.target||50;
+  $('target').textContent=STATE.target||100;
   $('remaining').textContent=STATE.remaining||0;
   $('done').textContent=STATE.done||0;
   const active=isFocusWindow();
@@ -273,18 +273,18 @@ async function load(){
   try{
     const data=await F1AcquisitionData.rest('rpc/f1_daily_seller_calls_v1',{
       method:'POST',
-      body:JSON.stringify({p_target_count:50})
+      body:JSON.stringify({p_target_count:100})
     })||{};
     STATE={
       rows:Array.isArray(data.rows)?data.rows:[],
-      target:Number(data.target)||50,
+      target:Number(data.target)||100,
       total:Number(data.total)||0,
       done:Number(data.done)||0,
       remaining:Number(data.remaining)||0
     };
     render();
   }catch(e){
-    $('list').innerHTML='<div class="empty">Impossibile caricare le 50 telefonate: '+esc(e.message||e)+'</div>';
+    $('list').innerHTML='<div class="empty">Impossibile caricare le 100 telefonate: '+esc(e.message||e)+'</div>';
   }
 }
 window.addEventListener('load',()=>{
