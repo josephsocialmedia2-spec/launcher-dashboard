@@ -7,17 +7,12 @@ const STORAGE_KEY='f1PrimaryAccordions:v1';
 const GROUPS=[
   {id:'content',selector:'#f1ContentProductionMount',title:'PRODUZIONE CONTENUTI',meta:'LUNEDÌ → MERCOLEDÌ'},
   {id:'sequence',selector:'main.app > section.steps',title:'SEQUENZA OPERATIVA',meta:'Ordine e attività corrente'},
-  {id:'today',selector:'main.app > section.main-grid',title:'ATTIVITÀ CORRENTE E OGGI',meta:'Operatività e CRM'},
   {id:'territory',selector:'main.app > section.territory-grid',title:'RICERCA TERRITORIALE',meta:'Comune, zona e civici'},
-  {id:'next',selector:'main.app > section.bottom-grid',title:'PROSSIMA ATTIVITÀ E CRM',meta:'Passo successivo'},
-  {id:'academy',selector:'#f1Academy',title:'FORMAZIONE ACQUISIZIONE',meta:'F1 Academy'},
-  {id:'tools',selector:'main.app > section.support-grid',title:'STRUMENTI, SCRIPT E DOCUMENTI',meta:'Materiali operativi'}
+  {id:'academy',selector:'#f1Academy',title:'FORMAZIONE ACQUISIZIONE',meta:'F1 Academy'}
 ];
 
 const HASH_MAP={
-  '#territorio':'territory',
-  '#persone':'tools',
-  '#valore':'tools'
+  '#territorio':'territory'
 };
 
 const bound={};
