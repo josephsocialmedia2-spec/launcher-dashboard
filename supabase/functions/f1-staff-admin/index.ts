@@ -52,12 +52,12 @@ Deno.serve(async(req)=>{if(req.method==="OPTIONS")return new Response("ok",{stat
    const {data:before,error:be}=await sb.auth.admin.getUserById(target);if(be||!before?.user)throw be||new Error("auth_user_not_found");
    const previousEmail=String(before.user.email||old.company_email||"").toLowerCase();
    const tombstone="removed."+target.replace(/-/g,"")+"@deleted.f1.invalid";
-   const tombstonePassword=crypto.randomUUID()+"!"+crypto.randomUUID();
-   await audit(sb,me.id,target,"STAFF_ACCESS_REMOVED",{first_name:old.first_name,last_name:old.last_name,role:old.role,access_removed:true},clean(b.reason,500)||"Eliminazione accesso da Gestione Accessi Ufficio");
+   const tombstonePassword=crypto.randomUUID()+"!Aa9";
    const {error:banErr}=await sb.auth.admin.updateUserById(target,{email:tombstone,email_confirm:true,password:tombstonePassword,ban_duration:"876000h",app_metadata:{...(before.user.app_metadata||{}),f1_role:old.role,f1_status:"REMOVED"}});if(banErr)throw banErr;
    const {error:pe}=await sb.from("f1_staff_profiles").delete().eq("user_id",target);
    if(pe){await sb.auth.admin.updateUserById(target,{email:previousEmail||undefined,ban_duration:"none",app_metadata:{...(before.user.app_metadata||{}),f1_role:old.role,f1_status:old.status}}).catch(()=>null);throw pe}
    const {error:de}=await sb.auth.admin.deleteUser(target);
+   await audit(sb,me.id,de?"":target,"STAFF_ACCESS_REMOVED",{first_name:old.first_name,last_name:old.last_name,role:old.role,access_removed:true,hard_deleted:!de,technical_identity_retained:!!de},clean(b.reason,500)||"Eliminazione accesso da Gestione Accessi Ufficio");
    return out(200,{ok:true,status:"REMOVED",access_removed:true,hard_deleted:!de,technical_identity_retained:!!de,message:de?"Accesso eliminato e rimosso dal pannello. È rimasto solo un identificativo tecnico bloccato per preservare dati collegati.":"Accesso eliminato definitivamente."});
  }
  if(action==="enable")return out(410,{ok:false,error:"reactivation_removed",message:"Gli accessi eliminati non possono essere riattivati. Crea un nuovo accesso."});
