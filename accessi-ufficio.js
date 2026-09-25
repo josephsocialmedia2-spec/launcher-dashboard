@@ -1,12 +1,46 @@
 (()=>{'use strict';
 const $=id=>document.getElementById(id),esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])),txt=v=>String(v??'').trim();
-const state={me:null,accounts:[],busy:false};
+const state={me:null,accounts:[],busy:false,lastCreatedAccess:null};
 function reveal(){document.documentElement.classList.remove('f1-auth-pending')}
 function setMsg(text,bad=false){const e=$('msg');e.textContent=text||'';e.className='admin-msg'+(text?' show '+(bad?'bad':'ok'):'')}
 function fmtDate(v){if(!v)return'—';const d=new Date(v);if(Number.isNaN(d.getTime()))return String(v);try{return new Intl.DateTimeFormat('it-IT',{timeZone:'Europe/Rome',dateStyle:'short',timeStyle:'short'}).format(d)}catch(_){return d.toLocaleString('it-IT')}}
 function statusOf(a){if(a?.banned_until){const d=new Date(a.banned_until);if(!Number.isNaN(d.getTime())&&d>new Date())return'DISABLED'}return String(a?.status||'').toUpperCase()||'—'}
 function randomPassword(len=18){const chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%*-_';const a=new Uint32Array(len);crypto.getRandomValues(a);let s='';for(let i=0;i<len;i++)s+=chars[a[i]%chars.length];return 'A9!'+s.slice(3)}
 function recoveryUrl(){const u=new URL('setup-cloud.html',location.href);u.searchParams.set('return','ricerca-territoriale.html');return u.href}
+function accessUrl(){const u=new URL('setup-cloud.html',location.href);u.searchParams.set('return','ricerca-territoriale.html');return u.href}
+function whatsappPhone(value){
+  const raw=txt(value),digits=raw.replace(/\D/g,'');
+  if(!digits)return'';
+  if(digits.startsWith('0039'))return digits.slice(2);
+  if(raw.startsWith('+'))return digits;
+  if(digits.startsWith('39')&&digits.length>=11)return digits;
+  if(digits.startsWith('3')&&(digits.length===9||digits.length===10))return '39'+digits;
+  return digits;
+}
+function sendCreatedAccess(){
+  const a=state.lastCreatedAccess;
+  if(!a){setMsg('PRIMA CREA L’ACCESSO DEL CANDIDATO',true);return}
+  const phone=whatsappPhone(a.phone);
+  if(!phone){setMsg('NUMERO WHATSAPP MANCANTE · INSERISCI IL TELEFONO DEL CANDIDATO',true);return}
+  const name=[a.first_name,a.last_name].filter(Boolean).join(' ');
+  const message=[
+    'Ciao '+(a.first_name||name||'')+',',
+    '',
+    'ti invio le credenziali personali per accedere a F1 Immobiliare.',
+    '',
+    'Email: '+a.email,
+    'Password temporanea: '+a.password,
+    '',
+    'Accesso: '+accessUrl(),
+    '',
+    'Al primo accesso conserva queste credenziali in modo sicuro e modifica la password quando richiesto.',
+    '',
+    'F1 Immobiliare'
+  ].join('\n');
+  const url='https://wa.me/'+phone+'?text='+encodeURIComponent(message);
+  window.open(url,'_blank','noopener,noreferrer');
+  setMsg('WHATSAPP APERTO · CREDENZIALI PRECOMPILATE PER '+name.toUpperCase());
+}
 function updateHeader(){
   const now=new Date();
   const name=[state.me?.first_name,state.me?.last_name].filter(Boolean).join(' ')||'Titolare';
@@ -37,8 +71,20 @@ async function createAccount(){
   if(state.busy)return;
   const first_name=txt($('firstName').value),last_name=txt($('lastName').value),email=txt($('email').value).toLowerCase(),phone=txt($('phone').value),role=$('role').value,password=$('password').value;
   if(!first_name||!last_name||!email.includes('@')||password.length<12){setMsg('INSERISCI NOME, COGNOME, EMAIL VALIDA E PASSWORD DI ALMENO 12 CARATTERI',true);return}
-  state.busy=true;$('createAccount').disabled=true;
-  try{const r=await F1StaffData.staffAdmin({action:'create',first_name,last_name,email,phone,role,password});if(!r?.ok)throw new Error(r?.message||r?.error||'CREAZIONE NON RIUSCITA');$('password').value='';setMsg('ACCESSO CREATO · '+email);await loadAccounts()}catch(e){setMsg('ERRORE CREAZIONE ACCESSO · '+String(e?.message||e),true)}finally{state.busy=false;$('createAccount').disabled=false}
+  if(!phone){setMsg('INSERISCI IL NUMERO WHATSAPP DEL CANDIDATO PRIMA DI CREARE L’ACCESSO',true);return}
+  state.busy=true;$('createAccount').disabled=true;$('sendAccess').disabled=true;state.lastCreatedAccess=null;
+  try{
+    const r=await F1StaffData.staffAdmin({action:'create',first_name,last_name,email,phone,role,password});
+    if(!r?.ok)throw new Error(r?.message||r?.error||'CREAZIONE NON RIUSCITA');
+    state.lastCreatedAccess={first_name,last_name,email,phone,role,password};
+    $('sendAccess').disabled=false;
+    $('password').value='';
+    setMsg('ACCESSO CREATO · '+email+' · ORA PUOI PREMERE INVIA');
+    await loadAccounts()
+  }catch(e){
+    state.lastCreatedAccess=null;$('sendAccess').disabled=true;
+    setMsg('ERRORE CREAZIONE ACCESSO · '+String(e?.message||e),true)
+  }finally{state.busy=false;$('createAccount').disabled=false}
 }
 async function deleteAccount(a){const name=[a.first_name,a.last_name].filter(Boolean).join(' ')||'questo utente';if(!confirm('ELIMINARE L’ACCESSO DI '+name.toUpperCase()+'?\n\nL’account sparirà da ACCESSI REGISTRATI e non potrà essere riattivato. Gli eventuali dati di lavoro già raccolti restano conservati.'))return;try{const r=await F1StaffData.staffAdmin({action:'delete',user_id:a.user_id,reason:'Eliminazione definitiva accesso da Gestione Accessi Ufficio'});if(!r?.ok)throw new Error(r?.message||r?.error||'ELIMINAZIONE NON RIUSCITA');setMsg(r.message||'ACCESSO ELIMINATO');await loadAccounts()}catch(e){setMsg('ERRORE ELIMINAZIONE ACCESSO · '+String(e?.message||e),true)}}
 async function setEmail(a,currentEmail){
@@ -60,7 +106,7 @@ async function init(){
     updateHeader();
     if(String(state.me.role||'').toUpperCase()!=='TITOLARE'){document.body.innerHTML='<main class="wrap"><section class="card"><h1>ACCESSO RISERVATO AL TITOLARE</h1><a class="admin-btn dark" href="ricerca-territoriale.html">TORNA ALLA DASHBOARD</a></section></main>';reveal();return}
     $('generatePassword').addEventListener('click',()=>{$('password').value=randomPassword();$('password').type='text'});
-    $('createAccount').addEventListener('click',createAccount);$('reload').addEventListener('click',loadAccounts);
+    $('createAccount').addEventListener('click',createAccount);$('sendAccess').addEventListener('click',sendCreatedAccess);$('reload').addEventListener('click',loadAccounts);
     await loadAccounts();reveal();
   }catch(e){console.error(e);location.replace('setup-cloud.html?return=accessi-ufficio.html')}
 }
