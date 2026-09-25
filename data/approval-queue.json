@@ -1,9 +1,49 @@
 {
   "version": 2,
-  "generated_at": "2026-09-25T07:22:41.765824+00:00",
+  "generated_at": "2026-09-25T12:53:19.107246+00:00",
   "pipeline": "F1_COMMON_APPROVAL_QUEUE",
   "crm_target": "Supabase public.approval_queue",
   "items": [
+    {
+      "approval_id": "facebook-group-FBG-7E8508054A",
+      "task_id": "facebook-group-FBG-7E8508054A",
+      "lead_id": "",
+      "property_id": "",
+      "module": "FACEBOOK_GROUPS",
+      "platform": "FACEBOOK",
+      "comune": "Pianezza",
+      "type": "GROUP_APPROVAL",
+      "subject": "PIANEZZA CULTURA",
+      "result": "Pianezza Cristina Sara 1w · Public Siamo tornati dopo la pausa estiva e vi aspettiamo da domenica 20 settembre#pianezza#bibliotecastorica#pianezzacultura Antonio De Pra' and 7 others 8 reactions · 1 share Fabrizio Nucera Giampaolo 2w · Public Nella notte tra il 5 ed il 6 settembre 1706: una giovane ragazza pianezzese, Maria Chiaberge Brico, residente accanto alle porte del castello di ...",
+      "action_proposed": "APPROVA GRUPPO",
+      "score": null,
+      "source_url": "https://www.facebook.com/groups/716603300219777/",
+      "preview_url": "",
+      "created_at": "2026-09-25T10:23:16+00:00",
+      "origin": "open-social-scheduler/growth/groups.json",
+      "status": "DA_APPROVARE",
+      "metadata": {}
+    },
+    {
+      "approval_id": "facebook-signal-FBS-F5C147C954",
+      "task_id": "facebook-signal-FBS-F5C147C954",
+      "lead_id": "",
+      "property_id": "",
+      "module": "FACEBOOK_NETWORK",
+      "platform": "FACEBOOK",
+      "comune": "Giaveno",
+      "type": "NETWORK_SIGNAL",
+      "subject": "sei di giaveno o sei stato a giaveno se... | Trovato in ...",
+      "result": "Trovato in discarica , maschio affettuoso, ha il codino storto, cerca casa!",
+      "action_proposed": "APPROVA ANALISI",
+      "score": null,
+      "source_url": "https://www.facebook.com/groups/216130891909846/permalink/2805078743015035/",
+      "preview_url": "",
+      "created_at": "2026-09-25T10:14:33+00:00",
+      "origin": "open-social-scheduler/growth/signals.json",
+      "status": "DA_APPROVARE",
+      "metadata": {}
+    },
     {
       "approval_id": "social-optimization-2026-09-25T06-55-42Z",
       "module": "SOCIAL_OPTIMIZATION",
@@ -16751,11 +16791,11 @@
     }
   ],
   "summary": {
-    "total": 836,
+    "total": 838,
     "seller_radar": 592,
     "social_content": 5,
-    "facebook_groups": 208,
-    "facebook_network": 30,
+    "facebook_groups": 209,
+    "facebook_network": 31,
     "social_optimization": 1,
     "instagram_gate": 0
   }
