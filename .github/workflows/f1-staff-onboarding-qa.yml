@@ -43,17 +43,21 @@ jobs:
           print('inline scripts:', len(inline))
           PY
           node --check /tmp/setup-cloud-inline.js
-      - name: Verify Anastasia onboarding contract
+      - name: Verify automatic internal F1 email contract
         shell: bash
         run: |
           set -euo pipefail
-          grep -Fq "ANASTASIA_LOGIN='anastasia@gmail.com'" setup-cloud.html
-          grep -Fq 'funzionario-notiziere.html' setup-cloud.html
-          grep -Fq 'Il vecchio flusso di auto-registrazione è stato disattivato' primo-accesso-notiziere.html
-          grep -Fq 'action==="set_email"' supabase/functions/f1-staff-admin/index.ts
-          ! grep -Fq 'LOGIN_ALIASES' supabase-sync.js
+          grep -Fq 'internalEmail=' supabase/functions/f1-staff-admin/index.ts
+          grep -Fq '@f1.local' supabase/functions/f1-staff-admin/index.ts
+          grep -Fq 'f1_login_type:"INTERNAL"' supabase/functions/f1-staff-admin/index.ts
+          grep -Fq 'EMAIL DI LAVORO · GENERATA AUTOMATICAMENTE' accessi-ufficio.html
+          grep -Fq 'readonly placeholder="nome.cognome.0000@f1.local"' accessi-ufficio.html
+          grep -Fq 'generatedEmail()' accessi-ufficio.js
+          grep -Fq 'TELEFONO / WHATSAPP' accessi-ufficio.html
+          grep -Fq 'managed_internal_email' supabase/functions/f1-staff-admin/index.ts
+          grep -Fq 'ana.cet.4567@f1.local' tests/cloud-auth.spec.js
           ! grep -RFq 'joseph.socialmedia2+f1.' setup-cloud.html supabase-sync.js primo-accesso-notiziere.html tests/cloud-auth.spec.js
-          echo 'F1 staff onboarding contract: PASS'
+          echo 'F1 automatic internal email contract: PASS'
       - name: Verify irreversible access removal
         shell: bash
         run: |
