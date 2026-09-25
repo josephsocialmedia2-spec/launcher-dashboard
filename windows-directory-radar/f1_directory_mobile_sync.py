@@ -118,6 +118,17 @@ def make_row(r):
         "updated_at": datetime.now().isoformat(timespec="seconds"),
         "device_id": "directory-radar",
         "deleted": False,
+        "rpo_status": "DA_VERIFICARE",
+        "call_allowed": False,
+        "directory_job_id": None,
+        "listing_url": r.get("URL annuncio", "") or "",
+        "listing_address": " ".join(x for x in [r.get("Via annuncio", ""), r.get("Civico annuncio", "")] if x).strip(),
+        "listing_title": r.get("Immobile", "") or "",
+        "listing_source": r.get("Fonte annuncio", "") or "",
+        "directory_match": r.get("Match", "") or "DA_VERIFICARE",
+        "directory_comune": r.get("Comune", "") or "",
+        "directory_via": r.get("Via contatto", "") or "",
+        "directory_civico": r.get("Civico contatto", "") or "",
     }
 
 
