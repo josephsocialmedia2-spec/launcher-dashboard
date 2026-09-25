@@ -6,6 +6,9 @@ function setMsg(text,bad=false){const e=$('msg');e.textContent=text||'';e.classN
 function fmtDate(v){if(!v)return'—';const d=new Date(v);if(Number.isNaN(d.getTime()))return String(v);try{return new Intl.DateTimeFormat('it-IT',{timeZone:'Europe/Rome',dateStyle:'short',timeStyle:'short'}).format(d)}catch(_){return d.toLocaleString('it-IT')}}
 function statusOf(a){if(a?.banned_until){const d=new Date(a.banned_until);if(!Number.isNaN(d.getTime())&&d>new Date())return'DISABLED'}return String(a?.status||'').toUpperCase()||'—'}
 function randomPassword(len=18){const chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%*-_';const a=new Uint32Array(len);crypto.getRandomValues(a);let s='';for(let i=0;i<len;i++)s+=chars[a[i]%chars.length];return 'A9!'+s.slice(3)}
+function codePart(v,n=3){return txt(v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,n)}
+function generatedEmail(){const f=codePart($('firstName')?.value),l=codePart($('lastName')?.value),digits=txt($('phone')?.value).replace(/\D/g,'');return f&&l&&digits.length>=4?f+'.'+l+'.'+digits.slice(-4)+'@f1.local':''}
+function refreshGeneratedEmail(){if($('email'))$('email').value=generatedEmail()}
 function recoveryUrl(){const u=new URL('setup-cloud.html',location.href);u.searchParams.set('return','ricerca-territoriale.html');return u.href}
 function accessUrl(){const u=new URL('setup-cloud.html',location.href);u.searchParams.set('return','ricerca-territoriale.html');return u.href}
 function whatsappPhone(value){
@@ -56,11 +59,10 @@ async function loadAccounts(){const box=$('accounts');box.innerHTML='<div class=
 function renderAccounts(){
   $('count').textContent=state.accounts.length+' account';
   const box=$('accounts');
-  box.innerHTML=state.accounts.length?state.accounts.map((a,i)=>{const status=statusOf(a),email=txt(a.email||a.company_email),name=[a.first_name,a.last_name].filter(Boolean).join(' ')||email||'Account F1',legacy=/\+f1\./i.test(email)&&/@gmail\.com$/i.test(email);return `<article class="account" data-index="${i}"><div class="account-head"><div><strong>${esc(name)}</strong><small>${esc(a.role||'—')} · ${esc(email||'—')}</small></div><span class="badge ${status==='ACTIVE'?'':'off'}">${esc(status)}</span></div><div class="meta"><span>ULTIMO LOGIN</span><strong>${esc(fmtDate(a.last_sign_in_at))}</strong><span>ULTIMO ACCESSO</span><strong>${esc(fmtDate(a.last_access))}</strong><span>ACCESSI</span><strong>${Number(a.access_count||0)}</strong><span>EMAIL</span><strong>${legacy?'ALIAS LEGACY · DA MIGRARE':'REALE / DIRETTA'}</strong><span>PASSWORD</span><strong>PROTETTA · NON VISUALIZZABILE</strong></div><div class="actions">${email?'<button class="admin-btn secondary" data-copy>COPIA EMAIL</button><button class="admin-btn secondary" data-email>'+(legacy?'MIGRA EMAIL':'CAMBIA EMAIL')+'</button><button class="admin-btn dark" data-recovery>INVIA RECUPERO</button>':''}<button class="admin-btn danger" data-delete>ELIMINA ACCESSO</button></div><div class="password-box"><div class="password-row"><input type="password" data-new-password minlength="12" autocomplete="new-password" placeholder="Nuova password temporanea"><button class="admin-btn secondary" data-generate>GENERA</button><button class="admin-btn dark" data-set-password>IMPOSTA PASSWORD</button></div></div></article>`}).join(''):'<div class="empty">NESSUN ACCOUNT REGISTRATO</div>';
+  box.innerHTML=state.accounts.length?state.accounts.map((a,i)=>{const status=statusOf(a),email=txt(a.email||a.company_email),name=[a.first_name,a.last_name].filter(Boolean).join(' ')||email||'Account F1',internal=/@f1\.local$/i.test(email);return `<article class="account" data-index="${i}"><div class="account-head"><div><strong>${esc(name)}</strong><small>${esc(a.role||'—')} · ${esc(email||'—')}</small></div><span class="badge ${status==='ACTIVE'?'':'off'}">${esc(status)}</span></div><div class="meta"><span>ULTIMO LOGIN</span><strong>${esc(fmtDate(a.last_sign_in_at))}</strong><span>ULTIMO ACCESSO</span><strong>${esc(fmtDate(a.last_access))}</strong><span>ACCESSI</span><strong>${Number(a.access_count||0)}</strong><span>EMAIL</span><strong>${internal?'INTERNA F1 · AUTOMATICA':'ESTERNA / TITOLARE'}</strong><span>PASSWORD</span><strong>PROTETTA · NON VISUALIZZABILE</strong></div><div class="actions">${email?'<button class="admin-btn secondary" data-copy>COPIA EMAIL</button>':''}${email&&!internal?'<button class="admin-btn dark" data-recovery>INVIA RECUPERO</button>':''}<button class="admin-btn danger" data-delete>ELIMINA ACCESSO</button></div><div class="password-box"><div class="password-row"><input type="password" data-new-password minlength="12" autocomplete="new-password" placeholder="Nuova password temporanea"><button class="admin-btn secondary" data-generate>GENERA</button><button class="admin-btn dark" data-set-password>IMPOSTA PASSWORD</button></div></div></article>`}).join(''):'<div class="empty">NESSUN ACCOUNT REGISTRATO</div>';
   box.querySelectorAll('.account').forEach(card=>{
     const a=state.accounts[Number(card.dataset.index)],email=txt(a.email||a.company_email);
     card.querySelector('[data-copy]')?.addEventListener('click',e=>copy(email,e.currentTarget));
-    card.querySelector('[data-email]')?.addEventListener('click',()=>setEmail(a,email));
     card.querySelector('[data-recovery]')?.addEventListener('click',()=>sendRecovery(email));
     card.querySelector('[data-delete]')?.addEventListener('click',()=>deleteAccount(a));
     card.querySelector('[data-generate]')?.addEventListener('click',()=>{const f=card.querySelector('[data-new-password]');f.value=randomPassword();f.type='text'});
@@ -69,17 +71,17 @@ function renderAccounts(){
 }
 async function createAccount(){
   if(state.busy)return;
-  const first_name=txt($('firstName').value),last_name=txt($('lastName').value),email=txt($('email').value).toLowerCase(),phone=txt($('phone').value),role=$('role').value,password=$('password').value;
-  if(!first_name||!last_name||!email.includes('@')||password.length<12){setMsg('INSERISCI NOME, COGNOME, EMAIL VALIDA E PASSWORD DI ALMENO 12 CARATTERI',true);return}
+  const first_name=txt($('firstName').value),last_name=txt($('lastName').value),phone=txt($('phone').value),role=$('role').value,password=$('password').value,email=generatedEmail();
+  if(!first_name||!last_name||!phone||!email||password.length<12){setMsg('INSERISCI NOME, COGNOME, TELEFONO VALIDO E PASSWORD DI ALMENO 12 CARATTERI',true);return}
   if(!phone){setMsg('INSERISCI IL NUMERO WHATSAPP DEL CANDIDATO PRIMA DI CREARE L’ACCESSO',true);return}
   state.busy=true;$('createAccount').disabled=true;$('sendAccess').disabled=true;state.lastCreatedAccess=null;
   try{
-    const r=await F1StaffData.staffAdmin({action:'create',first_name,last_name,email,phone,role,password});
+    const r=await F1StaffData.staffAdmin({action:'create',first_name,last_name,phone,role,password});
     if(!r?.ok)throw new Error(r?.message||r?.error||'CREAZIONE NON RIUSCITA');
-    state.lastCreatedAccess={first_name,last_name,email,phone,role,password};
+    const createdEmail=txt(r.email||email).toLowerCase();state.lastCreatedAccess={first_name,last_name,email:createdEmail,phone,role,password};
     $('sendAccess').disabled=false;
     $('password').value='';
-    setMsg('ACCESSO CREATO · '+email+' · ORA PUOI PREMERE INVIA');
+    $('email').value=state.lastCreatedAccess.email;setMsg('ACCESSO CREATO · '+state.lastCreatedAccess.email+' · ORA PUOI PREMERE INVIA');
     await loadAccounts()
   }catch(e){
     state.lastCreatedAccess=null;$('sendAccess').disabled=true;
@@ -87,16 +89,6 @@ async function createAccount(){
   }finally{state.busy=false;$('createAccount').disabled=false}
 }
 async function deleteAccount(a){const name=[a.first_name,a.last_name].filter(Boolean).join(' ')||'questo utente';if(!confirm('ELIMINARE L’ACCESSO DI '+name.toUpperCase()+'?\n\nL’account sparirà da ACCESSI REGISTRATI e non potrà essere riattivato. Gli eventuali dati di lavoro già raccolti restano conservati.'))return;try{const r=await F1StaffData.staffAdmin({action:'delete',user_id:a.user_id,reason:'Eliminazione definitiva accesso da Gestione Accessi Ufficio'});if(!r?.ok)throw new Error(r?.message||r?.error||'ELIMINAZIONE NON RIUSCITA');setMsg(r.message||'ACCESSO ELIMINATO');await loadAccounts()}catch(e){setMsg('ERRORE ELIMINAZIONE ACCESSO · '+String(e?.message||e),true)}}
-async function setEmail(a,currentEmail){
-  const isAnastasia=String(a?.first_name||'').toLowerCase()==='anastasia'&&String(a?.last_name||'').toLowerCase()==='cetrulo';
-  const suggested=isAnastasia&&/\+f1\./i.test(currentEmail)?'anastasia@gmail.com':currentEmail;
-  const email=txt(prompt('Nuova email reale di accesso F1',suggested)).toLowerCase();
-  if(!email)return;
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){setMsg('EMAIL NON VALIDA',true);return}
-  if(email===String(currentEmail||'').toLowerCase()){setMsg('EMAIL INVARIATA');return}
-  if(!confirm('Aggiornare l’accesso di '+[a.first_name,a.last_name].filter(Boolean).join(' ')+' da '+currentEmail+' a '+email+'?'))return;
-  try{const r=await F1StaffData.staffAdmin({action:'set_email',user_id:a.user_id,email,reason:'Migrazione a email reale da Gestione Accessi Ufficio'});if(!r?.ok)throw new Error(r?.message||r?.error||'EMAIL NON AGGIORNATA');setMsg('EMAIL DI ACCESSO AGGIORNATA · '+email);await loadAccounts()}catch(e){setMsg('ERRORE CAMBIO EMAIL · '+String(e?.message||e),true)}
-}
 async function sendRecovery(email){if(!email)return;try{await F1Sync.sendRecoveryEmail(email,recoveryUrl());setMsg('EMAIL DI RECUPERO INVIATA A '+email)}catch(e){setMsg('RECUPERO NON INVIATO · '+String(e?.message||e),true)}}
 async function setPassword(a,card){const f=card.querySelector('[data-new-password]'),password=f.value;if(password.length<12){setMsg('LA NUOVA PASSWORD DEVE AVERE ALMENO 12 CARATTERI',true);return}try{const r=await F1StaffData.staffAdmin({action:'set_password',user_id:a.user_id,password,reason:'Reset amministrativo password ufficio'});if(!r?.ok)throw new Error(r?.message||r?.error||'PASSWORD NON AGGIORNATA');f.value='';f.type='password';setMsg('PASSWORD TEMPORANEA AGGIORNATA · NON È STATA SALVATA NEI DATI F1')}catch(e){setMsg('ERRORE PASSWORD · '+String(e?.message||e),true)}}
 async function init(){
@@ -105,6 +97,7 @@ async function init(){
     state.me=await F1StaffData.me();
     updateHeader();
     if(String(state.me.role||'').toUpperCase()!=='TITOLARE'){document.body.innerHTML='<main class="wrap"><section class="card"><h1>ACCESSO RISERVATO AL TITOLARE</h1><a class="admin-btn dark" href="ricerca-territoriale.html">TORNA ALLA DASHBOARD</a></section></main>';reveal();return}
+    ['firstName','lastName','phone'].forEach(id=>$(id).addEventListener('input',refreshGeneratedEmail));refreshGeneratedEmail();
     $('generatePassword').addEventListener('click',()=>{$('password').value=randomPassword();$('password').type='text'});
     $('createAccount').addEventListener('click',createAccount);$('sendAccess').addEventListener('click',sendCreatedAccess);$('reload').addEventListener('click',loadAccounts);
     await loadAccounts();reveal();
