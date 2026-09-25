@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#070907">
-<title>F1 — 50 telefonate di oggi</title>
+<title>F1 — Blocco telefonate 09:30–12:30</title>
 <style>
-:root{--p:#101510;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--gold:#f4c95d;--red:#ff7777}
+:root{--p:#101510;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--gold:#f4c95d;--red:#ff7777;--orange:#ffae57}
 *{box-sizing:border-box}
 body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt);font-family:Arial,sans-serif}
 .wrap{max-width:980px;margin:auto;padding:18px 12px 90px}
@@ -21,10 +21,12 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 .stat b{display:block;color:var(--g);font-size:24px}
 .stat.gold b{color:var(--gold)}
 .actions{display:flex;gap:7px;flex-wrap:wrap}
-.btn{display:inline-block;padding:10px 11px;border-radius:9px;background:var(--g);color:#07100a;text-decoration:none;font-size:10px;font-weight:900;border:0;cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 11px;border-radius:9px;background:var(--g);color:#07100a;text-decoration:none;font-size:10px;font-weight:900;border:0;cursor:pointer}
 .btn.alt{background:#182019;color:#fff;border:1px solid var(--line)}
 .btn.gold{background:#2b2414;color:var(--gold);border:1px solid #66552a}
-.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.red{background:#2a1515;color:#ff9f9f;border:1px solid #6a3030}
+.btn.orange{background:#2b2014;color:#ffc27e;border:1px solid #6d4a25}
+.btn:disabled{opacity:.35;cursor:not-allowed}
 .top{display:flex;justify-content:space-between;gap:10px}
 .reason{font-weight:900;font-size:14px}
 .score{color:var(--g);border:1px solid #35513d;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:900;white-space:nowrap}
@@ -44,7 +46,24 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 .rank{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:999px;background:#172119;border:1px solid #35513d;color:var(--g);font-size:10px;font-weight:900;margin-right:7px}
 .search{width:100%;padding:11px;border-radius:10px;border:1px solid var(--line);background:#0d120e;color:#fff}
 .toolbar{display:grid;grid-template-columns:1fr auto;gap:8px}
-@media(max-width:650px){.top{display:block}.summary{grid-template-columns:1fr 1fr 1fr}.score{display:inline-block;margin-top:6px}.toolbar{grid-template-columns:1fr}.context{grid-template-columns:1fr}}
+.session{position:sticky;top:0;z-index:30;margin:-18px -12px 12px;padding:12px;border-bottom:1px solid #24452f;background:rgba(5,12,7,.96);backdrop-filter:blur(10px)}
+.session-inner{max-width:980px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.session-title{font-size:12px;font-weight:900;letter-spacing:.06em}
+.session-sub{margin-top:3px;color:var(--mut);font-size:10px}
+.session-clock{font-size:22px;font-weight:900;color:var(--g);white-space:nowrap}
+.session.active{border-bottom-color:#2b6b43;background:rgba(5,22,11,.97)}
+.session.active .session-title{color:var(--g)}
+.focus-card{border:2px solid var(--g);box-shadow:0 0 0 1px rgba(57,242,138,.12),0 20px 60px rgba(0,0,0,.22)}
+.call-now{width:100%;min-height:58px;font-size:17px;border-radius:12px}
+.outcomes{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.outcome-title{grid-column:1/-1;color:var(--mut);font-size:9px;font-weight:900;letter-spacing:.08em}
+.focus-note{margin-top:8px;color:var(--mut);font-size:9px;line-height:1.4}
+body.focus-active .toolbar,body.focus-active .nav-panel,body.focus-active .secondary-action{display:none!important}
+body.focus-active .call:not(.focus-card){display:none!important}
+body.focus-active .wrap{max-width:760px}
+body.focus-active h1{font-size:clamp(28px,7vw,42px)}
+body.focus-active .notice{border-color:#2b6b43}
+@media(max-width:650px){.top{display:block}.summary{grid-template-columns:1fr 1fr 1fr}.score{display:inline-block;margin-top:6px}.toolbar{grid-template-columns:1fr}.context{grid-template-columns:1fr}.outcomes{grid-template-columns:1fr 1fr}.outcome-title{grid-column:1/-1}.session-inner{align-items:flex-start}.session-clock{font-size:18px}}
 </style>
 <script defer src="supabase-config.js?v=20260924-calls50"></script>
 <script defer src="supabase-sync.js?v=20260924-calls50"></script>
@@ -52,17 +71,27 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 <script defer src="f1-acquisition-data.js?v=20260924-calls50"></script>
 </head>
 <body>
+<div id="sessionBar" class="session">
+  <div class="session-inner">
+    <div>
+      <div id="sessionTitle" class="session-title">BLOCCO TELEFONATE</div>
+      <div id="sessionSub" class="session-sub">Fascia operativa 09:30–12:30</div>
+    </div>
+    <div id="sessionClock" class="session-clock">--:--:--</div>
+  </div>
+</div>
+
 <main class="wrap">
   <div class="ey">F1 ACQUISITION ENGINE · ACQUISIZIONE IMMOBILI</div>
   <h1>50 TELEFONATE DI OGGI</h1>
-  <p class="meta">Lista giornaliera CRM dedicata esclusivamente alla ricerca di immobili in vendita.</p>
+  <p class="meta">Dalle 09:30 alle 12:30 il sistema entra in modalità chiamate: un contatto alla volta, esito, contatto successivo.</p>
 
   <div class="notice">
     <span class="goal">OBIETTIVO: 50 TELEFONATE.</span><br>
-    Ogni chiamata deve avere un motivo immobiliare verificabile: privato/FSBO, segnale venditore oppure un annuncio attivo nella stessa via. La scheda mostra Comune, Via, immobile/notizia collegata e motivo preciso della telefonata.
+    Ogni chiamata deve avere un motivo immobiliare verificabile: privato/FSBO, segnale venditore oppure un annuncio attivo nella stessa via.
   </div>
 
-  <section class="panel">
+  <section class="panel nav-panel">
     <div class="actions">
       <a class="btn alt" href="crm.html#contatti">CONTATTI CRM</a>
       <a class="btn alt" href="crm.html#attivita">ATTIVITÀ CRM</a>
@@ -88,11 +117,11 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 
 <script>
 let STATE={rows:[],target:50,total:0,done:0,remaining:0};
+let ACTIVE_TASK=localStorage.getItem('f1_active_call_task')||'';
 const $=id=>document.getElementById(id);
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function phone(s){let d=String(s||'').replace(/\D/g,'');if(d.startsWith('39')&&d.length>10)d=d.slice(2);return d}
 function nameOf(r){return [r.nome,r.cognome].filter(Boolean).join(' ').trim()||'Contatto senza nome'}
-function placeOf(r){return [r.comune,r.via,r.civico].filter(Boolean).join(' · ')}
 function evidenceLabel(r){
   const e=String(r.evidence_type||'').toUpperCase();
   if(e==='FSBO')return 'PRIVATO / FSBO';
@@ -103,17 +132,58 @@ function evidenceLabel(r){
 }
 function euro(v){const n=Number(v||0);return n>0?new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n):''}
 function isDone(r){return String(r.status||'OPEN').toUpperCase()==='DONE'}
+function isFocusWindow(d=new Date()){
+  const day=d.getDay();
+  const m=d.getHours()*60+d.getMinutes();
+  return day>=1&&day<=5&&m>=570&&m<750;
+}
+function remainingToEnd(d=new Date()){
+  const end=new Date(d);end.setHours(12,30,0,0);
+  const sec=Math.max(0,Math.floor((end-d)/1000));
+  return String(Math.floor(sec/3600)).padStart(2,'0')+':'+String(Math.floor((sec%3600)/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
+}
+function updateSession(){
+  const d=new Date();
+  const active=isFocusWindow(d);
+  document.body.classList.toggle('focus-active',active);
+  $('sessionBar').classList.toggle('active',active);
+  $('sessionClock').textContent=d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  if(active){
+    $('sessionTitle').textContent='MODALITÀ TELEFONATE ATTIVA';
+    $('sessionSub').textContent='Niente altro fino alle 12:30 · tempo residuo '+remainingToEnd(d);
+  }else{
+    $('sessionTitle').textContent='BLOCCO TELEFONATE 09:30–12:30';
+    $('sessionSub').textContent='Fuori fascia: la lista resta disponibile, ma la modalità concentrata è disattivata.';
+  }
+  if(STATE.rows.length) render();
+}
 function filteredRows(){
   const q=String($('search')?.value||'').trim().toLowerCase();
   if(!q)return STATE.rows;
   return STATE.rows.filter(r=>[r.nome,r.cognome,r.telefono,r.comune,r.via,r.civico,r.selection_reason,r.call_reason_detail,r.linked_property_address,r.linked_property_title,r.linked_property_source,r.source].join(' ').toLowerCase().includes(q));
 }
+function outcomeButtons(r,enabled){
+  const disabled=enabled?'':'disabled';
+  return `<div class="outcomes">
+    <div class="outcome-title">DOPO LA TELEFONATA SCEGLI UN SOLO ESITO — IL SISTEMA PASSA AL SUCCESSIVO</div>
+    <button class="btn alt" ${disabled} data-outcome="FATTA" data-task="${esc(r.task_id)}">FATTA</button>
+    <button class="btn orange" ${disabled} data-outcome="NON_RISPONDE" data-task="${esc(r.task_id)}">NON RISPONDE</button>
+    <button class="btn gold" ${disabled} data-outcome="RICHIAMA" data-task="${esc(r.task_id)}">RICHIAMA</button>
+    <button class="btn" ${disabled} data-outcome="INTERESSATO" data-task="${esc(r.task_id)}">INTERESSATO</button>
+    <button class="btn red" ${disabled} data-outcome="NON_INTERESSATO" data-task="${esc(r.task_id)}">NON INTERESSATO</button>
+  </div>`;
+}
 function render(){
   $('target').textContent=STATE.target||50;
   $('remaining').textContent=STATE.remaining||0;
   $('done').textContent=STATE.done||0;
-  const rows=filteredRows();
+  const active=isFocusWindow();
+  let rows=active?STATE.rows.filter(r=>!isDone(r)).slice(0,1):filteredRows();
   const firstOpenIndex=STATE.rows.findIndex(r=>!isDone(r));
+  if(active&&firstOpenIndex<0){
+    $('list').innerHTML='<div class="panel empty"><b style="color:var(--g)">OBIETTIVO COMPLETATO.</b><br>Non risultano altre telefonate aperte per oggi.</div>';
+    return;
+  }
   $('list').innerHTML=rows.length?rows.map(r=>{
     const originalIndex=STATE.rows.indexOf(r);
     const done=isDone(r),next=originalIndex===firstOpenIndex&&!done,p=phone(r.telefono);
@@ -121,7 +191,8 @@ function render(){
     const propertyTitle=String(r.linked_property_title||'').trim();
     const propertySource=String(r.linked_property_source||'').trim();
     const propertyPrice=euro(r.linked_property_price);
-    return `<article class="call ${done?'done':''} ${next?'next':''}">
+    const armed=ACTIVE_TASK===String(r.task_id);
+    return `<article class="call ${done?'done':''} ${next?'next':''} ${active&&next?'focus-card':''}">
       <div class="top">
         <div>
           <div class="reason"><span class="rank">${originalIndex+1}</span>${esc(nameOf(r))}</div>
@@ -150,23 +221,37 @@ function render(){
       </div>
 
       <div class="actions">
-        ${!done&&r.telefono?`<a class="btn" href="tel:${esc(r.telefono)}">CHIAMA</a>`:''}
-        ${!done&&p?`<a class="btn alt" target="_blank" rel="noopener" href="https://wa.me/39${p}">WHATSAPP</a>`:''}
-        ${r.linked_property_url?`<a class="btn gold" target="_blank" rel="noopener" href="${esc(r.linked_property_url)}">APRI ANNUNCIO</a>`:''}
-        ${r.contact_source_url?`<a class="btn alt" target="_blank" rel="noopener" href="${esc(r.contact_source_url)}">FONTE CONTATTO</a>`:''}
-        ${!done?'<a class="btn gold" href="http://127.0.0.1:8766/">CENTRALE PC</a>':''}
-        ${!done?`<button class="btn alt" data-done="${esc(r.task_id)}">SEGNA FATTA</button>`:''}
-        <a class="btn alt" href="crm.html#contatti">CRM</a>
+        ${!done&&r.telefono?`<a class="btn call-now" data-call="${esc(r.task_id)}" href="tel:${esc(r.telefono)}">CHIAMA ORA · ${esc(r.telefono)}</a>`:''}
+        ${!done&&p?`<a class="btn alt secondary-action" target="_blank" rel="noopener" href="https://wa.me/39${p}">WHATSAPP</a>`:''}
+        ${r.linked_property_url?`<a class="btn gold secondary-action" target="_blank" rel="noopener" href="${esc(r.linked_property_url)}">APRI ANNUNCIO</a>`:''}
+        ${r.contact_source_url?`<a class="btn alt secondary-action" target="_blank" rel="noopener" href="${esc(r.contact_source_url)}">FONTE CONTATTO</a>`:''}
+        ${!done?`<a class="btn gold secondary-action" href="http://127.0.0.1:8766/">CENTRALE PC</a>`:''}
+        ${!done&&!active?`<button class="btn alt" data-outcome="FATTA" data-task="${esc(r.task_id)}">SEGNA FATTA</button>`:''}
+        <a class="btn alt secondary-action" href="crm.html#contatti">CRM</a>
       </div>
+      ${!done&&active?outcomeButtons(r,armed):''}
+      ${!done&&active?`<div class="focus-note">${armed?'Telefonata avviata: registra l’esito.':'Prima premi CHIAMA ORA. Gli esiti si attivano dopo l’avvio della chiamata.'}</div>`:''}
     </article>`
   }).join(''):'<div class="empty">Nessun contatto corrisponde alla ricerca.</div>';
-  document.querySelectorAll('[data-done]').forEach(b=>b.onclick=()=>completeTask(b.dataset.done,b));
+  document.querySelectorAll('[data-call]').forEach(a=>a.addEventListener('click',()=>{
+    ACTIVE_TASK=String(a.dataset.call||'');
+    localStorage.setItem('f1_active_call_task',ACTIVE_TASK);
+    setTimeout(render,250);
+  }));
+  document.querySelectorAll('[data-outcome]').forEach(b=>b.onclick=()=>completeTask(b.dataset.task,b.dataset.outcome,b));
 }
-async function completeTask(taskId,btn){
+async function completeTask(taskId,outcome,btn){
+  if(!taskId)return;
   btn.disabled=true;
   try{
-    await F1AcquisitionData.setTaskStatus(taskId,'DONE','Telefonata acquisizione effettuata');
+    const label=String(outcome||'FATTA').replace(/_/g,' ');
+    await F1AcquisitionData.setTaskStatus(taskId,'DONE','Telefonata acquisizione: '+label);
+    if(ACTIVE_TASK===String(taskId)){
+      ACTIVE_TASK='';
+      localStorage.removeItem('f1_active_call_task');
+    }
     await load();
+    window.scrollTo({top:0,behavior:'smooth'});
   }catch(e){
     alert(e.message||e);
     btn.disabled=false;
@@ -194,6 +279,8 @@ async function load(){
 window.addEventListener('load',()=>{
   $('search').addEventListener('input',render);
   $('reloadBtn').onclick=load;
+  updateSession();
+  setInterval(updateSession,1000);
   load();
 });
 </script>
