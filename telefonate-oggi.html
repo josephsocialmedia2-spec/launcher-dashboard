@@ -3,7 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#070907">\n<meta name="mobile-web-app-capable" content="yes">\n<meta name="apple-mobile-web-app-capable" content="yes">\n<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n<meta name="apple-mobile-web-app-title" content="F1 Territory">\n<link rel="manifest" href="territory-mobile.webmanifest">\n<link rel="icon" href="f1-mobile-icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#070907">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="F1 Territory">
+<link rel="manifest" href="territory-mobile.webmanifest">
+<link rel="icon" href="f1-mobile-icon.svg" type="image/svg+xml">
 <title>F1 — Blocco telefonate 09:30–12:30</title>
 <style>
 :root{--p:#101510;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--gold:#f4c95d;--red:#ff7777;--orange:#ffae57}
@@ -65,7 +71,8 @@ body.focus-active h1{font-size:clamp(28px,7vw,42px)}
 body.focus-active .notice{border-color:#2b6b43}
 @media(max-width:650px){.top{display:block}.summary{grid-template-columns:1fr 1fr 1fr}.score{display:inline-block;margin-top:6px}.toolbar{grid-template-columns:1fr}.context{grid-template-columns:1fr}.outcomes{grid-template-columns:1fr 1fr}.outcome-title{grid-column:1/-1}.session-inner{align-items:flex-start}.session-clock{font-size:18px}}
 </style>
-<script defer src="pwa.js?v=20260925-callblock-app1"></script>\n<script defer src="supabase-config.js?v=20260924-calls50"></script>
+<script defer src="pwa.js?v=20260925-callblock-app1"></script>
+<script defer src="supabase-config.js?v=20260924-calls50"></script>
 <script defer src="supabase-sync.js?v=20260924-calls50"></script>
 <script defer src="f1-acquisition-core.js?v=20260924-no-rpo-block1"></script>
 <script defer src="f1-acquisition-data.js?v=20260924-calls50"></script>
@@ -117,7 +124,9 @@ body.focus-active .notice{border-color:#2b6b43}
 
 <script>
 let STATE={rows:[],target:50,total:0,done:0,remaining:0};
-let ACTIVE_TASK=localStorage.getItem('f1_active_call_task')||'';\nconst FROM_TERRITORY_APP=new URLSearchParams(location.search).get('source')==='f1-territory-app';\nlet WAS_ACTIVE_FROM_APP=FROM_TERRITORY_APP;
+let ACTIVE_TASK=localStorage.getItem('f1_active_call_task')||'';
+const FROM_TERRITORY_APP=new URLSearchParams(location.search).get('source')==='f1-territory-app';
+let WAS_ACTIVE_FROM_APP=FROM_TERRITORY_APP;
 const $=id=>document.getElementById(id);
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function phone(s){let d=String(s||'').replace(/\D/g,'');if(d.startsWith('39')&&d.length>10)d=d.slice(2);return d}
@@ -145,6 +154,8 @@ function remainingToEnd(d=new Date()){
 function updateSession(){
   const d=new Date();
   const active=isFocusWindow(d);
+  if(active&&FROM_TERRITORY_APP)WAS_ACTIVE_FROM_APP=true;
+  if(!active&&WAS_ACTIVE_FROM_APP&&d.getDay()>=1&&d.getDay()<=5&&(d.getHours()*60+d.getMinutes())>=750){location.replace('territory-mobile.html?source=callblock-ended');return;}
   document.body.classList.toggle('focus-active',active);
   $('sessionBar').classList.toggle('active',active);
   $('sessionClock').textContent=d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
