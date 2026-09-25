@@ -13,7 +13,7 @@ async function caller(sb:any,req:Request){const auth=req.headers.get("authorizat
 async function audit(sb:any,actor:string,owner:string,action:string,after:any,reason=""){await sb.from("f1_audit_log").insert({actor_user_id:actor,owner_user_id:owner||null,action,table_name:"f1_staff_profiles",record_key:owner||"",after_data:after||{},source:"F1_STAFF_ADMIN_EDGE",reason})}
 Deno.serve(async(req)=>{if(req.method==="OPTIONS")return new Response("ok",{status:200,headers:CORS});if(req.method!=="POST")return out(405,{ok:false,error:"method_not_allowed"});let sb:any;try{sb=admin()}catch(e){return out(500,{ok:false,error:String(e)})}let me:any;try{me=await caller(sb,req)}catch(e){return out(403,{ok:false,error:String(e)})}let b:any={};try{b=await req.json()}catch{return out(400,{ok:false,error:"invalid_json"})}const action=clean(b.action,40).toLowerCase();try{
  if(action==="list"){
-   const {data:profiles,error:pe}=await sb.from("f1_staff_profiles").select("user_id,first_name,last_name,company_email,role,status,assigned_territory,created_at,updated_at").order("role").order("last_name").order("first_name");if(pe)throw pe;
+   const {data:profiles,error:pe}=await sb.from("f1_staff_profiles").select("user_id,first_name,last_name,company_email,role,status,assigned_territory,created_at,updated_at").eq("status","ACTIVE").order("role").order("last_name").order("first_name");if(pe)throw pe;
    const {data:authData,error:ue}=await sb.auth.admin.listUsers({page:1,perPage:1000});if(ue)throw ue;
    const {data:logs,error:le}=await sb.from("f1_staff_access_log").select("user_id,occurred_at").order("occurred_at",{ascending:false}).limit(5000);if(le)throw le;
    const users=new Map((authData?.users||[]).map((u:any)=>[u.id,u]));
@@ -35,7 +35,7 @@ Deno.serve(async(req)=>{if(req.method==="OPTIONS")return new Response("ok",{stat
    const profile={user_id:uid,first_name:clean(b.first_name,120),last_name:clean(b.last_name,120),company_email:email,phone:clean(b.phone,50),start_date:clean(b.start_date,10)||new Date().toISOString().slice(0,10),role,manager_user_id:b.manager_user_id||null,assigned_territory:b.assigned_territory||{},status:"ACTIVE",daily_objectives:b.daily_objectives||{},weekly_objectives:b.weekly_objectives||{},monthly_objectives:b.monthly_objectives||{}};
    const {error:pe}=await sb.from("f1_staff_profiles").insert(profile);if(pe){await sb.auth.admin.deleteUser(uid);throw pe}await audit(sb,me.id,uid,"STAFF_CREATED",profile,"Creazione account applicativo F1");return out(200,{ok:true,user_id:uid,role,account_created:true,mailbox_created:false,message:"Account applicativo creato. La casella email aziendale reale, se necessaria, va creata nel provider di posta F1."});
  }
- const target=clean(b.user_id,80);if(!target)return out(422,{ok:false,error:"user_id_required"});if(action==="disable"&&target===me.id)return out(409,{ok:false,error:"cannot_disable_current_titolare"});const {data:old,error:oe}=await sb.from("f1_staff_profiles").select("*").eq("user_id",target).maybeSingle();if(oe||!old)return out(404,{ok:false,error:"staff_not_found"});
+ const target=clean(b.user_id,80);if(!target)return out(422,{ok:false,error:"user_id_required"});if((action==="delete"||action==="disable")&&target===me.id)return out(409,{ok:false,error:"cannot_delete_current_titolare"});const {data:old,error:oe}=await sb.from("f1_staff_profiles").select("*").eq("user_id",target).maybeSingle();if(oe||!old)return out(404,{ok:false,error:"staff_not_found"});
  if(action==="set_password"){
    if(target===me.id)return out(409,{ok:false,error:"use_recovery_for_current_titolare",message:"Per il TITOLARE corrente usa il recupero password via email."});
    const password=String(b.password||"");if(password.length<12)return out(422,{ok:false,error:"password_too_short",message:"La password temporanea deve contenere almeno 12 caratteri."});
@@ -54,12 +54,20 @@ Deno.serve(async(req)=>{if(req.method==="OPTIONS")return new Response("ok",{stat
    await audit(sb,me.id,target,"STAFF_EMAIL_CHANGED",{previous_email:previousEmail,email},clean(b.reason,500)||"Aggiornamento email accesso F1");
    return out(200,{ok:true,email,previous_email:previousEmail,message:"Email di accesso aggiornata."});
  }
- if(action==="disable"){
-   const {error:ae}=await sb.auth.admin.updateUserById(target,{ban_duration:"876000h",app_metadata:{...(old.app_metadata||{}),f1_role:old.role,f1_status:"DISABLED"}});if(ae)throw ae;const {error:pe}=await sb.from("f1_staff_profiles").update({status:"DISABLED",updated_at:new Date().toISOString()}).eq("user_id",target);if(pe)throw pe;await audit(sb,me.id,target,"STAFF_DISABLED",{status:"DISABLED"},clean(b.reason,500));return out(200,{ok:true,status:"DISABLED",authorization_revoked:true,note:"RLS blocca immediatamente l'accesso CRM; gli access token Auth già emessi restano tecnicamente validi fino alla loro scadenza, ma non autorizzano più dati F1."});
+ if(action==="delete"||action==="disable"){
+   if(old.role==="TITOLARE")return out(409,{ok:false,error:"cannot_delete_titolare",message:"Un account TITOLARE non può essere eliminato da questo pannello."});
+   const {data:before,error:be}=await sb.auth.admin.getUserById(target);if(be||!before?.user)throw be||new Error("auth_user_not_found");
+   const previousEmail=String(before.user.email||old.company_email||"").toLowerCase();
+   const tombstone="removed."+target.replace(/-/g,"")+"@deleted.f1.invalid";
+   const tombstonePassword=crypto.randomUUID()+"!"+crypto.randomUUID();
+   await audit(sb,me.id,target,"STAFF_ACCESS_REMOVED",{first_name:old.first_name,last_name:old.last_name,role:old.role,access_removed:true},clean(b.reason,500)||"Eliminazione accesso da Gestione Accessi Ufficio");
+   const {error:banErr}=await sb.auth.admin.updateUserById(target,{email:tombstone,email_confirm:true,password:tombstonePassword,ban_duration:"876000h",app_metadata:{...(before.user.app_metadata||{}),f1_role:old.role,f1_status:"REMOVED"}});if(banErr)throw banErr;
+   const {error:pe}=await sb.from("f1_staff_profiles").delete().eq("user_id",target);
+   if(pe){await sb.auth.admin.updateUserById(target,{email:previousEmail||undefined,ban_duration:"none",app_metadata:{...(before.user.app_metadata||{}),f1_role:old.role,f1_status:old.status}}).catch(()=>null);throw pe}
+   const {error:de}=await sb.auth.admin.deleteUser(target);
+   return out(200,{ok:true,status:"REMOVED",access_removed:true,hard_deleted:!de,technical_identity_retained:!!de,message:de?"Accesso eliminato e rimosso dal pannello. È rimasto solo un identificativo tecnico bloccato per preservare dati collegati.":"Accesso eliminato definitivamente."});
  }
- if(action==="enable"){
-   const {error:ae}=await sb.auth.admin.updateUserById(target,{ban_duration:"none",app_metadata:{f1_role:old.role,f1_status:"ACTIVE"}});if(ae)throw ae;const {error:pe}=await sb.from("f1_staff_profiles").update({status:"ACTIVE",updated_at:new Date().toISOString()}).eq("user_id",target);if(pe)throw pe;await audit(sb,me.id,target,"STAFF_ENABLED",{status:"ACTIVE"},clean(b.reason,500));return out(200,{ok:true,status:"ACTIVE"});
- }
+ if(action==="enable")return out(410,{ok:false,error:"reactivation_removed",message:"Gli accessi eliminati non possono essere riattivati. Crea un nuovo accesso."});
  if(action==="update"){
    const role=b.role?clean(b.role,30).toUpperCase():old.role;if(!roles.has(role))return out(422,{ok:false,error:"invalid_role"});const patch:any={first_name:b.first_name===undefined?old.first_name:clean(b.first_name,120),last_name:b.last_name===undefined?old.last_name:clean(b.last_name,120),phone:b.phone===undefined?old.phone:clean(b.phone,50),role,manager_user_id:b.manager_user_id===undefined?old.manager_user_id:(b.manager_user_id||null),assigned_territory:b.assigned_territory===undefined?old.assigned_territory:(b.assigned_territory||{}),daily_objectives:b.daily_objectives===undefined?old.daily_objectives:(b.daily_objectives||{}),weekly_objectives:b.weekly_objectives===undefined?old.weekly_objectives:(b.weekly_objectives||{}),monthly_objectives:b.monthly_objectives===undefined?old.monthly_objectives:(b.monthly_objectives||{}),updated_at:new Date().toISOString()};const {error:pe}=await sb.from("f1_staff_profiles").update(patch).eq("user_id",target);if(pe)throw pe;const {error:ae}=await sb.auth.admin.updateUserById(target,{app_metadata:{f1_role:role,f1_status:old.status}});if(ae)throw ae;await audit(sb,me.id,target,"STAFF_UPDATED",patch,clean(b.reason,500));return out(200,{ok:true,role});
  }
