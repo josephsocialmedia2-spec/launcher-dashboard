@@ -33,7 +33,7 @@ async function addNews(userId,payload){
 async function quality(userId,limit=30){return rest('f1_quality_snapshots?user_id=eq.'+encodeURIComponent(userId)+'&select=*&order=report_date.desc&limit='+Number(limit||30))}
 async function reports(userId,limit=30){return rest('f1_daily_reports?user_id=eq.'+encodeURIComponent(userId)+'&select=*&order=report_date.desc&limit='+Number(limit||30))}
 async function duplicateEvents(userId,limit=50){return rest('f1_duplicate_events?user_id=eq.'+encodeURIComponent(userId)+'&select=*&order=created_at.desc&limit='+Number(limit||50))}
-async function team(){return rest('f1_staff_profiles?select=*&order=role.asc,last_name.asc,first_name.asc')}
+async function team(){return rest('f1_staff_profiles?status=eq.ACTIVE&select=*&order=role.asc,last_name.asc,first_name.asc')}
 async function teamQuality(){return rest('f1_quality_snapshots?select=*&order=report_date.desc,quality_score.desc&limit=500')}
 async function teamReports(){return rest('f1_daily_reports?select=*&order=report_date.desc&limit=500')}
 async function alerts(){return rest('f1_alerts?select=*&order=created_at.desc&limit=200')}
