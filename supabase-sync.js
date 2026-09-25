@@ -4,10 +4,7 @@ const CFG=window.F1_SUPABASE||{};
 const DEVICE_KEY='f1DeviceId',SESSION_KEY='f1SupabaseSession';
 const AUTH_TIMEOUT_MS=Math.max(100,Number(window.F1_AUTH_TIMEOUT_MS||15000)||15000);
 const EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const LOGIN_ALIASES={
-  'anastasia.cetrulo@f1immobiliare.it':'joseph.socialmedia2+f1.anastasia.cetrulo@gmail.com'
-};
-function loginEmail(email){const raw=String(email||'').trim().toLowerCase();return LOGIN_ALIASES[raw]||raw}
+function loginEmail(email){return String(email||'').trim().toLowerCase()}
 function assertEmail(email){if(!EMAIL_RE.test(String(email||'')))throw new Error('Inserisci una email valida');return email}
 function deviceId(){let id=localStorage.getItem(DEVICE_KEY);if(!id){id='dev-'+crypto.randomUUID();localStorage.setItem(DEVICE_KEY,id)}return id}
 function normalizeSession(raw){if(!raw||typeof raw!=='object')return null;const s={...raw};let exp=Number(s.expires_at||0);if(exp&&exp<1e12)exp*=1000;if(!exp&&s.expires_in)exp=Date.now()+Number(s.expires_in||3600)*1000;s.expires_at=exp||0;s.saved_at=Number(s.saved_at||0);return s}
