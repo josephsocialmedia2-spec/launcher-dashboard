@@ -47,6 +47,7 @@
       cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px
     }
     .admin-btn.primary{background:linear-gradient(180deg,#0da35d,#087a45);color:#fff;box-shadow:0 5px 12px rgba(8,120,66,.17)}
+    .admin-btn.whatsapp{background:#25D366;color:#fff;box-shadow:0 5px 12px rgba(37,211,102,.2)}
     .admin-btn.dark{background:#173042;color:#fff}
     .admin-btn.secondary{background:#f2f6f4;color:#315142;border:1px solid #dce6e0}
     .admin-btn.danger{background:var(--admin-danger);color:#fff}
@@ -158,8 +159,9 @@
         <div class="admin-actions">
           <button class="admin-btn secondary" id="generatePassword" type="button"><i class="fa-solid fa-wand-magic-sparkles"></i> GENERA PASSWORD</button>
           <button class="admin-btn primary" id="createAccount" type="button"><i class="fa-solid fa-user-plus"></i> CREA ACCESSO</button>
+          <button class="admin-btn whatsapp" id="sendAccess" type="button" disabled><i class="fa-brands fa-whatsapp"></i> INVIA</button>
         </div>
-        <div class="admin-note">La password temporanea viene inviata a Supabase Auth ma non viene salvata nel CRM, nei profili F1 o nei log. Dopo la consegna all'utente è preferibile farla cambiare.</div>
+        <div class="admin-note">La password temporanea viene inviata a Supabase Auth ma non viene salvata nel CRM, nei profili F1 o nei log. Dopo CREA ACCESSO, usa INVIA per trasmettere via WhatsApp email, password temporanea e link di accesso al nuovo candidato.</div>
         <div class="admin-msg" id="msg" aria-live="polite"></div>
       </section>
 
@@ -179,6 +181,6 @@
   <script src="supabase-config.js?v=20260916-auth2"></script>
   <script src="supabase-sync.js?v=20260925-auth-unified1"></script>
   <script src="f1-staff-data.js?v=20260925-active-only1"></script>
-  <script src="accessi-ufficio.js?v=20260925-remove-access1"></script>
+  <script src="accessi-ufficio.js?v=20260925-whatsapp-access1"></script>
 </body>
 </html>
