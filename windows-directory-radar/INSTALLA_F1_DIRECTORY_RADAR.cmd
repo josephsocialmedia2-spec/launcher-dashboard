@@ -7,6 +7,7 @@ set "BASE=%LOCALAPPDATA%\F1DirectoryRadar"
 set "CORE=%BASE%\f1_directory_radar.py"
 set "SCRIPT=%BASE%\f1_directory_radar_mobile.py"
 set "SYNC=%BASE%\f1_directory_mobile_sync.py"
+set "WORKER=%BASE%\f1_directory_event_worker.py"
 set "TASKS=%BASE%\install_tasks.ps1"
 set "RAW=https://raw.githubusercontent.com/josephsocialmedia2-spec/launcher-dashboard/main/windows-directory-radar"
 
@@ -27,7 +28,7 @@ if not exist "%BASE%" mkdir "%BASE%"
 
 echo [1/5] Scarico il programma aggiornato...
 powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ^
-  "$ErrorActionPreference='Stop'; Invoke-WebRequest -UseBasicParsing '%RAW%/f1_directory_radar.py' -OutFile '%CORE%'; Invoke-WebRequest -UseBasicParsing '%RAW%/f1_directory_radar_mobile.py' -OutFile '%SCRIPT%'; Invoke-WebRequest -UseBasicParsing '%RAW%/f1_directory_mobile_sync.py' -OutFile '%SYNC%'; Invoke-WebRequest -UseBasicParsing '%RAW%/install_tasks.ps1' -OutFile '%TASKS%'"
+  "$ErrorActionPreference='Stop'; Invoke-WebRequest -UseBasicParsing '%RAW%/f1_directory_radar.py' -OutFile '%CORE%'; Invoke-WebRequest -UseBasicParsing '%RAW%/f1_directory_radar_mobile.py' -OutFile '%SCRIPT%'; Invoke-WebRequest -UseBasicParsing '%RAW%/f1_directory_mobile_sync.py' -OutFile '%SYNC%'; Invoke-WebRequest -UseBasicParsing '%RAW%/f1_directory_event_worker.py' -OutFile '%WORKER%'; Invoke-WebRequest -UseBasicParsing '%RAW%/install_tasks.ps1' -OutFile '%TASKS%'"
 if errorlevel 1 (
   echo ERRORE: download non riuscito.
   pause
@@ -46,7 +47,7 @@ if errorlevel 1 (
 )
 
 echo [3/5] Verifico la sintassi...
-"%PY%" -m py_compile "%CORE%" "%SCRIPT%" "%SYNC%"
+"%PY%" -m py_compile "%CORE%" "%SCRIPT%" "%SYNC%" "%WORKER%"
 if errorlevel 1 (
   echo ERRORE: il programma scaricato non supera il controllo sintattico.
   pause
@@ -68,6 +69,11 @@ echo.
 echo ============================================================
 echo INSTALLAZIONE COMPLETATA
 echo ============================================================
+echo Ogni 10 minuti:
+echo - controlla se nel cloud F1 e arrivato un nuovo segnale/via;
+echo - se non ci sono lavori non apre Chrome;
+echo - se ci sono, elabora fino a 3 vie e sincronizza i contatti come RPO DA VERIFICARE.
+echo.
 echo Ogni notte alle 02:30:
 echo - legge gli annunci F1 aggiornati;
 echo - ricava Comune, via e civico;
@@ -85,6 +91,7 @@ echo Sul Desktop trovi:
 echo - F1 - AGGIORNA NUMERI E ANNUNCI
 echo - F1 - REPORT ACQUISIZIONE
 echo - F1 - IMPORTA ELENCHI
+echo - F1 - CONTROLLA NUOVI SEGNALI
 echo.
 echo Lascia il PC acceso e il tuo utente Windows connesso durante la notte.
 echo ============================================================
