@@ -8,7 +8,22 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="F1 Territory">
-<title>F1 Territory · CRM online v4</title>
+<title>F1 Territory · CRM online v4</title>\n<script id="f1CallBlockAppRouter">
+(function(){
+  try{
+    const parts=new Intl.DateTimeFormat('en-GB',{
+      timeZone:'Europe/Rome',weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23'
+    }).formatToParts(new Date());
+    const get=t=>parts.find(p=>p.type===t)?.value||'';
+    const weekday=get('weekday');
+    const minutes=(Number(get('hour'))||0)*60+(Number(get('minute'))||0);
+    const workday=['Mon','Tue','Wed','Thu','Fri'].includes(weekday);
+    if(workday&&minutes>=570&&minutes<750){
+      location.replace('telefonate-oggi.html?source=f1-territory-app');
+    }
+  }catch(e){console.warn('[F1 Territory call router]',e)}
+})();
+</script>
 <link rel="manifest" href="territory-mobile.webmanifest">
 <link rel="icon" href="f1-mobile-icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="f1-mobile-icon.svg">
