@@ -1,55 +1,184 @@
 <!doctype html>
 <html lang="it" class="f1-auth-pending">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#090c09">
-<title>F1 Immobiliare — Accessi Ufficio</title>
-<style>
-html.f1-auth-pending body{visibility:hidden}
-:root{--g:#9bdc00;--g2:#78c900;--bg:#eef1ee;--ink:#172017;--mut:#68736b;--line:#dfe5df;--dark:#090c09;--danger:#b12d2d}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif}
-.top{position:sticky;top:0;z-index:10;background:var(--dark);color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
-.brand{font-weight:900}.brand b{color:var(--g);font-size:26px;margin-right:7px}.top a{color:#fff;text-decoration:none;font-weight:800}
-.wrap{width:min(1180px,100%);margin:auto;padding:22px}
-.hero{background:linear-gradient(135deg,#0d120d,#1d251d);color:#fff;border-radius:20px;padding:22px;margin-bottom:18px}
-.hero h1{margin:5px 0 7px;font-size:clamp(28px,4vw,42px)}.hero p{margin:0;color:#cbd5cb;max-width:780px}
-.grid{display:grid;grid-template-columns:minmax(320px,.8fr) minmax(0,1.5fr);gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:18px;box-shadow:0 8px 24px #25362512}
-h2{margin:0 0 14px}.field{display:grid;gap:6px;margin:11px 0;font-weight:800;font-size:12px}.field input,.field select{width:100%;padding:12px;border:1px solid #cbd4cb;border-radius:10px;font:inherit;background:#fff}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:11px 13px;font:inherit;font-weight:900;cursor:pointer}.btn.primary{background:linear-gradient(180deg,var(--g),var(--g2));color:#172100}.btn.dark{background:#121812;color:#fff}.btn.secondary{background:#e8ece8;color:#273127}.btn.danger{background:var(--danger);color:#fff}.btn:disabled{opacity:.5;cursor:not-allowed}
-.note{font-size:12px;line-height:1.5;color:var(--mut);background:#f7f9f7;border-radius:10px;padding:10px;margin-top:12px}.msg{display:none;margin-top:12px;padding:11px;border-radius:10px;font-weight:800;font-size:12px}.msg.show{display:block}.msg.ok{background:#eef8dd;color:#355200}.msg.bad{background:#fff0f0;color:#8d1f1f}
-.toolbar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.count{font-size:12px;color:var(--mut);font-weight:800}
-.accounts{display:grid;gap:12px}.account{border:1px solid var(--line);border-radius:13px;padding:14px;background:#fbfcfb}.account-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.account-head strong{display:block}.account-head small{display:block;color:var(--mut);margin-top:3px}.badge{padding:5px 8px;border-radius:999px;font-size:10px;font-weight:900;background:#edf2e9}.badge.off{background:#fae7e7;color:#8a2020}
-.meta{display:grid;grid-template-columns:125px 1fr;gap:7px 10px;margin:12px 0;font-size:12px}.meta span{color:var(--mut);font-weight:800}.meta strong{word-break:break-word}
-.password-box{margin-top:12px;padding-top:12px;border-top:1px solid #e7ebe7}.password-row{display:grid;grid-template-columns:1fr auto auto;gap:8px}.password-row input{min-width:0;padding:10px;border:1px solid #cbd4cb;border-radius:9px}
-.empty{padding:18px;border:1px dashed #bdc7bd;border-radius:12px;color:var(--mut)}
-@media(max-width:850px){.grid{grid-template-columns:1fr}.row{grid-template-columns:1fr}.password-row{grid-template-columns:1fr}.btn{min-height:44px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#090c09">
+  <title>F1 Immobiliare — Accessi Ufficio</title>
+  <style>html.f1-auth-pending body{visibility:hidden}</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="ricerca-territoriale.css?v=20260924-social-publisher1">
+  <style>
+    :root{--admin-danger:#b12d2d}
+    .admin-app{padding-top:80px}
+    .admin-hero{
+      display:flex;align-items:center;justify-content:space-between;gap:18px;
+      padding:20px;margin-bottom:14px;overflow:visible
+    }
+    .admin-hero-copy{display:flex;align-items:center;gap:14px;min-width:0}
+    .admin-hero-icon{
+      width:54px;height:54px;display:grid;place-items:center;flex:0 0 54px;
+      border-radius:14px;background:#eaf6ef;color:var(--f1);font-size:23px
+    }
+    .admin-kicker{display:block;color:var(--f1);font-size:10px;font-weight:900;letter-spacing:.12em;margin-bottom:4px}
+    .admin-hero h1{margin:0;color:var(--text);font-size:28px;line-height:1.1;font-weight:900;letter-spacing:-.5px}
+    .admin-hero p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.45;max-width:760px}
+    .admin-role{
+      display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border-radius:999px;
+      background:#edf8f2;border:1px solid #d7ebdf;color:var(--f1-dark);font-size:10px;font-weight:900;white-space:nowrap
+    }
+    .admin-grid{display:grid;grid-template-columns:minmax(320px,.78fr) minmax(0,1.42fr);gap:14px}
+    .admin-card{padding:18px!important;overflow:visible}
+    .admin-card .section-head{margin-bottom:12px}
+    .admin-card .section-head h2{font-size:18px!important}
+    .admin-field{display:grid;gap:6px;margin:11px 0;color:#40515c;font-size:11px;font-weight:900;letter-spacing:.02em}
+    .admin-field input,.admin-field select{
+      width:100%;min-height:44px;padding:11px 12px;border:1px solid #cfd9d3;border-radius:9px;
+      font:inherit;background:#fff;color:var(--text);outline:none
+    }
+    .admin-field input:focus,.admin-field select:focus{border-color:#79bd98;box-shadow:0 0 0 3px rgba(10,138,77,.08)}
+    .admin-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .admin-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .admin-btn{
+      min-height:42px;border:0;border-radius:8px;padding:10px 13px;font:inherit;font-size:12px;font-weight:900;
+      cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px
+    }
+    .admin-btn.primary{background:linear-gradient(180deg,#0da35d,#087a45);color:#fff;box-shadow:0 5px 12px rgba(8,120,66,.17)}
+    .admin-btn.dark{background:#173042;color:#fff}
+    .admin-btn.secondary{background:#f2f6f4;color:#315142;border:1px solid #dce6e0}
+    .admin-btn.danger{background:var(--admin-danger);color:#fff}
+    .admin-btn:disabled{opacity:.5;cursor:not-allowed}
+    .admin-note{
+      margin-top:12px;padding:11px 12px;border-radius:9px;background:#f7faf8;border:1px solid #e5ece8;
+      color:#69766f;font-size:11px;line-height:1.5
+    }
+    .admin-msg{display:none;margin-top:12px;padding:11px 12px;border-radius:9px;font-weight:800;font-size:11px}
+    .admin-msg.show{display:block}.admin-msg.ok{background:#edf8f2;color:#17633c;border:1px solid #d8ebdf}
+    .admin-msg.bad{background:#fff0f0;color:#8d1f1f;border:1px solid #f0d0d0}
+    .admin-toolbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:12px}
+    .admin-count{font-size:11px;color:var(--muted);font-weight:800;margin-top:3px}
+    .accounts{display:grid;gap:10px}
+    .account{border:1px solid #e1e8e4;border-radius:11px;padding:14px;background:#fbfcfb}
+    .account-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .account-head strong{display:block;color:#223a2e;font-size:14px}
+    .account-head small{display:block;color:var(--muted);margin-top:3px;font-size:11px}
+    .account .badge{padding:5px 8px;border-radius:999px;font-size:9px;font-weight:900;background:#edf8f2;color:#17633c;border:1px solid #d8ebdf}
+    .account .badge.off{background:#fae7e7;color:#8a2020;border-color:#f0d2d2}
+    .meta{display:grid;grid-template-columns:125px minmax(0,1fr);gap:7px 10px;margin:12px 0;font-size:11px}
+    .meta span{color:var(--muted);font-weight:800}.meta strong{word-break:break-word;color:#344b3f}
+    .password-box{margin-top:12px;padding-top:12px;border-top:1px solid #e7ebe7}
+    .password-row{display:grid;grid-template-columns:1fr auto auto;gap:8px}
+    .password-row input{min-width:0;min-height:40px;padding:9px 10px;border:1px solid #cfd9d3;border-radius:8px}
+    .empty{padding:18px;border:1px dashed #c9d3cd;border-radius:10px;color:var(--muted);background:#fafcfb}
+    .admin-back-mobile{display:none}
+    @media(max-width:1380px){.admin-grid{grid-template-columns:1fr}}
+    @media(max-width:900px){
+      .admin-app{padding-top:78px}.admin-hero{align-items:flex-start;flex-direction:column}
+      .admin-grid{grid-template-columns:1fr}.admin-row{grid-template-columns:1fr}.password-row{grid-template-columns:1fr}
+      .admin-btn{min-height:44px}.admin-back-mobile{display:inline-flex}
+    }
+    @media(max-width:560px){
+      .admin-hero h1{font-size:23px}.admin-hero-icon{width:46px;height:46px;flex-basis:46px}
+      .admin-card{padding:14px!important}.admin-toolbar{align-items:flex-start;flex-direction:column}
+      .admin-toolbar .admin-btn{width:100%}.admin-actions .admin-btn{width:100%}
+      .meta{grid-template-columns:1fr}.meta span{margin-top:4px}
+      .account-head{align-items:flex-start;flex-direction:column}
+    }
+  </style>
 </head>
 <body>
-<header class="top"><div class="brand"><b>F1</b> IMMOBILIARE · TITOLARE</div><a href="ricerca-territoriale.html">← DASHBOARD</a></header>
-<main class="wrap">
-<section class="hero"><small>SUPABASE AUTH · AMMINISTRAZIONE</small><h1>GESTIONE ACCESSI UFFICIO</h1><p>Crea, attiva o disattiva gli account di lavoro F1, modifica l’email reale di accesso e gestisci recupero o sostituzione delle password. Gli alias Gmail tecnici non vengono più usati.</p></section>
-<div class="grid">
-<section class="card">
-<h2>NUOVO ACCESSO</h2>
-<div class="row"><label class="field">NOME<input id="firstName" autocomplete="off"></label><label class="field">COGNOME<input id="lastName" autocomplete="off"></label></div>
-<label class="field">EMAIL DI LAVORO<input id="email" type="email" autocomplete="off" placeholder="nome@azienda.it"></label>
-<div class="row"><label class="field">RUOLO<select id="role"><option value="FUNZIONARIO">FUNZIONARIO</option><option value="RESPONSABILE">RESPONSABILE</option></select></label><label class="field">TELEFONO<input id="phone" autocomplete="off"></label></div>
-<label class="field">PASSWORD TEMPORANEA<input id="password" type="password" minlength="12" autocomplete="new-password" placeholder="Minimo 12 caratteri"></label>
-<div class="actions"><button class="btn secondary" id="generatePassword" type="button">GENERA PASSWORD</button><button class="btn primary" id="createAccount" type="button">CREA ACCESSO</button></div>
-<div class="note">La password temporanea viene inviata a Supabase Auth ma non viene salvata nel CRM, nei profili F1 o nei log. Dopo la consegna all'utente è preferibile farla cambiare.</div>
-<div class="msg" id="msg" aria-live="polite"></div>
-</section>
-<section class="card">
-<div class="toolbar"><div><h2 style="margin:0">ACCESSI REGISTRATI</h2><div class="count" id="count">—</div></div><button class="btn secondary" id="reload" type="button">AGGIORNA</button></div>
-<div class="accounts" id="accounts"><div class="empty">Caricamento…</div></div>
-</section>
-</div>
-</main>
-<script src="supabase-config.js?v=20260916-auth2"></script>
-<script src="supabase-sync.js?v=20260925-auth-unified1"></script>
-<script src="f1-staff-data.js?v=20260919-access-fix2"></script>
-<script src="accessi-ufficio.js?v=20260925-email-migration1"></script>
+  <header class="topbar">
+    <a class="brand" href="ricerca-territoriale.html" aria-label="Dashboard F1">
+      <div class="brand-mark"><i class="fa-solid fa-house-chimney"></i></div>
+      <div class="brand-name">F1 <span>IMMOBILIARE</span></div>
+      <div class="brand-sep"></div>
+      <nav class="micro-nav"><span>TERRITORIO</span><span>|</span><span>PERSONE</span><span>|</span><span>VALORE</span></nav>
+    </a>
+    <div class="topbar-right">
+      <div class="top-item"><i class="fa-regular fa-calendar-days"></i><span id="todayDate">—</span></div>
+      <div class="top-item"><i class="fa-regular fa-clock"></i><span id="topClock">--:--</span></div>
+      <div class="status-pill ready"><span class="live-dot"></span> TITOLARE</div>
+      <div class="user-sep"></div>
+      <div id="userBadge" class="user-badge">F1</div>
+      <div class="user-name">Utente: <strong id="staffName">F1</strong></div>
+    </div>
+  </header>
+
+  <aside class="sidebar" aria-label="Navigazione principale">
+    <a class="side-item" href="ricerca-territoriale.html"><i class="fa-solid fa-table-columns"></i><span>Dashboard</span></a>
+    <a class="side-item" href="ricerca-territoriale.html#territorio"><i class="fa-solid fa-location-dot"></i><span>Ricerca territoriale</span></a>
+    <a class="side-item" href="albero-fonti-notizie.html"><i class="fa-solid fa-bullhorn"></i><span>Notizie</span></a>
+    <a class="side-item" href="crm.html#immobili"><i class="fa-solid fa-house"></i><span>Immobili</span></a>
+    <a class="side-item" href="crm.html#contatti"><i class="fa-solid fa-user-group"></i><span>Contatti</span></a>
+    <a class="side-item" href="telefonate-oggi.html"><i class="fa-solid fa-phone"></i><span>Telefonate</span></a>
+    <a class="side-item" href="crm.html"><i class="fa-solid fa-database"></i><span>CRM</span></a>
+    <a class="side-item" href="oggi.html#tasks"><i class="fa-regular fa-calendar"></i><span>Agenda</span></a>
+    <a class="side-item" href="documenti-vendita.html"><i class="fa-regular fa-file-lines"></i><span>Documenti</span></a>
+    <a class="side-item" href="centrale-risultati.html"><i class="fa-solid fa-chart-column"></i><span>Report</span></a>
+    <a class="side-item active" href="accessi-ufficio.html"><i class="fa-solid fa-key"></i><span>Accessi ufficio</span></a>
+    <a class="side-item" href="setup-cloud.html?return=ricerca-territoriale.html"><i class="fa-solid fa-gear"></i><span>Impostazioni</span></a>
+  </aside>
+
+  <main class="app admin-app" id="adminMain">
+    <section class="card admin-hero">
+      <div class="admin-hero-copy">
+        <div class="admin-hero-icon"><i class="fa-solid fa-user-shield"></i></div>
+        <div>
+          <span class="admin-kicker">SUPABASE AUTH · AMMINISTRAZIONE</span>
+          <h1>GESTIONE ACCESSI UFFICIO</h1>
+          <p>Crea, attiva o disattiva gli account di lavoro F1, modifica l’email reale di accesso e gestisci recupero o sostituzione delle password.</p>
+        </div>
+      </div>
+      <span class="admin-role"><i class="fa-solid fa-lock"></i> SOLO TITOLARE</span>
+    </section>
+
+    <section class="admin-grid">
+      <section class="card admin-card">
+        <div class="section-head">
+          <h2><span class="title-icon"><i class="fa-solid fa-user-plus"></i></span> NUOVO ACCESSO</h2>
+        </div>
+        <div class="admin-row">
+          <label class="admin-field">NOME<input id="firstName" autocomplete="off"></label>
+          <label class="admin-field">COGNOME<input id="lastName" autocomplete="off"></label>
+        </div>
+        <label class="admin-field">EMAIL DI LAVORO<input id="email" type="email" autocomplete="off" placeholder="nome@azienda.it"></label>
+        <div class="admin-row">
+          <label class="admin-field">RUOLO
+            <select id="role">
+              <option value="FUNZIONARIO">FUNZIONARIO</option>
+              <option value="RESPONSABILE">RESPONSABILE</option>
+            </select>
+          </label>
+          <label class="admin-field">TELEFONO<input id="phone" autocomplete="off"></label>
+        </div>
+        <label class="admin-field">PASSWORD TEMPORANEA<input id="password" type="password" minlength="12" autocomplete="new-password" placeholder="Minimo 12 caratteri"></label>
+        <div class="admin-actions">
+          <button class="admin-btn secondary" id="generatePassword" type="button"><i class="fa-solid fa-wand-magic-sparkles"></i> GENERA PASSWORD</button>
+          <button class="admin-btn primary" id="createAccount" type="button"><i class="fa-solid fa-user-plus"></i> CREA ACCESSO</button>
+        </div>
+        <div class="admin-note">La password temporanea viene inviata a Supabase Auth ma non viene salvata nel CRM, nei profili F1 o nei log. Dopo la consegna all'utente è preferibile farla cambiare.</div>
+        <div class="admin-msg" id="msg" aria-live="polite"></div>
+      </section>
+
+      <section class="card admin-card">
+        <div class="admin-toolbar">
+          <div>
+            <div class="section-head"><h2><span class="title-icon"><i class="fa-solid fa-users-gear"></i></span> ACCESSI REGISTRATI</h2></div>
+            <div class="admin-count" id="count">—</div>
+          </div>
+          <button class="admin-btn secondary" id="reload" type="button"><i class="fa-solid fa-rotate"></i> AGGIORNA</button>
+        </div>
+        <div class="accounts" id="accounts"><div class="empty">Caricamento…</div></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="supabase-config.js?v=20260916-auth2"></script>
+  <script src="supabase-sync.js?v=20260925-auth-unified1"></script>
+  <script src="f1-staff-data.js?v=20260919-access-fix2"></script>
+  <script src="accessi-ufficio.js?v=20260925-dashboard-style1"></script>
 </body>
 </html>
