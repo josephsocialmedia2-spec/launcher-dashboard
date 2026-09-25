@@ -6,6 +6,7 @@ const CORS={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"au
 const H={...CORS,"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"};
 const out=(s:number,b:unknown)=>new Response(JSON.stringify(b),{status:s,headers:H});
 const clean=(v:any,n=300)=>String(v??"").trim().slice(0,n);
+const emailOk=(v:string)=>/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(v);
 const roles=new Set(["TITOLARE","RESPONSABILE","FUNZIONARIO"]);
 function admin(){if(!KEY)throw new Error("Missing server admin key");return createClient(BASE,KEY,{auth:{persistSession:false,autoRefreshToken:false}})}
 async function caller(sb:any,req:Request){const auth=req.headers.get("authorization")||"";const token=auth.replace(/^Bearer\s+/i,"");if(!token)throw new Error("AUTH_REQUIRED");const {data,error}=await sb.auth.getUser(token);if(error||!data?.user?.id)throw new Error("AUTH_INVALID");const {data:p,error:pe}=await sb.from("f1_staff_profiles").select("user_id,role,status").eq("user_id",data.user.id).maybeSingle();if(pe||!p||p.role!=="TITOLARE"||p.status!=="ACTIVE")throw new Error("TITOLARE_REQUIRED");return data.user}
@@ -29,7 +30,7 @@ Deno.serve(async(req)=>{if(req.method==="OPTIONS")return new Response("ok",{stat
    return out(200,{ok:true,accounts,total:accounts.length});
  }
  if(action==="create"){
-   const email=clean(b.email,320).toLowerCase(),password=String(b.password||""),role=clean(b.role,30).toUpperCase();if(!email||!email.includes("@")||password.length<12||!roles.has(role))return out(422,{ok:false,error:"email_password_role_required",message:"Email valida, password di almeno 12 caratteri e ruolo valido sono obbligatori."});
+   const email=clean(b.email,320).toLowerCase(),password=String(b.password||""),role=clean(b.role,30).toUpperCase();if(!emailOk(email)||password.length<12||!roles.has(role))return out(422,{ok:false,error:"email_password_role_required",message:"Email valida, password di almeno 12 caratteri e ruolo valido sono obbligatori."});
    const {data:u,error:ue}=await sb.auth.admin.createUser({email,password,email_confirm:true,app_metadata:{f1_role:role}});if(ue||!u?.user)throw ue||new Error("user_create_failed");const uid=u.user.id;
    const profile={user_id:uid,first_name:clean(b.first_name,120),last_name:clean(b.last_name,120),company_email:email,phone:clean(b.phone,50),start_date:clean(b.start_date,10)||new Date().toISOString().slice(0,10),role,manager_user_id:b.manager_user_id||null,assigned_territory:b.assigned_territory||{},status:"ACTIVE",daily_objectives:b.daily_objectives||{},weekly_objectives:b.weekly_objectives||{},monthly_objectives:b.monthly_objectives||{}};
    const {error:pe}=await sb.from("f1_staff_profiles").insert(profile);if(pe){await sb.auth.admin.deleteUser(uid);throw pe}await audit(sb,me.id,uid,"STAFF_CREATED",profile,"Creazione account applicativo F1");return out(200,{ok:true,user_id:uid,role,account_created:true,mailbox_created:false,message:"Account applicativo creato. La casella email aziendale reale, se necessaria, va creata nel provider di posta F1."});
@@ -41,6 +42,17 @@ Deno.serve(async(req)=>{if(req.method==="OPTIONS")return new Response("ok",{stat
    const {error:ae}=await sb.auth.admin.updateUserById(target,{password});if(ae)throw ae;
    await audit(sb,me.id,target,"STAFF_PASSWORD_RESET",{password_changed:true},clean(b.reason,500)||"Password temporanea impostata dal titolare");
    return out(200,{ok:true,password_changed:true,message:"Password temporanea aggiornata. La password non è stata salvata nei dati F1."});
+ }
+ if(action==="set_email"){
+   if(target===me.id)return out(409,{ok:false,error:"use_account_settings_for_current_titolare",message:"Per il TITOLARE corrente non modificare l'email da Gestione Accessi."});
+   const email=clean(b.email,320).toLowerCase();if(!emailOk(email))return out(422,{ok:false,error:"invalid_email",message:"Inserisci un indirizzo email valido."});
+   const {data:before,error:be}=await sb.auth.admin.getUserById(target);if(be||!before?.user)throw be||new Error("auth_user_not_found");
+   const previousEmail=String(before.user.email||old.company_email||"").toLowerCase();if(previousEmail===email&&String(old.company_email||"").toLowerCase()===email)return out(200,{ok:true,email,unchanged:true,message:"Email già aggiornata."});
+   const {error:ae}=await sb.auth.admin.updateUserById(target,{email,email_confirm:true});if(ae)throw ae;
+   const {error:pe}=await sb.from("f1_staff_profiles").update({company_email:email,updated_at:new Date().toISOString()}).eq("user_id",target);
+   if(pe){if(previousEmail)await sb.auth.admin.updateUserById(target,{email:previousEmail,email_confirm:true}).catch(()=>null);throw pe}
+   await audit(sb,me.id,target,"STAFF_EMAIL_CHANGED",{previous_email:previousEmail,email},clean(b.reason,500)||"Aggiornamento email accesso F1");
+   return out(200,{ok:true,email,previous_email:previousEmail,message:"Email di accesso aggiornata."});
  }
  if(action==="disable"){
    const {error:ae}=await sb.auth.admin.updateUserById(target,{ban_duration:"876000h",app_metadata:{...(old.app_metadata||{}),f1_role:old.role,f1_status:"DISABLED"}});if(ae)throw ae;const {error:pe}=await sb.from("f1_staff_profiles").update({status:"DISABLED",updated_at:new Date().toISOString()}).eq("user_id",target);if(pe)throw pe;await audit(sb,me.id,target,"STAFF_DISABLED",{status:"DISABLED"},clean(b.reason,500));return out(200,{ok:true,status:"DISABLED",authorization_revoked:true,note:"RLS blocca immediatamente l'accesso CRM; gli access token Auth già emessi restano tecnicamente validi fino alla loro scadenza, ma non autorizzano più dati F1."});
