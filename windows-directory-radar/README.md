@@ -28,9 +28,38 @@ L'installer crea sul Desktop:
 - **F1 - REPORT ACQUISIZIONE**
 - **F1 - IMPORTA ELENCHI**
 
+
+## Modalità evento — nuovo segnale → nuova via
+
+Oltre al ciclo notturno, il sistema dispone ora di una coda cloud.
+
+Quando F1 inserisce un nuovo annuncio/segnale in `f1_market_opportunities`:
+
+1. Supabase normalizza Comune, via e civico;
+2. deduplica per **utente + Comune + via**;
+3. crea/aggiorna un job `QUEUED`;
+4. ogni 10 minuti il PC controlla la coda;
+5. se non ci sono job non apre Chrome;
+6. se ci sono job elabora al massimo 3 vie per ciclo;
+7. i contatti trovati vengono sincronizzati in `contacts` con `RPO = DA_VERIFICARE` e `CALL ALLOWED = NO`;
+8. dalla pagina **Directory Radar** l'operatore verifica il RPO e sceglie:
+   - **RPO OK → CRM**: il contatto viene promosso in `leads`;
+   - **RPO STOP**: resta escluso dalle telefonate.
+
+La promozione nel CRM non attribuisce la proprietà dell'immobile: il dato significa soltanto che il contatto pubblico è stato trovato sulla stessa via del segnale.
+
+Task Windows aggiuntivo:
+
+- **F1 Directory Radar - Nuovi Segnali** — controllo ogni 10 minuti.
+
+Collegamento Desktop aggiuntivo:
+
+- **F1 - CONTROLLA NUOVI SEGNALI** — forza un controllo immediato della coda.
+
 ## Orari
 
-- **02:30** — aggiornamento notturno automatico.
+- **ogni 10 minuti** — controllo dei nuovi segnali cloud; Chrome si apre solo se ci sono vie da elaborare.
+- **02:30** — aggiornamento notturno automatico completo.
 - **08:00** — apertura automatica dell'ultimo report.
 
 Per l'esecuzione notturna il PC deve essere acceso e l'utente Windows deve essere connesso.
