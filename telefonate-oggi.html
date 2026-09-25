@@ -28,14 +28,23 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 .top{display:flex;justify-content:space-between;gap:10px}
 .reason{font-weight:900;font-size:14px}
 .score{color:var(--g);border:1px solid #35513d;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:900;white-space:nowrap}
-.why{font-size:11px;line-height:1.55;margin:8px 0}
+.why{font-size:11px;line-height:1.55;margin:10px 0}
+.context{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:10px 0}
+.context .item{background:#0b100c;border:1px solid #263128;border-radius:10px;padding:9px}
+.context .item span{display:block;color:var(--mut);font-size:8px;font-weight:900;letter-spacing:.08em;margin-bottom:4px}
+.context .item b{display:block;font-size:11px;line-height:1.35}
+.propertybox{margin:10px 0;padding:11px;border-radius:12px;background:#12170f;border:1px solid #4c4729}
+.propertybox .label{color:var(--gold);font-size:9px;font-weight:900;letter-spacing:.08em}
+.propertybox .address{font-size:13px;font-weight:900;margin:5px 0}
+.propertybox .title{font-size:10px;line-height:1.45;color:#e7e9e7}
+.propertybox .source{margin-top:5px;color:var(--mut);font-size:9px}
 .notice{border:1px solid #35513d;background:#0d1b11;color:#d8f7e4;border-radius:12px;padding:11px;font-size:11px;line-height:1.55}
 .goal{font-weight:900;color:var(--g)}
 .empty{color:var(--mut);padding:16px}
 .rank{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:999px;background:#172119;border:1px solid #35513d;color:var(--g);font-size:10px;font-weight:900;margin-right:7px}
 .search{width:100%;padding:11px;border-radius:10px;border:1px solid var(--line);background:#0d120e;color:#fff}
 .toolbar{display:grid;grid-template-columns:1fr auto;gap:8px}
-@media(max-width:650px){.top{display:block}.summary{grid-template-columns:1fr 1fr 1fr}.score{display:inline-block;margin-top:6px}.toolbar{grid-template-columns:1fr}}
+@media(max-width:650px){.top{display:block}.summary{grid-template-columns:1fr 1fr 1fr}.score{display:inline-block;margin-top:6px}.toolbar{grid-template-columns:1fr}.context{grid-template-columns:1fr}}
 </style>
 <script defer src="supabase-config.js?v=20260924-calls50"></script>
 <script defer src="supabase-sync.js?v=20260924-calls50"></script>
@@ -50,7 +59,7 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 
   <div class="notice">
     <span class="goal">OBIETTIVO: 50 TELEFONATE.</span><br>
-    Prima vengono selezionati privati/FSBO, possibili venditori e contatti con segnali di vendita; poi contatti territoriali e relazioni utili alla prospezione. Servono telefono presente e contatto non marcato “NON CONTATTARE”.
+    Ogni chiamata deve avere un motivo immobiliare verificabile: privato/FSBO, segnale venditore oppure un annuncio attivo nella stessa via. La scheda mostra Comune, Via, immobile/notizia collegata e motivo preciso della telefonata.
   </div>
 
   <section class="panel">
@@ -84,11 +93,20 @@ function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&l
 function phone(s){let d=String(s||'').replace(/\D/g,'');if(d.startsWith('39')&&d.length>10)d=d.slice(2);return d}
 function nameOf(r){return [r.nome,r.cognome].filter(Boolean).join(' ').trim()||'Contatto senza nome'}
 function placeOf(r){return [r.comune,r.via,r.civico].filter(Boolean).join(' · ')}
+function evidenceLabel(r){
+  const e=String(r.evidence_type||'').toUpperCase();
+  if(e==='FSBO')return 'PRIVATO / FSBO';
+  if(e.includes('SELLER_SIGNAL')&&e.includes('IMMOBILE_STESSA_VIA'))return 'SEGNALE VENDITORE + IMMOBILE';
+  if(e.includes('SELLER_SIGNAL'))return 'SEGNALE VENDITORE';
+  if(e.includes('IMMOBILE_STESSA_VIA'))return 'IMMOBILE STESSA VIA';
+  return r.selection_reason||'SEGNALE ACQUISIZIONE';
+}
+function euro(v){const n=Number(v||0);return n>0?new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n):''}
 function isDone(r){return String(r.status||'OPEN').toUpperCase()==='DONE'}
 function filteredRows(){
   const q=String($('search')?.value||'').trim().toLowerCase();
   if(!q)return STATE.rows;
-  return STATE.rows.filter(r=>[r.nome,r.cognome,r.telefono,r.comune,r.via,r.civico,r.selection_reason,r.source].join(' ').toLowerCase().includes(q));
+  return STATE.rows.filter(r=>[r.nome,r.cognome,r.telefono,r.comune,r.via,r.civico,r.selection_reason,r.call_reason_detail,r.linked_property_address,r.linked_property_title,r.linked_property_source,r.source].join(' ').toLowerCase().includes(q));
 }
 function render(){
   $('target').textContent=STATE.target||50;
@@ -99,21 +117,43 @@ function render(){
   $('list').innerHTML=rows.length?rows.map(r=>{
     const originalIndex=STATE.rows.indexOf(r);
     const done=isDone(r),next=originalIndex===firstOpenIndex&&!done,p=phone(r.telefono);
+    const propertyAddress=String(r.linked_property_address||'').trim();
+    const propertyTitle=String(r.linked_property_title||'').trim();
+    const propertySource=String(r.linked_property_source||'').trim();
+    const propertyPrice=euro(r.linked_property_price);
     return `<article class="call ${done?'done':''} ${next?'next':''}">
       <div class="top">
         <div>
           <div class="reason"><span class="rank">${originalIndex+1}</span>${esc(nameOf(r))}</div>
-          <div class="meta">${esc(placeOf(r)||'Località non indicata')} · ${esc(r.telefono||'Telefono assente')}</div>
+          <div class="meta">${esc(r.telefono||'Telefono assente')}</div>
         </div>
         <div class="score">${done?'FATTA':'PRIORITÀ '+esc(r.priority||0)}</div>
       </div>
-      <div class="why">
-        <b>SCOPO DELLA CHIAMATA</b><br>
-        Ricerca di immobili in vendita · ${esc(r.selection_reason||'PROSPEZIONE CRM')}
+
+      <div class="context">
+        <div class="item"><span>COMUNE</span><b>${esc(r.comune||'Non indicato')}</b></div>
+        <div class="item"><span>VIA / CIVICO CONTATTO</span><b>${esc([r.via,r.civico].filter(Boolean).join(' ')||'Non indicato')}</b></div>
+        <div class="item"><span>PERCHÉ È IN LISTA</span><b>${esc(evidenceLabel(r))}</b></div>
       </div>
+
+      <div class="why">
+        <b>PERCHÉ LA CHIAMI</b><br>
+        ${esc(r.call_reason_detail||r.selection_reason||'Ricerca immobiliare territoriale')}
+        ${r.next_action?`<br><span class="meta">Azione: ${esc(r.next_action)}</span>`:''}
+      </div>
+
+      <div class="propertybox">
+        <div class="label">IMMOBILE / NOTIZIA COLLEGATA</div>
+        <div class="address">${esc(propertyAddress||'Riferimento immobiliare rilevato dal motore F1')}</div>
+        ${propertyTitle?`<div class="title">${esc(propertyTitle)}</div>`:''}
+        <div class="source">${esc([propertySource,propertyPrice].filter(Boolean).join(' · ')||'Segnale interno F1')}</div>
+      </div>
+
       <div class="actions">
         ${!done&&r.telefono?`<a class="btn" href="tel:${esc(r.telefono)}">CHIAMA</a>`:''}
         ${!done&&p?`<a class="btn alt" target="_blank" rel="noopener" href="https://wa.me/39${p}">WHATSAPP</a>`:''}
+        ${r.linked_property_url?`<a class="btn gold" target="_blank" rel="noopener" href="${esc(r.linked_property_url)}">APRI ANNUNCIO</a>`:''}
+        ${r.contact_source_url?`<a class="btn alt" target="_blank" rel="noopener" href="${esc(r.contact_source_url)}">FONTE CONTATTO</a>`:''}
         ${!done?'<a class="btn gold" href="http://127.0.0.1:8766/">CENTRALE PC</a>':''}
         ${!done?`<button class="btn alt" data-done="${esc(r.task_id)}">SEGNA FATTA</button>`:''}
         <a class="btn alt" href="crm.html#contatti">CRM</a>
