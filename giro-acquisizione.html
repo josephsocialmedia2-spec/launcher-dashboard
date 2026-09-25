@@ -1,5 +1,5 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#070907"><title>F1 — Giro Acquisizione · Task FIELD</title><style>:root{--p:#101510;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--gold:#f4c95d;--red:#ff7777}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt);font-family:Arial,sans-serif}.wrap{max-width:920px;margin:auto;padding:18px 12px 90px}.ey{color:var(--g);font-size:10px;font-weight:900;letter-spacing:.15em}h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}.meta{color:var(--mut);font-size:12px;line-height:1.55}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}.stat,.stop{background:var(--p);border:1px solid var(--line);border-radius:14px;padding:12px}.stat{text-align:center;font-size:9px;color:var(--mut)}.stat b{display:block;color:var(--g);font-size:24px}.stop{margin:10px 0}.top{display:flex;justify-content:space-between;gap:10px}.place{font-size:17px;font-weight:900}.score{color:var(--g);font-size:10px;font-weight:900}.reason{font-size:12px;line-height:1.5;margin:8px 0}.actions{display:flex;gap:7px;flex-wrap:wrap}.btn{display:inline-block;padding:10px 11px;border-radius:9px;background:var(--g);color:#07100a;text-decoration:none;font-size:10px;font-weight:900;border:0;cursor:pointer}.btn.alt{background:#182019;color:#fff;border:1px solid var(--line)}.notice{border:1px solid #35513d;border-radius:12px;padding:11px;background:#0d160f;font-size:11px;line-height:1.5}.empty{color:var(--mut);padding:16px}dialog{width:min(94vw,520px);border:1px solid #35513d;border-radius:16px;background:#0d120e;color:#fff;padding:0}dialog::backdrop{background:#000c}.dh{padding:13px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px}.db{padding:14px;display:grid;gap:9px}.field{width:100%;border:1px solid var(--line);background:#09100b;color:#fff;border-radius:10px;padding:11px;font:inherit}.msg{min-height:18px;color:var(--g);font-size:11px;font-weight:900}.msg.err{color:var(--red)}@media(max-width:600px){.top{display:block}.summary{grid-template-columns:1fr 1fr}}</style><script defer src="supabase-config.js"></script><script defer src="supabase-sync.js?v=20260913-auth1"></script><script defer src="f1-acquisition-core.js"></script><script defer src="f1-acquisition-data.js"></script><script defer src="f1-staff-data.js"></script></head><body><main class="wrap"><div class="ey">F1 ACQUISITION ENGINE · TASK VIEW</div><h1>GIRO ACQUISIZIONE</h1><p class="meta" id="territory">Caricamento territorio canonico…</p><div class="notice" id="assignment"><b>Assegnazione:</b> caricamento funzionario e Comune…</div><div class="notice"><b>Regola:</b> il giro trasforma i segnali immobiliari utili del Comune assegnato in <b>fermate operative</b>. Una fermata non può essere chiusa senza registrare almeno che cosa è successo.</div><div class="summary"><div class="stat"><b id="tot">0</b>FERMATE APERTE</div><div class="stat"><b id="high">0</b>PRIORITÀ ≥ 60</div><div class="stat"><b id="streets">0</b>VIE</div><div class="stat"><b id="done">0</b>COMPLETATE</div></div><div class="actions"><button class="btn" id="routeBtn" type="button" style="display:none">APRI GIRO IN MAPS</button><a class="btn alt" href="funzionario-notiziere.html">← AREA NOTIZIERE</a><a class="btn alt" href="ricerca-territoriale.html">HOME OPERATIVA</a></div><section id="list"><div class="empty">Caricamento task FIELD…</div></section></main><dialog id="doneDlg"><div class="dh"><b>PRIMA DI CHIUDERE IL TASK</b><button class="btn alt" id="doneClose">✕</button></div><form id="doneForm" class="db"><div class="meta">COSA È SUCCESSO? F1 deve conoscere almeno l’esito minimo prima di chiudere l’attività.</div><select id="doneOutcome" class="field" required><option value="">Scegli…</option><option value="FIELD_NO_NEWS">Nessuna informazione utile rilevata</option><option value="FIELD_DATA_RECORDED">Ho registrato osservazioni / persone / notizie</option><option value="FIELD_REVISIT">Devo ripassare / attività non conclusa</option></select><textarea id="doneNote" class="field" placeholder="Nota facoltativa"></textarea><button class="btn" type="submit">REGISTRA ESITO</button><div id="doneMsg" class="msg"></div></form></dialog><script>
-let ROWS=[],SELECTED=null,SAVING=false,CURRENT_USER=null,ACTIVE_COMUNE='',ROLE='';
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#070907"><title>F1 — Giro Acquisizione · Task FIELD</title><style>:root{--p:#101510;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--gold:#f4c95d;--red:#ff7777}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt);font-family:Arial,sans-serif}.wrap{max-width:920px;margin:auto;padding:18px 12px 90px}.ey{color:var(--g);font-size:10px;font-weight:900;letter-spacing:.15em}h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}.meta{color:var(--mut);font-size:12px;line-height:1.55}.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}.stat,.stop{background:var(--p);border:1px solid var(--line);border-radius:14px;padding:12px}.stat{text-align:center;font-size:9px;color:var(--mut)}.stat b{display:block;color:var(--g);font-size:24px}.stop{margin:10px 0}.top{display:flex;justify-content:space-between;gap:10px}.place{font-size:17px;font-weight:900}.score{color:var(--g);font-size:10px;font-weight:900}.reason{font-size:12px;line-height:1.5;margin:8px 0}.actions{display:flex;gap:7px;flex-wrap:wrap}.btn{display:inline-block;padding:10px 11px;border-radius:9px;background:var(--g);color:#07100a;text-decoration:none;font-size:10px;font-weight:900;border:0;cursor:pointer}.btn.alt{background:#182019;color:#fff;border:1px solid var(--line)}.notice{border:1px solid #35513d;border-radius:12px;padding:11px;background:#0d160f;font-size:11px;line-height:1.5}.empty{color:var(--mut);padding:16px}dialog{width:min(94vw,520px);border:1px solid #35513d;border-radius:16px;background:#0d120e;color:#fff;padding:0}dialog::backdrop{background:#000c}.dh{padding:13px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px}.db{padding:14px;display:grid;gap:9px}.field{width:100%;border:1px solid var(--line);background:#09100b;color:#fff;border-radius:10px;padding:11px;font:inherit}.msg{min-height:18px;color:var(--g);font-size:11px;font-weight:900}.msg.err{color:var(--red)}@media(max-width:600px){.top{display:block}.summary{grid-template-columns:1fr 1fr}}</style><script defer src="supabase-config.js"></script><script defer src="supabase-sync.js?v=20260913-auth1"></script><script defer src="f1-acquisition-core.js"></script><script defer src="f1-acquisition-data.js"></script><script defer src="f1-staff-data.js"></script></head><body><main class="wrap"><div class="ey">F1 ACQUISITION ENGINE · TASK VIEW</div><h1>GIRO ACQUISIZIONE</h1><p class="meta" id="territory">Caricamento territorio canonico…</p><div class="notice" id="assignment"><b>Assegnazione:</b> caricamento funzionario e Comune…</div><div class="notice"><b>Regola:</b> il giro trasforma i segnali immobiliari utili del Comune assegnato in <b>fermate operative</b>. Una fermata non può essere chiusa senza registrare almeno che cosa è successo.</div><div class="summary"><div class="stat"><b id="tot">0</b>FERMATE APERTE</div><div class="stat"><b id="high">0</b>PRIORITÀ ≥ 60</div><div class="stat"><b id="streets">0</b>VIE</div><div class="stat"><b id="done">0</b>COMPLETATE</div></div><div class="actions"><button class="btn" id="optimizeBtn" type="button">OTTIMIZZA PERCORSO</button><button class="btn" id="routeBtn" type="button" style="display:none">APRI GIRO IN MAPS</button><a class="btn alt" href="funzionario-notiziere.html">← AREA NOTIZIERE</a><a class="btn alt" href="ricerca-territoriale.html">HOME OPERATIVA</a></div><div class="notice" id="geoStatus"><b>Percorso:</b> in attesa dei dati territoriali.</div><section id="list"><div class="empty">Caricamento task FIELD…</div></section></main><dialog id="doneDlg"><div class="dh"><b>PRIMA DI CHIUDERE IL TASK</b><button class="btn alt" id="doneClose">✕</button></div><form id="doneForm" class="db"><div class="meta">COSA È SUCCESSO? F1 deve conoscere almeno l’esito minimo prima di chiudere l’attività.</div><select id="doneOutcome" class="field" required><option value="">Scegli…</option><option value="FIELD_NO_NEWS">Nessuna informazione utile rilevata</option><option value="FIELD_DATA_RECORDED">Ho registrato osservazioni / persone / notizie</option><option value="FIELD_REVISIT">Devo ripassare / attività non conclusa</option></select><textarea id="doneNote" class="field" placeholder="Nota facoltativa"></textarea><button class="btn" type="submit">REGISTRA ESITO</button><div id="doneMsg" class="msg"></div></form></dialog><script>
+let ROWS=[],SELECTED=null,SAVING=false,CURRENT_USER=null,ACTIVE_COMUNE='',ROLE='',COMMUNE_CENTER=null,ROUTE_KM=0,OPTIMIZING=false;\nconst GEO_CACHE_KEY='f1AcquisitionGeoCacheV2';
 const $=id=>document.getElementById(id);
 const MANAGER_ROLES=new Set(['TITOLARE','ADMIN','MANAGER']);
 const MARKET_CATEGORIES=new Set(['COMPETITOR_LISTING','MARKET_LISTING','FSBO','FSBO_CANDIDATE','EXPIRED_CANDIDATE','EXPIRED_VERIFIED']);
@@ -12,6 +12,83 @@ function mapUrl(t){const q=[t.via,t.civico,t.comune,'TO','Italia'].filter(Boolea
 function safeUrl(u){try{const x=new URL(String(u||''),location.href);return ['http:','https:'].includes(x.protocol)?x.href:''}catch(_){return''}}
 function address(t){return [t.via,t.civico,t.comune,'TO','Italia'].filter(Boolean).join(', ')}
 function stopKey(t){return String(t.property_id||'').trim()||norm([t.comune,t.via,t.civico].filter(Boolean).join('|'))}
+function taskCoord(t){
+  const m=t&&t.metadata&&typeof t.metadata==='object'?t.metadata:{};
+  const lat=Number(t?.lat??t?.latitude??m.lat??m.latitude),lon=Number(t?.lon??t?.lng??t?.longitude??m.lon??m.lng??m.longitude);
+  return Number.isFinite(lat)&&Number.isFinite(lon)&&Math.abs(lat)<=90&&Math.abs(lon)<=180?{lat,lon}:null;
+}
+function loadGeoLocal(){try{const x=JSON.parse(localStorage.getItem(GEO_CACHE_KEY)||'{}');return x&&typeof x==='object'?x:{}}catch(_){return{}}}
+function saveGeoLocal(x){try{localStorage.setItem(GEO_CACHE_KEY,JSON.stringify(x))}catch(_){}}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+function haversine(a,b){
+  if(!a||!b)return Infinity;
+  const R=6371,toRad=x=>x*Math.PI/180,dLat=toRad(b.lat-a.lat),dLon=toRad(b.lon-a.lon);
+  const s=Math.sin(dLat/2)**2+Math.cos(toRad(a.lat))*Math.cos(toRad(b.lat))*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.sqrt(s));
+}
+async function loadCommuneCenter(){
+  try{
+    const r=await fetch('data/territory_geocache.json?v=20260925-route1',{cache:'no-store'});if(!r.ok)return null;
+    const j=await r.json(),x=j[norm(ACTIVE_COMUNE)];
+    if(x&&Number.isFinite(Number(x.lat))&&Number.isFinite(Number(x.lon)))return{lat:Number(x.lat),lon:Number(x.lon)};
+  }catch(_){}
+  return null;
+}
+async function geocodeStop(t,cache){
+  const direct=taskCoord(t);if(direct)return direct;
+  const key=norm(address(t));if(!key)return null;
+  if(cache[key]&&Number.isFinite(Number(cache[key].lat))&&Number.isFinite(Number(cache[key].lon)))return{lat:Number(cache[key].lat),lon:Number(cache[key].lon)};
+  const q=address(t),u='https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=it&addressdetails=0&q='+encodeURIComponent(q);
+  try{
+    const r=await fetch(u,{headers:{'Accept-Language':'it'},cache:'no-store'});if(!r.ok)return null;
+    const a=await r.json(),x=Array.isArray(a)?a[0]:null;
+    if(!x)return null;
+    const p={lat:Number(x.lat),lon:Number(x.lon),at:new Date().toISOString()};
+    if(!Number.isFinite(p.lat)||!Number.isFinite(p.lon))return null;
+    cache[key]=p;saveGeoLocal(cache);return{lat:p.lat,lon:p.lon};
+  }catch(_){return null}
+}
+function nearestNeighbor(items,start){
+  const left=[...items],out=[];let cur=start||left[0]?.coord||null,total=0;
+  while(left.length){
+    let best=0,bestD=Infinity;
+    for(let i=0;i<left.length;i++){
+      const d=cur?haversine(cur,left[i].coord):0;
+      if(d<bestD-0.0001||(Math.abs(d-bestD)<0.0001&&(Number(left[i].row.priority)||0)>(Number(left[best].row.priority)||0))){best=i;bestD=d}
+    }
+    const hit=left.splice(best,1)[0];
+    if(cur&&Number.isFinite(bestD))total+=bestD;
+    out.push(hit.row);cur=hit.coord;
+  }
+  return{rows:out,total};
+}
+async function optimizeRoute(manual=true){
+  if(OPTIMIZING)return;OPTIMIZING=true;
+  const btn=$('optimizeBtn'),status=$('geoStatus');if(btn)btn.disabled=true;
+  try{
+    const open=ROWS.filter(isOpen),done=ROWS.filter(t=>!isOpen(t));
+    if(open.length<2){status.innerHTML='<b>Percorso:</b> non servono ottimizzazioni con meno di 2 fermate.';return}
+    COMMUNE_CENTER=COMMUNE_CENTER||await loadCommuneCenter();
+    const cache=loadGeoLocal(),located=[],missing=[];
+    let uncached=0;
+    status.innerHTML='<b>Percorso:</b> geocodifica fermate e calcolo ordine di prossimità…';
+    for(let i=0;i<open.length;i++){
+      const t=open[i],key=norm(address(t)),had=!!taskCoord(t)||!!cache[key];
+      const coord=await geocodeStop(t,cache);
+      if(coord)located.push({row:t,coord});else missing.push(t);
+      if(!had&&coord){uncached++;if(i<open.length-1)await sleep(1100)}
+    }
+    const base=COMMUNE_CENTER||located[0]?.coord||null,optimized=nearestNeighbor(located,base);
+    const fallback=missing.sort(sortStops);
+    ROWS=[...optimized.rows,...fallback,...done];
+    ROUTE_KM=optimized.total;
+    render();
+    const approx=Number.isFinite(ROUTE_KM)?ROUTE_KM.toFixed(1):'—';
+    status.innerHTML='<b>Percorso ottimizzato:</b> '+optimized.rows.length+' fermate geolocalizzate'+(missing.length?' · '+missing.length+' senza coordinate':'')+' · circa '+approx+' km in linea d’aria tra le fermate. Partenza: '+esc(ACTIVE_COMUNE||'centro territorio')+'.';
+  }catch(e){
+    status.innerHTML='<b>Percorso:</b> ottimizzazione non completata · '+esc(e.message||e)+'. Resta attivo l’ordinamento per priorità/via/civico.';
+  }finally{OPTIMIZING=false;if(btn)btn.disabled=false}
+}
 function isAcquisitionTask(t){
   if(!String(t.via||'').trim())return false;
   const task=upper(t.task_type),market=upper(t.market_category),core=upper(t.core_category),event=upper(t.event_type);
@@ -140,5 +217,5 @@ async function load(){
 }
 $('doneClose').onclick=()=>$('doneDlg').close();
 $('doneForm').addEventListener('submit',saveOutcome);
-window.addEventListener('load',load);
+$('optimizeBtn').addEventListener('click',()=>optimizeRoute(true));\nwindow.addEventListener('load',load);
 </script></body></html>
