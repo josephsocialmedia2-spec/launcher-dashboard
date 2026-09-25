@@ -213,9 +213,11 @@ async function load(){
     $('territory').textContent='Centro canonico: '+t.reference_hub+' · '+t.policy+' · giro filtrato sul Comune operativo';
     ROWS=buildStops(d.tasks||[]);
     render();
+    optimizeRoute(false).catch(()=>{});
   }catch(e){$('list').innerHTML='<div class="empty">Impossibile caricare il giro: '+esc(e.message)+'</div>'}
 }
 $('doneClose').onclick=()=>$('doneDlg').close();
 $('doneForm').addEventListener('submit',saveOutcome);
-$('optimizeBtn').addEventListener('click',()=>optimizeRoute(true));\nwindow.addEventListener('load',load);
+$('optimizeBtn').addEventListener('click',()=>optimizeRoute(true));
+window.addEventListener('load',load);
 </script></body></html>
