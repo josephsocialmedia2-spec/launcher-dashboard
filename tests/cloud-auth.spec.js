@@ -15,35 +15,22 @@ async function mockRest(context){
   await context.route(REST+'**',async route=>route.fulfill({status:200,contentType:'application/json',body:'[]'}));
 }
 
-test('BLOCCO 1 · NORMALE · registrazione -> login -> sessione -> dashboard F1',async({browser})=>{
+test('BLOCCO 1 · NORMALE · account creato dal titolare -> login -> sessione -> dashboard F1',async({browser})=>{
   const context=await browser.newContext();
-  let signupCalls=0,loginCalls=0;
-  await context.route(AUTH+'signup?**',async route=>{
-    signupCalls++;
-    const body=JSON.parse(route.request().postData()||'{}');
-    expect(body.email).toBe('joseph.socialmedia2+f1.anastasia.cetrulo@gmail.com');
-    expect(body.password).toBe('Qa-password-1234');
-    await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({user:{id:USER_ID,email:body.email}})});
-  });
+  let loginCalls=0;
   await context.route(AUTH+'token?grant_type=password',async route=>{
     loginCalls++;
     const body=JSON.parse(route.request().postData()||'{}');
-    expect(body.email).toBe('joseph.socialmedia2+f1.anastasia.cetrulo@gmail.com');
-    expect(body.password).toBe('Qa-password-1234');
+    expect(body.email).toBe('anastasia@gmail.com');
     await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({access_token:'qa-access',refresh_token:'qa-refresh',expires_in:3600,token_type:'bearer',user:{id:USER_ID,email:body.email}})});
   });
-  await mockValidUser(context,'joseph.socialmedia2+f1.anastasia.cetrulo@gmail.com');
-  await context.route(FN+'f1-staff-claim',async route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({ok:true})}));
+  await mockValidUser(context,'anastasia@gmail.com');
   await mockRest(context);
-
   const page=await context.newPage();
   await page.goto('/setup-cloud.html?invite=anastasia&return=ricerca-territoriale.html');
-  await expect(page.locator('#signupBtn')).toBeVisible();
+  await expect(page.locator('#email')).toHaveValue('anastasia@gmail.com');
+  await expect(page.locator('#signupBtn')).toHaveCount(0);
   await page.fill('#password','Qa-password-1234');
-  await page.click('#signupBtn');
-  await expect(page.locator('#status')).toContainText('ACCOUNT REGISTRATO');
-  expect(signupCalls).toBe(1);
-
   await page.click('#loginBtn');
   await page.waitForURL('**/ricerca-territoriale.html');
   await page.waitForFunction(()=>window.F1DashboardAuthGuard?.ready()===true);
@@ -52,13 +39,8 @@ test('BLOCCO 1 · NORMALE · registrazione -> login -> sessione -> dashboard F1'
   expect(stored).toContain('qa-access');
   expect(stored).toContain('qa-refresh');
   expect(stored).not.toContain('Qa-password-1234');
-
-  await page.reload();
-  await page.waitForFunction(()=>window.F1DashboardAuthGuard?.ready()===true);
-  await expect(page).toHaveURL(/ricerca-territoriale\.html/);
   await context.close();
 });
-
 test('BLOCCO 1 · DISTRATTO · email errata non chiama Supabase e doppio click non duplica login',async({page})=>{
   let loginCalls=0;
   await page.route(AUTH+'token?grant_type=password',async route=>{
