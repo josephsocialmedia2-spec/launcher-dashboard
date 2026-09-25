@@ -6,7 +6,7 @@ const CORS={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"au
 const H={...CORS,"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"};
 const out=(s:number,b:unknown)=>new Response(JSON.stringify(b),{status:s,headers:H});
 const clean=(v:any,n=300)=>String(v??"").trim().slice(0,n);
-const emailOk=(v:string)=>/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(v);
+const emailOk=(v:string)=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 const roles=new Set(["TITOLARE","RESPONSABILE","FUNZIONARIO"]);
 function admin(){if(!KEY)throw new Error("Missing server admin key");return createClient(BASE,KEY,{auth:{persistSession:false,autoRefreshToken:false}})}
 async function caller(sb:any,req:Request){const auth=req.headers.get("authorization")||"";const token=auth.replace(/^Bearer\s+/i,"");if(!token)throw new Error("AUTH_REQUIRED");const {data,error}=await sb.auth.getUser(token);if(error||!data?.user?.id)throw new Error("AUTH_INVALID");const {data:p,error:pe}=await sb.from("f1_staff_profiles").select("user_id,role,status").eq("user_id",data.user.id).maybeSingle();if(pe||!p||p.role!=="TITOLARE"||p.status!=="ACTIVE")throw new Error("TITOLARE_REQUIRED");return data.user}
