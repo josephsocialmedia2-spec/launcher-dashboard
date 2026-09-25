@@ -21,14 +21,14 @@ test('BLOCCO 1 · NORMALE · account creato dal titolare -> login -> sessione ->
   await context.route(AUTH+'token?grant_type=password',async route=>{
     loginCalls++;
     const body=JSON.parse(route.request().postData()||'{}');
-    expect(body.email).toBe('anastasia@gmail.com');
+    expect(body.email).toBe('ana.cet.4567@f1.local');
     await route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({access_token:'qa-access',refresh_token:'qa-refresh',expires_in:3600,token_type:'bearer',user:{id:USER_ID,email:body.email}})});
   });
-  await mockValidUser(context,'anastasia@gmail.com');
+  await mockValidUser(context,'ana.cet.4567@f1.local');
   await mockRest(context);
   const page=await context.newPage();
   await page.goto('/setup-cloud.html?invite=anastasia&return=ricerca-territoriale.html');
-  await expect(page.locator('#email')).toHaveValue('anastasia@gmail.com');
+  await expect(page.locator('#email')).toHaveValue('ana.cet.4567@f1.local');
   await expect(page.locator('#signupBtn')).toHaveCount(0);
   await page.fill('#password','Qa-password-1234');
   await page.click('#loginBtn');
