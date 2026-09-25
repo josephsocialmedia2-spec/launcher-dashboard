@@ -33,7 +33,7 @@ Deno.serve(async(req)=>{if(req.method==="OPTIONS")return new Response("ok",{stat
  }
  if(action==="create"){
    const firstName=clean(b.first_name,120),lastName=clean(b.last_name,120),phone=clean(b.phone,50),email=internalEmail(firstName,lastName,phone),password=String(b.password||""),role=clean(b.role,30).toUpperCase();
-   if(!firstName||!lastName||!emailOk(email)||password.length<12||!roles.has(role))return out(422,{ok:false,error:"staff_identity_password_role_required",message:"Nome, cognome, telefono valido, password di almeno 12 caratteri e ruolo valido sono obbligatori."});
+   if(!firstName||!lastName||!emailOk(email)||password.length<12||password.length>72||!roles.has(role))return out(422,{ok:false,error:"staff_identity_password_role_required",message:"Nome, cognome, telefono valido, password tra 12 e 72 caratteri e ruolo valido sono obbligatori."});
    const {data:u,error:ue}=await sb.auth.admin.createUser({email,password,email_confirm:true,app_metadata:{f1_role:role,f1_login_type:"INTERNAL"}});if(ue||!u?.user)throw ue||new Error("user_create_failed");const uid=u.user.id;
    const profile={user_id:uid,first_name:firstName,last_name:lastName,company_email:email,phone,start_date:clean(b.start_date,10)||new Date().toISOString().slice(0,10),role,manager_user_id:b.manager_user_id||null,assigned_territory:b.assigned_territory||{},status:"ACTIVE",daily_objectives:b.daily_objectives||{},weekly_objectives:b.weekly_objectives||{},monthly_objectives:b.monthly_objectives||{}};
    const {error:pe}=await sb.from("f1_staff_profiles").insert(profile);if(pe){await sb.auth.admin.deleteUser(uid);throw pe}await audit(sb,me.id,uid,"STAFF_CREATED",profile,"Creazione account interno F1 con identificativo automatico");return out(200,{ok:true,user_id:uid,role,email,account_created:true,mailbox_created:false,login_type:"INTERNAL",message:"Account F1 creato con email interna "+email+"."});
@@ -41,7 +41,7 @@ Deno.serve(async(req)=>{if(req.method==="OPTIONS")return new Response("ok",{stat
  const target=clean(b.user_id,80);if(!target)return out(422,{ok:false,error:"user_id_required"});if((action==="delete"||action==="disable")&&target===me.id)return out(409,{ok:false,error:"cannot_delete_current_titolare"});const {data:old,error:oe}=await sb.from("f1_staff_profiles").select("*").eq("user_id",target).maybeSingle();if(oe||!old)return out(404,{ok:false,error:"staff_not_found"});
  if(action==="set_password"){
    if(target===me.id)return out(409,{ok:false,error:"use_recovery_for_current_titolare",message:"Per il TITOLARE corrente usa il recupero password via email."});
-   const password=String(b.password||"");if(password.length<12)return out(422,{ok:false,error:"password_too_short",message:"La password temporanea deve contenere almeno 12 caratteri."});
+   const password=String(b.password||"");if(password.length<12||password.length>72)return out(422,{ok:false,error:"password_invalid_length",message:"La password temporanea deve contenere da 12 a 72 caratteri."});
    const {error:ae}=await sb.auth.admin.updateUserById(target,{password});if(ae)throw ae;
    await audit(sb,me.id,target,"STAFF_PASSWORD_RESET",{password_changed:true},clean(b.reason,500)||"Password temporanea impostata dal titolare");
    return out(200,{ok:true,password_changed:true,message:"Password temporanea aggiornata. La password non è stata salvata nei dati F1."});
