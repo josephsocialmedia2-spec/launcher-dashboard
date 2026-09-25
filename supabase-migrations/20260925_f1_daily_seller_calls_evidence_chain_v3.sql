@@ -3,7 +3,7 @@
 -- FSBO/segnale venditore oppure annuncio attivo nella stessa via.
 -- La RPC restituisce anche Comune, Via, motivo, immobile/notizia e URL fonte.
 
-CREATE OR REPLACE FUNCTION public.f1_daily_seller_calls_v1(p_target_count integer DEFAULT 50)
+CREATE OR REPLACE FUNCTION public.f1_daily_seller_calls_v1(p_target_count integer DEFAULT 100)
  RETURNS jsonb
  LANGUAGE plpgsql
  SET search_path TO ''
@@ -11,7 +11,7 @@ AS $function$
 declare
   v_user uuid := auth.uid();
   v_today date := (now() at time zone 'Europe/Rome')::date;
-  v_target integer := greatest(1,least(coalesce(p_target_count,50),100));
+  v_target integer := greatest(1,least(coalesce(p_target_count,100),100));
   v_existing integer := 0;
   v_needed integer := 0;
   v_rows jsonb := '[]'::jsonb;
@@ -223,7 +223,7 @@ begin
         'batch_date',v_today::text,
         'selection_score',c.selection_score,
         'selection_reason',c.selection_reason,
-        'goal','50 TELEFONATE ALLA RICERCA DI IMMOBILI IN VENDITA',
+        'goal','100 TELEFONATE ALLA RICERCA DI IMMOBILI IN VENDITA',
         'evidence_type',c.evidence_type,
         'call_reason_detail',c.call_reason_detail,
         'linked_property_id',coalesce(c.linked_property_id,''),
