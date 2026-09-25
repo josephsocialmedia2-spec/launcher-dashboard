@@ -27,9 +27,9 @@ test('BLOCCO 1 · NORMALE · account creato dal titolare -> login -> sessione ->
   await mockValidUser(context,'ana.cet.4567@f1.local');
   await mockRest(context);
   const page=await context.newPage();
-  await page.goto('/setup-cloud.html?invite=anastasia&return=ricerca-territoriale.html');
-  await expect(page.locator('#email')).toHaveValue('ana.cet.4567@f1.local');
+  await page.goto('/setup-cloud.html?invite=staff&return=ricerca-territoriale.html');
   await expect(page.locator('#signupBtn')).toHaveCount(0);
+  await page.fill('#email','ana.cet.4567@f1.local');
   await page.fill('#password','Qa-password-1234');
   await page.click('#loginBtn');
   await page.waitForURL('**/ricerca-territoriale.html');
