@@ -117,7 +117,7 @@ body.focus-active .notice{border-color:#2b6b43}
 
 <script>
 let STATE={rows:[],target:50,total:0,done:0,remaining:0};
-let ACTIVE_TASK=localStorage.getItem('f1_active_call_task')||'';
+let ACTIVE_TASK=localStorage.getItem('f1_active_call_task')||'';\nconst FROM_TERRITORY_APP=new URLSearchParams(location.search).get('source')==='f1-territory-app';\nlet WAS_ACTIVE_FROM_APP=FROM_TERRITORY_APP;
 const $=id=>document.getElementById(id);
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function phone(s){let d=String(s||'').replace(/\D/g,'');if(d.startsWith('39')&&d.length>10)d=d.slice(2);return d}
