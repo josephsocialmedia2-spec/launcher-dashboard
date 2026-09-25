@@ -8,7 +8,10 @@ on:
       - 'supabase-sync.js'
       - 'funzionario-notiziere.html'
       - 'primo-accesso-notiziere.html'
+      - 'accessi-ufficio.html'
       - 'accessi-ufficio.js'
+      - 'f1-staff-data.js'
+      - 'titolare-funzionari.html'
       - 'supabase/functions/f1-staff-admin/index.ts'
       - 'tests/cloud-auth.spec.js'
       - '.github/workflows/f1-staff-onboarding-qa.yml'
@@ -51,3 +54,16 @@ jobs:
           ! grep -Fq 'LOGIN_ALIASES' supabase-sync.js
           ! grep -RFq 'joseph.socialmedia2+f1.' setup-cloud.html supabase-sync.js primo-accesso-notiziere.html tests/cloud-auth.spec.js
           echo 'F1 staff onboarding contract: PASS'
+      - name: Verify irreversible access removal
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -Fq 'ELIMINA ACCESSO' accessi-ufficio.js
+          grep -Fq 'ELIMINA ACCESSO' titolare-funzionari.html
+          grep -Fq "action:'delete'" accessi-ufficio.js
+          grep -Fq 'action==="delete"||action==="disable"' supabase/functions/f1-staff-admin/index.ts
+          grep -Fq '.eq("status","ACTIVE")' supabase/functions/f1-staff-admin/index.ts
+          grep -Fq 'status=eq.ACTIVE' f1-staff-data.js
+          ! grep -Fq 'RIATTIVA' accessi-ufficio.js
+          ! grep -Fq 'RIABILITA' titolare-funzionari.html
+          echo 'F1 irreversible access removal: PASS'
