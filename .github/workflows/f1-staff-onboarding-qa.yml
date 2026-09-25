@@ -7,6 +7,10 @@ on:
       - 'setup-cloud.html'
       - 'supabase-sync.js'
       - 'funzionario-notiziere.html'
+      - 'primo-accesso-notiziere.html'
+      - 'accessi-ufficio.js'
+      - 'supabase/functions/f1-staff-admin/index.ts'
+      - 'tests/cloud-auth.spec.js'
       - '.github/workflows/f1-staff-onboarding-qa.yml'
   workflow_dispatch:
 
@@ -40,9 +44,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          grep -Fq 'CREA ACCOUNT · PRIMO ACCESSO' setup-cloud.html
-          grep -Fq 'anastasia.cetrulo@f1immobiliare.it' setup-cloud.html
+          grep -Fq "ANASTASIA_LOGIN='anastasia@gmail.com'" setup-cloud.html
           grep -Fq 'funzionario-notiziere.html' setup-cloud.html
-          grep -Fq 'f1-staff-claim' setup-cloud.html
-          grep -Fq "'anastasia.cetrulo@f1immobiliare.it':'joseph.socialmedia2+f1.anastasia.cetrulo@gmail.com'" supabase-sync.js
+          grep -Fq 'Il vecchio flusso di auto-registrazione è stato disattivato' primo-accesso-notiziere.html
+          grep -Fq 'action==="set_email"' supabase/functions/f1-staff-admin/index.ts
+          ! grep -Fq 'LOGIN_ALIASES' supabase-sync.js
+          ! grep -RFq 'joseph.socialmedia2+f1.' setup-cloud.html supabase-sync.js primo-accesso-notiziere.html tests/cloud-auth.spec.js
           echo 'F1 staff onboarding contract: PASS'
