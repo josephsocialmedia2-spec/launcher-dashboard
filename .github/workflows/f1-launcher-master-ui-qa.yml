@@ -1,0 +1,41 @@
+name: F1 Launcher Master UI QA
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'f1-launcher-master.css'
+      - 'f1-launcher-master.js'
+      - 'albero-fonti-notizie.html'
+      - 'ricerca-territoriale.html'
+      - 'crm.html'
+      - 'oggi.html'
+      - 'documenti-vendita.html'
+      - 'centrale-risultati.html'
+      - 'accessi-ufficio.html'
+      - 'setup-cloud.html'
+      - 'telefonate-oggi.html'
+      - 'f1-email-radar.html'
+      - 'social-seller-radar.html'
+      - 'tests/f1-launcher-master-ui.spec.js'
+      - '.github/workflows/f1-launcher-master-ui-qa.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  master-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install QA dependencies
+        run: npm install
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Run master UI regression checks
+        run: npx playwright test tests/f1-launcher-master-ui.spec.js --project=desktop-chromium
