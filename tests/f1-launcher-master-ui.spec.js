@@ -1,4 +1,5 @@
-const { test, expect } = require('@playwright/test');\nconst fs = require('fs');
+const { test, expect } = require('@playwright/test');
+const fs = require('fs');
 
 const corePages = [
   'albero-fonti-notizie.html',
