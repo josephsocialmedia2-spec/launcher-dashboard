@@ -75,6 +75,8 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 .btn.copy-card:hover{background:#0d4675!important;border-color:#20c7ff!important;color:#fff!important}
 .btn.news-transfer{background:#073c62!important;color:#d8f5ff!important;border:1px solid #20c7ff!important;box-shadow:0 0 14px rgba(32,199,255,.12)}
 .btn.news-transfer:hover{background:#095281!important;color:#fff!important}
+.btn.google-address{background:#0a2740!important;color:#d9f3ff!important;border:1px solid #4fb8ff!important}
+.btn.google-address:hover{background:#0d3d63!important;border-color:#7de7ff!important;color:#fff!important}
 .busy-reminder-bar{display:none;position:sticky;top:72px;z-index:35;margin:0 0 10px;padding:11px 12px;border-radius:12px;border:1px solid #e0a51e;background:linear-gradient(135deg,#4a3308,#241b08);color:#fff4c8;box-shadow:0 0 22px rgba(224,165,30,.22)}
 .busy-reminder-bar.show{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .busy-reminder-bar b{color:#ffd56a}
@@ -234,6 +236,7 @@ function render(){
     const propertyTitle=String(r.linked_property_title||'').trim();
     const propertySource=String(r.linked_property_source||'').trim();
     const propertyPrice=euro(r.linked_property_price);
+    const googleAddressQuery=encodeURIComponent([r.comune,r.via,r.civico].filter(Boolean).join(' ').trim());
     return `<article class="call ${done?'done':''} ${next?'next':''} ${active&&next?'focus-card':''}">
       <div class="top">
         <div>
@@ -273,6 +276,7 @@ function render(){
         ${!done&&r.lead_id?`<button class="btn remove-contact" data-remove-contact="${esc(r.task_id)}" data-lead="${esc(r.lead_id)}" data-name="${esc(nameOf(r))}">NON PIÙ PRESENTE · ELIMINA</button>`:''}
         <button class="btn news-transfer" type="button" data-news-task="${esc(r.task_id)}">NOTIZIA</button>
         <a class="btn alt secondary-action" href="crm.html#contatti">CRM</a>
+        ${googleAddressQuery?`<a class="btn google-address" target="_blank" rel="noopener" href="https://www.google.com/search?q=${googleAddressQuery}">GOOGLE INDIRIZZO</a>`:''}
         <button class="btn copy-card" type="button" data-copy-card="1">COPIA SCHEDA</button>
       </div>
       ${!done&&active?outcomeButtons(r):''}
