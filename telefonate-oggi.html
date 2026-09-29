@@ -64,6 +64,11 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 .outcomes{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
 .outcome-title{grid-column:1/-1;color:var(--mut);font-size:9px;font-weight:900;letter-spacing:.08em}
 .focus-note{margin-top:8px;color:var(--mut);font-size:9px;line-height:1.4}
+.phone-access{margin-top:5px}
+.phone-direct{display:inline-flex;align-items:center;gap:6px;color:#8fddff!important;text-decoration:none;font-size:14px;font-weight:900;letter-spacing:.02em}
+.phone-direct:hover{text-decoration:underline;color:#fff!important}
+.btn.remove-contact{background:#32171c!important;color:#ffb5c0!important;border:1px solid #7c3442!important}
+.btn.remove-contact:hover{background:#4b1e27!important;border-color:#d15f73!important}
 body.focus-active .toolbar,body.focus-active .nav-panel,body.focus-active .secondary-action{display:none!important}
 body.focus-active .call:not(.focus-card){display:none!important}
 body.focus-active .wrap{max-width:760px}
@@ -173,15 +178,14 @@ function filteredRows(){
   if(!q)return STATE.rows;
   return STATE.rows.filter(r=>[r.nome,r.cognome,r.telefono,r.comune,r.via,r.civico,r.selection_reason,r.call_reason_detail,r.linked_property_address,r.linked_property_title,r.linked_property_source,r.source].join(' ').toLowerCase().includes(q));
 }
-function outcomeButtons(r,enabled){
-  const disabled=enabled?'':'disabled';
+function outcomeButtons(r){
   return `<div class="outcomes">
-    <div class="outcome-title">DOPO LA TELEFONATA SCEGLI UN SOLO ESITO — IL SISTEMA PASSA AL SUCCESSIVO</div>
-    <button class="btn alt" ${disabled} data-outcome="FATTA" data-task="${esc(r.task_id)}">FATTA</button>
-    <button class="btn orange" ${disabled} data-outcome="NON_RISPONDE" data-task="${esc(r.task_id)}">NON RISPONDE</button>
-    <button class="btn gold" ${disabled} data-outcome="RICHIAMA" data-task="${esc(r.task_id)}">RICHIAMA</button>
-    <button class="btn" ${disabled} data-outcome="INTERESSATO" data-task="${esc(r.task_id)}">INTERESSATO</button>
-    <button class="btn red" ${disabled} data-outcome="NON_INTERESSATO" data-task="${esc(r.task_id)}">NON INTERESSATO</button>
+    <div class="outcome-title">SCEGLI L'ESITO QUANDO VUOI — NON È NECESSARIO PREMERE "CHIAMA ORA"</div>
+    <button class="btn alt" data-outcome="FATTA" data-task="${esc(r.task_id)}">FATTA</button>
+    <button class="btn orange" data-outcome="NON_RISPONDE" data-task="${esc(r.task_id)}">NON RISPONDE</button>
+    <button class="btn gold" data-outcome="RICHIAMA" data-task="${esc(r.task_id)}">RICHIAMA</button>
+    <button class="btn" data-outcome="INTERESSATO" data-task="${esc(r.task_id)}">INTERESSATO</button>
+    <button class="btn red" data-outcome="NON_INTERESSATO" data-task="${esc(r.task_id)}">NON INTERESSATO</button>
   </div>`;
 }
 function render(){
@@ -202,12 +206,11 @@ function render(){
     const propertyTitle=String(r.linked_property_title||'').trim();
     const propertySource=String(r.linked_property_source||'').trim();
     const propertyPrice=euro(r.linked_property_price);
-    const armed=ACTIVE_TASK===String(r.task_id);
     return `<article class="call ${done?'done':''} ${next?'next':''} ${active&&next?'focus-card':''}">
       <div class="top">
         <div>
           <div class="reason"><span class="rank">${originalIndex+1}</span>${esc(nameOf(r))}</div>
-          <div class="meta">${esc(r.telefono||'Telefono assente')}</div>
+          <div class="meta phone-access">${r.telefono?`<a class="phone-direct" href="tel:${esc(r.telefono)}" title="Chiama direttamente ${esc(r.telefono)}">☎ ${esc(r.telefono)}</a>`:'Telefono assente'}</div>
         </div>
         <div class="score">${done?'FATTA':'PRIORITÀ '+esc(r.priority||0)}</div>
       </div>
@@ -238,10 +241,11 @@ function render(){
         ${r.contact_source_url?`<a class="btn alt secondary-action" target="_blank" rel="noopener" href="${esc(r.contact_source_url)}">FONTE CONTATTO</a>`:''}
         ${!done?`<a class="btn gold secondary-action" href="http://127.0.0.1:8766/">CENTRALE PC</a>`:''}
         ${!done&&!active?`<button class="btn alt" data-outcome="FATTA" data-task="${esc(r.task_id)}">SEGNA FATTA</button>`:''}
+        ${!done&&r.lead_id?`<button class="btn remove-contact" data-remove-contact="${esc(r.task_id)}" data-lead="${esc(r.lead_id)}" data-name="${esc(nameOf(r))}">NON PIÙ PRESENTE · ELIMINA</button>`:''}
         <a class="btn alt secondary-action" href="crm.html#contatti">CRM</a>
       </div>
-      ${!done&&active?outcomeButtons(r,armed):''}
-      ${!done&&active?`<div class="focus-note">${armed?'Telefonata avviata: registra l’esito.':'Prima premi CHIAMA ORA. Gli esiti si attivano dopo l’avvio della chiamata.'}</div>`:''}
+      ${!done&&active?outcomeButtons(r):''}
+      ${!done&&active?`<div class="focus-note">Il numero è sempre visibile e cliccabile. Puoi registrare l’esito anche senza premere CHIAMA ORA.</div>`:''}
     </article>`
   }).join(''):'<div class="empty">Nessun contatto corrisponde alla ricerca.</div>';
   document.querySelectorAll('[data-call]').forEach(a=>a.addEventListener('click',()=>{
@@ -250,6 +254,44 @@ function render(){
     setTimeout(render,250);
   }));
   document.querySelectorAll('[data-outcome]').forEach(b=>b.onclick=()=>completeTask(b.dataset.task,b.dataset.outcome,b));
+  document.querySelectorAll('[data-remove-contact]').forEach(b=>b.onclick=()=>removeContact(b.dataset.removeContact,b.dataset.lead,b.dataset.name,b));
+}
+async function removeContact(taskId,leadId,contactName,btn){
+  if(!leadId)return alert('Impossibile eliminare: identificativo contatto mancante.');
+  const ok=confirm('Eliminare "'+(contactName||'questo contatto')+'" dal CRM e dalla lista telefonate perché non è più presente?\n\nIl sistema userà una cancellazione logica: il dato resta tracciabile per audit ma non comparirà più nelle liste operative.');
+  if(!ok)return;
+  btn.disabled=true;
+  try{
+    const now=new Date().toISOString();
+    await F1AcquisitionData.addInteraction({
+      lead_id:leadId,
+      task_id:taskId||null,
+      interaction_type:'NOTE',
+      direction:'OUTBOUND',
+      occurred_at:now,
+      outcome:'CONTATTO_NON_PIU_PRESENTE',
+      note:'Contatto eliminato dalla lista operativa: non più presente.',
+      next_action:'',
+      next_action_date:''
+    });
+    await F1AcquisitionData.updateLead(leadId,{
+      deleted:true,
+      do_not_contact:true,
+      status:'ARCHIVIATO',
+      next_action:'',
+      next_action_date:''
+    });
+    if(taskId)await F1AcquisitionData.setTaskStatus(taskId,'DONE','CONTATTO NON PIÙ PRESENTE');
+    if(ACTIVE_TASK===String(taskId)){
+      ACTIVE_TASK='';
+      localStorage.removeItem('f1_active_call_task');
+    }
+    await load();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }catch(e){
+    alert('Eliminazione non completata: '+(e.message||e));
+    btn.disabled=false;
+  }
 }
 async function completeTask(taskId,outcome,btn){
   if(!taskId)return;
