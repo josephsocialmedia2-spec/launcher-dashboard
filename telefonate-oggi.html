@@ -71,6 +71,8 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 .btn.remove-contact:hover{background:#4b1e27!important;border-color:#d15f73!important}
 .btn.busy{background:#3d2b08!important;color:#ffd56a!important;border:1px solid #9b6f11!important}
 .btn.busy:hover{background:#563b08!important;border-color:#e0a51e!important}
+.btn.copy-card{background:#0b3154!important;color:#bfeaff!important;border:1px solid #1d78b7!important}
+.btn.copy-card:hover{background:#0d4675!important;border-color:#20c7ff!important;color:#fff!important}
 .busy-reminder-bar{display:none;position:sticky;top:72px;z-index:35;margin:0 0 10px;padding:11px 12px;border-radius:12px;border:1px solid #e0a51e;background:linear-gradient(135deg,#4a3308,#241b08);color:#fff4c8;box-shadow:0 0 22px rgba(224,165,30,.22)}
 .busy-reminder-bar.show{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .busy-reminder-bar b{color:#ffd56a}
@@ -267,6 +269,7 @@ function render(){
         ${!done&&!active?`<button class="btn busy" data-busy-task="${esc(r.task_id)}" data-lead="${esc(r.lead_id||'')}" data-name="${esc(nameOf(r))}" data-phone="${esc(r.telefono||'')}">OCCUPATO · +5 MIN</button>`:''}
         ${!done&&r.lead_id?`<button class="btn remove-contact" data-remove-contact="${esc(r.task_id)}" data-lead="${esc(r.lead_id)}" data-name="${esc(nameOf(r))}">NON PIÙ PRESENTE · ELIMINA</button>`:''}
         <a class="btn alt secondary-action" href="crm.html#contatti">CRM</a>
+        <button class="btn copy-card" type="button" data-copy-card="1">COPIA SCHEDA</button>
       </div>
       ${!done&&active?outcomeButtons(r):''}
       ${!done&&active?`<div class="focus-note">Il numero è sempre visibile e cliccabile. Puoi registrare l’esito anche senza premere CHIAMA ORA.</div>`:''}
@@ -280,6 +283,38 @@ function render(){
   document.querySelectorAll('[data-outcome]').forEach(b=>b.onclick=()=>completeTask(b.dataset.task,b.dataset.outcome,b));
   document.querySelectorAll('[data-busy-task]').forEach(b=>b.onclick=()=>scheduleBusyCallback(b.dataset.busyTask,b.dataset.lead,b.dataset.name,b.dataset.phone,b));
   document.querySelectorAll('[data-remove-contact]').forEach(b=>b.onclick=()=>removeContact(b.dataset.removeContact,b.dataset.lead,b.dataset.name,b));
+  document.querySelectorAll('[data-copy-card]').forEach(b=>b.onclick=()=>copyClientCard(b));
+}
+async function copyClientCard(btn){
+  const card=btn.closest('.call');
+  if(!card)return;
+  const originalLabel=btn.textContent;
+  try{
+    const text=card.innerText
+      .split('\n')
+      .filter(line=>line.trim()!=='COPIA SCHEDA')
+      .join('\n')
+      .replace(/\n{3,}/g,'\n\n')
+      .trim();
+    if(navigator.clipboard&&window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+    }else{
+      const ta=document.createElement('textarea');
+      ta.value=text;
+      ta.setAttribute('readonly','');
+      ta.style.position='fixed';
+      ta.style.opacity='0';
+      document.body.appendChild(ta);
+      ta.select();
+      const ok=document.execCommand('copy');
+      ta.remove();
+      if(!ok)throw new Error('Clipboard non disponibile');
+    }
+    btn.textContent='COPIATO ✓';
+    setTimeout(()=>{btn.textContent=originalLabel},1200);
+  }catch(e){
+    alert('Impossibile copiare la scheda: '+(e.message||e));
+  }
 }
 function showBusyReminder(rem){
   const bar=$('busyReminderBar');
