@@ -73,6 +73,8 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 .btn.busy:hover{background:#563b08!important;border-color:#e0a51e!important}
 .btn.copy-card{background:#0b3154!important;color:#bfeaff!important;border:1px solid #1d78b7!important}
 .btn.copy-card:hover{background:#0d4675!important;border-color:#20c7ff!important;color:#fff!important}
+.btn.news-transfer{background:#073c62!important;color:#d8f5ff!important;border:1px solid #20c7ff!important;box-shadow:0 0 14px rgba(32,199,255,.12)}
+.btn.news-transfer:hover{background:#095281!important;color:#fff!important}
 .busy-reminder-bar{display:none;position:sticky;top:72px;z-index:35;margin:0 0 10px;padding:11px 12px;border-radius:12px;border:1px solid #e0a51e;background:linear-gradient(135deg,#4a3308,#241b08);color:#fff4c8;box-shadow:0 0 22px rgba(224,165,30,.22)}
 .busy-reminder-bar.show{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .busy-reminder-bar b{color:#ffd56a}
@@ -140,6 +142,7 @@ body.focus-active .notice{border-color:#2b6b43}
 let STATE={rows:[],target:100,total:0,done:0,remaining:0};
 let ACTIVE_TASK=localStorage.getItem('f1_active_call_task')||'';
 const BUSY_REMINDER_KEY='f1_busy_call_reminders_v1';
+const NEWS_TRANSFER_KEY='f1_news_transfer_queue_v1';
 const FROM_TERRITORY_APP=new URLSearchParams(location.search).get('source')==='f1-territory-app';
 let WAS_ACTIVE_FROM_APP=FROM_TERRITORY_APP;
 const $=id=>document.getElementById(id);
@@ -268,6 +271,7 @@ function render(){
         ${!done&&!active?`<button class="btn alt" data-outcome="FATTA" data-task="${esc(r.task_id)}">SEGNA FATTA</button>`:''}
         ${!done&&!active?`<button class="btn busy" data-busy-task="${esc(r.task_id)}" data-lead="${esc(r.lead_id||'')}" data-name="${esc(nameOf(r))}" data-phone="${esc(r.telefono||'')}">OCCUPATO · +5 MIN</button>`:''}
         ${!done&&r.lead_id?`<button class="btn remove-contact" data-remove-contact="${esc(r.task_id)}" data-lead="${esc(r.lead_id)}" data-name="${esc(nameOf(r))}">NON PIÙ PRESENTE · ELIMINA</button>`:''}
+        <button class="btn news-transfer" type="button" data-news-task="${esc(r.task_id)}">NOTIZIA</button>
         <a class="btn alt secondary-action" href="crm.html#contatti">CRM</a>
         <button class="btn copy-card" type="button" data-copy-card="1">COPIA SCHEDA</button>
       </div>
@@ -283,7 +287,76 @@ function render(){
   document.querySelectorAll('[data-outcome]').forEach(b=>b.onclick=()=>completeTask(b.dataset.task,b.dataset.outcome,b));
   document.querySelectorAll('[data-busy-task]').forEach(b=>b.onclick=()=>scheduleBusyCallback(b.dataset.busyTask,b.dataset.lead,b.dataset.name,b.dataset.phone,b));
   document.querySelectorAll('[data-remove-contact]').forEach(b=>b.onclick=()=>removeContact(b.dataset.removeContact,b.dataset.lead,b.dataset.name,b));
+  document.querySelectorAll('[data-news-task]').forEach(b=>b.onclick=()=>sendCardToNews(b.dataset.newsTask,b));
   document.querySelectorAll('[data-copy-card]').forEach(b=>b.onclick=()=>copyClientCard(b));
+}
+function newsTransferQueue(){
+  try{const q=JSON.parse(localStorage.getItem(NEWS_TRANSFER_KEY)||'[]');return Array.isArray(q)?q:[]}
+  catch{return[]}
+}
+function buildNewsPayload(r){
+  const fullName=nameOf(r);
+  const address=[r.via,r.civico].filter(Boolean).join(' ').trim();
+  const property=String(r.linked_property_address||r.linked_property_title||'').trim();
+  const cardText=[
+    fullName,
+    r.telefono?'☎ '+r.telefono:'',
+    'PRIORITÀ '+String(r.priority||0),
+    '',
+    'COMUNE',
+    r.comune||'Non indicato',
+    '',
+    'VIA / CIVICO CONTATTO',
+    address||'Non indicato',
+    '',
+    'PERCHÉ È IN LISTA',
+    evidenceLabel(r),
+    '',
+    'PERCHÉ LA CHIAMI',
+    r.call_reason_detail||r.selection_reason||'Ricerca immobiliare territoriale',
+    r.next_action?'Azione: '+r.next_action:'',
+    '',
+    'IMMOBILE / NOTIZIA COLLEGATA',
+    property||'Riferimento immobiliare rilevato dal motore F1',
+    r.linked_property_title&&r.linked_property_title!==property?r.linked_property_title:'',
+    r.linked_property_source||'Segnale interno F1'
+  ].filter((v,i,a)=>v!=='' || (i>0&&a[i-1]!== '')).join('\n').trim();
+  return {
+    id:'news_'+String(r.task_id||Date.now()),
+    source:'telefonate-oggi',
+    sourceTaskId:String(r.task_id||''),
+    leadId:String(r.lead_id||''),
+    nome:String(r.nome||''),
+    cognome:String(r.cognome||''),
+    fullName,
+    phone:String(r.telefono||''),
+    comune:String(r.comune||''),
+    via:String(r.via||''),
+    civico:String(r.civico||''),
+    priority:Number(r.priority)||0,
+    selectionReason:evidenceLabel(r),
+    callReason:String(r.call_reason_detail||r.selection_reason||''),
+    nextAction:String(r.next_action||''),
+    linkedPropertyAddress:String(r.linked_property_address||''),
+    linkedPropertyTitle:String(r.linked_property_title||''),
+    linkedPropertySource:String(r.linked_property_source||''),
+    linkedPropertyUrl:String(r.linked_property_url||''),
+    contactSourceUrl:String(r.contact_source_url||''),
+    cardText,
+    createdAt:new Date().toISOString()
+  };
+}
+function sendCardToNews(taskId,btn){
+  const r=STATE.rows.find(x=>String(x.task_id)===String(taskId));
+  if(!r)return alert('Scheda non trovata.');
+  const payload=buildNewsPayload(r);
+  const q=newsTransferQueue().filter(x=>String(x.sourceTaskId||'')!==String(payload.sourceTaskId));
+  q.push(payload);
+  localStorage.setItem(NEWS_TRANSFER_KEY,JSON.stringify(q));
+  const old=btn.textContent;
+  btn.textContent='NOTIZIA ✓';
+  setTimeout(()=>{btn.textContent=old},1200);
+  window.open('albero-fonti-notizie.html#notizie','_blank','noopener');
 }
 async function copyClientCard(btn){
   const card=btn.closest('.call');
