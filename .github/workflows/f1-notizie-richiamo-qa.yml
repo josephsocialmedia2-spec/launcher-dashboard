@@ -1,0 +1,104 @@
+name: F1 Notizie Richiami QA
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "albero-fonti-notizie.html"
+      - "f1-tree-cloud.js"
+      - "telefonate-oggi.html"
+      - ".github/workflows/f1-notizie-richiamo-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verifica workbench notizie e ciclo 18 giorni
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          tree=Path('albero-fonti-notizie.html').read_text(encoding='utf-8')
+          calls=Path('telefonate-oggi.html').read_text(encoding='utf-8')
+          cloud=Path('f1-tree-cloud.js').read_text(encoding='utf-8')
+
+          required_tree=[
+            'id="notizie"',
+            'id="newsWorkbenchList"',
+            'IMPORTA NOTIZIE JSON',
+            "const NEWS_TRANSFER_KEY='f1_news_transfer_queue_v1'",
+            'function consumeIncomingNewsQueue',
+            'function markNewsWorked',
+            'function markNewsRecallDone',
+            'function newsRecallDateFrom',
+            'd.getDay()===6',
+            'd.setDate(d.getDate()+3)',
+            'd.getDay()===0',
+            'd.setDate(d.getDate()+2)',
+            'LAVORATA · PROGRAMMA +18 GG',
+            'RICHIAMA ORA',
+            'RICHIAMATA · PROSSIMI 18 GG',
+            'function importNewsData'
+          ]
+          required_calls=[
+            'NOTIZIA</button>',
+            'data-news-task',
+            'function sendCardToNews',
+            'f1_news_transfer_queue_v1'
+          ]
+          required_cloud=[
+            'newsNextRecall:p.newsNextRecall',
+            'newsInbox:(db.newsInbox||[]).slice(0,500)',
+            'db.newsInbox=Array.isArray(g.newsInbox)'
+          ]
+          missing=[x for x in required_tree if x not in tree]
+          missing += [x for x in required_calls if x not in calls]
+          missing += [x for x in required_cloud if x not in cloud]
+          if missing:
+              raise SystemExit('FAIL elementi mancanti: '+', '.join(missing))
+
+          scripts=re.findall(r'<script>(.*?)</script>', tree, flags=re.S|re.I)
+          Path('/tmp/albero-inline.js').write_text('\n'.join(scripts), encoding='utf-8')
+
+          scripts2=re.findall(r'<script>(.*?)</script>', calls, flags=re.S|re.I)
+          Path('/tmp/telefonate-inline.js').write_text('\n'.join(scripts2), encoding='utf-8')
+          print('PASS struttura notizie, richiamo 18 giorni, import JSON e trasferimento da telefonate')
+          PY
+
+          node --check /tmp/albero-inline.js
+          node --check /tmp/telefonate-inline.js
+          node --check f1-tree-cloud.js
+
+      - name: Verifica spostamento weekend al martedì
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'JS'
+          function localISODate(d){const x=new Date(d.getTime()-d.getTimezoneOffset()*60000);return x.toISOString().slice(0,10)}
+          function newsRecallDateFrom(base){
+            const d=new Date(base||new Date());
+            d.setHours(12,0,0,0);
+            d.setDate(d.getDate()+18);
+            if(d.getDay()===6)d.setDate(d.getDate()+3);
+            else if(d.getDay()===0)d.setDate(d.getDate()+2);
+            return localISODate(d);
+          }
+          const cases=[
+            ['2026-09-29T12:00:00','2026-10-20'],
+            ['2026-09-30T12:00:00','2026-10-20'],
+            ['2026-09-24T12:00:00','2026-10-12']
+          ];
+          for(const [base,expected] of cases){
+            const got=newsRecallDateFrom(new Date(base));
+            if(got!==expected)throw new Error(base+' -> '+got+' atteso '+expected);
+          }
+          console.log('PASS calendario richiamo 18 giorni con weekend -> martedì');
+          JS
