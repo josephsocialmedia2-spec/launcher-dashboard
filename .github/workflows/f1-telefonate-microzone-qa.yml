@@ -57,7 +57,10 @@ jobs:
             'f1_news_transfer_queue_v1',
             'GOOGLE INDIRIZZO',
             'googleAddressQuery',
-            'https://www.google.com/search?q='
+            'https://www.google.com/search?q=',
+            'f1_news_transferred_tasks_v1',
+            "newsSent?'NOTIZIA ✓':'NOTIZIA'",
+            'markNewsTransferred(taskId)'
           ]
           missing=[x for x in required if x not in s]
           if missing:
