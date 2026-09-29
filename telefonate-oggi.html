@@ -69,6 +69,12 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 .phone-direct:hover{text-decoration:underline;color:#fff!important}
 .btn.remove-contact{background:#32171c!important;color:#ffb5c0!important;border:1px solid #7c3442!important}
 .btn.remove-contact:hover{background:#4b1e27!important;border-color:#d15f73!important}
+.btn.busy{background:#3d2b08!important;color:#ffd56a!important;border:1px solid #9b6f11!important}
+.btn.busy:hover{background:#563b08!important;border-color:#e0a51e!important}
+.busy-reminder-bar{display:none;position:sticky;top:72px;z-index:35;margin:0 0 10px;padding:11px 12px;border-radius:12px;border:1px solid #e0a51e;background:linear-gradient(135deg,#4a3308,#241b08);color:#fff4c8;box-shadow:0 0 22px rgba(224,165,30,.22)}
+.busy-reminder-bar.show{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.busy-reminder-bar b{color:#ffd56a}
+.busy-reminder-actions{display:flex;gap:7px;flex-wrap:wrap}
 body.focus-active .toolbar,body.focus-active .nav-panel,body.focus-active .secondary-action{display:none!important}
 body.focus-active .call:not(.focus-card){display:none!important}
 body.focus-active .wrap{max-width:760px}
@@ -94,6 +100,7 @@ body.focus-active .notice{border-color:#2b6b43}
 </div>
 
 <main class="wrap">
+  <div id="busyReminderBar" class="busy-reminder-bar" role="status" aria-live="assertive"></div>
   <div class="ey">F1 ACQUISITION ENGINE · ACQUISIZIONE IMMOBILI</div>
   <h1>100 TELEFONATE DI OGGI</h1>
   <p class="meta">Dalle 09:30 alle 12:30 il sistema entra in modalità chiamate: un contatto alla volta, esito, contatto successivo.</p>
@@ -130,6 +137,7 @@ body.focus-active .notice{border-color:#2b6b43}
 <script>
 let STATE={rows:[],target:100,total:0,done:0,remaining:0};
 let ACTIVE_TASK=localStorage.getItem('f1_active_call_task')||'';
+const BUSY_REMINDER_KEY='f1_busy_call_reminders_v1';
 const FROM_TERRITORY_APP=new URLSearchParams(location.search).get('source')==='f1-territory-app';
 let WAS_ACTIVE_FROM_APP=FROM_TERRITORY_APP;
 const $=id=>document.getElementById(id);
@@ -173,16 +181,30 @@ function updateSession(){
   }
   if(STATE.rows.length) render();
 }
+function busyReminders(){
+  try{return JSON.parse(localStorage.getItem(BUSY_REMINDER_KEY)||'[]').filter(Boolean)}
+  catch{return[]}
+}
+function saveBusyReminders(rows){localStorage.setItem(BUSY_REMINDER_KEY,JSON.stringify(rows||[]))}
+function busyReminderFor(taskId){
+  return busyReminders().find(x=>String(x.taskId)===String(taskId))||null;
+}
+function isBusyWaiting(r){
+  const rem=busyReminderFor(r.task_id);
+  return !!(rem&&!rem.fired&&Number(rem.remindAt)>Date.now());
+}
 function filteredRows(){
   const q=String($('search')?.value||'').trim().toLowerCase();
-  if(!q)return STATE.rows;
-  return STATE.rows.filter(r=>[r.nome,r.cognome,r.telefono,r.comune,r.via,r.civico,r.selection_reason,r.call_reason_detail,r.linked_property_address,r.linked_property_title,r.linked_property_source,r.source].join(' ').toLowerCase().includes(q));
+  const base=STATE.rows;
+  if(!q)return base;
+  return base.filter(r=>[r.nome,r.cognome,r.telefono,r.comune,r.via,r.civico,r.selection_reason,r.call_reason_detail,r.linked_property_address,r.linked_property_title,r.linked_property_source,r.source].join(' ').toLowerCase().includes(q));
 }
 function outcomeButtons(r){
   return `<div class="outcomes">
     <div class="outcome-title">SCEGLI L'ESITO QUANDO VUOI — NON È NECESSARIO PREMERE "CHIAMA ORA"</div>
     <button class="btn alt" data-outcome="FATTA" data-task="${esc(r.task_id)}">FATTA</button>
     <button class="btn orange" data-outcome="NON_RISPONDE" data-task="${esc(r.task_id)}">NON RISPONDE</button>
+    <button class="btn busy" data-busy-task="${esc(r.task_id)}" data-lead="${esc(r.lead_id||'')}" data-name="${esc(nameOf(r))}" data-phone="${esc(r.telefono||'')}">OCCUPATO · +5 MIN</button>
     <button class="btn gold" data-outcome="RICHIAMA" data-task="${esc(r.task_id)}">RICHIAMA</button>
     <button class="btn" data-outcome="INTERESSATO" data-task="${esc(r.task_id)}">INTERESSATO</button>
     <button class="btn red" data-outcome="NON_INTERESSATO" data-task="${esc(r.task_id)}">NON INTERESSATO</button>
@@ -193,8 +215,9 @@ function render(){
   $('remaining').textContent=STATE.remaining||0;
   $('done').textContent=STATE.done||0;
   const active=isFocusWindow();
-  let rows=active?STATE.rows.filter(r=>!isDone(r)).slice(0,1):filteredRows();
-  const firstOpenIndex=STATE.rows.findIndex(r=>!isDone(r));
+  const callableRows=STATE.rows.filter(r=>!isDone(r)&&!isBusyWaiting(r));
+  let rows=active?callableRows.slice(0,1):filteredRows();
+  const firstOpenIndex=callableRows.length?STATE.rows.indexOf(callableRows[0]):-1;
   if(active&&firstOpenIndex<0){
     $('list').innerHTML='<div class="panel empty"><b style="color:var(--g)">OBIETTIVO COMPLETATO.</b><br>Non risultano altre telefonate aperte per oggi.</div>';
     return;
@@ -241,6 +264,7 @@ function render(){
         ${r.contact_source_url?`<a class="btn alt secondary-action" target="_blank" rel="noopener" href="${esc(r.contact_source_url)}">FONTE CONTATTO</a>`:''}
         ${!done?`<a class="btn gold secondary-action" href="http://127.0.0.1:8766/">CENTRALE PC</a>`:''}
         ${!done&&!active?`<button class="btn alt" data-outcome="FATTA" data-task="${esc(r.task_id)}">SEGNA FATTA</button>`:''}
+        ${!done&&!active?`<button class="btn busy" data-busy-task="${esc(r.task_id)}" data-lead="${esc(r.lead_id||'')}" data-name="${esc(nameOf(r))}" data-phone="${esc(r.telefono||'')}">OCCUPATO · +5 MIN</button>`:''}
         ${!done&&r.lead_id?`<button class="btn remove-contact" data-remove-contact="${esc(r.task_id)}" data-lead="${esc(r.lead_id)}" data-name="${esc(nameOf(r))}">NON PIÙ PRESENTE · ELIMINA</button>`:''}
         <a class="btn alt secondary-action" href="crm.html#contatti">CRM</a>
       </div>
@@ -254,7 +278,93 @@ function render(){
     setTimeout(render,250);
   }));
   document.querySelectorAll('[data-outcome]').forEach(b=>b.onclick=()=>completeTask(b.dataset.task,b.dataset.outcome,b));
+  document.querySelectorAll('[data-busy-task]').forEach(b=>b.onclick=()=>scheduleBusyCallback(b.dataset.busyTask,b.dataset.lead,b.dataset.name,b.dataset.phone,b));
   document.querySelectorAll('[data-remove-contact]').forEach(b=>b.onclick=()=>removeContact(b.dataset.removeContact,b.dataset.lead,b.dataset.name,b));
+}
+function showBusyReminder(rem){
+  const bar=$('busyReminderBar');
+  if(!bar||!rem)return;
+  const tel=String(rem.phone||'').trim();
+  bar.innerHTML=`<div><b>RICHIAMO ORA</b><br>${esc(rem.name||'Contatto')} · occupato 5 minuti fa</div><div class="busy-reminder-actions">${tel?`<a class="btn call-now" href="tel:${esc(tel)}">RICHIAMA · ${esc(tel)}</a>`:''}<button class="btn alt" id="dismissBusyReminder">CHIUDI</button></div>`;
+  bar.classList.add('show');
+  const close=$('dismissBusyReminder');
+  if(close)close.onclick=()=>bar.classList.remove('show');
+}
+async function scheduleBusyCallback(taskId,leadId,contactName,contactPhone,btn){
+  if(!taskId)return;
+  btn.disabled=true;
+  const now=new Date();
+  const remindAt=new Date(now.getTime()+5*60*1000);
+  try{
+    await F1AcquisitionData.addInteraction({
+      lead_id:leadId||'',
+      task_id:taskId,
+      interaction_type:'CALL',
+      direction:'OUTBOUND',
+      occurred_at:now.toISOString(),
+      outcome:'OCCUPATO',
+      note:'Linea occupata. Richiamare tra 5 minuti.',
+      next_action:'Richiamare dopo occupato',
+      next_action_date:remindAt.toISOString()
+    });
+    await F1AcquisitionData.rest('tasks?task_id=eq.'+encodeURIComponent(taskId),{
+      method:'PATCH',
+      body:JSON.stringify({
+        status:'OPEN',
+        outcome:'OCCUPATO',
+        due_date:remindAt.toISOString(),
+        completed_at:null,
+        updated_at:now.toISOString()
+      }),
+      prefer:'return=representation'
+    });
+    if(leadId){
+      await F1AcquisitionData.updateLead(leadId,{
+        next_action:'Richiamare dopo occupato',
+        next_action_date:remindAt.toISOString()
+      });
+    }
+    const reminders=busyReminders().filter(x=>String(x.taskId)!==String(taskId));
+    reminders.push({
+      taskId:String(taskId),
+      leadId:String(leadId||''),
+      name:String(contactName||'Contatto'),
+      phone:String(contactPhone||''),
+      remindAt:remindAt.getTime(),
+      fired:false
+    });
+    saveBusyReminders(reminders);
+    if('Notification' in window&&Notification.permission==='default'){
+      Notification.requestPermission().catch(()=>{});
+    }
+    if(ACTIVE_TASK===String(taskId)){
+      ACTIVE_TASK='';
+      localStorage.removeItem('f1_active_call_task');
+    }
+    await load();
+    $('sessionSub').textContent='Richiamo '+(contactName||'contatto')+' programmato alle '+remindAt.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})+'.';
+  }catch(e){
+    alert('Impossibile programmare il richiamo: '+(e.message||e));
+    btn.disabled=false;
+  }
+}
+function checkBusyReminders(){
+  const rows=busyReminders();
+  let changed=false;
+  for(const rem of rows){
+    if(!rem.fired&&Number(rem.remindAt)<=Date.now()){
+      rem.fired=true;
+      changed=true;
+      showBusyReminder(rem);
+      if('Notification' in window&&Notification.permission==='granted'){
+        try{new Notification('F1 · Richiama ora',{body:(rem.name||'Contatto')+(rem.phone?' · '+rem.phone:'')+' — linea occupata 5 minuti fa.'})}catch{}
+      }
+    }
+  }
+  if(changed){
+    saveBusyReminders(rows);
+    load().catch(()=>{});
+  }
 }
 async function removeContact(taskId,leadId,contactName,btn){
   if(!leadId)return alert('Impossibile eliminare: identificativo contatto mancante.');
@@ -334,6 +444,8 @@ window.addEventListener('load',()=>{
   $('reloadBtn').onclick=load;
   updateSession();
   setInterval(updateSession,1000);
+  setInterval(checkBusyReminders,1000);
+  checkBusyReminders();
   load();
 });
 </script>
