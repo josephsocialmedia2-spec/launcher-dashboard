@@ -1,9 +1,49 @@
 {
   "version": 2,
-  "generated_at": "2026-09-29T09:06:59.620489+00:00",
+  "generated_at": "2026-09-29T15:54:12.177191+00:00",
   "pipeline": "F1_COMMON_APPROVAL_QUEUE",
   "crm_target": "Supabase public.approval_queue",
   "items": [
+    {
+      "approval_id": "facebook-group-FBG-CE159B7ED4",
+      "task_id": "facebook-group-FBG-CE159B7ED4",
+      "lead_id": "",
+      "property_id": "",
+      "module": "FACEBOOK_GROUPS",
+      "platform": "FACEBOOK",
+      "comune": "Beinasco",
+      "type": "GROUP_APPROVAL",
+      "subject": "NO CASELLO BEINASCO SICUREZZA STRADALE",
+      "result": "Che aggiunge: «Già adesso chi arriva di Pinerolo esce a Volvera per evitare il pedaggio, intasando le provinciali di Orbassano, Beinasco e Rivalta. Da oggi diventerà una prassi comune e a farne le spese saranno i cittadini e l’ambiente».",
+      "action_proposed": "APPROVA GRUPPO",
+      "score": null,
+      "source_url": "https://www.facebook.com/groups/69791080942/",
+      "preview_url": "",
+      "created_at": "2026-09-29T11:26:12+00:00",
+      "origin": "open-social-scheduler/growth/groups.json",
+      "status": "DA_APPROVARE",
+      "metadata": {}
+    },
+    {
+      "approval_id": "facebook-signal-FBS-F5151E97A3",
+      "task_id": "facebook-signal-FBS-F5151E97A3",
+      "lead_id": "",
+      "property_id": "",
+      "module": "FACEBOOK_NETWORK",
+      "platform": "FACEBOOK",
+      "comune": "Almese",
+      "type": "NETWORK_SIGNAL",
+      "subject": "Vendo, compro, Val di Susa ( Avigliana/ Almese / Ferriera ...",
+      "result": "Aug 18, 2026 · CERCHIAMO CASA IN VAL SUSA: Villetta o Indipendente con Affitto a Riscatto (Rent to Buy) Famiglia di 4 persone è alla ricerca di una soluzione abitativa spaziosa in Val Susa. Valutiamo...",
+      "action_proposed": "APPROVA ANALISI",
+      "score": null,
+      "source_url": "https://www.facebook.com/groups/307179086293602/permalink/2908801929464625/",
+      "preview_url": "",
+      "created_at": "2026-09-29T11:23:54+00:00",
+      "origin": "open-social-scheduler/growth/signals.json",
+      "status": "DA_APPROVARE",
+      "metadata": {}
+    },
     {
       "approval_id": "facebook-group-FBG-444FD56CB9",
       "task_id": "facebook-group-FBG-444FD56CB9",
@@ -16951,11 +16991,11 @@
     }
   ],
   "summary": {
-    "total": 846,
+    "total": 848,
     "seller_radar": 592,
     "social_content": 5,
-    "facebook_groups": 216,
-    "facebook_network": 32,
+    "facebook_groups": 217,
+    "facebook_network": 33,
     "social_optimization": 1,
     "instagram_gate": 0
   }
