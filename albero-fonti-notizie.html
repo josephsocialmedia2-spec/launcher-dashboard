@@ -40,6 +40,13 @@ button{cursor:pointer}
 .news-list{display:grid;gap:9px}.news-card{border:1px solid rgba(32,199,255,.24);background:#081d31;border-radius:13px;padding:12px}.news-card.due{border-color:#f2b84b;box-shadow:0 0 18px rgba(242,184,75,.10)}.news-card.todo{border-color:#20c7ff}
 .news-card-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.news-card-head h3{margin:0;font-size:14px}.news-status{font-size:9px;font-weight:900;border-radius:999px;padding:5px 8px;background:#0b3154;color:#bfeaff;border:1px solid rgba(32,199,255,.32);white-space:nowrap}.news-status.due{background:#4d3713;color:#ffe1a0;border-color:#8e6727}.news-status.todo{background:#0b3154;color:#bfeaff}.news-status.active{background:#11392f;color:#a8f0d4;border-color:#347861}
 .news-meta{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 9px;color:#9fb7d0;font-size:10px}.news-body{font-size:11px;line-height:1.5;color:#d8e8f5}.news-body b{color:#fff}.news-property{margin-top:8px;padding:8px 9px;border-radius:9px;background:#0a243d;border:1px solid rgba(32,199,255,.18)}
+.news-note-box{margin-top:10px;padding:10px;border-radius:11px;background:#061a2d;border:1px solid rgba(32,199,255,.24)}
+.news-note-box label{display:block;margin-bottom:6px;font-size:10px;font-weight:1000;letter-spacing:.08em;color:#7de7ff}
+.news-note-box textarea{width:100%;min-height:88px;resize:vertical;background:#031421!important;color:#f5f8fc!important;border:1px solid rgba(32,199,255,.32)!important;border-radius:9px!important;padding:9px!important;line-height:1.45}
+.news-note-box textarea:focus{border-color:#20c7ff!important;box-shadow:0 0 0 3px rgba(32,199,255,.10)!important}
+.news-note-tools{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:7px}
+.news-note-meta{font-size:9px;color:#9fb7d0}
+.news-note-save{background:#0b5db8!important;border:1px solid #20c7ff!important;color:#fff!important}
 .news-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.news-actions .btn{font-weight:900}.news-call{background:linear-gradient(135deg,#155ee8,#168fff)!important;border:1px solid #20c7ff!important;color:#fff!important}.news-worked{background:#11392f!important;border:1px solid #347861!important;color:#b9f5dc!important}.news-archive{background:#2c1e22!important;border:1px solid #6d3a48!important;color:#ffc4d0!important}
 .news-due-summary{display:none;margin-bottom:9px;padding:10px 11px;border-radius:11px;background:#4d3713;border:1px solid #8e6727;color:#ffe1a0;font-size:11px}.news-due-summary.show{display:block}.news-empty{padding:16px;text-align:center;color:#9fb7d0;border:1px dashed rgba(32,199,255,.24);border-radius:11px}
 .news-import{display:inline-flex;align-items:center;justify-content:center;min-height:38px;border-radius:9px;padding:8px 10px;background:#0b3154;color:#d8f5ff;border:1px solid #20c7ff;font-size:10px;font-weight:900;cursor:pointer}.news-import input{display:none}
@@ -749,6 +756,9 @@ function normalizeNewsItem(item){
   linkedPropertyUrl:String(item.linkedPropertyUrl||''),
   contactSourceUrl:String(item.contactSourceUrl||''),
   cardText:String(item.cardText||''),
+  notes:String(item.notes||item.newsNote||''),
+  noteUpdatedAt:item.noteUpdatedAt||'',
+  noteHistory:Array.isArray(item.noteHistory)?item.noteHistory:[],
   status:String(item.status||'DA_LAVORARE'),
   createdAt:item.createdAt||new Date().toISOString(),
   workedAt:item.workedAt||'',
@@ -840,6 +850,7 @@ function renderNewsWorkbench(){
    '<div class="news-body"><b>'+esc(n.selectionReason||'NOTIZIA IMMOBILIARE')+'</b>'+
    (n.callReason?'<br>'+esc(n.callReason):'')+
    ((n.linkedPropertyAddress||n.linkedPropertyTitle)?'<div class="news-property"><b>IMMOBILE / NOTIZIA COLLEGATA</b><br>'+esc(n.linkedPropertyAddress||n.linkedPropertyTitle)+(n.linkedPropertySource?'<br><small>'+esc(n.linkedPropertySource)+'</small>':'')+'</div>':'')+
+   '<div class="news-note-box"><label>NOTE DELLA NOTIZIA</label><textarea data-news-note="'+esc(n.id)+'" placeholder="Scrivi qui dettagli, esito della conversazione, informazioni sul proprietario, tempistiche, motivazione di vendita, osservazioni...">'+esc(n.notes||'')+'</textarea><div class="news-note-tools"><span class="news-note-meta">'+(n.noteUpdatedAt?'Ultimo salvataggio: '+esc(new Date(n.noteUpdatedAt).toLocaleString('it-IT')):'Nessuna nota salvata')+'</span><button class="btn news-note-save" type="button" data-save-news-note="'+esc(n.id)+'">SALVA NOTA</button></div></div>'+
    '</div><div class="news-actions">'+
    (isTodo?'<button class="btn news-worked" onclick="markNewsWorked(\''+esc(n.id)+'\')">LAVORATA · PROGRAMMA +18 GG</button>':'')+
    (!isTodo&&phone?'<a class="btn news-call" href="tel:'+esc(phone)+'">'+(isDue?'RICHIAMA ORA':'RICHIAMA')+' · '+esc(phone)+'</a>':'')+
@@ -849,16 +860,40 @@ function renderNewsWorkbench(){
    '<button class="btn news-archive" onclick="archiveNewsItem(\''+esc(n.id)+'\')">ARCHIVIA</button>'+
    '</div></article>';
  }).join('');
+ holder.querySelectorAll('[data-save-news-note]').forEach(btn=>btn.addEventListener('click',()=>saveNewsNote(btn.dataset.saveNewsNote,btn)));
+}
+function saveNewsNote(id,btn){
+ const n=(db.newsInbox||[]).find(x=>String(x.id)===String(id));if(!n)return;
+ const area=document.querySelector('[data-news-note="'+CSS.escape(String(id))+'"]');if(!area)return;
+ const text=String(area.value||'').trim();
+ const previous=String(n.notes||'').trim();
+ if(text===previous){toast(text?'Nota già salvata':'Nessuna nota da salvare');return}
+ const now=new Date().toISOString();
+ n.notes=text;
+ n.noteUpdatedAt=now;
+ n.noteHistory=Array.isArray(n.noteHistory)?n.noteHistory:[];
+ n.noteHistory.push({at:now,text});
+ if(n.noteHistory.length>100)n.noteHistory=n.noteHistory.slice(-100);
+ const p=db.people.find(x=>x.id===n.personId);
+ if(p){
+  p.updatedAt=now;
+  try{window.F1TreeCloud?.touchLocal?.(p)}catch(_){}
+ }
+ persist();
+ if(btn){const old=btn.textContent;btn.textContent='NOTA SALVATA ✓';setTimeout(()=>{btn.textContent=old},1200)}
+ renderNewsWorkbench();
+ toast('Nota della notizia salvata');
 }
 function markNewsWorked(id){
  const n=(db.newsInbox||[]).find(x=>String(x.id)===String(id));if(!n)return;
  n.status='IN_RICHIAMO';n.workedAt=new Date().toISOString();n.nextRecall=newsRecallDateFrom(new Date());n.recallCount=Number(n.recallCount)||0;
+ n.noteHistory=Array.isArray(n.noteHistory)?n.noteHistory:[];
  refreshPersonNewsRecall(n.personId);persist();renderAll();toast('Richiamo programmato per '+formatDateIT(n.nextRecall));
 }
 function markNewsRecallDone(id){
  const n=(db.newsInbox||[]).find(x=>String(x.id)===String(id));if(!n)return;
  const now=new Date(),today=localISODate(now),previous=n.nextRecall||'';
- n.recallHistory=Array.isArray(n.recallHistory)?n.recallHistory:[];n.recallHistory.push({at:now.toISOString(),scheduledFor:previous});
+ n.recallHistory=Array.isArray(n.recallHistory)?n.recallHistory:[];n.recallHistory.push({at:now.toISOString(),scheduledFor:previous,note:String(n.notes||'')});
  n.recallCount=(Number(n.recallCount)||0)+1;n.status='IN_RICHIAMO';n.nextRecall=newsRecallDateFrom(now);
  const p=db.people.find(x=>x.id===n.personId);if(p){p.lastContact=today;p.contactDates=Array.isArray(p.contactDates)?p.contactDates:[];p.contactDates.push(today);p.updatedAt=now.toISOString()}
  refreshPersonNewsRecall(n.personId);persist();renderAll();toast('Prossimo richiamo: '+formatDateIT(n.nextRecall));
