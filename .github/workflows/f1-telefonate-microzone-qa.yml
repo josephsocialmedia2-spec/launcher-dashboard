@@ -1,4 +1,4 @@
-name: F1 Telefonate Microzone QA
+name: F1 Telefonate Dashboard QA
 
 on:
   workflow_dispatch:
@@ -15,60 +15,49 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Verifica Pagina 1 -> Pagina 2 e quadrato del segnale
+
+      - name: Verifica controlli telefonata e rimozione contatto
         shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
           from pathlib import Path
           import re
+
           p=Path('telefonate-oggi.html')
           s=p.read_text(encoding='utf-8')
+
           required=[
-            'PAGINA 2',
-            'TELEFONATE · QUADRATO DEL SEGNALE',
-            'URLSearchParams',
-            'microzone_targets.csv',
-            'osm_microzone_cache',
-            'dynamicZone',
-            'focusSelected',
-            'SEGNALE · VIA CENTRALE',
-            'VIA 1','VIA 2','VIA 3','VIA 4',
-            'Directory Radar','SEGNA RPO OK','APPUNTAMENTO','NON INTERESSATO',
-            'GOOGLE 5 VIE','PAGINEGIALLE','TORNA AL MASTER',
-            'TERRITORIAL_ROUTE','WHATSAPP OPERATIVO'
+            'NON PIÙ PRESENTE · ELIMINA',
+            'data-remove-contact',
+            'async function removeContact',
+            'CONTATTO_NON_PIU_PRESENTE',
+            'deleted:true',
+            'do_not_contact:true',
+            'status:\'ARCHIVIATO\'',
+            'class="phone-direct"',
+            'href="tel:',
+            'SCEGLI L\'ESITO QUANDO VUOI',
+            'outcomeButtons(r)'
           ]
           missing=[x for x in required if x not in s]
           if missing:
-              raise SystemExit('FAIL elementi mancanti: '+', '.join(missing))
-          if s.count('streetbox') < 6:
-              raise SystemExit('FAIL quadrato non presente')
+              raise SystemExit('FAIL controlli mancanti: '+', '.join(missing))
+
+          forbidden=[
+            "Prima premi CHIAMA ORA. Gli esiti si attivano dopo l’avvio della chiamata.",
+            "outcomeButtons(r,armed)"
+          ]
+          present=[x for x in forbidden if x in s]
+          if present:
+              raise SystemExit('FAIL vincolo CHIAMA ORA ancora presente: '+', '.join(present))
+
           scripts=re.findall(r'<script>(.*?)</script>', s, flags=re.S|re.I)
           if not scripts:
               raise SystemExit('FAIL JavaScript inline assente')
           Path('/tmp/telefonate-inline.js').write_text('\n'.join(scripts), encoding='utf-8')
-          print('PASS struttura Pagina 2, quadrato microzona e flusso territoriale')
+          print('PASS controlli rimozione, telefono diretto ed esiti non vincolati')
           PY
-          node --check /tmp/telefonate-inline.js
-          echo "PASS JavaScript Pagina 2"
 
-      - name: Verifica esempio Almese Via Drubiaglio
-        shell: bash
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          import json, urllib.request, unicodedata, re
-          url='https://raw.githubusercontent.com/josephsocialmedia2-spec/immobili-in-zona/main/seller_radar_auto/data/osm_microzone_cache/almese.json'
-          req=urllib.request.Request(url,headers={'User-Agent':'F1-Microzone-QA/1.0'})
-          with urllib.request.urlopen(req,timeout=30) as r:
-              roads=json.loads(r.read().decode('utf-8'))
-          def norm(s):
-              s=unicodedata.normalize('NFKD',str(s or ''))
-              s=''.join(c for c in s if not unicodedata.combining(c)).lower()
-              return re.sub(r'[^a-z0-9 ]+',' ',s).strip()
-          names={norm(x.get('name')) for x in roads}
-          if 'via drubiaglio' not in names:
-              raise SystemExit('FAIL fixture reale: Via Drubiaglio non presente nella cache Almese')
-          print('PASS fixture reale | Almese · Via Drubiaglio disponibile per quadrato dinamico')
-          PY
-# final-qa-rerun-js-fixed
+          node --check /tmp/telefonate-inline.js
+          echo "PASS sintassi JavaScript telefonate"
