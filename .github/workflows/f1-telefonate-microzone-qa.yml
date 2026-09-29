@@ -38,7 +38,14 @@ jobs:
             'class="phone-direct"',
             'href="tel:',
             'SCEGLI L\'ESITO QUANDO VUOI',
-            'outcomeButtons(r)'
+            'outcomeButtons(r)',
+            'OCCUPATO · +5 MIN',
+            'data-busy-task',
+            'async function scheduleBusyCallback',
+            'function checkBusyReminders',
+            'BUSY_REMINDER_KEY',
+            'Linea occupata. Richiamare tra 5 minuti.',
+            'next_action:\'Richiamare dopo occupato\''
           ]
           missing=[x for x in required if x not in s]
           if missing:
@@ -56,7 +63,7 @@ jobs:
           if not scripts:
               raise SystemExit('FAIL JavaScript inline assente')
           Path('/tmp/telefonate-inline.js').write_text('\n'.join(scripts), encoding='utf-8')
-          print('PASS controlli rimozione, telefono diretto ed esiti non vincolati')
+          print('PASS rimozione, telefono diretto, esiti liberi e richiamo OCCUPATO +5 minuti')
           PY
 
           node --check /tmp/telefonate-inline.js
