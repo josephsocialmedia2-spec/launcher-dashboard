@@ -53,7 +53,8 @@ jobs:
             'NOTA SALVATA ✓'
           ]
           required_calls=[
-            'NOTIZIA</button>',
+            "data-news-task",
+  "newsSent?'NOTIZIA ✓':'NOTIZIA'",
             'data-news-task',
             'function sendCardToNews',
             'f1_news_transfer_queue_v1'
