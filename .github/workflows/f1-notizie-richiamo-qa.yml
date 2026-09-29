@@ -46,7 +46,11 @@ jobs:
             'LAVORATA · PROGRAMMA +18 GG',
             'RICHIAMA ORA',
             'RICHIAMATA · PROSSIMI 18 GG',
-            'function importNewsData'
+            'function importNewsData',
+            'NOTE DELLA NOTIZIA',
+            'function saveNewsNote',
+            'noteHistory:Array.isArray(item.noteHistory)',
+            'NOTA SALVATA ✓'
           ]
           required_calls=[
             'NOTIZIA</button>',
@@ -70,7 +74,7 @@ jobs:
 
           scripts2=re.findall(r'<script>(.*?)</script>', calls, flags=re.S|re.I)
           Path('/tmp/telefonate-inline.js').write_text('\n'.join(scripts2), encoding='utf-8')
-          print('PASS struttura notizie, richiamo 18 giorni, import JSON e trasferimento da telefonate')
+          print('PASS struttura notizie, note persistenti, richiamo 18 giorni, import JSON e trasferimento da telefonate')
           PY
 
           node --check /tmp/albero-inline.js
