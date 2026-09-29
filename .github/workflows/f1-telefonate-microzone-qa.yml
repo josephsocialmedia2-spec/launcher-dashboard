@@ -54,7 +54,10 @@ jobs:
             'NOTIZIA</button>',
             'data-news-task',
             'function sendCardToNews',
-            'f1_news_transfer_queue_v1'
+            'f1_news_transfer_queue_v1',
+            'GOOGLE INDIRIZZO',
+            'googleAddressQuery',
+            'https://www.google.com/search?q='
           ]
           missing=[x for x in required if x not in s]
           if missing:
@@ -72,7 +75,7 @@ jobs:
           if not scripts:
               raise SystemExit('FAIL JavaScript inline assente')
           Path('/tmp/telefonate-inline.js').write_text('\n'.join(scripts), encoding='utf-8')
-          print('PASS rimozione, telefono diretto, esiti liberi, OCCUPATO +5 minuti, COPIA SCHEDA e invio NOTIZIA')
+          print('PASS rimozione, telefono diretto, esiti liberi, OCCUPATO +5 minuti, COPIA SCHEDA, invio NOTIZIA e GOOGLE INDIRIZZO')
           PY
 
           node --check /tmp/telefonate-inline.js
