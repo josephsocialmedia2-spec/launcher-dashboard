@@ -90,7 +90,7 @@ function boot(){
  $('azImportConfirm')?.addEventListener('click',confirmImport);$('azTemplateAziende')?.addEventListener('click',()=>downloadTemplate('aziende'));$('azTemplatePrivati')?.addEventListener('click',()=>downloadTemplate('privati'));
  ['azSearch','azStatus','azSettore','azComune'].forEach(id=>$(id)?.addEventListener('input',render));['azStatus'].forEach(id=>$(id)?.addEventListener('change',render));
  document.querySelectorAll('[data-close-az]').forEach(b=>b.onclick=()=>$(b.dataset.closeAz).close());
- window.F1CRMAziende={load,downloadTemplate,openForm};
+ window.F1CRMAziende={load,downloadTemplate,openForm}; window.dispatchEvent(new CustomEvent('f1-crm-aziende-ready')); if(location.hash.replace('#','').toLowerCase()==='aziende')load();
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
