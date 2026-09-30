@@ -1,1 +1,38 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>RealMediaPro — Customer Campaign Engine</title><link rel="stylesheet" href="./styles.css"></head><body><header class="top"><b>REALMEDIAPRO</b><span>CUSTOMER CAMPAIGN ENGINE</span><strong>100 €/MESE</strong></header><main><section class="hero"><div><small>SISTEMA COMMERCIALE STANDARD</small><h1>Campagne commerciali per settore, generate in pochi passaggi.</h1><p>Grafica, email, WhatsApp, 4 contenuti e scheda commerciale pronta per il cliente.</p></div><aside><b>50 €</b><small>attivazione</small><b>100 €</b><small>al mese</small></aside></section><section class="grid"><div class="panel"><h2>Dati attività</h2><label>Nome attività<input id="company" placeholder="Es. Antica Cappella"></label><label>Settore<select id="sector"></select></label><label>Città / zona<input id="city" placeholder="Es. Avigliana"></label><label>Offerta del mese<input id="offer" placeholder="Es. Aperitivo per 2 persone"></label><label>Vantaggio / regalo<input id="gift" placeholder="Da confermare con il titolare"></label><label>CTA<input id="cta" value="Scopri l'offerta"></label><button id="generate">GENERA PACCHETTO</button></div><div class="panel" id="output"><h2>Output</h2><p class="muted">Compila i dati e genera la campagna.</p></div></section><section class="panel"><h2>Standard incluso</h2><div class="cards"><div><b>1</b>Email/mese</div><div><b>1</b>WhatsApp/mese</div><div><b>4</b>Contenuti/mese</div><div><b>4</b>Piattaforme</div><div><b>100 €</b>Extra</div></div><p class="muted">Costi esterni, API, advertising, stampa e lavorazioni fuori standard sono separati.</p></section></main><script src="./app.js"></script></body></html>
+<!doctype html>
+<html lang="it">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RealMediaPro — Customer Campaign Engine</title>
+<link rel="stylesheet" href="./styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+<header class="top"><b>REALMEDIAPRO</b><span>CUSTOMER CAMPAIGN ENGINE</span><strong>€99 ATTIVAZIONE + €100/MESE</strong></header>
+<main>
+<section class="hero"><div><small>SISTEMA COMMERCIALE 12 MESI</small><h1>Trasforma i clienti in una parte attiva della tua promozione.</h1><p>24 immagini del settore, 12 campagne annuali, QR Code, registrazione, contenuti, recensioni e UGC.</p></div>
+<aside><b>€99</b><small>attivazione</small><b>€100</b><small>al mese</small><strong>Extra: consuntivo a fine anno</strong></aside></section>
+
+<section class="grid"><div class="panel"><h2>Dati attività</h2>
+<label>Nome attività<input id="company" placeholder="Es. Antica Cappella"></label>
+<label>Settore<select id="sector"></select></label>
+<label>Città / zona<input id="city" placeholder="Es. Avigliana"></label>
+<label>Offerta del mese<input id="offer" placeholder="Es. Campagna clienti"></label>
+<label>Vantaggio / regalo<input id="gift" placeholder="Es. Pacco omaggio a casa"></label>
+<label>CTA<input id="cta" value="Scopri l'offerta"></label>
+<label>URL registrazione / landing<input id="registrationUrl" placeholder="https://..."></label>
+<button id="generate">GENERA CAMPAGNA</button></div>
+<div class="panel" id="output"><h2>Output</h2><p class="muted">Compila i dati, carica le immagini e genera la campagna.</p></div></section>
+
+<section class="panel"><h2>24 immagini del settore</h2>
+<p class="muted">Carica fino a 24 immagini. Rimangono nel browser e vengono utilizzate per anteprime e grafiche generate.</p>
+<div id="imageGrid" class="image-grid"></div>
+</section>
+
+<section class="panel"><h2>Meccanismo della campagna</h2>
+<div class="process"><div><b>01</b>Bigliettino + QR Code</div><div><b>02</b>Scansione e registrazione</div><div><b>03</b>Premio/pacco a casa</div><div><b>04</b>Recensione + video + hashtag</div><div><b>05</b>Raccolta UGC e pubblicazione</div><div><b>06</b>Una nuova campagna ogni mese</div></div>
+</section>
+
+<section class="panel"><h2>Standard commerciale</h2>
+<div class="cards"><div><b>€99</b>Attivazione</div><div><b>€100</b>Al mese</div><div><b>12</b>Campagne/anno</div><div><b>24</b>Immagini/settore</div><div><b>QR</b>Registrazione</div><div><b>UGC</b>Video clienti</div></div>
+<p class="muted">Le eventuali spese extra per grafiche aggiuntive, stampa, spedizioni, premi, advertising o servizi esterni vengono conteggiate e fatturate a fine anno secondo consuntivo.</p>
+</section>
+</main><script src="./app.js"></script></body></html>
