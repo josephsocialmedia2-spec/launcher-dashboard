@@ -141,7 +141,9 @@
           item.icon + '<span>' + item.label + '</span>' +
         '</a>'
       ).join("");
-    sidebar.appendChild(section);
+    const footer = sidebar.querySelector(".sidebar-footer, .f1-master-sidefoot");
+    if (footer) sidebar.insertBefore(section, footer);
+    else sidebar.appendChild(section);
   }
 
   function ensureNativeEntries(sidebar){
