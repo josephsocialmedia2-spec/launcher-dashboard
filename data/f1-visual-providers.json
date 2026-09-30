@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "zero_cost_policy": {
+    "max_cost_eur": 0,
+    "allow_paid_fallback": false
+  },
+  "providers": [
+    {
+      "id": "hf-zerogpu",
+      "name": "Hugging Face ZeroGPU",
+      "free": true,
+      "unlimited": false,
+      "queue": true,
+      "configured": false,
+      "model": "black-forest-labs/FLUX.1-schnell",
+      "capabilities": [
+        "TEXT_TO_IMAGE"
+      ],
+      "notes": "Free quota is limited; disabled until compatible Space endpoint is configured."
+    }
+  ],
+  "excluded_models": [
+    {
+      "id": "flux-dev-family",
+      "reason": "Non-commercial model license; excluded from default commercial path."
+    }
+  ]
+}
