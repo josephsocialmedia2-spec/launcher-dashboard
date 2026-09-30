@@ -34,6 +34,8 @@ function setNav(){
   const contacts=state.section==='contatti';
   if($('excelImportBtn'))$('excelImportBtn').style.display=contacts?'':'none';
   if($('newBtn'))$('newBtn').style.display=contacts?'':'none';
+  if($('azTemplatePrivati'))$('azTemplatePrivati').style.display=company?'none':(contacts?'':'none');
+  if($('azTemplateAziende'))$('azTemplateAziende').style.display=company?'none':(contacts?'':'none');
   if($('azNew'))$('azNew').style.display=company?'':'none';
   if($('azImportTrigger'))$('azImportTrigger').style.display=company?'':'none';
   if($('azExport'))$('azExport').style.display=company?'':'none';
