@@ -157,7 +157,8 @@ function init(){
   if(state.section==='aziende')window.F1CRMAziende?.load?.();
   if($('q'))$('q').addEventListener('input',schedule);
   window.addEventListener('hashchange',()=>{if(hubEnabled())applySection()});
-  window.addEventListener('f1-crm-data-changed',()=>load());
+  window.addEventListener('f1-crm-data-changed',()=>state.section==='aziende'?window.F1CRMAziende?.load?.():load());
+  window.addEventListener('f1-crm-aziende-ready',()=>{if(state.section==='aziende')window.F1CRMAziende?.load?.()});
   if(window.F1UnifiedCRM)window.F1UnifiedCRM.reload=load;
   load();
 }
