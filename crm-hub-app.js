@@ -3,8 +3,8 @@
 const $=id=>document.getElementById(id);
 const Data=()=>window.F1AcquisitionData;
 const PAGE_SIZE=50;
-const HUB_SECTIONS=new Set(['','contatti','immobili','trattative','attivita','aziende']);
-const LABELS={contatti:'CONTATTI',immobili:'IMMOBILI',trattative:'TRATTATIVE',attivita:'ATTIVITÀ',aziende:'CRM AZIENDE'};
+const HUB_SECTIONS=new Set(['','contatti','immobili','trattative','attivita']);
+const LABELS={contatti:'CONTATTI',immobili:'IMMOBILI',trattative:'TRATTATIVE',attivita:'ATTIVITÀ'};
 let state={section:'contatti',offset:0,filtered:0,total:0,rows:[],filters:{},timer:0,request:0};
 
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -17,16 +17,9 @@ function hubEnabled(){
   if(q.has('mode')||q.has('download')||h==='territory-news')return false;
   return HUB_SECTIONS.has(h);
 }
-function sectionFromHash(){const h=location.hash.replace('#','').toLowerCase();return ['contatti','immobili','trattative','attivita','aziende'].includes(h)?h:'contatti'}
+function sectionFromHash(){const h=location.hash.replace('#','').toLowerCase();return ['contatti','immobili','trattative','attivita'].includes(h)?h:'contatti'}
 function payloadSection(){return state.section==='attivita'?'ATTIVITA':state.section.toUpperCase()}
 function setNav(){
-  const company=state.section==='aziende';
-  if($('aziendeView'))$('aziendeView').style.display=company?'block':'none';
-  if($('list'))$('list').style.display=company?'none':'';
-  if($('hubFilters'))$('hubFilters').style.display=company?'none':'';
-  if($('hubPager'))$('hubPager').style.display=company?'none':'';
-  if($('hubSectionTitle'))$('hubSectionTitle').style.display=company?'none':'';
-  if($('hubSectionCount'))$('hubSectionCount').style.display=company?'none':'';
   document.querySelectorAll('#crmHubNav [data-section]').forEach(a=>a.classList.toggle('on',a.dataset.section===state.section));
   $('hubSectionTitle').textContent=LABELS[state.section]||'CRM';
   const q=$('q');
@@ -34,11 +27,6 @@ function setNav(){
   const contacts=state.section==='contatti';
   if($('excelImportBtn'))$('excelImportBtn').style.display=contacts?'':'none';
   if($('newBtn'))$('newBtn').style.display=contacts?'':'none';
-  if($('azTemplatePrivati'))$('azTemplatePrivati').style.display=company?'none':(contacts?'':'none');
-  if($('azTemplateAziende'))$('azTemplateAziende').style.display=company?'none':(contacts?'':'none');
-  if($('azNew'))$('azNew').style.display=company?'':'none';
-  if($('azImportTrigger'))$('azImportTrigger').style.display=company?'':'none';
-  if($('azExport'))$('azExport').style.display=company?'':'none';
 }
 function activeFilters(){
   if(state.section==='contatti')return{
@@ -149,18 +137,15 @@ function schedule(){clearTimeout(state.timer);state.offset=0;state.timer=setTime
 function applySection(){
   state.section=sectionFromHash();state.offset=0;state.filters={};
   setNav();renderFilters();if($('q'))$('q').value='';
-  if(state.section==='aziende'){window.F1CRMAziende?.load?.();return}
   load();
 }
 function init(){
   if(!hubEnabled())return;
   if(!location.hash)history.replaceState(null,'','#contatti');
   setNav();renderFilters();
-  if(state.section==='aziende')window.F1CRMAziende?.load?.();
   if($('q'))$('q').addEventListener('input',schedule);
   window.addEventListener('hashchange',()=>{if(hubEnabled())applySection()});
-  window.addEventListener('f1-crm-data-changed',()=>state.section==='aziende'?window.F1CRMAziende?.load?.():load());
-  window.addEventListener('f1-crm-aziende-ready',()=>{if(state.section==='aziende')window.F1CRMAziende?.load?.()});
+  window.addEventListener('f1-crm-data-changed',()=>load());
   if(window.F1UnifiedCRM)window.F1UnifiedCRM.reload=load;
   load();
 }
