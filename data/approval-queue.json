@@ -1,9 +1,29 @@
 {
   "version": 2,
-  "generated_at": "2026-09-30T05:21:53.464118+00:00",
+  "generated_at": "2026-09-30T11:17:48.694793+00:00",
   "pipeline": "F1_COMMON_APPROVAL_QUEUE",
   "crm_target": "Supabase public.approval_queue",
   "items": [
+    {
+      "approval_id": "social-optimization-2026-09-30T10-09-09Z",
+      "module": "SOCIAL_OPTIMIZATION",
+      "platform": "FACEBOOK · INSTAGRAM",
+      "comune": "",
+      "type": "KPI_REVIEW",
+      "subject": "Ottimizzazione social · controllo KPI e Insights",
+      "result": "Analisi automatica: PARTIAL_INSIGHTS_MISSING. Insights: NOT_AVAILABLE.",
+      "action_proposed": "APPROVA VERIFICA KPI",
+      "score": null,
+      "source_url": "",
+      "preview_url": "",
+      "created_at": "2026-09-30T10:09:09Z",
+      "origin": "open-social-scheduler/publisher/content_analysis.json",
+      "metadata": {
+        "analysis_status": "PARTIAL_INSIGHTS_MISSING",
+        "insights_status": "NOT_AVAILABLE"
+      },
+      "status": "DA_APPROVARE"
+    },
     {
       "approval_id": "facebook-group-FBG-CE159B7ED4",
       "task_id": "facebook-group-FBG-CE159B7ED4",
@@ -203,26 +223,6 @@
       "origin": "open-social-scheduler/growth/groups.json",
       "status": "DA_APPROVARE",
       "metadata": {}
-    },
-    {
-      "approval_id": "social-optimization-2026-09-28T06-11-18Z",
-      "module": "SOCIAL_OPTIMIZATION",
-      "platform": "FACEBOOK · INSTAGRAM",
-      "comune": "",
-      "type": "KPI_REVIEW",
-      "subject": "Ottimizzazione social · controllo KPI e Insights",
-      "result": "Analisi automatica: PARTIAL_INSIGHTS_MISSING. Insights: NOT_AVAILABLE.",
-      "action_proposed": "APPROVA VERIFICA KPI",
-      "score": null,
-      "source_url": "",
-      "preview_url": "",
-      "created_at": "2026-09-28T06:11:18Z",
-      "origin": "open-social-scheduler/publisher/content_analysis.json",
-      "metadata": {
-        "analysis_status": "PARTIAL_INSIGHTS_MISSING",
-        "insights_status": "NOT_AVAILABLE"
-      },
-      "status": "DA_APPROVARE"
     },
     {
       "approval_id": "facebook-group-FBG-7E8508054A",
