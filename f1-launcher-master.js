@@ -116,7 +116,7 @@
   const campaignLinks = [
     {
       label: "CAMPAGNE REALMEDIAPRO",
-      href: "https://f1immobiliare.com/pages/gggg",
+      href: "/launcher-dashboard/customer-campaign-engine/",
       cls: "f1-campaign-realmedia",
       icon: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z" stroke="currentColor" stroke-width="1.7"/><path d="M8 12h8M8 15h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>'
     },
