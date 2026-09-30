@@ -1,9 +1,49 @@
 {
   "version": 2,
-  "generated_at": "2026-09-30T11:17:48.694793+00:00",
+  "generated_at": "2026-09-30T21:19:24.997139+00:00",
   "pipeline": "F1_COMMON_APPROVAL_QUEUE",
   "crm_target": "Supabase public.approval_queue",
   "items": [
+    {
+      "approval_id": "facebook-group-FBG-AC20D2F0FD",
+      "task_id": "facebook-group-FBG-AC20D2F0FD",
+      "lead_id": "",
+      "property_id": "",
+      "module": "FACEBOOK_GROUPS",
+      "platform": "FACEBOOK",
+      "comune": "Torino",
+      "type": "GROUP_APPROVAL",
+      "subject": "operatori olistici Torino e Piemonte",
+      "result": "2 days ago · praticanti di discipline naturali uniamoci! :-) Questo gruppo aperto riunisce studenti, praticanti amatoriali e professionisti nel campo della naturopatia, massaggio olistico in genere, e discipline del benessere.",
+      "action_proposed": "APPROVA GRUPPO",
+      "score": null,
+      "source_url": "https://www.facebook.com/groups/366612546705531/",
+      "preview_url": "",
+      "created_at": "2026-09-30T11:20:11+00:00",
+      "origin": "open-social-scheduler/growth/groups.json",
+      "status": "DA_APPROVARE",
+      "metadata": {}
+    },
+    {
+      "approval_id": "facebook-signal-FBS-603732D75E",
+      "task_id": "facebook-signal-FBS-603732D75E",
+      "lead_id": "",
+      "property_id": "",
+      "module": "FACEBOOK_NETWORK",
+      "platform": "FACEBOOK",
+      "comune": "Rubiana",
+      "type": "NETWORK_SIGNAL",
+      "subject": "Sei di Rubiana se... | Buonasera, il pullman delle ore 6:45 ...",
+      "result": "Buongiorno, affitto per brevi periodi, preferibilmente ad insegnanti fuori sede, un bilocale nella piazza principale di RUBIANA, paese nella bassa valle di Susa, a 30 km da Torino, comodo con auto e bus.",
+      "action_proposed": "APPROVA ANALISI",
+      "score": null,
+      "source_url": "https://www.facebook.com/groups/363225840487171/permalink/4008481275961591/",
+      "preview_url": "",
+      "created_at": "2026-09-30T11:17:31+00:00",
+      "origin": "open-social-scheduler/growth/signals.json",
+      "status": "DA_APPROVARE",
+      "metadata": {}
+    },
     {
       "approval_id": "social-optimization-2026-09-30T10-09-09Z",
       "module": "SOCIAL_OPTIMIZATION",
@@ -16991,11 +17031,11 @@
     }
   ],
   "summary": {
-    "total": 848,
+    "total": 850,
     "seller_radar": 592,
     "social_content": 5,
-    "facebook_groups": 217,
-    "facebook_network": 33,
+    "facebook_groups": 218,
+    "facebook_network": 34,
     "social_optimization": 1,
     "instagram_gate": 0
   }
