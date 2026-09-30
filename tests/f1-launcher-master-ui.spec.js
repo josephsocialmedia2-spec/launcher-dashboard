@@ -58,4 +58,35 @@ test.describe('F1 Launcher master UI', () => {
     await page.goto('/documenti-vendita.html', { waitUntil: 'domcontentloaded' });
     await expect(page.locator('.f1-master-menu-toggle')).toBeVisible();
   });
+  
+  test('campaign buttons are present and point to distinct real destinations', async ({ page }) => {
+    await page.goto('/documenti-vendita.html', { waitUntil: 'domcontentloaded' });
+    const links = await page.locator('.f1-campaign-link').evaluateAll(nodes =>
+      nodes.map(n => ({ text: n.textContent.trim(), href: n.getAttribute('href') }))
+    );
+    expect(links).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        text: expect.stringContaining('CAMPAGNE REALMEDIAPRO'),
+        href: '/launcher-dashboard/customer-campaign-engine/'
+      }),
+      expect.objectContaining({
+        text: expect.stringContaining('CAMPAGNE F1 IMMOBILIARE'),
+        href: 'https://josephsocialmedia2-spec.github.io/open-social-scheduler/f1-content-hub/'
+      })
+    ]));
+    expect(new Set(links.map(x => x.href)).size).toBeGreaterThanOrEqual(2);
+  });
+
+  test('mobile drawer exposes campaigns and remains scrollable', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/documenti-vendita.html', { waitUntil: 'domcontentloaded' });
+    const toggle = page.locator('.f1-master-menu-toggle');
+    await expect(toggle).toBeVisible();
+    await toggle.click();
+    await expect(page.locator('.f1-master-sidebar')).toBeVisible();
+    await expect(page.locator('.f1-master-sidebar .f1-campaign-link')).toHaveCount(2);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(2);
+  });
+
 });
