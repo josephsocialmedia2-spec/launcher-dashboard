@@ -56,3 +56,6 @@ create policy "f1 staff select azienda interactions" on public.azienda_interacti
 create policy "f1 staff insert azienda interactions" on public.azienda_interactions for insert to authenticated with check ((select f1_private.current_staff_role()) <> '' and (select auth.uid()) = user_id);
 create policy "f1 admin delete azienda interactions" on public.azienda_interactions for delete to authenticated using ((select f1_private.is_titolare()));
 grant select,insert,delete on public.azienda_interactions to authenticated;
+
+-- Deduplicazione forte: il telefono normalizzato è unico per utente.
+create unique index if not exists aziende_user_telefono_unique on public.aziende(user_id, telefono) where telefono is not null and telefono <> '';
