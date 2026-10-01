@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="F1 Territory">
 <link rel="manifest" href="territory-mobile.webmanifest">
 <link rel="icon" href="f1-mobile-icon.svg" type="image/svg+xml">
-<title>F1 — Blocco telefonate 09:30–12:30</title>
+<title>F1 — Telefonate</title>
 <style>
 :root{--p:#101510;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--gold:#f4c95d;--red:#ff7777;--orange:#ffae57}
 *{box-sizing:border-box}
@@ -57,9 +57,6 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 .session-title{font-size:12px;font-weight:900;letter-spacing:.06em}
 .session-sub{margin-top:3px;color:var(--mut);font-size:10px}
 .session-clock{font-size:22px;font-weight:900;color:var(--g);white-space:nowrap}
-.session.active{border-bottom-color:#2b6b43;background:rgba(5,22,11,.97)}
-.session.active .session-title{color:var(--g)}
-.focus-card{border:2px solid var(--g);box-shadow:0 0 0 1px rgba(57,242,138,.12),0 20px 60px rgba(0,0,0,.22)}
 .call-now{width:100%;min-height:58px;font-size:17px;border-radius:12px}
 .outcomes{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
 .outcome-title{grid-column:1/-1;color:var(--mut);font-size:9px;font-weight:900;letter-spacing:.08em}
@@ -83,14 +80,9 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 .busy-reminder-bar.show{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .busy-reminder-bar b{color:#ffd56a}
 .busy-reminder-actions{display:flex;gap:7px;flex-wrap:wrap}
-body.focus-active .toolbar,body.focus-active .nav-panel,body.focus-active .secondary-action{display:none!important}
-body.focus-active .call:not(.focus-card){display:none!important}
-body.focus-active .wrap{max-width:760px}
-body.focus-active h1{font-size:clamp(28px,7vw,42px)}
-body.focus-active .notice{border-color:#2b6b43}
 @media(max-width:650px){.top{display:block}.summary{grid-template-columns:1fr 1fr 1fr}.score{display:inline-block;margin-top:6px}.toolbar{grid-template-columns:1fr}.context{grid-template-columns:1fr}.outcomes{grid-template-columns:1fr 1fr}.outcome-title{grid-column:1/-1}.session-inner{align-items:flex-start}.session-clock{font-size:18px}}
 </style>
-<script defer src="pwa.js?v=20260925-callblock-app1"></script>
+<script defer src="pwa.js?v=20261001-callroutine-off1"></script>
 <script defer src="supabase-config.js?v=20260924-calls50"></script>
 <script defer src="supabase-sync.js?v=20260924-calls50"></script>
 <script defer src="f1-acquisition-core.js?v=20260924-no-rpo-block1"></script>
@@ -100,8 +92,8 @@ body.focus-active .notice{border-color:#2b6b43}
 <div id="sessionBar" class="session">
   <div class="session-inner">
     <div>
-      <div id="sessionTitle" class="session-title">BLOCCO TELEFONATE</div>
-      <div id="sessionSub" class="session-sub">Fascia operativa 09:30–12:30</div>
+      <div id="sessionTitle" class="session-title">TELEFONATE</div>
+      <div id="sessionSub" class="session-sub">Coda disponibile quando è utile nella tua giornata</div>
     </div>
     <div id="sessionClock" class="session-clock">--:--:--</div>
   </div>
@@ -111,7 +103,7 @@ body.focus-active .notice{border-color:#2b6b43}
   <div id="busyReminderBar" class="busy-reminder-bar" role="status" aria-live="assertive"></div>
   <div class="ey">F1 ACQUISITION ENGINE · ACQUISIZIONE IMMOBILI</div>
   <h1>TELEFONATE DI OGGI</h1>
-  <p class="meta">Dalle 09:30 alle 12:30 il sistema entra in modalità chiamate: un contatto alla volta, esito, contatto successivo.</p>
+  <p class="meta">Apri questa coda quando vuoi lavorare i contatti: puoi telefonare, registrare l’esito e passare al contatto successivo senza vincoli di orario.</p>
 
   <div class="notice">
     <span class="goal">NESSUN OBIETTIVO NUMERICO.</span><br>
@@ -149,8 +141,6 @@ let ACTIVE_TASK=localStorage.getItem('f1_active_call_task')||'';
 const BUSY_REMINDER_KEY='f1_busy_call_reminders_v1';
 const NEWS_TRANSFER_KEY='f1_news_transfer_queue_v1';
 const NEWS_TRANSFERRED_KEY='f1_news_transferred_tasks_v1';
-const FROM_TERRITORY_APP=new URLSearchParams(location.search).get('source')==='f1-territory-app';
-let WAS_ACTIVE_FROM_APP=FROM_TERRITORY_APP;
 const $=id=>document.getElementById(id);
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function phone(s){let d=String(s||'').replace(/\D/g,'');if(d.startsWith('39')&&d.length>10)d=d.slice(2);return d}
@@ -171,32 +161,11 @@ function callAllowed(r){
   return !!(r&&r.telefono&&!r.do_not_contact&&rpo==='VERIFICATO_OK'&&!['NON_CONTATTARE','ARCHIVIATO','SCARTATO'].includes(status));
 }
 window.callAllowed=callAllowed;
-function isFocusWindow(d=new Date()){
-  const day=d.getDay();
-  const m=d.getHours()*60+d.getMinutes();
-  return day>=1&&day<=5&&m>=570&&m<750;
-}
-function remainingToEnd(d=new Date()){
-  const end=new Date(d);end.setHours(12,30,0,0);
-  const sec=Math.max(0,Math.floor((end-d)/1000));
-  return String(Math.floor(sec/3600)).padStart(2,'0')+':'+String(Math.floor((sec%3600)/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
-}
 function updateSession(){
   const d=new Date();
-  const active=isFocusWindow(d);
-  if(active&&FROM_TERRITORY_APP)WAS_ACTIVE_FROM_APP=true;
-  if(!active&&WAS_ACTIVE_FROM_APP&&d.getDay()>=1&&d.getDay()<=5&&(d.getHours()*60+d.getMinutes())>=750){location.replace('territory-mobile.html?source=callblock-ended');return;}
-  document.body.classList.toggle('focus-active',active);
-  $('sessionBar').classList.toggle('active',active);
   $('sessionClock').textContent=d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  if(active){
-    $('sessionTitle').textContent='MODALITÀ TELEFONATE ATTIVA';
-    $('sessionSub').textContent='Niente altro fino alle 12:30 · tempo residuo '+remainingToEnd(d);
-  }else{
-    $('sessionTitle').textContent='BLOCCO TELEFONATE 09:30–12:30';
-    $('sessionSub').textContent='Fuori fascia: la lista resta disponibile, ma la modalità concentrata è disattivata.';
-  }
-  if(STATE.rows.length) render();
+  $('sessionTitle').textContent='TELEFONATE';
+  $('sessionSub').textContent='Coda disponibile quando è utile nella tua giornata';
 }
 function busyReminders(){
   try{return JSON.parse(localStorage.getItem(BUSY_REMINDER_KEY)||'[]').filter(Boolean)}
@@ -230,14 +199,9 @@ function outcomeButtons(r){
 function render(){
   $('remaining').textContent=STATE.remaining||0;
   $('done').textContent=STATE.done||0;
-  const active=isFocusWindow();
   const callableRows=STATE.rows.filter(r=>!isDone(r)&&!isBusyWaiting(r)&&callAllowed(r));
-  let rows=active?callableRows.slice(0,1):filteredRows();
+  const rows=filteredRows();
   const firstOpenIndex=callableRows.length?STATE.rows.indexOf(callableRows[0]):-1;
-  if(active&&firstOpenIndex<0){
-    $('list').innerHTML='<div class="panel empty"><b style="color:var(--g)">CODA COMPLETATA.</b><br>Non risultano altre telefonate aperte per oggi.</div>';
-    return;
-  }
   $('list').innerHTML=rows.length?rows.map(r=>{
     const originalIndex=STATE.rows.indexOf(r);
     const done=isDone(r),next=originalIndex===firstOpenIndex&&!done,p=phone(r.telefono);
@@ -247,7 +211,7 @@ function render(){
     const propertyPrice=euro(r.linked_property_price);
     const googleAddressQuery=encodeURIComponent([r.comune,r.via,r.civico].filter(Boolean).join(' ').trim());
     const newsSent=isNewsTransferred(r.task_id);
-    return `<article class="call ${done?'done':''} ${next?'next':''} ${active&&next?'focus-card':''}">
+    return `<article class="call ${done?'done':''} ${next?'next':''} ">
       <div class="top">
         <div>
           <div class="reason"><span class="rank">${originalIndex+1}</span>${esc(nameOf(r))}</div>
@@ -281,16 +245,15 @@ function render(){
         ${r.linked_property_url?`<a class="btn gold secondary-action" target="_blank" rel="noopener" href="${esc(r.linked_property_url)}">APRI ANNUNCIO</a>`:''}
         ${r.contact_source_url?`<a class="btn alt secondary-action" target="_blank" rel="noopener" href="${esc(r.contact_source_url)}">FONTE CONTATTO</a>`:''}
         ${!done?`<a class="btn gold secondary-action" href="http://127.0.0.1:8766/">CENTRALE PC</a>`:''}
-        ${!done&&!active?`<button class="btn alt" data-outcome="FATTA" data-task="${esc(r.task_id)}">SEGNA FATTA</button>`:''}
-        ${!done&&!active?`<button class="btn busy" data-busy-task="${esc(r.task_id)}" data-lead="${esc(r.lead_id||'')}" data-name="${esc(nameOf(r))}" data-phone="${esc(r.telefono||'')}">OCCUPATO · +5 MIN</button>`:''}
+        
         ${!done&&r.lead_id?`<button class="btn remove-contact" data-remove-contact="${esc(r.task_id)}" data-lead="${esc(r.lead_id)}" data-name="${esc(nameOf(r))}">NON PIÙ PRESENTE · ELIMINA</button>`:''}
         <button class="btn news-transfer ${newsSent?'sent':''}" type="button" data-news-task="${esc(r.task_id)}">${newsSent?'NOTIZIA ✓':'NOTIZIA'}</button>
         <a class="btn alt secondary-action" href="crm.html#contatti">CRM</a>
         ${googleAddressQuery?`<a class="btn google-address" target="_blank" rel="noopener" href="https://www.google.com/search?q=${googleAddressQuery}">GOOGLE INDIRIZZO</a>`:''}
         <button class="btn copy-card" type="button" data-copy-card="1">COPIA SCHEDA</button>
       </div>
-      ${!done&&active?outcomeButtons(r):''}
-      ${!done&&active?`<div class="focus-note">Il numero è sempre visibile e cliccabile. Puoi registrare l’esito anche senza premere CHIAMA ORA.</div>`:''}
+      ${!done?outcomeButtons(r):''}
+      ${!done?`<div class="focus-note">Telefonate è uno strumento libero: scegli quando lavorare questa coda e registra sempre l’esito nel CRM.</div>`:''}
     </article>`
   }).join(''):'<div class="empty">Nessun contatto corrisponde alla ricerca.</div>';
   document.querySelectorAll('[data-call]').forEach(a=>a.addEventListener('click',()=>{
