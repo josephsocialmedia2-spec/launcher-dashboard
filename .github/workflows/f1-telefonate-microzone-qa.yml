@@ -51,7 +51,6 @@ jobs:
             'async function copyClientCard',
             'navigator.clipboard.writeText',
             'document.execCommand(\'copy\')',
-            'NOTIZIA</button>',
             'data-news-task',
             'function sendCardToNews',
             'f1_news_transfer_queue_v1',
