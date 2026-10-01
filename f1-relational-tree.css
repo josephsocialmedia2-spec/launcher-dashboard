@@ -496,6 +496,7 @@ html,body{max-width:100%;overflow-x:clip}
 .rel-edge-label.work{border-color:#505cad;color:#c4c9ff}
 .rel-edge-label.selected{outline:2px solid rgba(85,196,255,.45)}
 .rel-graph-node{
+  box-sizing:border-box;
   position:absolute;
   width:142px;
   min-height:94px;
