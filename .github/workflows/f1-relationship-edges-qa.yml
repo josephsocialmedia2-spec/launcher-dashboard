@@ -66,7 +66,7 @@ jobs:
           base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
           ok=0
           for i in $(seq 1 60); do
-            if curl -fsSL --max-time 20 "$base/albero-fonti-notizie.html?qa=$RANDOM" -o /tmp/tree               && grep -Fq 'id="relationshipEdges"' /tmp/tree               && grep -Fq 'id="edgeEditorModal"' /tmp/tree               && grep -Fq 'f1-relational-tree.js?v=20261001-freecards1' /tmp/tree               && grep -Fq 'f1-relational-tree.css?v=20261001-freecards1' /tmp/tree; then
+            if curl -fsSL --max-time 20 "$base/albero-fonti-notizie.html?qa=$RANDOM" -o /tmp/tree               && grep -Fq 'id="relationshipEdges"' /tmp/tree               && grep -Fq 'id="edgeEditorModal"' /tmp/tree               && grep -Fq 'f1-relational-tree.js?v=20261001-freecards2' /tmp/tree               && grep -Fq 'f1-relational-tree.css?v=20261001-freecards1' /tmp/tree; then
               ok=1
               break
             fi
