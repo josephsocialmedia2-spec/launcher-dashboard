@@ -145,4 +145,84 @@ test.describe('F1 novice dashboard contract', () => {
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(2);
   });
+
+  test('main dashboard stays usable on desktop tablet and mobile', async ({ browser }, testInfo) => {
+    const sizes = [
+      { name: 'desktop-1440', width: 1440, height: 900 },
+      { name: 'tablet-768', width: 768, height: 1024 },
+      { name: 'mobile-390', width: 390, height: 844 }
+    ];
+
+    for (const size of sizes) {
+      const context = await browser.newContext({ viewport: { width: size.width, height: size.height } });
+      const page = await context.newPage();
+      const pageErrors = [];
+      page.on('pageerror', err => pageErrors.push(String(err.stack || err.message || err)));
+
+      await page.route('**/f1-call-block.js*', route =>
+        route.fulfill({ status: 200, contentType: 'application/javascript', body: '' })
+      );
+      await page.route('**/auth/v1/user', route =>
+        route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ id: 'qa-user' }) })
+      );
+      await page.route('**/rest/v1/**', route => {
+        const url = route.request().url();
+        let body = [];
+        if (url.includes('/rpc/f1_staff_me')) {
+          body = [{ user_id: 'qa-user', first_name: 'QA', last_name: 'Responsive', role: 'TITOLARE' }];
+        } else if (url.includes('/rpc/f1_territory_panel_state')) {
+          body = {
+            progress: {
+              status: 'OPERATIVO',
+              comune: 'Susa',
+              zona: 'Centro',
+              via: 'Via Roma',
+              civic_start: '1',
+              last_civic: '3',
+              next_civic: '5',
+              civic_sequence: ['1', '3', '5']
+            },
+            summary: { civics: 2, condominiums: 1, activities: 1, contacts: 4, news: 1 },
+            pending_news: []
+          };
+        }
+        return route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(body) });
+      });
+      await page.addInitScript(() => {
+        const session = {
+          access_token: 'qa-token',
+          refresh_token: 'qa-refresh',
+          expires_at: Date.now() + 3600000,
+          saved_at: Date.now()
+        };
+        localStorage.setItem('f1SupabaseSession', JSON.stringify(session));
+        sessionStorage.setItem('f1SupabaseSession', JSON.stringify(session));
+      });
+
+      await page.goto('/ricerca-territoriale.html?responsive=' + size.name, { waitUntil: 'domcontentloaded' });
+      await expect(page.locator('html')).not.toHaveClass(/f1-auth-pending/);
+      await expect(page.locator('.f1-home-heading')).toBeVisible();
+      await expect(page.locator('.f1-now-card')).toBeVisible();
+      await expect(page.locator('#actionNowTitle')).toHaveText(/VAI AL CIVICO 5/);
+      await expect(page.locator('.f1-quick-actions')).toBeVisible();
+
+      const layout = await page.evaluate(() => ({
+        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+        headingWidth: document.querySelector('.f1-home-heading')?.getBoundingClientRect().width || 0,
+        viewport: window.innerWidth
+      }));
+      expect(layout.overflow, size.name + ' horizontal overflow').toBeLessThanOrEqual(2);
+      expect(layout.headingWidth, size.name + ' heading width').toBeLessThanOrEqual(layout.viewport + 1);
+
+      if (size.width <= 900) {
+        await expect(page.locator('.f1-master-menu-toggle')).toBeVisible();
+      }
+
+      const shot = await page.screenshot({ fullPage: true });
+      await testInfo.attach('f1-' + size.name, { body: shot, contentType: 'image/png' });
+      expect(pageErrors, size.name + '\n' + pageErrors.join('\n')).toEqual([]);
+      await context.close();
+    }
+  });
+
 });
