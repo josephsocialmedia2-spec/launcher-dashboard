@@ -26,6 +26,8 @@ on:
       - 'f1-staff-access-panel.js'
       - 'f1-desktop-mobile-bridge.js'
       - 'f1-territory-admin-v4.js'
+      - 'f1-global-brand.js'
+      - 'f1-premium-help.js'
       - 'tests/f1-launcher-master-ui.spec.js'
       - 'tests/f1-novice-dashboard.spec.js'
       - '.github/workflows/f1-launcher-master-ui-qa.yml'
@@ -59,3 +61,27 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Run launcher and novice-dashboard regression checks
         run: npx playwright test tests/f1-launcher-master-ui.spec.js tests/f1-novice-dashboard.spec.js --project=desktop-chromium
+      - name: Verify deployed F1 dashboard
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
+          ok=0
+          for i in $(seq 1 60); do
+            echo "Published dashboard check $i/60"
+            if curl -fsSL --max-time 20 "$base/ricerca-territoriale.html?qa=$RANDOM" -o /tmp/dashboard.html \
+              && curl -fsSL --max-time 20 "$base/f1-dashboard-novice.css?qa=$RANDOM" -o /tmp/novice.css \
+              && curl -fsSL --max-time 20 "$base/f1-premium-help.js?qa=$RANDOM" -o /tmp/help.js \
+              && grep -Fq 'Parti da qui. Una cosa alla volta.' /tmp/dashboard.html \
+              && grep -Fq 'f1-dashboard-novice.css' /tmp/dashboard.html \
+              && grep -Fq 'f1-priority-grid' /tmp/novice.css \
+              && ! grep -Fq 'REALMEDIAPRO' /tmp/dashboard.html \
+              && ! grep -Fq 'CUSTOMER CAMPAIGN ENGINE' /tmp/dashboard.html \
+              && node --check /tmp/help.js; then
+              ok=1
+              break
+            fi
+            sleep 5
+          done
+          test "$ok" = 1
+          echo 'PASS F1 novice dashboard deployed and syntax-valid'
