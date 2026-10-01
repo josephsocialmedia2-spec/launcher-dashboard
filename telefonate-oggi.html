@@ -22,7 +22,7 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 .panel,.call{background:var(--p);border:1px solid var(--line);border-radius:14px;padding:13px;margin:10px 0}
 .call.done{opacity:.62}
 .call.next{border-color:var(--g);box-shadow:0 0 0 1px rgba(57,242,138,.16)}
-.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.summary{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
 .stat{text-align:center;font-size:9px;color:var(--mut)}
 .stat b{display:block;color:var(--g);font-size:24px}
 .stat.gold b{color:var(--gold)}
@@ -110,12 +110,12 @@ body.focus-active .notice{border-color:#2b6b43}
 <main class="wrap">
   <div id="busyReminderBar" class="busy-reminder-bar" role="status" aria-live="assertive"></div>
   <div class="ey">F1 ACQUISITION ENGINE · ACQUISIZIONE IMMOBILI</div>
-  <h1>100 TELEFONATE DI OGGI</h1>
+  <h1>TELEFONATE DI OGGI</h1>
   <p class="meta">Dalle 09:30 alle 12:30 il sistema entra in modalità chiamate: un contatto alla volta, esito, contatto successivo.</p>
 
   <div class="notice">
-    <span class="goal">OBIETTIVO: 100 TELEFONATE.</span><br>
-    Ogni chiamata deve avere un motivo immobiliare verificabile: privato/FSBO, segnale venditore oppure un annuncio attivo nella stessa via.
+    <span class="goal">NESSUN OBIETTIVO NUMERICO.</span><br>
+    Lavora la coda disponibile con qualità: ogni chiamata deve avere un motivo immobiliare verificabile, come privato/FSBO, segnale venditore oppure un annuncio attivo nella stessa via.
   </div>
 
   <section class="panel nav-panel">
@@ -129,7 +129,6 @@ body.focus-active .notice{border-color:#2b6b43}
 
   <section class="panel">
     <div class="summary">
-      <div class="stat"><b id="target">100</b>OBIETTIVO</div>
       <div class="stat gold"><b id="remaining">0</b>DA CHIAMARE</div>
       <div class="stat"><b id="done">0</b>COMPLETATE</div>
     </div>
@@ -140,11 +139,11 @@ body.focus-active .notice{border-color:#2b6b43}
     <button id="reloadBtn" class="btn alt">AGGIORNA</button>
   </section>
 
-  <section id="list"><div class="empty">Preparazione delle 100 telefonate…</div></section>
+  <section id="list"><div class="empty">Preparazione della coda telefonate…</div></section>
 </main>
 
 <script>
-let STATE={rows:[],target:100,total:0,done:0,remaining:0};
+let STATE={rows:[],total:0,done:0,remaining:0};
 let ACTIVE_TASK=localStorage.getItem('f1_active_call_task')||'';
 const BUSY_REMINDER_KEY='f1_busy_call_reminders_v1';
 const NEWS_TRANSFER_KEY='f1_news_transfer_queue_v1';
@@ -228,7 +227,6 @@ function outcomeButtons(r){
   </div>`;
 }
 function render(){
-  $('target').textContent=STATE.target||100;
   $('remaining').textContent=STATE.remaining||0;
   $('done').textContent=STATE.done||0;
   const active=isFocusWindow();
@@ -236,7 +234,7 @@ function render(){
   let rows=active?callableRows.slice(0,1):filteredRows();
   const firstOpenIndex=callableRows.length?STATE.rows.indexOf(callableRows[0]):-1;
   if(active&&firstOpenIndex<0){
-    $('list').innerHTML='<div class="panel empty"><b style="color:var(--g)">OBIETTIVO COMPLETATO.</b><br>Non risultano altre telefonate aperte per oggi.</div>';
+    $('list').innerHTML='<div class="panel empty"><b style="color:var(--g)">CODA COMPLETATA.</b><br>Non risultano altre telefonate aperte per oggi.</div>';
     return;
   }
   $('list').innerHTML=rows.length?rows.map(r=>{
@@ -567,14 +565,13 @@ async function load(){
     })||{};
     STATE={
       rows:Array.isArray(data.rows)?data.rows:[],
-      target:Number(data.target)||100,
       total:Number(data.total)||0,
       done:Number(data.done)||0,
       remaining:Number(data.remaining)||0
     };
     render();
   }catch(e){
-    $('list').innerHTML='<div class="empty">Impossibile caricare le 100 telefonate: '+esc(e.message||e)+'</div>';
+    $('list').innerHTML='<div class="empty">Impossibile caricare la coda telefonate: '+esc(e.message||e)+'</div>';
   }
 }
 window.addEventListener('load',()=>{
