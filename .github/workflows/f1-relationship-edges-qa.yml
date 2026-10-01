@@ -13,6 +13,7 @@ on:
       - "tests/editable-relationship-edges.spec.js"
       - "tests/relational-tree-redesign.spec.js"
       - "tests/mindmap-relational-layout.spec.js"
+      - "tests/free-card-layout.spec.js"
       - ".github/workflows/f1-relationship-edges-qa.yml"
 
 permissions:
@@ -41,6 +42,9 @@ jobs:
           grep -Fq 'id="edgeEditorModal"' albero-fonti-notizie.html
           grep -Fq 'MAPPA RELAZIONALE' albero-fonti-notizie.html
           grep -Fq 'graphPositions:db.graphPositions||{}' f1-tree-cloud.js
+          grep -Fq 'graphGroups:Array.isArray(db.graphGroups)?db.graphGroups:[]' f1-tree-cloud.js
+          grep -Fq 'id="relationshipGroups"' albero-fonti-notizie.html
+          grep -Fq 'RIORDINA' albero-fonti-notizie.html
           grep -Fq 'data-relation-id' f1-relational-tree.js
           grep -Fq 'rel-node-phone' f1-relational-tree.js
           grep -Fq 'tel:+' f1-relational-tree.js
@@ -52,7 +56,7 @@ jobs:
           npx playwright install --with-deps chromium
 
       - name: Run editable relationship graph tests
-        run: npx playwright test tests/editable-relationship-edges.spec.js tests/relational-tree-redesign.spec.js tests/mindmap-relational-layout.spec.js --project=desktop-chromium
+        run: npx playwright test tests/editable-relationship-edges.spec.js tests/relational-tree-redesign.spec.js tests/mindmap-relational-layout.spec.js tests/free-card-layout.spec.js --project=desktop-chromium
 
       - name: Verify published graph shell
         shell: bash
@@ -61,7 +65,7 @@ jobs:
           base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
           ok=0
           for i in $(seq 1 60); do
-            if curl -fsSL --max-time 20 "$base/albero-fonti-notizie.html?qa=$RANDOM" -o /tmp/tree               && grep -Fq 'id="relationshipEdges"' /tmp/tree               && grep -Fq 'id="edgeEditorModal"' /tmp/tree               && grep -Fq 'f1-relational-tree.js?v=20261001-mindmap1' /tmp/tree; then
+            if curl -fsSL --max-time 20 "$base/albero-fonti-notizie.html?qa=$RANDOM" -o /tmp/tree               && grep -Fq 'id="relationshipEdges"' /tmp/tree               && grep -Fq 'id="edgeEditorModal"' /tmp/tree               && grep -Fq 'f1-relational-tree.js?v=20261001-freecards1' /tmp/tree; then
               ok=1
               break
             fi
