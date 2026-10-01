@@ -571,7 +571,8 @@ function nodeMove(e){
   });
   const primary=positions()[nodeDrag.id];if(primary){
     updateGuides(nodeDrag.id,primary);
-    nodeDrag.overGroupId=groupAt(primary.x+NODE_W/2,primary.y+NODE_H/2);
+    const pointer=canvasPoint(e.clientX,e.clientY);
+    nodeDrag.overGroupId=groupAt(pointer.x,pointer.y);
     markGroupDrop(nodeDrag.overGroupId);
   }
   renderIncidentEdgesMany(nodeDrag.ids);
