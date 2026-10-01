@@ -108,8 +108,8 @@ body.f1-page-ricerca-territoriale .side-claim{color:#a8c9b8!important}
 
 /* Primary cards */
 .f1-priority-grid{
-  display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.8fr);
-  gap:14px;max-width:1500px;margin:0 auto 14px;
+  display:grid;grid-template-columns:minmax(0,1.7fr) minmax(540px,.95fr);
+  gap:14px;max-width:1500px;margin:0 auto 14px;align-items:start;
 }
 body.f1-page-ricerca-territoriale .card,
 body.f1-page-ricerca-territoriale .panel{
@@ -119,7 +119,7 @@ body.f1-page-ricerca-territoriale .panel{
   box-shadow:var(--f1-home-shadow)!important;
   border-radius:var(--f1-home-radius)!important;
 }
-.f1-now-card{padding:22px!important;display:grid;gap:18px}
+.f1-now-card{padding:22px!important;display:grid;gap:18px;align-self:start;height:auto!important;min-height:0!important}
 .f1-now-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .f1-now-kicker{display:flex;align-items:center;gap:8px;color:var(--f1-home-green);font-size:11px;font-weight:900;letter-spacing:.1em}
 .f1-now-kicker i{font-size:15px}
@@ -149,7 +149,11 @@ body.f1-page-ricerca-territoriale #continueSearch:hover{background:var(--f1-home
 .f1-next-note strong{display:block;margin-top:2px;color:var(--f1-home-text)!important;font-size:12px}
 
 /* Today / KPI */
-.right-col{display:grid;gap:14px;min-width:0}
+.right-col{
+  display:grid;grid-template-columns:minmax(220px,.9fr) minmax(280px,1.1fr);
+  gap:14px;min-width:0;align-items:start;align-content:start;
+}
+.right-col>.card{align-self:start;height:auto!important;min-height:0!important}
 .f1-today-card{padding:18px!important}
 .f1-section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
 .f1-section-title h2{margin:0!important;color:var(--f1-home-text)!important;font-size:16px!important}
@@ -188,15 +192,17 @@ body.f1-page-ricerca-territoriale #continueSearch:hover{background:var(--f1-home
 .f1-attention-card .section-head h2 i{color:var(--f1-home-amber)}
 .f1-attention-card .section-head a{font-size:10px;font-weight:850;color:var(--f1-home-green)!important;text-decoration:none}
 .f1-attention-card .alert-row{
-  display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:10px;align-items:center;
+  display:grid;grid-template-columns:42px minmax(0,1fr);gap:10px;align-items:center;
   padding:12px;border-radius:12px;background:var(--f1-home-amber-soft);border:1px solid #f0d9a7;
 }
 .f1-attention-card .doc-circle{
   width:40px;height:40px;display:grid;place-items:center;border-radius:10px;background:#fff;color:var(--f1-home-amber)
 }
-.f1-attention-card .alert-copy strong{display:block;color:var(--f1-home-text)!important;font-size:12px}
-.f1-attention-card .alert-copy span{display:block;margin-top:3px;color:var(--f1-home-muted);font-size:11px}
+.f1-attention-card .alert-copy{min-width:0;word-break:normal;overflow-wrap:break-word}
+.f1-attention-card .alert-copy strong{display:block;color:var(--f1-home-text)!important;font-size:12px;line-height:1.3;word-break:normal;overflow-wrap:break-word}
+.f1-attention-card .alert-copy span{display:block;margin-top:3px;color:var(--f1-home-muted);font-size:11px;line-height:1.4;word-break:normal;overflow-wrap:break-word}
 .f1-attention-card .outline-link{
+  grid-column:1/-1;width:100%;
   min-height:38px;padding:0 11px;display:inline-flex;align-items:center;justify-content:center;
   border-radius:9px;border:1px solid #d1b975;color:#6e500e!important;background:#fff;text-decoration:none;font-size:10px;font-weight:900;
 }
@@ -297,8 +303,10 @@ body.f1-page-ricerca-territoriale .footer{
 }
 
 /* Mobile: one decision at a time, generous touch targets. */
-@media(max-width:1180px){
+@media(max-width:1280px){
   .f1-priority-grid{grid-template-columns:1fr}
+}
+@media(max-width:1180px){
   .f1-quick-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 @media(max-width:900px){
@@ -316,6 +324,7 @@ body.f1-page-ricerca-territoriale .footer{
   .f1-today-kpis{grid-template-columns:1fr 1fr}
   .f1-quick-grid{grid-template-columns:1fr 1fr}
   .f1-quick-link{min-height:82px}
+  .right-col{grid-template-columns:1fr}
   .f1-attention-card .alert-row{grid-template-columns:38px minmax(0,1fr)}
   .f1-attention-card .outline-link{grid-column:1/-1;width:100%}
   body.f1-page-ricerca-territoriale .steps{display:none!important}
