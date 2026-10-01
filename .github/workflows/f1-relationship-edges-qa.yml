@@ -1,0 +1,68 @@
+name: F1 Relationship Edges QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "albero-fonti-notizie.html"
+      - "f1-relational-tree.js"
+      - "f1-relational-tree.css"
+      - "f1-tree-cloud.js"
+      - "f1-tree-network-engine.js"
+      - "tests/editable-relationship-edges.spec.js"
+      - ".github/workflows/f1-relationship-edges-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Static relationship graph contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check f1-relational-tree.js
+          node --check f1-tree-cloud.js
+          node --check f1-tree-network-engine.js
+          grep -Fq 'id="relationshipEdges"' albero-fonti-notizie.html
+          grep -Fq 'id="relationshipEdgeLabels"' albero-fonti-notizie.html
+          grep -Fq 'id="relationshipNodes"' albero-fonti-notizie.html
+          grep -Fq 'id="edgeEditorModal"' albero-fonti-notizie.html
+          grep -Fq 'graphPositions:db.graphPositions||{}' f1-tree-cloud.js
+          grep -Fq 'data-relation-id' f1-relational-tree.js
+          grep -Fq 'rel-node-phone' f1-relational-tree.js
+          grep -Fq 'tel:+' f1-relational-tree.js
+          grep -Fq 'startConnect' f1-relational-tree.js
+
+      - name: Install browser QA
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: Run editable relationship graph tests
+        run: npx playwright test tests/editable-relationship-edges.spec.js tests/relational-tree-redesign.spec.js --project=desktop-chromium
+
+      - name: Verify published graph shell
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
+          ok=0
+          for i in $(seq 1 60); do
+            if curl -fsSL --max-time 20 "$base/albero-fonti-notizie.html?qa=$RANDOM" -o /tmp/tree               && grep -Fq 'id="relationshipEdges"' /tmp/tree               && grep -Fq 'id="edgeEditorModal"' /tmp/tree               && grep -Fq 'f1-relational-tree.js?v=20261001-edges1' /tmp/tree; then
+              ok=1
+              break
+            fi
+            sleep 5
+          done
+          test "$ok" = 1
+          echo 'PASS editable relationship graph shell published'
