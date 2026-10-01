@@ -11,6 +11,7 @@ on:
       - "f1-tree-cloud.js"
       - "f1-tree-network-engine.js"
       - "tests/editable-relationship-edges.spec.js"
+      - "tests/relational-tree-redesign.spec.js"
       - "tests/mindmap-relational-layout.spec.js"
       - ".github/workflows/f1-relationship-edges-qa.yml"
 
