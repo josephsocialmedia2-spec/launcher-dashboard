@@ -90,3 +90,20 @@ jobs:
           node --check /tmp/albero-inline.js
           node --check /tmp/telefonate-inline.js
           node --check f1-tree-cloud.js
+
+      - name: Verifica pagina GitHub Pages pubblicata
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
+          ok=0
+          for i in $(seq 1 60); do
+            echo "Published Fonti di Notizie check $i/60"
+            if curl -fsSL --max-time 20 "$base/albero-fonti-notizie.html?qa=$RANDOM" -o /tmp/albero-live               && grep -Fq 'RICERCA TERRITORIALE → FONTI DI NOTIZIE' /tmp/albero-live               && grep -Fq '>NOTIZIE</button>' /tmp/albero-live               && grep -Fq 'id="mnemonicPanel"' /tmp/albero-live               && ! grep -Fq 'F1 NOTIZIE · LAVORAZIONE E RICHIAMI' /tmp/albero-live               && ! grep -Fq 'Notizie da lavorare' /tmp/albero-live               && ! grep -Fq 'IMPORTA NOTIZIE JSON' /tmp/albero-live               && ! grep -Fq 'Nessuna notizia da lavorare' /tmp/albero-live               && ! grep -Fq 'class="news-workbench"' /tmp/albero-live; then
+              ok=1
+              break
+            fi
+            sleep 5
+          done
+          test "$ok" = 1
+          echo 'PASS pannello Notizie da lavorare assente dalla pagina pubblicata'
