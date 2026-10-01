@@ -242,7 +242,7 @@ function render(){
 
       <div class="actions">
         ${!done&&r.telefono?`<a class="btn call-now" data-call="${esc(r.task_id)}" href="tel:${esc(r.telefono)}">CHIAMA ORA · ${esc(r.telefono)}</a>`:''}
-        ${!done&&p?`<a class="btn alt secondary-action" target="_blank" rel="noopener" href="https://wa.me/39${p}">WHATSAPP</a>`:''}
+        ${!done&&p?`<a class="btn alt secondary-action" target="_blank" rel="noopener" href="https://wa.me/39${p}">WHATSAPP</a><button class="btn alt secondary-action" data-message-sent="${esc(r.task_id)}">SEGNA MESSAGGIO INVIATO</button>`:''}
         ${r.linked_property_url?`<a class="btn gold secondary-action" target="_blank" rel="noopener" href="${esc(r.linked_property_url)}">APRI ANNUNCIO</a>`:''}
         ${r.contact_source_url?`<a class="btn alt secondary-action" target="_blank" rel="noopener" href="${esc(r.contact_source_url)}">FONTE CONTATTO</a>`:''}
         ${!done?`<a class="btn gold secondary-action" href="http://127.0.0.1:8766/">CENTRALE PC</a>`:''}
@@ -263,6 +263,7 @@ function render(){
     setTimeout(render,250);
   }));
   document.querySelectorAll('[data-outcome]').forEach(b=>b.onclick=()=>completeTask(b.dataset.task,b.dataset.outcome,b));
+  document.querySelectorAll('[data-message-sent]').forEach(b=>b.onclick=()=>markMessageSent(b.dataset.messageSent,b));
   document.querySelectorAll('[data-busy-task]').forEach(b=>b.onclick=()=>scheduleBusyCallback(b.dataset.busyTask,b.dataset.lead,b.dataset.name,b.dataset.phone,b));
   document.querySelectorAll('[data-remove-contact]').forEach(b=>b.onclick=()=>removeContact(b.dataset.removeContact,b.dataset.lead,b.dataset.name,b));
   document.querySelectorAll('[data-news-task]').forEach(b=>b.onclick=()=>sendCardToNews(b.dataset.newsTask,b));
@@ -508,7 +509,19 @@ async function completeTask(taskId,outcome,btn){
   if(!taskId)return;
   btn.disabled=true;
   try{
+    const row=STATE.rows.find(x=>String(x.task_id)===String(taskId))||{};
     const label=String(outcome||'FATTA').replace(/_/g,' ');
+    const now=new Date().toISOString();
+    await F1AcquisitionData.addInteraction({
+      lead_id:row.lead_id||'',
+      task_id:taskId,
+      interaction_type:'CALL',
+      direction:'OUTBOUND',
+      occurred_at:now,
+      outcome:String(outcome||'FATTA'),
+      note:'Telefonata acquisizione: '+label,
+      metadata:{origin:'telefonate-oggi',display_name:nameOf(row),confirmed_by_user:true}
+    });
     await F1AcquisitionData.setTaskStatus(taskId,'DONE','Telefonata acquisizione: '+label);
     if(ACTIVE_TASK===String(taskId)){
       ACTIVE_TASK='';
@@ -518,6 +531,30 @@ async function completeTask(taskId,outcome,btn){
     window.scrollTo({top:0,behavior:'smooth'});
   }catch(e){
     alert(e.message||e);
+    btn.disabled=false;
+  }
+}
+
+async function markMessageSent(taskId,btn){
+  const row=STATE.rows.find(x=>String(x.task_id)===String(taskId))||{};
+  if(!row.task_id)return;
+  if(!confirm('Confermi di aver realmente inviato un messaggio a '+nameOf(row)+'?'))return;
+  btn.disabled=true;
+  try{
+    await F1AcquisitionData.addInteraction({
+      lead_id:row.lead_id||'',
+      task_id:row.task_id,
+      interaction_type:'WHATSAPP',
+      direction:'OUTBOUND',
+      occurred_at:new Date().toISOString(),
+      outcome:'MESSAGGIO_INVIATO',
+      note:'Messaggio confermato come realmente inviato dall operatore.',
+      metadata:{origin:'telefonate-oggi',display_name:nameOf(row),confirmed_by_user:true}
+    });
+    btn.textContent='MESSAGGIO REGISTRATO ✓';
+    setTimeout(()=>{btn.disabled=false;btn.textContent='SEGNA ALTRO MESSAGGIO INVIATO'},1200);
+  }catch(e){
+    alert('Messaggio non registrato: '+(e.message||e));
     btn.disabled=false;
   }
 }
