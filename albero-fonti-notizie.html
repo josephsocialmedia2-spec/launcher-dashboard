@@ -411,7 +411,7 @@ button{cursor:pointer}
       <input type="hidden" id="edgeEditorPairId" />
       <div class="grid2">
         <div class="field"><label>Relazione</label><select id="edgeEditorType" onchange="F1RelationshipTree.previewEdgeInverse()"></select></div>
-        <div class="field"><label>Relazione inversa</label><select id="edgeEditorInverse"></select></div>
+        <div class="field"><label>Relazione inversa</label><select id="edgeEditorInverse" onchange="F1RelationshipTree.syncEdgeCustomRows()"></select></div>
       </div>
       <div class="field" id="edgeEditorCustomRow" style="display:none"><label>Etichetta personalizzata</label><input id="edgeEditorCustom" /></div>
       <div class="field" id="edgeEditorInverseCustomRow" style="display:none"><label>Etichetta inversa personalizzata</label><input id="edgeEditorInverseCustom" /></div>
