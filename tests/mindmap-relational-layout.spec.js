@@ -110,6 +110,113 @@ for(const count of [20,50,100,200]){
   });
 }
 
+
+test('200-node map keeps drag and pan responsive without page errors', async ({page})=>{
+  const pageErrors=[];
+  page.on('pageerror',e=>pageErrors.push(String(e)));
+  await prepare(page);
+  await page.goto('/albero-fonti-notizie.html',{waitUntil:'domcontentloaded'});
+  await page.evaluate(()=>{
+    const now=new Date().toISOString(),people=[{id:'root',parentId:null,name:'IO',surname:'',stage:'Nome',phone:'',town:''}],relations=[],positions={root:{x:1250,y:850}};
+    for(let i=1;i<200;i++){
+      const id='perf'+i,parent=i<12?'root':'perf'+Math.max(1,Math.floor(i/5));
+      people.push({id,parentId:parent,name:'PERF '+i,surname:'',stage:'Nome',phone:'',town:'',createdAt:now,updatedAt:now});
+      const pair='perfPair'+i,type=i%5===0?'collega':i%3===0?'amica':'conoscente';
+      const inv=type==='amica'?'amico_a':type;
+      relations.push({id:'pf'+i,pairId:pair,pairRole:'forward',sourceId:parent,targetId:id,type,inverseType:inv,context:'quick_relationship'});
+      relations.push({id:'pr'+i,pairId:pair,pairRole:'reverse',sourceId:id,targetId:parent,type:inv,inverseType:type,context:'quick_relationship'});
+      const angle=i*2.399963229728653,radius=100+Math.sqrt(i)*100;
+      positions[id]={x:1250+Math.cos(angle)*radius,y:850+Math.sin(angle)*radius};
+    }
+    db.people=people;db.relations=relations;db.graphPositions=positions;F1RelationshipTree.render();F1RelationshipTree.fit();
+  });
+
+  const result=await page.evaluate(()=>{
+    const node=document.querySelector('[data-person-id="perf100"]');
+    const viewport=document.querySelector('#relationshipTreeViewport');
+    const stage=document.querySelector('#relationshipTreeStage');
+    const beforePos={...db.graphPositions.perf100};
+    const nr=node.getBoundingClientRect(),sx=nr.left+35,sy=nr.top+18;
+    const dragStart=performance.now();
+    node.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,button:0,clientX:sx,clientY:sy,pointerId:11}));
+    for(let i=1;i<=60;i++)window.dispatchEvent(new PointerEvent('pointermove',{bubbles:true,clientX:sx+i*1.4,clientY:sy+i*.7,pointerId:11}));
+    window.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,clientX:sx+84,clientY:sy+42,pointerId:11}));
+    const dragMs=performance.now()-dragStart,afterPos={...db.graphPositions.perf100};
+
+    const vr=viewport.getBoundingClientRect(),px=vr.left+12,py=vr.top+12,beforeTransform=stage.style.transform;
+    const panStart=performance.now();
+    viewport.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,button:0,clientX:px,clientY:py,pointerId:12}));
+    for(let i=1;i<=60;i++)window.dispatchEvent(new PointerEvent('pointermove',{bubbles:true,clientX:px+i*1.5,clientY:py+i*.5,pointerId:12}));
+    window.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,clientX:px+90,clientY:py+30,pointerId:12}));
+    const panMs=performance.now()-panStart,afterTransform=stage.style.transform;
+    return {dragMs,panMs,beforePos,afterPos,beforeTransform,afterTransform};
+  });
+
+  console.log('MINDMAP_INTERACTION_PERF','drag',Math.round(result.dragMs)+'ms','pan',Math.round(result.panMs)+'ms');
+  expect(result.afterPos.x).not.toBe(result.beforePos.x);
+  expect(result.afterTransform).not.toBe(result.beforeTransform);
+  expect(result.dragMs).toBeLessThan(1000);
+  expect(result.panMs).toBeLessThan(500);
+  expect(pageErrors).toEqual([]);
+});
+
+test('collapsing a hierarchical branch does not delete unrelated cross-links', async ({page})=>{
+  await prepare(page);
+  await page.goto('/albero-fonti-notizie.html',{waitUntil:'domcontentloaded'});
+  const state=await page.evaluate(()=>{
+    const now=new Date().toISOString();
+    db.people=[
+      {id:'root',parentId:null,name:'IO',surname:'',stage:'Nome',phone:'',town:''},
+      {id:'m',parentId:'root',name:'MAMMA',surname:'',stage:'Nome',phone:'',town:'',createdAt:now,updatedAt:now},
+      {id:'e',parentId:'m',name:'ERICA',surname:'',stage:'Nome',phone:'',town:'',createdAt:now,updatedAt:now},
+      {id:'a',parentId:'root',name:'ANNA',surname:'',stage:'Nome',phone:'',town:'',createdAt:now,updatedAt:now}
+    ];
+    db.graphPositions={root:{x:200,y:200},m:{x:470,y:260},e:{x:690,y:420},a:{x:830,y:180}};
+    db.relations=[
+      {id:'1',pairId:'fam',pairRole:'forward',sourceId:'m',targetId:'e',type:'figlia',inverseType:'madre',context:'quick_relationship'},
+      {id:'2',pairId:'fam',pairRole:'reverse',sourceId:'e',targetId:'m',type:'madre',inverseType:'figlia',context:'quick_relationship'},
+      {id:'3',pairId:'friend',pairRole:'forward',sourceId:'e',targetId:'a',type:'amica',inverseType:'amico_a',context:'quick_relationship'},
+      {id:'4',pairId:'friend',pairRole:'reverse',sourceId:'a',targetId:'e',type:'amico_a',inverseType:'amica',context:'quick_relationship'}
+    ];
+    F1RelationshipTree.render();
+    return {people:db.people.length,relations:db.relations.length};
+  });
+  await expect(page.locator('[data-person-id="e"]')).toBeVisible();
+  await page.evaluate(()=>F1RelationshipTree.toggle('m'));
+  await expect(page.locator('[data-person-id="m"]')).toBeVisible();
+  await expect(page.locator('[data-person-id="e"]')).toHaveCount(0);
+  await expect(page.locator('[data-person-id="a"]')).toBeVisible();
+  expect(await page.evaluate(()=>({people:db.people.length,relations:db.relations.length}))).toEqual(state);
+  await page.evaluate(()=>F1RelationshipTree.toggle('m'));
+  await expect(page.locator('[data-person-id="e"]')).toBeVisible();
+  await expect(page.locator('.rel-edge-label').filter({hasText:'AMICA'})).toHaveCount(1);
+});
+
+test('mind map cards and relationship labels expose keyboard and ARIA affordances', async ({page})=>{
+  await prepare(page);
+  await page.goto('/albero-fonti-notizie.html',{waitUntil:'domcontentloaded'});
+  await page.evaluate(()=>{
+    const now=new Date().toISOString();
+    db.people=[
+      {id:'root',parentId:null,name:'IO',surname:'',stage:'Nome',phone:'',town:''},
+      {id:'p1',parentId:'root',name:'RENATO',surname:'TONIOLO',stage:'Contatto',phone:'3481234567',town:'Bruzolo',createdAt:now,updatedAt:now},
+      {id:'p2',parentId:'root',name:'MAMMA',surname:'',stage:'Nome',phone:'',town:'',createdAt:now,updatedAt:now}
+    ];
+    db.graphPositions={root:{x:180,y:160},p1:{x:450,y:210},p2:{x:720,y:210}};
+    db.relations=[
+      {id:'a',pairId:'couple',pairRole:'forward',sourceId:'p1',targetId:'p2',type:'moglie',inverseType:'marito',context:'quick_relationship'},
+      {id:'b',pairId:'couple',pairRole:'reverse',sourceId:'p2',targetId:'p1',type:'marito',inverseType:'moglie',context:'quick_relationship'}
+    ];
+    F1RelationshipTree.render();
+  });
+  const renato=page.locator('[data-person-id="p1"]');
+  await expect(renato).toHaveAttribute('tabindex','0');
+  await expect(renato).toHaveAttribute('aria-label',/RENATO TONIOLO/);
+  await expect(renato.locator('.rel-node-phone')).toHaveAttribute('aria-label',/Apri WhatsApp con RENATO TONIOLO/);
+  await expect(renato.locator('a.call')).toHaveAttribute('aria-label',/Chiama RENATO TONIOLO/);
+  await expect(page.locator('.rel-edge-label')).toHaveAttribute('aria-label',/Modifica relazione MOGLIE ↔ MARITO/);
+});
+
 for(const size of [
   {name:'1600x900',width:1600,height:900},
   {name:'1366x768',width:1366,height:768},
