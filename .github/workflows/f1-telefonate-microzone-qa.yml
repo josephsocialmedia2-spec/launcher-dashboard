@@ -9,6 +9,9 @@ on:
       - "territory-mobile.html"
       - "daily-command-panel.js"
       - "tests/call-routine-disabled.spec.js"
+      - "f1-contact-outreach.js"
+      - "f1-acquisition-data.js"
+      - "tests/daily-contact-outreach.spec.js"
       - ".github/workflows/f1-telefonate-microzone-qa.yml"
 
 permissions:
@@ -63,7 +66,14 @@ jobs:
             'https://www.google.com/search?q=',
             'f1_news_transferred_tasks_v1',
             "newsSent?'NOTIZIA ✓':'NOTIZIA'",
-            'markNewsTransferred(taskId)'
+            'markNewsTransferred(taskId)',
+            'f1-contact-outreach.js',
+            'SEGNA MESSAGGIO INVIATO',
+            'data-message-sent',
+            'async function markMessageSent',
+            "interaction_type:'CALL'",
+            "interaction_type:'WHATSAPP'",
+            "outcome:'MESSAGGIO_INVIATO'"
           ]
           missing=[x for x in required if x not in s]
           if missing:
