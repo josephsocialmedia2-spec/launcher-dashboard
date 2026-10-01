@@ -248,8 +248,10 @@ test.describe('F1 novice dashboard contract', () => {
         await expect(page.locator('.f1-master-menu-toggle')).toBeVisible();
       }
 
-      const shot = await page.screenshot({ fullPage: true });
-      await testInfo.attach('f1-' + size.name, { body: shot, contentType: 'image/png' });
+      fs.mkdirSync('test-results', { recursive: true });
+      const shotPath = path.join('test-results', 'f1-' + size.name + '.png');
+      await page.screenshot({ path: shotPath, fullPage: true });
+      await testInfo.attach('f1-' + size.name, { path: shotPath, contentType: 'image/png' });
       expect(pageErrors, size.name + '\n' + pageErrors.join('\n')).toEqual([]);
       await context.close();
     }
