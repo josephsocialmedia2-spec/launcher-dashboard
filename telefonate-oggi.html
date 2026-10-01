@@ -398,7 +398,9 @@ async function scheduleBusyCallback(taskId,leadId,contactName,contactPhone,btn){
   const now=new Date();
   const remindAt=new Date(now.getTime()+5*60*1000);
   try{
+    const interactionId=btn.dataset.interactionId||(btn.dataset.interactionId=crypto.randomUUID());
     await F1AcquisitionData.addInteraction({
+      interaction_id:interactionId,
       lead_id:leadId||'',
       task_id:taskId,
       interaction_type:'CALL',
@@ -513,6 +515,7 @@ async function completeTask(taskId,outcome,btn){
     const label=String(outcome||'FATTA').replace(/_/g,' ');
     const now=new Date().toISOString();
     await F1AcquisitionData.addInteraction({
+      interaction_id:String(taskId),
       lead_id:row.lead_id||'',
       task_id:taskId,
       interaction_type:'CALL',
@@ -541,7 +544,9 @@ async function markMessageSent(taskId,btn){
   if(!confirm('Confermi di aver realmente inviato un messaggio a '+nameOf(row)+'?'))return;
   btn.disabled=true;
   try{
+    const interactionId=btn.dataset.interactionId||(btn.dataset.interactionId=crypto.randomUUID());
     await F1AcquisitionData.addInteraction({
+      interaction_id:interactionId,
       lead_id:row.lead_id||'',
       task_id:row.task_id,
       interaction_type:'WHATSAPP',
@@ -551,6 +556,7 @@ async function markMessageSent(taskId,btn){
       note:'Messaggio confermato come realmente inviato dall operatore.',
       metadata:{origin:'telefonate-oggi',display_name:nameOf(row),confirmed_by_user:true}
     });
+    delete btn.dataset.interactionId;
     btn.textContent='MESSAGGIO REGISTRATO ✓';
     setTimeout(()=>{btn.disabled=false;btn.textContent='SEGNA ALTRO MESSAGGIO INVIATO'},1200);
   }catch(e){
