@@ -70,7 +70,7 @@ async function installBackend(page) {
   return {metrics,leads};
 }
 
-async function openReady(page){await page.goto('/crm.html');await expect(page.locator('article.lead')).toHaveCount(50);}
+async function openReady(page){await page.goto('/crm.html?mode=legacy');await expect(page.locator('article.lead')).toHaveCount(50);}
 
 test('critical path: KPI -> 50 lead -> task visibili, senza interactions/research/XLSX', async ({page}) => {
   const {metrics}=await installBackend(page);
