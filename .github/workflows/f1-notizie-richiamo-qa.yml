@@ -8,6 +8,9 @@ on:
       - "f1-tree-cloud.js"
       - "telefonate-oggi.html"
       - "tests/news-work-panel-removed.spec.js"
+      - "tests/daily-contact-outreach.spec.js"
+      - "f1-contact-outreach.js"
+      - "f1-tree-network-engine.js"
       - ".github/workflows/f1-notizie-richiamo-qa.yml"
 
 permissions:
@@ -45,7 +48,18 @@ jobs:
             'function importNewsData',
             'function markNewsWorked',
             'function markNewsRecallDone',
-            'function saveNewsNote'
+            'function saveNewsNote',
+            'id="networkKpis"',
+            'id="metrics"',
+            'id="dailyTarget"',
+            'id="dailyProgress"',
+            'id="todayContacts"',
+            'id="journey"',
+            'id="chronologyGraph"',
+            'id="tree"',
+            'Albero verticale delle relazioni',
+            'Obiettivo giornaliero contatti',
+            'Catena operativa'
           ]
           present=[x for x in forbidden_tree if x in tree]
           if present:
@@ -60,7 +74,10 @@ jobs:
             'function normalizeNewsItem',
             'function ensurePersonForNews',
             'id="sourceGrid"',
-            'id="tree"'
+            'id="dailyOutreachPanel"',
+            'id="dailyOutreachGrid"',
+            'CONTATTI DI OGGI',
+            'function applyDailyOutreachData'
           ]
           required_calls=[
             'data-news-task',
@@ -99,7 +116,7 @@ jobs:
           ok=0
           for i in $(seq 1 60); do
             echo "Published Fonti di Notizie check $i/60"
-            if curl -fsSL --max-time 20 "$base/albero-fonti-notizie.html?qa=$RANDOM" -o /tmp/albero-live               && grep -Fq 'RICERCA TERRITORIALE → FONTI DI NOTIZIE' /tmp/albero-live               && grep -Fq '>NOTIZIE</button>' /tmp/albero-live               && grep -Fq 'id="mnemonicPanel"' /tmp/albero-live               && ! grep -Fq 'F1 NOTIZIE · LAVORAZIONE E RICHIAMI' /tmp/albero-live               && ! grep -Fq 'Notizie da lavorare' /tmp/albero-live               && ! grep -Fq 'IMPORTA NOTIZIE JSON' /tmp/albero-live               && ! grep -Fq 'Nessuna notizia da lavorare' /tmp/albero-live               && ! grep -Fq 'class="news-workbench"' /tmp/albero-live; then
+            if curl -fsSL --max-time 20 "$base/albero-fonti-notizie.html?qa=$RANDOM" -o /tmp/albero-live               && grep -Fq 'RICERCA TERRITORIALE → FONTI DI NOTIZIE' /tmp/albero-live               && grep -Fq '>NOTIZIE</button>' /tmp/albero-live               && grep -Fq 'id="dailyOutreachPanel"' /tmp/albero-live               && grep -Fq 'CONTATTI DI OGGI' /tmp/albero-live               && grep -Fq 'id="mnemonicPanel"' /tmp/albero-live               && ! grep -Fq 'F1 NOTIZIE · LAVORAZIONE E RICHIAMI' /tmp/albero-live               && ! grep -Fq 'Notizie da lavorare' /tmp/albero-live               && ! grep -Fq 'IMPORTA NOTIZIE JSON' /tmp/albero-live               && ! grep -Fq 'Nessuna notizia da lavorare' /tmp/albero-live               && ! grep -Fq 'class="news-workbench"' /tmp/albero-live               && ! grep -Fq 'id="networkKpis"' /tmp/albero-live               && ! grep -Fq 'id="chronologyGraph"' /tmp/albero-live               && ! grep -Fq 'Albero verticale delle relazioni' /tmp/albero-live; then
               ok=1
               break
             fi
