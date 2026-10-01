@@ -43,6 +43,13 @@ async function installBackend(context,db){
       do_not_contact:db.leads.filter(x=>x.do_not_contact||String(x.status||'')==='NON_CONTATTARE').length
     }]);
     if(path.endsWith('/rpc/f1_crm_lead_page_v2'))return ok(pageRows(db,JSON.parse(req.postData()||'{}')));
+    if(path.endsWith('/rpc/f1_crm_hub_page_v1')){
+      const body=JSON.parse(req.postData()||'{}'),section=String(body.p_section||'contatti'),offset=Number(body.p_offset||0),limit=Number(body.p_limit||50),search=String(body.p_search||'').trim().toLowerCase();
+      let rows=section==='attivita'?db.tasks:db.leads.filter(x=>!x.deleted);
+      if(search)rows=rows.filter(x=>Object.values(x).join(' ').toLowerCase().includes(search));
+      const filtered=rows.length;
+      return ok({rows:rows.slice(offset,offset+limit),filtered,total:filtered});
+    }
     if(path.endsWith('/rpc/f1_crm_visible_tasks')){
       const body=JSON.parse(req.postData()||'{}'),ids=new Set((body.p_lead_ids||[]).map(String));
       return ok(db.tasks.filter(t=>ids.has(String(t.lead_id))&&!['DONE','CANCELLED'].includes(String(t.status||'OPEN').toUpperCase())));
@@ -109,7 +116,7 @@ test('dashboard -> auth -> CRM -> lead/interactions/task -> refresh/reopen persi
   await page.fill('#fVia','Via QA');
   await page.fill('#fCivico','1');
   await page.selectOption('#fType','FSBO');
-  await page.selectOption('#fRpo','NON_APPLICABILE');
+  await page.selectOption('#fRpo','VERIFICATO_OK');
   await page.fill('#fNotes','Record QA browser persistente');
   await page.fill('#fNext','Richiamo QA');
   await page.fill('#fNextDate','2026-09-14');
