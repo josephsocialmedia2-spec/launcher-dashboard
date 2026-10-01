@@ -63,6 +63,10 @@ test('single drag is free, marks manual, updates edges and persists only on drop
   await page.mouse.move(box.x+55,box.y+18);
   await page.mouse.down();
   await page.mouse.move(box.x+135,box.y+78,{steps:8});
+  const pathDuring=await page.locator('.rel-edge-path[data-relation-id="spouse"]').getAttribute('d');
+  const pushesDuring=await page.evaluate(()=>window.__pushes);
+  expect(pathDuring).not.toBe(pathBefore);
+  expect(pushesDuring).toBe(0);
   await page.mouse.up();
 
   const after=await page.evaluate(()=>({
@@ -118,6 +122,10 @@ test('pin protects a card from explicit reorder but never blocks manual drag', a
   const moved=await page.evaluate(()=>({...db.graphPositions.a}));
   expect(moved.pinned).toBe(true);
   expect(moved.x).not.toBe(pinned.x);
+
+  await page.evaluate(()=>F1RelationshipTree.togglePin('a'));
+  const unpinned=await page.evaluate(()=>({...db.graphPositions.a}));
+  expect(unpinned.pinned).toBe(false);
 });
 
 test('ctrl multiselect moves selected cards together and preserves their distances', async ({page})=>{
@@ -207,6 +215,34 @@ test('keyboard arrows provide a non-drag movement path and undo restores the pre
   const restored=await page.evaluate(()=>({...db.graphPositions.a}));
   expect(restored.x).toBe(before.x);
   expect(restored.y).toBe(before.y);
+});
+
+test('dropping selected cards inside a group assigns the whole selection without changing relations', async ({page})=>{
+  const gid=await page.evaluate(()=>{
+    const id=F1RelationshipTree.createGroup('LAVORO');
+    F1RelationshipTree.assignGroup('a',id);
+    F1RelationshipTree.assignGroup('b',id);
+    return id;
+  });
+  const relationBefore=await page.evaluate(()=>JSON.stringify(db.relations));
+  await page.evaluate(()=>{
+    F1RelationshipTree.select('c',false);
+    F1RelationshipTree.select('root',false,{ctrlKey:true});
+  });
+  const root=page.locator('[data-person-id="root"]'),box=await root.boundingBox();
+  const group=page.locator('.rel-group-box[data-group-id="'+gid+'"]'),gb=await group.boundingBox();
+  await page.mouse.move(box.x+45,box.y+20);
+  await page.mouse.down();
+  await page.mouse.move(gb.x+gb.width/2,gb.y+gb.height/2,{steps:8});
+  await page.mouse.up();
+  const state=await page.evaluate(()=>({
+    rootGroup:db.graphPositions.root.groupId,
+    cGroup:db.graphPositions.c.groupId,
+    relations:JSON.stringify(db.relations)
+  }));
+  expect(state.rootGroup).toBe(gid);
+  expect(state.cGroup).toBe(gid);
+  expect(state.relations).toBe(relationBefore);
 });
 
 test('cloud metadata keeps graphPositions and graphGroups without a parallel database', async ()=>{
