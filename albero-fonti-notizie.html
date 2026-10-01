@@ -484,7 +484,7 @@ try{const shared=JSON.parse(localStorage.getItem('f1NotizieOfficial')||'null');i
 normalizeDBNames(db);
 
 function defaultDB(){
- return {dataVersion:2,relations:[],places:[],memories:[],automationLog:[],newsInbox:[],duplicateCandidates:[],mnemonic:{current:null,pendingDuplicate:null,answerHistory:[],ignoredDuplicatePairs:[]},people:[{id:'root',parentId:null,name:'IO',surname:'',phone:'',email:'',category:'',source:'',stage:'Nome',town:'',notes:'Punto di partenza della rete personale',influence:false,firstContact:'',lastContact:'',nextContact:'',touchpointHistory:{},socialSearchHistory:{},lifeTriggers:[],lifeTriggerHistory:[],lifeTriggerStatus:{},lifeTriggerNews:{},periodContexts:[],places:[],memories:[],schools:[],companies:[],contextTags:[],createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),contactDates:[]}], dailyTarget:40, settings:{officialName:'',officialPhone:'',officialEmail:'',automationWebhook:''}};
+ return {dataVersion:2,relations:[],places:[],memories:[],automationLog:[],newsInbox:[],duplicateCandidates:[],mnemonic:{current:null,pendingDuplicate:null,answerHistory:[],ignoredDuplicatePairs:[]},people:[{id:'root',parentId:null,name:'IO',surname:'',phone:'',email:'',category:'',source:'',stage:'Nome',town:'',notes:'Punto di partenza della rete personale',influence:false,firstContact:'',lastContact:'',nextContact:'',touchpointHistory:{},socialSearchHistory:{},lifeTriggers:[],lifeTriggerHistory:[],lifeTriggerStatus:{},lifeTriggerNews:{},periodContexts:[],places:[],memories:[],schools:[],companies:[],contextTags:[],createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),contactDates:[]}], settings:{officialName:'',officialPhone:'',officialEmail:'',automationWebhook:''}};
 }
 function loadDB(){try{const x=JSON.parse(localStorage.getItem('alberoFontiNotizie'));if(!(x&&x.people))return defaultDB();x.newsInbox=Array.isArray(x.newsInbox)?x.newsInbox:[];x.settings=x.settings||{officialName:'',officialPhone:'',officialEmail:'',automationWebhook:''};x.people.forEach(p=>{p.touchpointHistory=p.touchpointHistory||{};p.socialSearchHistory=p.socialSearchHistory||{};p.lifeTriggers=Array.isArray(p.lifeTriggers)?p.lifeTriggers:[];p.lifeTriggerHistory=Array.isArray(p.lifeTriggerHistory)?p.lifeTriggerHistory:[];p.lifeTriggerStatus=p.lifeTriggerStatus||{};p.lifeTriggerNews=p.lifeTriggerNews||{};p.updatedAt=p.updatedAt||p.createdAt||new Date().toISOString();p.firstContact=p.firstContact||((p.contactDates||[])[0]||'');syncNextContact(p)});return x}catch(e){return defaultDB()}}
 function persist(){localStorage.setItem('alberoFontiNotizie',JSON.stringify(db));try{window.F1TreeCloud?.schedulePush?.()}catch(_){}try{window.F1NetworkEngine?.afterMutation?.()}catch(_){}}
@@ -499,20 +499,17 @@ function currentPerson(){if(drawerMode==='new')return formPersonSnapshot('draft'
 
 
 const COACH_STORAGE_KEY='f1TreeCoachState';
-let coachCurrent=null,coachTimer=null,coachLastActivity=Date.now();
+let coachCurrent=null;
 function coachState(){try{return JSON.parse(localStorage.getItem(COACH_STORAGE_KEY)||'{}')}catch(_){return {}}}
 function saveCoachState(v){try{localStorage.setItem(COACH_STORAGE_KEY,JSON.stringify(v||{}))}catch(_){}}
 function todayLocalKey(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
-function todayContactCount(){const day=todayLocalKey();return (db.people||[]).filter(function(p){return p.id!=='root'}).reduce(function(n,p){return n+(p.contactDates||[]).filter(function(x){return String(x).slice(0,10)===day}).length},0)}
-function peopleAddedToday(){const day=todayLocalKey();return (db.people||[]).filter(function(p){return p.id!=='root'&&String(p.createdAt||'').slice(0,10)===day}).length}
-function influenceCount(){return (db.people||[]).filter(function(p){return p.id!=='root'&&(p.influence||p.source==='influenza'||p.category==='professionisti')}).length}
 function firstUncontacted(){return (db.people||[]).find(function(p){return p.id!=='root'&&p.stage==='Nome'})}
 function coachActionRun(kind){
  closeCoachPopup();
  if(kind==='rubrica'){openNewRootChild();return}
  if(kind==='telefono'){const p=firstUncontacted();if(p)openPerson(p.id);else openNewRootChild();return}
  if(kind==='influenza'){openSourcePerson('influenza');return}
- if(kind==='risultati'){const el=document.getElementById('metrics');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});return}
+ if(kind==='risultati'){document.getElementById('dailyOutreachPanel')?.scrollIntoView({behavior:'smooth',block:'start'});return}
 }
 function closeCoachPopup(){const el=document.getElementById('coachPopup');if(el)el.classList.remove('open');coachCurrent=null}
 function showCoachPopup(msg,force){
@@ -530,29 +527,6 @@ function showCoachPopup(msg,force){
  st[key]=new Date().toISOString();saveCoachState(st);
  return true;
 }
-function temporalCoach(force){
- if(coachCurrent)return;
- const h=new Date().getHours(),contacts=todayContactCount(),added=peopleAddedToday(),infl=influenceCount();
- let msg=null;
- if(h>=7&&h<10){
-   msg={id:'morning-rubrica',tag:'📒 RUBRICA',title:'Apri la tua rete',body:added?'Hai già iniziato. Aggiungi ancora un nome e chiediti: chi altro conosco attraverso questa persona?':'Parti dai nomi che hai già in testa. Non giudicare chi venderà: costruisci la lista.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'+ AGGIUNGI UN NOME',action:'rubrica'};
- }else if(h>=10&&h<13){
-   msg={id:'morning-phone',tag:'📞 TELEFONO',title:'Ora contatti, non perfezione',body:'Hai registrato '+contacts+' contatti oggi. Porta avanti il blocco telefonate e raccogli notizie.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'INIZIA / CONTINUA I CONTATTI',action:'telefono'};
- }else if(h>=13&&h<16){
-   msg=contacts>=30
-    ?{id:'midday-30',tag:'✅ SOGLIA RAGGIUNTA',title:'Contatto registrato',body:'Sei a '+contacts+'. Mantieni il ritmo e usa le conversazioni per far emergere notizie.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'CONTINUA FINO A 50',action:'telefono'}
-    :{id:'midday-phone',tag:'📞 METÀ GIORNATA',title:'Controlla il ritmo',body:'Sei a '+contacts+' contatti. Riparti dal prossimo nome disponibile.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'PROSSIMO CONTATTO',action:'telefono'};
- }else if(h>=16&&h<19){
-   msg={id:'afternoon-influence',tag:'🤝 CENTRI DI INFLUENZA',title:'Apri una porta che parla con molte persone',body:infl?'Hai '+infl+' contatti ad alta rete. Aggiungine un altro tra baristi, edicolanti, parrucchieri, commercialisti o professionisti.':'Inserisci almeno un centro di influenza: una persona che incontra molte persone ogni giorno.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'+ CENTRO DI INFLUENZA',action:'influenza'};
- }else if(h>=19){
-   msg=contacts>=50
-    ?{id:'evening-50',tag:'🏁 GIORNATA COMPLETA',title:'Contatto registrato',body:'Hai completato la soglia alta della giornata. Guarda i nomi generati e le notizie emerse.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'VEDI I RISULTATI',action:'risultati'}
-    :contacts>=30
-      ?{id:'evening-30',tag:'✅ OBIETTIVO MINIMO',title:'Contatto registrato',body:'Sei a '+contacts+'. Puoi ancora consolidare la giornata con qualche contatto mirato.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'CONTINUA',action:'telefono'}
-      :{id:'evening-under30',tag:'📞 ULTIMO BLOCCO',title:'Chiudi la giornata con azione',body:'Sei a '+contacts+' contatti. Scegli il prossimo nome e fai un ultimo blocco operativo.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'PROSSIMO CONTATTO',action:'telefono'};
- }
- if(msg)showCoachPopup(msg,!!force);
-}
 function coachOnPersonSaved(p,isNew){
  if(!p||!isNew)return;
  const total=(db.people||[]).filter(function(x){return x.id!=='root'}).length;
@@ -564,8 +538,6 @@ function coachOnPersonSaved(p,isNew){
  }
 }
 function coachOnContactRecorded(){renderDailyOutreach();}
-function coachRegisterActivity(){coachLastActivity=Date.now()}
-
 const INCOMING_CONTACT_INTERVAL_MS=3*60*1000;
 let incomingContactTimer=null,incomingContactPersonId=null;
 function incomingContactCandidate(){
@@ -610,19 +582,6 @@ function startIncomingContactReminder(){
    closeCoachPopup();
    openIncomingContact();
  },INCOMING_CONTACT_INTERVAL_MS);
-}
-
-function startCoachSystem(){
- ['click','keydown','touchstart','scroll'].forEach(function(ev){window.addEventListener(ev,coachRegisterActivity,{passive:true})});
- setTimeout(function(){temporalCoach(false)},1600);
- clearInterval(coachTimer);
- coachTimer=setInterval(function(){
-   if(coachCurrent||document.getElementById('incomingContactPop')?.classList.contains('open'))return;
-   if(Date.now()-coachLastActivity>15*60*1000){
-     showCoachPopup({id:'inactive-action',tag:'⏱ RIPARTI',title:'Una sola azione adesso',body:'Apri il prossimo contatto oppure rispondi alla prossima domanda mnemonica.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'PROSSIMO CONTATTO',action:'telefono'},true);
-     coachLastActivity=Date.now();
-   }else temporalCoach(true);
- },3*60*1000);
 }
 
 function init(){
