@@ -61,6 +61,17 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Run launcher and novice-dashboard regression checks
         run: npx playwright test tests/f1-launcher-master-ui.spec.js tests/f1-novice-dashboard.spec.js --project=desktop-chromium
+
+      - name: Upload dashboard visual QA artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: f1-dashboard-visual-qa
+          path: |
+            test-results
+            playwright-report
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Verify deployed F1 dashboard
         shell: bash
         run: |
