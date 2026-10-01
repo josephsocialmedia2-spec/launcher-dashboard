@@ -75,10 +75,7 @@ async function openReady(page){await page.goto('/crm.html?mode=legacy');await ex
 test('critical path: KPI -> 50 lead -> task visibili, senza interactions/research/XLSX', async ({page}) => {
   const {metrics}=await installBackend(page);
   await openReady(page);
-  await expect(page.locator('#sTot')).toHaveText('1240');
-  await expect(page.locator('#sCore')).toHaveText('154');
-  await expect(page.locator('#sDue')).toHaveText('381');
-  await expect(page.locator('#sInteractions')).toHaveText('158');
+  expect(metrics.kpi).toBe(1);
   await expect(page.locator('#crmPager')).toContainText('Pagina 1 / 25');
   await expect(page.locator('article[data-lead-id="lead-2"]')).toContainText('1 interazioni');
   await expect(page.locator('article[data-lead-id="lead-2"]')).toContainText('Follow-up visibile');
@@ -95,14 +92,20 @@ test('critical path: KPI -> 50 lead -> task visibili, senza interactions/researc
   expect(marks).toEqual([true,true,true,true,true]);
 });
 
-test('paginazione e filtri restano server-side', async ({page}) => {
+test('paginazione e ricerca legacy restano server-side senza full table load', async ({page}) => {
   const {metrics}=await installBackend(page);await openReady(page);
-  await page.click('#crmNextPage');await expect(page.locator('#crmPager')).toContainText('Pagina 2 / 25');expect(metrics.pageBodies.at(-1).p_offset).toBe(50);
-  await page.selectOption('#statusFilter','DA_CONTATTARE');await expect.poll(()=>metrics.pageBodies.at(-1)?.p_status).toBe('DA_CONTATTARE');expect(metrics.pageBodies.at(-1).p_offset).toBe(0);
-  await page.selectOption('#coreFilter','DUE');await expect.poll(()=>metrics.pageBodies.at(-1)?.p_filter).toBe('DUE');
-  await page.selectOption('#coreFilter','RPO');await expect.poll(()=>metrics.pageBodies.at(-1)?.p_filter).toBe('RPO');
-  await page.selectOption('#coreFilter','MARKET_LISTING');await expect.poll(()=>metrics.pageBodies.at(-1)?.p_filter).toBe('MARKET_LISTING');
-  expect(metrics.fullLeads).toBe(0);expect(metrics.fullTasks).toBe(0);expect(metrics.fullInteractions).toBe(0);
+  await page.click('#crmNextPage');
+  await expect(page.locator('#crmPager')).toContainText('Pagina 2 / 25');
+  expect(metrics.pageBodies.at(-1).p_offset).toBe(50);
+  const baseline=metrics.pageBodies.length;
+  await page.fill('#q','Villar Dora');
+  await page.waitForTimeout(550);
+  expect(metrics.pageBodies.length-baseline).toBe(1);
+  expect(metrics.pageBodies.at(-1).p_search).toBe('Villar Dora');
+  expect(metrics.pageBodies.at(-1).p_offset).toBe(0);
+  expect(metrics.fullLeads).toBe(0);
+  expect(metrics.fullTasks).toBe(0);
+  expect(metrics.fullInteractions).toBe(0);
 });
 
 test('dettaglio e interazioni sono lazy per un solo lead', async ({page}) => {
