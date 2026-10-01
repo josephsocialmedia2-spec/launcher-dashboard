@@ -1,6 +1,16 @@
 const { test, expect } = require('@playwright/test');
 const fs = require('fs');
 
+async function prepareTreePage(page) {
+  await page.route('**/f1-tree-cloud.js*', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/javascript',
+      body: "window.F1TreeCloud={boot:async()=>true,touchLocal:()=>{},queueReset:()=>{}};"
+    })
+  );
+}
+
 test('Fonti di Notizie no longer contains the removed workbench', async ({ page, request }) => {
   const source = fs.readFileSync('albero-fonti-notizie.html','utf8');
 
@@ -35,6 +45,7 @@ test('Fonti di Notizie no longer contains the removed workbench', async ({ page,
 
   const pageErrors = [];
   page.on('pageerror', e => pageErrors.push(String(e.message || e)));
+  await prepareTreePage(page);
   await page.goto('/albero-fonti-notizie.html', { waitUntil: 'domcontentloaded' });
 
   await expect(page.getByText('RICERCA TERRITORIALE → FONTI DI NOTIZIE')).toBeVisible();
@@ -48,6 +59,7 @@ test('Fonti di Notizie no longer contains the removed workbench', async ({ page,
 test('Fonti di Notizie remains usable on mobile after panel removal', async ({ browser }) => {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true });
   const page = await context.newPage();
+  await prepareTreePage(page);
   await page.goto('/albero-fonti-notizie.html', { waitUntil: 'domcontentloaded' });
 
   await expect(page.getByText('RICERCA TERRITORIALE → FONTI DI NOTIZIE')).toBeVisible();
