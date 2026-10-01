@@ -344,7 +344,8 @@ body.f1-dashboard-fullscreen .crm-open{
 }
 .card h1,.card h2,.card h3,.card p,.card span,.card strong,
 .f1tv4 h1,.f1tv4 h2,.f1tv4 h3,.f1tv4 p,.f1tv4 span,.f1tv4 strong{
-  overflow-wrap:anywhere;
+  overflow-wrap:break-word;
+  word-break:normal;
 }
 
 /* Dock laterale: non deve coprire il contenuto */
