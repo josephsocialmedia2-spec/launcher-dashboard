@@ -16,6 +16,11 @@ async function prepare(page){
     contentType:'application/javascript',
     body:"window.F1ContactOutreach={ready:()=>true,today:async()=>({day:'2026-10-01',timezone:'Europe/Rome',total:0,calls:0,messages:0,events:[]}),record:async x=>x,recordInteraction:async()=>({})};"
   }));
+  await page.route('**/f1-tree-network-engine.js*', route => route.fulfill({
+    status:200,
+    contentType:'application/javascript',
+    body:"window.F1NetworkEngine={boot:()=>{},afterMutation:()=>{},renderAllExtensions:()=>{},formFields:()=>({}),loadPersonFields:()=>{},renderPersonRelations:()=>{}};"
+  }));
 }
 
 async function seed(page){
