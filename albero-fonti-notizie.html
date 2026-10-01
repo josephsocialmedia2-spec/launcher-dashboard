@@ -977,7 +977,28 @@ function renderTouchpoints(p){
  holder.innerHTML=`<div class="touchpoint-current"><div class="touchpoint-top"><div><div class="touchpoint-title">${tp.index}. ${esc(tp.title)}</div><div class="touchpoint-cat">${esc(tp.cat)}</div></div><div class="touchpoint-date">${formatDateIT(tp.date)}</div></div><div class="touchpoint-send-label">${esc(statusLabel)}</div><div class="touchpoint-main-message"><b>INVIA AL CLIENTE:</b><br>${esc(tp.desc)}</div><div class="touchpoint-desc"><b>Fonte da consultare:</b> ${esc(tp.source)}</div><div class="touchpoint-actions">${sourceLink}<button class="pdf" type="button" onclick="generateTouchpointPDF('${p.id}','${tp.id}')">PDF F1</button><button class="mail" type="button" onclick="prepareEmailTouchpoint('${p.id}','${tp.id}')">EMAIL</button><button class="wa" type="button" onclick="prepareWhatsAppTouchpoint('${p.id}','${tp.id}')">WHATSAPP</button><button type="button" onclick="shareTouchpointPDF('${p.id}','${tp.id}')">CONDIVIDI PDF</button><button class="donebtn" type="button" onclick="toggleTouchpointDone('${p.id}','${tp.id}')">SEGNA INVIATO</button></div><details class="touchpoint-social-details"><summary>RIFAI RICERCA SOCIAL PER QUESTA DATA · ${esc(socialStatus)}</summary><div class="social-actions">${socialButtons}</div><div class="social-research-detail">Google cercherà usando solo i dati disponibili: <b>${esc(socialQueryFor(p,'[SOCIAL]'))}</b><br>Non è necessario avere telefono, email o altri dati. ${socialDetail}</div></details>${nextAfter?`<div class="touchpoint-next-hint">Dopo questo: ${formatDateIT(nextAfter.date)} - ${esc(nextAfter.title)}</div>`:''}</div>`;
 }
 function getPersonTouchpoint(personId,tpId){const p=db.people.find(x=>x.id===personId);if(!p)return {};const tp=buildTouchpointsForPerson(p).find(x=>x.id===tpId);return {p,tp}}
-function toggleTouchpointDone(personId,tpId){const {p,tp}=getPersonTouchpoint(personId,tpId);if(!p||!tp)return;p.touchpointHistory=p.touchpointHistory||{};const current=p.touchpointHistory[tpId]||{};const done=!current.done;p.touchpointHistory[tpId]={...current,done,sentAt:done?new Date().toISOString():''};try{window.F1TreeCloud?.touchLocal?.(p)}catch(_){p.updatedAt=new Date().toISOString()};if(done){p.lastContact=localISODate(new Date());p.contactDates=p.contactDates||[];p.contactDates.push(p.lastContact)}syncNextContact(p);persist();renderAll();openPerson(p.id);toast(done?'Touch point segnato come inviato':'Touch point riaperto')}
+async function toggleTouchpointDone(personId,tpId){
+ const {p,tp}=getPersonTouchpoint(personId,tpId);if(!p||!tp)return;
+ p.touchpointHistory=p.touchpointHistory||{};
+ const current=p.touchpointHistory[tpId]||{},done=!current.done,sentAt=done?new Date().toISOString():'';
+ if(done){
+  try{
+   await window.F1ContactOutreach?.record?.({
+    channel:'MESSAGE',
+    sourceEventId:'touchpoint:'+personId+':'+tpId,
+    contactRef:personId,
+    source:'fonti-touchpoint',
+    displayName:upperName([p.name,p.surname].filter(Boolean).join(' ')),
+    occurredAt:sentAt,
+    metadata:{touchpoint_id:tpId,touchpoint_title:tp.title||'',confirmed_by_user:true}
+   });
+  }catch(e){toast('Invio non registrato nel contatore: '+(e.message||e));return}
+ }
+ p.touchpointHistory[tpId]={...current,done,sentAt};
+ try{window.F1TreeCloud?.touchLocal?.(p)}catch(_){p.updatedAt=new Date().toISOString()}
+ if(done){p.lastContact=localISODate(new Date());p.contactDates=p.contactDates||[];p.contactDates.push(p.lastContact)}
+ syncNextContact(p);persist();renderAll();openPerson(p.id);toast(done?'Touch point segnato come inviato':'Touch point riaperto')
+}
 function pdfSafeName(p,tp){const who=upperName([p.name,p.surname].filter(Boolean).join('_')).replace(/[^A-Z0-9_À-Ü]/g,'_');return `F1_IMMOBILIARE_${who}_${tp.date}_${tp.index}.pdf`}
 function makeTouchpointPdfBlob(p,tp){
  if(!(window.jspdf&&window.jspdf.jsPDF)){toast('Motore PDF non disponibile. Controlla la connessione Internet.');return null}
