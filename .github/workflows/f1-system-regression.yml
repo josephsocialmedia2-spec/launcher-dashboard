@@ -1,0 +1,81 @@
+name: F1 System Regression
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/f1-system-regression.yml'
+      - 'f1-launcher-master.css'
+      - 'f1-launcher-master.js'
+      - 'f1-dashboard-novice.css'
+      - 'ricerca-territoriale.html'
+      - 'ricerca-territoriale.js'
+      - 'f1-premium-help.js'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  system-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Static core contracts
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check f1-launcher-master.js
+          node --check ricerca-territoriale.js
+          node --check f1-premium-help.js
+          node --check crm-unified-app.js
+          node --check f1-acquisition-data.js
+          node --check f1-notiziere-engine.js
+          node --check f1-staff-data.js
+          node --check centrale-risultati.js
+          node --check centrale-cloud.js
+          node --check accessi-ufficio.js
+          test -f mike-ferry-script-trainer/index.html
+          test -f mike-ferry-script-trainer/acquisition.html
+          test -f mike-ferry-script-trainer/simulator.html
+          test -f mike-ferry-script-trainer/audio.html
+          grep -Fq 'F1 SCRIPT TRAINER' mike-ferry-script-trainer/index.html
+          grep -Fq "IMPARA L'ACQUISIZIONE" mike-ferry-script-trainer/index.html
+          grep -Fq 'SIMULATORE ROLE PLAY' mike-ferry-script-trainer/simulator.html
+          ! grep -Fq 'REALMEDIAPRO' ricerca-territoriale.html
+          ! grep -Fq 'CUSTOMER CAMPAIGN ENGINE' ricerca-territoriale.html
+
+      - name: Install browser QA
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: CRM regressions
+        run: npx playwright test tests/unified-crm.spec.js tests/crm-phase2.spec.js tests/crm-full-e2e.spec.js --project=desktop-chromium
+
+      - name: Territory and Notiziere regressions
+        run: npx playwright test tests/territory-operations-panel.spec.js tests/notiziere-guided.spec.js --project=desktop-chromium
+
+      - name: Authentication and office regressions
+        run: npx playwright test tests/cloud-auth.spec.js tests/staff-access-panel.spec.js --project=desktop-chromium
+
+      - name: Command center and results regressions
+        run: npx playwright test tests/acquisition-command-center.spec.js tests/centrale-risultati.spec.js --project=desktop-chromium
+
+      - name: Core route smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 8765 >/tmp/f1-system-http.log 2>&1 &
+          pid=$!
+          trap 'kill $pid || true' EXIT
+          sleep 1
+          for path in             ricerca-territoriale.html             albero-fonti-notizie.html             crm.html             telefonate-oggi.html             f1-email-radar.html             oggi.html             documenti-vendita.html             centrale-risultati.html             accessi-ufficio.html             setup-cloud.html             mike-ferry-script-trainer/index.html             mike-ferry-script-trainer/acquisition.html             mike-ferry-script-trainer/simulator.html             mike-ferry-script-trainer/audio.html; do
+            echo "SMOKE $path"
+            curl -fsS "http://127.0.0.1:8765/$path" >/dev/null
+          done
