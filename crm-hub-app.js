@@ -130,7 +130,13 @@ async function load(){
     $('hubSectionCount').textContent=`${state.filtered} su ${state.total}`;
     renderRows();renderPager();
   }catch(e){
-    if(box)box.innerHTML='<div class="hub-empty">Errore CRM: '+esc(e.message||e)+'</div>';
+    const message=String(e?.message||e);
+    if(message.includes('ACCESSO CRM RICHIESTO')){
+      window.F1CRMAuthGuard?.show?.();
+      return;
+    }
+    if(box)box.innerHTML='<div class="hub-empty">Non sono riuscito a caricare il CRM. Riprova o controlla la connessione.</div>';
+    console.error('CRM Hub load:',e);
   }
 }
 function schedule(){clearTimeout(state.timer);state.offset=0;state.timer=setTimeout(load,250)}
