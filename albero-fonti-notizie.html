@@ -131,7 +131,8 @@ button{cursor:pointer}
 .context-box{background:#121e27;border:1px solid #364e5f;border-radius:12px;padding:11px;margin:10px 0}.context-box h3{margin:0 0 8px;font-size:11px}.period-checks{display:grid;grid-template-columns:1fr 1fr;gap:5px}.period-check{font-size:9px;color:#c7d5dd;background:#0d171e;border-radius:7px;padding:6px}.period-check input{width:auto;margin-right:5px}.relation-pills{display:flex;gap:5px;flex-wrap:wrap}.relation-pill{border:0;border-radius:999px;background:#243d4c;color:#dfeaf0;padding:5px 7px;font-size:8px}
 @media(max-width:760px){.mnemonic-answer-row{grid-template-columns:1fr}.period-checks{grid-template-columns:1fr}}
 </style>
-\n  <link rel="stylesheet" href="f1-launcher-master.css?v=20260928a">\n  <script defer src="f1-launcher-master.js?v=20260928a"></script>\n</head>
+\n  <link rel="stylesheet" href="f1-launcher-master.css?v=20260928a">
+  <link rel="stylesheet" href="f1-relational-tree.css?v=20261001-tree1">\n  <script defer src="f1-launcher-master.js?v=20260928a"></script>\n</head>
 <body>
 <div class="app">
   <aside class="sidebar">
@@ -186,17 +187,41 @@ button{cursor:pointer}
         <div><b>RICERCA TERRITORIALE → FONTI DI NOTIZIE</b><span>Apri la dashboard, cerca segnali territoriali e poi registra qui ogni nominativo come nodo dell'albero.</span></div>
         <button class="btn news-launcher" onclick="openNewsDashboard()">NOTIZIE</button>
       </div>
-      <section class="daily-outreach" id="dailyOutreachPanel" aria-labelledby="dailyOutreachTitle">
-        <div class="daily-outreach-head">
-          <div><h2 id="dailyOutreachTitle">CONTATTI DI OGGI</h2><div class="daily-outreach-sub">Telefonate e messaggi realmente effettuati oggi</div></div>
-          <div class="daily-outreach-total"><b id="dailyOutreachTotal">0</b><span>CONTATTI REGISTRATI OGGI</span></div>
+      <section class="relationship-workspace" id="relationshipWorkspace">
+        <div class="relationship-left">
+          <section class="daily-outreach" id="dailyOutreachPanel" aria-labelledby="dailyOutreachTitle">
+            <div class="daily-outreach-head">
+              <div><h2 id="dailyOutreachTitle">CONTATTI DI OGGI</h2><div class="daily-outreach-sub">Telefonate e messaggi realmente effettuati oggi</div></div>
+              <div class="daily-outreach-total"><b id="dailyOutreachTotal">0</b><span>CONTATTI</span></div>
+            </div>
+            <div class="daily-outreach-breakdown">
+              <div class="daily-outreach-chip">☎ <b id="dailyOutreachCalls">0</b></div>
+              <div class="daily-outreach-chip">💬 <b id="dailyOutreachMessages">0</b></div>
+            </div>
+            <div class="daily-outreach-grid" id="dailyOutreachGrid" aria-label="Registro visuale dei primi 100 contatti della giornata"></div>
+            <div class="daily-outreach-note">100 è solo la capacità del display, non un obiettivo.</div>
+          </section>
         </div>
-        <div class="daily-outreach-breakdown">
-          <div class="daily-outreach-chip">☎ Telefonate: <b id="dailyOutreachCalls">0</b></div>
-          <div class="daily-outreach-chip">✉ Messaggi: <b id="dailyOutreachMessages">0</b></div>
+        <div class="relationship-right">
+          <section class="relationship-tree-panel" aria-labelledby="relationshipTreeTitle">
+            <div class="relationship-tree-head">
+              <div class="relationship-tree-title"><h2 id="relationshipTreeTitle">ALBERO RELAZIONALE</h2><p>IO → persone → relazioni → nuovi nominativi</p></div>
+              <div class="relationship-tree-tools">
+                <button type="button" onclick="F1RelationshipTree.zoomOut()" title="Riduci">−</button>
+                <button type="button" onclick="F1RelationshipTree.zoomIn()" title="Ingrandisci">+</button>
+                <button type="button" onclick="F1RelationshipTree.fit()">ADATTA</button>
+                <button type="button" onclick="F1RelationshipTree.center()" title="Centra la persona selezionata">CENTRA</button>
+                <button type="button" class="primary" onclick="F1RelationshipTree.openPicker('root')">+ PERSONA</button>
+              </div>
+            </div>
+            <div class="rel-tree-viewport" id="relationshipTreeViewport">
+              <div class="rel-tree-stage" id="relationshipTreeStage">
+                <div id="relationshipTree"></div>
+              </div>
+            </div>
+            <div class="rel-legend"><b>Trascina</b> per spostarti · <b>Ctrl + rotellina</b> per zoom · clicca <b>+</b> per creare un nuovo ramo.</div>
+          </section>
         </div>
-        <div class="daily-outreach-grid" id="dailyOutreachGrid" aria-label="Registro visuale dei primi 100 contatti della giornata"></div>
-        <div class="daily-outreach-note">I 100 numeri sono solo la capacità del display. Non rappresentano un obiettivo o un numero minimo da raggiungere.</div>
       </section>
 
       <section class="mnemonic-panel" id="mnemonicPanel">
@@ -352,6 +377,39 @@ button{cursor:pointer}
   </div>
 </div>
 
+<div class="modal" id="relationModal">
+  <div class="modal-card" style="max-width:620px">
+    <div class="modal-head"><div><h2>CHI È COLLEGATO A <span id="relationSourceName">QUESTA PERSONA</span>?</h2><div class="tip" id="relationContextQuestion">Scegli la relazione.</div></div><button class="close" onclick="F1RelationshipTree.closePicker()">Chiudi</button></div>
+    <div class="modal-body">
+      <div class="relation-type-grid" id="relationTypeGrid"></div>
+      <div class="relation-form" id="relationForm">
+        <div class="tip" style="margin-bottom:8px">RELAZIONE: <b id="relationTypeLabel"></b></div>
+        <div class="grid2">
+          <div class="field"><label>Nome *</label><input id="relName" oninput="F1RelationshipTree.renderExistingMatches()" /></div>
+          <div class="field"><label>Cognome</label><input id="relSurname" oninput="F1RelationshipTree.renderExistingMatches()" /></div>
+        </div>
+        <div class="field"><label>Telefono facoltativo</label><input id="relPhone" /></div>
+        <div class="relation-existing" id="relationExisting"></div>
+        <div style="display:flex;gap:7px;justify-content:flex-end;margin-top:12px"><button class="btn" type="button" onclick="F1RelationshipTree.closePicker()">ANNULLA</button><button class="btn primary" type="button" onclick="F1RelationshipTree.createQuick()">SALVA E CREA RAMO</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="expandNetworkModal">
+  <div class="modal-card" style="max-width:620px">
+    <div class="modal-head"><div><h2>+ ESPANDI RETE</h2><div class="tip">Parti da <b id="expandNetworkName"></b> e scegli una domanda.</div></div><button class="close" onclick="F1RelationshipTree.closeExpand()">Chiudi</button></div>
+    <div class="modal-body"><div class="expand-question-grid" id="expandQuestionGrid"></div></div>
+  </div>
+</div>
+
+<div class="wa-confirm-bar" id="waConfirmBar" style="position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:140;display:none;align-items:center;gap:8px;background:#10281e;border:1px solid #2f8258;border-radius:12px;padding:9px 10px;box-shadow:0 15px 35px rgba(0,0,0,.35)">
+  <span style="font-size:10px">WhatsApp aperto per <b id="waConfirmName"></b>. Hai davvero inviato il messaggio?</span>
+  <button id="waConfirmButton" class="btn primary" type="button" onclick="F1RelationshipTree.confirmWhatsAppSent()">SEGNA MESSAGGIO INVIATO</button>
+  <button class="btn" type="button" onclick="F1RelationshipTree.closeWhatsAppConfirm()">NO</button>
+</div>
+<style>.wa-confirm-bar.open{display:flex!important}@media(max-width:600px){.wa-confirm-bar{width:calc(100vw - 20px);flex-wrap:wrap}}</style>
+
 <div class="toast" id="toast"></div>
 <div class="incoming-contact-pop" id="incomingContactPop" role="dialog" aria-live="assertive" aria-label="Nuovo contatto da gestire">
   <div class="incoming-contact-head">
@@ -376,6 +434,7 @@ button{cursor:pointer}
 <script src="f1-contact-outreach.js?v=20261001-outreach1"></script>
 <script src="f1-tree-cloud.js?v=20260924-tree1"></script>
 <script src="f1-tree-network-engine.js?v=20260924-network2"></script>
+<script src="f1-relational-tree.js?v=20261001-tree1"></script>
 
 <script>
 const SOURCES = [
@@ -613,7 +672,7 @@ function init(){
  const qp=new URLSearchParams(location.search).get('person');if(qp&&db.people.some(x=>x.id===qp))setTimeout(()=>openPerson(qp),80);
  try{window.F1TreeCloud?.boot?.()}catch(_){ }
 }
-function renderAll(){renderDailyOutreach();try{window.F1NetworkEngine?.renderAllExtensions?.()}catch(_){}}
+function renderAll(){renderDailyOutreach();try{window.F1RelationshipTree?.render?.()}catch(_){}try{window.F1NetworkEngine?.renderAllExtensions?.()}catch(_){}}
 function applyDailyOutreachData(data){
  const grid=document.getElementById('dailyOutreachGrid');
  if(!grid)return;
@@ -829,10 +888,10 @@ function formPersonSnapshot(id='draft'){
 }
 function refreshDraftInvestigator(){if(drawerMode==='new')renderInvestigatorPlan(formPersonSnapshot('draft'))}
 function setDrawerFooterState(){const del=document.getElementById('deletePersonBtn');const save=document.getElementById('savePersonBtn');del.style.display=(drawerMode==='new'||document.getElementById('personId').value==='root')?'none':'inline-block';save.textContent=drawerMode==='new'?'SALVA PERSONA E CREA RAMO':'SALVA'}
-function openPerson(id){const p=db.people.find(x=>x.id===id);if(!p)return;drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource='';syncNextContact(p);document.getElementById('drawerTitle').textContent=p.id==='root'?'Punto di partenza':'Scheda persona';document.getElementById('personId').value=p.id;document.getElementById('pName').value=upperName(p.name);document.getElementById('pSurname').value=upperName(p.surname);document.getElementById('pPhone').value=p.phone||'';document.getElementById('pEmail').value=p.email||'';document.getElementById('pCategory').value=p.category||'';document.getElementById('pSource').value=p.source||'';document.getElementById('pStage').value=p.stage||'Nome';document.getElementById('pTown').value=p.town||'';document.getElementById('pInfluence').checked=!!p.influence;document.getElementById('pFirstContact').value=p.firstContact||'';document.getElementById('pLastContact').value=p.lastContact||'';document.getElementById('pNextContact').value=p.nextContact||'';document.getElementById('pNotes').value=p.notes||'';try{window.F1NetworkEngine?.loadPersonFields?.(p)}catch(_){}setFormLifeTriggers(p.lifeTriggers||[]);p.lifeTriggerStatus=p.lifeTriggerStatus||{};p.lifeTriggerNews=p.lifeTriggerNews||{};loadOfficialSettingsIntoForm();renderLifeTriggerPanel(p);renderInvestigatorPlan(p);renderSocialSearchPanel(p);renderTouchpoints(p);setDrawerFooterState();document.getElementById('drawer').classList.add('open')}
+function openPerson(id){const p=db.people.find(x=>x.id===id);if(!p)return;try{window.F1RelationshipTree?.select?.(id,false)}catch(_){}drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource='';syncNextContact(p);document.getElementById('drawerTitle').textContent=p.id==='root'?'Punto di partenza':'Scheda persona';document.getElementById('personId').value=p.id;document.getElementById('pName').value=upperName(p.name);document.getElementById('pSurname').value=upperName(p.surname);document.getElementById('pPhone').value=p.phone||'';document.getElementById('pEmail').value=p.email||'';document.getElementById('pCategory').value=p.category||'';document.getElementById('pSource').value=p.source||'';document.getElementById('pStage').value=p.stage||'Nome';document.getElementById('pTown').value=p.town||'';document.getElementById('pInfluence').checked=!!p.influence;document.getElementById('pFirstContact').value=p.firstContact||'';document.getElementById('pLastContact').value=p.lastContact||'';document.getElementById('pNextContact').value=p.nextContact||'';document.getElementById('pNotes').value=p.notes||'';try{window.F1NetworkEngine?.loadPersonFields?.(p)}catch(_){}setFormLifeTriggers(p.lifeTriggers||[]);p.lifeTriggerStatus=p.lifeTriggerStatus||{};p.lifeTriggerNews=p.lifeTriggerNews||{};loadOfficialSettingsIntoForm();renderLifeTriggerPanel(p);renderInvestigatorPlan(p);renderSocialSearchPanel(p);renderTouchpoints(p);setDrawerFooterState();document.getElementById('drawer').classList.add('open')}
 function openNewPersonSheet(parentId,question,presetSource=''){drawerMode='new';draftParentId=parentId||'root';draftQuestion=question||'Chi altro conosco attraverso questa persona?';draftPresetSource=presetSource||selectedSource||'';document.getElementById('drawerTitle').textContent='Scheda persona';document.getElementById('personId').value='';document.getElementById('pName').value='';document.getElementById('pSurname').value='';document.getElementById('pPhone').value='';document.getElementById('pEmail').value='';document.getElementById('pCategory').value='';document.getElementById('pSource').value=draftPresetSource;document.getElementById('pStage').value='Nome';document.getElementById('pTown').value='';document.getElementById('pInfluence').checked=false;document.getElementById('pFirstContact').value='';document.getElementById('pLastContact').value='';document.getElementById('pNextContact').value='';document.getElementById('pNotes').value='';try{window.F1NetworkEngine?.loadPersonFields?.(null)}catch(_){}setFormLifeTriggers([]);loadOfficialSettingsIntoForm();renderLifeTriggerPanel(formPersonSnapshot('draft'));renderInvestigatorPlan(formPersonSnapshot('draft'));renderSocialSearchPanel(formPersonSnapshot('draft'));renderTouchpoints(formPersonSnapshot('draft'));setDrawerFooterState();document.getElementById('drawer').classList.add('open');setTimeout(()=>document.getElementById('pName').focus(),100)}
 function closeDrawer(){document.getElementById('drawer').classList.remove('open');if(drawerMode==='new'){drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource=''}}
-function savePerson(silent=false){const name=document.getElementById('pName').value.trim();if(!name){toast('Inserisci il nome');return null}if(drawerMode==='new'){const snap=formPersonSnapshot(uid());snap.parentId=draftParentId||'root';snap.createdAt=new Date().toISOString();snap.contactDates=[];snap.touchpointHistory={};snap.socialSearchHistory={};snap.lifeTriggerHistory=(snap.lifeTriggers||[]).map(id=>({id,date:localISODate(new Date())}));snap.lifeTriggerStatus=snap.lifeTriggerStatus||{};(snap.lifeTriggers||[]).forEach(id=>snap.lifeTriggerStatus[id]=snap.lifeTriggerStatus[id]||'RILEVATO');snap.lifeTriggerNews=snap.lifeTriggerNews||{};snap.updatedAt=new Date().toISOString();syncNextContact(snap);if(draftQuestion){snap.notes=[snap.notes,`Origine ramo: ${draftQuestion}`].filter(Boolean).join(' · ')}db.people.push(snap);persist();renderAll();drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource='';document.getElementById('personId').value=snap.id;setDrawerFooterState();renderLifeTriggerPanel(snap);renderInvestigatorPlan(snap);renderSocialSearchPanel(snap);renderTouchpoints(snap);coachOnPersonSaved(snap,true);if(!silent)toast('Persona salvata e ramo creato');return snap.id}const id=document.getElementById('personId').value;const p=db.people.find(x=>x.id===id);if(!p)return null;const snap=formPersonSnapshot(id);const previousTriggers=new Set(p.lifeTriggers||[]);const existingTriggerHistory=p.lifeTriggerHistory||[];Object.assign(p,snap,{parentId:p.parentId,createdAt:p.createdAt,contactDates:p.contactDates||[],touchpointHistory:p.touchpointHistory||{},socialSearchHistory:p.socialSearchHistory||{},lifeTriggerHistory:existingTriggerHistory,lifeTriggerStatus:{...(p.lifeTriggerStatus||{}),...(snap.lifeTriggerStatus||{})},lifeTriggerNews:{...(p.lifeTriggerNews||{}),...(snap.lifeTriggerNews||{})},updatedAt:new Date().toISOString()});(p.lifeTriggers||[]).forEach(tid=>{if(!previousTriggers.has(tid))p.lifeTriggerHistory.push({id:tid,date:localISODate(new Date())})});syncNextContact(p);document.getElementById('pNextContact').value=p.nextContact||'';persist();renderAll();renderLifeTriggerPanel(p);renderInvestigatorPlan(p);renderSocialSearchPanel(p);renderTouchpoints(p);if(!silent)toast('Scheda salvata');return p.id}
+function savePerson(silent=false){const name=document.getElementById('pName').value.trim();if(!name){toast('Inserisci il nome');return null}if(drawerMode==='new'){const snap=formPersonSnapshot(uid());snap.parentId=draftParentId||'root';snap.createdAt=new Date().toISOString();snap.contactDates=[];snap.touchpointHistory={};snap.socialSearchHistory={};snap.lifeTriggerHistory=(snap.lifeTriggers||[]).map(id=>({id,date:localISODate(new Date())}));snap.lifeTriggerStatus=snap.lifeTriggerStatus||{};(snap.lifeTriggers||[]).forEach(id=>snap.lifeTriggerStatus[id]=snap.lifeTriggerStatus[id]||'RILEVATO');snap.lifeTriggerNews=snap.lifeTriggerNews||{};snap.updatedAt=new Date().toISOString();syncNextContact(snap);if(draftQuestion){snap.notes=[snap.notes,`Origine ramo: ${draftQuestion}`].filter(Boolean).join(' · ')}db.people.push(snap);persist();renderAll();drawerMode='edit';draftParentId=null;draftQuestion='';draftPresetSource='';document.getElementById('personId').value=snap.id;setDrawerFooterState();renderLifeTriggerPanel(snap);renderInvestigatorPlan(snap);renderSocialSearchPanel(snap);renderTouchpoints(snap);coachOnPersonSaved(snap,true);try{window.F1RelationshipTree?.afterPersonSaved?.(snap.id,true)}catch(_){}if(!silent)toast('Persona salvata e ramo creato');return snap.id}const id=document.getElementById('personId').value;const p=db.people.find(x=>x.id===id);if(!p)return null;const snap=formPersonSnapshot(id);const previousTriggers=new Set(p.lifeTriggers||[]);const existingTriggerHistory=p.lifeTriggerHistory||[];Object.assign(p,snap,{parentId:p.parentId,createdAt:p.createdAt,contactDates:p.contactDates||[],touchpointHistory:p.touchpointHistory||{},socialSearchHistory:p.socialSearchHistory||{},lifeTriggerHistory:existingTriggerHistory,lifeTriggerStatus:{...(p.lifeTriggerStatus||{}),...(snap.lifeTriggerStatus||{})},lifeTriggerNews:{...(p.lifeTriggerNews||{}),...(snap.lifeTriggerNews||{})},updatedAt:new Date().toISOString()});(p.lifeTriggers||[]).forEach(tid=>{if(!previousTriggers.has(tid))p.lifeTriggerHistory.push({id:tid,date:localISODate(new Date())})});syncNextContact(p);document.getElementById('pNextContact').value=p.nextContact||'';persist();renderAll();renderLifeTriggerPanel(p);renderInvestigatorPlan(p);renderSocialSearchPanel(p);renderTouchpoints(p);if(!silent)toast('Scheda salvata');return p.id}
 function deleteCurrentPerson(){const id=document.getElementById('personId').value;requestDelete(id)}
 function descendantsOf(id){const ids=new Set([id]);let changed=true;while(changed){changed=false;db.people.forEach(x=>{if(x.parentId&&ids.has(x.parentId)&&!ids.has(x.id)){ids.add(x.id);changed=true}})}return ids}
 function requestDelete(id){if(!id)return toast('Nessun contatto selezionato');if(id==='root')return toast('La radice IO non si elimina');const p=db.people.find(x=>x.id===id);if(!p)return toast('Contatto non trovato');currentDeleteId=id;const ids=descendantsOf(id);document.getElementById('deleteMessage').innerHTML=`Stai per eliminare <b>${esc(upperName([p.name,p.surname].filter(Boolean).join(' ')))}</b>${ids.size>1?` e altri <b>${ids.size-1}</b> nominativi discendenti`:''}.`;document.getElementById('deleteModal').classList.add('open')}
