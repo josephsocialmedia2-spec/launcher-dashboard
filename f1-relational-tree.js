@@ -228,30 +228,41 @@ function hiddenIds(){
 function renderNodes(){
   ensurePositions();
   const holder=document.getElementById('relationshipNodes');if(!holder)return;
-  const hidden=hiddenIds();
+  const hidden=hiddenIds(),focusPerson=selectedId&&selectedId!=='root';
+  const neighbours=new Set();
+  if(focusPerson){
+    visualEdges().forEach(e=>{
+      if(e.sourceId===selectedId)neighbours.add(e.targetId);
+      if(e.targetId===selectedId)neighbours.add(e.sourceId);
+    });
+  }
   const cards=people().filter(p=>!hidden.has(p.id)).map(p=>{
     const pos=positions()[p.id]||{x:40,y:40},phone=normalizePhone(p.phone),display=phoneDisplay(p.phone);
-    const rels=incidentLabels(p.id).slice(0,2);
-    const hasChildren=people().some(x=>x.parentId===p.id);
-    const isRoot=p.id==='root';
-    return '<article class="rel-graph-node '+(isRoot?'root ':'')+(selectedId===p.id?'selected ':'')+'" data-person-id="'+esc(p.id)+'" style="left:'+pos.x+'px;top:'+pos.y+'px" onpointerdown="F1RelationshipTree.startNodeDrag(event,\''+jsArg(p.id)+'\')" onclick="F1RelationshipTree.select(\''+jsArg(p.id)+'\',false)">'+
+    const rels=incidentLabels(p.id).slice(0,1),hasChildren=people().some(x=>x.parentId===p.id),isRoot=p.id==='root';
+    const dim=focusPerson&&p.id!==selectedId&&!neighbours.has(p.id);
+    const name=isRoot?'IO':fullName(p),aria=[name,rels[0]||'',p.town||'',display||''].filter(Boolean).join(', ');
+    return '<article tabindex="0" role="group" aria-label="'+esc(aria)+'" class="rel-graph-node '+(isRoot?'root ':'')+(selectedId===p.id?'selected ':'')+(dim?'context-dim ':'')+'" data-person-id="'+esc(p.id)+'" style="left:'+pos.x+'px;top:'+pos.y+'px" onkeydown="F1RelationshipTree.nodeKey(event,\''+jsArg(p.id)+'\')" onpointerdown="F1RelationshipTree.startNodeDrag(event,\''+jsArg(p.id)+'\')" onclick="F1RelationshipTree.select(\''+jsArg(p.id)+'\',false)">'+
       '<div class="rel-node-content">'+
-      '<div class="rel-node-name">'+esc(isRoot?'IO':fullName(p))+'</div>'+
-      (!isRoot&&rels.length?'<div class="rel-node-rel">'+esc(rels.join(' · '))+'</div>':'')+
+      '<div class="rel-node-name">'+esc(name)+'</div>'+
+      (!isRoot&&rels.length?'<div class="rel-node-rel">'+esc(rels[0])+'</div>':'')+
       '<div class="rel-node-town">'+esc(p.town||'')+'</div>'+
-      (!isRoot&&display?'<button type="button" class="rel-node-phone" onclick="event.stopPropagation();F1RelationshipTree.openWhatsApp(\''+jsArg(p.id)+'\')" title="Apri WhatsApp">'+esc(display)+'</button>':'')+
+      (!isRoot&&display?'<button type="button" aria-label="Apri WhatsApp con '+esc(name)+' al numero '+esc(display)+'" class="rel-node-phone" onclick="event.stopPropagation();F1RelationshipTree.openWhatsApp(\''+jsArg(p.id)+'\')">'+esc(display)+'</button>':'')+
       (!isRoot?'<div class="rel-node-stage">● '+esc(p.stage||'Nome')+'</div>':'')+
       '<div class="rel-node-actions">'+
-      (!isRoot&&phone?'<a class="call" href="tel:+'+esc(phone)+'" onclick="event.stopPropagation()" title="Chiama">☎</a>':'<span></span>')+
-      (!isRoot&&phone?'<button type="button" class="wa" onclick="event.stopPropagation();F1RelationshipTree.openWhatsApp(\''+jsArg(p.id)+'\')">WA</button>':'<span></span>')+
-      (!isRoot?'<button type="button" class="open" onclick="event.stopPropagation();F1RelationshipTree.openPerson(\''+jsArg(p.id)+'\')">APRI</button>':'<span></span>')+
-      '<button type="button" class="add" onclick="event.stopPropagation();F1RelationshipTree.openPicker(\''+jsArg(p.id)+'\')">+</button>'+
+      (!isRoot&&phone?'<a aria-label="Chiama '+esc(name)+'" class="call" href="tel:+'+esc(phone)+'" onclick="event.stopPropagation()" title="Chiama">☎</a>':'<span></span>')+
+      (!isRoot&&phone?'<button type="button" aria-label="Apri WhatsApp con '+esc(name)+'" class="wa" onclick="event.stopPropagation();F1RelationshipTree.openWhatsApp(\''+jsArg(p.id)+'\')">WA</button>':'<span></span>')+
+      (!isRoot?'<button type="button" aria-label="Apri scheda '+esc(name)+'" class="open" onclick="event.stopPropagation();F1RelationshipTree.openPerson(\''+jsArg(p.id)+'\')">APRI</button>':'<span></span>')+
+      '<button type="button" aria-label="Aggiungi persona collegata a '+esc(name)+'" class="add" onclick="event.stopPropagation();F1RelationshipTree.openPicker(\''+jsArg(p.id)+'\')">+</button>'+
       '</div></div>'+
-      (hasChildren?'<button type="button" class="rel-collapse" onclick="event.stopPropagation();F1RelationshipTree.toggle(\''+jsArg(p.id)+'\')">'+(collapsed.has(p.id)?'▸':'▾')+'</button>':'')+
-      '<button type="button" class="rel-connect-handle" title="Trascina verso un’altra persona per collegarla" onpointerdown="event.stopPropagation();F1RelationshipTree.startConnect(event,\''+jsArg(p.id)+'\')"></button>'+
+      (hasChildren?'<button type="button" aria-label="'+(collapsed.has(p.id)?'Espandi':'Comprimi')+' ramo di '+esc(name)+'" class="rel-collapse" onclick="event.stopPropagation();F1RelationshipTree.toggle(\''+jsArg(p.id)+'\')">'+(collapsed.has(p.id)?'▸':'▾')+'</button>':'')+
+      '<button type="button" aria-label="Collega '+esc(name)+' trascinando verso un’altra persona" class="rel-connect-handle" title="Trascina verso un’altra persona per collegarla" onpointerdown="event.stopPropagation();F1RelationshipTree.startConnect(event,\''+jsArg(p.id)+'\')"></button>'+
       '</article>';
   }).join('');
   holder.innerHTML=cards||'<div class="rel-tree-empty">Nessuna persona ancora inserita.</div>';
+}
+function nodeKey(e,id){
+  if(e.key==='Enter'){e.preventDefault();openPersonCard(id)}
+  if((e.key==='+'||e.key==='=')){e.preventDefault();openPicker(id)}
 }
 function edgeGeometry(e){
   const a=positions()[e.sourceId],b=positions()[e.targetId];if(!a||!b)return null;
@@ -585,7 +596,7 @@ function boot(){
   if(booted)return;booted=true;positions();populateTypeButtons();compactDrawer();bindViewport();render();setTimeout(()=>fit(),140);
 }
 window.F1RelationshipTree={
-  render,renderEdges,fit,zoomIn:()=>zoomBy(.1),zoomOut:()=>zoomBy(-.1),center,select,toggle,startNodeDrag,startConnect,
+  render,renderEdges,fit,zoomIn:()=>zoomBy(.1),zoomOut:()=>zoomBy(-.1),center,select,toggle,nodeKey,startNodeDrag,startConnect,
   openPerson:openPersonCard,openWhatsApp,confirmWhatsAppSent,closeWhatsAppConfirm,
   openPicker,closePicker,chooseType,renderExistingMatches,createQuick,linkExisting,
   openEdgeEditor,closeEdgeEditor,previewEdgeInverse,syncEdgeCustomRows,saveEdge,deleteEdge,editRelationByRow,
