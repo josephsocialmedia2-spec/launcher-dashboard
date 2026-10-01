@@ -23,7 +23,10 @@ test('Fonti di Notizie no longer contains the removed workbench', async ({ page,
     'id="importNewsFile"',
     'id="newsWorkbenchList"',
     'id="newsDueSummary"',
-    'class="news-workbench"'
+    'class="news-workbench"',
+    'id="tree"',
+    'id="chronologyGraph"',
+    'Albero verticale delle relazioni'
   ]) {
     expect(source, 'forbidden panel fragment: ' + forbidden).not.toContain(forbidden);
   }
@@ -34,7 +37,8 @@ test('Fonti di Notizie no longer contains the removed workbench', async ({ page,
     'onclick="openNewsDashboard()"',
     '>NOTIZIE</button>',
     'id="sourceGrid"',
-    'id="tree"',
+    'id="dailyOutreachPanel"',
+    'id="dailyOutreachGrid"',
     'id="mnemonicPanel"'
   ]) {
     expect(source, 'required content: ' + required).toContain(required);
@@ -51,6 +55,9 @@ test('Fonti di Notizie no longer contains the removed workbench', async ({ page,
   await expect(page.getByText('RICERCA TERRITORIALE → FONTI DI NOTIZIE')).toBeVisible();
   await expect(page.locator('.dashboard-strip .news-launcher')).toHaveText('NOTIZIE');
   await expect(page.locator('.news-workbench')).toHaveCount(0);
+  await expect(page.locator('#dailyOutreachPanel')).toBeVisible();
+  await expect(page.locator('#tree')).toHaveCount(0);
+  await expect(page.locator('#dailyOutreachPanel')).toBeVisible();
   await expect(page.locator('#mnemonicPanel')).toBeVisible();
 
   expect(pageErrors, pageErrors.join('\n')).toEqual([]);
