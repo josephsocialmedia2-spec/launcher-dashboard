@@ -335,7 +335,7 @@ function fit(){
   const ps=positions(),xs=shown.map(p=>ps[p.id].x),ys=shown.map(p=>ps[p.id].y);
   const minX=Math.min(...xs),maxX=Math.max(...xs)+NODE_W,minY=Math.min(...ys),maxY=Math.max(...ys)+NODE_H;
   const w=Math.max(320,maxX-minX),h=Math.max(220,maxY-minY);
-  scale=Math.max(.38,Math.min(1.08,Math.min((v.clientWidth-40)/w,(v.clientHeight-40)/h)));
+  scale=Math.max(.38,Math.min(1,Math.min((v.clientWidth-40)/w,(v.clientHeight-40)/h)));
   panX=(v.clientWidth-w*scale)/2-minX*scale;
   panY=(v.clientHeight-h*scale)/2-minY*scale;
   applyTransform();
