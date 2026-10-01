@@ -73,7 +73,14 @@ jobs:
             "OBIETTIVO COMPLETATO.",
             "Preparazione delle 100 telefonate",
             "Impossibile caricare le 100 telefonate",
-            'id="target"'
+            'id="target"',
+            "09:30–12:30",
+            "BLOCCO TELEFONATE",
+            "MODALITÀ TELEFONATE ATTIVA",
+            "Niente altro fino alle 12:30",
+            "isFocusWindow(",
+            "WAS_ACTIVE_FROM_APP",
+            "focus-active"
           ]
           present=[x for x in forbidden if x in s]
           if present:
