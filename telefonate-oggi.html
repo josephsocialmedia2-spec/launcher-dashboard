@@ -81,6 +81,35 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
 .busy-reminder-bar b{color:#ffd56a}
 .busy-reminder-actions{display:flex;gap:7px;flex-wrap:wrap}
 @media(max-width:650px){.top{display:block}.summary{grid-template-columns:1fr 1fr 1fr}.score{display:inline-block;margin-top:6px}.toolbar{grid-template-columns:1fr}.context{grid-template-columns:1fr}.outcomes{grid-template-columns:1fr 1fr}.outcome-title{grid-column:1/-1}.session-inner{align-items:flex-start}.session-clock{font-size:18px}}
+/* F1 QUEUE 2.0 UI */
+.queue-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.queue-head .meta{max-width:760px}
+.summary.queue-summary{grid-template-columns:repeat(5,minmax(110px,1fr))}
+.stat.callback b{color:var(--orange)}.stat.follow b{color:#8fddff}.stat.appointment b{color:#d5b8ff}
+.queue-toolbar{display:grid;grid-template-columns:minmax(220px,1.4fr) minmax(145px,.6fr) minmax(145px,.6fr) auto;gap:8px;align-items:center}
+.queue-toolbar select{width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);background:#0d120e;color:#fff}
+.quick-filters{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.filter-btn{padding:8px 10px;border-radius:999px;border:1px solid var(--line);background:#101812;color:#cbd5ce;font-size:9px;font-weight:900;cursor:pointer}
+.filter-btn.active{border-color:var(--g);color:var(--g);background:#102319}
+.op-row{padding:0;overflow:hidden}.op-main{display:grid;grid-template-columns:minmax(150px,1.2fr) minmax(135px,1fr) minmax(155px,1.25fr) minmax(105px,.7fr) minmax(135px,.9fr) minmax(140px,1fr);gap:0}
+.op-cell{padding:11px;border-right:1px solid var(--line);min-width:0}.op-cell:last-child{border-right:0}
+.op-label{display:block;color:var(--mut);font-size:8px;font-weight:900;letter-spacing:.08em;margin-bottom:5px}.op-value{font-size:11px;line-height:1.4;font-weight:800;overflow-wrap:anywhere}.op-person{font-size:13px}
+.op-phone{display:inline-block;margin-top:4px;color:#8fddff;text-decoration:none;font-weight:900}
+.status-badge{display:inline-flex;align-items:center;max-width:100%;padding:5px 7px;border-radius:999px;border:1px solid #3b5945;background:#112019;color:#bff5d5;font-size:8px;font-weight:900;letter-spacing:.04em}
+.status-badge.richiamo{border-color:#7a562a;background:#261c10;color:#ffd098}.status-badge.followup{border-color:#2b6680;background:#102532;color:#aee9ff}.status-badge.interessato{border-color:#2f7451;background:#102b1d;color:#aef3cd}.status-badge.appuntamento{border-color:#6a4d8a;background:#23162f;color:#e0c5ff}.status-badge.completata{border-color:#4c5550;background:#171b18;color:#bdc5bf}.status-badge.noninteressato{border-color:#6a3030;background:#2a1515;color:#ffb3b3}
+.op-actions{display:flex;gap:5px;flex-wrap:wrap;padding:9px 11px;border-top:1px solid var(--line);background:#0b110c}.op-actions .btn{padding:8px 9px;min-height:34px}
+.secondary-drawer{width:100%;border-top:1px dashed #334039;padding-top:7px;margin-top:2px}.secondary-drawer summary{cursor:pointer;color:var(--mut);font-size:9px;font-weight:900;list-style:none}.secondary-drawer summary::-webkit-details-marker{display:none}.secondary-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.outcomes.compact{grid-template-columns:repeat(7,minmax(90px,1fr));margin:0;padding:9px 11px;background:#0b100c}.outcomes.compact .btn{padding:8px 7px;font-size:9px}
+.drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.56);z-index:150;display:none}.drawer-backdrop.open{display:block}
+.op-drawer{position:fixed;right:0;top:0;bottom:0;width:min(560px,94vw);z-index:160;transform:translateX(103%);transition:transform .18s ease;background:#071109;border-left:1px solid #35513d;box-shadow:-18px 0 40px rgba(0,0,0,.42);display:flex;flex-direction:column}.op-drawer.open{transform:translateX(0)}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px;border-bottom:1px solid var(--line);background:#0d160f}.drawer-title{font-weight:900;font-size:14px}.drawer-body{padding:14px;overflow:auto}
+.drawer-section{border:1px solid var(--line);background:#0d130e;border-radius:12px;padding:11px;margin-bottom:10px}.drawer-section h3{margin:0 0 8px;font-size:10px;letter-spacing:.08em;color:var(--g)}
+.drawer-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.drawer-field{font-size:10px;line-height:1.45}.drawer-field span{display:block;color:var(--mut);font-size:8px;font-weight:900;margin-bottom:3px}
+.drawer-body textarea,.drawer-body input{width:100%;padding:10px;border-radius:9px;border:1px solid var(--line);background:#0b100c;color:#fff}.drawer-body textarea{min-height:120px;resize:vertical}
+.drawer-form{display:grid;grid-template-columns:1fr 1fr;gap:9px}.drawer-form .full{grid-column:1/-1}
+.timeline{display:grid;gap:7px}.timeline-item{border-left:2px solid #35513d;padding-left:9px;font-size:10px;line-height:1.45}.timeline-item b{display:block;color:#fff}.timeline-item small{color:var(--mut)}.row-empty{color:var(--mut);font-style:italic}
+@media(max-width:1000px){.op-main{grid-template-columns:1.15fr .9fr 1.15fr .8fr 1fr}.op-main .op-cell:nth-child(5){display:none}.queue-toolbar{grid-template-columns:1fr 1fr}.outcomes.compact{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:700px){.summary.queue-summary{grid-template-columns:repeat(2,1fr)}.queue-toolbar{grid-template-columns:1fr}.op-main{display:block}.op-cell{border-right:0;border-bottom:1px solid #1c2720;padding:9px 11px}.op-cell:nth-child(5){display:block}.outcomes.compact{grid-template-columns:repeat(2,1fr)}.drawer-grid,.drawer-form{grid-template-columns:1fr}.drawer-form .full{grid-column:auto}}
 </style>
 <script defer src="pwa.js?v=20261001-callroutine-off1"></script>
 <script defer src="supabase-config.js?v=20260924-calls50"></script>
@@ -104,39 +133,52 @@ h1{margin:5px 0;font-size:clamp(28px,8vw,46px)}
   <div id="busyReminderBar" class="busy-reminder-bar" role="status" aria-live="assertive"></div>
   <div class="ey">F1 ACQUISITION ENGINE · ACQUISIZIONE IMMOBILI</div>
   <h1>TELEFONATE DI OGGI</h1>
-  <p class="meta">Apri questa coda quando vuoi lavorare i contatti: puoi telefonare, registrare l’esito e passare al contatto successivo senza vincoli di orario.</p>
+  <div class="queue-head"><p class="meta">Coda operativa generata dalla Ricerca Territoriale: persona, contesto immobiliare, ultimo esito e prossima attività restano nello stesso flusso.</p></div>
 
   <div class="notice">
-    <span class="goal">NESSUN OBIETTIVO NUMERICO.</span><br>
-    Lavora la coda disponibile con qualità: ogni chiamata deve avere un motivo immobiliare verificabile, come privato/FSBO, segnale venditore oppure un annuncio attivo nella stessa via.
+    <span class="goal">CODA OPERATIVA.</span><br>
+    La Ricerca Territoriale trova; la scheda raccoglie; la telefonata qualifica; il follow-up conserva la prossima azione.
   </div>
 
   <section class="panel nav-panel">
     <div class="actions">
-      <a class="btn alt" href="crm.html#contatti">CONTATTI CRM</a>
-      <a class="btn alt" href="crm.html#attivita">ATTIVITÀ CRM</a>
+      <a class="btn alt" href="ricerca-territoriale.html">RICERCA TERRITORIALE</a>
+      <a class="btn alt" href="crm.html#contatti">CONTATTI</a>
+      <a class="btn alt" href="crm.html#attivita">ATTIVITÀ / CRM</a>
       <a class="btn gold" href="crm.html#contatti">VERIFICA RPO</a>
-      <a class="btn alt" href="ricerca-territoriale.html">DASHBOARD</a>
     </div>
   </section>
 
   <section class="panel">
-    <div class="summary">
+    <div class="summary queue-summary">
       <div class="stat gold"><b id="remaining">0</b>DA CHIAMARE</div>
+      <div class="stat callback"><b id="callbacks">0</b>RICHIAMI</div>
+      <div class="stat follow"><b id="followups">0</b>FOLLOW-UP</div>
+      <div class="stat appointment"><b id="appointments">0</b>APPUNTAMENTI</div>
       <div class="stat"><b id="done">0</b>COMPLETATE</div>
     </div>
   </section>
 
-  <section class="panel toolbar">
-    <input id="search" class="search" placeholder="Cerca nome, telefono, Comune, via...">
-    <button id="reloadBtn" class="btn alt">AGGIORNA</button>
+  <section class="panel">
+    <div class="queue-toolbar">
+      <input id="search" class="search" placeholder="Cerca nome, telefono, Comune, via, civico, immobile...">
+      <select id="municipalityFilter"><option value="">TUTTI I COMUNI</option></select>
+      <select id="propertyTypeFilter"><option value="">TUTTI GLI IMMOBILI</option></select>
+      <button id="reloadBtn" class="btn alt">AGGIORNA</button>
+    </div>
+    <div id="quickFilters" class="quick-filters">
+      <button class="filter-btn active" data-filter="ALL">TUTTE</button><button class="filter-btn" data-filter="DA_CHIAMARE">DA CHIAMARE</button><button class="filter-btn" data-filter="RICHIAMARE">RICHIAMI</button><button class="filter-btn" data-filter="FOLLOW_UP">FOLLOW-UP</button><button class="filter-btn" data-filter="INTERESSATO">INTERESSATI</button><button class="filter-btn" data-filter="APPUNTAMENTO">APPUNTAMENTI</button><button class="filter-btn" data-filter="DA_APPROFONDIRE">DA APPROFONDIRE</button><button class="filter-btn" data-filter="COMPLETATA">COMPLETATE</button><button class="filter-btn" data-filter="NON_INTERESSATO">NON INTERESSATI</button>
+    </div>
   </section>
 
   <section id="list"><div class="empty">Preparazione della coda telefonate…</div></section>
 </main>
-
+<div id="drawerBackdrop" class="drawer-backdrop"></div>
+<aside id="opDrawer" class="op-drawer" aria-hidden="true"><div class="drawer-head"><div id="drawerTitle" class="drawer-title">DETTAGLIO OPERATIVO</div><button id="drawerClose" class="btn alt" type="button">CHIUDI</button></div><div id="drawerBody" class="drawer-body"></div></aside>
 <script>
 let STATE={rows:[],total:0,done:0,remaining:0};
+let ACTIVE_FILTER='ALL';
+let DRAWER_ROW=null;
 const DAILY_QUEUE_CAP=100; // Limite tecnico di caricamento, non un obiettivo operativo.
 let ACTIVE_TASK=localStorage.getItem('f1_active_call_task')||'';
 const BUSY_REMINDER_KEY='f1_busy_call_reminders_v1';
@@ -180,95 +222,47 @@ function isBusyWaiting(r){
   const rem=busyReminderFor(r.task_id);
   return !!(rem&&!rem.fired&&Number(rem.remindAt)>Date.now());
 }
-function filteredRows(){
-  const q=String($('search')?.value||'').trim().toLowerCase();
-  const base=STATE.rows;
-  if(!q)return base;
-  return base.filter(r=>[r.nome,r.cognome,r.telefono,r.comune,r.via,r.civico,r.selection_reason,r.call_reason_detail,r.linked_property_address,r.linked_property_title,r.linked_property_source,r.source].join(' ').toLowerCase().includes(q));
-}
-function outcomeButtons(r){
-  return `<div class="outcomes">
-    <div class="outcome-title">SCEGLI L'ESITO QUANDO VUOI — NON È NECESSARIO PREMERE "CHIAMA ORA"</div>
-    <button class="btn alt" data-outcome="FATTA" data-task="${esc(r.task_id)}">FATTA</button>
-    <button class="btn orange" data-outcome="NON_RISPONDE" data-task="${esc(r.task_id)}">NON RISPONDE</button>
-    <button class="btn busy" data-busy-task="${esc(r.task_id)}" data-lead="${esc(r.lead_id||'')}" data-name="${esc(nameOf(r))}" data-phone="${esc(r.telefono||'')}">OCCUPATO · +5 MIN</button>
-    <button class="btn gold" data-outcome="RICHIAMA" data-task="${esc(r.task_id)}">RICHIAMA</button>
-    <button class="btn" data-outcome="INTERESSATO" data-task="${esc(r.task_id)}">INTERESSATO</button>
-    <button class="btn red" data-outcome="NON_INTERESSATO" data-task="${esc(r.task_id)}">NON INTERESSATO</button>
-  </div>`;
-}
+function latestOutcome(r){return String(r?._latestInteraction?.outcome||'').toUpperCase()}
+function hasOpenFollowup(r){return !!(r?._nextTask&&String(r._nextTask.task_type||'').toUpperCase()==='FOLLOW_UP'&&String(r._nextTask.status||'OPEN').toUpperCase()==='OPEN')}
+function isAppointment(r){return /APPUNT/.test([latestOutcome(r),r?._nextTask?.reason,r?.next_action].join(' ').toUpperCase())}
+function rowStage(r){const out=latestOutcome(r);if(isAppointment(r))return'APPUNTAMENTO';if(out==='INTERESSATO')return'INTERESSATO';if(out==='NON_INTERESSATO')return'NON_INTERESSATO';if(out==='DA_APPROFONDIRE')return'DA_APPROFONDIRE';if(/NON_RISPONDE|RICHIAMA|OCCUPATO/.test(out))return'RICHIAMARE';if(hasOpenFollowup(r))return'FOLLOW_UP';if(isDone(r))return'COMPLETATA';return'DA_CHIAMARE'}
+function matchesFilter(r){if(ACTIVE_FILTER==='ALL')return true;if(ACTIVE_FILTER==='FOLLOW_UP')return hasOpenFollowup(r);return rowStage(r)===ACTIVE_FILTER}
+function fmtWhen(value){if(!value)return'—';const d=new Date(value);if(Number.isNaN(d.getTime()))return String(value);return d.toLocaleString('it-IT',{timeZone:'Europe/Rome',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}
+function nextActivityText(r){if(hasOpenFollowup(r))return fmtWhen(r._nextTask.due_date)+' · '+String(r._nextTask.reason||'Follow-up');if(!isDone(r))return'OGGI · '+String(r.next_action||'Chiamare');return r.next_action?String(r.next_action):'—'}
+function filteredRows(){const q=String($('search')?.value||'').trim().toLowerCase(),comune=String($('municipalityFilter')?.value||'').trim().toLowerCase(),type=String($('propertyTypeFilter')?.value||'').trim().toLowerCase();return STATE.rows.filter(r=>{if(!matchesFilter(r))return false;if(comune&&String(r.comune||'').toLowerCase()!==comune)return false;if(type&&String(r.linked_property_type||'').toLowerCase()!==type)return false;if(!q)return true;return[r.nome,r.cognome,r.telefono,r.email,r.comune,r.via,r.civico,r.selection_reason,r.call_reason_detail,r.linked_property_address,r.linked_property_title,r.linked_property_source,r.linked_property_type,r.source,r.next_action,latestOutcome(r)].join(' ').toLowerCase().includes(q)})}
+function populateFacetFilters(){const commune=$('municipalityFilter'),type=$('propertyTypeFilter');if(!commune||!type)return;const cv=commune.value,tv=type.value,communes=[...new Set(STATE.rows.map(r=>String(r.comune||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'it')),types=[...new Set(STATE.rows.map(r=>String(r.linked_property_type||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'it'));commune.innerHTML='<option value="">TUTTI I COMUNI</option>'+communes.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join('');type.innerHTML='<option value="">TUTTI GLI IMMOBILI</option>'+types.map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join('');if(communes.includes(cv))commune.value=cv;if(types.includes(tv))type.value=tv}
+function outcomeButtons(r){return `<div class="outcomes compact"><div class="outcome-title">REGISTRA ESITO → DEFINISCI LA PROSSIMA AZIONE</div><button class="btn alt" data-outcome="FATTA" data-task="${esc(r.task_id)}">FATTA</button><button class="btn orange" data-outcome="NON_RISPONDE" data-task="${esc(r.task_id)}">NON RISPONDE</button><button class="btn busy" data-busy-task="${esc(r.task_id)}" data-lead="${esc(r.lead_id||'')}" data-name="${esc(nameOf(r))}" data-phone="${esc(r.telefono||'')}">OCCUPATO · +5 MIN</button><button class="btn gold" data-outcome="RICHIAMA" data-task="${esc(r.task_id)}">RICHIAMA</button><button class="btn" data-outcome="INTERESSATO" data-task="${esc(r.task_id)}">INTERESSATO</button><button class="btn gold" data-outcome="APPUNTAMENTO" data-task="${esc(r.task_id)}">APPUNTAMENTO</button><button class="btn alt" data-outcome="DA_APPROFONDIRE" data-task="${esc(r.task_id)}">DA APPROFONDIRE</button><button class="btn red" data-outcome="NON_INTERESSATO" data-task="${esc(r.task_id)}">NON INTERESSATO</button></div>`}
+function counterRows(){const rows=STATE.rows;return{remaining:rows.filter(r=>!isDone(r)&&!isBusyWaiting(r)).length,callbacks:rows.filter(r=>rowStage(r)==='RICHIAMARE').length,followups:rows.filter(hasOpenFollowup).length,appointments:rows.filter(isAppointment).length,done:rows.filter(isDone).length}}
 function render(){
-  $('remaining').textContent=STATE.remaining||0;
-  $('done').textContent=STATE.done||0;
-  const callableRows=STATE.rows.filter(r=>!isDone(r)&&!isBusyWaiting(r)&&callAllowed(r));
-  const rows=filteredRows();
-  const firstOpenIndex=callableRows.length?STATE.rows.indexOf(callableRows[0]):-1;
-  $('list').innerHTML=rows.length?rows.map(r=>{
-    const originalIndex=STATE.rows.indexOf(r);
-    const done=isDone(r),next=originalIndex===firstOpenIndex&&!done,p=phone(r.telefono);
-    const propertyAddress=String(r.linked_property_address||'').trim();
-    const propertyTitle=String(r.linked_property_title||'').trim();
-    const propertySource=String(r.linked_property_source||'').trim();
-    const propertyPrice=euro(r.linked_property_price);
-    const googleAddressQuery=encodeURIComponent([r.comune,r.via,r.civico].filter(Boolean).join(' ').trim());
-    const newsSent=isNewsTransferred(r.task_id);
-    return `<article class="call ${done?'done':''} ${next?'next':''} ">
-      <div class="top">
-        <div>
-          <div class="reason"><span class="rank">${originalIndex+1}</span>${esc(nameOf(r))}</div>
-          <div class="meta phone-access">${r.telefono?`<a class="phone-direct" href="tel:${esc(r.telefono)}" title="Chiama direttamente ${esc(r.telefono)}">☎ ${esc(r.telefono)}</a>`:'Telefono assente'}</div>
-        </div>
-        <div class="score">${done?'FATTA':'PRIORITÀ '+esc(r.priority||0)}</div>
-      </div>
-
-      <div class="context">
-        <div class="item"><span>COMUNE</span><b>${esc(r.comune||'Non indicato')}</b></div>
-        <div class="item"><span>VIA / CIVICO CONTATTO</span><b>${esc([r.via,r.civico].filter(Boolean).join(' ')||'Non indicato')}</b></div>
-        <div class="item"><span>PERCHÉ È IN LISTA</span><b>${esc(evidenceLabel(r))}</b></div>
-      </div>
-
-      <div class="why">
-        <b>PERCHÉ LA CHIAMI</b><br>
-        ${esc(r.call_reason_detail||r.selection_reason||'Ricerca immobiliare territoriale')}
-        ${r.next_action?`<br><span class="meta">Azione: ${esc(r.next_action)}</span>`:''}
-      </div>
-
-      <div class="propertybox">
-        <div class="label">IMMOBILE / NOTIZIA COLLEGATA</div>
-        <div class="address">${esc(propertyAddress||'Riferimento immobiliare rilevato dal motore F1')}</div>
-        ${propertyTitle?`<div class="title">${esc(propertyTitle)}</div>`:''}
-        <div class="source">${esc([propertySource,propertyPrice].filter(Boolean).join(' · ')||'Segnale interno F1')}</div>
-      </div>
-
-      <div class="actions">
-        ${!done&&r.telefono?`<a class="btn call-now" data-call="${esc(r.task_id)}" href="tel:${esc(r.telefono)}">CHIAMA ORA · ${esc(r.telefono)}</a>`:''}
-        ${!done&&p?`<a class="btn alt secondary-action" target="_blank" rel="noopener" href="https://wa.me/39${p}">WHATSAPP</a><button class="btn alt secondary-action" data-message-sent="${esc(r.task_id)}">SEGNA MESSAGGIO INVIATO</button>`:''}
-        ${r.linked_property_url?`<a class="btn gold secondary-action" target="_blank" rel="noopener" href="${esc(r.linked_property_url)}">APRI ANNUNCIO</a>`:''}
-        ${r.contact_source_url?`<a class="btn alt secondary-action" target="_blank" rel="noopener" href="${esc(r.contact_source_url)}">FONTE CONTATTO</a>`:''}
-        ${!done?`<a class="btn gold secondary-action" href="http://127.0.0.1:8766/">CENTRALE PC</a>`:''}
-        
-        ${!done&&r.lead_id?`<button class="btn remove-contact" data-remove-contact="${esc(r.task_id)}" data-lead="${esc(r.lead_id)}" data-name="${esc(nameOf(r))}">NON PIÙ PRESENTE · ELIMINA</button>`:''}
-        <button class="btn news-transfer ${newsSent?'sent':''}" type="button" data-news-task="${esc(r.task_id)}">${newsSent?'NOTIZIA ✓':'NOTIZIA'}</button>
-        <a class="btn alt secondary-action" href="crm.html#contatti">CRM</a>
-        ${googleAddressQuery?`<a class="btn google-address" target="_blank" rel="noopener" href="https://www.google.com/search?q=${googleAddressQuery}">GOOGLE INDIRIZZO</a>`:''}
-        <button class="btn copy-card" type="button" data-copy-card="1">COPIA SCHEDA</button>
-      </div>
-      ${!done?outcomeButtons(r):''}
-      ${!done?`<div class="focus-note">Telefonate è uno strumento libero: scegli quando lavorare questa coda e registra sempre l’esito nel CRM.</div>`:''}
-    </article>`
-  }).join(''):'<div class="empty">Nessun contatto corrisponde alla ricerca.</div>';
-  document.querySelectorAll('[data-call]').forEach(a=>a.addEventListener('click',()=>{
-    ACTIVE_TASK=String(a.dataset.call||'');
-    localStorage.setItem('f1_active_call_task',ACTIVE_TASK);
-    setTimeout(render,250);
-  }));
-  document.querySelectorAll('[data-outcome]').forEach(b=>b.onclick=()=>completeTask(b.dataset.task,b.dataset.outcome,b));
-  document.querySelectorAll('[data-message-sent]').forEach(b=>b.onclick=()=>markMessageSent(b.dataset.messageSent,b));
-  document.querySelectorAll('[data-busy-task]').forEach(b=>b.onclick=()=>scheduleBusyCallback(b.dataset.busyTask,b.dataset.lead,b.dataset.name,b.dataset.phone,b));
-  document.querySelectorAll('[data-remove-contact]').forEach(b=>b.onclick=()=>removeContact(b.dataset.removeContact,b.dataset.lead,b.dataset.name,b));
-  document.querySelectorAll('[data-news-task]').forEach(b=>b.onclick=()=>sendCardToNews(b.dataset.newsTask,b));
-  document.querySelectorAll('[data-copy-card]').forEach(b=>b.onclick=()=>copyClientCard(b));
+ const counts=counterRows();$('remaining').textContent=counts.remaining;$('callbacks').textContent=counts.callbacks;$('followups').textContent=counts.followups;$('appointments').textContent=counts.appointments;$('done').textContent=counts.done;document.querySelectorAll('[data-filter]').forEach(x=>x.classList.toggle('active',x.dataset.filter===ACTIVE_FILTER));
+ const callableRows=STATE.rows.filter(r=>!isDone(r)&&!isBusyWaiting(r)&&callAllowed(r)),rows=filteredRows(),firstOpenIndex=callableRows.length?STATE.rows.indexOf(callableRows[0]):-1;
+ $('list').innerHTML=rows.length?rows.map(r=>{const originalIndex=STATE.rows.indexOf(r),done=isDone(r),next=originalIndex===firstOpenIndex&&!done,p=phone(r.telefono),stage=rowStage(r),stageClass=stage.toLowerCase().replace(/_/g,''),propertyAddress=String(r.linked_property_address||'').trim(),propertyTitle=String(r.linked_property_title||'').trim(),googleAddressQuery=encodeURIComponent([r.comune,r.via,r.civico].filter(Boolean).join(' ').trim()),newsSent=isNewsTransferred(r.task_id),lastOut=latestOutcome(r)||'—';
+ return `<article class="call op-row ${done?'done':''} ${next?'next':''}"><div class="op-main">
+ <div class="op-cell"><span class="op-label">PERSONA</span><div class="op-value op-person"><span class="rank">${originalIndex+1}</span>${esc(nameOf(r))}</div>${r.telefono?`<a class="op-phone" href="tel:${esc(r.telefono)}">☎ ${esc(r.telefono)}</a>`:'<span class="row-empty">Telefono assente</span>'}</div>
+ <div class="op-cell"><span class="op-label">TERRITORIO</span><div class="op-value">${esc(r.comune||'—')}<br>${esc([r.via,r.civico].filter(Boolean).join(' ')||'—')}</div></div>
+ <div class="op-cell"><span class="op-label">IMMOBILE / MOTIVO</span><div class="op-value">${esc(propertyAddress||propertyTitle||evidenceLabel(r))}</div><div class="meta">${esc(r.call_reason_detail||r.selection_reason||'Ricerca immobiliare territoriale')}</div></div>
+ <div class="op-cell"><span class="op-label">STATO</span><span class="status-badge ${stageClass}">${esc(stage.replace(/_/g,' '))}</span></div>
+ <div class="op-cell"><span class="op-label">ULTIMO ESITO</span><div class="op-value">${esc(lastOut.replace(/_/g,' '))}</div><div class="meta">${r._latestInteraction?.occurred_at?esc(fmtWhen(r._latestInteraction.occurred_at)):''}</div></div>
+ <div class="op-cell"><span class="op-label">PROSSIMA ATTIVITÀ</span><div class="op-value">${esc(nextActivityText(r))}</div></div></div>
+ <div class="op-actions">${!done&&r.telefono?`<a class="btn call-now" data-call="${esc(r.task_id)}" href="tel:${esc(r.telefono)}">☎ CHIAMA</a>`:''}<button class="btn alt" type="button" data-notes="${esc(r.task_id)}">📝 NOTE</button>${!done?`<button class="btn gold" type="button" data-followup="${esc(r.task_id)}">↻ FOLLOW-UP</button>`:''}<button class="btn alt" type="button" data-property="${esc(r.task_id)}">🏠 IMMOBILE</button><button class="btn alt" type="button" data-contact="${esc(r.task_id)}">👤 CONTATTO</button><button class="btn alt" type="button" data-details="${esc(r.task_id)}">⋯ DETTAGLI</button>
+ <details class="secondary-drawer"><summary>ALTRE AZIONI</summary><div class="secondary-actions">${!done&&p?`<a class="btn alt" target="_blank" rel="noopener" href="https://wa.me/39${p}">WHATSAPP</a><button class="btn alt" data-message-sent="${esc(r.task_id)}">SEGNA MESSAGGIO INVIATO</button>`:''}${r.linked_property_url?`<a class="btn gold" target="_blank" rel="noopener" href="${esc(r.linked_property_url)}">APRI ANNUNCIO</a>`:''}${r.contact_source_url?`<a class="btn alt" target="_blank" rel="noopener" href="${esc(r.contact_source_url)}">FONTE CONTATTO</a>`:''}${!done?`<a class="btn gold" href="http://127.0.0.1:8766/">CENTRALE PC</a>`:''}${!done&&r.lead_id?`<button class="btn remove-contact" data-remove-contact="${esc(r.task_id)}" data-lead="${esc(r.lead_id)}" data-name="${esc(nameOf(r))}">NON PIÙ PRESENTE · ELIMINA</button>`:''}<button class="btn news-transfer ${newsSent?'sent':''}" type="button" data-news-task="${esc(r.task_id)}">${newsSent?'NOTIZIA ✓':'NOTIZIA'}</button><a class="btn alt" href="crm.html#contatti">APRI CRM</a>${googleAddressQuery?`<a class="btn google-address" target="_blank" rel="noopener" href="https://www.google.com/search?q=${googleAddressQuery}">GOOGLE INDIRIZZO</a>`:''}<button class="btn copy-card" type="button" data-copy-card="1">COPIA SCHEDA</button></div></details></div>${!done?outcomeButtons(r):''}</article>`}).join(''):'<div class="empty">Nessuna situazione operativa corrisponde ai filtri.</div>';
+ document.querySelectorAll('[data-call]').forEach(x=>x.addEventListener('click',()=>{ACTIVE_TASK=String(x.dataset.call||'');localStorage.setItem('f1_active_call_task',ACTIVE_TASK);setTimeout(render,250)}));
+ document.querySelectorAll('[data-outcome]').forEach(x=>x.onclick=()=>handleOutcome(x.dataset.task,x.dataset.outcome,x));document.querySelectorAll('[data-message-sent]').forEach(x=>x.onclick=()=>markMessageSent(x.dataset.messageSent,x));document.querySelectorAll('[data-busy-task]').forEach(x=>x.onclick=()=>scheduleBusyCallback(x.dataset.busyTask,x.dataset.lead,x.dataset.name,x.dataset.phone,x));document.querySelectorAll('[data-remove-contact]').forEach(x=>x.onclick=()=>removeContact(x.dataset.removeContact,x.dataset.lead,x.dataset.name,x));document.querySelectorAll('[data-news-task]').forEach(x=>x.onclick=()=>sendCardToNews(x.dataset.newsTask,x));document.querySelectorAll('[data-copy-card]').forEach(x=>x.onclick=()=>copyClientCard(x));document.querySelectorAll('[data-notes]').forEach(x=>x.onclick=()=>openDetailDrawer(x.dataset.notes,'notes'));document.querySelectorAll('[data-property]').forEach(x=>x.onclick=()=>openDetailDrawer(x.dataset.property,'property'));document.querySelectorAll('[data-contact]').forEach(x=>x.onclick=()=>openDetailDrawer(x.dataset.contact,'contact'));document.querySelectorAll('[data-details]').forEach(x=>x.onclick=()=>openDetailDrawer(x.dataset.details,'details'));document.querySelectorAll('[data-followup]').forEach(x=>x.onclick=()=>{const row=STATE.rows.find(r=>String(r.task_id)===String(x.dataset.followup));if(row)openFollowupEditor(row,'RICHIAMA')})
 }
+function openDrawer(title,html){$('drawerTitle').textContent=title||'DETTAGLIO OPERATIVO';$('drawerBody').innerHTML=html||'';$('drawerBackdrop').classList.add('open');$('opDrawer').classList.add('open');$('opDrawer').setAttribute('aria-hidden','false')}
+function closeDrawer(){$('drawerBackdrop').classList.remove('open');$('opDrawer').classList.remove('open');$('opDrawer').setAttribute('aria-hidden','true');DRAWER_ROW=null}
+function field(label,value){return'<div class="drawer-field"><span>'+esc(label)+'</span>'+(value?esc(value):'<span class="row-empty">—</span>')+'</div>'}
+function timelineHtml(rows){if(!rows?.length)return'<div class="row-empty">Nessuna attività registrata.</div>';return'<div class="timeline">'+rows.slice(0,30).map(x=>'<div class="timeline-item"><b>'+esc((x.interaction_type||'ATTIVITÀ')+' · '+(x.outcome||'')).replace(/_/g,' ')+'</b><small>'+esc(fmtWhen(x.occurred_at))+'</small>'+(x.note?'<div>'+esc(x.note)+'</div>':'')+(x.next_action?'<div><strong>Prossima:</strong> '+esc(x.next_action)+(x.next_action_date?' · '+esc(fmtWhen(x.next_action_date)):'')+'</div>':'')+'</div>').join('')+'</div>'}
+async function openDetailDrawer(taskId,mode='details'){const row=STATE.rows.find(x=>String(x.task_id)===String(taskId));if(!row)return;DRAWER_ROW=row;openDrawer('CARICAMENTO…','<div class="empty">Recupero dati reali dal CRM…</div>');let lead=null,interactions=[];try{[lead,interactions]=await Promise.all([row.lead_id?F1AcquisitionData.pullLead(row.lead_id):Promise.resolve(null),row.lead_id?F1AcquisitionData.pullInteractionsForLead(row.lead_id,100):Promise.resolve([])])}catch(e){console.warn('Dettaglio operativo:',e)}const contact=lead||row;
+ const contactSection='<section class="drawer-section"><h3>PERSONA / CONTATTO</h3><div class="drawer-grid">'+field('Nome',nameOf(contact))+field('Telefono',contact.telefono||'')+field('Email',contact.email||'')+field('Stato CRM',contact.status||'')+field('Ultimo contatto',contact.last_contact?fmtWhen(contact.last_contact):'')+field('Prossima azione',contact.next_action||row.next_action||'')+'</div><div class="actions" style="margin-top:10px"><a class="btn alt" href="crm.html#contatti">APRI CONTATTO CRM</a></div></section>';
+ const propertySection='<section class="drawer-section"><h3>IMMOBILE / CONTESTO</h3><div class="drawer-grid">'+field('Comune',row.comune||'')+field('Via / civico',[row.via,row.civico].filter(Boolean).join(' '))+field('Tipo',row.linked_property_type||'')+field('Prezzo',euro(row.linked_property_price)||'')+field('Riferimento',row.linked_property_address||row.linked_property_title||'Riferimento immobiliare non ancora associato')+field('Fonte',row.linked_property_source||row.source||'')+'</div>'+(row.linked_property_url?'<div class="actions" style="margin-top:10px"><a class="btn gold" target="_blank" rel="noopener" href="'+esc(row.linked_property_url)+'">APRI ANNUNCIO</a></div>':'')+'</section>';
+ const contextSection='<section class="drawer-section"><h3>TERRITORIO / MOTIVO</h3><div class="drawer-grid">'+field('Perché è in lista',evidenceLabel(row))+field('Motivo chiamata',row.call_reason_detail||row.selection_reason||'')+field('Prossima attività',nextActivityText(row))+field('Lead ID',row.lead_id||'')+'</div></section>';
+ const notesText=String(contact.notes||''),notesSection='<section class="drawer-section"><h3>NOTE</h3><textarea id="drawerNotes" placeholder="Inserisci note operative…">'+esc(notesText)+'</textarea><div class="actions" style="margin-top:8px"><button id="saveDrawerNotes" class="btn" type="button">SALVA NOTE</button></div></section>',timelineSection='<section class="drawer-section"><h3>CRONOLOGIA</h3>'+timelineHtml(interactions)+'</section>';
+ let html='';if(mode==='notes')html=contactSection+notesSection+timelineSection;else if(mode==='property')html=propertySection+contextSection;else if(mode==='contact')html=contactSection+notesSection+timelineSection;else html=contextSection+contactSection+propertySection+notesSection+timelineSection;openDrawer(mode==='notes'?'NOTE — '+nameOf(row):mode==='property'?'IMMOBILE — '+nameOf(row):mode==='contact'?'CONTATTO — '+nameOf(row):'DETTAGLIO — '+nameOf(row),html);
+ const save=$('saveDrawerNotes');if(save)save.onclick=async()=>{if(!row.lead_id)return alert('Lead non collegato: impossibile salvare le note nel CRM.');save.disabled=true;try{await F1AcquisitionData.updateLead(row.lead_id,{notes:String($('drawerNotes').value||'')});save.textContent='SALVATO ✓';setTimeout(()=>{save.disabled=false;save.textContent='SALVA NOTE'},1000)}catch(e){alert('Note non salvate: '+(e.message||e));save.disabled=false}}}
+function followupReason(outcome){if(outcome==='NON_RISPONDE')return'Richiamare';if(outcome==='INTERESSATO')return'Approfondire interesse';if(outcome==='APPUNTAMENTO')return'Appuntamento';if(outcome==='DA_APPROFONDIRE')return'Approfondire';return'Richiamare'}
+function openFollowupEditor(row,outcome='RICHIAMA'){DRAWER_ROW=row;const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Rome'}).format(new Date());openDrawer('PROSSIMA AZIONE — '+nameOf(row),`<section class="drawer-section"><h3>ESITO → PROSSIMA ATTIVITÀ</h3><div class="drawer-grid">${field('Esito',outcome.replace(/_/g,' '))}${field('Contatto',nameOf(row))}${field('Territorio',[row.comune,row.via,row.civico].filter(Boolean).join(' · '))}${field('Immobile',row.linked_property_address||row.linked_property_title||'Non associato')}</div></section><section class="drawer-section"><div class="drawer-form"><div><span class="op-label">DATA</span><input id="followDate" type="date" min="${today}"></div><div><span class="op-label">ORA</span><input id="followTime" type="time"></div><div class="full"><span class="op-label">MOTIVO / PROSSIMA AZIONE</span><input id="followReason" value="${esc(followupReason(outcome))}"></div><div class="full"><span class="op-label">NOTE</span><textarea id="followNote" placeholder="Nota del contatto o del richiamo"></textarea></div><div class="full"><button id="saveFollowup" class="btn" type="button">CONFERMA FOLLOW-UP</button></div></div></section>`);const save=$('saveFollowup');save.onclick=async()=>{const date=$('followDate').value,time=$('followTime').value,reason=String($('followReason').value||'').trim(),note=String($('followNote').value||'').trim();if(!date||!time)return alert('Indica data e ora della prossima attività.');const when=new Date(date+'T'+time+':00');if(Number.isNaN(when.getTime()))return alert('Data o ora non valide.');save.disabled=true;try{await F1AcquisitionData.recordOutcome({leadId:row.lead_id||'',propertyId:row.linked_property_id||'',taskId:row.task_id||'',interactionType:'CALL',direction:'OUTBOUND',outcome,note:note||('Telefonata acquisizione: '+outcome.replace(/_/g,' ')),status:outcome==='INTERESSATO'?'IN_CORSO':'',nextAction:reason||followupReason(outcome),nextActionDate:when.toISOString()});if(ACTIVE_TASK===String(row.task_id)){ACTIVE_TASK='';localStorage.removeItem('f1_active_call_task')}closeDrawer();await load();window.scrollTo({top:0,behavior:'smooth'})}catch(e){alert('Follow-up non salvato: '+(e.message||e));save.disabled=false}}}
+function handleOutcome(taskId,outcome,btn){const row=STATE.rows.find(x=>String(x.task_id)===String(taskId));if(!row)return;if(['NON_RISPONDE','RICHIAMA','INTERESSATO','APPUNTAMENTO','DA_APPROFONDIRE'].includes(String(outcome||''))){openFollowupEditor(row,String(outcome));return}completeTask(taskId,outcome,btn)}
 function newsTransferQueue(){
   try{const q=JSON.parse(localStorage.getItem(NEWS_TRANSFER_KEY)||'[]');return Array.isArray(q)?q:[]}
   catch{return[]}
@@ -507,36 +501,7 @@ async function removeContact(taskId,leadId,contactName,btn){
     btn.disabled=false;
   }
 }
-async function completeTask(taskId,outcome,btn){
-  if(!taskId)return;
-  btn.disabled=true;
-  try{
-    const row=STATE.rows.find(x=>String(x.task_id)===String(taskId))||{};
-    const label=String(outcome||'FATTA').replace(/_/g,' ');
-    const now=new Date().toISOString();
-    await F1AcquisitionData.addInteraction({
-      interaction_id:String(taskId),
-      lead_id:row.lead_id||'',
-      task_id:taskId,
-      interaction_type:'CALL',
-      direction:'OUTBOUND',
-      occurred_at:now,
-      outcome:String(outcome||'FATTA'),
-      note:'Telefonata acquisizione: '+label,
-      metadata:{origin:'telefonate-oggi',display_name:nameOf(row),confirmed_by_user:true}
-    });
-    await F1AcquisitionData.setTaskStatus(taskId,'DONE','Telefonata acquisizione: '+label);
-    if(ACTIVE_TASK===String(taskId)){
-      ACTIVE_TASK='';
-      localStorage.removeItem('f1_active_call_task');
-    }
-    await load();
-    window.scrollTo({top:0,behavior:'smooth'});
-  }catch(e){
-    alert(e.message||e);
-    btn.disabled=false;
-  }
-}
+async function completeTask(taskId,outcome,btn){if(!taskId)return;btn.disabled=true;try{const row=STATE.rows.find(x=>String(x.task_id)===String(taskId))||{},raw=String(outcome||'FATTA'),label=raw.replace(/_/g,' '),status=raw==='NON_INTERESSATO'?'NON_INTERESSATO':raw==='FATTA'?'CONTATTATO':'';await F1AcquisitionData.recordOutcome({leadId:row.lead_id||'',propertyId:row.linked_property_id||'',taskId,interactionType:'CALL',direction:'OUTBOUND',outcome:raw,note:'Telefonata acquisizione: '+label,status,nextAction:'',nextActionDate:''});if(ACTIVE_TASK===String(taskId)){ACTIVE_TASK='';localStorage.removeItem('f1_active_call_task')}await load();window.scrollTo({top:0,behavior:'smooth'})}catch(e){alert(e.message||e);btn.disabled=false}}
 
 async function markMessageSent(taskId,btn){
   const row=STATE.rows.find(x=>String(x.task_id)===String(taskId))||{};
@@ -564,33 +529,8 @@ async function markMessageSent(taskId,btn){
     btn.disabled=false;
   }
 }
-async function load(){
-  $('list').innerHTML='<div class="empty">Caricamento lista giornaliera…</div>';
-  try{
-    const data=await F1AcquisitionData.rest('rpc/f1_daily_seller_calls_v1',{
-      method:'POST',
-      body:JSON.stringify({p_target_count:DAILY_QUEUE_CAP})
-    })||{};
-    STATE={
-      rows:Array.isArray(data.rows)?data.rows:[],
-      total:Number(data.total)||0,
-      done:Number(data.done)||0,
-      remaining:Number(data.remaining)||0
-    };
-    render();
-  }catch(e){
-    $('list').innerHTML='<div class="empty">Impossibile caricare la coda telefonate: '+esc(e.message||e)+'</div>';
-  }
-}
-window.addEventListener('load',()=>{
-  $('search').addEventListener('input',render);
-  $('reloadBtn').onclick=load;
-  updateSession();
-  setInterval(updateSession,1000);
-  setInterval(checkBusyReminders,1000);
-  checkBusyReminders();
-  load();
-});
+async function load(){$('list').innerHTML='<div class="empty">Caricamento coda operativa…</div>';try{const data=await F1AcquisitionData.rest('rpc/f1_daily_seller_calls_v1',{method:'POST',body:JSON.stringify({p_target_count:DAILY_QUEUE_CAP})})||{},rows=Array.isArray(data.rows)?data.rows:[];try{const leadIds=[...new Set(rows.map(r=>String(r.lead_id||'')).filter(Boolean))],[interactions,visibleTasks]=await Promise.all([F1AcquisitionData.pullInteractions(),leadIds.length?F1AcquisitionData.pullVisibleTasks(leadIds):Promise.resolve([])]),latestByLead=new Map();for(const i of interactions||[]){const id=String(i.lead_id||'');if(id&&!latestByLead.has(id))latestByLead.set(id,i)}for(const r of rows){const id=String(r.lead_id||'');r._latestInteraction=latestByLead.get(id)||null;const open=(visibleTasks||[]).filter(t=>String(t.lead_id||'')===id&&String(t.task_id||'')!==String(r.task_id||'')&&String(t.status||'OPEN').toUpperCase()==='OPEN');r._nextTask=open.find(t=>String(t.task_type||'').toUpperCase()==='FOLLOW_UP')||open.sort((x,y)=>String(x.due_date||'').localeCompare(String(y.due_date||'')))[0]||null}}catch(enrichError){console.warn('Arricchimento coda non disponibile:',enrichError)}STATE={rows,total:Number(data.total)||0,done:Number(data.done)||0,remaining:Number(data.remaining)||0};populateFacetFilters();render()}catch(e){$('list').innerHTML='<div class="empty">Impossibile caricare la coda telefonate: '+esc(e.message||e)+'</div>'}}
+window.addEventListener('load',()=>{$('search').addEventListener('input',render);$('municipalityFilter').addEventListener('change',render);$('propertyTypeFilter').addEventListener('change',render);$('reloadBtn').onclick=load;document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{ACTIVE_FILTER=b.dataset.filter||'ALL';render()});$('drawerClose').onclick=closeDrawer;$('drawerBackdrop').onclick=closeDrawer;document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});updateSession();setInterval(updateSession,1000);setInterval(checkBusyReminders,1000);checkBusyReminders();load()});
 </script>
 </body>
 </html>
