@@ -126,7 +126,8 @@ test('WhatsApp opening does not count until SEGNA MESSAGGIO INVIATO', async ({ p
   await page.locator('#relName').fill('PAOLO');
   await page.locator('#relPhone').fill('3331234567');
   await page.getByRole('button',{name:'SALVA E CREA RAMO'}).click();
-  const paoloId=await page.evaluate(()=>db.people.find(p=>p.name==='PAOLO').id);
+  await expect.poll(()=>page.evaluate(()=>db.people.some(p=>String(p.name||'').toUpperCase()==='PAOLO'))).toBeTruthy();
+  const paoloId=await page.evaluate(()=>db.people.find(p=>String(p.name||'').toUpperCase()==='PAOLO').id);
 
   await page.evaluate(id=>F1RelationshipTree.openWhatsApp(id),paoloId);
   expect(await page.evaluate(()=>window.__outreachRecords.length)).toBe(0);
