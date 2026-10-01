@@ -19,7 +19,7 @@ test('Dashboard -> F1-004/F1-005 -> role-play -> real property -> call outcome -
   const context=await browser.newContext();await backend(context,db);const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(String(e)));
 
   // Modulo JLS: il motore settimana 2 è disponibile senza alterare l'entrypoint F1 canonico.
-  await page.goto('/just-listed-sold.html');await expect(page.getByRole('heading',{name:'JUST LISTED / JUST SOLD'})).toBeVisible();await expect(page.locator('#campaignList')).toContainText('Nessuna campagna reale attiva');await expect(page.locator('#progressText')).toContainText('0 / 10');
+  await page.goto('/just-listed-sold.html');await expect(page.locator('h1')).toHaveText('JUST LISTED / JUST SOLD');await expect(page.locator('#campaignList')).toContainText('Nessuna campagna reale attiva');await expect(page.locator('#progressText')).toContainText('0 / 10');
 
   // Archivio: gli script ufficiali esistono e hanno azioni role-play senza duplicazione.
   await page.goto('/script.html');await expect(page.locator('#f1-004')).toContainText('Immobile appena acquisito');await expect(page.locator('#f1-005')).toContainText('Immobile appena venduto');await expect(page.locator('#f1-004')).toContainText('ROLE-PLAY JUST LISTED');await expect(page.locator('#f1-005')).toContainText('ROLE-PLAY JUST SOLD');
