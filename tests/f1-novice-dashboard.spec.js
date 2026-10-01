@@ -148,9 +148,13 @@ test.describe('F1 novice dashboard contract', () => {
 
   test('main dashboard stays usable on desktop tablet and mobile', async ({ browser }, testInfo) => {
     const sizes = [
-      { name: 'desktop-1440', width: 1440, height: 900 },
+      { name: 'desktop-1600', width: 1600, height: 900 },
+      { name: 'desktop-1366', width: 1366, height: 768 },
+      { name: 'tablet-1024', width: 1024, height: 768 },
       { name: 'tablet-768', width: 768, height: 1024 },
-      { name: 'mobile-390', width: 390, height: 844 }
+      { name: 'mobile-430', width: 430, height: 932 },
+      { name: 'mobile-390', width: 390, height: 844 },
+      { name: 'mobile-360', width: 360, height: 800 }
     ];
 
     for (const size of sizes) {
@@ -206,13 +210,39 @@ test.describe('F1 novice dashboard contract', () => {
       await expect(page.locator('#actionNowTitle')).toHaveText(/VAI AL CIVICO 5/);
       await expect(page.locator('.f1-quick-actions')).toBeVisible();
 
-      const layout = await page.evaluate(() => ({
-        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-        headingWidth: document.querySelector('.f1-home-heading')?.getBoundingClientRect().width || 0,
-        viewport: window.innerWidth
+      const layout = await page.evaluate(() => {
+        const rect = selector => document.querySelector(selector)?.getBoundingClientRect() || null;
+        const pending = document.querySelector('#pendingBody .alert-copy strong');
+        const pendingStyle = pending ? getComputedStyle(pending) : null;
+        return {
+          overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+          headingWidth: rect('.f1-home-heading')?.width || 0,
+          viewport: window.innerWidth,
+          nowCard: rect('.f1-now-card'),
+          todayCard: rect('.f1-today-card'),
+          attentionCard: rect('.f1-attention-card'),
+          attentionCopy: rect('#pendingBody .alert-copy'),
+          pendingStrong: rect('#pendingBody .alert-copy strong'),
+          pendingLineHeight: pendingStyle ? parseFloat(pendingStyle.lineHeight) || 0 : 0,
+          pendingText: pending?.textContent?.trim() || ''
+        };
       }));
       expect(layout.overflow, size.name + ' horizontal overflow').toBeLessThanOrEqual(2);
       expect(layout.headingWidth, size.name + ' heading width').toBeLessThanOrEqual(layout.viewport + 1);
+      expect(layout.pendingText).toMatch(/Nessuna notizia pendente/i);
+      expect(layout.attentionCopy?.width || 0, size.name + ' CRM text column width').toBeGreaterThan(120);
+      expect(layout.pendingStrong?.width || 0, size.name + ' pending text width').toBeGreaterThan(120);
+      expect(layout.pendingStrong?.height || 999, size.name + ' pending text vertical collapse').toBeLessThan(90);
+      if (size.width >= 768) {
+        expect(layout.nowCard?.height || 9999, size.name + ' oversized primary card').toBeLessThan(540);
+      } else {
+        expect(layout.nowCard?.height || 9999, size.name + ' oversized mobile primary card').toBeLessThan(650);
+      }
+      for (const card of [layout.nowCard, layout.todayCard, layout.attentionCard]) {
+        if (!card) continue;
+        expect(card.width, size.name + ' card width').toBeGreaterThan(180);
+        expect(card.height, size.name + ' card height').toBeGreaterThan(80);
+      }
 
       if (size.width <= 900) {
         await expect(page.locator('.f1-master-menu-toggle')).toBeVisible();
