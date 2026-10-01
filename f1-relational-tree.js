@@ -503,13 +503,24 @@ function saveEdge(){
   const custom=type==='altro'?String(document.getElementById('edgeEditorCustom').value||'').trim().toLocaleUpperCase('it-IT'):'';
   const invCustom=inv==='altro'?String(document.getElementById('edgeEditorInverseCustom').value||'').trim().toLocaleUpperCase('it-IT'):'';
   if(type==='altro'&&!custom){try{toast('Inserisci l’etichetta personalizzata')}catch(_){}return}
-  const rows=relations().filter(r=>(r.pairId||('legacy:'+relationKey(r.sourceId,r.targetId)))===pairId);
-  let forward=rows.find(r=>r.pairRole==='forward')||rows.find(r=>r.sourceId===e.sourceId&&r.targetId===e.targetId)||rows[0];
-  let reverse=rows.find(r=>r!==forward&&r.sourceId===e.targetId&&r.targetId===e.sourceId);
-  const now=new Date().toISOString();
-  if(forward){Object.assign(forward,{pairId,pairRole:'forward',type,inverseType:inv,customLabel:custom,inverseCustomLabel:invCustom,updatedAt:now,context:'quick_relationship'})}
-  if(reverse){Object.assign(reverse,{pairId,pairRole:'reverse',type:inv,inverseType:type,customLabel:invCustom,inverseCustomLabel:custom,updatedAt:now,context:'quick_relationship'})}
-  else relations().push({id:newId('rel'),pairId,pairRole:'reverse',sourceId:e.targetId,targetId:e.sourceId,type:inv,inverseType:type,customLabel:invCustom,inverseCustomLabel:custom,periodId:'',context:'quick_relationship',createdAt:now,updatedAt:now});
+  const now=new Date().toISOString(),all=relations();
+  const belongs=r=>(r.pairId||('legacy:'+relationKey(r.sourceId,r.targetId)))===pairId;
+  const oldRows=all.filter(belongs),oldForward=oldRows.find(r=>r.pairRole==='forward')||e.forward||oldRows[0],oldReverse=oldRows.find(r=>r.pairRole==='reverse')||e.reverse||oldRows.find(r=>r!==oldForward);
+  db.relations=all.filter(r=>!belongs(r));
+  db.relations.push({
+    id:oldForward?.id||newId('rel'),pairId,pairRole:'forward',
+    sourceId:e.sourceId,targetId:e.targetId,type,inverseType:inv,
+    customLabel:custom,inverseCustomLabel:invCustom,
+    periodId:oldForward?.periodId||'',context:oldForward?.context||'quick_relationship',
+    createdAt:oldForward?.createdAt||now,updatedAt:now
+  });
+  db.relations.push({
+    id:oldReverse?.id||newId('rel'),pairId,pairRole:'reverse',
+    sourceId:e.targetId,targetId:e.sourceId,type:inv,inverseType:type,
+    customLabel:invCustom,inverseCustomLabel:custom,
+    periodId:oldReverse?.periodId||'',context:oldReverse?.context||'quick_relationship',
+    createdAt:oldReverse?.createdAt||now,updatedAt:now
+  });
   persistGraph();closeEdgeEditor();render();
   try{toast('Relazione aggiornata')}catch(_){}
 }
