@@ -1,7 +1,7 @@
 /* F1 relational tree redesign: compact daily register + growing relationship tree */
 .relationship-workspace{
   display:grid;
-  grid-template-columns:minmax(300px,38%) minmax(0,62%);
+  grid-template-columns:minmax(250px,32%) minmax(0,68%);
   gap:14px;
   align-items:start;
   margin:12px 0 16px;
@@ -20,17 +20,17 @@
 .relationship-left .daily-outreach-breakdown{margin-bottom:10px}
 .relationship-left .daily-outreach-chip{padding:5px 8px;font-size:9px}
 .relationship-left .daily-outreach-grid{
-  grid-template-columns:repeat(10,26px);
+  grid-template-columns:repeat(10,22px);
   gap:4px;
   justify-content:start;
 }
 .relationship-left .daily-outreach-cell{
-  width:26px;
-  height:26px;
+  width:22px;
+  height:22px;
   min-height:0;
   aspect-ratio:auto;
-  border-radius:6px;
-  font-size:8px;
+  border-radius:5px;
+  font-size:7px;
   gap:1px;
   padding:0;
 }
@@ -71,13 +71,13 @@
 .relationship-tree-tools button.primary{background:#1d6c50;border-color:#2c8a67}
 .rel-tree-viewport{
   position:relative;
-  min-height:440px;
-  height:calc(100vh - 235px);
-  max-height:760px;
+  min-height:520px;
+  height:calc(100vh - 190px);
+  max-height:860px;
   overflow:hidden;
   touch-action:none;
   background:
-    radial-gradient(circle at 1px 1px,rgba(125,164,190,.12) 1px,transparent 1px) 0 0/20px 20px,
+    radial-gradient(circle at 1px 1px,rgba(125,164,190,.095) 1px,transparent 1px) 0 0/24px 24px,
     #0a141c;
   cursor:grab;
 }
@@ -369,9 +369,9 @@
 }
 
 @media(max-width:1180px){
-  .relationship-workspace{grid-template-columns:minmax(270px,34%) minmax(0,66%)}
-  .relationship-left .daily-outreach-grid{grid-template-columns:repeat(10,24px)}
-  .relationship-left .daily-outreach-cell{width:24px;height:24px}
+  .relationship-workspace{grid-template-columns:minmax(250px,33%) minmax(0,67%)}
+  .relationship-left .daily-outreach-grid{grid-template-columns:repeat(10,21px)}
+  .relationship-left .daily-outreach-cell{width:21px;height:21px}
   .rel-person{width:138px}
 }
 @media(max-width:900px){
@@ -497,16 +497,16 @@ html,body{max-width:100%;overflow-x:clip}
 .rel-edge-label.selected{outline:2px solid rgba(85,196,255,.45)}
 .rel-graph-node{
   position:absolute;
-  width:158px;
-  min-height:122px;
+  width:142px;
+  min-height:94px;
   pointer-events:auto;
   user-select:none;
   touch-action:none;
   background:#142633;
   border:1px solid #35566a;
-  border-radius:11px;
-  padding:9px;
-  box-shadow:0 8px 20px rgba(0,0,0,.26);
+  border-radius:10px;
+  padding:7px;
+  box-shadow:0 5px 14px rgba(0,0,0,.22);
   transition:border-color .12s ease,box-shadow .12s ease;
 }
 .rel-graph-node.root{
@@ -519,7 +519,7 @@ html,body{max-width:100%;overflow-x:clip}
 }
 .rel-graph-node.dragging{opacity:.96;box-shadow:0 12px 28px rgba(0,0,0,.38);z-index:20}
 .rel-node-name{
-  font-size:10px;
+  font-size:9px;
   font-weight:950;
   color:#fff;
   overflow:hidden;
@@ -528,16 +528,16 @@ html,body{max-width:100%;overflow-x:clip}
   padding-right:22px;
 }
 .rel-node-rel{
-  margin-top:3px;
-  font-size:7px;
+  margin-top:2px;
+  font-size:6.5px;
   color:#bad0dc;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
 .rel-node-town{
-  margin-top:3px;
-  font-size:8px;
+  margin-top:2px;
+  font-size:7px;
   color:#8ea7b6;
   min-height:10px;
   white-space:nowrap;
@@ -550,22 +550,22 @@ html,body{max-width:100%;overflow-x:clip}
   border:0;
   background:transparent;
   color:#8ed7ff;
-  padding:5px 0 2px;
+  padding:4px 0 1px;
   text-align:left;
-  font-size:9px;
+  font-size:8px;
   font-weight:900;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
-.rel-node-stage{font-size:7px;color:#8bd5ad;margin-top:2px}
-.rel-node-actions{display:grid;grid-template-columns:27px 1fr 1fr 27px;gap:4px;margin-top:7px}
+.rel-node-stage{font-size:6px;color:#8bd5ad;margin-top:1px}
+.rel-node-actions{display:grid;grid-template-columns:22px 1fr 1fr 22px;gap:3px;margin-top:5px}
 .rel-node-actions button,.rel-node-actions a{
   min-width:0;
   border:0;
   border-radius:6px;
-  padding:6px 4px;
-  font-size:7px;
+  padding:5px 3px;
+  font-size:6.5px;
   line-height:1;
   font-weight:900;
   text-decoration:none;
@@ -578,11 +578,11 @@ html,body{max-width:100%;overflow-x:clip}
 .rel-node-actions .add{background:#9b5d12}
 .rel-connect-handle{
   position:absolute;
-  right:-8px;
+  right:-7px;
   top:50%;
   transform:translateY(-50%);
-  width:17px;
-  height:17px;
+  width:15px;
+  height:15px;
   border:2px solid #0b151d;
   border-radius:50%;
   background:#ff9f1c;
@@ -593,8 +593,9 @@ html,body{max-width:100%;overflow-x:clip}
   font-weight:950;
   cursor:crosshair;
   box-shadow:0 0 0 1px #ffbe68;
+  opacity:.82;
 }
-.rel-connect-handle::after{content:"+"}
+.rel-connect-handle::after{content:"+"}.rel-connect-handle:hover{opacity:1;transform:translateY(-50%) scale(1.08)}
 .rel-node-drag-zone{
   position:absolute;
   inset:0 0 auto 0;
@@ -641,7 +642,21 @@ html,body{max-width:100%;overflow-x:clip}
   .rel-tree-stage,.rel-graph-canvas{width:2200px;height:1600px;min-width:2200px;min-height:1600px}
 }
 @media(max-width:520px){
-  .rel-graph-node{width:148px;min-height:118px}
-  .rel-node-phone{font-size:8px}
+  .rel-graph-node{width:136px;min-height:90px}
+  .rel-node-phone{font-size:7.5px}
   .rel-edge-label{font-size:6px;padding:3px 5px}
 }
+
+.rel-edge-path.context-active{opacity:1;stroke-width:2.8}
+.rel-edge-path.context-dim{opacity:.18}
+.rel-edge-label.context-active{opacity:1}
+.rel-edge-label.context-dim{opacity:.24}
+.rel-graph-node.context-dim{opacity:.58}
+.rel-graph-node:focus-visible{outline:2px solid #61c5ff;outline-offset:2px}
+.rel-node-phone:focus-visible,.rel-node-actions a:focus-visible,.rel-node-actions button:focus-visible,.rel-edge-label:focus-visible{outline:2px solid #61c5ff;outline-offset:2px}
+.relationship-tree-panel{border-color:#233f51;background:#0b151d}
+.relationship-tree-head{background:#0c1821;border-bottom-color:#203846;padding:9px 11px}
+.relationship-tree-title h2{font-size:12px}
+.relationship-tree-title p{font-size:8px}
+.relationship-tree-tools button{height:27px;min-width:28px;padding:0 7px;font-size:8px;border-radius:6px}
+.rel-edge-label{padding:3px 6px;font-size:6.5px;box-shadow:0 2px 8px rgba(0,0,0,.22)}
