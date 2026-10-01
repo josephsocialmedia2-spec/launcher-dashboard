@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-const WIDTH=2600,HEIGHT=1800,NODE_W=158,NODE_H=122;
+const WIDTH=2600,HEIGHT=1800,NODE_W=142,NODE_H=94;
 const RELATION_TYPES=[
   {id:'marito',label:'MARITO',inverse:'moglie',group:'family',spouse:true},
   {id:'moglie',label:'MOGLIE',inverse:'marito',group:'family',spouse:true},
@@ -114,33 +114,45 @@ function occupied(x,y,ignore=''){
 }
 function findFree(start,ignore=''){
   let p=clampPosition(start);
-  for(let i=0;i<80&&occupied(p.x,p.y,ignore);i++){
-    p=clampPosition({x:start.x+((i%5)-2)*190,y:start.y+(Math.floor(i/5)+1)*145});
+  const golden=2.399963229728653;
+  for(let i=0;i<90&&occupied(p.x,p.y,ignore);i++){
+    const radius=34+Math.sqrt(i+1)*34;
+    const angle=i*golden;
+    p=clampPosition({x:start.x+Math.cos(angle)*radius,y:start.y+Math.sin(angle)*radius});
   }
   return p;
 }
 function ensurePositions(){
   const ps=positions();let changed=false;
-  if(!ps.root){ps.root={x:520,y:110};changed=true}
+  if(!ps.root){ps.root={x:520,y:220};changed=true}
   const ordered=people().filter(p=>p.id!=='root');
-  ordered.forEach((p,i)=>{
+  ordered.forEach(p=>{
     if(ps[p.id])return;
-    const parent=ps[p.parentId]||ps.root;
-    const col=i%5,row=Math.floor(i/5);
-    ps[p.id]=findFree({x:parent.x+(col-2)*190,y:parent.y+180+row*145},p.id);
+    const parentId=(p.parentId&&person(p.parentId))?p.parentId:'root';
+    const edge=visualEdges().find(e=>(e.sourceId===parentId&&e.targetId===p.id)||(e.targetId===parentId&&e.sourceId===p.id));
+    const type=edge?(edge.sourceId===parentId?edge.type:edge.inverseType):'altro';
+    placeNew(p.id,parentId,type);
     changed=true;
   });
   if(changed)persistGraph();
 }
 function placeNew(targetId,srcId,type){
-  const ps=positions(),src=ps[srcId]||ps.root||{x:520,y:110};
-  const d=def(type);let candidate;
-  if(d.spouse)candidate={x:src.x+195,y:src.y};
-  else if(d.child)candidate={x:src.x+((relations().filter(r=>r.sourceId===srcId&&['figlio','figlia'].includes(r.type)).length%3)-1)*185,y:src.y+185};
-  else if(d.parent)candidate={x:src.x,y:src.y-175};
-  else if(groupFor(type)==='work')candidate={x:src.x+230,y:src.y+90};
-  else candidate={x:src.x+210,y:src.y+145};
+  const ps=positions(),src=ps[srcId]||ps.root||{x:520,y:220};
+  const d=def(type),group=groupFor(type);
+  const degree=visualEdges().filter(e=>e.sourceId===srcId||e.targetId===srcId).length;
+  let base=0,radius=210;
+  if(d.spouse){base=0.04+(degree%2?0.13:-0.13);radius=190}
+  else if(d.child){base=1.08+((degree%5)-2)*0.20;radius=215}
+  else if(d.parent){base=-1.62+((degree%3)-1)*0.20;radius=205}
+  else if(group==='friend'){base=-0.58+((degree%5)-2)*0.32;radius=220}
+  else if(group==='work'){base=0.48+((degree%4)-1.5)*0.36;radius=235}
+  else if(group==='family'){base=2.55+((degree%4)-1.5)*0.28;radius=205}
+  else{base=-1.10+(degree*2.399963229728653);radius=225}
+  const candidate={x:src.x+Math.cos(base)*radius,y:src.y+Math.sin(base)*radius};
   ps[targetId]=findFree(candidate,targetId);
+}
+function hashCode(v){
+  let h=0;for(const ch of String(v||''))h=((h<<5)-h)+ch.charCodeAt(0)|0;return Math.abs(h);
 }
 function relationKey(a,b){return[a,b].sort().join('::')}
 function applyHierarchy(a,b,type,isNew){
@@ -245,29 +257,56 @@ function edgeGeometry(e){
   const a=positions()[e.sourceId],b=positions()[e.targetId];if(!a||!b)return null;
   const ac={x:a.x+NODE_W/2,y:a.y+NODE_H/2},bc={x:b.x+NODE_W/2,y:b.y+NODE_H/2};
   const dx=bc.x-ac.x,dy=bc.y-ac.y,dist=Math.max(1,Math.hypot(dx,dy)),ux=dx/dist,uy=dy/dist;
-  const ax=ac.x+ux*(NODE_W*.47),ay=ac.y+uy*(NODE_H*.42);
-  const bx=bc.x-ux*(NODE_W*.47),by=bc.y-uy*(NODE_H*.42);
-  const bend=Math.min(70,dist*.16),nx=-uy,ny=ux;
+  const ax=ac.x+ux*(NODE_W*.47),ay=ac.y+uy*(NODE_H*.44);
+  const bx=bc.x-ux*(NODE_W*.47),by=bc.y-uy*(NODE_H*.44);
+  const nx=-uy,ny=ux,sign=(hashCode(e.pairId)%2)?1:-1;
+  const bend=Math.min(92,Math.max(24,dist*.145))*sign;
   const mx=(ax+bx)/2+nx*bend,my=(ay+by)/2+ny*bend;
-  const c1x=ax+(mx-ax)*.68,c1y=ay+(my-ay)*.68,c2x=bx+(mx-bx)*.68,c2y=by+(my-by)*.68;
-  return {path:'M '+ax+' '+ay+' C '+c1x+' '+c1y+', '+c2x+' '+c2y+', '+bx+' '+by,mx,my};
+  const c1x=ax+(mx-ax)*.64,c1y=ay+(my-ay)*.64,c2x=bx+(mx-bx)*.64,c2y=by+(my-by)*.64;
+  return {path:'M '+ax+' '+ay+' C '+c1x+' '+c1y+', '+c2x+' '+c2y+', '+bx+' '+by,mx,my,nx,ny};
+}
+function resolveLabelPosition(g,used,pairId){
+  let x=g.mx,y=g.my;
+  const sign=(hashCode(pairId)%2)?1:-1;
+  for(let i=0;i<7;i++){
+    const hit=used.some(p=>Math.abs(p.x-x)<92&&Math.abs(p.y-y)<22);
+    if(!hit)break;
+    const step=(Math.floor(i/2)+1)*18*(i%2?1:-1)*sign;
+    x=g.mx+g.nx*step;y=g.my+g.ny*step;
+  }
+  used.push({x,y});return{x,y};
 }
 function renderEdges(){
   const svg=document.getElementById('relationshipEdges'),labels=document.getElementById('relationshipEdgeLabels');
   if(!svg||!labels)return;
   svg.setAttribute('viewBox','0 0 '+WIDTH+' '+HEIGHT);
   const hidden=hiddenIds(),edges=visualEdges().filter(e=>!hidden.has(e.sourceId)&&!hidden.has(e.targetId));
-  let paths='<defs><marker id="relArrow" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L0,6 L6,3 z" fill="context-stroke"/></marker></defs>';
+  const focusPerson=selectedId&&selectedId!=='root',usedLabels=[];
+  let paths='<defs><marker id="relArrow" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L0,6 L6,3 z" fill="context-stroke"/></marker></defs>';
   const labelHtml=[];
   for(const e of edges){
     const g=edgeGeometry(e);if(!g)continue;
-    const cls='rel-edge-path '+e.group+(selectedEdgeId===e.pairId?' selected':'');
+    const incident=focusPerson&&(e.sourceId===selectedId||e.targetId===selectedId);
+    const contextClass=focusPerson?(incident?' context-active':' context-dim'):'';
+    const cls='rel-edge-path '+e.group+(selectedEdgeId===e.pairId?' selected':'')+contextClass;
     paths+='<path class="'+cls+'" data-relation-id="'+esc(e.pairId)+'" d="'+g.path+'" marker-start="url(#relArrow)" marker-end="url(#relArrow)"></path>';
     paths+='<path class="rel-edge-hit" data-relation-id="'+esc(e.pairId)+'" d="'+g.path+'" onclick="F1RelationshipTree.openEdgeEditor(\''+jsArg(e.pairId)+'\')"></path>';
-    labelHtml.push('<button type="button" class="rel-edge-label '+e.group+(selectedEdgeId===e.pairId?' selected':'')+'" data-relation-id="'+esc(e.pairId)+'" style="left:'+g.mx+'px;top:'+g.my+'px" onclick="F1RelationshipTree.openEdgeEditor(\''+jsArg(e.pairId)+'\')" ondblclick="F1RelationshipTree.openEdgeEditor(\''+jsArg(e.pairId)+'\')">'+esc(edgeText(e))+'</button>');
+    const lp=resolveLabelPosition(g,usedLabels,e.pairId),aria='Modifica relazione '+edgeText(e);
+    labelHtml.push('<button type="button" aria-label="'+esc(aria)+'" class="rel-edge-label '+e.group+(selectedEdgeId===e.pairId?' selected':'')+contextClass+'" data-relation-id="'+esc(e.pairId)+'" style="left:'+lp.x+'px;top:'+lp.y+'px" onclick="F1RelationshipTree.openEdgeEditor(\''+jsArg(e.pairId)+'\')" ondblclick="F1RelationshipTree.openEdgeEditor(\''+jsArg(e.pairId)+'\')">'+esc(edgeText(e))+'</button>');
   }
   if(connectDrag?.path)paths+='<path id="relEdgeDraft" class="rel-edge-draft" d="'+connectDrag.path+'"></path>';
   svg.innerHTML=paths;labels.innerHTML=labelHtml.join('');
+}
+function updateEdgeElements(e){
+  const g=edgeGeometry(e);if(!g)return;
+  document.querySelectorAll('[data-relation-id="'+CSS.escape(e.pairId)+'"]').forEach(el=>{
+    if(el.tagName==='path'||el.tagName==='PATH')el.setAttribute('d',g.path);
+  });
+  const labelEl=document.querySelector('.rel-edge-label[data-relation-id="'+CSS.escape(e.pairId)+'"]');
+  if(labelEl){labelEl.style.left=g.mx+'px';labelEl.style.top=g.my+'px'}
+}
+function renderIncidentEdges(nodeId){
+  visualEdges().filter(e=>e.sourceId===nodeId||e.targetId===nodeId).forEach(updateEdgeElements);
 }
 function render(){
   if(!document.getElementById('relationshipNodes'))return;
@@ -322,12 +361,12 @@ function nodeMove(e){
   const pos=clampPosition({x:nodeDrag.x+dx,y:nodeDrag.y+dy});positions()[nodeDrag.id]=pos;
   const node=document.querySelector('[data-person-id="'+CSS.escape(nodeDrag.id)+'"]');
   if(node){node.style.left=pos.x+'px';node.style.top=pos.y+'px'}
-  renderEdges();
+  renderIncidentEdges(nodeDrag.id);
 }
 function nodeUp(){
   if(!nodeDrag)return;
   document.querySelector('[data-person-id="'+CSS.escape(nodeDrag.id)+'"]')?.classList.remove('dragging');
-  if(nodeDrag.moved)persistGraph();
+  if(nodeDrag.moved){renderEdges();persistGraph()}
   nodeDrag=null;window.removeEventListener('pointermove',nodeMove);
 }
 function startCanvasPan(e){
