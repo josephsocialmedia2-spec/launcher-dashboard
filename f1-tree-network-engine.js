@@ -335,7 +335,7 @@ function renderAutomationLog(){
 }
 function renderAllExtensions(){
  if(!booted)return;
- renderChronology();renderNextQuestion();renderDuplicatePanel();renderNetworkKpis();renderAutomationLog();
+ renderNextQuestion();
  const p=(typeof drawerMode!=='undefined'&&drawerMode==='edit')?db.people.find(x=>x.id===document.getElementById('personId')?.value):null;
  if(p)renderPersonRelations(p);
 }
