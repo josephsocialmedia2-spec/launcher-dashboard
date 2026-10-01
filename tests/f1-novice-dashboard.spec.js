@@ -226,7 +226,7 @@ test.describe('F1 novice dashboard contract', () => {
           pendingLineHeight: pendingStyle ? parseFloat(pendingStyle.lineHeight) || 0 : 0,
           pendingText: pending?.textContent?.trim() || ''
         };
-      }));
+      });
       expect(layout.overflow, size.name + ' horizontal overflow').toBeLessThanOrEqual(2);
       expect(layout.headingWidth, size.name + ' heading width').toBeLessThanOrEqual(layout.viewport + 1);
       expect(layout.pendingText).toMatch(/Nessuna notizia pendente/i);
