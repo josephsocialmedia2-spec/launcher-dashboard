@@ -661,3 +661,72 @@ html,body{max-width:100%;overflow-x:clip}
 .relationship-tree-title p{font-size:8px}
 .relationship-tree-tools button{height:27px;min-width:28px;padding:0 7px;font-size:8px;border-radius:6px}
 .rel-edge-label{padding:3px 6px;font-size:6.5px;box-shadow:0 2px 8px rgba(0,0,0,.22)}
+
+
+/* ===== FREE CARD LAYOUT · Chrome-inspired UX concepts, F1 visual language ===== */
+.rel-group-layer{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.rel-group-box{
+  position:absolute;pointer-events:none;border:1px dashed rgba(116,174,207,.42);
+  background:rgba(35,77,99,.08);border-radius:16px;
+  transition:border-color .12s ease,background .12s ease;
+}
+.rel-group-box.drop-active{border-color:#55c4ff;background:rgba(85,196,255,.12)}
+.rel-group-box.collapsed{background:rgba(15,35,48,.96);border-style:solid;height:42px!important}
+.rel-group-handle{
+  position:absolute;left:9px;top:7px;max-width:calc(100% - 42px);pointer-events:auto;
+  border:1px solid #3a6077;background:#132936;color:#dcecf4;border-radius:999px;
+  padding:5px 9px;font-size:8px;font-weight:950;letter-spacing:.04em;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;cursor:grab;
+}
+.rel-group-handle:active{cursor:grabbing}
+.rel-group-handle span{color:#8fb0c2;font-size:7px}
+.rel-group-collapse{
+  position:absolute;right:8px;top:8px;pointer-events:auto;border:1px solid #3a6077;
+  background:#0f202a;color:#fff;border-radius:999px;width:25px;height:25px;padding:0;
+  font-size:10px;font-weight:900;
+}
+.rel-guide{
+  position:absolute;display:none;pointer-events:none;z-index:2;
+  background:rgba(85,196,255,.48);box-shadow:0 0 0 1px rgba(85,196,255,.08);
+}
+.rel-guide-x{top:0;bottom:0;width:1px}
+.rel-guide-y{left:0;right:0;height:1px}
+.rel-graph-node{cursor:grab}
+.rel-graph-node.dragging{cursor:grabbing;transform:translateY(-2px)}
+.rel-graph-node.multi-selected{outline:2px solid rgba(85,196,255,.62);outline-offset:2px}
+.rel-graph-node.pinned{box-shadow:inset 0 0 0 1px rgba(243,201,65,.28),0 5px 14px rgba(0,0,0,.22)}
+.rel-pin-mark{
+  position:absolute;right:29px;top:3px;font-size:9px;line-height:1;z-index:31;
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,.45));pointer-events:none;
+}
+.rel-node-menu{
+  position:absolute;right:5px;top:3px;z-index:32;width:21px;height:20px;padding:0;
+  border:0;border-radius:7px;background:#203a4b;color:#d8e5ec;font-weight:900;line-height:1;
+}
+.rel-node-menu:hover{background:#2a4b60}
+.rel-node-menu-panel{
+  position:absolute;right:-3px;top:27px;z-index:60;width:154px;display:none;
+  background:#0c1821;border:1px solid #3b5c70;border-radius:10px;padding:5px;
+  box-shadow:0 12px 28px rgba(0,0,0,.42);
+}
+.rel-node-menu-panel.show{display:grid;gap:3px}
+.rel-node-menu-panel button{
+  border:0;border-radius:7px;background:#172b38;color:#e8f1f5;padding:7px 8px;
+  text-align:left;font-size:7px;font-weight:900;letter-spacing:.02em;
+}
+.rel-node-menu-panel button:hover{background:#234257}
+.rel-move-undo{
+  display:none;align-items:center;justify-content:center;gap:9px;margin:8px 12px 0;
+  padding:7px 10px;border:1px solid #35566a;border-radius:10px;background:#0d1a23;
+  color:#c9d9e3;font-size:9px;font-weight:800;
+}
+.rel-move-undo.show{display:flex}
+.rel-move-undo button{
+  border:0;border-radius:7px;background:#284a60;color:#fff;padding:5px 8px;
+  font-size:8px;font-weight:900;
+}
+@media(max-width:700px){
+  .rel-node-menu-panel{right:auto;left:6px;top:28px;width:148px}
+  .rel-group-handle{font-size:7px}
+  .rel-move-undo{margin-left:6px;margin-right:6px}
+}
