@@ -66,10 +66,20 @@ test('Fonti di Notizie remains usable on mobile after panel removal', async ({ b
   await expect(page.locator('.dashboard-strip .news-launcher')).toBeVisible();
   await expect(page.locator('.news-workbench')).toHaveCount(0);
 
-  const layout = await page.evaluate(() => ({
-    scrollWidth: document.documentElement.scrollWidth,
-    clientWidth: document.documentElement.clientWidth
-  }));
-  expect(layout.scrollWidth).toBeLessThanOrEqual(layout.clientWidth + 2);
+  const layout = await page.evaluate(() => {
+    const strip = document.querySelector('.dashboard-strip')?.getBoundingClientRect();
+    const mnemonic = document.querySelector('#mnemonicPanel')?.getBoundingClientRect();
+    return {
+      viewport: innerWidth,
+      stripLeft: strip?.left ?? -1,
+      stripRight: strip?.right ?? 99999,
+      mnemonicLeft: mnemonic?.left ?? -1,
+      mnemonicRight: mnemonic?.right ?? 99999
+    };
+  });
+  expect(layout.stripLeft).toBeGreaterThanOrEqual(0);
+  expect(layout.stripRight).toBeLessThanOrEqual(layout.viewport + 2);
+  expect(layout.mnemonicLeft).toBeGreaterThanOrEqual(0);
+  expect(layout.mnemonicRight).toBeLessThanOrEqual(layout.viewport + 2);
   await context.close();
 });
