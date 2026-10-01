@@ -67,7 +67,13 @@ jobs:
 
           forbidden=[
             "Prima premi CHIAMA ORA. Gli esiti si attivano dopo l’avvio della chiamata.",
-            "outcomeButtons(r,armed)"
+            "outcomeButtons(r,armed)",
+            "100 TELEFONATE DI OGGI",
+            "OBIETTIVO: 100 TELEFONATE",
+            "OBIETTIVO COMPLETATO.",
+            "Preparazione delle 100 telefonate",
+            "Impossibile caricare le 100 telefonate",
+            'id="target"'
           ]
           present=[x for x in forbidden if x in s]
           if present:
