@@ -143,6 +143,14 @@ function placeNew(targetId,srcId,type){
   ps[targetId]=findFree(candidate,targetId);
 }
 function relationKey(a,b){return[a,b].sort().join('::')}
+function applyHierarchy(a,b,type,isNew){
+  const src=person(a),target=person(b);if(!src||!target||target.id==='root')return;
+  const d=def(type);
+  if(d.spouse||['fratello','sorella'].includes(type))target.parentId=src.parentId||'root';
+  else if(d.child)target.parentId=src.id;
+  else if(d.parent)target.parentId=src.parentId||'root';
+  else if(isNew&&!target.parentId)target.parentId=src.id;
+}
 function addPair(a,b,type,custom='',inverseType='',inverseCustom=''){
   const src=person(a),tgt=person(b);if(!src||!tgt||a===b)return null;
   const inv=inverseType||inverseFor(type,src,tgt);
@@ -409,6 +417,7 @@ function linkExisting(targetId){if(!relationType){try{toast('Scegli la relazione
 function finalize(a,b,type,isNew,custom=''){
   const src=person(a),target=person(b);if(!src||!target)return;
   const inv=inverseFor(type,src,target),pairId=addPair(a,b,type,custom,inv,'');
+  applyHierarchy(a,b,type,isNew);
   if(!positions()[b])placeNew(b,a,type);
   const now=new Date().toISOString();src.updatedAt=now;target.updatedAt=now;
   persistGraph();closePicker();selectedId=b;selectedEdgeId=pairId||'';render();center(b);
