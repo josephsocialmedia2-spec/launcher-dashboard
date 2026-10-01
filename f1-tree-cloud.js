@@ -211,6 +211,7 @@ function mergeCloudIntoLocal(bundle){
     const g=bundle.settings.graph_meta;
     db.dataVersion=Number(bundle.settings.data_version||g.dataVersion||db.dataVersion||1);
     db.relations=Array.isArray(g.relations)?g.relations:(db.relations||[]);
+    db.graphPositions=g.graphPositions&&typeof g.graphPositions==='object'?g.graphPositions:(db.graphPositions||{});
     db.places=Array.isArray(g.places)?g.places:(db.places||[]);
     db.memories=Array.isArray(g.memories)?g.memories:(db.memories||[]);
     db.automationLog=Array.isArray(g.automationLog)?g.automationLog:(db.automationLog||[]);
@@ -327,7 +328,7 @@ function buildSocialRows(p,contactId){
 async function pushSettings(){
   const settings=db.settings||{};
   await upsert('f1_tree_settings','owner_id',[{
-    owner_id:user.id,daily_target:Number(db.dailyTarget||40),automation_webhook:settings.automationWebhook||'',data_version:Number(db.dataVersion||1),graph_meta:{dataVersion:Number(db.dataVersion||1),relations:db.relations||[],places:db.places||[],memories:db.memories||[],automationLog:(db.automationLog||[]).slice(0,60),newsInbox:(db.newsInbox||[]).slice(0,500),mnemonic:db.mnemonic||{}}
+    owner_id:user.id,daily_target:Number(db.dailyTarget||40),automation_webhook:settings.automationWebhook||'',data_version:Number(db.dataVersion||1),graph_meta:{dataVersion:Number(db.dataVersion||1),relations:db.relations||[],graphPositions:db.graphPositions||{},places:db.places||[],memories:db.memories||[],automationLog:(db.automationLog||[]).slice(0,60),newsInbox:(db.newsInbox||[]).slice(0,500),mnemonic:db.mnemonic||{}}
   }]);
   const profilePatch={};
   if(settings.officialName){Object.assign(profilePatch,splitOfficialName(settings.officialName))}
