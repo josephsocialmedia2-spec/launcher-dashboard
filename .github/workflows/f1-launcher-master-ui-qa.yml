@@ -30,6 +30,7 @@ on:
       - 'f1-premium-help.js'
       - 'tests/f1-launcher-master-ui.spec.js'
       - 'tests/f1-novice-dashboard.spec.js'
+      - 'tests/f1-live-dashboard-visual.spec.js'
       - '.github/workflows/f1-launcher-master-ui-qa.yml'
   workflow_dispatch:
 
