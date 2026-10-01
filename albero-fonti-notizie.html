@@ -39,8 +39,6 @@ button{cursor:pointer}
 .topbar{padding:16px 20px;background:#13202b;border-bottom:1px solid #2a3d4c;display:flex;gap:10px;align-items:center;position:sticky;top:0;z-index:20}
 .search{flex:1;min-width:180px}.search input{width:100%;border:1px solid #365064;background:#0f1922;color:#fff;border-radius:10px;padding:10px 12px}.topbar select{background:#0f1922;color:#fff;border:1px solid #365064;border-radius:10px;padding:10px}
 .content{padding:18px;overflow:auto}
-.metrics{display:grid;grid-template-columns:repeat(6,minmax(115px,1fr));gap:10px;margin-bottom:14px}.metric{background:var(--panel);border:1px solid #2b3d4c;border-radius:12px;padding:12px}.metric b{font-size:24px;display:block}.metric span{font-size:11px;color:var(--muted)}
-.kpi{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}.kpi .panel{margin:0}.progress{height:10px;border-radius:999px;background:#0b131a;overflow:hidden;margin:8px 0}.progress i{display:block;height:100%;background:var(--accent);width:0}.journey{display:flex;gap:5px;flex-wrap:wrap}.stage{font-size:10px;padding:5px 7px;border-radius:999px;background:#243747;color:#dbe6ee}.stage.active{background:var(--green);color:white}
 .tree-wrap{background:linear-gradient(180deg,#1a2a37 0%,#12202c 100%);border:1px solid #2d4557;border-radius:16px;padding:22px;min-height:560px;overflow:auto;box-shadow:var(--shadow)}
 .tree-title{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}.tree-title h2{margin:0;font-size:20px}.tree-title p{margin:4px 0 0;color:var(--muted);font-size:12px}.legend{display:flex;gap:7px;flex-wrap:wrap}.legend span{font-size:10px;border-radius:999px;padding:5px 7px;background:#233747}
 .tree{min-width:1100px;text-align:center;padding:10px 0 30px}.tree ul{padding-top:38px;position:relative;display:flex;justify-content:center;margin:0;padding-left:0}.tree li{list-style:none;text-align:center;position:relative;padding:38px 10px 0}.tree li::before,.tree li::after{content:"";position:absolute;top:0;right:50%;border-top:2px solid var(--line);width:50%;height:38px}.tree li::after{right:auto;left:50%;border-left:2px solid var(--line)}.tree li:only-child::after,.tree li:only-child::before{display:none}.tree li:only-child{padding-top:0}.tree li:first-child::before,.tree li:last-child::after{border:0}.tree li:last-child::before{border-right:2px solid var(--line);border-radius:0 8px 0 0}.tree li:first-child::after{border-radius:8px 0 0 0}.tree ul ul::before{content:"";position:absolute;top:0;left:50%;border-left:2px solid var(--line);height:38px}
@@ -218,19 +216,6 @@ button{cursor:pointer}
       </section>
 
       <section class="guide">
-        <details>
-          <summary>Routine del PDF: agenda a blocchi</summary>
-          <table>
-            <tr><td>08:30–09:00</td><td>Riscaldamento e role play: prepara le conversazioni a voce alta.</td></tr>
-            <tr><td>09:00–12:00</td><td>Telefonate e ricerca in zona. È il blocco più importante.</td></tr>
-            <tr><td>12:00–13:00</td><td>Sviluppo delle notizie e amministrazione.</td></tr>
-            <tr><td>14:00–14:30</td><td>Formazione breve.</td></tr>
-            <tr><td>14:30–16:00</td><td>Telefonate e ricontatto: richiama, fissa appuntamenti.</td></tr>
-            <tr><td>16:00–18:00</td><td>Ricerca in zona e appuntamenti.</td></tr>
-            <tr><td>18:00–19:30</td><td>Appuntamenti: preview e prese incarico.</td></tr>
-            <tr><td>Sabato mattina</td><td>Conta chiamate, appuntamenti e notizie della settimana.</td></tr>
-          </table>
-        </details>
         <details>
           <summary>Promemoria conversazione: 5 errori da evitare</summary>
           <ol>
@@ -676,42 +661,40 @@ function init(){
  renderAll();
  checkDueTouchpoints();
  const qp=new URLSearchParams(location.search).get('person');if(qp&&db.people.some(x=>x.id===qp))setTimeout(()=>openPerson(qp),80);
- startCoachSystem();
- startIncomingContactReminder();
  try{window.F1TreeCloud?.boot?.()}catch(_){ }
 }
 function renderAll(){renderDailyOutreach();try{window.F1NetworkEngine?.renderAllExtensions?.()}catch(_){}}
-async function renderDailyOutreach(){
+function applyDailyOutreachData(data){
  const grid=document.getElementById('dailyOutreachGrid');
  if(!grid)return;
  if(!grid.children.length){
    grid.innerHTML=Array.from({length:100},(_,i)=>'<div class="daily-outreach-cell" data-outreach-index="'+i+'"><b>'+(i+1)+'</b><span class="kind"></span></div>').join('');
  }
+ const events=Array.isArray(data?.events)?data.events:[];
+ const total=Number(data?.total)||0,calls=Number(data?.calls)||0,messages=Number(data?.messages)||0;
+ document.getElementById('dailyOutreachTotal').textContent=String(total);
+ document.getElementById('dailyOutreachCalls').textContent=String(calls);
+ document.getElementById('dailyOutreachMessages').textContent=String(messages);
+ [...grid.children].forEach((cell,i)=>{
+   const ev=events[i]||null;
+   cell.className='daily-outreach-cell'+(ev?' on '+(ev.channel==='CALL'?'call':'message'):'');
+   const kind=cell.querySelector('.kind');if(kind)kind.textContent=ev?(ev.channel==='CALL'?'☎':'✉'):'';
+   if(ev){
+     const time=new Date(ev.occurred_at).toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
+     const who=ev.display_name?(' · '+ev.display_name):'';
+     cell.title='#'+(i+1)+' · '+(ev.channel==='CALL'?'Telefonata':'Messaggio')+who+' · '+time;
+   }else cell.removeAttribute('title');
+ });
+}
+async function renderDailyOutreach(){
  try{
-   if(!window.F1ContactOutreach?.ready?.()){
-     document.getElementById('dailyOutreachTotal').textContent='0';
-     return;
-   }
-   const data=await window.F1ContactOutreach.today();
-   const events=Array.isArray(data?.events)?data.events:[];
-   const total=Number(data?.total)||0,calls=Number(data?.calls)||0,messages=Number(data?.messages)||0;
-   document.getElementById('dailyOutreachTotal').textContent=String(total);
-   document.getElementById('dailyOutreachCalls').textContent=String(calls);
-   document.getElementById('dailyOutreachMessages').textContent=String(messages);
-   [...grid.children].forEach((cell,i)=>{
-     const ev=events[i]||null;
-     cell.className='daily-outreach-cell'+(ev?' on '+(ev.channel==='CALL'?'call':'message'):'');
-     const kind=cell.querySelector('.kind');if(kind)kind.textContent=ev?(ev.channel==='CALL'?'☎':'✉'):'';
-     if(ev){
-       const time=new Date(ev.occurred_at).toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
-       const who=ev.display_name?(' · '+ev.display_name):'';
-       cell.title='#'+(i+1)+' · '+(ev.channel==='CALL'?'Telefonata':'Messaggio')+who+' · '+time;
-     }else cell.removeAttribute('title');
-   });
+   if(!window.F1ContactOutreach?.ready?.()){applyDailyOutreachData({total:0,calls:0,messages:0,events:[]});return}
+   applyDailyOutreachData(await window.F1ContactOutreach.today());
  }catch(e){
    console.warn('Registro contatti giornalieri:',e);
  }
 }
+window.F1DailyOutreach={apply:applyDailyOutreachData,render:renderDailyOutreach};
 window.addEventListener('f1-outreach-changed',()=>renderDailyOutreach());
 window.addEventListener('focus',()=>renderDailyOutreach());
 setInterval(()=>renderDailyOutreach(),60000);
