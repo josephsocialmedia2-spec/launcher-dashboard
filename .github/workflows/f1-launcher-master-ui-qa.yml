@@ -47,7 +47,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for file in             f1-launcher-master.js             f1-dashboard-auth-guard.js             f1-staff-data.js             f1-notiziere-engine.js             ricerca-territoriale.js             f1-notiziere-assistant-bridge.js             f1-tour-admin-dashboard.js             f1-staff-access-panel.js             f1-realtime.js             f1-desktop-mobile-bridge.js             f1-territory-admin-v4.js             ricerca-territoriale-layout.js             f1-secret-db-access.js             content-production-week.js             dashboard-primary-accordions.js; do
+          for file in             f1-launcher-master.js             f1-dashboard-auth-guard.js             f1-staff-data.js             f1-notiziere-engine.js             ricerca-territoriale.js             f1-notiziere-assistant-bridge.js             f1-tour-admin-dashboard.js             f1-staff-access-panel.js             f1-realtime.js             f1-desktop-mobile-bridge.js             f1-territory-admin-v4.js             ricerca-territoriale-layout.js             f1-secret-db-access.js             content-production-week.js             dashboard-primary-accordions.js \
+            f1-global-brand.js \
+            f1-premium-help.js; do
             echo "CHECK $file"
             node --check "$file"
           done
