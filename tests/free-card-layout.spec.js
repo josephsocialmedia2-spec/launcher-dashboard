@@ -47,6 +47,7 @@ async function seed(page){
     db.graphGroups=[];
     persist();
     F1RelationshipTree.render();
+    F1RelationshipTree.fit();
     window.__pushes=0;
   });
 }
