@@ -5,6 +5,10 @@ on:
   push:
     paths:
       - "telefonate-oggi.html"
+      - "f1-call-block.js"
+      - "territory-mobile.html"
+      - "daily-command-panel.js"
+      - "tests/call-routine-disabled.spec.js"
       - ".github/workflows/f1-telefonate-microzone-qa.yml"
 
 permissions:
