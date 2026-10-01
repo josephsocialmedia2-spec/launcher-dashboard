@@ -270,10 +270,10 @@ function renderPersonRelations(p){
  el.innerHTML=rel.filter(r=>{
    const key=r.pairId||[r.sourceId,r.targetId].sort().join(':')+':'+r.type;
    if(seen.has(key))return false;seen.add(key);return true;
- }).slice(0,20).map(r=>{
+ }).slice(0,30).map(r=>{
    const other=db.people.find(x=>x.id===(r.sourceId===p.id?r.targetId:r.sourceId));
    const relLabel=window.F1RelationshipTree?.labelForRelation?.(r,p.id)||periodLabel(r.periodId)||'RELAZIONE';
-   return '<button type="button" class="relation-pill" onclick="openPerson(\''+(other?other.id:'')+'\')">'+(other?esc(upperName([other.name,other.surname].join(' '))):'RELAZIONE')+' · '+esc(relLabel)+'</button>';
+   return '<div class="relation-link-row"><button type="button" class="relation-pill" title="'+esc(relLabel)+'">'+(other?esc(upperName([other.name,other.surname].join(' '))):'RELAZIONE')+' · '+esc(relLabel)+'</button><button type="button" class="relation-open" onclick="openPerson(\''+(other?other.id:'')+'\')">APRI</button><button type="button" class="relation-edit" onclick="F1RelationshipTree.editRelationByRow(\''+r.id+'\')">MODIFICA</button></div>';
  }).join('');
 }
 function renderChronology(){
