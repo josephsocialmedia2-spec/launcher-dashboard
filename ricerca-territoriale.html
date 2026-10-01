@@ -3,159 +3,252 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#090c09" />
-  <title>F1 Immobiliare — Centrale Operativa Territoriale</title>
+  <meta name="theme-color" content="#10281c" />
+  <title>F1 Immobiliare — Centrale Operativa</title>
+  <meta name="description" content="Centrale operativa F1 Immobiliare: priorità, territorio, clienti, agenda e formazione in un unico punto." />
   <script>document.documentElement.classList.add('f1-auth-pending')</script>
   <style>html.f1-auth-pending body{visibility:hidden}</style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="ricerca-territoriale.css?v=20260924-social-publisher1" />
-  <link rel="stylesheet" href="ricerca-territoriale-layout.css?v=20260919-layout-final3" />
-  <style id="f1AcademyCritical">
-    #f1Academy{display:block!important;width:min(100%,1380px)!important;margin:16px auto 0!important;padding:18px!important;background:linear-gradient(180deg,#fff 0%,#f7fbf8 100%)!important;border:1px solid #dce7e0!important;border-radius:12px!important;box-shadow:0 5px 18px rgba(20,54,38,.06)!important;color:#173a29!important;overflow:visible!important}
-    #f1Academy *{box-sizing:border-box!important}
-    #f1Academy .f1-academy-head{display:flex!important;align-items:flex-end!important;justify-content:space-between!important;gap:16px!important;margin:0 0 14px!important}
-    #f1Academy .f1-academy-kicker{display:block!important;margin:0 0 5px!important;color:#0a8a4d!important;font-size:10px!important;font-weight:900!important;letter-spacing:.12em!important;line-height:1.2!important}
-    #f1Academy h2{margin:0!important;color:#173a29!important;font-size:19px!important;line-height:1.2!important;font-weight:900!important}
-    #f1Academy h2 i{color:#0a8a4d!important;margin-right:7px!important}
-    #f1Academy .f1-academy-head p{margin:5px 0 0!important;color:#63736a!important;font-size:12px!important;line-height:1.45!important}
-    #f1Academy a{color:inherit!important;text-decoration:none!important}
-    #f1Academy .f1-academy-all{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;min-height:40px!important;padding:10px 13px!important;border:1px solid #bfd5c7!important;border-radius:9px!important;color:#0b7d48!important;background:#fff!important;font-size:10px!important;font-weight:900!important;white-space:nowrap!important}
-    #f1Academy .f1-academy-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;width:100%!important}
-    #f1Academy .f1-academy-tile{display:grid!important;grid-template-columns:42px minmax(0,1fr) 14px!important;align-items:center!important;gap:10px!important;min-height:82px!important;padding:12px!important;border:1px solid #dfe9e3!important;border-radius:11px!important;background:#fff!important;color:#173a29!important;text-decoration:none!important;overflow:hidden!important}
-    #f1Academy .f1-academy-tile.is-current{border-color:#71bb92!important;background:#f2fbf6!important}
-    #f1Academy .f1-academy-icon{width:42px!important;height:42px!important;display:grid!important;place-items:center!important;border-radius:10px!important;background:#eaf7ef!important;color:#078247!important;font-size:18px!important}
-    #f1Academy .f1-academy-copy{display:grid!important;gap:4px!important;min-width:0!important}
-    #f1Academy .f1-academy-copy strong{display:block!important;color:#173a29!important;font-size:12px!important;font-weight:900!important;line-height:1.2!important;white-space:normal!important;overflow-wrap:anywhere!important}
-    #f1Academy .f1-academy-copy small{display:block!important;color:#7d8a82!important;font-size:10px!important;line-height:1.3!important;white-space:normal!important;overflow-wrap:anywhere!important}
-    #f1Academy .f1-academy-arrow{color:#9aaba1!important;font-size:11px!important}
-    @media(max-width:1179px){#f1Academy .f1-academy-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
-    @media(max-width:700px){#f1Academy{padding:14px!important}#f1Academy .f1-academy-head{align-items:stretch!important;flex-direction:column!important}#f1Academy .f1-academy-all{width:100%!important}#f1Academy .f1-academy-grid{grid-template-columns:1fr!important}#f1Academy .f1-academy-tile{min-height:70px!important}}
-  </style>
+  <link rel="stylesheet" href="ricerca-territoriale.css?v=20261001-novice1" />
+  <link rel="stylesheet" href="ricerca-territoriale-layout.css?v=20261001-novice1" />
   <link rel="stylesheet" href="content-production-week.css?v=20260924-content-production-v2" />
   <link rel="stylesheet" href="dashboard-primary-accordions.css?v=20260924-primary-accordion1" />
-
-  <style id="f1NotizieLauncherStyles">
-    @keyframes f1NotiziePulse{
-      0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(25,207,91,.62),0 0 18px rgba(25,207,91,.22)}
-      50%{transform:scale(1.045);box-shadow:0 0 0 10px rgba(25,207,91,0),0 0 28px rgba(25,207,91,.48)}
-    }
-    .f1-notizie-pulse{
-      display:inline-flex;align-items:center;justify-content:center;gap:8px;
-      min-height:38px;padding:9px 16px;border:2px solid #83ffab;border-radius:10px;
-      background:linear-gradient(180deg,#20cf62 0%,#0e9f45 100%);
-      color:#fff!important;text-decoration:none!important;font-size:12px;font-weight:900;
-      letter-spacing:.08em;white-space:nowrap;
-      animation:f1NotiziePulse 1.15s ease-in-out infinite;
-      box-shadow:0 0 18px rgba(25,207,91,.28);
-    }
-    .f1-notizie-pulse:hover{background:linear-gradient(180deg,#29df70 0%,#12b550 100%);transform:translateY(-1px)}
-    .f1-notizie-pulse i{font-size:13px}
-    .side-item.f1-notizie-side{color:#8dffb1!important;font-weight:900}
-    .side-item.f1-notizie-side i{color:#29d96b!important}
-    @media(max-width:760px){
-      .f1-notizie-pulse{padding:8px 11px;font-size:10px}
-      .f1-notizie-pulse span{display:inline}
-    }
-  </style>
-\n  <link rel="stylesheet" href="f1-launcher-master.css?v=20260928a">\n  <script defer src="f1-launcher-master.js?v=20260928a"></script>\n</head>
+  <link rel="stylesheet" href="f1-launcher-master.css?v=20261001-novice1">
+  <link rel="stylesheet" href="f1-dashboard-novice.css?v=20261001-novice1">
+  <script defer src="f1-launcher-master.js?v=20261001-novice1"></script>
+</head>
 <body>
   <header class="topbar">
-    <a class="brand" href="ricerca-territoriale.html" aria-label="Dashboard F1">
-      <div class="brand-mark"><i class="fa-solid fa-house-chimney"></i></div>
+    <a class="brand" href="ricerca-territoriale.html" aria-label="Dashboard F1 Immobiliare">
+      <div class="brand-mark"><i class="fa-solid fa-house-chimney" aria-hidden="true"></i></div>
       <div class="brand-name">F1 <span>IMMOBILIARE</span></div>
       <div class="brand-sep"></div>
-      <nav class="micro-nav"><span>TERRITORIO</span><span>|</span><span>PERSONE</span><span>|</span><span>VALORE</span></nav>
+      <nav class="micro-nav" aria-label="Valori F1"><span>TERRITORIO</span><span>|</span><span>PERSONE</span><span>|</span><span>VALORE</span></nav>
     </a>
     <div class="topbar-right">
-      <a id="f1NotizieLauncher" class="f1-notizie-pulse" href="albero-fonti-notizie.html" title="Apri Albero delle Fonti di Notizie"><i class="fa-solid fa-bullhorn"></i><span>NOTIZIE</span></a>
-      <div class="top-item"><i class="fa-regular fa-calendar-days"></i><span id="todayDate">—</span></div>
-      <div class="top-item"><i class="fa-regular fa-clock"></i><span id="topClock">--:--</span></div>
-      <div id="cloudPill" class="status-pill"><span class="live-dot"></span> VERIFICA</div>
+      <div class="top-item"><i class="fa-regular fa-calendar-days" aria-hidden="true"></i><span id="todayDate">—</span></div>
+      <div class="top-item"><i class="fa-regular fa-clock" aria-hidden="true"></i><span id="topClock">--:--</span></div>
+      <div id="cloudPill" class="status-pill" role="status" aria-live="polite"><span class="live-dot"></span> CONNESSIONE IN VERIFICA</div>
       <div class="user-sep"></div>
       <div id="userBadge" class="user-badge">F1</div>
-      <div class="user-name">Funzionario: <strong id="staffName">F1</strong></div>
-      <i class="fa-solid fa-chevron-down user-chevron" aria-hidden="true"></i>
+      <div class="user-name">Utente: <strong id="staffName">F1</strong></div>
     </div>
   </header>
 
   <aside class="sidebar" aria-label="Navigazione principale">
-    <a class="side-item active" href="ricerca-territoriale.html"><i class="fa-solid fa-table-columns"></i><span>Dashboard</span></a>
-    <a class="side-item active-secondary" href="ricerca-territoriale.html#territorio"><i class="fa-solid fa-location-dot"></i><span>Ricerca territoriale</span></a>
-    <a class="side-item f1-notizie-side" href="albero-fonti-notizie.html"><i class="fa-solid fa-bullhorn"></i><span>Notizie</span></a>
-    <a class="side-item" href="crm.html#immobili"><i class="fa-solid fa-house"></i><span>Immobili</span></a>
-    <a class="side-item" href="crm.html#contatti"><i class="fa-solid fa-user-group"></i><span>Contatti</span></a>
-    <a class="side-item" href="telefonate-oggi.html"><i class="fa-solid fa-phone"></i><span>Telefonate 100</span></a>
-    <a class="side-item" href="crm.html"><i class="fa-solid fa-database"></i><span>CRM</span></a>\n    <a class="side-item" href="f1-email-radar.html"><i class="fa-solid fa-at"></i><span>Email Radar</span></a>
-    <a class="side-item" href="oggi.html#tasks"><i class="fa-regular fa-calendar"></i><span>Agenda</span></a>
-    <a class="side-item" href="documenti-vendita.html"><i class="fa-regular fa-file-lines"></i><span>Documenti</span></a>
-    <a class="side-item" href="centrale-risultati.html"><i class="fa-solid fa-chart-column"></i><span>Report</span></a>
-    <a class="side-item" href="accessi-ufficio.html"><i class="fa-solid fa-key"></i><span>Accessi ufficio</span></a>
-    <a class="side-item" href="setup-cloud.html?return=ricerca-territoriale.html"><i class="fa-solid fa-gear"></i><span>Impostazioni</span></a>
+    <span class="nav-group-label">OGGI</span>
+    <a class="side-item active" href="ricerca-territoriale.html" aria-current="page"><i class="fa-solid fa-table-columns" aria-hidden="true"></i><span>Dashboard</span></a>
+    <a class="side-item" href="oggi.html#tasks"><i class="fa-regular fa-calendar" aria-hidden="true"></i><span>Agenda</span></a>
+    <a class="side-item" href="telefonate-oggi.html"><i class="fa-solid fa-phone" aria-hidden="true"></i><span>Telefonate</span></a>
+
+    <span class="nav-group-label">TERRITORIO</span>
+    <a class="side-item active-secondary" href="ricerca-territoriale.html#territorio"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Ricerca territoriale</span></a>
+    <a class="side-item" href="albero-fonti-notizie.html"><i class="fa-solid fa-bullhorn" aria-hidden="true"></i><span>Notizie</span></a>
+
+    <span class="nav-group-label">CLIENTI E IMMOBILI</span>
+    <a class="side-item" href="crm.html#contatti"><i class="fa-solid fa-user-group" aria-hidden="true"></i><span>Contatti</span></a>
+    <a class="side-item" href="crm.html#immobili"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Immobili</span></a>
+    <a class="side-item" href="crm.html"><i class="fa-solid fa-database" aria-hidden="true"></i><span>CRM</span></a>
+    <a class="side-item" href="f1-email-radar.html"><i class="fa-solid fa-at" aria-hidden="true"></i><span>Email Radar</span></a>
+
+    <span class="nav-group-label">LAVORO</span>
+    <a class="side-item" href="documenti-vendita.html"><i class="fa-regular fa-file-lines" aria-hidden="true"></i><span>Documenti</span></a>
+    <a class="side-item" href="centrale-risultati.html"><i class="fa-solid fa-chart-column" aria-hidden="true"></i><span>Report</span></a>
+
+    <span class="nav-group-label">FORMAZIONE</span>
+    <a class="side-item" href="#f1Academy"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i><span>F1 Academy</span></a>
+
+    <span class="nav-group-label">SISTEMA</span>
+    <a class="side-item" href="accessi-ufficio.html"><i class="fa-solid fa-key" aria-hidden="true"></i><span>Accessi ufficio</span></a>
+    <a class="side-item" href="setup-cloud.html?return=ricerca-territoriale.html"><i class="fa-solid fa-gear" aria-hidden="true"></i><span>Impostazioni</span></a>
+
     <div class="sidebar-footer">
       <div class="side-photo"></div>
-      <div class="side-claim">PIÙ VALORE<br>AL TUO TERRITORIO</div>
+      <div class="side-claim">PERSONE · CASE · TERRITORIO</div>
     </div>
   </aside>
 
   <main class="app">
-    <section class="steps" aria-label="Sequenza operativa">
-      <div class="step"><div class="num">1</div><div><small>ORA</small><strong id="stepClock">--:--</strong><em id="operationState">Sei operativo</em></div></div>
-      <div class="arrow"><i class="fa-solid fa-chevron-right"></i></div>
-      <div class="step"><div class="num">2</div><div><small>ATTIVITÀ CORRENTE</small><strong>Ricerca territoriale</strong><em>Presidio capillare della zona</em></div></div>
-      <div class="arrow"><i class="fa-solid fa-chevron-right"></i></div>
-      <div class="step"><div class="num">3</div><div><small>TEMPO DEL BLOCCO</small><strong id="remainingTop">--:--</strong><em id="remainingCaption">rimanenti</em></div></div>
-      <div class="arrow"><i class="fa-solid fa-chevron-right"></i></div>
-      <div class="step"><div class="num">4</div><div><small>COSA DEVE FARE ADESSO</small><strong id="stepNow">Caricamento territorio…</strong><em>Prosegui la ricerca</em></div></div>
-      <div class="arrow"><i class="fa-solid fa-chevron-right"></i></div>
-      <div class="step muted"><div class="num">5</div><div><small>ATTIVITÀ SUCCESSIVA</small><strong id="stepNext">—</strong><em>Dopo questa</em></div></div>
+    <section class="f1-home-heading" aria-labelledby="f1HomeTitle">
+      <div>
+        <small>CENTRALE OPERATIVA F1</small>
+        <h1 id="f1HomeTitle">Parti da qui. Una cosa alla volta.</h1>
+        <p>La dashboard mette prima ciò che richiede un’azione e lascia gli strumenti avanzati in secondo piano.</p>
+      </div>
+      <div class="f1-home-help">
+        <strong>Se non sai dove iniziare</strong>
+        Segui il riquadro “Cosa devi fare adesso”. Il sistema ti porta poi al passo successivo.
+      </div>
     </section>
 
-    <section class="grid territory-grid" id="territorio">
-      <div class="card territory-card"><h2><span class="title-icon"><i class="fa-regular fa-map"></i></span> RICERCA TERRITORIALE</h2><div class="territory-inner"><div class="facts"><div><span>Comune</span><strong id="factComune">—</strong></div><div><span>Zona</span><strong id="factZona">—</strong></div><div><span>Strada</span><strong id="factVia">—</strong></div></div><div class="civics"><p>Civici completati</p><div class="civic-progress"><span id="civicStart">—</span><div class="progress civic-track"><div id="civicProgress" class="progress-fill civic-fill"></div></div><span id="civicLast">—</span></div><div class="civic-badges"><div><i class="fa-solid fa-circle-check"></i> <strong>ULTIMO CIVICO:</strong> <span id="lastCivic">—</span></div><div><i class="fa-regular fa-clock"></i> <strong>PROSSIMO CIVICO:</strong> <span id="nextCivic">—</span></div></div></div></div></div><div class="territory-spacer"></div>
+    <section class="f1-priority-grid" aria-label="Priorità operative">
+      <article class="card current-card f1-now-card">
+        <div class="f1-now-head">
+          <div class="f1-now-kicker"><i class="fa-solid fa-bolt" aria-hidden="true"></i> COSA DEVI FARE ADESSO</div>
+          <span id="territoryStatus" class="badge"><span class="live-dot"></span> CARICAMENTO</span>
+        </div>
+        <div class="f1-now-content">
+          <h2 id="actionNowTitle">Caricamento della prossima attività…</h2>
+          <p id="actionNowSub">Sto leggendo lo stato operativo F1 per indicarti il passo corretto.</p>
+          <div id="crumbs" class="crumbs">Recupero territorio e assegnazioni…</div>
+        </div>
+        <a class="action-button" id="continueSearch" href="ricerca-territoriale.html">
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i> APRI ATTIVITÀ
+        </a>
+        <div class="f1-next-note">
+          <i class="fa-regular fa-circle-right" aria-hidden="true"></i>
+          <div><small>DOPO QUESTA</small><strong id="stepNext">F1 calcolerà il passo successivo.</strong></div>
+        </div>
+      </article>
+
+      <div class="right-col">
+        <article class="card f1-today-card">
+          <div class="f1-section-title">
+            <h2><i class="fa-regular fa-calendar-days" aria-hidden="true"></i> Oggi</h2>
+            <span id="todayLabel">—</span>
+          </div>
+          <div class="f1-today-kpis" aria-label="Dati operativi di oggi">
+            <div class="f1-kpi"><strong id="kpiCivics">—</strong><small>CIVICI</small></div>
+            <div class="f1-kpi"><strong id="kpiContacts">—</strong><small>CONTATTI</small></div>
+            <div class="f1-kpi"><strong id="kpiNews">—</strong><small>NOTIZIE</small></div>
+            <div class="f1-kpi"><strong id="kpiActivities">—</strong><small>ATTIVITÀ</small></div>
+            <div class="f1-kpi wide"><small>CONDOMINI</small><strong id="kpiCondos">—</strong></div>
+          </div>
+        </article>
+
+        <article class="card f1-attention-card">
+          <div class="section-head">
+            <h2 id="pendingTitle"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Verifica CRM</h2>
+            <a href="crm.html#territory-news">Apri CRM <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+          </div>
+          <div id="pendingBody" class="alert-row">
+            <div class="doc-circle"><i class="fa-regular fa-file-lines" aria-hidden="true"></i></div>
+            <div class="alert-copy"><strong>Controllo dati in corso</strong><span>Qui compariranno solo gli elementi che richiedono attenzione.</span></div>
+            <a class="outline-link" href="crm.html">APRI CRM</a>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <section class="f1-academy-launcher" id="f1Academy">
+    <section class="card f1-quick-actions" aria-labelledby="quickActionsTitle">
+      <h2 id="quickActionsTitle">Azioni rapide</h2>
+      <p>Le operazioni più frequenti, con nomi espliciti.</p>
+      <div class="f1-quick-grid">
+        <a class="f1-quick-link" href="ricerca-territoriale.html#territorio"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Apri territorio</span><small>Comune, zona e civici</small></a>
+        <a class="f1-quick-link" href="telefonate-oggi.html"><i class="fa-solid fa-phone" aria-hidden="true"></i><span>Fai telefonate</span><small>Coda operativa</small></a>
+        <a class="f1-quick-link" href="crm.html#contatti"><i class="fa-solid fa-user-group" aria-hidden="true"></i><span>Trova contatto</span><small>Persone e follow-up</small></a>
+        <a class="f1-quick-link" href="crm.html#immobili"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Trova immobile</span><small>Schede e opportunità</small></a>
+        <a class="f1-quick-link" href="oggi.html#tasks"><i class="fa-regular fa-calendar-check" aria-hidden="true"></i><span>Apri agenda</span><small>Attività e scadenze</small></a>
+        <a class="f1-quick-link" href="documenti-vendita.html"><i class="fa-regular fa-folder-open" aria-hidden="true"></i><span>Apri documenti</span><small>Checklist vendita</small></a>
+      </div>
+    </section>
+
+    <section class="steps" aria-label="Dettaglio sequenza operativa">
+      <div class="step"><div class="num">1</div><div><small>ORA</small><strong id="stepClock">--:--</strong><em id="operationState">Verifica stato</em></div></div>
+      <div class="arrow"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></div>
+      <div class="step"><div class="num">2</div><div><small>ATTIVITÀ CORRENTE</small><strong>Ricerca territoriale</strong><em>Il motore aggiorna questa voce</em></div></div>
+      <div class="arrow"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></div>
+      <div class="step"><div class="num">3</div><div><small>STATO BLOCCO</small><strong id="remainingTop">—</strong><em id="remainingCaption">programma centrale</em></div></div>
+      <div class="arrow"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></div>
+      <div class="step"><div class="num">4</div><div><small>ADESSO</small><strong id="stepNow">Caricamento…</strong><em>Segui l’azione indicata sopra</em></div></div>
+      <div class="arrow"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></div>
+      <div class="step muted"><div class="num">5</div><div><small>POI</small><strong>Passo successivo</strong><em>Viene aggiornato dopo l’esito</em></div></div>
+    </section>
+
+    <section class="grid territory-grid" id="territorio" aria-labelledby="territoryTitle">
+      <div class="card territory-card">
+        <h2 id="territoryTitle"><span class="title-icon"><i class="fa-regular fa-map" aria-hidden="true"></i></span> Ricerca territoriale</h2>
+        <div class="territory-inner">
+          <div class="facts">
+            <div><span>Comune</span><strong id="factComune">—</strong></div>
+            <div><span>Zona</span><strong id="factZona">—</strong></div>
+            <div><span>Strada</span><strong id="factVia">—</strong></div>
+          </div>
+          <div class="civics">
+            <p>Civici completati</p>
+            <div class="civic-progress">
+              <span id="civicStart">—</span>
+              <div class="progress civic-track" aria-label="Avanzamento civici"><div id="civicProgress" class="progress-fill civic-fill"></div></div>
+              <span id="civicLast">—</span>
+            </div>
+            <div class="civic-badges">
+              <div><i class="fa-solid fa-circle-check" aria-hidden="true"></i> <strong>ULTIMO:</strong> <span id="lastCivic">—</span></div>
+              <div><i class="fa-regular fa-clock" aria-hidden="true"></i> <strong>PROSSIMO:</strong> <span id="nextCivic">—</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="territory-spacer" aria-live="polite"></div>
+    </section>
+
+    <section class="grid bottom-grid" aria-label="Passo successivo e CRM">
+      <a class="card next-card link-card" id="nextActivity" href="ricerca-territoriale.html">
+        <div>
+          <h2><span class="title-icon"><i class="fa-solid fa-forward" aria-hidden="true"></i></span> Prossima attività</h2>
+          <h3 id="nextActivityTitle">In attesa dello stato F1</h3>
+        </div>
+        <div class="after"><p id="nextActivitySub">Il sistema indicherà il passo successivo dopo la registrazione dell’esito.</p></div>
+      </a>
+      <div class="card crm-open">
+        <a class="crm-button" href="crm.html"><i class="fa-solid fa-database" aria-hidden="true"></i> APRI CRM</a>
+        <p>Contatti, immobili e aggiornamento delle opportunità.</p>
+      </div>
+    </section>
+
+    <section class="f1-academy-launcher" id="f1Academy" aria-labelledby="academyTitle">
       <div class="f1-academy-head">
         <div>
-          <span class="f1-academy-kicker">F1 ACADEMY · ACCESSO RAPIDO</span>
-          <h2><i class="fa-solid fa-graduation-cap"></i> FORMAZIONE ACQUISIZIONE</h2>
-          <p>Un unico punto di accesso alla dashboard e all'allenamento dei copioni.</p>
+          <span class="f1-academy-kicker">FORMAZIONE · QUANDO TI SERVE</span>
+          <h2 id="academyTitle"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> F1 Academy</h2>
+          <p>Allenamento e copioni restano disponibili senza distrarre dal lavoro operativo.</p>
         </div>
-        <a class="f1-academy-all" href="mike-ferry-script-trainer/">APRI F1 SCRIPT TRAINER <i class="fa-solid fa-arrow-right"></i></a>
+        <a class="f1-academy-all" href="mike-ferry-script-trainer/">APRI ACADEMY <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
       </div>
       <div class="f1-academy-grid">
-        <a class="f1-academy-tile is-current" href="ricerca-territoriale.html">
-          <span class="f1-academy-icon"><i class="fa-solid fa-table-columns"></i></span>
-          <span class="f1-academy-copy"><strong>DASHBOARD F1</strong><small>Torna alla centrale operativa</small></span>
-          <i class="fa-solid fa-arrow-right f1-academy-arrow"></i>
-        </a>
         <a class="f1-academy-tile" href="mike-ferry-script-trainer/acquisition.html">
-          <span class="f1-academy-icon"><i class="fa-solid fa-route"></i></span>
-          <span class="f1-academy-copy"><strong>IMPARA L'ACQUISIZIONE</strong><small>Dalla prequalifica alla firma</small></span>
-          <i class="fa-solid fa-arrow-right f1-academy-arrow"></i>
+          <span class="f1-academy-icon"><i class="fa-solid fa-route" aria-hidden="true"></i></span>
+          <span class="f1-academy-copy"><strong>Impara l’acquisizione</strong><small>Dalla prequalifica alla firma</small></span>
+          <i class="fa-solid fa-arrow-right f1-academy-arrow" aria-hidden="true"></i>
         </a>
         <a class="f1-academy-tile" href="mike-ferry-script-trainer/simulator.html">
-          <span class="f1-academy-icon"><i class="fa-solid fa-microphone-lines"></i></span>
-          <span class="f1-academy-copy"><strong>SIMULATORE ROLE PLAY</strong><small>Cliente parla, tu rispondi</small></span>
-          <i class="fa-solid fa-arrow-right f1-academy-arrow"></i>
+          <span class="f1-academy-icon"><i class="fa-solid fa-microphone-lines" aria-hidden="true"></i></span>
+          <span class="f1-academy-copy"><strong>Simulatore Role Play</strong><small>Cliente parla, tu rispondi</small></span>
+          <i class="fa-solid fa-arrow-right f1-academy-arrow" aria-hidden="true"></i>
         </a>
         <a class="f1-academy-tile" href="mike-ferry-script-trainer/audio.html">
-          <span class="f1-academy-icon"><i class="fa-solid fa-headphones"></i></span>
-          <span class="f1-academy-copy"><strong>SOLO AUDIO</strong><small>Ripasso completo in cuffia</small></span>
-          <i class="fa-solid fa-arrow-right f1-academy-arrow"></i>
+          <span class="f1-academy-icon"><i class="fa-solid fa-headphones" aria-hidden="true"></i></span>
+          <span class="f1-academy-copy"><strong>Solo audio</strong><small>Ripasso completo in cuffia</small></span>
+          <i class="fa-solid fa-arrow-right f1-academy-arrow" aria-hidden="true"></i>
+        </a>
+        <a class="f1-academy-tile" href="mike-ferry-script-trainer/">
+          <span class="f1-academy-icon"><i class="fa-solid fa-book-open" aria-hidden="true"></i></span>
+          <span class="f1-academy-copy"><strong>Tutta la formazione</strong><small>Apri il trainer completo</small></span>
+          <i class="fa-solid fa-arrow-right f1-academy-arrow" aria-hidden="true"></i>
         </a>
       </div>
     </section>
 
-    <footer class="footer"><div><strong><i class="fa-solid fa-house-chimney"></i> F1</strong> IMMOBILIARE</div><div>IL TERRITORIO CREA OPPORTUNITÀ, NOI LE TRASFORMIAMO IN VALORE.</div><div>Persone prima di tutto.</div></footer>
+    <div class="f1-runtime-compat" aria-hidden="true">
+      <span id="remainingMain">—</span>
+      <span id="blockStartLabel">—</span>
+      <span id="blockEndLabel">—</span>
+      <span id="timeProgress"></span>
+    </div>
+
+    <footer class="footer">
+      <div><strong><i class="fa-solid fa-house-chimney" aria-hidden="true"></i> F1</strong> IMMOBILIARE</div>
+      <div>Un’unica centrale per capire cosa fare e dove andare.</div>
+      <div>Persone prima di tutto.</div>
+    </footer>
   </main>
 
-  <div id="toast" class="toast"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
   <script src="supabase-config.js?v=20260916-auth2"></script>
-  <script src="supabase-sync.js?v=20260919-layout-final1"></script>
+  <script src="supabase-sync.js?v=20260925-auth-unified1"></script>
   <script src="f1-dashboard-auth-guard.js?v=20260925-owner-access1"></script>
   <script src="f1-secret-db-access.js?v=20260918-secret-db1"></script>
   <script src="content-production-week.js?v=20260924-content-production-v2"></script>
