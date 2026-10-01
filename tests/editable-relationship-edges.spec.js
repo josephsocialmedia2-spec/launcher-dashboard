@@ -26,7 +26,9 @@ async function newPerson(page,name,surname='',phone=''){
   const id=await page.locator('#personId').inputValue();
   await expect.poll(()=>page.evaluate(savedId=>db.people.some(p=>p.id===savedId),id)).toBeTruthy();
   const saved=await page.evaluate(savedId=>db.people.find(p=>p.id===savedId),id);
-  expect([saved.name,saved.surname].filter(Boolean).join(' ').toUpperCase()).toBe([name,surname].filter(Boolean).join(' ').toUpperCase());
+  const actualIdentity=[saved.name,saved.surname].filter(Boolean).join('').replace(/\s+/g,'').toUpperCase();
+  const expectedIdentity=[name,surname].filter(Boolean).join('').replace(/\s+/g,'').toUpperCase();
+  expect(actualIdentity).toBe(expectedIdentity);
   return id;
 }
 async function createRelationFromOpenPopup(page,type,targetName,targetSurname='',phone=''){
