@@ -37,6 +37,7 @@ jobs:
           grep -Fq 'id="relationshipEdgeLabels"' albero-fonti-notizie.html
           grep -Fq 'id="relationshipNodes"' albero-fonti-notizie.html
           grep -Fq 'id="edgeEditorModal"' albero-fonti-notizie.html
+          grep -Fq 'MAPPA RELAZIONALE' albero-fonti-notizie.html
           grep -Fq 'graphPositions:db.graphPositions||{}' f1-tree-cloud.js
           grep -Fq 'data-relation-id' f1-relational-tree.js
           grep -Fq 'rel-node-phone' f1-relational-tree.js
@@ -58,7 +59,7 @@ jobs:
           base='https://josephsocialmedia2-spec.github.io/launcher-dashboard'
           ok=0
           for i in $(seq 1 60); do
-            if curl -fsSL --max-time 20 "$base/albero-fonti-notizie.html?qa=$RANDOM" -o /tmp/tree               && grep -Fq 'id="relationshipEdges"' /tmp/tree               && grep -Fq 'id="edgeEditorModal"' /tmp/tree               && grep -Fq 'f1-relational-tree.js?v=20261001-edges1' /tmp/tree; then
+            if curl -fsSL --max-time 20 "$base/albero-fonti-notizie.html?qa=$RANDOM" -o /tmp/tree               && grep -Fq 'id="relationshipEdges"' /tmp/tree               && grep -Fq 'id="edgeEditorModal"' /tmp/tree               && grep -Fq 'f1-relational-tree.js?v=20261001-mindmap1' /tmp/tree; then
               ok=1
               break
             fi
