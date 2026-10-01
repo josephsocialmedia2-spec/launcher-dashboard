@@ -326,3 +326,11 @@ body.f1-page-ricerca-territoriale .footer{
   .f1-today-kpis{grid-template-columns:1fr}
   .f1-kpi.wide{grid-column:auto}
 }
+
+
+/* The global brand layer also injects a floating founder badge and legacy quick dock.
+   On the novice home both duplicate existing navigation and add visual noise. */
+body.f1-page-ricerca-territoriale .f1-luxury-dock,
+body.f1-page-ricerca-territoriale .f1-founders-mini{
+  display:none!important;
+}
