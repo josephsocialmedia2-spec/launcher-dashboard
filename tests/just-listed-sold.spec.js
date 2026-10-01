@@ -2,7 +2,7 @@ const {test,expect}=require('@playwright/test');
 const BASE='https://nqnmlsmeiynxbdojeyjt.supabase.co',AUTH=BASE+'/auth/v1/',REST=BASE+'/rest/v1/';
 const uuid=()=>`00000000-0000-4000-8000-${Math.random().toString().slice(2,14).padEnd(12,'0')}`;
 const isoAgo=n=>new Date(Date.now()-n*86400000).toISOString(),datePlus=n=>new Date(Date.now()+n*86400000).toISOString().slice(0,10);
-function lead(id,nome,cognome,phone,via,immobile=''){return{lead_id:id,pillar:2,source_type:'COI',source:'QA',source_url:'',created_at:isoAgo(40),first_seen:isoAgo(40),last_seen:isoAgo(1),nome,cognome,azienda:'',telefono:phone,email:'',comune:'Villar Dora',via,civico:'',zona:'Centro',immobile_id:immobile,competitor_agency:'',lead_reason:'QA TERRITORIO',lead_score:70,confidence:'HIGH',status:'DA_CONTATTARE',last_contact:null,next_action:'',next_action_date:null,assigned_to:'',notes:'',privacy_basis:'QA',do_not_contact:false,rpo_status:'NON_APPLICABILE',created_by:'qa',updated_at:isoAgo(1),deleted:false}}
+function lead(id,nome,cognome,phone,via,immobile=''){return{lead_id:id,pillar:2,source_type:'COI',source:'QA',source_url:'',created_at:isoAgo(40),first_seen:isoAgo(40),last_seen:isoAgo(1),nome,cognome,azienda:'',telefono:phone,email:'',comune:'Villar Dora',via,civico:'',zona:'Centro',immobile_id:immobile,competitor_agency:'',lead_reason:'QA TERRITORIO',lead_score:70,confidence:'HIGH',status:'DA_CONTATTARE',last_contact:null,next_action:'',next_action_date:null,assigned_to:'',notes:'',privacy_basis:'QA',do_not_contact:false,rpo_status:'VERIFICATO_OK',created_by:'qa',updated_at:isoAgo(1),deleted:false}}
 function idField(t){return({leads:'lead_id',tasks:'task_id',interactions:'interaction_id',campaigns:'campaign_id',properties:'property_id',events:'event_id',referrals:'referral_id'}[t]||t+'_id')}
 async function backend(context,db){
   await context.addInitScript(()=>sessionStorage.setItem('f1SupabaseSession',JSON.stringify({access_token:'qa-access',refresh_token:'qa-refresh',expires_at:Date.now()+3600000,user:{id:'00000000-0000-4000-8000-000000000001'}})));
@@ -18,8 +18,8 @@ test('Dashboard -> F1-004/F1-005 -> role-play -> real property -> call outcome -
   };
   const context=await browser.newContext();await backend(context,db);const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(String(e)));
 
-  // Dashboard: il motore settimana 2 è visibile ma non inventa campagne immobiliari.
-  await page.goto('/index.html');await expect(page.locator('#jlsWidget')).toContainText('JUST LISTED / JUST SOLD');await expect(page.locator('#jlsStage')).toContainText('NESSUN IMMOBILE REALE ATTIVO');await expect(page.locator('#jlsProgressText')).toContainText('0 / 10');
+  // Modulo JLS: il motore settimana 2 è disponibile senza alterare l'entrypoint F1 canonico.
+  await page.goto('/just-listed-sold.html');await expect(page.getByRole('heading',{name:'JUST LISTED / JUST SOLD'})).toBeVisible();await expect(page.locator('#campaignList')).toContainText('Nessuna campagna reale attiva');await expect(page.locator('#progressText')).toContainText('0 / 10');
 
   // Archivio: gli script ufficiali esistono e hanno azioni role-play senza duplicazione.
   await page.goto('/script.html');await expect(page.locator('#f1-004')).toContainText('Immobile appena acquisito');await expect(page.locator('#f1-005')).toContainText('Immobile appena venduto');await expect(page.locator('#f1-004')).toContainText('ROLE-PLAY JUST LISTED');await expect(page.locator('#f1-005')).toContainText('ROLE-PLAY JUST SOLD');
