@@ -315,6 +315,7 @@ function renderNodes(){
       '<button type="button" class="rel-node-menu" aria-label="Menu '+esc(name)+'" onclick="event.stopPropagation();F1RelationshipTree.toggleNodeMenu(\''+jsArg(p.id)+'\')">⋯</button>'+
       '<div class="rel-node-menu-panel '+(openMenuId===p.id?'show':'')+'" onclick="event.stopPropagation()">'+
         '<button type="button" onclick="F1RelationshipTree.openPerson(\''+jsArg(p.id)+'\')">APRI SCHEDA</button>'+
+        '<button type="button" onclick="F1RelationshipTree.openPicker(\''+jsArg(p.id)+'\')">+ PERSONA COLLEGATA</button>'+
         '<button type="button" onclick="F1RelationshipTree.center(\''+jsArg(p.id)+'\')">CENTRA QUI</button>'+
         '<button type="button" onclick="F1RelationshipTree.togglePin(\''+jsArg(p.id)+'\')">'+(pos.pinned?'📌 SBLOCCA POSIZIONE':'📌 FISSA POSIZIONE')+'</button>'+
         '<button type="button" onclick="F1RelationshipTree.assignGroupPrompt(\''+jsArg(p.id)+'\')">SPOSTA IN GRUPPO</button>'+
@@ -452,10 +453,17 @@ function assignGroup(id,groupId){
 function assignGroupPrompt(id){
   const list=groups().map(g=>g.name).join(', ');
   const value=String(prompt('Sposta in gruppo. Scrivi il nome del gruppo oppure lascia vuoto per rimuoverlo.'+(list?'\nGruppi: '+list:''))||'').trim();
-  if(!value){assignGroup(id,null);return}
+  const ids=selectedIds.has(id)&&selectedIds.size>1?[...selectedIds]:[id];
+  if(!value){
+    ids.forEach(x=>{const p=positions()[x];if(p){p.groupId=null;p.manual=true}});
+    openMenuId='';persistGraph();render();return;
+  }
   let g=groups().find(x=>String(x.name||'').toLocaleUpperCase('it-IT')===value.toLocaleUpperCase('it-IT'));
   if(!g){const gid=createGroup(value);g=groupById(gid)}
-  if(g)assignGroup(id,g.id);
+  if(g){
+    ids.forEach(x=>{const p=positions()[x];if(p){p.groupId=g.id;p.manual=true}});
+    openMenuId='';persistGraph();render();
+  }
 }
 function toggleGroupCollapse(id){const g=groupById(id);if(!g)return;g.collapsed=!g.collapsed;persistGraph();render()}
 function canvasPoint(clientX,clientY){
@@ -577,7 +585,9 @@ function nodeUp(){
       positions()[id]={...polishDrop(id,current),manual:true,pinned:!!current.pinned,groupId:current.groupId||null};
       const node=document.querySelector('[data-person-id="'+CSS.escape(id)+'"]');if(node){node.style.left=positions()[id].x+'px';node.style.top=positions()[id].y+'px'}
     });
-    if(nodeDrag.overGroupId&&positions()[nodeDrag.id])positions()[nodeDrag.id].groupId=nodeDrag.overGroupId;
+    if(nodeDrag.overGroupId){
+      nodeDrag.ids.forEach(id=>{const p=positions()[id];if(p)p.groupId=nodeDrag.overGroupId});
+    }
     lastMove={positions:nodeDrag.before,groups:[]};suppressClickUntil=Date.now()+120;
     render();persistGraph();showMoveUndo();
   }
