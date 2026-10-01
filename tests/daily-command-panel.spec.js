@@ -7,13 +7,13 @@ test.describe('F1 daily command + IA004 workspace + Guida IA',()=>{
     const context=await browser.newContext({timezoneId:'Europe/Rome',viewport:{width:1440,height:1000}});const page=await context.newPage();
     await openAt(page,'2026-09-13T16:45:00+02:00');
     await expect(page.locator('[data-task-id="contact-pm"]')).toHaveClass(/current/);
-    await expect(page.locator('#f1AiTitle')).toContainText('CONTATTO');
+    await expect(page.locator('#f1AiTitle')).toContainText('PRIORITÀ POMERIDIANE');
     for(const id of ['#f1AiWhere','#f1AiWho','#f1AiZone','#f1AiExecute','#f1AiRegister','#f1AiObjective','#f1AiDuration','#f1AiCompletion','#f1AiNext'])await expect(page.locator(id)).not.toHaveText('—');
     await page.evaluate(()=>F1DailyCommand.startTask('contact-pm'));
     expect(await page.evaluate(()=>F1DailyCommand.loadState().tasks['contact-pm'].status)).toBe('running');
     await page.clock.fastForward('00:00:05');
     await page.locator('#f1AiRecalc').click();
-    await expect(page.locator('#f1AiTitle')).toContainText('CONTATTO');
+    await expect(page.locator('#f1AiTitle')).toContainText('PRIORITÀ POMERIDIANE');
     await page.locator('#f1AiDone').click();
     await expect.poll(()=>page.evaluate(()=>F1DailyCommand.loadState().tasks['contact-pm'].status)).toBe('completed');
     await expect.poll(()=>page.locator('#f1AiTitle').innerText()).toContain('FOLLOW-UP POMERIDIANO');
