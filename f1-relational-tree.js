@@ -152,6 +152,18 @@ function renderCard(p,relLabel=''){
       '<button class="add" type="button" onclick="event.stopPropagation();F1RelationshipTree.openPicker(\''+jsArg(p.id)+'\')">+ PERSONA</button>'+
     '</div>'+extraHtml+'</div>';
 }
+function markHiddenBranch(id,visited){
+  if(visited.has(id))return;
+  visited.add(id);
+  const spouses=spouseIds(id);
+  spouses.forEach(s=>visited.add(s));
+  const group=[id,...spouses];
+  for(const gid of group){
+    for(const child of structuralChildren(gid)){
+      if(!group.includes(child.id))markHiddenBranch(child.id,visited);
+    }
+  }
+}
 function renderBranch(id,visited,parentId=''){
   if(visited.has(id))return '';
   const p=person(id);if(!p)return '';
@@ -172,6 +184,7 @@ function renderBranch(id,visited,parentId=''){
   }
   const children=[...childMap.values()].filter(x=>!visited.has(x.p.id));
   const closed=collapsed.has(id);
+  if(closed)children.forEach(x=>markHiddenBranch(x.p.id,visited));
   const childHtml=(!closed&&children.length)?'<ul>'+children.map(x=>renderBranch(x.p.id,visited,x.parentId)).join('')+'</ul>':'';
   return '<li class="rel-tree-branch '+(closed?'collapsed':'')+'">'+couple+childHtml+'</li>';
 }
