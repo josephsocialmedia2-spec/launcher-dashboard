@@ -50,6 +50,17 @@ button{cursor:pointer}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:80;padding:20px}.modal.open{display:flex}.modal-card{width:min(760px,96vw);max-height:90vh;overflow:auto;background:#13212d;border:1px solid #355064;border-radius:16px;box-shadow:var(--shadow)}.modal-head{padding:16px;border-bottom:1px solid #304657;display:flex;justify-content:space-between;gap:10px;align-items:center}.modal-body{padding:16px}.modal-head h2{font-size:17px;margin:0}.question-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.question-card{background:#1a2b38;border:1px solid #31495b;border-radius:12px;padding:12px}.question-card h4{margin:0 0 7px;font-size:12px}.question-card p{font-size:11px;color:var(--muted);margin:0 0 8px}.question-card button{border:0;background:var(--accent);border-radius:8px;padding:7px 9px;font-weight:700}
 .guide{margin-top:14px}.guide details{background:#152631;border:1px solid #2c4456;border-radius:11px;margin-bottom:8px;padding:10px}.guide summary{cursor:pointer;font-weight:700;font-size:12px}.guide p,.guide li{font-size:11px;color:#c2cdd5;line-height:1.45}.guide table{width:100%;border-collapse:collapse;font-size:11px}.guide td{padding:6px;border-bottom:1px solid #2c4353;vertical-align:top}.guide td:first-child{width:110px;color:#8fa4ff;font-weight:700}
 .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#061019;color:#fff;border:1px solid #385368;border-radius:10px;padding:10px 14px;z-index:100;display:none}.toast.show{display:block}
+.daily-outreach{background:linear-gradient(180deg,#102230,#0b1822);border:1px solid #2d5c78;border-radius:16px;padding:18px;margin:12px 0 16px;box-shadow:var(--shadow)}
+.daily-outreach-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:14px}
+.daily-outreach-head h2{margin:0;font-size:18px;letter-spacing:.04em}.daily-outreach-sub{color:#a8bdcb;font-size:11px;margin-top:4px}
+.daily-outreach-total{font-size:30px;font-weight:950;color:#fff;line-height:1}.daily-outreach-total span{display:block;font-size:9px;color:#9fb3c0;margin-top:5px;letter-spacing:.07em}
+.daily-outreach-breakdown{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:13px}.daily-outreach-chip{border:1px solid #294c61;background:#0d1b25;border-radius:999px;padding:6px 10px;font-size:10px;color:#dceaf2}.daily-outreach-chip b{color:#fff}
+.daily-outreach-grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:7px}
+.daily-outreach-cell{aspect-ratio:1/1;min-width:0;border:1px solid #2a4252;background:#101b23;border-radius:9px;display:flex;align-items:center;justify-content:center;gap:3px;color:#667d8c;font-size:11px;font-weight:900;position:relative;transition:transform .16s ease,background .16s ease,border-color .16s ease,color .16s ease}
+.daily-outreach-cell.on{color:#fff;border-color:#2e8a61;background:#124631}.daily-outreach-cell.call{background:#123e5a;border-color:#2d84b8}.daily-outreach-cell.message{background:#3e315d;border-color:#7c64b0}.daily-outreach-cell .kind{font-size:9px;line-height:1}
+.daily-outreach-note{margin-top:11px;color:#8298a7;font-size:9px;line-height:1.45}
+.daily-outreach-error{color:#ffb1b1;font-size:10px}
+@media(max-width:760px){.daily-outreach-head{align-items:flex-start}.daily-outreach-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.daily-outreach-cell{aspect-ratio:auto;min-height:42px}.daily-outreach-total{font-size:26px}}
 @media(max-width:1000px){.app{grid-template-columns:1fr}.sidebar{position:relative;height:auto;border-right:0;border-bottom:1px solid #2b3d4c}.metrics{grid-template-columns:repeat(3,1fr)}.kpi{grid-template-columns:1fr}.drawer{width:min(420px,100vw)}}
 
 /* ===== TOUCH POINT F1 IMMOBILIARE ===== */
@@ -186,35 +197,24 @@ button{cursor:pointer}
         <div><b>RICERCA TERRITORIALE → FONTI DI NOTIZIE</b><span>Apri la dashboard, cerca segnali territoriali e poi registra qui ogni nominativo come nodo dell'albero.</span></div>
         <button class="btn news-launcher" onclick="openNewsDashboard()">NOTIZIE</button>
       </div>
+      <section class="daily-outreach" id="dailyOutreachPanel" aria-labelledby="dailyOutreachTitle">
+        <div class="daily-outreach-head">
+          <div><h2 id="dailyOutreachTitle">CONTATTI DI OGGI</h2><div class="daily-outreach-sub">Telefonate e messaggi realmente effettuati oggi</div></div>
+          <div class="daily-outreach-total"><b id="dailyOutreachTotal">0</b><span>CONTATTI REGISTRATI OGGI</span></div>
+        </div>
+        <div class="daily-outreach-breakdown">
+          <div class="daily-outreach-chip">☎ Telefonate: <b id="dailyOutreachCalls">0</b></div>
+          <div class="daily-outreach-chip">✉ Messaggi: <b id="dailyOutreachMessages">0</b></div>
+        </div>
+        <div class="daily-outreach-grid" id="dailyOutreachGrid" aria-label="Registro visuale dei primi 100 contatti della giornata"></div>
+        <div class="daily-outreach-note">I 100 numeri sono solo la capacità del display. Non rappresentano un obiettivo o un numero minimo da raggiungere.</div>
+      </section>
+
       <section class="mnemonic-panel" id="mnemonicPanel">
         <div class="mnemonic-head"><h3>PROSSIMA DOMANDA</h3><span class="mnemonic-period" id="mnemonicPeriod">RETE</span></div>
-        <div class="mnemonic-question" id="mnemonicQuestion">Sto analizzando i rami della tua rete...</div>
+        <div class="mnemonic-question" id="mnemonicQuestion">Sto analizzando i nominativi e le fonti già presenti...</div>
         <div class="mnemonic-answer-row"><input id="mnemonicAnswer" placeholder="Scrivi un nome, luogo o ricordo..." /><button type="button" onclick="F1NetworkEngine.saveMnemonicAnswer()">SALVA RISPOSTA</button></div>
         <div class="mnemonic-dup-review" id="mnemonicDuplicateReview"></div>
-      </section>
-      <section class="confirm-panel"><h3>SOLO TU PUOI CONFERMARE QUESTO</h3><div id="duplicatePanel"></div></section>
-      <section class="network-kpis" id="networkKpis"></section>
-      <section class="metrics" id="metrics"></section>
-
-      <section class="kpi">
-        <div class="panel">
-          <h3>Obiettivo giornaliero contatti</h3>
-          <div style="display:flex;justify-content:space-between;gap:10px;align-items:end"><div><b id="todayContacts" style="font-size:24px">0</b><span class="tip"> contatti registrati oggi</span></div><select id="dailyTarget" style="background:#0f1922;color:#fff;border:1px solid #365064;border-radius:8px;padding:7px"><option>30</option><option selected>40</option><option>50</option></select></div>
-          <div class="progress"><i id="dailyProgress"></i></div>
-          <div class="tip">Il PDF indica 30–50 contatti al giorno. L'obiettivo non è “chiudere” al telefono: è fissare appuntamenti e raccogliere notizie.</div>
-        </div>
-        <div class="panel">
-          <h3>Catena operativa</h3>
-          <div class="journey" id="journey"></div>
-          <p class="tip">Nome → contatto → conversazione → informazione → notizia → proprietario → appuntamento → incarico.</p>
-        </div>
-      </section>
-
-      <section class="tree-wrap">
-        <div class="tree-title"><div><h2>Albero verticale delle relazioni</h2><p>IO → periodo della vita → persona → persone collegate → ricordi → nuovi rami.</p></div><div class="legend"><span>★ centro di influenza</span><span>verde = notizia</span><span>blu = appuntamento</span></div></div>
-        <div class="chronology-graph" id="chronologyGraph"></div>
-        <div class="tree" id="tree"></div>
-        <details class="automation-log"><summary>REGISTRO AUTOMATICO DEL MOTORE</summary><div class="automation-log-body" id="automationLog"></div></details>
       </section>
 
       <section class="guide">
@@ -382,7 +382,7 @@ button{cursor:pointer}
     <div><div class="incoming-contact-kicker">📞 NUOVO CONTATTO · PROMEMORIA 3 MINUTI</div><div class="incoming-contact-name" id="incomingContactName">DA CONTATTARE</div><div class="incoming-contact-meta" id="incomingContactMeta"></div></div>
     <button class="incoming-contact-close" type="button" onclick="closeIncomingContactPop()">✕</button>
   </div>
-  <div class="incoming-contact-goal">Obiettivo: 30–50 contatti al giorno per fissare appuntamenti e raccogliere notizie.</div>
+  
   <div class="incoming-contact-actions">
     <button class="incoming-contact-open" id="incomingContactOpen" type="button">APRI CONTATTO</button>
     <button class="incoming-contact-later" type="button" onclick="closeIncomingContactPop()">TRA 3 MINUTI</button>
@@ -559,21 +559,21 @@ function temporalCoach(force){
  const h=new Date().getHours(),contacts=todayContactCount(),added=peopleAddedToday(),infl=influenceCount();
  let msg=null;
  if(h>=7&&h<10){
-   msg={id:'morning-rubrica',tag:'📒 RUBRICA',title:'Apri la tua rete',body:added?'Hai già iniziato. Aggiungi ancora un nome e chiediti: chi altro conosco attraverso questa persona?':'Parti dai nomi che hai già in testa. Non giudicare chi venderà: costruisci la lista.',goal:'Obiettivo: ampliare la rubrica e generare nuovi rami.',cta:'+ AGGIUNGI UN NOME',action:'rubrica'};
+   msg={id:'morning-rubrica',tag:'📒 RUBRICA',title:'Apri la tua rete',body:added?'Hai già iniziato. Aggiungi ancora un nome e chiediti: chi altro conosco attraverso questa persona?':'Parti dai nomi che hai già in testa. Non giudicare chi venderà: costruisci la lista.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'+ AGGIUNGI UN NOME',action:'rubrica'};
  }else if(h>=10&&h<13){
-   msg={id:'morning-phone',tag:'📞 TELEFONO',title:'Ora contatti, non perfezione',body:'Hai registrato '+contacts+' contatti oggi. Porta avanti il blocco telefonate e raccogli notizie.',goal:'Obiettivo: 30–50 contatti al giorno per fissare appuntamenti e raccogliere notizie.',cta:'INIZIA / CONTINUA I CONTATTI',action:'telefono'};
+   msg={id:'morning-phone',tag:'📞 TELEFONO',title:'Ora contatti, non perfezione',body:'Hai registrato '+contacts+' contatti oggi. Porta avanti il blocco telefonate e raccogli notizie.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'INIZIA / CONTINUA I CONTATTI',action:'telefono'};
  }else if(h>=13&&h<16){
    msg=contacts>=30
-    ?{id:'midday-30',tag:'✅ SOGLIA RAGGIUNTA',title:'Hai superato i 30 contatti',body:'Sei a '+contacts+'. Mantieni il ritmo e usa le conversazioni per far emergere notizie.',goal:'Obiettivo: arrivare fino a 50 senza perdere qualità.',cta:'CONTINUA FINO A 50',action:'telefono'}
-    :{id:'midday-phone',tag:'📞 METÀ GIORNATA',title:'Controlla il ritmo',body:'Sei a '+contacts+' contatti. Riparti dal prossimo nome disponibile.',goal:'Obiettivo: raggiungere almeno 30 contatti oggi.',cta:'PROSSIMO CONTATTO',action:'telefono'};
+    ?{id:'midday-30',tag:'✅ SOGLIA RAGGIUNTA',title:'Contatto registrato',body:'Sei a '+contacts+'. Mantieni il ritmo e usa le conversazioni per far emergere notizie.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'CONTINUA FINO A 50',action:'telefono'}
+    :{id:'midday-phone',tag:'📞 METÀ GIORNATA',title:'Controlla il ritmo',body:'Sei a '+contacts+' contatti. Riparti dal prossimo nome disponibile.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'PROSSIMO CONTATTO',action:'telefono'};
  }else if(h>=16&&h<19){
-   msg={id:'afternoon-influence',tag:'🤝 CENTRI DI INFLUENZA',title:'Apri una porta che parla con molte persone',body:infl?'Hai '+infl+' contatti ad alta rete. Aggiungine un altro tra baristi, edicolanti, parrucchieri, commercialisti o professionisti.':'Inserisci almeno un centro di influenza: una persona che incontra molte persone ogni giorno.',goal:'Obiettivo: farti ricordare quando qualcuno dice “devo vendere casa”.',cta:'+ CENTRO DI INFLUENZA',action:'influenza'};
+   msg={id:'afternoon-influence',tag:'🤝 CENTRI DI INFLUENZA',title:'Apri una porta che parla con molte persone',body:infl?'Hai '+infl+' contatti ad alta rete. Aggiungine un altro tra baristi, edicolanti, parrucchieri, commercialisti o professionisti.':'Inserisci almeno un centro di influenza: una persona che incontra molte persone ogni giorno.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'+ CENTRO DI INFLUENZA',action:'influenza'};
  }else if(h>=19){
    msg=contacts>=50
-    ?{id:'evening-50',tag:'🏁 GIORNATA COMPLETA',title:'50 contatti raggiunti',body:'Hai completato la soglia alta della giornata. Guarda i nomi generati e le notizie emerse.',goal:'Obiettivo: trasformare conversazioni in notizie e appuntamenti.',cta:'VEDI I RISULTATI',action:'risultati'}
+    ?{id:'evening-50',tag:'🏁 GIORNATA COMPLETA',title:'Contatto registrato',body:'Hai completato la soglia alta della giornata. Guarda i nomi generati e le notizie emerse.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'VEDI I RISULTATI',action:'risultati'}
     :contacts>=30
-      ?{id:'evening-30',tag:'✅ OBIETTIVO MINIMO',title:'Hai raggiunto i 30 contatti',body:'Sei a '+contacts+'. Puoi ancora consolidare la giornata con qualche contatto mirato.',goal:'Obiettivo: chiudere la giornata con notizie e appuntamenti concreti.',cta:'CONTINUA',action:'telefono'}
-      :{id:'evening-under30',tag:'📞 ULTIMO BLOCCO',title:'Chiudi la giornata con azione',body:'Sei a '+contacts+' contatti. Scegli il prossimo nome e fai un ultimo blocco operativo.',goal:'Obiettivo: avvicinarti a 30 contatti senza giudicarti.',cta:'PROSSIMO CONTATTO',action:'telefono'};
+      ?{id:'evening-30',tag:'✅ OBIETTIVO MINIMO',title:'Contatto registrato',body:'Sei a '+contacts+'. Puoi ancora consolidare la giornata con qualche contatto mirato.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'CONTINUA',action:'telefono'}
+      :{id:'evening-under30',tag:'📞 ULTIMO BLOCCO',title:'Chiudi la giornata con azione',body:'Sei a '+contacts+' contatti. Scegli il prossimo nome e fai un ultimo blocco operativo.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'PROSSIMO CONTATTO',action:'telefono'};
  }
  if(msg)showCoachPopup(msg,!!force);
 }
@@ -581,17 +581,13 @@ function coachOnPersonSaved(p,isNew){
  if(!p||!isNew)return;
  const total=(db.people||[]).filter(function(x){return x.id!=='root'}).length;
  if(p.influence||p.source==='influenza'||p.category==='professionisti'){
-   showCoachPopup({id:'saved-influence-'+p.id,tag:'🤝 CENTRO DI INFLUENZA',title:'Nuovo centro di influenza inserito',body:'Ora il valore sta nel farti ricordare: una conversazione utile, poi mantieni il contatto.',goal:'Obiettivo: essere la persona a cui pensano quando sentono “devo vendere casa”.',cta:'AGGIUNGI UN ALTRO NOME',action:'rubrica'},true);return;
+   showCoachPopup({id:'saved-influence-'+p.id,tag:'🤝 CENTRO DI INFLUENZA',title:'Nuovo centro di influenza inserito',body:'Ora il valore sta nel farti ricordare: una conversazione utile, poi mantieni il contatto.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'AGGIUNGI UN ALTRO NOME',action:'rubrica'},true);return;
  }
  if(total>0&&total%10===0){
-   showCoachPopup({id:'rubrica-'+total,tag:'📒 RUBRICA',title:total+' persone nella rete',body:'La lista cresce. Ogni nome deve aprire una nuova domanda: chi altro conosco attraverso questa persona?',goal:'Obiettivo: ampliare l’albero, non fermarti al primo livello.',cta:'+ NUOVO NOME',action:'rubrica'},true);
+   showCoachPopup({id:'rubrica-'+total,tag:'📒 RUBRICA',title:total+' persone nella rete',body:'La lista cresce. Ogni nome deve aprire una nuova domanda: chi altro conosco attraverso questa persona?',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'+ NUOVO NOME',action:'rubrica'},true);
  }
 }
-function coachOnContactRecorded(){
- const n=todayContactCount();
- if(n===30)showCoachPopup({id:'threshold-30',tag:'✅ TELEFONO',title:'30 contatti raggiunti',body:'Hai raggiunto la soglia minima operativa. Continua se hai ancora ritmo.',goal:'Obiettivo: 30–50 contatti per appuntamenti e notizie.',cta:'CONTINUA',action:'telefono'},true);
- else if(n===50)showCoachPopup({id:'threshold-50',tag:'🏁 TELEFONO',title:'50 contatti raggiunti',body:'Soglia alta completata. Ora concentra l’attenzione su notizie e appuntamenti emersi.',goal:'Obiettivo: trasformare quantità in opportunità concrete.',cta:'VEDI I RISULTATI',action:'risultati'},true);
-}
+function coachOnContactRecorded(){renderDailyOutreach();}
 function coachRegisterActivity(){coachLastActivity=Date.now()}
 
 const INCOMING_CONTACT_INTERVAL_MS=3*60*1000;
@@ -647,7 +643,7 @@ function startCoachSystem(){
  coachTimer=setInterval(function(){
    if(coachCurrent||document.getElementById('incomingContactPop')?.classList.contains('open'))return;
    if(Date.now()-coachLastActivity>15*60*1000){
-     showCoachPopup({id:'inactive-action',tag:'⏱ RIPARTI',title:'Una sola azione adesso',body:'Apri il prossimo contatto oppure rispondi alla prossima domanda mnemonica.',goal:'Obiettivo: rimettere in movimento la rete senza giudicare il ritmo.',cta:'PROSSIMO CONTATTO',action:'telefono'},true);
+     showCoachPopup({id:'inactive-action',tag:'⏱ RIPARTI',title:'Una sola azione adesso',body:'Apri il prossimo contatto oppure rispondi alla prossima domanda mnemonica.',goal:'Scegli la prossima azione utile senza obiettivi numerici',cta:'PROSSIMO CONTATTO',action:'telefono'},true);
      coachLastActivity=Date.now();
    }else temporalCoach(true);
  },3*60*1000);
@@ -664,13 +660,10 @@ function init(){
  document.getElementById('pStage').innerHTML=opt(STAGES);
  document.getElementById('stageFilter').innerHTML='<option value="">Tutte le fasi</option>'+opt(STAGES);
  document.getElementById('sourceFilter').innerHTML='<option value="">Tutte le fonti</option>'+opt(SOURCES);
- document.getElementById('dailyTarget').value=String(db.dailyTarget||40);
  document.getElementById('promptList').innerHTML=PROMPTS.map((p,i)=>`<div class="prompt"><span>${esc(p)}</span><button onclick="openAddChildFromDrawer(${i})">+ nome</button></div>`).join('');
- document.getElementById('journey').innerHTML=STAGES.map(s=>`<span class="stage" data-journey="${s}">${s}</span>`).join('');
  document.getElementById('searchInput').addEventListener('input',renderAll);
  document.getElementById('stageFilter').addEventListener('change',renderAll);
  document.getElementById('sourceFilter').addEventListener('change',renderAll);
- document.getElementById('dailyTarget').addEventListener('change',e=>{db.dailyTarget=Number(e.target.value);persist();renderMetrics()});
  document.getElementById('importFile').addEventListener('change',importData);
  ['pName','pSurname','mName','mSurname'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{const pos=e.target.selectionStart;e.target.value=e.target.value.toLocaleUpperCase('it-IT');try{e.target.setSelectionRange(pos,pos)}catch(_){ }if(id==='pName'||id==='pSurname')refreshDraftInvestigator();}));
  ['pCategory','pSource','pTown','pPhone','pEmail','pInfluence'].forEach(id=>document.getElementById(id).addEventListener('change',refreshDraftInvestigator));
@@ -687,22 +680,41 @@ function init(){
  startIncomingContactReminder();
  try{window.F1TreeCloud?.boot?.()}catch(_){ }
 }
-function renderAll(){renderMetrics();renderTree();try{window.F1NetworkEngine?.renderAllExtensions?.()}catch(_){}}
-function renderMetrics(){
- const people=db.people.filter(p=>p.id!=='root');
- const contacted=people.filter(p=>STAGES.indexOf(p.stage)>=1).length;
- const toContact=people.filter(p=>p.stage==='Nome').length;
- const news=people.filter(p=>STAGES.indexOf(p.stage)>=4).length;
- const appts=people.filter(p=>STAGES.indexOf(p.stage)>=6).length;
- const generated=people.filter(p=>p.parentId && p.parentId!=='root').length;
- const items=[['Persone inserite',people.length],['Contattate',contacted],['Da contattare',toContact],['Nuovi nomi generati',generated],['Notizie',news],['Appuntamenti',appts]];
- document.getElementById('metrics').innerHTML=items.map(([l,v])=>`<div class="metric"><b>${v}</b><span>${l}</span></div>`).join('');
- const today=new Date().toISOString().slice(0,10);
- const todayCount=people.reduce((n,p)=>n+(p.contactDates||[]).filter(d=>String(d).slice(0,10)===today).length,0);
- document.getElementById('todayContacts').textContent=todayCount;
- const target=db.dailyTarget||40;document.getElementById('dailyProgress').style.width=Math.min(100,(todayCount/target)*100)+'%';
- document.querySelectorAll('[data-journey]').forEach(el=>{const stage=el.dataset.journey;el.classList.toggle('active',people.some(p=>STAGES.indexOf(p.stage)>=STAGES.indexOf(stage)))});
+function renderAll(){renderDailyOutreach();try{window.F1NetworkEngine?.renderAllExtensions?.()}catch(_){}}
+async function renderDailyOutreach(){
+ const grid=document.getElementById('dailyOutreachGrid');
+ if(!grid)return;
+ if(!grid.children.length){
+   grid.innerHTML=Array.from({length:100},(_,i)=>'<div class="daily-outreach-cell" data-outreach-index="'+i+'"><b>'+(i+1)+'</b><span class="kind"></span></div>').join('');
+ }
+ try{
+   if(!window.F1ContactOutreach?.ready?.()){
+     document.getElementById('dailyOutreachTotal').textContent='0';
+     return;
+   }
+   const data=await window.F1ContactOutreach.today();
+   const events=Array.isArray(data?.events)?data.events:[];
+   const total=Number(data?.total)||0,calls=Number(data?.calls)||0,messages=Number(data?.messages)||0;
+   document.getElementById('dailyOutreachTotal').textContent=String(total);
+   document.getElementById('dailyOutreachCalls').textContent=String(calls);
+   document.getElementById('dailyOutreachMessages').textContent=String(messages);
+   [...grid.children].forEach((cell,i)=>{
+     const ev=events[i]||null;
+     cell.className='daily-outreach-cell'+(ev?' on '+(ev.channel==='CALL'?'call':'message'):'');
+     const kind=cell.querySelector('.kind');if(kind)kind.textContent=ev?(ev.channel==='CALL'?'☎':'✉'):'';
+     if(ev){
+       const time=new Date(ev.occurred_at).toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
+       const who=ev.display_name?(' · '+ev.display_name):'';
+       cell.title='#'+(i+1)+' · '+(ev.channel==='CALL'?'Telefonata':'Messaggio')+who+' · '+time;
+     }else cell.removeAttribute('title');
+   });
+ }catch(e){
+   console.warn('Registro contatti giornalieri:',e);
+ }
 }
+window.addEventListener('f1-outreach-changed',()=>renderDailyOutreach());
+window.addEventListener('focus',()=>renderDailyOutreach());
+setInterval(()=>renderDailyOutreach(),60000);
 const NEWS_TRANSFER_KEY='f1_news_transfer_queue_v1';
 function normalizePhoneKey(v){return String(v||'').replace(/\D/g,'').replace(/^39(?=\d{9,})/,'')}
 function normalizeNewsItem(item){
@@ -802,20 +814,6 @@ function filterPeople(){
   const triggerText=(p.lifeTriggers||[]).map(id=>{const t=lifeTriggerById(id);return t?t.label:''}).join(' ');const contextText=[...(p.periodContexts||[]),...(p.places||[]),...(p.memories||[]),...(p.schools||[]),...(p.companies||[])].join(' ');const hay=[p.name,p.surname,p.phone,p.email,p.town,p.notes,triggerText,contextText].join(' ').toLowerCase();
   return (!q||hay.includes(q)) && (!stage||p.stage===stage) && (!source||p.source===source);
  });
-}
-function renderTree(){
- const visible=filterPeople();const allowed=new Set(visible.map(p=>p.id));
- const q=document.getElementById('searchInput').value.trim();const sf=document.getElementById('stageFilter').value;const so=document.getElementById('sourceFilter').value;
- if(q||sf||so){visible.forEach(p=>{let cur=p;while(cur&&cur.parentId){allowed.add(cur.parentId);cur=db.people.find(x=>x.id===cur.parentId)}})}
- const root=db.people.find(p=>p.id==='root');
- const html=root?`<ul><li>${renderNode(root,allowed)}</li></ul>`:'<div class="empty">Nessuna radice.</div>';
- document.getElementById('tree').innerHTML=html;
-}
-function renderNode(p,allowed){
- const children=db.people.filter(x=>x.parentId===p.id && allowed.has(x.id));
- const cls=['person'];if(p.id==='root')cls.push('root');if(p.influence)cls.push('influence');if((p.lifeTriggers||[]).length)cls.push('trigger');if(STAGES.indexOf(p.stage)>=4)cls.push('news');if(STAGES.indexOf(p.stage)>=6)cls.push('appointment');
- const cat=CATEGORIES.find(c=>c.id===p.category);const src=SOURCES.find(s=>s.id===p.source);
- return `<div class="${cls.join(' ')}" onclick="openPerson('${p.id}')"><div class="name">${esc(upperName([p.name,p.surname].filter(Boolean).join(' ')))}</div><div class="meta">${esc(p.town||'')}${p.phone?'<br>'+esc(p.phone):''}</div><div class="badges">${p.influence?'<span class="badge">★ influenza</span>':''}${(p.lifeTriggers||[]).length?`<span class="badge trigger-badge">⚡ ${(p.lifeTriggers||[]).length} trigger</span>`:''}${cat?`<span class="badge">${esc(cat.name)}</span>`:''}${src?`<span class="badge">${esc(src.name)}</span>`:''}<span class="badge">${esc(p.stage)}</span></div><div class="node-actions"><button onclick="event.stopPropagation();openAddChild('${p.id}','Chi altro conosco attraverso questa persona?')">+ ramo</button>${p.id!=='root'?`<button onclick="event.stopPropagation();markContact('${p.id}')">contatto oggi</button><button class="node-delete" onclick="event.stopPropagation();requestDelete('${p.id}')">elimina</button>`:''}</div></div>${children.length?`<ul>${children.map(c=>`<li>${renderNode(c,allowed)}</li>`).join('')}</ul>`:''}`;
 }
 function getCurrentLifeTriggerStatus(){
  if(drawerMode==='edit'){
