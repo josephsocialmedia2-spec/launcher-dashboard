@@ -11,6 +11,9 @@ on:
       - "tests/daily-contact-outreach.spec.js"
       - "f1-contact-outreach.js"
       - "f1-tree-network-engine.js"
+      - "tests/relational-tree-redesign.spec.js"
+      - "f1-relational-tree.css"
+      - "f1-relational-tree.js"
       - ".github/workflows/f1-notizie-richiamo-qa.yml"
 
 permissions:
@@ -77,7 +80,10 @@ jobs:
             'id="dailyOutreachPanel"',
             'id="dailyOutreachGrid"',
             'CONTATTI DI OGGI',
-            'function applyDailyOutreachData'
+            'function applyDailyOutreachData',
+            'id="relationshipTree"',
+            'ALBERO RELAZIONALE',
+            'f1-relational-tree.js'
           ]
           required_calls=[
             'data-news-task',
@@ -116,7 +122,7 @@ jobs:
           ok=0
           for i in $(seq 1 60); do
             echo "Published Fonti di Notizie check $i/60"
-            if curl -fsSL --max-time 20 "$base/albero-fonti-notizie.html?qa=$RANDOM" -o /tmp/albero-live               && grep -Fq 'RICERCA TERRITORIALE → FONTI DI NOTIZIE' /tmp/albero-live               && grep -Fq '>NOTIZIE</button>' /tmp/albero-live               && grep -Fq 'id="dailyOutreachPanel"' /tmp/albero-live               && grep -Fq 'CONTATTI DI OGGI' /tmp/albero-live               && grep -Fq 'id="mnemonicPanel"' /tmp/albero-live               && ! grep -Fq 'F1 NOTIZIE · LAVORAZIONE E RICHIAMI' /tmp/albero-live               && ! grep -Fq 'Notizie da lavorare' /tmp/albero-live               && ! grep -Fq 'IMPORTA NOTIZIE JSON' /tmp/albero-live               && ! grep -Fq 'Nessuna notizia da lavorare' /tmp/albero-live               && ! grep -Fq 'class="news-workbench"' /tmp/albero-live               && ! grep -Fq 'id="networkKpis"' /tmp/albero-live               && ! grep -Fq 'id="chronologyGraph"' /tmp/albero-live               && ! grep -Fq 'Albero verticale delle relazioni' /tmp/albero-live; then
+            if curl -fsSL --max-time 20 "$base/albero-fonti-notizie.html?qa=$RANDOM" -o /tmp/albero-live               && grep -Fq 'RICERCA TERRITORIALE → FONTI DI NOTIZIE' /tmp/albero-live               && grep -Fq '>NOTIZIE</button>' /tmp/albero-live               && grep -Fq 'id="dailyOutreachPanel"' /tmp/albero-live               && grep -Fq 'CONTATTI DI OGGI' /tmp/albero-live               && grep -Fq 'id="relationshipTree"' /tmp/albero-live               && grep -Fq 'ALBERO RELAZIONALE' /tmp/albero-live               && grep -Fq 'f1-relational-tree.js' /tmp/albero-live               && grep -Fq 'id="mnemonicPanel"' /tmp/albero-live               && ! grep -Fq 'F1 NOTIZIE · LAVORAZIONE E RICHIAMI' /tmp/albero-live               && ! grep -Fq 'Notizie da lavorare' /tmp/albero-live               && ! grep -Fq 'IMPORTA NOTIZIE JSON' /tmp/albero-live               && ! grep -Fq 'Nessuna notizia da lavorare' /tmp/albero-live               && ! grep -Fq 'class="news-workbench"' /tmp/albero-live               && ! grep -Fq 'id="networkKpis"' /tmp/albero-live               && ! grep -Fq 'id="chronologyGraph"' /tmp/albero-live               && ! grep -Fq 'Albero verticale delle relazioni' /tmp/albero-live; then
               ok=1
               break
             fi
