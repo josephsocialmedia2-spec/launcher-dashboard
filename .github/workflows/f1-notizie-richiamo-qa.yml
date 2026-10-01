@@ -12,6 +12,7 @@ on:
       - "f1-contact-outreach.js"
       - "f1-tree-network-engine.js"
       - "tests/relational-tree-redesign.spec.js"
+      - "tests/editable-relationship-edges.spec.js"
       - "f1-relational-tree.css"
       - "f1-relational-tree.js"
       - ".github/workflows/f1-notizie-richiamo-qa.yml"
@@ -82,6 +83,8 @@ jobs:
             'CONTATTI DI OGGI',
             'function applyDailyOutreachData',
             'id="relationshipTree"',
+            'id="relationshipEdges"',
+            'id="edgeEditorModal"',
             'ALBERO RELAZIONALE',
             'f1-relational-tree.js'
           ]
