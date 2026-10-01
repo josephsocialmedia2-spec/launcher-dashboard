@@ -217,3 +217,39 @@ test('cloud metadata keeps graphPositions and graphGroups without a parallel dat
   expect(cloud).toContain('db.graphGroups=Array.isArray(g.graphGroups)?g.graphGroups:(db.graphGroups||[])');
   expect(migration).toContain('graph_meta jsonb');
 });
+
+
+for (const size of [
+  {name:'tablet',width:768,height:1024},
+  {name:'mobile',width:390,height:844}
+]){
+  test('touch drag works on '+size.name+' without disabling page scroll globally', async ({browser})=>{
+    const context=await browser.newContext({viewport:{width:size.width,height:size.height},hasTouch:true,isMobile:true});
+    const touchPage=await context.newPage();
+    await prepare(touchPage);
+    await touchPage.goto('/albero-fonti-notizie.html',{waitUntil:'domcontentloaded'});
+    await seed(touchPage);
+    await touchPage.evaluate(()=>F1RelationshipTree.fit());
+
+    const before=await touchPage.evaluate(()=>({...db.graphPositions.a}));
+    const result=await touchPage.evaluate(()=>{
+      const node=document.querySelector('[data-person-id="a"]');
+      const box=node.getBoundingClientRect();
+      const sx=box.left+45,sy=box.top+20;
+      node.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,pointerId:81,pointerType:'touch',isPrimary:true,button:0,clientX:sx,clientY:sy}));
+      window.dispatchEvent(new PointerEvent('pointermove',{bubbles:true,pointerId:81,pointerType:'touch',isPrimary:true,button:0,clientX:sx+70,clientY:sy+42}));
+      window.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,pointerId:81,pointerType:'touch',isPrimary:true,button:0,clientX:sx+70,clientY:sy+42}));
+      return {
+        pos:{...db.graphPositions.a},
+        bodyTouchAction:getComputedStyle(document.body).touchAction,
+        overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth
+      };
+    });
+    expect(result.pos.x).not.toBe(before.x);
+    expect(result.pos.y).not.toBe(before.y);
+    expect(result.pos.manual).toBe(true);
+    expect(result.bodyTouchAction).not.toBe('none');
+    expect(result.overflow).toBeLessThanOrEqual(2);
+    await context.close();
+  });
+}
