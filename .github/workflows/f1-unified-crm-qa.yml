@@ -9,6 +9,7 @@ on:
       - 'crm.html'
       - 'crm-auth-guard.js'
       - 'crm-unified-app.js'
+      - 'crm-hub-app.js'
       - 'crm-import-app.js'
       - 'f1-acquisition-data.js'
       - 'market-listing-ui.js'
@@ -24,6 +25,7 @@ on:
       - 'system-registry.json'
       - 'tests/unified-crm.spec.js'
       - 'tests/crm-phase2.spec.js'
+      - 'tests/crm-hub-current.spec.js'
       - '.github/workflows/f1-unified-crm-qa.yml'
   workflow_dispatch:
 
@@ -47,6 +49,7 @@ jobs:
           node --check supabase-sync.js
           node --check crm-auth-guard.js
           node --check crm-unified-app.js
+          node --check crm-hub-app.js
           node --check crm-import-app.js
           node --check market-listing-ui.js
           node --check market-interest-engine.js
@@ -54,8 +57,13 @@ jobs:
           node --check f1-opportunity-crm-ui-v2.js
           node --check tests/unified-crm.spec.js
           node --check tests/crm-phase2.spec.js
-          grep -q 'F1 ACQUISITION ENGINE · CRM UNIFICATO' crm.html
-          grep -q 'LEAD · INTERAZIONI · TASK' crm.html
+          node --check tests/crm-hub-current.spec.js
+          grep -q 'F1 IMMOBILIARE · CRM UNIFICATO' crm.html
+          grep -q 'CONTATTI' crm.html
+          grep -q 'IMMOBILI' crm.html
+          grep -q 'TRATTATIVE' crm.html
+          grep -q 'ATTIVITÀ' crm.html
+          grep -q 'rpc/f1_crm_hub_page_v1' crm-hub-app.js
           grep -q 'SALVA NEL CRM' f1-opportunity-crm-ui-v2.js
           grep -q 'CRM legacy disattivato' supabase-sync.js
           grep -q 'READ_ONLY_CACHE' system-registry.json
@@ -91,7 +99,7 @@ jobs:
           npm install
           npx playwright install --with-deps chromium
       - name: CRM functional and Phase 2 QA
-        run: npx playwright test tests/unified-crm.spec.js tests/crm-phase2.spec.js --project=desktop-chromium
+        run: npx playwright test tests/unified-crm.spec.js tests/crm-phase2.spec.js tests/crm-hub-current.spec.js --project=desktop-chromium
       - name: Retain browser failure evidence
         if: failure()
         uses: actions/upload-artifact@v4
@@ -113,11 +121,13 @@ jobs:
             if curl -fsSL --max-time 20 "$base/crm.html?qa=$RANDOM" -o /tmp/crm.html \
               && curl -fsSL --max-time 20 "$base/crm-auth-guard.js?qa=$RANDOM" -o /tmp/guard.js \
               && curl -fsSL --max-time 20 "$base/crm-unified-app.js?qa=$RANDOM" -o /tmp/app.js \
+              && curl -fsSL --max-time 20 "$base/crm-hub-app.js?qa=$RANDOM" -o /tmp/hub.js \
               && curl -fsSL --max-time 20 "$base/f1-acquisition-data.js?qa=$RANDOM" -o /tmp/data.js \
               && curl -fsSL --max-time 20 "$base/crm-import-app.js?qa=$RANDOM" -o /tmp/import.js \
               && grep -q 'CRM UNIFICATO' /tmp/crm.html \
               && grep -q 'COUNT_KPI' /tmp/guard.js \
               && grep -q 'SEARCH_DEBOUNCE_MS=300' /tmp/app.js \
+              && grep -q 'rpc/f1_crm_hub_page_v1' /tmp/hub.js \
               && grep -q 'rpc/f1_crm_lead_page_v2' /tmp/data.js \
               && grep -q 'loadXlsxLibrary' /tmp/import.js \
               && ! grep -q 'xlsx.full.min.js.*</script>' /tmp/crm.html; then ok=1; break; fi
