@@ -22,14 +22,12 @@ async function newPerson(page,name,surname='',phone=''){
   if(phone)await page.locator('#pPhone').fill(phone);
   await page.locator('#savePersonBtn').click();
   await expect(page.locator('#relationModal')).toHaveClass(/open/);
-  await expect.poll(()=>page.evaluate(({name,surname})=>{
-    const wanted=[name,surname].filter(Boolean).join(' ').toUpperCase();
-    return !!db.people.find(p=>[p.name,p.surname].filter(Boolean).join(' ').toUpperCase()===wanted);
-  },{name,surname})).toBeTruthy();
-  return page.evaluate(({name,surname})=>{
-    const wanted=[name,surname].filter(Boolean).join(' ').toUpperCase();
-    return db.people.find(p=>[p.name,p.surname].filter(Boolean).join(' ').toUpperCase()===wanted)?.id||'';
-  },{name,surname});
+  await expect.poll(()=>page.locator('#personId').inputValue()).not.toBe('draft');
+  const id=await page.locator('#personId').inputValue();
+  await expect.poll(()=>page.evaluate(savedId=>db.people.some(p=>p.id===savedId),id)).toBeTruthy();
+  const saved=await page.evaluate(savedId=>db.people.find(p=>p.id===savedId),id);
+  expect([saved.name,saved.surname].filter(Boolean).join(' ').toUpperCase()).toBe([name,surname].filter(Boolean).join(' ').toUpperCase());
+  return id;
 }
 async function createRelationFromOpenPopup(page,type,targetName,targetSurname='',phone=''){
   await page.getByRole('button',{name:type,exact:true}).click();
