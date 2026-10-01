@@ -491,7 +491,15 @@ async function confirmWhatsAppSent(){
   }catch(e){try{toast('Messaggio non registrato: '+(e.message||e))}catch(_){}}finally{if(btn)btn.disabled=false}
 }
 function closeWhatsAppConfirm(){pendingMessage=null;document.getElementById('waConfirmBar')?.classList.remove('open')}
-function afterPersonSaved(id,isNew){selectedId=id;if(!positions()[id])placeNew(id,'root','altro');render();if(isNew)setTimeout(()=>openPicker(id),120)}
+function afterPersonSaved(id,isNew){
+  selectedId=id;
+  if(!positions()[id])placeNew(id,'root','altro');
+  render();
+  if(isNew){
+    document.getElementById('drawer')?.classList.remove('open');
+    setTimeout(()=>{center(id);openPicker(id)},90);
+  }
+}
 function promptRelations(id){openPicker(id||selectedId)}
 function openExpand(id){
   expandSourceId=id||selectedId||'root';const p=person(expandSourceId);
