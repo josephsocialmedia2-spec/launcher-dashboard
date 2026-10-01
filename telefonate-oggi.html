@@ -122,6 +122,7 @@ body.focus-active .notice{border-color:#2b6b43}
     <div class="actions">
       <a class="btn alt" href="crm.html#contatti">CONTATTI CRM</a>
       <a class="btn alt" href="crm.html#attivita">ATTIVITÀ CRM</a>
+      <a class="btn gold" href="crm.html#contatti">VERIFICA RPO</a>
       <a class="btn alt" href="ricerca-territoriale.html">DASHBOARD</a>
     </div>
   </section>
@@ -164,6 +165,12 @@ function evidenceLabel(r){
 }
 function euro(v){const n=Number(v||0);return n>0?new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n):''}
 function isDone(r){return String(r.status||'OPEN').toUpperCase()==='DONE'}
+function callAllowed(r){
+  const status=String(r?.status||'').toUpperCase();
+  const rpo=String(r?.rpo_status||'').toUpperCase();
+  return !!(r&&r.telefono&&!r.do_not_contact&&rpo==='VERIFICATO_OK'&&!['NON_CONTATTARE','ARCHIVIATO','SCARTATO'].includes(status));
+}
+window.callAllowed=callAllowed;
 function isFocusWindow(d=new Date()){
   const day=d.getDay();
   const m=d.getHours()*60+d.getMinutes();
@@ -225,7 +232,7 @@ function render(){
   $('remaining').textContent=STATE.remaining||0;
   $('done').textContent=STATE.done||0;
   const active=isFocusWindow();
-  const callableRows=STATE.rows.filter(r=>!isDone(r)&&!isBusyWaiting(r));
+  const callableRows=STATE.rows.filter(r=>!isDone(r)&&!isBusyWaiting(r)&&callAllowed(r));
   let rows=active?callableRows.slice(0,1):filteredRows();
   const firstOpenIndex=callableRows.length?STATE.rows.indexOf(callableRows[0]):-1;
   if(active&&firstOpenIndex<0){
