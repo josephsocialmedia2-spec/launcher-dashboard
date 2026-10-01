@@ -132,7 +132,7 @@ button{cursor:pointer}
 @media(max-width:760px){.mnemonic-answer-row{grid-template-columns:1fr}.period-checks{grid-template-columns:1fr}}
 </style>
 \n  <link rel="stylesheet" href="f1-launcher-master.css?v=20260928a">
-  <link rel="stylesheet" href="f1-relational-tree.css?v=20261001-edges1">\n  <script defer src="f1-launcher-master.js?v=20260928a"></script>\n</head>
+  <link rel="stylesheet" href="f1-relational-tree.css?v=20261001-mindmap1">\n  <script defer src="f1-launcher-master.js?v=20260928a"></script>\n</head>
 <body>
 <div class="app">
   <aside class="sidebar">
@@ -205,11 +205,11 @@ button{cursor:pointer}
         <div class="relationship-right">
           <section class="relationship-tree-panel" aria-labelledby="relationshipTreeTitle">
             <div class="relationship-tree-head">
-              <div class="relationship-tree-title"><h2 id="relationshipTreeTitle">ALBERO RELAZIONALE</h2><p>IO → persone → relazioni → nuovi nominativi</p></div>
+              <div class="relationship-tree-title"><h2 id="relationshipTreeTitle">MAPPA RELAZIONALE</h2><p>Mappa libera: trascina persone, collega rami e costruisci la rete senza schema obbligato.</p></div>
               <div class="relationship-tree-tools">
                 <button type="button" onclick="F1RelationshipTree.zoomOut()" title="Riduci">−</button>
                 <button type="button" onclick="F1RelationshipTree.zoomIn()" title="Ingrandisci">+</button>
-                <button type="button" onclick="F1RelationshipTree.fit()">ADATTA</button>
+                <button type="button" onclick="F1RelationshipTree.fit()" title="Mostra e centra tutta la mappa">ADATTA</button>
                 <button type="button" onclick="F1RelationshipTree.center()" title="Centra la persona selezionata">CENTRA</button>
                 <button type="button" class="primary" onclick="F1RelationshipTree.openPicker('root')">+ PERSONA</button>
               </div>
@@ -223,7 +223,7 @@ button{cursor:pointer}
                 </div>
               </div>
             </div>
-            <div class="rel-legend"><b>Trascina</b> per spostarti · <b>Ctrl + rotellina</b> per zoom · clicca <b>+</b> per creare un nuovo ramo.</div>
+            <div class="rel-legend"><b>Trascina lo sfondo</b> per muovere la mappa · <b>trascina una persona</b> per riposizionarla · <b>Ctrl + rotellina</b> per zoom · <b>+</b> crea un collegamento.</div>
           </section>
         </div>
       </section>
@@ -458,7 +458,7 @@ button{cursor:pointer}
 <script src="f1-contact-outreach.js?v=20261001-outreach1"></script>
 <script src="f1-tree-cloud.js?v=20260924-tree1"></script>
 <script src="f1-tree-network-engine.js?v=20260924-network2"></script>
-<script src="f1-relational-tree.js?v=20261001-edges1"></script>
+<script src="f1-relational-tree.js?v=20261001-mindmap1"></script>
 
 <script>
 const SOURCES = [
