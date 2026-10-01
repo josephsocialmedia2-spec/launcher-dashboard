@@ -71,6 +71,11 @@ jobs:
           grep -q 'setInterval(tick,1000)' daily-command-panel.js
           grep -q '06:30' daily-command-panel.js
           grep -q '20:00' daily-command-panel.js
+          ! grep -q "name:'PROSPECTING'" daily-command-panel.js
+          ! grep -q "goal:'10 contatti prospecting'" daily-command-panel.js
+          ! grep -q "module:'Telefonate + Script + CRM'" daily-command-panel.js
+          grep -q "name:'PRIORITÀ OPERATIVE'" daily-command-panel.js
+          grep -q "name:'PRIORITÀ POMERIDIANE'" daily-command-panel.js
           grep -q 'GUIDA FUNZIONARIO' f1-ai-guide.js
           grep -q 'ORDINE OPERATIVO' f1-ai-guide.js
           grep -q 'TROVA NOTIZIE' f1-ai-guide.js
