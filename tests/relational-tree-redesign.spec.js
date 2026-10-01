@@ -21,7 +21,8 @@ async function addRootPerson(page,name){
   await page.locator('#pName').fill(name);
   await page.locator('#savePersonBtn').click();
   await expect(page.locator('#relationModal')).toHaveClass(/open/);
-  const id=await page.evaluate(n=>db.people.find(p=>p.name===n)?.id,name);
+  const id=await page.locator('#personId').inputValue();
+  await expect.poll(()=>page.evaluate(savedId=>db.people.some(p=>p.id===savedId),id)).toBeTruthy();
   return id;
 }
 
@@ -126,8 +127,10 @@ test('WhatsApp opening does not count until SEGNA MESSAGGIO INVIATO', async ({ p
   await page.locator('#relName').fill('PAOLO');
   await page.locator('#relPhone').fill('3331234567');
   await page.getByRole('button',{name:'SALVA E CREA RAMO'}).click();
-  await expect.poll(()=>page.evaluate(()=>db.people.some(p=>String(p.name||'').toUpperCase()==='PAOLO'))).toBeTruthy();
-  const paoloId=await page.evaluate(()=>db.people.find(p=>String(p.name||'').toUpperCase()==='PAOLO').id);
+  const paoloCard=page.locator('.rel-graph-node').filter({has:page.locator('.rel-node-name',{hasText:'PAOLO'})}).first();
+  await expect(paoloCard).toBeVisible();
+  const paoloId=await paoloCard.getAttribute('data-person-id');
+  expect(paoloId).toBeTruthy();
 
   await page.evaluate(id=>F1RelationshipTree.openWhatsApp(id),paoloId);
   expect(await page.evaluate(()=>window.__outreachRecords.length)).toBe(0);
