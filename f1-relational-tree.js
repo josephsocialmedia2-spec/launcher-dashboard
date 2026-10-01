@@ -541,7 +541,7 @@ window.F1RelationshipTree={
   render,renderEdges,fit,zoomIn:()=>zoomBy(.1),zoomOut:()=>zoomBy(-.1),center,select,toggle,startNodeDrag,startConnect,
   openPerson:openPersonCard,openWhatsApp,confirmWhatsAppSent,closeWhatsAppConfirm,
   openPicker,closePicker,chooseType,renderExistingMatches,createQuick,linkExisting,
-  openEdgeEditor,closeEdgeEditor,previewEdgeInverse,saveEdge,deleteEdge,editRelationByRow,
+  openEdgeEditor,closeEdgeEditor,previewEdgeInverse,syncEdgeCustomRows,saveEdge,deleteEdge,editRelationByRow,
   afterPersonSaved,promptRelations,openExpand,closeExpand,useExpandQuestion,
   openCurrentRelation,openCurrentExpand,openCurrentWhatsApp,labelForRelation,compactDrawer,
   visualEdges,positions,types:RELATION_TYPES
