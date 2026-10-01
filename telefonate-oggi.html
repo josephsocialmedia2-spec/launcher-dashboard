@@ -144,6 +144,7 @@ body.focus-active .notice{border-color:#2b6b43}
 
 <script>
 let STATE={rows:[],total:0,done:0,remaining:0};
+const DAILY_QUEUE_CAP=100; // Limite tecnico di caricamento, non un obiettivo operativo.
 let ACTIVE_TASK=localStorage.getItem('f1_active_call_task')||'';
 const BUSY_REMINDER_KEY='f1_busy_call_reminders_v1';
 const NEWS_TRANSFER_KEY='f1_news_transfer_queue_v1';
@@ -561,7 +562,7 @@ async function load(){
   try{
     const data=await F1AcquisitionData.rest('rpc/f1_daily_seller_calls_v1',{
       method:'POST',
-      body:JSON.stringify({p_target_count:100})
+      body:JSON.stringify({p_target_count:DAILY_QUEUE_CAP})
     })||{};
     STATE={
       rows:Array.isArray(data.rows)?data.rows:[],
