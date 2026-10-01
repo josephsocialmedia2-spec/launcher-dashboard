@@ -1,0 +1,328 @@
+/* F1 Immobiliare — Home operativa per utenti non tecnici
+   Obiettivo: gerarchia chiara, rumore ridotto, azioni esplicite. */
+body.f1-page-ricerca-territoriale{
+  --f1-home-bg:#f3f6f4;
+  --f1-home-surface:#ffffff;
+  --f1-home-surface-soft:#f7faf8;
+  --f1-home-text:#17251d;
+  --f1-home-muted:#66756c;
+  --f1-home-line:#dce6e0;
+  --f1-home-green:#0b7a45;
+  --f1-home-green-dark:#075d35;
+  --f1-home-green-soft:#e9f6ef;
+  --f1-home-amber:#a86400;
+  --f1-home-amber-soft:#fff5df;
+  --f1-home-red:#ad3040;
+  --f1-home-radius:16px;
+  --f1-home-shadow:0 8px 28px rgba(18,48,31,.08);
+  color:var(--f1-home-text)!important;
+  background:var(--f1-home-bg)!important;
+}
+body.f1-page-ricerca-territoriale::before{display:none!important}
+body.f1-page-ricerca-territoriale .app{
+  background:var(--f1-home-bg)!important;
+  padding:92px 22px 48px!important;
+}
+body.f1-page-ricerca-territoriale .topbar{
+  min-height:68px!important;
+  background:#10281c!important;
+  border-bottom:1px solid rgba(255,255,255,.12)!important;
+  box-shadow:0 4px 18px rgba(4,27,15,.16)!important;
+}
+body.f1-page-ricerca-territoriale .brand-name,
+body.f1-page-ricerca-territoriale .brand-name span{color:#fff!important}
+body.f1-page-ricerca-territoriale .brand-mark{color:#84d9ab!important}
+body.f1-page-ricerca-territoriale .micro-nav{color:#b9d8c7!important}
+body.f1-page-ricerca-territoriale .topbar-right{gap:10px}
+body.f1-page-ricerca-territoriale .top-item{color:#d7e7dd!important}
+body.f1-page-ricerca-territoriale .status-pill{
+  background:#173d2a!important;border-color:#2b6044!important;color:#e8f6ee!important;
+}
+body.f1-page-ricerca-territoriale .status-pill.ok,
+body.f1-page-ricerca-territoriale .status-pill.ready{background:#0d6b3d!important;border-color:#45a875!important;color:#fff!important}
+body.f1-page-ricerca-territoriale .user-name{color:#d7e7dd!important}
+body.f1-page-ricerca-territoriale .user-badge{background:#eef9f3!important;color:#0b6840!important}
+
+/* Sidebar: dark, calm, grouped. */
+body.f1-page-ricerca-territoriale .sidebar{
+  background:#10251b!important;
+  border-right:1px solid #264334!important;
+  box-shadow:8px 0 24px rgba(10,34,21,.10)!important;
+  padding:12px 10px 22px!important;
+}
+body.f1-page-ricerca-territoriale .f1-nav-group-label,
+body.f1-page-ricerca-territoriale .nav-group-label{
+  display:block;
+  margin:16px 10px 5px;
+  color:#82a895;
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+body.f1-page-ricerca-territoriale .f1-nav-group-label:first-child,
+body.f1-page-ricerca-territoriale .nav-group-label:first-child{margin-top:3px}
+body.f1-page-ricerca-territoriale .side-item{
+  min-height:42px;
+  margin:2px 0;
+  padding:9px 10px!important;
+  border:0!important;
+  border-radius:10px;
+  color:#c4d7cc!important;
+  font-size:12px!important;
+  font-weight:720!important;
+}
+body.f1-page-ricerca-territoriale .side-item i{color:#87c7a6!important;width:22px;text-align:center}
+body.f1-page-ricerca-territoriale .side-item:hover{
+  color:#fff!important;background:#193829!important;
+}
+body.f1-page-ricerca-territoriale .side-item.active,
+body.f1-page-ricerca-territoriale .side-item.active-secondary{
+  color:#fff!important;background:#0b7a45!important;border:0!important;
+}
+body.f1-page-ricerca-territoriale .side-item.active i,
+body.f1-page-ricerca-territoriale .side-item.active-secondary i{color:#fff!important}
+body.f1-page-ricerca-territoriale .sidebar-footer{margin-top:18px;border-top:1px solid #2b4436!important}
+body.f1-page-ricerca-territoriale .side-claim{color:#a8c9b8!important}
+
+/* Page heading */
+.f1-home-heading{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:18px;
+  max-width:1500px;margin:0 auto 16px;
+}
+.f1-home-heading small{
+  display:block;margin-bottom:5px;color:var(--f1-home-green)!important;
+  font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;
+}
+.f1-home-heading h1{
+  margin:0!important;color:var(--f1-home-text)!important;
+  font-size:clamp(25px,2.5vw,36px)!important;line-height:1.08;letter-spacing:-.035em;
+}
+.f1-home-heading p{margin:7px 0 0;color:var(--f1-home-muted);font-size:13px;line-height:1.5}
+.f1-home-help{
+  flex:0 0 auto;max-width:300px;padding:10px 12px;border:1px solid var(--f1-home-line);
+  border-radius:12px;background:var(--f1-home-surface);color:var(--f1-home-muted);
+  font-size:11px;line-height:1.45;
+}
+.f1-home-help strong{display:block;color:var(--f1-home-text)!important;margin-bottom:2px}
+
+/* Primary cards */
+.f1-priority-grid{
+  display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.8fr);
+  gap:14px;max-width:1500px;margin:0 auto 14px;
+}
+body.f1-page-ricerca-territoriale .card,
+body.f1-page-ricerca-territoriale .panel{
+  color:var(--f1-home-text)!important;
+  background:var(--f1-home-surface)!important;
+  border:1px solid var(--f1-home-line)!important;
+  box-shadow:var(--f1-home-shadow)!important;
+  border-radius:var(--f1-home-radius)!important;
+}
+.f1-now-card{padding:22px!important;display:grid;gap:18px}
+.f1-now-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.f1-now-kicker{display:flex;align-items:center;gap:8px;color:var(--f1-home-green);font-size:11px;font-weight:900;letter-spacing:.1em}
+.f1-now-kicker i{font-size:15px}
+body.f1-page-ricerca-territoriale #territoryStatus{
+  background:var(--f1-home-green-soft)!important;border:1px solid #c6e8d4!important;
+  color:var(--f1-home-green-dark)!important;padding:7px 9px;border-radius:999px;font-size:10px;font-weight:900;
+}
+.f1-now-content h2{
+  margin:0!important;color:var(--f1-home-text)!important;
+  font-size:clamp(24px,2.3vw,34px)!important;line-height:1.1;letter-spacing:-.035em;
+}
+.f1-now-content p{margin:8px 0 0;color:var(--f1-home-muted);font-size:14px;line-height:1.55}
+.f1-now-content .crumbs{margin-top:10px;color:#4e6759!important;font-size:12px;font-weight:750}
+body.f1-page-ricerca-territoriale #continueSearch{
+  justify-self:start;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:48px;padding:0 18px;border-radius:11px;text-decoration:none;
+  color:#fff!important;background:var(--f1-home-green)!important;border:1px solid var(--f1-home-green)!important;
+  font-size:12px;font-weight:900;box-shadow:none!important;
+}
+body.f1-page-ricerca-territoriale #continueSearch:hover{background:var(--f1-home-green-dark)!important;transform:translateY(-1px)}
+.f1-next-note{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;
+  padding:12px;border-radius:12px;background:var(--f1-home-surface-soft);border:1px solid var(--f1-home-line);
+}
+.f1-next-note i{color:var(--f1-home-green);margin-top:2px}
+.f1-next-note small{display:block;color:var(--f1-home-muted)!important;font-weight:800}
+.f1-next-note strong{display:block;margin-top:2px;color:var(--f1-home-text)!important;font-size:12px}
+
+/* Today / KPI */
+.right-col{display:grid;gap:14px;min-width:0}
+.f1-today-card{padding:18px!important}
+.f1-section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.f1-section-title h2{margin:0!important;color:var(--f1-home-text)!important;font-size:16px!important}
+.f1-section-title span{color:var(--f1-home-muted);font-size:10px;font-weight:850}
+.f1-today-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.f1-kpi{
+  min-height:76px;padding:11px;border:1px solid var(--f1-home-line);border-radius:12px;
+  background:var(--f1-home-surface-soft);display:flex;flex-direction:column;justify-content:center;
+}
+.f1-kpi strong{color:var(--f1-home-text)!important;font-size:23px;line-height:1}
+.f1-kpi small{margin-top:5px;color:var(--f1-home-muted)!important;font-size:9px;font-weight:900;letter-spacing:.07em}
+.f1-kpi.wide{grid-column:1/-1;min-height:64px;flex-direction:row;align-items:center;justify-content:space-between}
+.f1-kpi.wide strong{font-size:18px}
+.f1-kpi.wide small{margin:0}
+
+/* Quick actions */
+.f1-quick-actions{
+  max-width:1500px;margin:0 auto 14px;padding:16px!important;
+}
+.f1-quick-actions h2{margin:0 0 4px!important;color:var(--f1-home-text)!important;font-size:16px!important}
+.f1-quick-actions>p{margin:0 0 12px;color:var(--f1-home-muted);font-size:11px}
+.f1-quick-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.f1-quick-link{
+  min-height:78px;padding:12px 10px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:7px;
+  border:1px solid var(--f1-home-line);border-radius:12px;background:var(--f1-home-surface-soft);
+  color:var(--f1-home-text)!important;text-decoration:none!important;font-size:11px;font-weight:850;
+}
+.f1-quick-link i{font-size:18px;color:var(--f1-home-green)}
+.f1-quick-link small{color:var(--f1-home-muted)!important;font-size:9px;font-weight:700}
+.f1-quick-link:hover{border-color:#9ccdb1;background:#eef8f2;transform:translateY(-1px)}
+
+/* CRM attention */
+.f1-attention-card{padding:16px!important}
+.f1-attention-card .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.f1-attention-card .section-head h2{margin:0!important;color:var(--f1-home-text)!important;font-size:14px!important}
+.f1-attention-card .section-head h2 i{color:var(--f1-home-amber)}
+.f1-attention-card .section-head a{font-size:10px;font-weight:850;color:var(--f1-home-green)!important;text-decoration:none}
+.f1-attention-card .alert-row{
+  display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:10px;align-items:center;
+  padding:12px;border-radius:12px;background:var(--f1-home-amber-soft);border:1px solid #f0d9a7;
+}
+.f1-attention-card .doc-circle{
+  width:40px;height:40px;display:grid;place-items:center;border-radius:10px;background:#fff;color:var(--f1-home-amber)
+}
+.f1-attention-card .alert-copy strong{display:block;color:var(--f1-home-text)!important;font-size:12px}
+.f1-attention-card .alert-copy span{display:block;margin-top:3px;color:var(--f1-home-muted);font-size:11px}
+.f1-attention-card .outline-link{
+  min-height:38px;padding:0 11px;display:inline-flex;align-items:center;justify-content:center;
+  border-radius:9px;border:1px solid #d1b975;color:#6e500e!important;background:#fff;text-decoration:none;font-size:10px;font-weight:900;
+}
+
+/* Operational sequence becomes secondary context, not the hero. */
+body.f1-page-ricerca-territoriale .steps{
+  max-width:1500px;margin:0 auto 14px!important;
+  min-height:0!important;padding:10px 12px!important;
+  background:#fff!important;border:1px solid var(--f1-home-line)!important;box-shadow:none!important;
+  border-radius:14px!important;
+}
+body.f1-page-ricerca-territoriale .step .num{
+  background:var(--f1-home-green)!important;box-shadow:none!important;color:#fff!important
+}
+body.f1-page-ricerca-territoriale .step strong{color:var(--f1-home-text)!important}
+body.f1-page-ricerca-territoriale .step small,
+body.f1-page-ricerca-territoriale .step em{color:var(--f1-home-muted)!important}
+body.f1-page-ricerca-territoriale .arrow{color:#9caf9f!important}
+
+/* Territory: real data, simple presentation. */
+body.f1-page-ricerca-territoriale #territorio{
+  max-width:1500px;margin:0 auto 14px!important;scroll-margin-top:84px;
+}
+body.f1-page-ricerca-territoriale .territory-card{padding:18px!important}
+body.f1-page-ricerca-territoriale .territory-card>h2{margin:0 0 12px!important;color:var(--f1-home-text)!important;font-size:16px!important}
+body.f1-page-ricerca-territoriale .title-icon{
+  color:var(--f1-home-green)!important;background:var(--f1-home-green-soft)!important
+}
+body.f1-page-ricerca-territoriale .territory-inner,
+body.f1-page-ricerca-territoriale .facts>div,
+body.f1-page-ricerca-territoriale .civics{
+  background:var(--f1-home-surface-soft)!important;border-color:var(--f1-home-line)!important;
+}
+body.f1-page-ricerca-territoriale .facts span,
+body.f1-page-ricerca-territoriale .civics p{color:var(--f1-home-muted)!important}
+body.f1-page-ricerca-territoriale .facts strong,
+body.f1-page-ricerca-territoriale .civic-badges strong{color:var(--f1-home-text)!important}
+body.f1-page-ricerca-territoriale .civic-badges>div{
+  color:var(--f1-home-text)!important;background:#fff!important;border:1px solid var(--f1-home-line);
+}
+body.f1-page-ricerca-territoriale .progress-fill,
+body.f1-page-ricerca-territoriale .civic-fill{background:var(--f1-home-green)!important}
+
+/* Bottom actions keep runtime insertion anchors and make next step explicit. */
+body.f1-page-ricerca-territoriale .bottom-grid{
+  max-width:1500px;margin:0 auto 14px!important;display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.42fr);gap:12px;
+}
+body.f1-page-ricerca-territoriale .next-card{padding:16px!important;text-decoration:none!important}
+body.f1-page-ricerca-territoriale .next-card h2{margin:0 0 8px!important;font-size:13px!important;color:var(--f1-home-muted)!important}
+body.f1-page-ricerca-territoriale .next-card h3{margin:0!important;color:var(--f1-home-text)!important;font-size:17px!important}
+body.f1-page-ricerca-territoriale .next-card p{margin:5px 0 0;color:var(--f1-home-muted);font-size:11px}
+body.f1-page-ricerca-territoriale .crm-open{padding:16px!important;display:flex;flex-direction:column;justify-content:center}
+body.f1-page-ricerca-territoriale .crm-button{
+  min-height:44px;display:flex;align-items:center;justify-content:center;gap:8px;
+  border-radius:10px;background:var(--f1-home-green)!important;color:#fff!important;text-decoration:none!important;font-size:11px;font-weight:900;
+}
+body.f1-page-ricerca-territoriale .crm-open p{margin:8px 0 0;color:var(--f1-home-muted);font-size:10px;line-height:1.45;text-align:center}
+
+/* Academy is useful but visually secondary. */
+body.f1-page-ricerca-territoriale #f1Academy{
+  max-width:1500px!important;margin:0 auto 14px!important;padding:16px!important;
+  color:var(--f1-home-text)!important;background:#fff!important;border:1px solid var(--f1-home-line)!important;box-shadow:none!important;
+}
+body.f1-page-ricerca-territoriale #f1Academy h2,
+body.f1-page-ricerca-territoriale #f1Academy .f1-academy-copy strong{color:var(--f1-home-text)!important}
+body.f1-page-ricerca-territoriale #f1Academy .f1-academy-kicker,
+body.f1-page-ricerca-territoriale #f1Academy h2 i{color:var(--f1-home-green)!important}
+body.f1-page-ricerca-territoriale #f1Academy .f1-academy-head p,
+body.f1-page-ricerca-territoriale #f1Academy .f1-academy-copy small{color:var(--f1-home-muted)!important}
+body.f1-page-ricerca-territoriale #f1Academy .f1-academy-tile,
+body.f1-page-ricerca-territoriale #f1Academy .f1-academy-all{
+  color:var(--f1-home-text)!important;background:var(--f1-home-surface-soft)!important;border-color:var(--f1-home-line)!important;box-shadow:none!important
+}
+body.f1-page-ricerca-territoriale #f1Academy .f1-academy-icon{
+  color:var(--f1-home-green)!important;background:var(--f1-home-green-soft)!important
+}
+
+/* Accordions / dynamically injected secondary modules */
+body.f1-page-ricerca-territoriale .f1pa-toggle{
+  max-width:1500px;margin-left:auto!important;margin-right:auto!important;
+  color:var(--f1-home-text)!important;background:#fff!important;border-color:var(--f1-home-line)!important;box-shadow:none!important;
+}
+body.f1-page-ricerca-territoriale .f1pa-meta{color:var(--f1-home-muted)!important}
+body.f1-page-ricerca-territoriale .f1-secondary-details{
+  max-width:1500px;margin-left:auto!important;margin-right:auto!important;
+  color:var(--f1-home-text);background:#fff;border:1px solid var(--f1-home-line);border-radius:14px;
+}
+body.f1-page-ricerca-territoriale .f1-secondary-details>summary{color:var(--f1-home-text);font-weight:850}
+
+/* Compatibility-only nodes used by the existing runtime, intentionally hidden. */
+.f1-runtime-compat{
+  position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;
+  overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;
+}
+
+body.f1-page-ricerca-territoriale .footer{
+  max-width:1500px;margin:20px auto 0!important;color:#718078!important;border-top:1px solid var(--f1-home-line)!important;
+}
+
+/* Mobile: one decision at a time, generous touch targets. */
+@media(max-width:1180px){
+  .f1-priority-grid{grid-template-columns:1fr}
+  .f1-quick-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:900px){
+  body.f1-page-ricerca-territoriale .app{padding:84px 14px 90px!important}
+  .f1-home-heading{align-items:flex-start;flex-direction:column}
+  .f1-home-help{max-width:none;width:100%}
+  body.f1-page-ricerca-territoriale .bottom-grid{grid-template-columns:1fr}
+}
+@media(max-width:620px){
+  body.f1-page-ricerca-territoriale .app{padding-left:10px!important;padding-right:10px!important}
+  .f1-home-heading h1{font-size:25px!important}
+  .f1-now-card{padding:17px!important}
+  .f1-now-head{align-items:flex-start;flex-direction:column}
+  body.f1-page-ricerca-territoriale #continueSearch{width:100%;min-height:50px}
+  .f1-today-kpis{grid-template-columns:1fr 1fr}
+  .f1-quick-grid{grid-template-columns:1fr 1fr}
+  .f1-quick-link{min-height:82px}
+  .f1-attention-card .alert-row{grid-template-columns:38px minmax(0,1fr)}
+  .f1-attention-card .outline-link{grid-column:1/-1;width:100%}
+  body.f1-page-ricerca-territoriale .steps{display:none!important}
+  body.f1-page-ricerca-territoriale .territory-inner{grid-template-columns:1fr!important}
+}
+@media(max-width:390px){
+  .f1-quick-grid{grid-template-columns:1fr}
+  .f1-today-kpis{grid-template-columns:1fr}
+  .f1-kpi.wide{grid-column:auto}
+}
