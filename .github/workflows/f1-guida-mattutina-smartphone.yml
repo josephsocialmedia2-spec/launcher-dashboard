@@ -49,7 +49,7 @@ jobs:
           2. **Giro Acquisizione** — mentre sei fuori usa questa sola schermata: https://josephsocialmedia2-spec.github.io/launcher-dashboard/giro-acquisizione.html
              - mappa, immobile/segnale, fonte e motivo;
              - premi ARRIVATO / TROVATO / NON TROVATO / CARTELLO / FOTO / VOLANTINO.
-          3. **Al rientro: Telefonate di oggi** — numeri collegati alle vie lavorate, motivo della chiamata e apertura suggerita: https://josephsocialmedia2-spec.github.io/launcher-dashboard/telefonate-oggi.html
+          3. **Al rientro: OGGI** — scegli la prossima attività prioritaria. Telefonate resta disponibile come strumento facoltativo, senza fascia oraria obbligatoria: https://josephsocialmedia2-spec.github.io/launcher-dashboard/oggi.html
           4. **Brief** — solo se hai un appuntamento: https://josephsocialmedia2-spec.github.io/immobili-in-zona/seller_radar_auto/appointment_brief.html
 
           **Non devi aprire Radar, Seller o CRM:** lavorano dietro le quinte.
