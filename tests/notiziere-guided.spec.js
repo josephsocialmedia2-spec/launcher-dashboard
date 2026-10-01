@@ -43,8 +43,8 @@ test('F1 Territory live integra CRM, notizie, lettere, FSBO e procedura 30 volan
   expect(ui).toContain('LETTERE DA IMBUCARE');
   expect(ui).toContain('FSBO · FOR SALE BY OWNER');
   expect(ui).toContain('HAI STAMPATO 30 VOLANTINI?');
-  expect(ui).toContain('f1_territory_mobile_crm_v3');
-  expect(ui).toContain('f1_territory_letter_create_v2');
+  expect(ui).toContain('f1_territory_mobile_crm_v5');
+  expect(ui).toContain('f1_territory_letter_create_record_v3');
   expect(ui).toContain('f1_territory_news_update_v2');
   expect(ui).toContain("'TERRENO','NEGOZIO','LOCALE COMMERCIALE'");
   expect(ui).toContain('f1-territory-online-v3.js');
