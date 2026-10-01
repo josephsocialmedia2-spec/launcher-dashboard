@@ -101,8 +101,8 @@ jobs:
               && curl -fsSL --max-time 20 "$base/script.html?qa=$RANDOM" -o /tmp/script \
               && curl -fsSL --max-time 20 "$base/just-listed-sold.html?qa=$RANDOM" -o /tmp/jls \
               && curl -fsSL --max-time 20 "$base/just-listed-sold.js?qa=$RANDOM" -o /tmp/jlsjs \
-              && grep -q 'id="jlsWidget"' /tmp/index \
-              && grep -q 'JUST LISTED / JUST SOLD: 0 / 10' /tmp/index \
+              && grep -q 'F1 Immobiliare · Apertura dashboard' /tmp/index \
+              && grep -q 'ricerca-territoriale.html' /tmp/index \
               && grep -q 'AVVIA ROLE-PLAY JUST LISTED' /tmp/script \
               && grep -q 'AVVIA ROLE-PLAY JUST SOLD' /tmp/script \
               && grep -q 'GATE IMMOBILE REALE' /tmp/jls \
