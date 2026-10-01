@@ -211,19 +211,25 @@ button{cursor:pointer}
                 <button type="button" onclick="F1RelationshipTree.zoomIn()" title="Ingrandisci">+</button>
                 <button type="button" onclick="F1RelationshipTree.fit()" title="Mostra e centra tutta la mappa">ADATTA</button>
                 <button type="button" onclick="F1RelationshipTree.center()" title="Centra la persona selezionata">CENTRA</button>
+                <button type="button" onclick="F1RelationshipTree.reorder()" title="Riordina solo le schede non fissate">RIORDINA</button>
+                <button type="button" onclick="F1RelationshipTree.createGroup()" title="Crea un gruppo visuale">GRUPPO</button>
                 <button type="button" class="primary" onclick="F1RelationshipTree.openPicker('root')">+ PERSONA</button>
               </div>
             </div>
             <div class="rel-tree-viewport" id="relationshipTreeViewport">
               <div class="rel-tree-stage" id="relationshipTreeStage">
                 <div id="relationshipTree" class="rel-graph-canvas">
+                  <div id="relationshipGroups" class="rel-group-layer" aria-label="Gruppi visuali"></div>
                   <svg id="relationshipEdges" class="rel-edge-layer" aria-hidden="true"></svg>
                   <div id="relationshipEdgeLabels" class="rel-edge-label-layer"></div>
+                  <div id="relGuideX" class="rel-guide rel-guide-x" aria-hidden="true"></div>
+                  <div id="relGuideY" class="rel-guide rel-guide-y" aria-hidden="true"></div>
                   <div id="relationshipNodes" class="rel-node-layer"></div>
                 </div>
               </div>
             </div>
-            <div class="rel-legend"><b>Trascina lo sfondo</b> per muovere la mappa · <b>trascina una persona</b> per riposizionarla · <b>Ctrl + rotellina</b> per zoom · <b>+</b> crea un collegamento.</div>
+            <div id="relationshipMoveUndo" class="rel-move-undo" role="status" aria-live="polite">SPOSTAMENTO SALVATO <button type="button" onclick="F1RelationshipTree.undoMove()">ANNULLA</button></div>
+            <div class="rel-legend"><b>Trascina lo sfondo</b> per muovere la mappa · <b>trascina una persona</b> per riposizionarla · <b>Ctrl/Cmd + click</b> seleziona più persone · <b>⋯</b> fissa o assegna a un gruppo · <b>Ctrl + rotellina</b> per zoom.</div>
           </section>
         </div>
       </section>
@@ -456,9 +462,9 @@ button{cursor:pointer}
 <script src="supabase-config.js?v=20260924-tree1"></script>
 <script src="supabase-sync.js?v=20260924-tree1"></script>
 <script src="f1-contact-outreach.js?v=20261001-outreach1"></script>
-<script src="f1-tree-cloud.js?v=20260924-tree1"></script>
+<script src="f1-tree-cloud.js?v=20261001-freecards1"></script>
 <script src="f1-tree-network-engine.js?v=20260924-network2"></script>
-<script src="f1-relational-tree.js?v=20261001-mindmap1"></script>
+<script src="f1-relational-tree.js?v=20261001-freecards1"></script>
 
 <script>
 const SOURCES = [
