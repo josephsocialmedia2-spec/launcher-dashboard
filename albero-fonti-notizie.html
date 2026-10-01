@@ -216,7 +216,11 @@ button{cursor:pointer}
             </div>
             <div class="rel-tree-viewport" id="relationshipTreeViewport">
               <div class="rel-tree-stage" id="relationshipTreeStage">
-                <div id="relationshipTree"></div>
+                <div id="relationshipTree" class="rel-graph-canvas">
+                  <svg id="relationshipEdges" class="rel-edge-layer" aria-hidden="true"></svg>
+                  <div id="relationshipEdgeLabels" class="rel-edge-label-layer"></div>
+                  <div id="relationshipNodes" class="rel-node-layer"></div>
+                </div>
               </div>
             </div>
             <div class="rel-legend"><b>Trascina</b> per spostarti · <b>Ctrl + rotellina</b> per zoom · clicca <b>+</b> per creare un nuovo ramo.</div>
@@ -384,14 +388,34 @@ button{cursor:pointer}
       <div class="relation-type-grid" id="relationTypeGrid"></div>
       <div class="relation-form" id="relationForm">
         <div class="tip" style="margin-bottom:8px">RELAZIONE: <b id="relationTypeLabel"></b></div>
-        <div class="grid2">
-          <div class="field"><label>Nome *</label><input id="relName" oninput="F1RelationshipTree.renderExistingMatches()" /></div>
-          <div class="field"><label>Cognome</label><input id="relSurname" oninput="F1RelationshipTree.renderExistingMatches()" /></div>
+        <div id="relationExistingTarget" class="relation-target-lock"></div>
+        <div id="relationNewPersonFields">
+          <div class="grid2">
+            <div class="field"><label>Nome *</label><input id="relName" oninput="F1RelationshipTree.renderExistingMatches()" /></div>
+            <div class="field"><label>Cognome</label><input id="relSurname" oninput="F1RelationshipTree.renderExistingMatches()" /></div>
+          </div>
+          <div class="field"><label>Telefono facoltativo</label><input id="relPhone" /></div>
+          <div class="relation-existing" id="relationExisting"></div>
         </div>
-        <div class="field"><label>Telefono facoltativo</label><input id="relPhone" /></div>
-        <div class="relation-existing" id="relationExisting"></div>
-        <div style="display:flex;gap:7px;justify-content:flex-end;margin-top:12px"><button class="btn" type="button" onclick="F1RelationshipTree.closePicker()">ANNULLA</button><button class="btn primary" type="button" onclick="F1RelationshipTree.createQuick()">SALVA E CREA RAMO</button></div>
+        <div class="field" id="relCustomRow" style="display:none"><label>Tipo relazione personalizzata</label><input id="relCustomLabel" placeholder="es. EX COLLEGA" /></div>
+        <div style="display:flex;gap:7px;justify-content:flex-end;margin-top:12px"><button class="btn" type="button" onclick="F1RelationshipTree.closePicker()">ANNULLA</button><button class="btn primary" id="relationSaveButton" type="button" onclick="F1RelationshipTree.createQuick()">SALVA E CREA RAMO</button></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="edgeEditorModal">
+  <div class="modal-card" style="max-width:560px">
+    <div class="modal-head"><div><h2>MODIFICA RELAZIONE</h2><div class="tip"><b id="edgeEditorFrom"></b> ↔ <b id="edgeEditorTo"></b></div></div><button class="close" onclick="F1RelationshipTree.closeEdgeEditor()">Chiudi</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="edgeEditorPairId" />
+      <div class="grid2">
+        <div class="field"><label>Relazione</label><select id="edgeEditorType" onchange="F1RelationshipTree.previewEdgeInverse()"></select></div>
+        <div class="field"><label>Relazione inversa</label><select id="edgeEditorInverse"></select></div>
+      </div>
+      <div class="field" id="edgeEditorCustomRow" style="display:none"><label>Etichetta personalizzata</label><input id="edgeEditorCustom" /></div>
+      <div class="field" id="edgeEditorInverseCustomRow" style="display:none"><label>Etichetta inversa personalizzata</label><input id="edgeEditorInverseCustom" /></div>
+      <div style="display:flex;gap:8px;justify-content:space-between;margin-top:14px"><button class="btn danger" type="button" onclick="F1RelationshipTree.deleteEdge()">ELIMINA RELAZIONE</button><div style="display:flex;gap:7px"><button class="btn" type="button" onclick="F1RelationshipTree.closeEdgeEditor()">ANNULLA</button><button class="btn primary" type="button" onclick="F1RelationshipTree.saveEdge()">SALVA</button></div></div>
     </div>
   </div>
 </div>
