@@ -29,7 +29,7 @@
     if(el)return el;
     el=document.createElement('div');
     el.id='f1CallBlockGate';
-    el.innerHTML='<div class="f1-call-gate-card"><div class="f1-call-gate-kicker">BLOCCO OPERATIVO OBBLIGATORIO</div><div class="f1-call-gate-title">09:30–12:30 · TELEFONATE</div><div id="f1CallGateText" class="f1-call-gate-text">Preparazione della coda da 50 contatti…</div><a class="f1-call-gate-button" href="'+TARGET+'">APRI TELEFONATE ORA</a></div>';
+    el.innerHTML='<div class="f1-call-gate-card"><div class="f1-call-gate-kicker">BLOCCO OPERATIVO OBBLIGATORIO</div><div class="f1-call-gate-title">09:30–12:30 · TELEFONATE</div><div id="f1CallGateText" class="f1-call-gate-text">Preparazione della coda telefonate…</div><a class="f1-call-gate-button" href="'+TARGET+'">APRI TELEFONATE ORA</a></div>';
     const style=document.createElement('style');
     style.id='f1CallBlockGateStyle';
     style.textContent='#f1CallBlockGate{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:20px;background:rgba(2,5,3,.92);backdrop-filter:blur(9px)}.f1-call-gate-card{width:min(92vw,620px);padding:28px;border:2px solid #39f28a;border-radius:18px;background:#0b120d;color:#fff;text-align:center;box-shadow:0 24px 90px rgba(0,0,0,.55)}.f1-call-gate-kicker{color:#39f28a;font:900 11px/1.2 Arial,sans-serif;letter-spacing:.14em}.f1-call-gate-title{margin:10px 0 8px;font:900 clamp(28px,7vw,48px)/1 Arial,sans-serif}.f1-call-gate-text{margin:0 0 18px;color:#c3cdc6;font:700 13px/1.5 Arial,sans-serif}.f1-call-gate-button{display:block;padding:16px 18px;border-radius:12px;background:#39f28a;color:#061009!important;text-decoration:none!important;font:900 15px/1 Arial,sans-serif}';
