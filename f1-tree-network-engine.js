@@ -266,9 +266,14 @@ function renderPersonRelations(p){
  if(!p||!p.id||p.id==='draft'){el.innerHTML='<span class="tip">Salva la persona per vedere i collegamenti.</span>';return}
  const rel=(db.relations||[]).filter(r=>r.sourceId===p.id||r.targetId===p.id);
  if(!rel.length){el.innerHTML='<span class="tip">Nessun collegamento contestuale aggiuntivo.</span>';return}
- el.innerHTML=rel.slice(0,20).map(r=>{
+ const seen=new Set();
+ el.innerHTML=rel.filter(r=>{
+   const key=r.pairId||[r.sourceId,r.targetId].sort().join(':')+':'+r.type;
+   if(seen.has(key))return false;seen.add(key);return true;
+ }).slice(0,20).map(r=>{
    const other=db.people.find(x=>x.id===(r.sourceId===p.id?r.targetId:r.sourceId));
-   return '<button type="button" class="relation-pill" onclick="openPerson(\''+(other?other.id:'')+'\')">'+(other?esc(upperName([other.name,other.surname].join(' '))):'RELAZIONE')+' · '+esc(periodLabel(r.periodId))+'</button>';
+   const relLabel=window.F1RelationshipTree?.labelForRelation?.(r,p.id)||periodLabel(r.periodId)||'RELAZIONE';
+   return '<button type="button" class="relation-pill" onclick="openPerson(\''+(other?other.id:'')+'\')">'+(other?esc(upperName([other.name,other.surname].join(' '))):'RELAZIONE')+' · '+esc(relLabel)+'</button>';
  }).join('');
 }
 function renderChronology(){
