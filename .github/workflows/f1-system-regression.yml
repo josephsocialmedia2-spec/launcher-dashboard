@@ -16,6 +16,9 @@ on:
       - 'f1-call-block.js'
       - 'ricerca-territoriale.html'
       - 'albero-fonti-notizie.html'
+      - 'tests/relational-tree-redesign.spec.js'
+      - 'f1-relational-tree.css'
+      - 'f1-relational-tree.js'
       - 'supabase-migrations/20261001_contact_outreach_daily_counter.sql'
       - 'tests/daily-contact-outreach.spec.js'
       - 'f1-tree-network-engine.js'
@@ -73,6 +76,7 @@ jobs:
           node --check f1-acquisition-data.js
           node --check f1-contact-outreach.js
           node --check f1-tree-network-engine.js
+          node --check f1-relational-tree.js
           node --check f1-notiziere-engine.js
           node --check f1-staff-data.js
           node --check centrale-risultati.js
@@ -95,6 +99,8 @@ jobs:
           grep -Fq 'enabled:false' f1-call-block.js
           grep -Fq 'id="dailyOutreachPanel"' albero-fonti-notizie.html
           grep -Fq 'CONTATTI DI OGGI' albero-fonti-notizie.html
+          grep -Fq 'id="relationshipTree"' albero-fonti-notizie.html
+          grep -Fq 'f1-relational-tree.js' albero-fonti-notizie.html
           ! grep -Fq 'id="networkKpis"' albero-fonti-notizie.html
           ! grep -Fq 'id="chronologyGraph"' albero-fonti-notizie.html
           ! grep -Fq 'Albero verticale delle relazioni' albero-fonti-notizie.html
@@ -114,7 +120,7 @@ jobs:
         run: npx playwright test tests/cloud-auth.spec.js tests/staff-access-panel.spec.js --project=desktop-chromium
 
       - name: Command center, novice dashboard and results regressions
-        run: npx playwright test tests/acquisition-command-center.spec.js tests/call-routine-disabled.spec.js tests/news-work-panel-removed.spec.js tests/daily-contact-outreach.spec.js tests/f1-novice-dashboard.spec.js tests/centrale-risultati.spec.js --project=desktop-chromium
+        run: npx playwright test tests/acquisition-command-center.spec.js tests/call-routine-disabled.spec.js tests/news-work-panel-removed.spec.js tests/daily-contact-outreach.spec.js tests/relational-tree-redesign.spec.js tests/f1-novice-dashboard.spec.js tests/centrale-risultati.spec.js --project=desktop-chromium
 
       - name: Core route smoke
         shell: bash
