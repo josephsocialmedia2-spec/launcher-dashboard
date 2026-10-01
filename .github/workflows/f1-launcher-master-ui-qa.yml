@@ -18,6 +18,14 @@ on:
       - 'telefonate-oggi.html'
       - 'f1-email-radar.html'
       - 'social-seller-radar.html'
+      - 'ricerca-territoriale.js'
+      - 'ricerca-territoriale-layout.js'
+      - 'f1-dashboard-auth-guard.js'
+      - 'f1-notiziere-engine.js'
+      - 'f1-tour-admin-dashboard.js'
+      - 'f1-staff-access-panel.js'
+      - 'f1-desktop-mobile-bridge.js'
+      - 'f1-territory-admin-v4.js'
       - 'tests/f1-launcher-master-ui.spec.js'
       - 'tests/f1-novice-dashboard.spec.js'
       - '.github/workflows/f1-launcher-master-ui-qa.yml'
@@ -34,7 +42,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
+      - name: Static JavaScript syntax checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in             f1-launcher-master.js             f1-dashboard-auth-guard.js             f1-staff-data.js             f1-notiziere-engine.js             ricerca-territoriale.js             f1-notiziere-assistant-bridge.js             f1-tour-admin-dashboard.js             f1-staff-access-panel.js             f1-realtime.js             f1-desktop-mobile-bridge.js             f1-territory-admin-v4.js             ricerca-territoriale-layout.js             f1-secret-db-access.js             content-production-week.js             dashboard-primary-accordions.js; do
+            echo "CHECK $file"
+            node --check "$file"
+          done
       - name: Install QA dependencies
         run: npm install
       - name: Install Chromium
