@@ -494,3 +494,50 @@ body.f1-page-accessi-ufficio .password-row input{background:#06192b!important;co
     animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important
   }
 }
+
+
+/* =========================================================
+   F1 2026-10 — NOVICE NAVIGATION LAYER
+   Group tools by user intent instead of presenting a flat list.
+   ========================================================= */
+.f1-master-nav{gap:0!important}
+.f1-master-nav-group{display:grid;gap:3px;margin:0 0 8px}
+.f1-master-nav-label,
+.f1-nav-group-label{
+  display:block;
+  margin:12px 9px 4px;
+  color:#789bb8;
+  font-size:9px;
+  line-height:1.2;
+  font-weight:900;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.f1-master-nav-group:first-child .f1-master-nav-label{margin-top:2px}
+.f1-master-nav a,
+body.f1-master-ui .side-item{min-height:44px!important}
+body.f1-master-ui .side-item.f1-route-active{
+  color:#fff!important;
+  background:linear-gradient(90deg,rgba(21,94,232,.92),rgba(22,143,255,.66))!important;
+  border-left-color:var(--f1m-cyan)!important;
+}
+body.f1-master-ui .side-item.f1-route-active i{color:#fff!important}
+.f1-master-sidefoot{line-height:1.55}
+
+/* Reduce decorative intensity: hierarchy should come from content, not glow. */
+body.f1-master-ui::before{opacity:.45}
+body.f1-master-ui .panel,
+body.f1-master-ui .card,
+body.f1-master-ui .hero,
+body.f1-master-ui .admin-card,
+body.f1-master-ui .rightGuide{box-shadow:0 9px 26px rgba(0,8,28,.20)!important}
+.f1-master-nav a:hover,
+.f1-master-nav a.is-active{box-shadow:none!important}
+.f1-master-menu-toggle{
+  width:52px;height:52px;
+  box-shadow:0 8px 24px rgba(0,20,52,.28);
+}
+@media(max-width:900px){
+  .f1-master-sidebar,
+  body.f1-page-ricerca-territoriale .sidebar{box-shadow:18px 0 46px rgba(0,0,0,.28)!important}
+}
