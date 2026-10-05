@@ -1,0 +1,50 @@
+name: F1 Relationship Intelligence QA
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'albero-fonti-notizie.html'
+      - 'f1-relationship-intelligence.js'
+      - 'f1-relationship-intelligence.css'
+      - 'f1-tree-cloud.js'
+      - 'oggi.html'
+      - 'f1-os-today.js'
+      - 'f1-territory-workspace.js'
+      - 'config/relationship-intelligence.json'
+      - 'tests/relationship-intelligence.spec.js'
+      - '.github/workflows/f1-relationship-intelligence-qa.yml'
+  pull_request:
+    paths:
+      - 'albero-fonti-notizie.html'
+      - 'f1-relationship-intelligence.js'
+      - 'f1-relationship-intelligence.css'
+      - 'f1-tree-cloud.js'
+      - 'oggi.html'
+      - 'f1-os-today.js'
+      - 'f1-territory-workspace.js'
+      - 'config/relationship-intelligence.json'
+      - 'tests/relationship-intelligence.spec.js'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: |
+          node --check f1-relationship-intelligence.js
+          node --check f1-tree-cloud.js
+          node --check f1-os-today.js
+          node --check f1-territory-workspace.js
+          node --check tests/relationship-intelligence.spec.js
+      - name: Relationship intelligence contract
+        run: node tests/relationship-intelligence.spec.js
