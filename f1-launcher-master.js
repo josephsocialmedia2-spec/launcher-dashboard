@@ -12,7 +12,8 @@
     {
       label: "OGGI",
       items: [
-        ["Dashboard","oggi.html","dashboard"],
+        ["Notizie calde","oggi.html","hot"],
+        ["Dashboard","oggi.html#dashboard","dashboard"],
         ["Agenda","oggi.html#tasks","agenda"],
         ["Telefonate","telefonate-oggi.html","telefonate"]
       ]
@@ -56,6 +57,7 @@
   ];
 
   const icons = {
+    hot:'<svg viewBox="0 0 24 24" fill="none"><path d="M13.2 3.5c.7 3-1 4.2-2.2 5.5-1.1 1.2-1.8 2.4-1.1 4.1.5-1.1 1.3-1.8 2.4-2.6-.1 2.1 1.8 2.7 1.8 5a3.9 3.9 0 0 1-7.8 0c0-4.8 3.8-6.7 6.9-12Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M15.5 8.5c1.8 1.7 2.8 3.7 2.8 6.4a6.3 6.3 0 0 1-12.6 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
     dashboard:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" stroke="currentColor" stroke-width="1.7"/></svg>',
     territorio:'<svg viewBox="0 0 24 24" fill="none"><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2" stroke="currentColor" stroke-width="1.7"/></svg>',
     notizie:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 11v2m3-5v8l9 3V5L7 8Zm9 2h3m-3-4 2-2m-2 12 2 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
@@ -82,13 +84,14 @@
     if (target.includes("/")) return location.pathname.toLowerCase().endsWith(target);
     if (current !== target) return false;
     const hash = href.includes("#") ? "#" + href.split("#")[1] : "";
-    if (!hash) return true;
+    if (!hash) return !location.hash;
     return location.hash === hash;
   }
 
   function itemHtml([label,href,key]){
     const active=isActive(href);
-    return '<a href="'+href+'" class="'+(active?'is-active':'')+'"'+(active?' aria-current="page"':'')+'>'+
+    const hot=key==='hot';
+    return '<a href="'+href+'" class="'+(active?'is-active ':'')+(hot?'f1-hot-news-link':'')+'"'+(active?' aria-current="page"':'')+(hot?' data-hot-news-nav="1"':'')+'>'+
       (icons[key]||'')+'<span>'+label+'</span></a>';
   }
 
