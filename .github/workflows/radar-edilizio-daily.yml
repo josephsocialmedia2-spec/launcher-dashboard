@@ -67,7 +67,7 @@ jobs:
           curl --fail --location --retry 5 --retry-delay 5 "$BASE/data/radar_edilizio.json" -o /tmp/radar.json
           python -m json.tool /tmp/radar.json >/dev/null
           curl --fail --location --retry 5 --retry-delay 5 "$BASE/oggi.html" -o /tmp/oggi.html
-          grep -q 'OGGI COSA FACCIO' /tmp/oggi.html
+          grep -q 'F1 ACQUISITION COMMAND CENTER' /tmp/oggi.html
           curl --fail --location --retry 5 --retry-delay 5 "$BASE/seller-radar-unico.html" -o /tmp/seller.html
           grep -q 'SELLER RADAR' /tmp/seller.html
       - name: Weekly scan
