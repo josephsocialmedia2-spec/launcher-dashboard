@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-10-05T14:59:45.064643+00:00",
+  "started_at": "2026-10-05T15:22:06.612671+00:00",
   "scanner_version": 4,
   "geography": {
     "center": "Susa",
@@ -35,8 +35,11 @@
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 5,
-      "http_status": 200
+      "pages_checked": 4,
+      "http_status": 200,
+      "warnings": [
+        "https://www.halleyweb.com/c001149/mc/mc_p_ricerca.php?servizio=: ConnectionError"
+      ]
     },
     {
       "comune": "Gravere",
@@ -119,8 +122,12 @@
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 4,
-      "http_status": 200
+      "pages_checked": 2,
+      "http_status": 200,
+      "warnings": [
+        "https://halleyweb.com/c001076/mc/mc_matri_gridev_messi.php?x=&servizio=&bck=: ConnectionError",
+        "https://www.halleyweb.com/c001076/mc/mc_gridev_messi.php?x=&servizio=&bck=: ConnectionError"
+      ]
     },
     {
       "comune": "Moncenisio",
@@ -159,11 +166,11 @@
       "comune": "Bruzolo",
       "km_from_susa": 11.3,
       "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Home.aspx?Ce=brzl1354",
-      "status": "ERROR",
+      "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 0,
-      "error": "ReadTimeout: HTTPSConnectionPool(host='www.servizipubblicaamministrazione.it', port=443): Read timed out. (read timeout=20)"
+      "pages_checked": 1,
+      "http_status": 200
     },
     {
       "comune": "San Didero",
@@ -188,6 +195,6 @@
   ],
   "new_records": 0,
   "baseline_imported": 0,
-  "errors": 1,
-  "finished_at": "2026-10-05T15:02:03.602839+00:00"
+  "errors": 0,
+  "finished_at": "2026-10-05T15:23:21.732921+00:00"
 }
