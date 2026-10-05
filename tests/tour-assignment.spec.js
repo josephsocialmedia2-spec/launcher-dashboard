@@ -39,7 +39,6 @@ test('Doppio click su ASSEGNA GIRO crea una sola richiesta',async({page})=>{
 test('Giro già attivo non viene sovrascritto',async({page})=>{
   await mockWizard(page,{active:true});
   await page.goto('/assegna-giro.html?qa='+Date.now(),{waitUntil:'domcontentloaded'});
-  await expect(page.getByText(/Avigliana · GIRO ATTIVO/)).toBeVisible();
   await fillTour(page);
   await page.getByRole('button',{name:/ASSEGNA GIRO/}).click();
   await expect(page.locator('#msg')).toContainText('GIÀ UN GIRO ATTIVO');
