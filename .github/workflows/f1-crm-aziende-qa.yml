@@ -1,0 +1,30 @@
+name: F1 CRM Aziende QA
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'crm.html'
+      - 'crm-hub-app.js'
+      - 'supabase-migrations/20261005_f1_crm_aziende_incremental.sql'
+      - '.github/workflows/f1-crm-aziende-qa.yml'
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: JavaScript syntax
+        run: node --check crm-hub-app.js
+      - name: CRM Aziende markers
+        shell: python
+        run: |
+          from pathlib import Path
+          h=Path('crm.html').read_text(encoding='utf-8')
+          j=Path('crm-hub-app.js').read_text(encoding='utf-8')
+          for marker in ['href="#aziende"','id="companyDlg"','id="companyOutcomeDlg"']:
+              assert marker in h, marker
+          for marker in ["f1_crm_companies_page_v1","f1_company_import_stats_v1","azienda_interactions","azienda_tasks","field_provenance"]:
+              assert marker in j, marker
+          print('PASS CRM AZIENDE QA')
