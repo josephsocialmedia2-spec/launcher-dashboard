@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-let DASH={tasks:[],leads:[],feed:{summary:{}},cfg:null,cloud:false,hotNews:[]};
+let DASH={tasks:[],leads:[],feed:{summary:{}},cfg:null,cloud:false,hotNews:[],sellerRadar:[]};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const up=v=>String(v||'').trim().toUpperCase();
@@ -232,6 +232,88 @@ function bindFrancyCalendar(){
   renderFrancyCalendar();
 }
 
+
+function sellerHay(t){return up([
+  t?.origin,t?.metadata?.origin,t?.reason,t?.lead_reason,t?.event_type,t?.task_type,
+  t?.core_category,t?.metadata?.core_category,t?.market_category,t?.seller_signal,
+  t?.source,t?.source_url,t?.contact_source_url,t?.linked_property_source
+].join(' '))}
+function isSyntheticSellerContact(t){
+  const h=sellerHay(t),u=String(t?.source_url||t?.contact_source_url||'').toLowerCase();
+  return isDailySellerTask(t)
+    || /CONTATTO SELLER DA LAVORARE/.test(h)
+    || /PAGINEBIANCHE|PAGINE BIANCHE|PAGINEGIALLE|PAGINE GIALLE/.test(h)
+    || /paginebianche\.it|paginegialle\.it/.test(u)
+    || (/POSSIBILE VENDITORE/.test(h)&&/IMMOBILE\/I IN VENDITA NELLA STESSA VIA|STESSA VIA/.test(h));
+}
+function isSellerRadarProperty(t){
+  if(!t||isSyntheticSellerContact(t))return false;
+  const h=sellerHay(t),type=up(t.task_type),pillar=Number(t.pillar)||0;
+  const hasProperty=!!clean(t.immobile||t.via||t.property_id||t.linked_property_url||t.source_url);
+  const market=/MARKET_LISTING|COMPETITOR_LISTING|FSBO|EXPIRED|PROPERTY_|POSSIBILE_SCADUTO|SCADUT|RIBASS|CAMBIO AGENZIA|RELIST|ANNUNCIO/.test(h);
+  return hasProperty && (pillar===1 || market || ['VERIFY','MONITOR'].includes(type));
+}
+function isSellerRadarOperationalNoise(t){
+  return isSyntheticSellerContact(t)||isSellerRadarProperty(t);
+}
+function cleanOperationalTasks(){
+  return (DASH.tasks||[]).filter(t=>!isSellerRadarOperationalNoise(t));
+}
+function sellerRadarKey(t){
+  const u=clean(t.source_url||t.linked_property_url);
+  if(u)return u.toLowerCase();
+  return [up(t.comune),up(t.via),up(t.civico),up(t.immobile)].join('|');
+}
+function buildSellerRadarResults(rows){
+  const map=new Map();
+  for(const t of rows||[]){
+    if(!isSellerRadarProperty(t))continue;
+    const key=sellerRadarKey(t);if(!key)continue;
+    const old=map.get(key);
+    if(!old || (Number(t.priority)||0)>(Number(old.priority)||0))map.set(key,t);
+  }
+  return [...map.values()].sort((a,b)=>(Number(b.priority)||0)-(Number(a.priority)||0)||String(b.updated_at||b.created_at||'').localeCompare(String(a.updated_at||a.created_at||'')));
+}
+function sellerPrice(v){
+  const n=Number(String(v||'').replace(/[^0-9]/g,''));
+  return n?new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n):'';
+}
+function sellerTitle(t){
+  return clean(t.immobile)||clean(t.title)||clean(t.tipologia)||clean(t.tipo)||clean(t.via)||'Immobile da verificare';
+}
+function sellerSignal(t){
+  return clean(t.seller_signal)||clean(t.lead_reason)||clean(t.reason)||clean(t.market_category)||'Segnale immobiliare';
+}
+function renderSellerRadar(){
+  const all=DASH.sellerRadar||[],sel=$('sellerRadarComune'),box=$('sellerRadarList');if(!box)return;
+  const comuni=[...new Set(all.map(x=>clean(x.comune)).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'it'));
+  if(sel){
+    const current=sel.value;
+    sel.innerHTML='<option value="">TUTTI I COMUNI</option>'+comuni.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join('');
+    if(comuni.includes(current))sel.value=current;
+  }
+  const comune=sel?.value||'';
+  const rows=(comune?all.filter(x=>clean(x.comune)===comune):all).slice(0,12);
+  setText('sellerRadarCount',all.length);
+  if(!rows.length){box.innerHTML='<div class="empty">Nessun segnale immobiliare Seller Radar disponibile.</div>';return}
+  box.innerHTML=rows.map(t=>{
+    const src=safeUrl(t.source_url||t.linked_property_url);
+    const address=[t.via,t.civico,t.comune].filter(Boolean).join(' · ');
+    const price=sellerPrice(t.prezzo||t.price);
+    const priority=Number(t.priority)||0;
+    const category=clean(t.market_category||t.core_category||t.metadata?.core_category||t.event_type);
+    return '<article class="seller-radar-card">'+
+      '<div class="seller-radar-card-top"><div><div class="seller-radar-title">'+esc(sellerTitle(t))+'</div>'+
+      '<div class="seller-radar-meta">'+esc([address,t.source,category].filter(Boolean).join(' · '))+'</div></div>'+
+      '<div class="seller-radar-side">'+(price?'<b>'+esc(price)+'</b>':'')+'<span>PRIORITÀ '+esc(priority)+'</span></div></div>'+
+      '<div class="seller-radar-signal"><b>SEGNALE:</b> '+esc(sellerSignal(t))+'</div>'+
+      '<div class="seller-radar-actions">'+
+      (src?'<a class="btn" href="'+esc(src)+'" target="_blank" rel="noopener">APRI ANNUNCIO</a>':'')+
+      '<a class="btn alt" href="seller-radar-unico.html">VEDI NEL RADAR</a>'+
+      '</div></article>';
+  }).join('');
+}
+
 function renderHeader(){
   const territory=DASH.cfg?.territory||{};
   const communes=window.F1AcquisitionCore?.territoryCommunes?.(territory)||[];
@@ -239,21 +321,21 @@ function renderHeader(){
   $('statusPills').innerHTML=`<span class="pill">CENTRO: ${esc(territory.reference_hub||'—')}</span><span class="pill">${esc(territory.policy||'TERRITORIO')}</span><span class="pill">${communes.length} COMUNI</span><span class="pill ${DASH.cloud?'blue':'gold'}">${DASH.cloud?'● CLOUD CONNESSO':'● FEED PUBBLICO'}</span>`;
 }
 function renderStats(){
-  const open=DASH.tasks.filter(openTask),leads=DASH.leads;
-  setText('sNew',open.filter(t=>t.is_new).length);
+  const open=cleanOperationalTasks().filter(openTask),leads=DASH.leads;
+  setText('sNew',(DASH.sellerRadar||[]).length);
   setText('sCall',open.filter(t=>up(t.task_type)==='CALL'&&F1AcquisitionCore.isDue(t)).length);
   setText('sCallback',open.filter(t=>/CALLBACK|RICHIAM/.test(up([t.reason,t.event_type].join(' ')))).length+countStatus(leads,/RICHIAMO|DA_RICONTATTARE/));
   setText('sAppointments',countStatus(leads,/APPUNTAMENTO/));setText('sValuations',countStatus(leads,/VALUTAZIONE/));setText('sListings',countStatus(leads,/INCARICO|ACQUISITO/));
 }
 function renderCore(){
-  const tasks=DASH.tasks.filter(openTask),leads=DASH.leads;
+  const tasks=cleanOperationalTasks().filter(openTask),leads=DASH.leads;
   setText('cPast',tasks.filter(t=>taskCore(t)==='PAST_CLIENT').length+leads.filter(l=>/CLIENTE PASSAT/.test(leadHay(l))).length);
   setText('cCoi',tasks.filter(t=>taskCore(t)==='COI').length+leads.filter(l=>/CENTRO DI INFLUENZA|\bCOI\b/.test(leadHay(l))).length);
   setText('cExpired',tasks.filter(t=>taskCore(t)==='EXPIRED_OR_POSSIBLE_EXPIRED').length+leads.filter(l=>/SCADUT|RITIRAT|NON PIU RILEVAT|CAMBIO AGENZIA/.test(leadHay(l))).length);
   setText('cFsbo',tasks.filter(t=>taskCore(t)==='FSBO').length+leads.filter(l=>/FSBO|PRIVAT|NO AGENZI/.test(leadHay(l))).length);
 }
 function renderPillars(){
-  const engine=DASH.cfg?.engine||{},open=DASH.tasks.filter(openTask);
+  const engine=DASH.cfg?.engine||{},open=cleanOperationalTasks().filter(openTask);
   $('pillarCards').innerHTML=(engine.pillars||[]).map(p=>{let n;if(Number(p.id)===5)n=open.filter(t=>taskCore(t)).length;else n=open.filter(t=>Number(t.pillar)===Number(p.id)).length+DASH.leads.filter(l=>Number(l.pillar)===Number(p.id)&&!/SCARTATO|PERSO|NON_INTERESSATO/.test(up(l.status))).length;return `<div class="card"><span class="badge">PILASTRO ${esc(p.id)}</span><div class="n">${n}</div><strong>${esc(p.label)}</strong><div class="small">${esc(p.description)}</div></div>`}).join('');
 }
 function renderCompetitor(){const s=DASH.feed.summary||{};setText('ciSignals',s.signals||0);setText('ciPrice',s.price_changes||0);setText('ciAgency',s.agency_changes||0);setText('ciExit',(s.possible_expired||0)+(s.relisted||0))}
@@ -262,7 +344,7 @@ function renderFunnel(){const f=F1AcquisitionCore.funnelFromLeads(DASH.leads);fo
 
 function renderTasks(){
   const filter=$('taskFilter').value;
-  const due=DASH.tasks.filter(t=>openTask(t)&&F1AcquisitionCore.isDue(t)&&(!filter||up(t.task_type)===filter));
+  const due=cleanOperationalTasks().filter(t=>openTask(t)&&F1AcquisitionCore.isDue(t)&&(!filter||up(t.task_type)===filter));
   const rows=dedupeDisplayTasks(due).sort((a,b)=>(Number(b.priority)||0)-(Number(a.priority)||0)||String(a.due_date||'').localeCompare(String(b.due_date||''))).slice(0,18);
   if(!rows.length){$('taskList').innerHTML='<div class="empty">Nessun task aperto per questo filtro.</div>';return}
   $('taskList').innerHTML=rows.map(t=>{
@@ -320,18 +402,18 @@ async function renderRelationsDue(){
   }catch(e){$('relationsDue').innerHTML=`<div class="empty">Rete relazionale non disponibile: ${esc(e?.message||e)}</div>`}
 }
 
-function renderAll(){renderHeader();renderHotNews();renderStats();renderCore();renderPillars();renderCompetitor();renderTerritory();renderFunnel();renderTasks()}
+function renderAll(){renderHeader();renderHotNews();renderSellerRadar();renderStats();renderCore();renderPillars();renderCompetitor();renderTerritory();renderFunnel();renderTasks()}
 async function load(){
   try{
     const data=await F1AcquisitionData.loadDashboardData();
-    DASH={...data,hotNews:[]};
+    DASH={...data,hotNews:[],sellerRadar:buildSellerRadarResults(data.feed?.tasks||[])};
     DASH.hotNews=await loadHotNews();
     renderAll();await renderRelationsDue();
   }catch(e){$('taskList').innerHTML=`<div class="empty">Command Center non inizializzato: ${esc(e?.message||e)}</div>`}
 }
 
 function bind(){
-  $('taskFilter')?.addEventListener('change',renderTasks);$('refreshBtn')?.addEventListener('click',load);$('outcomeForm')?.addEventListener('submit',saveOutcome);$('outcomeCancel')?.addEventListener('click',closeOutcome);
+  $('taskFilter')?.addEventListener('change',renderTasks);$('sellerRadarComune')?.addEventListener('change',renderSellerRadar);$('refreshBtn')?.addEventListener('click',load);$('outcomeForm')?.addEventListener('submit',saveOutcome);$('outcomeCancel')?.addEventListener('click',closeOutcome);
   let installPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('installBtn').hidden=false});$('installBtn')?.addEventListener('click',async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$('installBtn').hidden=true});
   window.addEventListener('focus',()=>{if(document.visibilityState==='visible')load()});
 }
