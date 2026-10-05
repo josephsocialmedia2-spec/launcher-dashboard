@@ -43,7 +43,8 @@ test.describe('F1 Launcher master UI', () => {
     // disabilitare o aggirare l'autenticazione reale.
     const html = fs.readFileSync('ricerca-territoriale.html', 'utf8');
     expect(html).toContain('id="territorio"');
-    expect(html).toContain('f1-territory-workspace.js');
+    const guard = fs.readFileSync('f1-dashboard-auth-guard.js', 'utf8');
+    expect(guard).toContain('f1-territory-workspace.js');
     expect(html).toContain('Dal civico alla relazione.');
     expect(html).not.toContain('href="ricerca-territoriale.html#territorio"');
   });
