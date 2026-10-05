@@ -127,3 +127,14 @@ Il percorso di invio F1 usa ora il link diretto al modulo Agent Pricing e non ge
 Il pixel `{{OPEN_PIXEL_URL}}` è stato rimosso dal template attivo e `campaign-admin-f1` non lo valorizza.
 
 Motivo operativo: il tracciamento occulto delle aperture resta disabilitato finché non esiste una gestione del consenso/informativa e della revoca granulare specificamente adeguata al tracking. Le metriche operative prioritarie restano invio, bounce, risposta, booking, show, opportunità e cliente.
+
+
+## Integrazione commerciale F1 + Real Media Pro — 05/10/2026
+
+- Landing commerciale integrata: `f1-commerciale-realmedia.html`.
+- Accesso diretto aggiunto a `f1-email-radar.html`.
+- Snapshot database al 05/10/2026: 450 soggetti territoriali, di cui 446 aziende, 2 professionisti e 2 studi professionali.
+- 51 record con email ordinaria; 37 email verificate, 14 rischiose, 399 non verificate/assenti nel flusso di acquisizione.
+- 397 record senza email e 2 con sola PEC.
+- Il motore resta in modalità `STRICT_CONSENT`; nessun invio automatico viene autorizzato solo perché l'email è pubblica.
+- La presentazione commerciale è pronta per essere inserita nelle comunicazioni quando il lead supera il compliance gate.
