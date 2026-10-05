@@ -17,6 +17,34 @@ function actionLabel(t){const type=up(t.task_type);return type==='CALL'?'APRI TE
 function dueDateValue(v){return String(v||'').slice(0,10)}
 function statusFromOutcome(value){const v=up(value);if(v==='APPUNTAMENTO')return'APPUNTAMENTO';if(v==='NON_INTERESSATO')return'NON_INTERESSATO';return''}
 function interactionType(task){const t=up(task?.task_type);if(t==='CALL')return'CALL';if(t==='FIELD')return'FIELD';if(t==='FOLLOW_UP')return'FOLLOW_UP';return'NOTE'}
+function taskLead(t){return DASH.leads.find(l=>String(l.lead_id||'')===String(t.lead_id||''))||null}
+function isDailySellerTask(t){return up(t.origin||t.metadata?.origin||'')==='DAILY_SELLER_50'}
+function dedupeDisplayTasks(rows){
+  const map=new Map();
+  for(const t of rows){
+    const key=isDailySellerTask(t)&&t.lead_id?'DAILY_SELLER_50|'+String(t.lead_id):'TASK|'+String(t.task_id||F1AcquisitionCore.taskIdentity(t));
+    const old=map.get(key);
+    if(!old){map.set(key,t);continue}
+    const a=[Number(t.priority)||0,String(t.due_date||''),String(t.updated_at||t.created_at||'')];
+    const b=[Number(old.priority)||0,String(old.due_date||''),String(old.updated_at||old.created_at||'')];
+    if(a[0]>b[0]||(a[0]===b[0]&&(a[1]>b[1]||(a[1]===b[1]&&a[2]>b[2]))))map.set(key,t);
+  }
+  return [...map.values()];
+}
+function taskTitle(t,lead){
+  if(isDailySellerTask(t)){
+    const name=[lead?.nome,lead?.cognome].filter(Boolean).join(' ').trim();
+    return name?('CHIAMA '+name):'CONTATTO SELLER DA LAVORARE';
+  }
+  return t.reason||t.lead_reason||lead?.lead_reason||'Task da lavorare';
+}
+function taskWhy(t,lead){
+  if(isDailySellerTask(t))return t.selection_reason||t.lead_reason||lead?.lead_reason||'Segnale immobiliare da approfondire';
+  return t.lead_reason||lead?.lead_reason||t.reason||'Segnale da verificare';
+}
+function taskDetail(t){
+  return clean(t.call_reason_detail||t.signal_text||t.trigger_note||'');
+}
 
 function renderHeader(){
   const territory=DASH.cfg?.territory||{};
@@ -48,11 +76,17 @@ function renderFunnel(){const f=F1AcquisitionCore.funnelFromLeads(DASH.leads);fo
 
 function renderTasks(){
   const filter=$('taskFilter').value;
-  const rows=DASH.tasks.filter(t=>openTask(t)&&F1AcquisitionCore.isDue(t)&&(!filter||up(t.task_type)===filter)).sort((a,b)=>(Number(b.priority)||0)-(Number(a.priority)||0)||String(a.due_date||'').localeCompare(String(b.due_date||''))).slice(0,18);
+  const due=DASH.tasks.filter(t=>openTask(t)&&F1AcquisitionCore.isDue(t)&&(!filter||up(t.task_type)===filter));
+  const rows=dedupeDisplayTasks(due).sort((a,b)=>(Number(b.priority)||0)-(Number(a.priority)||0)||String(a.due_date||'').localeCompare(String(b.due_date||''))).slice(0,18);
   if(!rows.length){$('taskList').innerHTML='<div class="empty">Nessun task aperto per questo filtro.</div>';return}
   $('taskList').innerHTML=rows.map(t=>{
-    const target=actionHref(t),src=safeUrl(t.source_url),where=[t.comune,t.via,t.civico].filter(Boolean).join(' — ');
-    return `<article class="task" data-task="${esc(t.task_id)}"><div class="taskTop"><div><div class="taskReason">${esc(t.reason||t.lead_reason||'Task da lavorare')}</div><div class="taskMeta">PILASTRO ${esc(t.pillar)} · ${esc(t.task_type)}${taskCore(t)?' · CORE '+esc(taskCore(t)):''}${where?' · '+esc(where):''}</div></div><div class="score">PRIORITÀ ${esc(t.priority||0)}</div></div><div class="taskWhy"><b>PERCHÉ:</b> ${esc(t.lead_reason||t.reason||'Segnale da verificare')}<br><span class="meta">Fonte: ${esc(t.source||'—')} · confidenza: ${esc(t.confidence||'—')}</span></div><div class="actions"><a class="btn" href="${esc(target)}"${/^https?:/.test(target)?' target="_blank" rel="noopener"':''}>${actionLabel(t)}</a>${src?`<a class="btn alt" href="${esc(src)}" target="_blank" rel="noopener">FONTE</a>`:''}<button class="btn gold" type="button" data-outcome="${esc(t.task_id)}">REGISTRA ESITO</button></div></article>`;
+    const lead=taskLead(t),target=actionHref(t);
+    const src=safeUrl(t.source_url||t.contact_source_url||t.linked_property_url||lead?.source_url);
+    const where=[t.comune||lead?.comune,t.via||lead?.via,t.civico||lead?.civico].filter(Boolean).join(' — ');
+    const source=t.source||lead?.source||t.linked_property_source||'—';
+    const confidence=t.confidence||lead?.confidence||'—';
+    const detail=taskDetail(t);
+    return `<article class="task" data-task="${esc(t.task_id)}"><div class="taskTop"><div><div class="taskReason">${esc(taskTitle(t,lead))}</div><div class="taskMeta">PILASTRO ${esc(t.pillar)} · ${esc(t.task_type)}${taskCore(t)?' · CORE '+esc(taskCore(t)):''}${where?' · '+esc(where):''}</div></div><div class="score">PRIORITÀ ${esc(t.priority||0)}</div></div><div class="taskWhy"><b>PERCHÉ:</b> ${esc(taskWhy(t,lead))}${detail?'<br>'+esc(detail):''}<br><span class="meta">Fonte: ${esc(source)} · confidenza: ${esc(confidence)}</span></div><div class="actions"><a class="btn" href="${esc(target)}"${/^https?:/.test(target)?' target="_blank" rel="noopener"':''}>${actionLabel(t)}</a>${src?`<a class="btn alt" href="${esc(src)}" target="_blank" rel="noopener">FONTE</a>`:''}<button class="btn gold" type="button" data-outcome="${esc(t.task_id)}">REGISTRA ESITO</button></div></article>`;
   }).join('');
   document.querySelectorAll('[data-outcome]').forEach(b=>b.addEventListener('click',()=>openOutcome(b.dataset.outcome)));
 }
