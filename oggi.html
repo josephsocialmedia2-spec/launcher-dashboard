@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="f1-launcher-master.css?v=20261005-sellerradar2">
+<link rel="stylesheet" href="f1-launcher-master.css?v=20261005-francyhorizontal1">
 <link rel="stylesheet" href="f1-operating-system.css?v=20261005-os1">
 <link rel="stylesheet" href="f1-public-intelligence.css?v=20261005-radar1">
 <script defer src="supabase-config.js"></script>
@@ -40,29 +40,39 @@
       <div class="notice"><b>REGOLA OPERATIVA:</b> questa è l’unica cabina giornaliera dell’acquisizione. Il territorio arriva da <b>config/territory.json</b>. Ogni attività conclusa deve registrare l’esito e, quando serve, la prossima azione con una data.</div>
 
       <section class="panel francy-calendar-panel" id="francyCalendar" aria-labelledby="francyCalendarTitle">
-        <div class="francy-calendar-head">
-          <div>
-            <span class="badge gold">FRANCY LIBERA → AGENZIA</span>
-            <h2 id="francyCalendarTitle">Calendario personale Francy</h2>
-            <p class="meta" id="francyWeekLabel">Disponibilità settimanale</p>
+        <details class="francy-calendar-accordion">
+          <summary>
+            <div class="francy-accordion-title">
+              <span class="badge gold">FRANCY LIBERA → AGENZIA</span>
+              <div>
+                <h2 id="francyCalendarTitle">Calendario personale Francy</h2>
+                <p class="meta" id="francyWeekLabel">Disponibilità settimanale</p>
+              </div>
+            </div>
+            <span class="francy-accordion-chevron" aria-hidden="true">⌄</span>
+          </summary>
+          <div class="francy-accordion-body">
+            <div class="francy-toolbar">
+              <div class="francy-sunday-alert" id="francySundayAlert" hidden><b>DOMENICA:</b> chiedi a Francy l'orario della prossima settimana.</div>
+              <div class="francy-calendar-actions">
+                <a class="btn gold" id="francyWhatsAppLink" href="#" target="_blank" rel="noopener">APRI CHAT FRANCESCA</a>
+                <button class="btn alt" id="francyToggleImport" type="button">INCOLLA ORARIO</button>
+              </div>
+            </div>
+            <div class="francy-week-scroll">
+              <div class="francy-week-grid" id="francyWeekGrid"></div>
+            </div>
+            <div class="francy-import" id="francyImport" hidden>
+              <label for="francyScheduleText"><b>Messaggio ricevuto da Francy</b></label>
+              <textarea id="francyScheduleText" rows="5" placeholder="Incolla qui il messaggio che contiene la parola ORARIO. Esempio: ORARIO: lun 9-13, mar 14-20, mer riposo..."></textarea>
+              <div class="actions">
+                <button class="btn" id="francyParseSave" type="button">LEGGI E SALVA ORARIO</button>
+                <button class="btn alt" id="francyClearSchedule" type="button">AZZERA SETTIMANA</button>
+              </div>
+              <div class="meta" id="francyParseStatus"></div>
+            </div>
           </div>
-          <div class="francy-calendar-actions">
-            <a class="btn gold" id="francyWhatsAppLink" href="#" target="_blank" rel="noopener">APRI CHAT FRANCESCA</a>
-            <button class="btn alt" id="francyToggleImport" type="button">INCOLLA ORARIO</button>
-          </div>
-        </div>
-        <div class="francy-sunday-alert" id="francySundayAlert" hidden><b>DOMENICA:</b> chiedi a Francy l'orario della prossima settimana.</div>
-        <div class="francy-week-grid" id="francyWeekGrid"></div>
-        <div class="francy-import" id="francyImport" hidden>
-          <label for="francyScheduleText"><b>Messaggio ricevuto da Francy</b></label>
-          <textarea id="francyScheduleText" rows="5" placeholder="Incolla qui il messaggio che contiene la parola ORARIO. Esempio: ORARIO: lun 9-13, mar 14-20, mer riposo..."></textarea>
-          <div class="actions">
-            <button class="btn" id="francyParseSave" type="button">LEGGI E SALVA ORARIO</button>
-            <button class="btn alt" id="francyClearSchedule" type="button">AZZERA SETTIMANA</button>
-          </div>
-          <div class="meta" id="francyParseStatus"></div>
-        </div>
-        <div class="meta francy-privacy-note">Il calendario usa solo l'orario che Francesca comunica volontariamente. Non accede automaticamente alle sue chat private.</div>
+        </details>
       </section>
 
       <section class="panel hot-news-panel" id="hot-news" aria-labelledby="hotNewsTitle">
