@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-10-05T17:51:15.924077+00:00",
+  "started_at": "2026-10-05T18:05:47.622104+00:00",
   "scanner_version": 4,
   "geography": {
     "center": "Susa",
@@ -32,11 +32,11 @@
       "comune": "Meana di Susa",
       "km_from_susa": 1.9,
       "url": "https://www.comune.meanadisusa.to.it/it-it/amministrazione/documenti-albo-pretorio",
-      "status": "ERROR",
+      "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 0,
-      "error": "ConnectTimeout: HTTPSConnectionPool(host='www.comune.meanadisusa.to.it', port=443): Max retries exceeded with url: /it-it/amministrazione/documenti-albo-pretorio (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.comune.meanadisusa.to.it', port=443) at 0x7f6dd54b43e0>, 'Connection to www.comune.meanadisusa.to.it timed out. (connect timeout=20)'))"
+      "pages_checked": 5,
+      "http_status": 200
     },
     {
       "comune": "Gravere",
@@ -52,21 +52,21 @@
       "comune": "Giaglione",
       "km_from_susa": 3.5,
       "url": "https://www.comune.giaglione.to.it/it-it/amministrazione/documenti-dati",
-      "status": "ERROR",
+      "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 0,
-      "error": "ConnectTimeout: HTTPSConnectionPool(host='www.comune.giaglione.to.it', port=443): Max retries exceeded with url: /it-it/amministrazione/documenti-dati (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.comune.giaglione.to.it', port=443) at 0x7f6dd54b41d0>, 'Connection to www.comune.giaglione.to.it timed out. (connect timeout=20)'))"
+      "pages_checked": 3,
+      "http_status": 200
     },
     {
       "comune": "Venaus",
       "km_from_susa": 4.3,
       "url": "https://www.comune.venaus.to.it/it-it/amministrazione/documenti-dati",
-      "status": "ERROR",
+      "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 0,
-      "error": "ConnectTimeout: HTTPSConnectionPool(host='www.comune.venaus.to.it', port=443): Max retries exceeded with url: /it-it/amministrazione/documenti-dati (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.comune.venaus.to.it', port=443) at 0x7f6dd53a43b0>, 'Connection to www.comune.venaus.to.it timed out. (connect timeout=20)'))"
+      "pages_checked": 3,
+      "http_status": 200
     },
     {
       "comune": "Mattie",
@@ -102,11 +102,15 @@
       "comune": "Bussoleno",
       "km_from_susa": 7.2,
       "url": "https://www.comune.bussoleno.to.it/it-it/albo-pretorio",
-      "status": "ERROR",
+      "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 0,
-      "error": "ConnectTimeout: HTTPSConnectionPool(host='www.comune.bussoleno.to.it', port=443): Max retries exceeded with url: /it-it/albo-pretorio (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.comune.bussoleno.to.it', port=443) at 0x7f6dd5013ce0>, 'Connection to www.comune.bussoleno.to.it timed out. (connect timeout=20)'))"
+      "pages_checked": 2,
+      "http_status": 200,
+      "warnings": [
+        "https://albo.studiok.it/bussoleno/albo/: ConnectTimeout",
+        "https://frontcsinivola.apkappa.it/cmsbussoleno/portale/albopretorio/albopretorioconsultazione.aspx?P=400: SSLError"
+      ]
     },
     {
       "comune": "Chianocco",
@@ -115,12 +119,8 @@
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 2,
-      "http_status": 200,
-      "warnings": [
-        "https://halleyweb.com/c001076/mc/mc_matri_gridev_messi.php?x=&servizio=&bck=: ConnectionError",
-        "https://www.halleyweb.com/c001076/mc/mc_gridev_messi.php?x=&servizio=&bck=: ConnectionError"
-      ]
+      "pages_checked": 4,
+      "http_status": 200
     },
     {
       "comune": "Moncenisio",
@@ -188,6 +188,6 @@
   ],
   "new_records": 0,
   "baseline_imported": 0,
-  "errors": 4,
-  "finished_at": "2026-10-05T17:53:47.747462+00:00"
+  "errors": 0,
+  "finished_at": "2026-10-05T18:06:50.486812+00:00"
 }
