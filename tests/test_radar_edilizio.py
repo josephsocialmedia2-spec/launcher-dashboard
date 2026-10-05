@@ -91,15 +91,13 @@ class RadarTests(unittest.TestCase):
         self.assertIn('KM_SUSA', html)
         self.assertIn('kmSusa', html)
 
-    def test_seller_radar_imports_edilizio_with_20km_filter(self):
+    def test_seller_radar_uses_canonical_acquisition_and_territory_sources(self):
         html = (ROOT / 'seller-radar-unico.html').read_text(encoding='utf-8')
-        self.assertIn("const EDILIZIO='./data/radar_edilizio.json'", html)
-        self.assertIn('RADAR_EDILIZIO', html)
-        self.assertIn('RIFERIMENTO PROFESSIONALE', html)
-        self.assertIn('KM_SUSA', html)
-        self.assertIn('kmSusa', html)
-        self.assertIn('<=20', html.replace(' ', ''))
-        self.assertIn('source_page', html)
+        self.assertIn('F1AcquisitionCore.loadConfig()', html)
+        self.assertIn('F1AcquisitionCore.loadPublicFeed()', html)
+        self.assertIn('TERRITORY.reference_hub', html)
+        self.assertIn('TERRITORY.sinistra', html)
+        self.assertIn('TERRITORY.destra', html)
 
     def test_weekly_schedule(self):
         workflow = (ROOT / '.github/workflows/radar-edilizio-daily.yml').read_text(encoding='utf-8')
@@ -107,12 +105,12 @@ class RadarTests(unittest.TestCase):
         self.assertIn('seller-radar-unico.html', workflow)
         self.assertIn('F1 Radar Edilizio Weekly', workflow)
 
-    def test_oggi_integration_hook(self):
+    def test_oggi_uses_canonical_pwa_bootstrap(self):
         oggi = (ROOT / 'oggi.html').read_text(encoding='utf-8')
         pwa = (ROOT / 'pwa.js').read_text(encoding='utf-8')
         self.assertIn('pwa.js', oggi)
-        self.assertIn('radar-edilizio.html', pwa)
-        self.assertIn('radar-edilizio-f1', pwa)
+        self.assertIn('F1 ACQUISITION COMMAND CENTER', oggi)
+        self.assertIn('PWA bootstrap only', pwa)
 
     def test_pwa_cache_contains_radar(self):
         sw = (ROOT / 'sw.js').read_text(encoding='utf-8')
