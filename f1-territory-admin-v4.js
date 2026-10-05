@@ -77,7 +77,7 @@ async function load(){
 }
 function render(){
   $('f1tv4Civics').textContent=data.civics.length;$('f1tv4Contacts').textContent=data.conversations.length;$('f1tv4News').textContent=data.news.length;$('f1tv4Notes').textContent=data.notes.length;$('f1tv4Ocr').textContent=data.notes.filter(x=>x.note_type==='OCR').length;
-  const p=data.letters.filter(x=>x.status==='DA_STAMPARE'),d=data.letters.filter(x=>x.status==='DA_IMBUCARE');$('f1tv4Print').textContent=p.length;$('f1tv4Deliver').textContent=d.length;const today=new Date().toISOString().slice(0,10);$('f1tv4Appointments').textContent=(data.appointments||[]).filter(x=>String(x.appointment_at||'').slice(0,10)===today).length;$('f1tv4Followups').textContent=(data.followups||[]).length;
+  const p=data.letters.filter(x=>x.status==='DA_STAMPARE'),d=data.letters.filter(x=>x.status==='DA_IMBUCARE');$('f1tv4Print').textContent=p.length;$('f1tv4Deliver').textContent=d.length;const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Rome',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());$('f1tv4Appointments').textContent=(data.appointments||[]).filter(x=>String(x.appointment_at||'').slice(0,10)===today).length;$('f1tv4Followups').textContent=(data.followups||[]).length;
   const syncAt=data.server_synced_at?new Date(data.server_synced_at):new Date();$('f1tv4Live').textContent='CRM ONLINE · '+new Intl.DateTimeFormat('it-IT',{hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(syncAt);
   renderResume();renderLetters();renderAppointments();renderFollowups();renderAssets();renderActivity();
 }
