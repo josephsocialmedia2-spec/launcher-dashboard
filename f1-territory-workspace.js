@@ -6,7 +6,7 @@ const $=id=>document.getElementById(id);
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const txt=v=>String(v??'').trim();
 const norm=v=>txt(v).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
-let profile=null,state=null,territory=null,people=[];
+let profile=null,state=null,territory=null,people=[],deepLinkOpened=false;
 
 function todayRome(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Rome',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
 function updateClock(){const now=new Date();$('twClock').textContent=new Intl.DateTimeFormat('it-IT',{timeZone:'Europe/Rome',hour:'2-digit',minute:'2-digit'}).format(now)}
@@ -38,7 +38,15 @@ function renderPeople(){
   document.querySelectorAll('[data-edit-contact]').forEach(b=>b.addEventListener('click',()=>editPerson(b.dataset.editContact)));
 }
 async function loadPeople(){
-  try{people=await F1StaffData.rest('network_contacts?deleted=eq.false&app_scope=eq.'+encodeURIComponent(SCOPE)+'&select=*&order=updated_at.desc&limit=500')||[];renderPeople()}catch(e){$('twPeopleList').innerHTML=`<div class="empty">Rete non disponibile: ${esc(e?.message||e)}</div>`}
+  try{
+    people=await F1StaffData.rest('network_contacts?deleted=eq.false&app_scope=eq.'+encodeURIComponent(SCOPE)+'&select=*&order=updated_at.desc&limit=500')||[];
+    renderPeople();
+    if(!deepLinkOpened){
+      const qp=new URLSearchParams(location.search),legacy=txt(qp.get('person'));
+      const target=legacy?people.find(r=>String(r.legacy_id||'')===legacy):null;
+      if(target){deepLinkOpened=true;editPerson(target.contact_id);toast('Scheda relazionale aperta nel territorio.')}
+    }
+  }catch(e){$('twPeopleList').innerHTML=`<div class="empty">Rete non disponibile: ${esc(e?.message||e)}</div>`}
 }
 
 function resetForm(){
