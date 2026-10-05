@@ -1,0 +1,51 @@
+name: F1 Agency 360 QA
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'oggi.html'
+      - 'f1-demand-engine.html'
+      - 'f1-demand-engine.js'
+      - 'f1-valutazioni.html'
+      - 'f1-documenti-immobile.html'
+      - 'f1-distribuzione-immobili.html'
+      - 'config/crm-os.json'
+      - 'supabase-migrations/20261005_f1_*.sql'
+      - '.github/workflows/f1-agency-360-qa.yml'
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check external JS
+        run: node --check f1-demand-engine.js
+      - name: Check inline scripts
+        shell: python
+        run: |
+          from pathlib import Path
+          import re,subprocess,tempfile
+          for name in ['f1-valutazioni.html','f1-documenti-immobile.html','f1-distribuzione-immobili.html']:
+              text=Path(name).read_text(encoding='utf-8')
+              scripts=re.findall(r'<script>([\s\S]*?)</script>',text,re.I)
+              assert scripts, f'No inline script in {name}'
+              for i,code in enumerate(scripts):
+                  p=Path(tempfile.gettempdir())/f'{name}-{i}.js'
+                  p.write_text(code,encoding='utf-8')
+                  subprocess.run(['node','--check',str(p)],check=True)
+      - name: Validate integration markers
+        shell: python
+        run: |
+          import json
+          from pathlib import Path
+          today=Path('oggi.html').read_text(encoding='utf-8')
+          assert 'id="agency360"' in today
+          for f in ['f1-demand-engine.html','f1-valutazioni.html','f1-documenti-immobile.html','f1-distribuzione-immobili.html']:
+              assert f in today, f'{f} missing from OGGI'
+              assert Path(f).exists()
+          cfg=json.loads(Path('config/crm-os.json').read_text())
+          assert cfg['featureFlags']['newMatchingEngine'] is True
+          print('PASS F1 AGENCY 360 STATIC QA')
