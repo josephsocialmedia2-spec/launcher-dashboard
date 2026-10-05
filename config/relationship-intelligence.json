@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "name": "F1 Relationship & Territory Intelligence",
+  "principle": "La relazione viene prima del lead. I dati pubblici servono a contestualizzare e verificare, non a dedurre automaticamente proprietà, reddito, residenza o intenzione di vendere.",
+  "evidence_statuses": ["DA_VERIFICARE", "VERIFICATO", "SCARTATO"],
+  "research_refresh_days": 180,
+  "relationship_stale_days": 90,
+  "rules": {
+    "no_private_data_harvesting": true,
+    "no_ownership_inference": true,
+    "no_sale_intent_inference": true,
+    "source_url_required_for_verified_evidence": true,
+    "public_or_professional_sources_only": true,
+    "manual_review_before_association": true,
+    "respect_followup_permission": true,
+    "respect_authorized_channel": true,
+    "respect_rpo_and_do_not_contact": true
+  },
+  "sources": [
+    {"id":"WEB","label":"Web pubblico","purpose":"Ruolo, attività, associazioni o informazioni pubbliche pertinenti."},
+    {"id":"PROFESSIONE","label":"Lavoro / azienda","purpose":"Informazioni professionali e aziendali pubbliche."},
+    {"id":"NOTIZIE","label":"Notizie locali","purpose":"Contesto territoriale e fatti pubblici rilevanti."},
+    {"id":"SOCIAL_PUBBLICO","label":"Profili pubblici","purpose":"Solo profili e contenuti pubblicamente accessibili."},
+    {"id":"MAPPE_ATTIVITA","label":"Mappe / attività","purpose":"Attività economiche, servizi e contesto della zona."},
+    {"id":"REGISTRO_IMPRESE","label":"Registro Imprese","url":"https://www.registroimprese.it/","purpose":"Ricerca ufficiale di imprese e sedi; eventuali servizi a pagamento restano esclusi dal flusso automatico."},
+    {"id":"OMI","label":"Agenzia Entrate · OMI","url":"https://www1.agenziaentrate.gov.it/servizi/geopoi_omi/index.php","purpose":"Quotazioni immobiliari territoriali; valori indicativi, non perizie."},
+    {"id":"ISTAT","label":"ISTAT","url":"https://esploradati.istat.it/","purpose":"Dati statistici e demografici territoriali."},
+    {"id":"PVP","label":"Portale Vendite Pubbliche","url":"https://pvp.giustizia.it/pvp/","purpose":"Informazioni pubbliche sulle vendite giudiziarie, usate come indicatore di mercato e non per profilare persone."}
+  ]
+}
