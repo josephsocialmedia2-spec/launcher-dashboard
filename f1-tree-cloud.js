@@ -145,6 +145,8 @@ function cloudContactToLocal(c,idByContact,triggers,touchpoints,socials){
     schools:Array.isArray(meta.schools)?meta.schools:[],
     companies:Array.isArray(meta.companies)?meta.companies:[],
     contextTags:Array.isArray(meta.contextTags)?meta.contextTags:[],
+    _treeMeta:meta,
+    publicIntelligence:meta.publicIntelligence&&typeof meta.publicIntelligence==='object'?meta.publicIntelligence:{lastResearchAt:'',evidence:[]},
     crmLeadId:meta.crmLeadId||'',
     newsNextRecall:meta.newsNextRecall||'',
     createdAt:c.created_at||nowIso(),
@@ -195,7 +197,7 @@ function mergeCloudIntoLocal(bundle){
   const root=(db.people||[]).find(p=>p.id==='root')||{
     id:'root',parentId:null,name:'IO',surname:'',phone:'',email:'',category:'',source:'',stage:'Nome',town:'',
     notes:'Punto di partenza della rete personale',influence:false,firstContact:'',lastContact:'',nextContact:'',
-    touchpointHistory:{},socialSearchHistory:{},lifeTriggers:[],lifeTriggerHistory:[],periodContexts:[],places:[],memories:[],schools:[],companies:[],contextTags:[],createdAt:nowIso(),updatedAt:nowIso(),contactDates:[]
+    touchpointHistory:{},socialSearchHistory:{},lifeTriggers:[],lifeTriggerHistory:[],periodContexts:[],places:[],memories:[],schools:[],companies:[],contextTags:[],_treeMeta:{},publicIntelligence:{lastResearchAt:'',evidence:[]},createdAt:nowIso(),updatedAt:nowIso(),contactDates:[]
   };
   const localMap=new Map((db.people||[]).filter(p=>p.id!=='root').map(p=>[p.id,p]));
   bundle.people.forEach(cp=>{
@@ -256,10 +258,12 @@ function contactPayload(p,parentCloudId){
     centro_influenza:!!p.influence,
     contact_dates:Array.isArray(p.contactDates)?p.contactDates:[],
     tree_meta:{
+      ...(p._treeMeta&&typeof p._treeMeta==='object'?p._treeMeta:{}),
       category:p.category||'',source:p.source||'',stage:p.stage||'Nome',
       lifeTriggerStatus:p.lifeTriggerStatus||{},lifeTriggerNews:p.lifeTriggerNews||{},
       periodContexts:p.periodContexts||[],places:p.places||[],memories:p.memories||[],schools:p.schools||[],companies:p.companies||[],contextTags:p.contextTags||[],
       crmLeadId:p.crmLeadId||'',newsNextRecall:p.newsNextRecall||'',
+      publicIntelligence:p.publicIntelligence&&typeof p.publicIntelligence==='object'?p.publicIntelligence:{lastResearchAt:'',evidence:[]},
       createdAt:p.createdAt||stamp,updatedAt:stamp
     },
     updated_at:stamp,
@@ -366,7 +370,7 @@ async function pushSnapshot(){
       if(r&&newer(r.updated_at,personStamp(p))){
         const idMap=new Map(remote.map(x=>[x.contact_id,x.legacy_id]));
         const cp=cloudContactToLocal(r,idMap,[],[],[]);
-        Object.assign(p,{...p,...cp,touchpointHistory:p.touchpointHistory||{},socialSearchHistory:p.socialSearchHistory||{},lifeTriggers:p.lifeTriggers||[],lifeTriggerHistory:p.lifeTriggerHistory||[],lifeTriggerStatus:p.lifeTriggerStatus||{},lifeTriggerNews:p.lifeTriggerNews||{},periodContexts:cp.periodContexts||p.periodContexts||[],places:cp.places||p.places||[],memories:cp.memories||p.memories||[],schools:cp.schools||p.schools||[],companies:cp.companies||p.companies||[],contextTags:cp.contextTags||p.contextTags||[]});
+        Object.assign(p,{...p,...cp,touchpointHistory:p.touchpointHistory||{},socialSearchHistory:p.socialSearchHistory||{},lifeTriggers:p.lifeTriggers||[],lifeTriggerHistory:p.lifeTriggerHistory||[],lifeTriggerStatus:p.lifeTriggerStatus||{},lifeTriggerNews:p.lifeTriggerNews||{},periodContexts:cp.periodContexts||p.periodContexts||[],places:cp.places||p.places||[],memories:cp.memories||p.memories||[],schools:cp.schools||p.schools||[],companies:cp.companies||p.companies||[],contextTags:cp.contextTags||p.contextTags||[],_treeMeta:cp._treeMeta||p._treeMeta||{},publicIntelligence:cp.publicIntelligence||p.publicIntelligence||{lastResearchAt:'',evidence:[]}});
         localChangedFromCloud=true;
       }
     });
