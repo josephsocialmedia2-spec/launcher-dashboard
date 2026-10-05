@@ -652,3 +652,155 @@ body.f1-master-ui .seller-radar-today{
 .seller-radar-signal{margin-top:9px;padding:8px 9px;border-left:3px solid #35d59d;background:rgba(53,213,157,.07);font-size:12px;line-height:1.45}
 .seller-radar-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
 @media(max-width:760px){.seller-radar-list{grid-template-columns:1fr}.seller-radar-card-top{display:block}.seller-radar-side{text-align:left;margin-top:8px}}
+
+
+/* ---------- Francy: accordion orizzontale compatto ---------- */
+body.f1-master-ui .francy-calendar-panel{
+  padding:0!important;
+  overflow:hidden;
+}
+.francy-calendar-accordion{
+  width:100%;
+  border:0;
+  border-radius:inherit;
+  overflow:hidden;
+  background:transparent;
+}
+.francy-calendar-accordion > summary{
+  list-style:none;
+  cursor:pointer;
+  min-height:74px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:12px 16px;
+  background:linear-gradient(90deg,rgba(75,55,19,.48),rgba(7,39,65,.78));
+}
+.francy-calendar-accordion > summary::-webkit-details-marker{display:none}
+.francy-accordion-title{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.francy-accordion-title h2{
+  margin:0!important;
+  font-size:17px!important;
+}
+.francy-accordion-title .meta{margin:3px 0 0!important}
+.francy-accordion-chevron{
+  flex:0 0 auto;
+  font-size:24px;
+  color:#ffe1a0;
+  transition:transform .18s ease;
+}
+.francy-calendar-accordion[open] .francy-accordion-chevron{transform:rotate(180deg)}
+.francy-accordion-body{
+  padding:12px 14px 14px;
+  border-top:1px solid rgba(242,184,75,.24);
+}
+.francy-toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+}
+.francy-calendar-actions{
+  margin-left:auto;
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+.francy-sunday-alert{
+  padding:7px 10px;
+  border-radius:9px;
+  border:1px solid rgba(242,184,75,.38);
+  background:rgba(89,62,17,.22);
+  color:#ffe1a0;
+  font-size:12px;
+}
+.francy-week-scroll{
+  width:100%;
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding-bottom:4px;
+  scrollbar-width:thin;
+}
+.francy-week-grid{
+  min-width:980px;
+  display:grid!important;
+  grid-template-columns:repeat(7,minmax(130px,1fr))!important;
+  gap:7px!important;
+  margin:0!important;
+}
+.francy-day{
+  min-height:88px;
+  padding:9px 8px;
+  border:1px solid rgba(32,199,255,.22);
+  border-radius:10px;
+  background:linear-gradient(145deg,rgba(7,35,58,.92),rgba(5,24,42,.95));
+}
+.francy-day.has-data{
+  border-color:rgba(53,213,157,.44);
+  background:linear-gradient(145deg,rgba(7,54,47,.72),rgba(5,29,45,.96));
+}
+.francy-day-head{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:7px;
+  padding-bottom:6px;
+  border-bottom:1px solid rgba(32,199,255,.14);
+}
+.francy-day-head b{
+  color:#fff!important;
+  font-size:13px;
+}
+.francy-day-head small{
+  font-size:10px!important;
+  white-space:nowrap;
+}
+.francy-day-free{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin-top:7px;
+  line-height:1.3;
+}
+.francy-unknown,.francy-none{
+  color:#8399ad;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.02em;
+}
+.francy-free-slot{
+  display:block;
+  padding:5px 6px;
+  border-radius:7px;
+  background:rgba(53,213,157,.12);
+  border:1px solid rgba(53,213,157,.25);
+  color:#a5f3d7;
+  font-size:10px;
+  font-weight:850;
+}
+.francy-import{
+  margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid var(--f1m-border);
+  background:rgba(5,27,47,.82);
+}
+.francy-import textarea{
+  width:100%;
+  margin-top:6px;
+  padding:10px;
+}
+@media(max-width:760px){
+  .francy-calendar-accordion > summary{padding:10px 12px}
+  .francy-accordion-title{align-items:flex-start;flex-direction:column;gap:6px}
+  .francy-toolbar{align-items:stretch;flex-direction:column}
+  .francy-calendar-actions{margin-left:0}
+  .francy-week-grid{min-width:910px}
+}
