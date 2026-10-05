@@ -12,7 +12,7 @@
     {
       label: "OGGI",
       items: [
-        ["Dashboard","ricerca-territoriale.html","dashboard"],
+        ["Dashboard","oggi.html","dashboard"],
         ["Agenda","oggi.html#tasks","agenda"],
         ["Telefonate","telefonate-oggi.html","telefonate"]
       ]
@@ -20,7 +20,7 @@
     {
       label: "TERRITORIO",
       items: [
-        ["Ricerca territoriale","ricerca-territoriale.html#territorio","territorio"],
+        ["Ricerca territoriale","ricerca-territoriale.html","territorio"],
         ["Notizie","albero-fonti-notizie.html","notizie"]
       ]
     },
@@ -82,7 +82,7 @@
     if (target.includes("/")) return location.pathname.toLowerCase().endsWith(target);
     if (current !== target) return false;
     const hash = href.includes("#") ? "#" + href.split("#")[1] : "";
-    if (!hash) return !location.hash || current !== "ricerca-territoriale.html";
+    if (!hash) return true;
     return location.hash === hash;
   }
 
