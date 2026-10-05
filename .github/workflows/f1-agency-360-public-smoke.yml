@@ -1,0 +1,36 @@
+name: F1 Agency 360 Public Smoke
+on:
+  workflow_run:
+    workflows: ["Deploy F1 Immobiliare to GitHub Pages"]
+    types: [completed]
+permissions:
+  contents: read
+jobs:
+  smoke:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Verify public Agency 360 pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="https://josephsocialmedia2-spec.github.io/launcher-dashboard"
+          check() {
+            url="$1"; marker="$2"
+            for i in $(seq 1 20); do
+              body="$(curl -fsSL --max-time 20 "$url?smoke=${{ github.event.workflow_run.head_sha }}" || true)"
+              if printf '%s' "$body" | grep -Fq "$marker"; then
+                echo "PASS $url -> $marker"
+                return 0
+              fi
+              sleep 10
+            done
+            echo "FAIL $url missing marker $marker"
+            return 1
+          }
+          check "$base/oggi.html" "GESTIONALE 360"
+          check "$base/f1-demand-engine.html" "DEMAND ENGINE"
+          check "$base/f1-valutazioni.html" "VALUTAZIONI"
+          check "$base/f1-documenti-immobile.html" "REGISTRO DOCUMENTALE"
+          check "$base/f1-distribuzione-immobili.html" "CONTROLLO PUBBLICAZIONI"
