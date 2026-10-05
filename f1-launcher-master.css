@@ -630,3 +630,25 @@ body.f1-master-ui .hot-news-panel{
   .f1-knowledge-grid,.f1-knowledge-check{grid-template-columns:1fr}
   .f1-knowledge-check strong{grid-column:auto}
 }
+
+
+/* ---------- Seller Radar nella dashboard ---------- */
+body.f1-master-ui .seller-radar-today{
+  border-color:rgba(53,213,157,.46)!important;
+  background:linear-gradient(145deg,rgba(6,47,43,.84),rgba(5,23,42,.97))!important;
+}
+.seller-radar-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.seller-radar-count{min-width:86px;text-align:center;padding:9px 12px;border-radius:999px;background:#0b4d40;border:1px solid #35d59d;color:#eafff8;font-weight:900}
+.seller-radar-filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.seller-radar-filters select{min-width:210px}
+.seller-radar-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.seller-radar-card{padding:13px;border-radius:12px;border:1px solid rgba(53,213,157,.28);background:linear-gradient(145deg,rgba(5,49,43,.7),rgba(7,29,49,.9))}
+.seller-radar-card-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.seller-radar-title{font-size:16px;font-weight:900;color:#fff}
+.seller-radar-meta{margin-top:4px;color:#a9c7c2;font-size:11px;line-height:1.45}
+.seller-radar-side{text-align:right;display:grid;gap:5px;white-space:nowrap}
+.seller-radar-side b{color:#78f0bf!important;font-size:16px}
+.seller-radar-side span{font-size:10px;color:#d8f7ec;font-weight:900}
+.seller-radar-signal{margin-top:9px;padding:8px 9px;border-left:3px solid #35d59d;background:rgba(53,213,157,.07);font-size:12px;line-height:1.45}
+.seller-radar-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+@media(max-width:760px){.seller-radar-list{grid-template-columns:1fr}.seller-radar-card-top{display:block}.seller-radar-side{text-align:left;margin-top:8px}}
