@@ -147,15 +147,22 @@ async function editCompany(id){
 }
 async function saveCompany(){
   const id=$('cId').value;if(!id)return;
-  const patch={ragione_sociale:clean($('cRagione').value),settore:clean($('cSettore').value),partita_iva:clean($('cPiva').value),codice_fiscale:clean($('cCf').value),
-    indirizzo:clean($('cIndirizzo').value),comune:clean($('cComune').value),cap:clean($('cCap').value),provincia:clean($('cProvincia').value),
-    cellulare:clean($('cCell').value),telefono_fisso:clean($('cFisso').value),telefono:clean($('cCell').value)||clean($('cFisso').value),
-    email:clean($('cEmail').value),pec:clean($('cPec').value),sito_web:clean($('cSito').value),referente_nome:clean($('cRefNome').value),
-    referente_cognome:clean($('cRefCognome').value),referente_ruolo:clean($('cRefRuolo').value),referente_telefono:clean($('cRefTel').value),referente_email:clean($('cRefEmail').value),
-    stato:$('cDnc').checked?'NON_CONTATTARE':$('cStato').value,interesse:clean($('cInteresse').value),budget_stimato:$('cBudget').value?Number($('cBudget').value):null,
-    note:$('cNote').value,prossima_azione:clean($('cNext').value),data_prossima_azione:$('cNextDate').value||null,do_not_contact:$('cDnc').checked,updated_at:new Date().toISOString()};
   $('companyStatus').textContent='Salvataggio…';
-  try{await Data().rest('aziende?id=eq.'+encodeURIComponent(id),{method:'PATCH',body:JSON.stringify(patch)});$('companyStatus').textContent='Salvata.';$('companyDlg').close();await load()}catch(e){$('companyStatus').textContent=e.message||e}
+  try{
+    const current=(await Data().rest('aziende?id=eq.'+encodeURIComponent(id)+'&select=field_provenance&limit=1'))?.[0]||{};
+    const manualFields=['ragione_sociale','settore','partita_iva','codice_fiscale','indirizzo','comune','cap','provincia','cellulare','telefono_fisso','telefono','email','pec','sito_web','referente_nome','referente_cognome','referente_ruolo','referente_telefono','referente_email','stato','interesse','budget_stimato','note','prossima_azione','data_prossima_azione','do_not_contact'];
+    const provenance={...(current.field_provenance||{})};manualFields.forEach(k=>provenance[k]='MANUALE');
+    const patch={ragione_sociale:clean($('cRagione').value),settore:clean($('cSettore').value),partita_iva:clean($('cPiva').value),codice_fiscale:clean($('cCf').value),
+      indirizzo:clean($('cIndirizzo').value),comune:clean($('cComune').value),cap:clean($('cCap').value),provincia:clean($('cProvincia').value),
+      cellulare:clean($('cCell').value),telefono_fisso:clean($('cFisso').value),telefono:clean($('cCell').value)||clean($('cFisso').value),
+      email:clean($('cEmail').value),pec:clean($('cPec').value),sito_web:clean($('cSito').value),referente_nome:clean($('cRefNome').value),
+      referente_cognome:clean($('cRefCognome').value),referente_ruolo:clean($('cRefRuolo').value),referente_telefono:clean($('cRefTel').value),referente_email:clean($('cRefEmail').value),
+      stato:$('cDnc').checked?'NON_CONTATTARE':$('cStato').value,interesse:clean($('cInteresse').value),budget_stimato:$('cBudget').value?Number($('cBudget').value):null,
+      note:$('cNote').value,prossima_azione:clean($('cNext').value),data_prossima_azione:$('cNextDate').value||null,do_not_contact:$('cDnc').checked,
+      field_provenance:provenance,updated_at:new Date().toISOString()};
+    await Data().rest('aziende?id=eq.'+encodeURIComponent(id),{method:'PATCH',body:JSON.stringify(patch)});
+    $('companyStatus').textContent='Salvata.';$('companyDlg').close();await load()
+  }catch(e){$('companyStatus').textContent=e.message||e}
 }
 async function openCompanyOutcome(id){
   $('coAziendaId').value=id;$('coType').value='CALL';$('coOutcome').value='';$('coStato').value='CONTATTATA';$('coNote').value='';$('coNext').value='';$('coNextDate').value='';$('companyOutcomeStatus').textContent='';$('companyOutcomeDlg').showModal();
