@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-10-05T17:08:58.885712+00:00",
+  "started_at": "2026-10-05T17:12:03.393196+00:00",
   "scanner_version": 4,
   "geography": {
     "center": "Susa",
@@ -196,5 +196,5 @@
   "new_records": 0,
   "baseline_imported": 0,
   "errors": 0,
-  "finished_at": "2026-10-05T17:10:18.229413+00:00"
+  "finished_at": "2026-10-05T17:13:27.078998+00:00"
 }
