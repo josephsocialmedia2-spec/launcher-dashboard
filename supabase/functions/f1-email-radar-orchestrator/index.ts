@@ -443,14 +443,20 @@ async function finalizeIfIdle(url:string,service:string,runId:string){
 
 
 async function prepareResumeProviders(url:string,service:string,run:any,forceWebsite=false){
- const now=Date.now();const progress=await jfetch(url,service,"f1_email_radar_source_progress?select=*&run_id=eq."+run.run_id+"&order=sort_order.asc");
+ const now=Date.now(),staleAfterMs=15*60*1000;
+ const progress=await jfetch(url,service,"f1_email_radar_source_progress?select=*&run_id=eq."+run.run_id+"&order=sort_order.asc");
  for(const p of progress||[]){
   let requeue=false;
+  const lastStarted=p.last_started_at?Date.parse(p.last_started_at):NaN;
+  const lastUpdated=p.updated_at?Date.parse(p.updated_at):NaN;
+  const staleReference=Number.isFinite(lastStarted)?lastStarted:lastUpdated;
+  const staleRunning=p.provider_class==="REQUIRED_AUTOMATABLE"&&p.status==="RUNNING"&&(!Number.isFinite(staleReference)||now-staleReference>staleAfterMs);
   if(p.provider_class==="REQUIRED_AUTOMATABLE"&&["INCOMPLETE","FAILED","COOLDOWN"].includes(p.status)){
     if(!p.next_retry_at||Date.parse(p.next_retry_at)<=now)requeue=true;
   }
+  if(staleRunning)requeue=true;
   if(p.source_key==="SITI_UFFICIALI"&&p.status==="COMPLETED"&&forceWebsite)requeue=true;
-  if(requeue)await jfetch(url,service,"f1_email_radar_source_progress?progress_id=eq."+p.progress_id,{method:"PATCH",body:JSON.stringify({status:"PENDING",error:"",completed_at:null,updated_at:new Date().toISOString()}),prefer:"return=minimal"});
+  if(requeue)await jfetch(url,service,"f1_email_radar_source_progress?progress_id=eq."+p.progress_id,{method:"PATCH",body:JSON.stringify({status:"PENDING",error:staleRunning?"RECOVERED_STALE_RUNNING":"",completed_at:null,next_retry_at:null,updated_at:new Date().toISOString()}),prefer:"return=minimal"});
  }
  await jfetch(url,service,"f1_email_radar_runs?run_id=eq."+run.run_id,{method:"PATCH",body:JSON.stringify({status:"RUNNING",requested_action:"",updated_at:new Date().toISOString()}),prefer:"return=minimal"});
  const rr=await jfetch(url,service,"f1_email_radar_runs?select=*&run_id=eq."+run.run_id+"&limit=1");return rr?.[0]||run;
