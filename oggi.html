@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="f1-launcher-master.css?v=20261005-francy1">
+<link rel="stylesheet" href="f1-launcher-master.css?v=20261005-sellerradar2">
 <link rel="stylesheet" href="f1-operating-system.css?v=20261005-os1">
 <link rel="stylesheet" href="f1-public-intelligence.css?v=20261005-radar1">
 <script defer src="supabase-config.js"></script>
@@ -20,7 +20,7 @@
 <script defer src="f1-launcher-master.js?v=20261005-hot1"></script>
 <script defer src="pwa.js?v=20261005-commandfix1"></script>
 <script defer src="f1-secret-db-access.js?v=20260918-secret-db2"></script>
-<script defer src="f1-os-today.js?v=20261005-francy1"></script>
+<script defer src="f1-os-today.js?v=20261005-sellerradar2"></script>
 <style id="f1-agency360-grid-fix">.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:10px}@media(max-width:1050px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:620px){.grid4{grid-template-columns:1fr}}</style>
 </head>
 <body class="f1-os-page f1-os-today">
@@ -89,10 +89,27 @@
         </div>
       </section>
 
+      <section class="panel seller-radar-today" id="sellerRadarToday">
+        <div class="seller-radar-head">
+          <div>
+            <span class="badge gold">SELLER RADAR</span>
+            <h2>Risultati Seller Radar</h2>
+            <p class="meta">Solo segnali immobiliari reali del radar. I nominativi generati automaticamente da Pagine Bianche/Gialle non vengono più mostrati come possibili venditori.</p>
+          </div>
+          <div class="seller-radar-count"><b id="sellerRadarCount">0</b> SEGNALI</div>
+        </div>
+        <div class="seller-radar-filters">
+          <select id="sellerRadarComune" aria-label="Filtra Seller Radar per comune"><option value="">TUTTI I COMUNI</option></select>
+          <a class="btn" href="seller-radar-unico.html">APRI SELLER RADAR COMPLETO</a>
+          <a class="btn alt" href="seller-radar-unico.html?view=scaduti">SCADUTI / DA VERIFICARE</a>
+        </div>
+        <div id="sellerRadarList" class="seller-radar-list"><div class="meta">Caricamento risultati Seller Radar…</div></div>
+      </section>
+
       <section class="panel" id="tasks">
-        <span class="badge gold">PRIORITÀ OPERATIVA</span>
+        <span class="badge">ATTIVITÀ REALI</span>
         <h2>Cosa devo fare adesso</h2>
-        <p class="meta">Una coda unica. Esegui, registra l’esito, definisci cosa succede dopo.</p>
+        <p class="meta">Solo appuntamenti, richiami e attività operative reali. I segnali Seller Radar restano nel riquadro dedicato qui sopra.</p>
         <div class="filters">
           <select id="taskFilter" aria-label="Filtra attività"><option value="">TUTTI I TASK</option><option value="CALL">TELEFONATE</option><option value="FIELD">GIRO / TERRITORIO</option><option value="VERIFY">VERIFICHE</option><option value="FOLLOW_UP">FOLLOW-UP</option><option value="REFERRAL">REFERRAL</option><option value="CAMPAIGN">CAMPAGNE</option></select>
           <button class="btn alt" id="refreshBtn" type="button">AGGIORNA</button>
