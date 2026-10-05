@@ -46,6 +46,7 @@ async function installTerritoryMocks(page,{role='TITOLARE',auth=true}={}){
     };`}));
   await page.route('**/f1-realtime.js*',route=>route.fulfill({status:200,contentType:'application/javascript',body:`
     window.F1Realtime={start:async()=>{setTimeout(()=>window.dispatchEvent(new CustomEvent('f1:realtime-status',{detail:{status:'LIVE'}})),0);return true},status:()=> 'LIVE'};
+    window.addEventListener('offline',()=>window.dispatchEvent(new CustomEvent('f1:realtime-status',{detail:{status:'OFFLINE'}})));
   `}));
 }
 
@@ -117,6 +118,19 @@ test('territory collaborator cannot see owner access entry', async ({ page }) =>
   const access=page.locator('.f1-master-nav a[href*="accessi-ufficio.html"]');
   await expect(access).toHaveAttribute('aria-hidden','true');
   await expect(access).toBeHidden();
+});
+
+
+test('territory stays readable when browser goes offline', async ({ page, context }) => {
+  await installTerritoryMocks(page,{role:'TITOLARE',auth:true});
+  await page.goto('/ricerca-territoriale.html');
+  await expect(page.getByRole('heading',{name:'Dal civico alla relazione.'})).toBeVisible();
+  await context.setOffline(true);
+  await page.evaluate(()=>window.dispatchEvent(new Event('offline')));
+  await expect(page.locator('#twRealtime')).toContainText('OFFLINE');
+  await expect(page.locator('#twPersonForm')).toBeVisible();
+  await expect(page.locator('#twActionTitle')).toContainText('Vai al civico 12');
+  await context.setOffline(false);
 });
 
 test('expired territory session returns to cloud login', async ({ page }) => {
