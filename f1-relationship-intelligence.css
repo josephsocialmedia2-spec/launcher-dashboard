@@ -1,0 +1,21 @@
+/* F1 Relationship Intelligence — 2026-10-05 */
+.relationship-intel-box{background:linear-gradient(180deg,#10251d,#0d1c17);border:1px solid #2f745e;border-radius:13px;padding:12px;margin:12px 0}
+.relationship-intel-box h3{margin:0 0 5px;font-size:12px;letter-spacing:.06em;color:#aaf2cf}
+.relationship-intel-note{font-size:10px;line-height:1.45;color:#a9c3b7;margin-bottom:10px}
+.ri-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:8px 0}
+.ri-kpi{background:#0a1712;border:1px solid #285843;border-radius:9px;padding:8px;min-width:0}
+.ri-kpi b{display:block;font-size:16px;color:#fff;line-height:1.1}.ri-kpi span{display:block;margin-top:3px;font-size:7px;letter-spacing:.06em;color:#83a99a;text-transform:uppercase}
+.ri-reason{background:#162217;border-left:4px solid #f3c941;border-radius:8px;padding:9px;margin:8px 0;font-size:10px;line-height:1.45;color:#e8eee9}
+.ri-path{font-size:9px;color:#9dc4b3;margin:6px 0 10px;line-height:1.4}
+.ri-actions{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.ri-actions button,.ri-actions a{border:1px solid #356a54;background:#143126;color:#eafff3;border-radius:8px;padding:7px 8px;font-size:8px;font-weight:800;text-decoration:none}
+.ri-actions .primary{background:#20a864;border-color:#2ec47a;color:#05130c}.ri-actions .gold{background:#49391a;border-color:#80611f;color:#ffe3a1}
+.ri-evidence-form{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid #27503f}
+.ri-evidence-form .full{grid-column:1/-1}.ri-evidence-form input,.ri-evidence-form select,.ri-evidence-form textarea{width:100%;border:1px solid #315a49;background:#09140f;color:#fff;border-radius:8px;padding:7px;font-size:9px}
+.ri-evidence-form textarea{min-height:52px;resize:vertical}
+.ri-evidence-list{display:grid;gap:6px;margin-top:8px}.ri-evidence{background:#0a1511;border:1px solid #254b3b;border-radius:9px;padding:8px}
+.ri-evidence-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.ri-evidence b{font-size:9px}.ri-evidence small{display:block;color:#8ea99e;font-size:8px;margin-top:3px;line-height:1.35}
+.ri-evidence-tools{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}.ri-evidence-tools button,.ri-evidence-tools a{border:0;border-radius:6px;background:#1c3b2e;color:#dff5e8;padding:5px 6px;font-size:7px;text-decoration:none}
+.ri-status{font-size:7px;border-radius:999px;padding:3px 6px;background:#4a3815;color:#ffe29a;white-space:nowrap}.ri-status.ok{background:#16492f;color:#a9f0c8}.ri-status.no{background:#4d2525;color:#ffb1b1}
+.ri-empty{font-size:9px;color:#80978d;padding:7px 0}
+@media(max-width:620px){.ri-kpis{grid-template-columns:repeat(2,1fr)}.ri-evidence-form{grid-template-columns:1fr}}
