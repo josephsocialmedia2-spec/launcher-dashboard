@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-10-05T06:44:05.297704+00:00",
+  "started_at": "2026-10-05T14:56:28.288109+00:00",
   "scanner_version": 4,
   "geography": {
     "center": "Susa",
@@ -13,7 +13,7 @@
       "km_from_susa": 0.0,
       "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=ss090&RicCro=1",
       "status": "OK",
-      "links": 5,
+      "links": 6,
       "new": 0,
       "pages_checked": 1,
       "http_status": 200
@@ -196,5 +196,5 @@
   "new_records": 0,
   "baseline_imported": 0,
   "errors": 0,
-  "finished_at": "2026-10-05T06:45:25.469622+00:00"
+  "finished_at": "2026-10-05T14:57:56.260311+00:00"
 }
