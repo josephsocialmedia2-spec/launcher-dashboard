@@ -3,7 +3,7 @@
   "featureFlags": {
     "newDashboard": true,
     "newContactProfile": true,
-    "newMatchingEngine": false,
+    "newMatchingEngine": true,
     "newTerritoryMap": false,
     "newOwnerControlRoom": true
   },
@@ -25,10 +25,58 @@
     "CENTRO_INFLUENZA"
   ],
   "pipelines": {
-    "PROPRIETARIO": ["NUOVO","DA_CONTATTARE","CONTATTATO","DA_QUALIFICARE","QUALIFICATO","APPUNTAMENTO","VALUTAZIONE","FOLLOW_UP","INCARICO","NON_INTERESSATO","DA_RICONTATTARE"],
-    "VENDITORE": ["NUOVO","DA_CONTATTARE","CONTATTATO","DA_QUALIFICARE","QUALIFICATO","APPUNTAMENTO","VALUTAZIONE","FOLLOW_UP","INCARICO","NON_INTERESSATO","DA_RICONTATTARE"],
-    "ACQUIRENTE": ["NUOVO","CONTATTATO","QUALIFICATO","RICERCA_ATTIVA","MATCH","VISITA","INTERESSATO","PROPOSTA","TRATTATIVA","ACQUISTATO","ARCHIVIATO"],
-    "IMMOBILE": ["SEGNALAZIONE","PROSPECT","VALUTAZIONE","INCARICO","PREPARAZIONE","PUBBLICATO","VISITE","PROPOSTA","TRATTATIVA","VENDUTO","ARCHIVIATO"]
+    "PROPRIETARIO": [
+      "NUOVO",
+      "DA_CONTATTARE",
+      "CONTATTATO",
+      "DA_QUALIFICARE",
+      "QUALIFICATO",
+      "APPUNTAMENTO",
+      "VALUTAZIONE",
+      "FOLLOW_UP",
+      "INCARICO",
+      "NON_INTERESSATO",
+      "DA_RICONTATTARE"
+    ],
+    "VENDITORE": [
+      "NUOVO",
+      "DA_CONTATTARE",
+      "CONTATTATO",
+      "DA_QUALIFICARE",
+      "QUALIFICATO",
+      "APPUNTAMENTO",
+      "VALUTAZIONE",
+      "FOLLOW_UP",
+      "INCARICO",
+      "NON_INTERESSATO",
+      "DA_RICONTATTARE"
+    ],
+    "ACQUIRENTE": [
+      "NUOVO",
+      "CONTATTATO",
+      "QUALIFICATO",
+      "RICERCA_ATTIVA",
+      "MATCH",
+      "VISITA",
+      "INTERESSATO",
+      "PROPOSTA",
+      "TRATTATIVA",
+      "ACQUISTATO",
+      "ARCHIVIATO"
+    ],
+    "IMMOBILE": [
+      "SEGNALAZIONE",
+      "PROSPECT",
+      "VALUTAZIONE",
+      "INCARICO",
+      "PREPARAZIONE",
+      "PUBBLICATO",
+      "VISITE",
+      "PROPOSTA",
+      "TRATTATIVA",
+      "VENDUTO",
+      "ARCHIVIATO"
+    ]
   },
   "priorityModel": {
     "version": 1,
@@ -41,7 +89,11 @@
       "pipelineStatus": 10,
       "recentInterest": 5
     },
-    "notYetStructured": ["motivazione", "valore_potenziale", "match_immobili"]
+    "notYetStructured": [
+      "motivazione",
+      "valore_potenziale",
+      "match_immobili"
+    ]
   },
   "agenda": {
     "start": "06:30",
