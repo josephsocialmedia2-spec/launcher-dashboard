@@ -4,7 +4,7 @@
     "generated_at": "2026-09-01T09:30:00+02:00",
     "status": "IN_POPOLAMENTO",
     "privacy": "Solo recapiti professionali/aziendali pubblici; nessun recapito personale di proprietari privati.",
-    "last_automatic_scan_utc": "2026-10-05T14:56:28.288109+00:00",
+    "last_automatic_scan_utc": "2026-10-05T14:59:45.064643+00:00",
     "last_scan_new_records": 0,
     "scanner_version": 4,
     "history_seed_verified_at": "2026-09-02",
@@ -14,6 +14,27 @@
     "max_radius_km": 20.0
   },
   "opportunities": [
+    {
+      "id": "AUTO-64A4612729",
+      "comune": "Susa",
+      "km_from_susa": 0.0,
+      "date": "2026-10-05",
+      "atto": "ORDINANZA N° 80/72 del 05/10/26 Oggetto: REVOCA DELL ORDINANZA N. 4 (N. 4 DEL REGISTRO GENERALE) DEL 27/01/2026 E DELL ORDINANZA N. 28 (N. 30 DEL REGISTRO GENER",
+      "tipo": "Atto edilizio da analizzare",
+      "indirizzo": "DA APPROFONDIRE",
+      "catasto": "",
+      "descrizione": "ORDINANZA N° 80/72 del 05/10/26 Oggetto: REVOCA DELL ORDINANZA N. 4 (N. 4 DEL REGISTRO GENERALE) DEL 27/01/2026 E DELL ORDINANZA N. 28 (N. 30 DEL REGISTRO GENERALE) DEL 08/05/2026 DI PROROGA, PER RIPRISTINO DELLO STATO DEI LUOGHI PER OPERE ESEGUITE IN ASSENZA DI PERMESSO DI COSTRUIRE - VIA OULX N. 23 - FOGLIO 3 MAPPALI 218 E 221",
+      "societa": "",
+      "professionista": "",
+      "priorita": "MEDIA",
+      "stato": "DA APPROFONDIRE",
+      "azione": "APRI FONTE → TROVA INDIRIZZO → TROVA TECNICO/IMPRESA → QUALIFICA PER ACQUISIZIONE",
+      "source_url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Dettaglio.aspx?Pub=15324&RicCro=1&CE=ss090",
+      "source_page": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=ss090&RicCro=1",
+      "verified": false,
+      "origin": "AUTOMATIC_NEW",
+      "seller_signal": "RADAR_EDILIZIO"
+    },
     {
       "id": "AUTO-4AA25A30AE",
       "comune": "Susa",
@@ -879,27 +900,6 @@
       "source_page": "",
       "verified": false,
       "origin": "BACKLOG_STORICO"
-    },
-    {
-      "id": "AUTO-64A4612729",
-      "comune": "Susa",
-      "km_from_susa": 0.0,
-      "date": "2026-10-05",
-      "atto": "ORDINANZA N° 80/72 del 05/10/26 Oggetto: REVOCA DELL ORDINANZA N. 4 (N. 4 DEL REGISTRO GENERALE) DEL 27/01/2026 E DELL ORDINANZA N. 28 (N. 30 DEL REGISTRO GENER",
-      "tipo": "Atto edilizio da analizzare",
-      "indirizzo": "DA APPROFONDIRE",
-      "catasto": "",
-      "descrizione": "ORDINANZA N° 80/72 del 05/10/26 Oggetto: REVOCA DELL ORDINANZA N. 4 (N. 4 DEL REGISTRO GENERALE) DEL 27/01/2026 E DELL ORDINANZA N. 28 (N. 30 DEL REGISTRO GENERALE) DEL 08/05/2026 DI PROROGA, PER RIPRISTINO DELLO STATO DEI LUOGHI PER OPERE ESEGUITE IN ASSENZA DI PERMESSO DI COSTRUIRE - VIA OULX N. 23 - FOGLIO 3 MAPPALI 218 E 221",
-      "societa": "",
-      "professionista": "",
-      "priorita": "MEDIA",
-      "stato": "DA APPROFONDIRE",
-      "azione": "APRI FONTE → TROVA INDIRIZZO → TROVA TECNICO/IMPRESA → QUALIFICA PER ACQUISIZIONE",
-      "source_url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Dettaglio.aspx?Pub=15324&RicCro=1&CE=ss090",
-      "source_page": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=ss090&RicCro=1",
-      "verified": false,
-      "origin": "AUTOMATIC_NEW",
-      "seller_signal": "RADAR_EDILIZIO"
     }
   ],
   "contacts": [
