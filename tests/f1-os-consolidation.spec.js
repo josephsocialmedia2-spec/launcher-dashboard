@@ -73,7 +73,7 @@ test('territory owner flow saves person relationship story and next action', asy
   await expect(page.locator('#twActionTitle')).toHaveText('Vai al civico 12');
   await expect(page.locator('#twRealtime')).toContainText('REALTIME ATTIVO');
   await expect(page.locator('#twUser')).toContainText('QA TITOLARE');
-  await expect(page.locator('.f1-master-nav a[href*="accessi-ufficio.html"]')).toBeVisible();
+  const ownerAccess=page.locator('.f1-master-nav a[href*="accessi-ufficio.html"]');\n  await expect(ownerAccess).toHaveCount(1);\n  await expect(ownerAccess).not.toHaveAttribute('aria-hidden','true');
 
   await page.fill('#twNome','Mario');
   await page.fill('#twCognome','Rossi');
