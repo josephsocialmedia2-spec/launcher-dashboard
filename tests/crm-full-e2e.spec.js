@@ -141,7 +141,7 @@ test('dashboard -> auth -> CRM -> lead/interactions/task -> refresh/reopen persi
   await page.fill('#oNext','Follow-up QA');
   await page.fill('#oNextDate','2026-09-15');
   await page.click('#saveOutcomeBtn');
-  await expect(page.locator('#sInteractions')).not.toHaveText('0');
+  await expect(page.locator('article.lead [data-interaction-count]').first()).not.toHaveText('0');
   expect(db.interactions.some(x=>x.outcome==='CONTATTO QA')).toBeTruthy();
 
   const leadId=db.leads[0].lead_id;
