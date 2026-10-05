@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-let DASH={tasks:[],leads:[],feed:{summary:{}},cfg:null,cloud:false};
+let DASH={tasks:[],leads:[],feed:{summary:{}},cfg:null,cloud:false,hotNews:[]};
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const up=v=>String(v||'').trim().toUpperCase();
@@ -44,6 +44,77 @@ function taskWhy(t,lead){
 }
 function taskDetail(t){
   return clean(t.call_reason_detail||t.signal_text||t.trigger_note||'');
+}
+
+function isHotCompany(a){
+  if(!a||a.do_not_contact||up(a.processing_status)==='ESCLUSA_TERRITORIO')return false;
+  const state=up(a.stato);
+  const hotState=/^(INTERESSATA|APPUNTAMENTO|PROPOSTA_INVIATA|IN_TRATTATIVA|CLIENTE|EMAIL_INVIATA|DA_RICONTATTARE)$/;
+  return hotState.test(state)||clean(a.interesse).length>0;
+}
+function hotPriority(a){
+  const state=up(a.stato);
+  if(state==='APPUNTAMENTO'||state==='IN_TRATTATIVA'||state==='PROPOSTA_INVIATA')return 100;
+  if(state==='INTERESSATA'||state==='CLIENTE')return 95;
+  if(state==='EMAIL_INVIATA')return 88;
+  if(state==='DA_RICONTATTARE')return 82;
+  return clean(a.interesse)?78:60;
+}
+async function loadHotNews(){
+  if(!DASH.cloud)return[];
+  const companyFields='id,ragione_sociale,comune,telefono,cellulare,email,stato,interesse,note,ultima_interazione,prossima_azione,data_prossima_azione,processing_status,do_not_contact,updated_at';
+  const interactionFields='azienda_id,interaction_type,direction,occurred_at,outcome,note,next_action,next_action_date';
+  const [companies,interactions]=await Promise.all([
+    F1AcquisitionData.rest('aziende?select='+companyFields+'&order=updated_at.desc&limit=100').catch(()=>[]),
+    F1AcquisitionData.rest('azienda_interactions?select='+interactionFields+'&order=occurred_at.desc&limit=150').catch(()=>[])
+  ]);
+  const latest=new Map();
+  for(const i of interactions||[])if(!latest.has(String(i.azienda_id)))latest.set(String(i.azienda_id),i);
+  const companyHot=(companies||[]).filter(isHotCompany).map(a=>({...a,_kind:'AZIENDA',_interaction:latest.get(String(a.id))||null,_priority:hotPriority(a)}));
+  const leadHot=(DASH.leads||[]).filter(l=>{
+    if(l.do_not_contact)return false;
+    const s=up(l.status);
+    return /INTERESSAT|APPUNTAMENTO|VALUTAZIONE|INCARICO|TRATTATIVA|RICHIAM|PROPOSTA/.test(s);
+  }).map(l=>({...l,_kind:'LEAD',_priority:/APPUNTAMENTO|INCARICO|TRATTATIVA/.test(up(l.status))?96:84}));
+  return [...companyHot,...leadHot].sort((a,b)=>(b._priority||0)-(a._priority||0)||String(b.updated_at||b.last_seen||'').localeCompare(String(a.updated_at||a.last_seen||''))).slice(0,20);
+}
+function hotNewsLabel(x){
+  if(x._kind==='LEAD')return [x.nome,x.cognome].filter(Boolean).join(' ')||x.azienda||'Lead caldo';
+  return x.ragione_sociale||'Azienda';
+}
+function hotNewsStatus(x){return x._kind==='LEAD'?(x.status||'LEAD'):(x.stato||'AZIENDA')}
+function hotNewsReason(x){
+  if(x._kind==='LEAD')return x.lead_reason||x.notes||'Contatto da seguire con priorità.';
+  const i=x._interaction;
+  return x.interesse||i?.note||x.note||'Contatto commerciale da seguire.';
+}
+function hotNewsNext(x){
+  if(x._kind==='LEAD')return [x.next_action,x.next_action_date].filter(Boolean).join(' · ');
+  const i=x._interaction;
+  const next=x.prossima_azione||i?.next_action||'';
+  const date=x.data_prossima_azione||i?.next_action_date||'';
+  return [next,date].filter(Boolean).join(' · ');
+}
+function renderHotNews(){
+  const rows=DASH.hotNews||[];
+  setText('hotNewsCount',rows.length);
+  const nav=document.querySelector('[data-hot-news-nav="1"] span');
+  if(nav)nav.textContent=rows.length?'Notizie calde · '+rows.length:'Notizie calde';
+  const box=$('hotNewsList');if(!box)return;
+  if(!DASH.cloud){box.innerHTML='<div class="empty">Accedi al Cloud F1 per visualizzare le notizie calde.</div>';return}
+  if(!rows.length){box.innerHTML='<div class="empty">Nessuna notizia calda aperta in questo momento.</div>';return}
+  box.innerHTML=rows.map(x=>{
+    const title=hotNewsLabel(x),status=hotNewsStatus(x),reason=hotNewsReason(x),next=hotNewsNext(x);
+    const comune=x.comune||'',phone=x.telefono||x.cellulare||'',email=x.email||'';
+    const urgent=(x._priority||0)>=90;
+    const crm=x._kind==='AZIENDA'?'crm.html#aziende':'crm.html#contatti';
+    return `<article class="hot-news-card ${urgent?'is-urgent':''}">
+      <div class="hot-news-card-top"><div><div class="hot-news-title">${esc(title)}</div><div class="hot-news-meta">${esc([comune,status].filter(Boolean).join(' · '))}</div></div><span class="badge gold">${urgent?'MOLTO CALDA':'CALDA'}</span></div>
+      <div class="hot-news-reason">${esc(reason).slice(0,520)}</div>
+      ${next?`<div class="hot-news-next"><b>PROSSIMA AZIONE:</b> ${esc(next)}</div>`:''}
+      <div class="hot-news-actions"><a class="btn" href="${crm}">APRI CRM</a>${phone?`<a class="btn alt" href="tel:${esc(phone.replace(/[^+\d]/g,''))}">CHIAMA</a>`:''}${email?`<a class="btn alt" href="mailto:${esc(email)}">EMAIL</a>`:''}</div>
+    </article>`;
+  }).join('');
 }
 
 function renderHeader(){
@@ -134,11 +205,13 @@ async function renderRelationsDue(){
   }catch(e){$('relationsDue').innerHTML=`<div class="empty">Rete relazionale non disponibile: ${esc(e?.message||e)}</div>`}
 }
 
-function renderAll(){renderHeader();renderStats();renderCore();renderPillars();renderCompetitor();renderTerritory();renderFunnel();renderTasks()}
+function renderAll(){renderHeader();renderHotNews();renderStats();renderCore();renderPillars();renderCompetitor();renderTerritory();renderFunnel();renderTasks()}
 async function load(){
   try{
     const data=await F1AcquisitionData.loadDashboardData();
-    DASH={...data};renderAll();await renderRelationsDue();
+    DASH={...data,hotNews:[]};
+    DASH.hotNews=await loadHotNews();
+    renderAll();await renderRelationsDue();
   }catch(e){$('taskList').innerHTML=`<div class="empty">Command Center non inizializzato: ${esc(e?.message||e)}</div>`}
 }
 
