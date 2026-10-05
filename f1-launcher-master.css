@@ -592,3 +592,41 @@ body.f1-master-ui .hot-news-panel{
 .hot-news-next{margin-top:8px;padding:8px 10px;border-left:3px solid #ffb14a;background:rgba(255,177,74,.08);color:#ffe1ae}
 .hot-news-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 @media(prefers-reduced-motion:reduce){.f1-master-nav a.f1-hot-news-link{animation:none!important}}
+
+
+/* ---------- Bagaglio professionale / schede tecniche ---------- */
+.f1-knowledge-accordion{
+  margin-top:12px;border:1px solid var(--f1m-border);border-radius:12px;
+  background:rgba(4,25,43,.72);overflow:hidden
+}
+.f1-knowledge-accordion summary{
+  cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 16px;background:linear-gradient(90deg,rgba(14,73,121,.72),rgba(7,39,65,.76));
+  border-bottom:1px solid transparent
+}
+.f1-knowledge-accordion[open] summary{border-bottom-color:var(--f1m-border)}
+.f1-knowledge-accordion summary::-webkit-details-marker{display:none}
+.f1-knowledge-accordion summary b{display:block;font-size:16px}
+.f1-knowledge-accordion summary small{display:block;margin-top:3px;color:var(--f1m-muted)!important}
+.f1-knowledge-chevron{font-size:22px;color:var(--f1m-cyan-soft);transition:transform .18s ease}
+.f1-knowledge-accordion[open] .f1-knowledge-chevron{transform:rotate(180deg)}
+.f1-knowledge-body{padding:14px}
+.f1-knowledge-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.f1-knowledge-block{
+  padding:12px;border:1px solid rgba(32,199,255,.20);border-radius:10px;
+  background:rgba(6,31,52,.74)
+}
+.f1-knowledge-block strong{display:block;color:var(--f1m-cyan-soft)!important;font-size:11px;letter-spacing:.08em}
+.f1-knowledge-block p{margin:6px 0 0;line-height:1.55;color:#dce8f3;font-size:13px}
+.f1-knowledge-check{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 14px;
+  margin-top:12px;padding:12px;border-radius:10px;border:1px solid rgba(242,184,75,.35);
+  background:rgba(75,52,16,.18);font-size:12px
+}
+.f1-knowledge-check strong{grid-column:1/-1;color:#ffe1a0!important;letter-spacing:.05em}
+.f1-knowledge-check span{color:#e7edf4}
+.f1-knowledge-note{margin-top:10px}
+@media(max-width:720px){
+  .f1-knowledge-grid,.f1-knowledge-check{grid-template-columns:1fr}
+  .f1-knowledge-check strong{grid-column:auto}
+}
