@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07100a"><title>F1 · Demand Engine</title>
+<link rel="stylesheet" href="f1-launcher-master.css?v=20261005-ag360">
+<style>
+:root{--bg:#070907;--p:#101510;--line:#29352d;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--gold:#f4c95d;--red:#ff7878}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:Inter,Arial,sans-serif}.wrap{max-width:1200px;margin:auto;padding:20px 14px 90px}.ey{color:var(--g);font-size:10px;font-weight:900;letter-spacing:.14em}h1{margin:4px 0 10px}.lead,.meta{color:var(--mut);font-size:12px;line-height:1.5}.stats,.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}.stat,.panel,.req,.match{background:var(--p);border:1px solid var(--line);border-radius:14px;padding:13px}.stat{text-align:center;font-size:10px;color:var(--mut)}.stat b{display:block;font-size:24px;color:var(--g)}.panel{margin:12px 0}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.field{width:100%;padding:10px;border-radius:9px;border:1px solid var(--line);background:#0b100c;color:#fff}.wide{grid-column:1/-1}.check{display:flex;gap:10px;flex-wrap:wrap;color:var(--mut);font-size:11px}.btn{display:inline-block;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#172019;color:#fff;text-decoration:none;font-weight:900;font-size:10px;cursor:pointer}.btn.primary{background:var(--g);color:#07100a}.btn.gold{color:var(--gold);border-color:#66552a}.list{display:grid;gap:8px}.req,.match{display:grid;gap:6px}.match.hot{border-color:#4c805b}.score{font-size:22px;color:var(--g);font-weight:900}.actions{display:flex;gap:7px;flex-wrap:wrap}.status{min-height:18px;color:var(--mut);font-size:11px}.status.err{color:var(--red)}.status.ok{color:var(--g)}@media(max-width:800px){.stats,.grid,.form{grid-template-columns:1fr 1fr}}@media(max-width:560px){.stats,.grid,.form{grid-template-columns:1fr}.wide{grid-column:auto}}
+</style>
+<script defer src="f1-demand-engine.js?v=20261005-ag360"></script></head>
+<body><main class="wrap">
+<div class="ey">F1 · CRM ACQUIRENTI · INCROCIO DOMANDA/OFFERTA</div><h1>DEMAND ENGINE</h1>
+<p class="lead">Registra una richiesta collegata a un contatto CRM e confrontala automaticamente con le opportunità immobiliari attive. Il punteggio è una priorità commerciale, non una garanzia di idoneità dell'immobile.</p>
+<div class="stats"><div class="stat"><b id="kReq">0</b>RICHIESTE ATTIVE</div><div class="stat"><b id="kMatch">0</b>MATCH ≥60</div><div class="stat"><b id="kHot">0</b>MATCH ≥85</div><div class="stat"><b id="kOpp">0</b>OPPORTUNITÀ ATTIVE</div></div>
+<section class="panel"><div class="ey">NUOVA RICHIESTA</div><h2>Qualifica l'acquirente</h2>
+<form id="requestForm" class="form">
+<select id="leadId" class="field wide" required><option value="">Seleziona contatto CRM…</option></select>
+<input id="comune" class="field" required placeholder="Comune principale">
+<input id="zone" class="field" placeholder="Zone/comuni alternativi, separati da virgola">
+<input id="tipologia" class="field" placeholder="Tipologia, es. appartamento">
+<input id="budgetMin" class="field" type="number" min="0" step="1000" placeholder="Budget minimo">
+<input id="budgetMax" class="field" type="number" min="1" step="1000" required placeholder="Budget massimo">
+<input id="mqMin" class="field" type="number" min="0" placeholder="Mq minimi">
+<input id="camere" class="field" type="number" min="0" placeholder="Camere minime">
+<input id="bagni" class="field" type="number" min="0" placeholder="Bagni minimi">
+<select id="urgenza" class="field"><option value="">Urgenza…</option><option>IMMEDIATA</option><option>30_GIORNI</option><option>90_GIORNI</option><option>NESSUNA_URGENZA</option></select>
+<div class="check wide"><label><input id="box" type="checkbox"> Box necessario</label><label><input id="giardino" type="checkbox"> Giardino necessario</label><label><input id="ascensore" type="checkbox"> Ascensore necessario</label><label><input id="terrazzo" type="checkbox"> Terrazzo necessario</label><label><input id="postoAuto" type="checkbox"> Posto auto necessario</label></div>
+<textarea id="note" class="field wide" placeholder="Note e vincoli"></textarea>
+<button class="btn primary" type="submit">SALVA RICHIESTA E ATTIVA MATCH</button><div id="saveStatus" class="status wide"></div>
+</form></section>
+<section class="panel"><div class="ey">MATCH AUTOMATICI</div><h2>Prima i clienti con opportunità più coerenti</h2><div id="matchList" class="list"><div class="meta">Caricamento…</div></div></section>
+<section class="panel"><div class="ey">RICHIESTE ATTIVE</div><h2>Database domanda</h2><div id="requestList" class="list"></div></section>
+<div class="actions"><a class="btn" href="oggi.html">← OGGI</a><a class="btn" href="crm.html">CRM</a><a class="btn gold" href="cerco-casa.html">MODULI PUBBLICI CERCO CASA</a></div>
+</main></body></html>
