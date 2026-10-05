@@ -117,6 +117,121 @@ function renderHotNews(){
   }).join('');
 }
 
+
+const FRANCY_PHONE='393714246300';
+const FRANCY_STORE_KEY='f1FrancySchedulesV1';
+const FRANCY_REQUEST_MESSAGE="Ciao Francy, mi mandi per favore l'ORARIO di lavoro della prossima settimana? Scrivilo indicando i giorni e le fasce, per esempio: lun 9-13, mar 14-20, mer riposo. Grazie.";
+const FRANCY_DAYS=[
+  {key:'lun',label:'LUN',name:'Lunedì',aliases:['lunedi','lunedì','lun']},
+  {key:'mar',label:'MAR',name:'Martedì',aliases:['martedi','martedì','mar']},
+  {key:'mer',label:'MER',name:'Mercoledì',aliases:['mercoledi','mercoledì','mer']},
+  {key:'gio',label:'GIO',name:'Giovedì',aliases:['giovedi','giovedì','gio']},
+  {key:'ven',label:'VEN',name:'Venerdì',aliases:['venerdi','venerdì','ven']},
+  {key:'sab',label:'SAB',name:'Sabato',aliases:['sabato','sab']},
+  {key:'dom',label:'DOM',name:'Domenica',aliases:['domenica','dom']}
+];
+function francyNorm(s){return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function francyPad(n){return String(n).padStart(2,'0')}
+function francyDateIso(d){return d.getFullYear()+'-'+francyPad(d.getMonth()+1)+'-'+francyPad(d.getDate())}
+function francyRomeToday(){
+  const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Rome',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+  const v={};for(const p of parts)if(p.type!=='literal')v[p.type]=p.value;
+  return new Date(Number(v.year),Number(v.month)-1,Number(v.day),12,0,0);
+}
+function francyTargetWeekStart(){
+  const d=francyRomeToday(),dow=d.getDay();
+  const delta=dow===0?1:1-dow;
+  const m=new Date(d);m.setDate(d.getDate()+delta);return m;
+}
+function francyReadStore(){try{const v=JSON.parse(localStorage.getItem(FRANCY_STORE_KEY)||'{}');return v&&typeof v==='object'?v:{}}catch(_){return{}}}
+function francyWriteStore(v){localStorage.setItem(FRANCY_STORE_KEY,JSON.stringify(v))}
+function francyTimeToMin(h,m){return Number(h)*60+Number(m||0)}
+function francyFmtMin(n){n=Math.max(0,Math.min(1440,n));return francyPad(Math.floor(n/60)%24)+':'+francyPad(n%60)}
+function francyFreeFromWork(ranges,isRest){
+  if(isRest)return['LIBERA TUTTO IL GIORNO'];
+  if(!ranges.length)return[];
+  const sorted=ranges.slice().sort((a,b)=>a[0]-b[0]);
+  const merged=[];
+  for(const r of sorted){
+    if(!merged.length||r[0]>merged[merged.length-1][1])merged.push(r.slice());
+    else merged[merged.length-1][1]=Math.max(merged[merged.length-1][1],r[1]);
+  }
+  const out=[];
+  if(merged[0][0]>0)out.push('prima delle '+francyFmtMin(merged[0][0]));
+  for(let i=0;i<merged.length-1;i++)if(merged[i][1]<merged[i+1][0])out.push(francyFmtMin(merged[i][1])+'–'+francyFmtMin(merged[i+1][0]));
+  if(merged[merged.length-1][1]<1440)out.push('dopo le '+francyFmtMin(merged[merged.length-1][1]));
+  return out;
+}
+function francyParseSchedule(text){
+  const raw=String(text||'').trim(),norm=francyNorm(raw);
+  if(!/\borario\b/.test(norm))throw new Error('Il messaggio deve contenere la parola ORARIO.');
+  const found=[];
+  for(let i=0;i<FRANCY_DAYS.length;i++){
+    const d=FRANCY_DAYS[i],aliases=d.aliases.map(francyNorm);
+    let pos=-1,matched='';
+    for(const a of aliases){const re=new RegExp('\\b'+a+'\\b','i'),m=norm.match(re);if(m&&m.index!==undefined&&(pos<0||m.index<pos)){pos=m.index;matched=a}}
+    if(pos<0)continue;
+    let end=norm.length;
+    for(const od of FRANCY_DAYS){
+      for(const oa of od.aliases.map(francyNorm)){
+        const re=new RegExp('\\b'+oa+'\\b','ig');let m;
+        while((m=re.exec(norm))){if(m.index>pos&&m.index<end)end=m.index}
+      }
+    }
+    const seg=norm.slice(pos+matched.length,end);
+    const isRest=/\b(riposo|libera|libero|off|non lavoro|non lavora)\b/.test(seg);
+    const ranges=[];
+    const re=/(?:^|\s)([01]?\d|2[0-3])(?:[:.,]([0-5]\d))?\s*(?:-|–|—|\/|alle|a)\s*([01]?\d|2[0-3])(?:[:.,]([0-5]\d))?(?=\s|$|,|;)/g;
+    let m;
+    while((m=re.exec(seg))){
+      const a=francyTimeToMin(m[1],m[2]||0),b=francyTimeToMin(m[3],m[4]||0);
+      if(b>a)ranges.push([a,b]);
+    }
+    found.push({day:d.key,label:d.label,name:d.name,isRest,work:ranges,free:francyFreeFromWork(ranges,isRest)});
+  }
+  if(!found.length)throw new Error('Non riconosco giorni della settimana nel messaggio.');
+  return found;
+}
+function renderFrancyCalendar(){
+  const grid=$('francyWeekGrid');if(!grid)return;
+  const week=francyTargetWeekStart(),weekKey=francyDateIso(week),store=francyReadStore(),data=store[weekKey]||null;
+  const end=new Date(week);end.setDate(end.getDate()+6);
+  const fmt=new Intl.DateTimeFormat('it-IT',{day:'2-digit',month:'2-digit'});
+  setText('francyWeekLabel','Settimana '+fmt.format(week)+' – '+fmt.format(end));
+  const wa=$('francyWhatsAppLink');if(wa)wa.href='https://wa.me/'+FRANCY_PHONE+'?text='+encodeURIComponent(FRANCY_REQUEST_MESSAGE);
+  const today=francyRomeToday(),isSunday=today.getDay()===0;
+  if($('francySundayAlert'))$('francySundayAlert').hidden=!isSunday;
+  const byDay=new Map((data?.days||[]).map(x=>[x.day,x]));
+  grid.innerHTML=FRANCY_DAYS.map((d,i)=>{
+    const date=new Date(week);date.setDate(week.getDate()+i);
+    const row=byDay.get(d.key);
+    const free=row?.free||[];
+    const body=!row?'<span class="francy-unknown">ORARIO NON COMUNICATO</span>':
+      (!free.length?'<span class="francy-none">NESSUNA FASCIA LIBERA RILEVATA</span>':
+      free.map(x=>'<span class="francy-free-slot">'+esc(x)+'</span>').join(''));
+    return '<div class="francy-day '+(row?'has-data':'')+'"><div class="francy-day-head"><b>'+d.label+'</b><small>'+fmt.format(date)+'</small></div><div class="francy-day-free">'+body+'</div></div>';
+  }).join('');
+  if($('francyParseStatus'))$('francyParseStatus').textContent=data?'Ultimo orario salvato per questa settimana.':'Nessun orario salvato per questa settimana.';
+}
+function saveFrancyScheduleFromText(){
+  const status=$('francyParseStatus');
+  try{
+    const text=$('francyScheduleText').value,days=francyParseSchedule(text),weekKey=francyDateIso(francyTargetWeekStart()),store=francyReadStore();
+    store[weekKey]={raw:text,days,savedAt:new Date().toISOString()};
+    francyWriteStore(store);if(status)status.textContent='Orario letto e calendario aggiornato.';renderFrancyCalendar();
+  }catch(e){if(status)status.textContent=String(e?.message||e)}
+}
+function clearFrancySchedule(){
+  const weekKey=francyDateIso(francyTargetWeekStart()),store=francyReadStore();delete store[weekKey];francyWriteStore(store);
+  if($('francyScheduleText'))$('francyScheduleText').value='';renderFrancyCalendar();
+}
+function bindFrancyCalendar(){
+  $('francyToggleImport')?.addEventListener('click',()=>{const box=$('francyImport');box.hidden=!box.hidden;if(!box.hidden)$('francyScheduleText')?.focus()});
+  $('francyParseSave')?.addEventListener('click',saveFrancyScheduleFromText);
+  $('francyClearSchedule')?.addEventListener('click',clearFrancySchedule);
+  renderFrancyCalendar();
+}
+
 function renderHeader(){
   const territory=DASH.cfg?.territory||{};
   const communes=window.F1AcquisitionCore?.territoryCommunes?.(territory)||[];
@@ -220,5 +335,5 @@ function bind(){
   let installPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('installBtn').hidden=false});$('installBtn')?.addEventListener('click',async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$('installBtn').hidden=true});
   window.addEventListener('focus',()=>{if(document.visibilityState==='visible')load()});
 }
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{bind();load()},{once:true});else{bind();load()}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>{bind();bindFrancyCalendar();load()},{once:true});else{bind();bindFrancyCalendar();load()}
 })();
