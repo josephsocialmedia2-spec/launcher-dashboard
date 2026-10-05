@@ -41,7 +41,7 @@ function sourceTemplates(env:any){
  ];
 }
 async function crawlPage(url:string){
- const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),9000);
+ const ctl=new AbortController();const timer=setTimeout(()=>ctl.abort(),5500);
  try{
   const r=await fetch(url,{redirect:"follow",signal:ctl.signal,headers:{"User-Agent":"F1-Email-Radar/3.0 (+https://josephsocialmedia2-spec.github.io/launcher-dashboard/f1-email-radar.html)","Accept":"text/html,application/xhtml+xml"}});
   if(!r.ok||!(r.headers.get("content-type")||"").includes("text/html"))return null;
@@ -73,7 +73,7 @@ async function officialSiteCandidate(dbUrl:string,service:string,actor:string,ru
  const first=await crawlPage(base);if(!first)return {saved:false};
  const pages:any[]=[{url:first.finalUrl,data:first}];let origin="";
  try{origin=new URL(first.finalUrl).origin}catch{}
- for(const h of first.links.slice(0,5)){
+ for(const h of first.links.slice(0,3)){
   try{
    const u=new URL(h,first.finalUrl);if(u.origin!==origin)continue;
    const d=await crawlPage(u.href);if(d)pages.push({url:u.href,data:d});
@@ -368,7 +368,7 @@ async function atecoAnalysis(dbUrl:string,service:string,run:any){
 }
 
 async function processWebsites(url:string,service:string,run:any,actor:string){
- const entities=await jfetch(url,service,"f1_email_radar_entities?select=*&comune=eq."+encodeURIComponent(run.comune)+"&website=not.eq.&or=(last_verified_at.is.null,last_verified_at.lt."+encodeURIComponent(new Date(Date.now()-30*86400000).toISOString())+")&order=updated_at.asc&limit=12");
+ const entities=await jfetch(url,service,"f1_email_radar_entities?select=*&comune=eq."+encodeURIComponent(run.comune)+"&website=not.eq.&or=(last_verified_at.is.null,last_verified_at.lt."+encodeURIComponent(new Date(Date.now()-30*86400000).toISOString())+")&order=updated_at.asc&limit=3");
  let done=0,emails=0,pecs=0,phones=0;
  for(const e of entities||[]){
    let base:string;try{base=new URL(/^https?:/i.test(e.website)?e.website:"https://"+e.website).href}catch{continue}
@@ -388,7 +388,7 @@ async function processWebsites(url:string,service:string,run:any,actor:string){
    const pages:any[]=[{url:first.finalUrl,data:first}];
    const ld=firstJsonLd(first);
    let origin="";try{origin=new URL(first.finalUrl).origin}catch{}
-   for(const h of first.links.slice(0,5)){try{const u=new URL(h,first.finalUrl);if(u.origin!==origin)continue;const d=await crawlPage(u.href);if(d)pages.push({url:u.href,data:d})}catch{}}
+   for(const h of first.links.slice(0,3)){try{const u=new URL(h,first.finalUrl);if(u.origin!==origin)continue;const d=await crawlPage(u.href);if(d)pages.push({url:u.href,data:d})}catch{}}
    const allEmails=uniq(pages.flatMap(p=>p.data.emails||[])), allTels=uniq(pages.flatMap(p=>p.data.tels||[])), vats=uniq(pages.flatMap(p=>p.data.vats||[]));
    if(ld?.email)allEmails.unshift(String(ld.email).replace(/^mailto:/i,"").toLowerCase());
    if(ld?.telephone)allTels.unshift(String(ld.telephone));
