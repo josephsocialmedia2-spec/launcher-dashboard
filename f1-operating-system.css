@@ -145,3 +145,9 @@ body.f1-os-today dialog{border:1px solid var(--f1-line);border-radius:16px;box-s
 body.f1-os-today .foot{position:fixed;left:0;right:0;bottom:0;padding:8px;z-index:90}.footin{max-width:1180px;margin:auto;display:flex;gap:7px;justify-content:center;overflow:auto}.foot a{padding:10px;border-radius:9px;text-decoration:none;font-size:9px;font-weight:900;white-space:nowrap}
 @media(max-width:900px){body.f1-os-today .stats{grid-template-columns:repeat(3,1fr)!important}body.f1-os-today .funnel{grid-template-columns:repeat(3,1fr)!important}}
 @media(max-width:620px){body.f1-os-today .stats{grid-template-columns:repeat(2,1fr)!important}body.f1-os-today .territoryLists{grid-template-columns:1fr!important}body.f1-os-today .taskTop{display:block}.score{display:inline-block;margin-top:6px}.actions .btn{flex:1}.funnel{grid-template-columns:repeat(2,1fr)!important}.guideLinks{grid-template-columns:1fr 1fr}.relation-due{grid-template-columns:1fr!important}}
+
+/* F1 OS owns its navigation and responsive canvas: hide legacy floating brand chrome. */
+body.f1-os-page{max-width:100vw!important;overflow-x:hidden!important}
+body.f1-os-page a[hidden],body.f1-os-page [hidden]{display:none!important}
+body.f1-os-page .f1-luxury-dock,body.f1-os-page .f1-founders-mini{display:none!important}
+body.f1-os-page .layoutShell,body.f1-os-page .mainCol,body.f1-os-page .panel,body.f1-os-page .os-card{min-width:0}
