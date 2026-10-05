@@ -3,7 +3,7 @@
 
 let DASH={tasks:[],leads:[],feed:{summary:{}},cfg:null,cloud:false};
 const $=id=>document.getElementById(id);
-const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[m]));
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const up=v=>String(v||'').trim().toUpperCase();
 const clean=v=>String(v||'').trim();
 function openTask(t){return !['DONE','CANCELLED'].includes(up(t.status||'OPEN'))}
