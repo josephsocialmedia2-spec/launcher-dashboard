@@ -122,9 +122,72 @@ function graphConfigured(){
 }
 async function currentCampaign(key:string){
   if(!key)return null;
-  const rows=await db("email_campaigns?select=id,campaign_key,name,status,metadata&brand=eq.f1&campaign_key=eq."+encodeURIComponent(key)+"&is_test=eq.false&limit=1");
+  const rows=await db("email_campaigns?select=id,campaign_key,name,status,metadata,owner_id,client_id&brand=eq.f1&campaign_key=eq."+encodeURIComponent(key)+"&is_test=eq.false&limit=1");
   return rows?.[0]||null;
 }
+async function syncReadyToF1Social(campaign:any,campaignKey:string){
+  if(!campaign?.id||!campaign?.owner_id||!campaign?.client_id)return {eligible:0,imported:0,suppressed:0,revoked:0};
+  const [readyLeads,clientSuppressions,existingRecipients]=await Promise.all([
+    db("f1_email_acquisition_leads?select=acquisition_id,entity_id,company_name,email,email_status,state,compliance_status,do_not_contact,metadata&campaign_key=eq."+encodeURIComponent(campaignKey)+"&state=eq.READY&compliance_status=eq.ELIGIBLE_CONSENT&do_not_contact=eq.false&email_status=eq.VERIFICATA&limit=5000"),
+    db("f1_client_email_suppressions?select=email_normalized,reason&owner_id=eq."+encodeURIComponent(campaign.owner_id)+"&client_id=eq."+encodeURIComponent(campaign.client_id)+"&limit=5000"),
+    db("email_campaign_recipients?select=id,email_normalized,status,eligibility_reason,source_row&campaign_id=eq."+encodeURIComponent(campaign.id)+"&limit=5000")
+  ]);
+  const sup=new Map((clientSuppressions||[]).map((x:any)=>[norm(x.email_normalized),x]));
+  const eligibleByEntity=new Set((readyLeads||[]).map((x:any)=>String(x.entity_id)));
+  const existingByEmail=new Set((existingRecipients||[]).map((x:any)=>norm(x.email_normalized)));
+  let revoked=0;
+  for(const r of existingRecipients||[]){
+    const source=r?.source_row||{};
+    if(source?.source!=="F1_EMAIL_RADAR_READY")continue;
+    if(["sent","delivered","opened","clicked","replied","lead","unsubscribed","suppressed"].includes(norm(r.status)))continue;
+    if(source?.entity_id && !eligibleByEntity.has(String(source.entity_id))){
+      await db("email_campaign_recipients?id=eq."+encodeURIComponent(r.id),{
+        method:"PATCH",
+        body:JSON.stringify({status:"suppressed",eligibility_reason:"RADAR_NO_LONGER_READY",updated_at:new Date().toISOString()}),
+        prefer:"return=minimal"
+      });
+      revoked++;
+    }
+  }
+  const rows:any[]=[];
+  let suppressed=0;
+  for(const l of readyLeads||[]){
+    const email=norm(l.email);
+    if(!EMAIL_RE.test(email)||existingByEmail.has(email))continue;
+    const block=sup.get(email);
+    if(block)suppressed++;
+    rows.push({
+      campaign_id:campaign.id,
+      owner_id:campaign.owner_id,
+      client_id:campaign.client_id,
+      email,
+      email_normalized:email,
+      first_name:null,
+      last_name:null,
+      status:block?"suppressed":"pending",
+      eligibility_reason:block?"CLIENT_SUPPRESSION_LIST":"RADAR_READY_CONSENT",
+      source_row:{
+        source:"F1_EMAIL_RADAR_READY",
+        acquisition_id:l.acquisition_id,
+        entity_id:l.entity_id,
+        AZIENDA:l.company_name||"",
+        COMUNE:l.metadata?.comune||"",
+        compliance_status:l.compliance_status,
+        email_status:l.email_status
+      },
+      updated_at:new Date().toISOString()
+    });
+  }
+  if(rows.length){
+    await db("email_campaign_recipients?on_conflict=campaign_id,email_normalized",{
+      method:"POST",
+      body:JSON.stringify(rows),
+      prefer:"resolution=ignore-duplicates,return=minimal"
+    });
+  }
+  return {eligible:(readyLeads||[]).length,imported:rows.length,suppressed,revoked};
+}
+
 async function cycle(actor:any){
   const cfg=await config();
   const campaign=await currentCampaign(cfg.activeCampaignKey);
@@ -215,12 +278,13 @@ async function cycle(actor:any){
     if(l.compliance_status==="NO_EMAIL")counts.no_email++;
     if(l.compliance_status==="PEC_ONLY")counts.pec_only++;
   }
+  const f1SocialSync=await syncReadyToF1Social(campaign,campaignKey);
   await db("f1_email_acquisition_kpi_snapshots",{method:"POST",body:JSON.stringify({
     campaign_key:campaignKey,contacts:counts.contacts,ready:counts.ready,consent_required:counts.consent_required,suppressed:counts.suppressed,
     metrics:{do_not_contact:counts.do_not_contact,no_email:counts.no_email,pec_only:counts.pec_only,campaign_ready:ccheck.ready,campaign_missing:ccheck.missing,provider_configured:graphConfigured(),send_enabled:cfg.sendEnabled}
   }),prefer:"return=minimal"});
 
-  return {cfg,campaign:campaign?{campaign_key:campaign.campaign_key,name:campaign.name,status:campaign.status}:null,campaign_check:ccheck,provider:{name:"Microsoft Graph",configured:graphConfigured()},counts,processed:(entities||[]).length,created,updated};
+  return {cfg,campaign:campaign?{campaign_key:campaign.campaign_key,name:campaign.name,status:campaign.status}:null,campaign_check:ccheck,provider:{name:"Microsoft Graph",configured:graphConfigured()},counts,f1_social_sync:f1SocialSync,processed:(entities||[]).length,created,updated};
 }
 async function status(){
   const cfg=await config();
