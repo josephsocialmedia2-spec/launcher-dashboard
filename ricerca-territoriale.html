@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="f1-launcher-master.css?v=20261005-os1">
-  <link rel="stylesheet" href="f1-operating-system.css?v=20261005-os1">
+  <link rel="stylesheet" href="f1-operating-system.css?v=20261005-os1">\n  <link rel="stylesheet" href="f1-public-intelligence.css?v=20261005-radar1">
   <script defer src="f1-launcher-master.js?v=20261005-os1"></script>
 </head>
 <body class="f1-os-page f1-os-territory">
@@ -51,7 +51,22 @@
       </aside>
     </section>
 
-    <section class="workspace-grid">
+
+    <section class="os-card public-radar" id="publicRadar">
+      <div class="public-radar-head">
+        <div><div class="action-kicker">RADAR PUBBLICO TERRITORIALE</div><h2>Dati pubblici utili alla zona</h2><div class="sub">Fonti ufficiali e verificabili. Contesto attuale: <span class="public-context" data-public-context>—</span>.</div></div>
+        <a class="os-btn" href="albero-fonti-notizie.html">APRI MAPPA RELAZIONI</a>
+      </div>
+      <div class="public-source-grid">
+        <article class="public-source"><strong>OMI · MERCATO</strong><p>Quotazioni e statistiche dell'Osservatorio del Mercato Immobiliare.</p><button class="os-btn" type="button" data-f1-public-action="omi">APRI OMI</button></article>
+        <article class="public-source"><strong>VALORI DICHIARATI</strong><p>Ricerca dei valori immobiliari dichiarati negli atti di compravendita.</p><button class="os-btn" type="button" data-f1-public-action="valori">CERCA VALORI</button></article>
+        <article class="public-source"><strong>VENDITE PUBBLICHE</strong><p>Portale ufficiale del Ministero della Giustizia per immobili in vendita pubblica.</p><button class="os-btn" type="button" data-f1-public-action="pvp">APRI PVP</button></article>
+        <article class="public-source"><strong>ISTAT · TERRITORIO</strong><p>Popolazione, demografia e indicatori comunali per leggere il territorio.</p><button class="os-btn" type="button" data-f1-public-action="istat">APRI ISTAT</button></article>
+        <article class="public-source"><strong>IMPRESE</strong><p>Ricerca di attività economiche e imprese del territorio tramite Registro Imprese.</p><button class="os-btn" type="button" data-f1-public-action="imprese">APRI REGISTRO</button></article>
+      </div>
+      <div class="public-safety"><b>REGOLA F1:</b> i dati trovati online non entrano automaticamente nel CRM. Prima si verifica la fonte e l'identità della persona; poi si decide manualmente se l'informazione è pertinente. Un dato pubblico non equivale automaticamente a un consenso commerciale.</div>
+    </section>
+\n    <section class="workspace-grid">
       <article class="os-card">
         <h2>Persona incontrata o collegata</h2>
         <div class="sub">Una sola scheda: chi è, come la conosci, che cosa ti ha raccontato e quando la rivedi.</div>
@@ -74,6 +89,17 @@
           <label>NOTE BREVI<input id="twNotes" maxlength="300"></label>
           <div class="form-actions"><button id="twSavePerson" class="os-btn primary" type="submit">SALVA PERSONA E PROSSIMO PASSO</button><button id="twResetPerson" class="os-btn" type="button">NUOVA SCHEDA</button><a class="os-btn" href="albero-fonti-notizie.html">APRI RETE RELAZIONALE</a></div>
           <div class="full helper">La data è obbligatoria quando esiste un’azione futura. Se il follow-up non è consentito, scegli “NESSUNO” come canale e definisci un esito coerente (es. archiviare/non contattare).</div>
+          <div class="public-person-tools">
+            <h3>Ricerca pubblica · <span id="publicPersonName">persona corrente</span></h3>
+            <div class="sub">Usa solo informazioni pubbliche pertinenti e verifica sempre gli omonimi prima di associarle alla scheda.</div>
+            <div class="public-tool-row">
+              <button class="os-btn" type="button" data-f1-public-action="webperson">RICERCA WEB PUBBLICA</button>
+              <button class="os-btn" type="button" data-f1-public-action="webbusiness">VERIFICA ATTIVITÀ / IMPRESA</button>
+              <button class="os-btn" type="button" data-f1-public-action="maps">VEDI ZONA SU MAPPA</button>
+              <button class="os-btn primary" type="button" id="publicWhyBtn">PERCHÉ CONTATTARLA?</button>
+            </div>
+            <div id="publicWhyOutput" class="public-why">Completa la scheda e premi “Perché contattarla?” per ottenere una motivazione operativa basata solo sui dati già inseriti nel CRM.</div>
+          </div>
         </form>
       </article>
 
@@ -88,6 +114,6 @@
   <div id="twToast" class="toast" role="status" aria-live="polite"></div>
   <script src="supabase-config.js?v=20261005-os1"></script>
   <script src="supabase-sync.js?v=20261005-os1"></script>
-  <script src="f1-dashboard-auth-guard.js?v=20261005-os1"></script>
+  <script src="f1-dashboard-auth-guard.js?v=20261005-os1"></script>\n  <script src="f1-public-intelligence.js?v=20261005-radar1"></script>
 </body>
 </html>
