@@ -3,8 +3,8 @@
 const $=id=>document.getElementById(id);
 const Data=()=>window.F1AcquisitionData;
 const PAGE_SIZE=50;
-const HUB_SECTIONS=new Set(['','contatti','immobili','trattative','attivita']);
-const LABELS={contatti:'CONTATTI',immobili:'IMMOBILI',trattative:'TRATTATIVE',attivita:'ATTIVITÀ'};
+const HUB_SECTIONS=new Set(['','contatti','aziende','immobili','trattative','attivita']);
+const LABELS={contatti:'CONTATTI',aziende:'AZIENDE',immobili:'IMMOBILI',trattative:'TRATTATIVE',attivita:'ATTIVITÀ'};
 let state={section:'contatti',offset:0,filtered:0,total:0,rows:[],filters:{},timer:0,request:0};
 
 const esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -17,13 +17,13 @@ function hubEnabled(){
   if(q.has('mode')||q.has('download')||h==='territory-news')return false;
   return HUB_SECTIONS.has(h);
 }
-function sectionFromHash(){const h=location.hash.replace('#','').toLowerCase();return ['contatti','immobili','trattative','attivita'].includes(h)?h:'contatti'}
+function sectionFromHash(){const h=location.hash.replace('#','').toLowerCase();return ['contatti','aziende','immobili','trattative','attivita'].includes(h)?h:'contatti'}
 function payloadSection(){return state.section==='attivita'?'ATTIVITA':state.section.toUpperCase()}
 function setNav(){
   document.querySelectorAll('#crmHubNav [data-section]').forEach(a=>a.classList.toggle('on',a.dataset.section===state.section));
   $('hubSectionTitle').textContent=LABELS[state.section]||'CRM';
   const q=$('q');
-  if(q)q.placeholder=state.section==='contatti'?'Cerca in tutti i contatti...':state.section==='immobili'?'Cerca immobile, Comune, via, tipologia...':state.section==='trattative'?'Cerca trattativa, persona, Comune, stato...':'Cerca attività, persona, esito...';
+  if(q)q.placeholder=state.section==='contatti'?'Cerca in tutti i contatti...':state.section==='aziende'?'Cerca azienda, P.IVA, settore, referente, Comune...':state.section==='immobili'?'Cerca immobile, Comune, via, tipologia...':state.section==='trattative'?'Cerca trattativa, persona, Comune, stato...':'Cerca attività, persona, esito...';
   const contacts=state.section==='contatti';
   if($('excelImportBtn'))$('excelImportBtn').style.display=contacts?'':'none';
   if($('newBtn'))$('newBtn').style.display=contacts?'':'none';
@@ -39,6 +39,7 @@ function activeFilters(){
     vendita:!!$('hubVendita')?.classList.contains('on'),
     privato:!!$('hubPrivato')?.classList.contains('on')
   };
+  if(state.section==='aziende')return{comune:clean($('hubComune')?.value),settore:clean($('hubSettore')?.value),stato:clean($('hubStato')?.value)};
   if(state.section==='immobili')return{
     comune:clean($('hubComune')?.value),
     tipologia:clean($('hubTipologia')?.value)
@@ -61,6 +62,8 @@ function renderFilters(){
         <button type="button" id="hubPrivato" class="hub-toggle">PRIVATO</button>
         <button type="button" id="hubReset" class="hub-toggle">AZZERA FILTRI</button>
       </div>`;
+  }else if(state.section==='aziende'){
+    box.innerHTML=`<input id="hubComune" placeholder="Paese / Comune"><input id="hubSettore" placeholder="Settore"><select id="hubStato"><option value="">Tutti gli stati</option><option value="PROSPECT">PROSPECT</option><option value="ATTIVA">ATTIVA</option><option value="CLIENTE">CLIENTE</option><option value="DA_RICONTATTARE">DA RICONTATTARE</option><option value="NON_INTERESSATA">NON INTERESSATA</option></select>`;
   }else if(state.section==='immobili'){
     box.innerHTML=`<input id="hubComune" placeholder="Paese / Comune"><input id="hubTipologia" placeholder="Tipologia immobile">`;
   }else if(state.section==='attivita'){
@@ -84,6 +87,10 @@ function contactCard(r){
     <div class="hub-card-meta">Origine: ${esc(r.source||r.source_type||'CRM')} ${r.lead_reason?'· '+esc(r.lead_reason):''}</div>
   </article>`;
 }
+function companyCard(r){
+  const ref=[r.referente_nome,r.referente_cognome].filter(Boolean).join(' '),addr=[r.indirizzo,r.comune,r.cap,r.provincia].filter(Boolean).join(' · ');
+  return `<article class="hub-card"><div class="hub-card-head"><div><div class="hub-card-title">${esc(r.ragione_sociale||'Azienda')}</div><div class="hub-card-meta">${esc(r.settore||'Settore non indicato')}${addr?'<br>'+esc(addr):''}${r.partita_iva?'<br>P.IVA: '+esc(r.partita_iva):''}${ref?'<br>Referente: '+esc(ref)+(r.referente_ruolo?' · '+esc(r.referente_ruolo):''):''}</div></div><span class="hub-badge">${esc(r.stato||'—')}</span></div><div class="hub-card-actions">${r.telefono?`<a class="btn primary" href="tel:${esc(r.telefono)}">CHIAMA AZIENDA</a>`:''}${r.referente_telefono?`<a class="btn" href="tel:${esc(r.referente_telefono)}">CHIAMA REFERENTE</a>`:''}${r.email?`<a class="btn" href="mailto:${esc(r.email)}">EMAIL</a>`:''}${r.sito_web?`<a class="btn" target="_blank" rel="noopener" href="${esc(r.sito_web)}">SITO</a>`:''}</div><div class="hub-card-meta">${r.prossima_azione?'Prossima azione: '+esc(r.prossima_azione)+(r.data_prossima_azione?' · '+esc(date(r.data_prossima_azione)):''):''}${r.interesse?'<br>Interesse: '+esc(r.interesse):''}${r.budget_stimato?'<br>Budget stimato: '+esc(money(r.budget_stimato)):''}</div></article>`;
+}
 function propertyCard(r){
   const addr=[r.comune,r.via,r.civico].filter(Boolean).join(' · ');
   const chars=r.caratteristiche&&typeof r.caratteristiche==='object'?Object.entries(r.caratteristiche).slice(0,5).map(([k,v])=>k+': '+String(v)).join(' · '):'';
@@ -100,7 +107,7 @@ function activityCard(r){
 function renderRows(){
   const box=$('list');if(!box)return;
   if(!state.rows.length){box.innerHTML='<div class="hub-empty">Nessun dato con questi filtri.</div>';return}
-  const fn=state.section==='contatti'?contactCard:state.section==='immobili'?propertyCard:state.section==='trattative'?dealCard:activityCard;
+  const fn=state.section==='contatti'?contactCard:state.section==='aziende'?companyCard:state.section==='immobili'?propertyCard:state.section==='trattative'?dealCard:activityCard;
   box.innerHTML=state.rows.map(fn).join('');
   box.querySelectorAll('[data-edit-lead]').forEach(b=>b.onclick=()=>window.F1UnifiedCRM?.editLead?.(b.dataset.editLead));
   box.querySelectorAll('[data-done-task]').forEach(b=>b.onclick=async()=>{b.disabled=true;try{await Data().setTaskStatus(b.dataset.doneTask,'DONE','Completata dal CRM centrale');await load()}catch(e){alert(e.message||e)}finally{b.disabled=false}});
@@ -120,9 +127,9 @@ async function load(){
   const box=$('list');if(box)box.innerHTML='<div class="hub-empty">Caricamento…</div>';
   try{
     await window.F1CRMAuthGuard?.ensure?.();
-    const result=await Data().rest('rpc/f1_crm_hub_page_v1',{method:'POST',body:JSON.stringify({
-      p_section:payloadSection(),p_offset:state.offset,p_limit:PAGE_SIZE,p_search:clean($('q')?.value),p_filters:activeFilters()
-    })})||{};
+    const endpoint=state.section==='aziende'?'rpc/f1_crm_companies_page_v1':'rpc/f1_crm_hub_page_v1';
+    const payload=state.section==='aziende'?{p_offset:state.offset,p_limit:PAGE_SIZE,p_search:clean($('q')?.value),p_filters:activeFilters()}:{p_section:payloadSection(),p_offset:state.offset,p_limit:PAGE_SIZE,p_search:clean($('q')?.value),p_filters:activeFilters()};
+    const result=await Data().rest(endpoint,{method:'POST',body:JSON.stringify(payload)})||{};
     if(token!==state.request)return;
     state.rows=Array.isArray(result.rows)?result.rows:[];
     state.filtered=Number(result.filtered)||0;
