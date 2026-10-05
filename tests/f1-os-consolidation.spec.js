@@ -77,6 +77,8 @@ test('territory owner flow saves person relationship story and next action', asy
   const ownerAccess=page.locator('.f1-master-nav a[href*="accessi-ufficio.html"]');
   await expect(ownerAccess).toHaveCount(1);
   await expect(ownerAccess).not.toHaveAttribute('aria-hidden','true');
+  await expect(page.locator('#twAssignTour')).toBeVisible();
+  await expect(page.locator('#twAssignTour')).toHaveAttribute('href','assegna-giro.html');
 
   await page.fill('#twNome','Mario');
   await page.fill('#twCognome','Rossi');
@@ -118,6 +120,7 @@ test('territory collaborator cannot see owner access entry', async ({ page }) =>
   const access=page.locator('.f1-master-nav a[href*="accessi-ufficio.html"]');
   await expect(access).toHaveAttribute('aria-hidden','true');
   await expect(access).toBeHidden();
+  await expect(page.locator('#twAssignTour')).toBeHidden();
 });
 
 

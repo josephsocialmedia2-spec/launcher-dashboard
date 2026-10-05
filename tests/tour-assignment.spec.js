@@ -10,7 +10,7 @@ async function mockWizard(page,{active=false}={}){
 async function fillTour(page){
   await expect(page.getByText('A CHI ASSEGNI QUESTO GIRO?')).toBeVisible();
   await page.getByRole('button',{name:/AVANTI/}).click();
-  await page.locator('#comune').fill('Avigliana');
+  await page.locator('#comune').selectOption({label:'Avigliana'});
   await page.getByRole('button',{name:/AVANTI/}).click();
   await page.locator('#zona').fill('Zona A');
   await page.getByRole('button',{name:/AVANTI/}).click();
@@ -56,12 +56,13 @@ test('Giro già attivo non viene sovrascritto',async({page})=>{
   expect(await page.evaluate(()=>window.__assignCalls.length)).toBe(1);
 });
 
-test('Dashboard Titolare espone il comando + ASSEGNA NUOVO GIRO',async({page})=>{
-  await page.route('**/f1-dashboard-auth-guard.js*',route=>route.fulfill({status:200,contentType:'application/javascript',body:`document.documentElement.classList.remove('f1-auth-pending');window.F1StaffData={ready:()=>true,me:async()=>({role:'TITOLARE'}),rpc:async()=>[]};const s=document.createElement('script');s.src='f1-tour-admin-dashboard.js?v=qa';document.body.appendChild(s);`}));
+test('Territorio Titolare espone il comando leggero + ASSEGNA NUOVO GIRO',async({page})=>{
+  await page.route('**/f1-dashboard-auth-guard.js*',route=>route.fulfill({status:200,contentType:'application/javascript',body:`document.documentElement.classList.remove('f1-auth-pending');const cta=document.getElementById('twAssignTour');if(cta)cta.hidden=false;`}));
   await page.goto('/ricerca-territoriale.html?qa='+Date.now(),{waitUntil:'domcontentloaded'});
   const cta=page.getByRole('link',{name:/ASSEGNA NUOVO GIRO/});
   await expect(cta).toBeVisible();
   await expect(cta).toHaveAttribute('href','assegna-giro.html');
+  await expect(page.locator('script[src*="f1-tour-admin-dashboard.js"]')).toHaveCount(0);
 });
 
 test('Smartphone: wizard senza overflow orizzontale',async({page,isMobile})=>{

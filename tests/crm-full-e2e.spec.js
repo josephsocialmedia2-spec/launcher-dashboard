@@ -99,6 +99,7 @@ test('dashboard -> auth -> CRM -> lead/interactions/task -> refresh/reopen persi
   await page.fill('#password','qa-password');
   await page.click('#loginBtn');
   await page.waitForURL('**/crm.html');
+  await page.goto('/crm.html?mode=qa');
   await expect(page.locator('#cloudStatus')).toContainText('SUPABASE AUTENTICATO');
   expect(await page.evaluate(()=>window.F1CRMAuthGuard?.ready())).toBeTruthy();
 
@@ -159,7 +160,7 @@ test('dashboard -> auth -> CRM -> lead/interactions/task -> refresh/reopen persi
   const reopened=await context.newPage();
   const reopenedErrors=[];
   reopened.on('pageerror',e=>reopenedErrors.push(String(e)));
-  await reopened.goto('/crm.html');
+  await reopened.goto('/crm.html?mode=qa');
   await expect(reopened.locator('#cloudStatus')).toContainText('SUPABASE AUTENTICATO');
   await expect(reopened.locator('#list')).toContainText('QA');
   expect(await reopened.evaluate(()=>window.F1CRMAuthGuard?.ready())).toBeTruthy();

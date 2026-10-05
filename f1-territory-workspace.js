@@ -91,7 +91,7 @@ async function loadState(force=false){
 }
 async function init(){
   updateClock();setInterval(updateClock,1000);
-  try{profile=await F1StaffData.me();$('twUser').textContent=[profile.first_name,profile.last_name].filter(Boolean).join(' ')||profile.role||'F1'}catch(e){toast('Profilo F1 non disponibile',true)}
+  try{profile=await F1StaffData.me();$('twUser').textContent=[profile.first_name,profile.last_name].filter(Boolean).join(' ')||profile.role||'F1';const assign=$('twAssignTour');if(assign)assign.hidden=String(profile.role||'').toUpperCase()!=='TITOLARE'}catch(e){toast('Profilo F1 non disponibile',true)}
   resetForm();$('twPersonForm').addEventListener('submit',savePerson);$('twResetPerson').addEventListener('click',resetForm);
   window.addEventListener('focus',()=>loadState(true));document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadState(true)});
   window.addEventListener('f1:realtime-change',()=>loadState(true));window.addEventListener('f1:realtime-status',e=>{const s=txt(e.detail?.status);$('twRealtime').textContent=s==='LIVE'?'REALTIME ATTIVO':s||'REALTIME';$('twRealtime').classList.toggle('ok',s==='LIVE')});
