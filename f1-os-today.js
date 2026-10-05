@@ -87,19 +87,48 @@ async function saveOutcome(ev){
 }
 
 async function renderRelationsDue(){
-  if(!DASH.cloud){$('relationsDue').innerHTML='<div class="empty">Accedi al Cloud F1 per visualizzare i follow-up relazionali.</div>';return}
+  if(!DASH.cloud){
+    setText('rDue',0);setText('rStale',0);setText('rSignals',0);setText('rEvidence',0);
+    $('relationsDue').innerHTML='<div class="empty">Accedi al Cloud F1 per visualizzare la rete relazionale.</div>';return;
+  }
   try{
-    const today=F1AcquisitionCore.todayRome();
-    const q='network_contacts?deleted=eq.false&app_scope=eq.albero_fonti_notizie&data_prossimo_contatto=lte.'+encodeURIComponent(today)+'&select=contact_id,legacy_id,nome,cognome,comune,stato_contatto,azione_successiva,data_prossimo_contatto,tipo_rapporto,tree_meta&order=data_prossimo_contatto.asc&limit=30';
+    const today=F1AcquisitionCore.todayRome(),todayMs=new Date(today+'T12:00:00').getTime(),DAY=86400000;
+    const q='network_contacts?deleted=eq.false&app_scope=eq.albero_fonti_notizie&select=contact_id,legacy_id,nome,cognome,comune,stato_contatto,azione_successiva,data_prossimo_contatto,tipo_rapporto,ultima_interazione,tree_meta,updated_at&order=updated_at.desc&limit=500';
     const rows=await F1AcquisitionData.rest(q)||[];
-    if(!rows.length){$('relationsDue').innerHTML='<div class="empty">Nessun follow-up relazionale scaduto o previsto oggi.</div>';return}
-    $('relationsDue').innerHTML=rows.map(r=>{
-      const tm=r.tree_meta&&typeof r.tree_meta==='object'?r.tree_meta:{},name=[r.nome,r.cognome].filter(Boolean).join(' ')||'Persona',rel=(r.tipo_rapporto||[]).join(', '),channel=tm.authorized_channel||'',after=r.azione_successiva||'Definire prossimo passo';
-      return `<div class="relation-due"><div><strong>${esc(name)}</strong><small>${esc([r.comune,rel,r.stato_contatto].filter(Boolean).join(' · '))}</small><small><b>DOPO:</b> ${esc(after)} · ${esc(r.data_prossimo_contatto||'')}</small>${channel?`<span class="badge">${esc(channel)}</span>`:''}</div><a class="btn alt" href="albero-fonti-notizie.html">APRI RELAZIONE</a></div>`;
-    }).join('');
-  }catch(e){$('relationsDue').innerHTML=`<div class="empty">Rete relazionale non disponibile: ${esc(e?.message||e)}</div>`}
-}
+    const info=rows.map(r=>{
+      const tm=r.tree_meta&&typeof r.tree_meta==='object'?r.tree_meta:{};
+      const channel=up(tm.authorized_channel||''),follow=up(tm.followup_allowed||'');
+      const contactAllowed=follow!=='NO'&&channel!=='NESSUNO';
+      const due=!!r.data_prossimo_contatto&&String(r.data_prossimo_contatto).slice(0,10)<=today&&contactAllowed;
+      const last=r.ultima_interazione?new Date(r.ultima_interazione).getTime():NaN;
+      const stale=contactAllowed&&Number.isFinite(last)&&Math.floor((todayMs-last)/DAY)>90&&!due;
+      const statuses=tm.lifeTriggerStatus&&typeof tm.lifeTriggerStatus==='object'?Object.values(tm.lifeTriggerStatus):[];
+      const signal=statuses.some(v=>/RILEVATO|DA_VERIFICARE/i.test(String(v)));
+      const intel=tm.publicIntelligence&&typeof tm.publicIntelligence==='object'?tm.publicIntelligence:{};
+      const evidence=Array.isArray(intel.evidence)?intel.evidence.filter(e=>up(e?.status||'DA_VERIFICARE')==='DA_VERIFICARE').length:0;
+      return{r,tm,channel,follow,contactAllowed,due,stale,signal,evidence};
+    });
+    const dueRows=info.filter(x=>x.due),staleRows=info.filter(x=>x.stale),signalRows=info.filter(x=>x.signal),evidenceCount=info.reduce((n,x)=>n+x.evidence,0);
+    setText('rDue',dueRows.length);setText('rStale',staleRows.length);setText('rSignals',signalRows.length);setText('rEvidence',evidenceCount);
 
+    const rank=x=>x.due?4:x.signal?3:x.evidence?2:x.stale?1:0;
+    const queue=info.filter(x=>rank(x)>0).sort((a,b)=>rank(b)-rank(a)||String(a.r.data_prossimo_contatto||'9999').localeCompare(String(b.r.data_prossimo_contatto||'9999'))).slice(0,24);
+    if(!queue.length){$('relationsDue').innerHTML='<div class="empty">Nessuna relazione richiede attenzione adesso.</div>';return}
+    $('relationsDue').innerHTML=queue.map(x=>{
+      const r=x.r,tm=x.tm,name=[r.nome,r.cognome].filter(Boolean).join(' ')||'Persona',rel=(r.tipo_rapporto||[]).join(', ');
+      let why='',badge='';
+      if(x.due){why='Ricontatto previsto oggi o scaduto.';badge='RICONTATTO'}
+      else if(x.signal){why=x.contactAllowed?'È presente un cambiamento/segnale emerso nella relazione: approfondire senza presumere una vendita.':'Segnale presente, ma il follow-up risulta non autorizzato: verificare la scheda senza contattare.';badge='SEGNALE'}
+      else if(x.evidence){why=x.evidence+' evidenza/e pubblica/e sono ancora da verificare.';badge='VERIFICA'}
+      else {why='Relazione ferma da oltre 90 giorni: mantenerla viva se il contatto è consentito.';badge='RELAZIONE'}
+      const after=r.azione_successiva||tm.what_told_me||'Aprire la scheda e definire il prossimo passo';
+      const href='albero-fonti-notizie.html'+(r.legacy_id?'?person='+encodeURIComponent(r.legacy_id):'');
+      return `<div class="relation-due"><div><strong>${esc(name)}</strong><small>${esc([r.comune,rel,r.stato_contatto].filter(Boolean).join(' · '))}</small><small><b>PERCHÉ:</b> ${esc(why)}</small><small><b>DOPO:</b> ${esc(after)}</small><span class="badge">${esc(badge)}${x.channel?' · '+esc(x.channel):''}</span></div><a class="btn alt" href="${esc(href)}">APRI RELAZIONE</a></div>`;
+    }).join('');
+  }catch(e){
+    $('relationsDue').innerHTML=`<div class="empty">Rete relazionale non disponibile: ${esc(e?.message||e)}</div>`;
+  }
+}
 function renderAll(){renderHeader();renderStats();renderCore();renderPillars();renderCompetitor();renderTerritory();renderFunnel();renderTasks()}
 async function load(){
   try{
