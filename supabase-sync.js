@@ -36,6 +36,7 @@ window.F1Sync={ready,configured,authToken,ensureSession,currentUser,refreshSessi
 
 (function loadF1GlobalBrand(){
   'use strict';
+  if(document.body?.classList.contains('f1-os-page'))return;
   if(document.querySelector('script[data-f1-global-brand]'))return;
   const s=document.createElement('script');
   s.src='f1-global-brand.js?v=20260919-layout-final1';
