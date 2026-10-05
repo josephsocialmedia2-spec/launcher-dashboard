@@ -81,6 +81,8 @@ test('dashboard -> auth -> CRM -> lead/interactions/task -> refresh/reopen persi
   const db={leads:[],interactions:[],tasks:[],territories:[],crm_import_log:[]};
   const context=await browser.newContext();
   await installBackend(context,db);
+  // Questo test valida il core CRM unificato; il CRM Hub ha una suite dedicata e viene isolato qui.
+  await context.route('**/crm-hub-app.js*',route=>route.fulfill({status:200,contentType:'application/javascript',body:'// isolated in core CRM E2E'}));
   const page=await context.newPage();
   const pageErrors=[],consoleErrors=[];
   page.on('pageerror',e=>pageErrors.push(String(e)));
