@@ -58,6 +58,25 @@ SOURCE
 
 `competitor-intelligence.html` usa lo storico immobiliare autenticato quando disponibile e degrada sul feed pubblico non sensibile.
 
+## Relationship & Territory Intelligence
+
+La rete relazionale in `albero-fonti-notizie.html` è una parte operativa del Command Center, non un database separato.
+
+Funzioni canoniche:
+
+- mappa libera con nodi trascinabili, relazioni etichettate, gruppi, zoom e posizioni sincronizzate;
+- scheda unica della persona con cronologia, 20 touch point/anno, trigger di cambiamento di vita e prossima azione;
+- Relationship Score separato dal segnale immobiliare: la forza della relazione non viene interpretata come probabilità di vendita;
+- percorso relazionale dalla radice `IO` alla persona per capire come nasce il collegamento;
+- spiegazione "perché lavorarla adesso" basata su ricontatto dovuto, relazione ferma, segnale esplicito o evidenza da verificare;
+- ricerca pubblica guidata (web, lavoro/azienda, notizie locali, profili pubblici, mappe/attività e fonti territoriali ufficiali);
+- nessun risultato di ricerca viene associato automaticamente: l'operatore salva solo le evidenze pertinenti, con URL e stato `DA_VERIFICARE / VERIFICATO / SCARTATO`;
+- i dati di Relationship Intelligence sono salvati in `network_contacts.tree_meta.publicIntelligence`, quindi restano nella stessa scheda cloud;
+- `tree_meta` viene unito, non sostituito, così Territorio, Relazioni e Intelligence non cancellano i rispettivi metadati;
+- `oggi.html` aggrega ricontatti dovuti, relazioni ferme, segnali da verificare ed evidenze pubbliche pendenti e apre direttamente la persona corretta.
+
+Le regole delle fonti pubbliche sono centralizzate in `config/relationship-intelligence.json`. Non dedurre automaticamente proprietà, reddito, residenza o intenzione di vendere; non raccogliere recapiti privati da pagine casuali; rispettare sempre follow-up autorizzato, canale autorizzato, RPO/DNC e la fonte dell'evidenza.
+
 ## Address Intelligence
 
 `address-intelligence.html` è il workspace di ricerca territoriale per una scheda immobiliare incompleta.
