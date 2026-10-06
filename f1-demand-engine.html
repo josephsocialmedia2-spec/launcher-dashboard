@@ -3,27 +3,70 @@
 <meta name="theme-color" content="#07100a"><title>F1 · Demand Engine</title>
 <link rel="stylesheet" href="f1-launcher-master.css?v=20261005-ag360">
 <style>
-:root{--bg:#070907;--p:#101510;--line:#29352d;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--gold:#f4c95d;--red:#ff7878}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:Inter,Arial,sans-serif}.wrap{max-width:1200px;margin:auto;padding:20px 14px 90px}.ey{color:var(--g);font-size:10px;font-weight:900;letter-spacing:.14em}h1{margin:4px 0 10px}.lead,.meta{color:var(--mut);font-size:12px;line-height:1.5}.stats,.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}.stat,.panel,.req,.match{background:var(--p);border:1px solid var(--line);border-radius:14px;padding:13px}.stat{text-align:center;font-size:10px;color:var(--mut)}.stat b{display:block;font-size:24px;color:var(--g)}.panel{margin:12px 0}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.field{width:100%;padding:10px;border-radius:9px;border:1px solid var(--line);background:#0b100c;color:#fff}.wide{grid-column:1/-1}.check{display:flex;gap:10px;flex-wrap:wrap;color:var(--mut);font-size:11px}.btn{display:inline-block;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#172019;color:#fff;text-decoration:none;font-weight:900;font-size:10px;cursor:pointer}.btn.primary{background:var(--g);color:#07100a}.btn.gold{color:var(--gold);border-color:#66552a}.list{display:grid;gap:8px}.req,.match{display:grid;gap:6px}.match.hot{border-color:#4c805b}.score{font-size:22px;color:var(--g);font-weight:900}.actions{display:flex;gap:7px;flex-wrap:wrap}.status{min-height:18px;color:var(--mut);font-size:11px}.status.err{color:var(--red)}.status.ok{color:var(--g)}@media(max-width:800px){.stats,.grid,.form{grid-template-columns:1fr 1fr}}@media(max-width:560px){.stats,.grid,.form{grid-template-columns:1fr}.wide{grid-column:auto}}
+:root{--bg:#070907;--p:#101510;--line:#29352d;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--gold:#f4c95d;--red:#ff7878}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font-family:Inter,Arial,sans-serif}.wrap{max-width:1200px;margin:auto;padding:20px 14px 90px}.ey{color:var(--g);font-size:10px;font-weight:900;letter-spacing:.14em}h1{margin:4px 0 10px}.lead,.meta{color:var(--mut);font-size:12px;line-height:1.5}.stats,.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}.stat,.panel,.req,.match{background:var(--p);border:1px solid var(--line);border-radius:14px;padding:13px}.stat{text-align:center;font-size:10px;color:var(--mut)}.stat b{display:block;font-size:24px;color:var(--g)}.panel{margin:12px 0}.form{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.field{width:100%;padding:10px;border-radius:9px;border:1px solid var(--line);background:#0b100c;color:#fff}.wide{grid-column:1/-1}.check{display:flex;gap:10px;flex-wrap:wrap;color:var(--mut);font-size:11px}.btn{display:inline-block;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:#172019;color:#fff;text-decoration:none;font-weight:900;font-size:10px;cursor:pointer}.btn.primary{background:var(--g);color:#07100a}.btn.gold{color:var(--gold);border-color:#66552a}.list{display:grid;gap:8px}.req,.match{display:grid;gap:6px}.match.hot{border-color:#4c805b}.score{font-size:22px;color:var(--g);font-weight:900}.actions{display:flex;gap:7px;flex-wrap:wrap}.status{min-height:18px;color:var(--mut);font-size:11px}.status.err{color:var(--red)}.status.ok{color:var(--g)}.flow6{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:10px 0}.flowstep{border:1px solid var(--line);border-radius:10px;padding:9px;background:#0b100c;font-size:9px;color:var(--mut);line-height:1.4}.flowstep b{display:block;color:var(--g);font-size:10px;margin-bottom:3px}.promptbox{margin-top:10px;border:1px solid #3d6648;border-radius:12px;background:#0b160e}.promptbox summary{cursor:pointer;padding:12px;font-weight:900;color:var(--g)}.promptbody{padding:0 12px 12px}.promptbody textarea{min-height:145px}.classbox{border:1px solid #66552a;background:#231f12;border-radius:10px;padding:10px;font-size:11px;color:#f6dc8d}.subhead{grid-column:1/-1;margin-top:5px;font-size:10px;color:var(--gold);font-weight:900;letter-spacing:.06em}.field.readonly{opacity:.8}.reqClass{display:inline-flex;padding:4px 7px;border-radius:999px;border:1px solid #66552a;color:var(--gold);font-size:9px;font-weight:900}.requestMetaGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.requestMetaGrid span{font-size:10px;color:var(--mut);background:#0b100c;border:1px solid var(--line);border-radius:8px;padding:7px}@media(max-width:1000px){.flow6{grid-template-columns:repeat(3,1fr)}}@media(max-width:800px){.stats,.grid,.form{grid-template-columns:1fr 1fr}}@media(max-width:560px){.stats,.grid,.form{grid-template-columns:1fr}.wide,.subhead{grid-column:auto}.flow6{grid-template-columns:1fr 1fr}.requestMetaGrid{grid-template-columns:1fr}}
 </style>
-<script defer src="f1-demand-engine.js?v=20261005-ag360"></script></head>
+<script defer src="f1-launcher-master.js?v=20261006-requests1"></script>
+<script defer src="f1-demand-engine.js?v=20261006-prequal1"></script></head>
 <body><main class="wrap">
 <div class="ey">F1 · CRM ACQUIRENTI · INCROCIO DOMANDA/OFFERTA</div><h1>DEMAND ENGINE</h1>
 <p class="lead">Registra una richiesta collegata a un contatto CRM e confrontala automaticamente con le opportunità immobiliari attive. Il punteggio è una priorità commerciale, non una garanzia di idoneità dell'immobile.</p>
 <div class="stats"><div class="stat"><b id="kReq">0</b>RICHIESTE ATTIVE</div><div class="stat"><b id="kMatch">0</b>MATCH ≥60</div><div class="stat"><b id="kHot">0</b>MATCH ≥85</div><div class="stat"><b id="kOpp">0</b>OPPORTUNITÀ ATTIVE</div></div>
+<section class="panel">
+<div class="ey">PROCEDURA OBBLIGATORIA F1 · RICHIESTE ACQUIRENTI</div>
+<h2>Prequalifica → ricerca → acquisizione territoriale</h2>
+<div class="flow6">
+  <div class="flowstep"><b>1 · PREQUALIFICA</b>Esigenza reale, budget e condizioni.</div>
+  <div class="flowstep"><b>2 · ECONOMIA</b>Liquidità, mutuo e dati da verificare.</div>
+  <div class="flowstep"><b>3 · VENDITA</b>Eventuale immobile da vendere prima.</div>
+  <div class="flowstep"><b>4 · RICERCA</b>Centro geografico + massimo 10 km.</div>
+  <div class="flowstep"><b>5 · MATCH</b>Immobili compatibili e fonti aggiornate.</div>
+  <div class="flowstep"><b>6 · CONFINANTI</b>Microzone per nuove acquisizioni.</div>
+</div>
+<details class="promptbox">
+  <summary>PROMPT OPERATIVO F1 · INCOLLA PREQUALIFICA</summary>
+  <div class="promptbody">
+    <p class="meta">Incolla appunti, WhatsApp o trascrizione. Il pulsante copia il prompt ufficiale F1 insieme ai dati inseriti, pronto da usare nell'assistente.</p>
+    <textarea id="prequalificaRaw" class="field" placeholder="Incolla qui la prequalifica del cliente…"></textarea>
+    <div class="actions"><button class="btn primary" id="copyPromptBtn" type="button">COPIA PROMPT F1 + DATI</button><a class="btn" href="prompts/f1-richieste-acquirenti-prequalifica.md" target="_blank" rel="noopener">APRI PROMPT UFFICIALE</a></div>
+    <div id="promptStatus" class="status"></div>
+  </div>
+</details>
+</section>
+
 <section class="panel"><div class="ey">NUOVA RICHIESTA</div><h2>Qualifica l'acquirente</h2>
+<div class="classbox" id="prequalClassPreview"><b>CLASSIFICAZIONE:</b> informazioni insufficienti finché i dati essenziali non sono compilati.</div>
 <form id="requestForm" class="form">
 <select id="leadId" class="field wide" required><option value="">Seleziona contatto CRM…</option></select>
-<input id="comune" class="field" required placeholder="Comune principale">
-<input id="zone" class="field" placeholder="Zone/comuni alternativi, separati da virgola">
+<input id="comune" class="field" required placeholder="Comune / centro geografico">
+<input id="zone" class="field" placeholder="Zone/comuni accettati, separati da virgola">
+<input id="zoneEscluse" class="field" placeholder="Zone escluse, separate da virgola">
 <input id="tipologia" class="field" placeholder="Tipologia, es. appartamento">
-<input id="budgetMin" class="field" type="number" min="0" step="1000" placeholder="Budget minimo">
-<input id="budgetMax" class="field" type="number" min="1" step="1000" required placeholder="Budget massimo">
+<input id="raggioKm" class="field readonly" value="10 km massimo" readonly>
+<select id="modalitaAcquisto" class="field"><option value="">Modalità acquisto da verificare…</option><option value="LIQUIDITA">Liquidità</option><option value="MUTUO">Mutuo</option><option value="MISTO">Liquidità + mutuo</option><option value="VENDITA_COLLEGATA">Dipende dalla vendita</option></select>
+<div class="subhead">PREQUALIFICA ECONOMICA · DICHIARATO / DA VERIFICARE</div>
+<input id="budgetMin" class="field" type="number" min="0" step="1000" placeholder="Budget minimo immobile">
+<input id="budgetMax" class="field" type="number" min="1" step="1000" required placeholder="Budget massimo immobile">
+<input id="liquidita" class="field" type="number" min="0" step="1000" placeholder="Liquidità dichiarata">
+<input id="budgetAccessori" class="field" type="number" min="0" step="1000" placeholder="Spese/lavori separati">
+<select id="mutuoStato" class="field"><option value="">Stato mutuo da verificare…</option><option value="NON_NECESSARIO">Non necessario</option><option value="DA_VERIFICARE">Da verificare</option><option value="SIMULAZIONE">Solo simulazione dichiarata</option><option value="PREVALUTAZIONE">Prevalutazione dichiarata</option><option value="DELIBERA_DICHIARATA">Delibera dichiarata · da verificare</option></select>
+<input id="mutuoImporto" class="field" type="number" min="0" step="1000" placeholder="Importo mutuo indicativo">
+<div class="subhead">CARATTERISTICHE IMMOBILE</div>
 <input id="mqMin" class="field" type="number" min="0" placeholder="Mq minimi">
 <input id="camere" class="field" type="number" min="0" placeholder="Camere minime">
 <input id="bagni" class="field" type="number" min="0" placeholder="Bagni minimi">
 <select id="urgenza" class="field"><option value="">Urgenza…</option><option>IMMEDIATA</option><option>30_GIORNI</option><option>90_GIORNI</option><option>NESSUNA_URGENZA</option></select>
-<div class="check wide"><label><input id="box" type="checkbox"> Box necessario</label><label><input id="giardino" type="checkbox"> Giardino necessario</label><label><input id="ascensore" type="checkbox"> Ascensore necessario</label><label><input id="terrazzo" type="checkbox"> Terrazzo necessario</label><label><input id="postoAuto" type="checkbox"> Posto auto necessario</label></div>
+<div class="check wide"><label><input id="box" type="checkbox"> Box necessario</label><label><input id="giardino" type="checkbox"> Giardino necessario</label><label><input id="ascensore" type="checkbox"> Ascensore necessario</label><label><input id="terrazzo" type="checkbox"> Terrazzo necessario</label><label><input id="postoAuto" type="checkbox"> Posto auto necessario</label><label><input id="deveVendere" type="checkbox"> Deve vendere un immobile per acquistare</label></div>
+<textarea id="indispensabili" class="field wide" placeholder="Requisiti indispensabili"></textarea>
+<textarea id="preferenze" class="field wide" placeholder="Preferenze negoziabili"></textarea>
+<div class="subhead">EVENTUALE VENDITA COLLEGATA</div>
+<select id="venditaStato" class="field"><option value="">Stato vendita da verificare…</option><option value="NON_AVVIATA">Non avviata</option><option value="PUBBLICIZZATA">Già pubblicizzata</option><option value="AGENZIA">Affidata a un'agenzia</option><option value="PROPOSTA_IN_CORSO">Proposta in corso</option></select>
+<input id="venditaPrezzoAtteso" class="field" type="number" min="0" step="1000" placeholder="Prezzo atteso dichiarato">
+<input id="venditaValutazione" class="field" placeholder="Valutazione presente? / da chi">
+<textarea id="venditaCollegata" class="field wide" placeholder="Ubicazione, proprietari, mutuo residuo dichiarato, caratteristiche e tempi dell'immobile da vendere"></textarea>
+<div class="subhead">CHIUSURA PREQUALIFICA</div>
+<textarea id="infoVerificare" class="field wide" placeholder="Informazioni ancora da verificare"></textarea>
 <textarea id="note" class="field wide" placeholder="Note e vincoli"></textarea>
+<input id="prossimaAzione" class="field wide" placeholder="Prossima azione operativa">
 <button class="btn primary" type="submit">SALVA RICHIESTA E ATTIVA MATCH</button><div id="saveStatus" class="status wide"></div>
 </form></section>
 <section class="panel"><div class="ey">MATCH AUTOMATICI</div><h2>Prima i clienti con opportunità più coerenti</h2><div id="matchList" class="list"><div class="meta">Caricamento…</div></div></section>
