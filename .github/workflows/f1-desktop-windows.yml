@@ -1,6 +1,9 @@
 name: F1 Desktop Windows
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - f1-desktop-offline
