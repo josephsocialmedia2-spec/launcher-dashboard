@@ -28,16 +28,25 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["nsis", "msi"],
+    "targets": [
+      "nsis",
+      "msi"
+    ],
     "windows": {
       "nsis": {
         "installMode": "currentUser"
+      },
+      "webviewInstallMode": {
+        "type": "offlineInstaller",
+        "silent": true
       }
     }
   },
   "plugins": {
     "sql": {
-      "preload": ["sqlite:f1-crm.sqlite"]
+      "preload": [
+        "sqlite:f1-crm.sqlite"
+      ]
     }
   }
 }
