@@ -361,6 +361,29 @@ async function migrateCloudIfAvailable(){
   }
 }
 
+async function pullDeletedLeads(){
+  const d=await db();
+  return(await d.select("SELECT contacts.*,(SELECT COUNT(*) FROM notes n WHERE n.contact_id=contacts.id AND n.deleted_at IS NULL) interaction_count FROM contacts WHERE deleted_at IS NOT NULL ORDER BY deleted_at DESC")).map(normalizeLead);
+}
+
+async function deleteLead(leadId){
+  const d=await db();
+  await d.execute("UPDATE contacts SET deleted_at=$1,updated_at=$1 WHERE id=$2",[iso(),leadId]);
+  return true;
+}
+
+async function restoreLead(leadId){
+  const d=await db();
+  await d.execute("UPDATE contacts SET deleted_at=NULL,updated_at=$1 WHERE id=$2",[iso(),leadId]);
+  return pullLead(leadId,true);
+}
+
+async function purgeLead(leadId){
+  const d=await db();
+  await d.execute("DELETE FROM contacts WHERE id=$1",[leadId]);
+  return true;
+}
+
 async function initialize(){
   await db();
   await migrateLocalStorage();
@@ -386,7 +409,7 @@ async function syncTerritorySnapshot(){return true}
 const api={
   cloudReady,requireCloud,rest,pullKpis,pullTasks,pullVisibleTasks,upsertTask,setTaskStatus,pullLeads,pullLeadPage,pullLead,upsertLead,updateLead,
   pullInteractions,pullInteractionsForLead,addInteraction,recordOutcome,ensureCore4DueTasks,syncTerritorySnapshot,loadDashboardData,
-  normalizeTask,normalizeLead,normalizeInteraction,
+  normalizeTask,normalizeLead,normalizeInteraction,pullDeletedLeads,deleteLead,restoreLead,purgeLead,
   localInteractions:()=>[],saveLocalInteractions:()=>true
 };
 
