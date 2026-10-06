@@ -384,14 +384,15 @@ pub fn run_self_test() -> Result<(), String> {
         let conn = Connection::open(&db).map_err(|e| e.to_string())?;
         conn.execute_batch(include_str!("../migrations/0001_init.sql"))
             .map_err(|e| e.to_string())?;
+        let now = Local::now().to_rfc3339();
         conn.execute(
             "INSERT INTO contacts(id,nome,created_at,updated_at) VALUES(?1,?2,?3,?3)",
-            ("self-test-contact", "F1 TEST OFFLINE", Local::now().to_rfc3339()),
+            rusqlite::params!["self-test-contact", "F1 TEST OFFLINE", &now],
         )
         .map_err(|e| e.to_string())?;
         conn.execute(
             "INSERT INTO notes(id,contact_id,contenuto,data_evento,created_at,updated_at) VALUES(?1,?2,?3,?4,?4,?4)",
-            ("self-test-note", "self-test-contact", "Nota offline persistente", Local::now().to_rfc3339()),
+            rusqlite::params!["self-test-note", "self-test-contact", "Nota offline persistente", &now],
         )
         .map_err(|e| e.to_string())?;
     }
