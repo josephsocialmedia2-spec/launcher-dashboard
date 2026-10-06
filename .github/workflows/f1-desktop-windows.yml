@@ -10,6 +10,7 @@ on:
     paths:
       - "src-tauri/**"
       - "f1-desktop-data.js"
+      - "f1-desktop-hub.js"
       - "desktop-settings.html"
       - "crm.html"
       - "crm-unified-app.js"
@@ -36,7 +37,7 @@ jobs:
         with:
           node-version: "22"
       - name: Check desktop adapter syntax
-        run: node --check f1-desktop-data.js
+        run: node --check f1-desktop-data.js && node --check f1-desktop-hub.js && node --check f1-territory-local.js
       - name: Check modified CRM runtime syntax
         run: node --check crm-unified-app.js && node --check crm-auth-guard.js && node --check f1-dashboard-auth-guard.js
 
