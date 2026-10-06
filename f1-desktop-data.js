@@ -8,7 +8,7 @@ const Database=window.__TAURI__.sql;
 const invoke=window.__TAURI__.core.invoke;
 const Core=()=>window.F1AcquisitionCore;
 const DB_URL='sqlite:f1-crm.sqlite';
-let dbPromise=null;
+let dbPromise=null,initPromise=null;
 
 window.F1_DESKTOP=true;
 
@@ -460,9 +460,13 @@ const api={
   localInteractions:()=>[],saveLocalInteractions:()=>true
 };
 
+function ready(){
+  if(!initPromise)initPromise=initialize();
+  return initPromise;
+}
 window.F1AcquisitionData=api;
-window.F1DesktopData={ready:initialize,db,close,invoke,api};
-initialize().catch(e=>{
+window.F1DesktopData={ready,db,close,invoke,api};
+ready().catch(e=>{
   console.error('F1 DESKTOP DATABASE ERROR',e);
   window.dispatchEvent(new CustomEvent('f1-desktop-error',{detail:{message:String(e?.message||e)}}));
 });
