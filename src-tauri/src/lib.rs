@@ -333,6 +333,23 @@ fn delete_all_local_data(app: tauri::AppHandle) -> Result<String, String> {
 }
 
 #[tauri::command]
+fn delete_backups(app: tauri::AppHandle) -> Result<u32, String> {
+    let dir = backup_dir_for_app(&app)?;
+    let mut deleted = 0u32;
+    if !dir.exists() {
+        return Ok(0);
+    }
+    for entry in fs::read_dir(&dir).map_err(|e| e.to_string())? {
+        let entry = entry.map_err(|e| e.to_string())?;
+        let path = entry.path();
+        if path.extension().and_then(|x| x.to_str()) == Some("sqlite") && fs::remove_file(&path).is_ok() {
+            deleted += 1;
+        }
+    }
+    Ok(deleted)
+}
+
+#[tauri::command]
 fn open_backup_dir(app: tauri::AppHandle) -> Result<String, String> {
     let dir = backup_dir_for_app(&app)?;
     fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
@@ -377,6 +394,7 @@ pub fn run() {
             list_backups,
             restore_backup,
             delete_all_local_data,
+            delete_backups,
             open_backup_dir,
             ensure_backup_task
         ])
