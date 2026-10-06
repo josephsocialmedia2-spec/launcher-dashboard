@@ -1,7 +1,7 @@
 (function(){
 'use strict';
 
-let DASH={tasks:[],leads:[],feed:{summary:{}},cfg:null,cloud:false,hotNews:[],hotNewsCached:false,sellerRadar:[]};
+let DASH={tasks:[],leads:[],feed:{summary:{}},cfg:null,cloud:false,hotNews:[],hotNewsCached:false,publicHotSummary:null,sellerRadar:[]};
 const HOT_NEWS_CACHE_KEY='f1HotNewsSnapshotV1';
 function hotNewsCacheRead(){
   try{
@@ -76,7 +76,12 @@ async function loadHotNews(){
   if(!DASH.cloud){
     const cached=hotNewsCacheRead();
     DASH.hotNewsCached=!!cached;
-    return cached?.rows||[];
+    if(cached?.rows?.length)return cached.rows;
+    try{
+      const r=await fetch('data/hot-news-public.json?v='+Date.now(),{cache:'no-store'});
+      if(r.ok)DASH.publicHotSummary=await r.json();
+    }catch(_){}
+    return [];
   }
   DASH.hotNewsCached=false;
   const companyFields='id,ragione_sociale,comune,telefono,cellulare,email,stato,interesse,note,ultima_interazione,prossima_azione,data_prossima_azione,processing_status,do_not_contact,updated_at';
@@ -115,12 +120,22 @@ function hotNewsNext(x){
   return [next,date].filter(Boolean).join(' · ');
 }
 function renderHotNews(){
-  const rows=DASH.hotNews||[];
-  setText('hotNewsCount',rows.length);
+  const rows=DASH.hotNews||[],publicSummary=DASH.publicHotSummary||null;
+  const visibleCount=rows.length||(Number(publicSummary?.hot_count)||0);
+  setText('hotNewsCount',visibleCount);
   const nav=document.querySelector('[data-hot-news-nav="1"] span');
-  if(nav)nav.textContent=rows.length?'Notizie calde · '+rows.length:'Notizie calde';
+  if(nav)nav.textContent=visibleCount?'Notizie calde · '+visibleCount:'Notizie calde';
   const box=$('hotNewsList');if(!box)return;
   if(!DASH.cloud&&!rows.length){
+    if(visibleCount>0){
+      const d7=Number(publicSummary?.d7_count)||0;
+      const highlights=Array.isArray(publicSummary?.highlights)?publicSummary.highlights:[];
+      box.innerHTML=
+        '<div class="notice" style="margin:0 0 10px"><b>'+esc(visibleCount)+' PRIORITÀ CALDE PRESENTI</b> · i dettagli dei clienti restano protetti.</div>'+
+        (d7>0?'<article class="hot-news-card is-urgent"><div class="hot-news-card-top"><div><div class="hot-news-title">RICERCA D/7 ATTIVA</div><div class="hot-news-meta">Priorità commerciale protetta</div></div><span class="badge gold">MOLTO CALDA</span></div><div class="hot-news-reason">Esiste una richiesta D/7 da lavorare. Accedi a F1 per vedere cliente, dettagli, immobili collegati e prossima azione.</div><div class="hot-news-actions"><a class="btn gold" href="setup-cloud.html?return=oggi.html%23hot-news">ACCEDI E APRI DETTAGLI</a></div></article>':'')+
+        highlights.filter(x=>up(x.type)!=='RICERCA_D7').map(x=>'<article class="hot-news-card"><div class="hot-news-title">'+esc(x.label||'PRIORITÀ CALDA')+'</div><div class="hot-news-reason">'+esc(x.detail||'Accedi a F1 per i dettagli.')+'</div></article>').join('');
+      return;
+    }
     box.innerHTML='<div class="empty"><b>SESSIONE F1 NON ATTIVA</b><br>Per leggere i dati CRM privati serve l’accesso F1.<div class="actions" style="justify-content:center;margin-top:10px"><a class="btn gold" href="setup-cloud.html?return=oggi.html%23hot-news">ACCEDI A F1</a></div></div>';
     return;
   }
@@ -466,7 +481,7 @@ function renderAll(){renderHeader();renderHotNews();renderSellerRadar();renderSt
 async function load(){
   try{
     const data=await F1AcquisitionData.loadDashboardData();
-    DASH={...data,hotNews:[],hotNewsCached:false,sellerRadar:buildSellerRadarResults(data.feed?.tasks||[])};
+    DASH={...data,hotNews:[],hotNewsCached:false,publicHotSummary:null,sellerRadar:buildSellerRadarResults(data.feed?.tasks||[])};
     DASH.hotNews=await loadHotNews();
     renderAll();await renderRelationsDue();
   }catch(e){$('taskList').innerHTML=`<div class="empty">Command Center non inizializzato: ${esc(e?.message||e)}</div>`}
