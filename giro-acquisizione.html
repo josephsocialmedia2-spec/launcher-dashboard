@@ -193,6 +193,13 @@ async function saveOutcome(e){
   }finally{SAVING=false}
 }
 async function loadIdentity(){
+  if(window.F1_DESKTOP){
+    const requested=String(new URLSearchParams(location.search).get('comune')||'').trim();
+    CURRENT_USER={user_id:'desktop-local',first_name:'Joseph',last_name:'',role:'TITOLARE',assigned_territory:{}};
+    ROLE='TITOLARE';ACTIVE_COMUNE=requested;
+    $('assignment').innerHTML='<b>Modalità desktop locale:</b> SQLite · '+(ACTIVE_COMUNE?('<b>Comune:</b> '+esc(ACTIVE_COMUNE)):'tutti i Comuni disponibili');
+    return true;
+  }
   if(!window.F1Sync||!window.F1StaffData||!F1Sync.configured?.()){location.replace('setup-cloud.html?return=giro-acquisizione.html');return false}
   const ok=await F1Sync.ensureSession().catch(()=>false);if(!ok){location.replace('setup-cloud.html?return=giro-acquisizione.html');return false}
   CURRENT_USER=await F1StaffData.me();ROLE=upper(CURRENT_USER.role);
