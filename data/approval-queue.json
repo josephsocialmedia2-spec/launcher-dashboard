@@ -1,9 +1,29 @@
 {
   "version": 2,
-  "generated_at": "2026-10-06T10:29:05.610140+00:00",
+  "generated_at": "2026-10-06T16:54:36.817157+00:00",
   "pipeline": "F1_COMMON_APPROVAL_QUEUE",
   "crm_target": "Supabase public.approval_queue",
   "items": [
+    {
+      "approval_id": "facebook-group-FBG-9DA9D80918",
+      "task_id": "facebook-group-FBG-9DA9D80918",
+      "lead_id": "",
+      "property_id": "",
+      "module": "FACEBOOK_GROUPS",
+      "platform": "FACEBOOK",
+      "comune": "Valle di Susa",
+      "type": "GROUP_APPROVAL",
+      "subject": "Servizi e Consegne a domicilio in Valle di Susa",
+      "result": "Unione Commercianti e Artigiani Avigliana \"Original Page\" 1y · Public 🌟Siamo pronti a salutare questa fantastica estate con l’evento Notti di Fine Estate! Scopri ora il programma ricco di attività, divertimento e tante risate! 😜 🗓️ 12 - 13 - 14 Settembre 📍Alveare Verde ad Avigliana Ti aspettiamo dalle 18:00 per passare insieme ...",
+      "action_proposed": "APPROVA GRUPPO",
+      "score": null,
+      "source_url": "https://www.facebook.com/groups/510560956326895/",
+      "preview_url": "",
+      "created_at": "2026-10-06T12:13:46+00:00",
+      "origin": "open-social-scheduler/growth/groups.json",
+      "status": "DA_APPROVARE",
+      "metadata": {}
+    },
     {
       "approval_id": "facebook-group-FBG-9B80B001C3",
       "task_id": "facebook-group-FBG-9B80B001C3",
@@ -17311,10 +17331,10 @@
     }
   ],
   "summary": {
-    "total": 864,
+    "total": 865,
     "seller_radar": 592,
     "social_content": 5,
-    "facebook_groups": 229,
+    "facebook_groups": 230,
     "facebook_network": 37,
     "social_optimization": 1,
     "instagram_gate": 0
