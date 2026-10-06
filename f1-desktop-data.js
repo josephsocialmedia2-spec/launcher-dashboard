@@ -306,11 +306,65 @@ async function dailySellerCalls(body){
 
 async function hubPage(body){
   body=body&&typeof body==='object'?body:{};
-  const section=String(body.p_section||'CONTATTI').toUpperCase(),offset=Math.max(0,Number(body.p_offset)||0),limit=Math.max(1,Math.min(100,Number(body.p_limit)||50));
-  const search=clean(body.p_search).toLowerCase(),filters=body.p_filters&&typeof body.p_filters==='object'?body.p_filters:{},d=await db();
+  const section=String(body.p_section||'CONTATTI').toUpperCase();
+  const offset=Math.max(0,Number(body.p_offset)||0);
+  const limit=Math.max(1,Math.min(100,Number(body.p_limit)||50));
+  const search=clean(body.p_search).toLowerCase();
+  const filters=body.p_filters&&typeof body.p_filters==='object'?body.p_filters:{};
+  const d=await db();
   if(section==='CONTATTI'){
     const where=['deleted_at IS NULL'],params=[];
-    function like(expr,value){if(!clean(value))return;params.push('%'+clean(value).toLowerCase()+'%');where.push('lower('+expr+') LIKE 
+    function like(expr,value){
+      if(!clean(value))return;
+      params.push('%'+clean(value).toLowerCase()+'%');
+      where.push('lower('+expr+') LIKE $'+params.length);
+    }
+    if(search){
+      params.push('%'+search+'%');
+      const p='$'+params.length;
+      where.push("(lower(nome||' '||cognome||' '||azienda||' '||telefono||' '||email||' '||comune||' '||indirizzo||' '||civico||' '||tipo_contatto||' '||stato||' '||notes_summary) LIKE "+p+" OR EXISTS(SELECT 1 FROM notes n WHERE n.contact_id=contacts.id AND n.deleted_at IS NULL AND lower(n.contenuto) LIKE "+p+'))');
+    }
+    like('telefono',filters.telefono);like('nome',filters.nome);like('cognome',filters.cognome);like('comune',filters.comune);
+    if(clean(filters.tipologia)){
+      params.push('%'+clean(filters.tipologia).toLowerCase()+'%');
+      const p='$'+params.length;
+      where.push('(lower(tipo_contatto) LIKE '+p+' OR lower(market_data) LIKE '+p+')');
+    }
+    if(filters.privato)where.push("tipo_contatto IN ('FSBO','FSBO_CANDIDATE','SELLER','TERRITORY')");
+    if(filters.vendita)where.push("tipo_contatto NOT IN ('BUYER')");
+    if(filters.ricerca)where.push("tipo_contatto IN ('BUYER','WEBSITE','REFERRAL')");
+    const clause=' WHERE '+where.join(' AND ');
+    const total=(await d.select("SELECT COUNT(*) n FROM contacts WHERE deleted_at IS NULL"))[0]?.n||0;
+    const filtered=(await d.select('SELECT COUNT(*) n FROM contacts'+clause,params))[0]?.n||0;
+    const qParams=[...params,limit,offset],lp='$'+(params.length+1),op='$'+(params.length+2);
+    const rows=await d.select('SELECT contacts.*,(SELECT COUNT(*) FROM notes n WHERE n.contact_id=contacts.id AND n.deleted_at IS NULL) interaction_count FROM contacts'+clause+' ORDER BY updated_at DESC LIMIT '+lp+' OFFSET '+op,qParams);
+    return{rows:rows.map(normalizeLead),filtered:Number(filtered)||0,total:Number(total)||0};
+  }
+  if(section==='ATTIVITA'){
+    const where=['1=1'],params=[];
+    if(search){
+      params.push('%'+search+'%');
+      const p='$'+params.length;
+      where.push("lower(coalesce(t.task_type,'')||' '||coalesce(t.reason,'')||' '||coalesce(c.nome,'')||' '||coalesce(c.cognome,'')||' '||coalesce(c.comune,'')) LIKE "+p);
+    }
+    if(clean(filters.stato)){params.push(clean(filters.stato));where.push('t.status=$'+params.length)}
+    const clause=' WHERE '+where.join(' AND ');
+    const total=(await d.select('SELECT COUNT(*) n FROM tasks'))[0]?.n||0;
+    const filtered=(await d.select('SELECT COUNT(*) n FROM tasks t LEFT JOIN contacts c ON c.id=t.contact_id'+clause,params))[0]?.n||0;
+    const qParams=[...params,limit,offset],lp='$'+(params.length+1),op='$'+(params.length+2);
+    const rows=await d.select("SELECT t.id task_id,t.task_type,t.reason,t.priority,t.due_date,t.status,t.outcome,t.created_at,t.updated_at,c.id lead_id,c.nome lead_nome,c.cognome lead_cognome,c.telefono lead_telefono,c.comune lead_comune FROM tasks t LEFT JOIN contacts c ON c.id=t.contact_id"+clause+" ORDER BY CASE WHEN t.status='OPEN' THEN 0 ELSE 1 END,t.due_date ASC,t.priority DESC LIMIT "+lp+' OFFSET '+op,qParams);
+    return{rows,filtered:Number(filtered)||0,total:Number(total)||0};
+  }
+  if(section==='TRATTATIVE'){
+    const all=await hubPage({...body,p_section:'CONTATTI'});
+    const rows=(all.rows||[]).filter(x=>!['DA_ANALIZZARE','NUOVO','ARCHIVIATO','SCARTATO'].includes(String(x.status||'').toUpperCase()));
+    return{rows,filtered:rows.length,total:rows.length};
+  }
+  return{rows:[],filtered:0,total:0,offline:true};
+}
+
+async function rest(path,opt={}){
+  path=String(path||'');
   if(path.startsWith('rpc/f1_daily_seller_calls_v1'))return dailySellerCalls(jparse(opt.body||'{}',{}));
   if(path.startsWith('rpc/f1_crm_hub_page_v1'))return hubPage(jparse(opt.body||'{}',{}));
   if(path.startsWith('rpc/f1_crm_companies_page_v1'))return {rows:[],filtered:0,total:0,offline:true};
@@ -328,7 +382,6 @@ async function hubPage(body){
   }
   throw new Error('Funzione online non disponibile in modalità desktop: '+path);
 }
-
 async function setting(key){
   const d=await db(),r=(await d.select('SELECT value FROM app_settings WHERE key=$1 LIMIT 1',[key]))[0];
   return r?.value||'';
