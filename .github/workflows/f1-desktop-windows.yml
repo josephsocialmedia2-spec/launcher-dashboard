@@ -58,5 +58,4 @@ jobs:
           name: F1-Immobiliare-Desktop-Windows
           path: |
             src-tauri/target/release/bundle/nsis/*.exe
-            src-tauri/target/release/bundle/msi/*.msi
           if-no-files-found: error
