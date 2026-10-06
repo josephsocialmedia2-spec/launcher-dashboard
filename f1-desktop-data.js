@@ -347,6 +347,34 @@ async function migrateLocalStorage(){
   await setSetting('local_storage_migration_v1','done');
 }
 
+async function migrateTerritoryLocalStorage(){
+  if(await setting('territory_local_storage_migration_v1'))return;
+  for(const raw of readArray('f1TerritoryLocalPeopleV1')){
+    const now=raw.updated_at||iso(),id=String(raw.id||'').replace(/^local_/,'')||crypto.randomUUID();
+    const lead={
+      lead_id:id,pillar:2,source_type:'TERRITORY',source:'RICERCA_TERRITORIALE_LOCALE',source_url:'',
+      created_at:now,first_seen:now,last_seen:now,nome:raw.nome||'',cognome:raw.cognome||'',azienda:'',
+      telefono:raw.telefono||'',email:raw.email||'',comune:raw.comune||'',via:raw.via||'',civico:raw.civico||'',
+      zona:[raw.via||'',raw.civico||''].filter(Boolean).join(' '),immobile_id:'',competitor_agency:'',
+      lead_reason:raw.relazione||'TERRITORY',lead_score:50,confidence:'MEDIUM',status:raw.stage||'DA_ANALIZZARE',
+      last_contact:now,next_action:raw.next_action||'',next_action_date:raw.next_date||'',assigned_to:'desktop-local',
+      notes:raw.story||raw.notes||'',privacy_basis:'TERRITORY_LOCAL_ENTRY',do_not_contact:false,rpo_status:'DA_VERIFICARE',
+      market_data:{relazione:raw.relazione||'',fonte:raw.fonte||'',stage:raw.stage||'',abs:raw.abs||'',story:raw.story||'',followup:raw.followup||'',channel:raw.channel||'',notes:raw.notes||''},
+      created_by:'territory_local_migration',updated_at:now,deleted:false
+    };
+    try{
+      const saved=await upsertLeadInternal(lead);
+      if(raw.story||raw.notes)await addInteraction({
+        lead_id:saved.lead_id,interaction_type:'NOTE',direction:'INBOUND',occurred_at:now,
+        outcome:'TERRITORY_LEGACY_MIGRATION',note:[raw.story,raw.notes].filter(Boolean).join(' · '),
+        next_action:raw.next_action||'',next_action_date:raw.next_date||'',
+        metadata:{origin:'f1TerritoryLocalPeopleV1'}
+      });
+    }catch(e){console.warn('F1 desktop territory local migration',e)}
+  }
+  await setSetting('territory_local_storage_migration_v1','done');
+}
+
 async function migrateCloudIfAvailable(){
   if(await setting('cloud_migration_v1'))return;
   if(!CloudData?.cloudReady?.())return;
@@ -387,6 +415,7 @@ async function purgeLead(leadId){
 async function initialize(){
   await db();
   await migrateLocalStorage();
+  await migrateTerritoryLocalStorage();
   await migrateCloudIfAvailable();
   try{await invoke('ensure_backup_task')}catch(_){}
   document.documentElement.dataset.f1Desktop='true';
