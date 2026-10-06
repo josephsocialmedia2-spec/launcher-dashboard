@@ -18,9 +18,14 @@ on:
       - "telefonate-oggi.html"
       - "giro-acquisizione.html"
       - "ricerca-territoriale.html"
+      - "f1-territory-local.js"
       - "package.json"
       - ".github/workflows/f1-desktop-windows.yml"
   workflow_dispatch:
+
+concurrency:
+  group: f1-desktop-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   verify-js:
