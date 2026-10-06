@@ -58,6 +58,24 @@ jobs:
         run: cargo check --manifest-path src-tauri/Cargo.toml
       - name: Build F1 Immobiliare Desktop
         run: npm run desktop:build
+      - name: Smoke test silent Windows installation
+        shell: pwsh
+        run: |
+          $installer = Get-ChildItem "src-tauri/target/release/bundle/nsis/*.exe" | Select-Object -First 1
+          if (-not $installer) { throw "Installer NSIS non trovato" }
+          $proc = Start-Process -FilePath $installer.FullName -ArgumentList "/S" -Wait -PassThru
+          if ($proc.ExitCode -ne 0) { throw "Installazione silenziosa fallita: exit $($proc.ExitCode)" }
+          $candidates = @(
+            "$env:LOCALAPPDATA\F1 Immobiliare Desktop\f1-immobiliare-desktop.exe",
+            "$env:LOCALAPPDATA\Programs\F1 Immobiliare Desktop\f1-immobiliare-desktop.exe",
+            "$env:LOCALAPPDATA\F1Immobiliare\f1-immobiliare-desktop.exe"
+          )
+          $installed = $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $installed) {
+            $installed = Get-ChildItem $env:LOCALAPPDATA -Filter "f1-immobiliare-desktop.exe" -File -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName
+          }
+          if (-not $installed) { throw "Installer terminato ma eseguibile installato non trovato" }
+          Write-Host "F1 Immobiliare Desktop installato correttamente in: $installed"
       - name: Upload Windows installers
         uses: actions/upload-artifact@v4
         with:
