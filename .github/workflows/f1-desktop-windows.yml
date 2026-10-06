@@ -76,6 +76,9 @@ jobs:
           }
           if (-not $installed) { throw "Installer terminato ma eseguibile installato non trovato" }
           Write-Host "F1 Immobiliare Desktop installato correttamente in: $installed"
+          $selfTest = Start-Process -FilePath $installed -ArgumentList "--self-test" -Wait -PassThru
+          if ($selfTest.ExitCode -ne 0) { throw "Self-test SQLite/backup fallito: exit $($selfTest.ExitCode)" }
+          Write-Host "Self-test SQLite: contatto + nota + riapertura + backup = OK"
       - name: Upload Windows installers
         uses: actions/upload-artifact@v4
         with:
