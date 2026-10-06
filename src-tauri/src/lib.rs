@@ -372,6 +372,55 @@ pub fn run_backup_only() -> Result<(), String> {
     create_backup_at(&db, &backups, &root).map(|_| ())
 }
 
+
+pub fn run_self_test() -> Result<(), String> {
+    let stamp = Local::now().timestamp_millis();
+    let root = std::env::temp_dir().join(format!("f1-immobiliare-self-test-{}-{}", std::process::id(), stamp));
+    let db = root.join(DB_NAME);
+    let backups = root.join("backups");
+    fs::create_dir_all(&backups).map_err(|e| e.to_string())?;
+
+    {
+        let conn = Connection::open(&db).map_err(|e| e.to_string())?;
+        conn.execute_batch(include_str!("../migrations/0001_init.sql"))
+            .map_err(|e| e.to_string())?;
+        conn.execute(
+            "INSERT INTO contacts(id,nome,created_at,updated_at) VALUES(?1,?2,?3,?3)",
+            ("self-test-contact", "F1 TEST OFFLINE", Local::now().to_rfc3339()),
+        )
+        .map_err(|e| e.to_string())?;
+        conn.execute(
+            "INSERT INTO notes(id,contact_id,contenuto,data_evento,created_at,updated_at) VALUES(?1,?2,?3,?4,?4,?4)",
+            ("self-test-note", "self-test-contact", "Nota offline persistente", Local::now().to_rfc3339()),
+        )
+        .map_err(|e| e.to_string())?;
+    }
+
+    let (contacts, notes) = counts(&db);
+    if contacts != 1 || notes != 1 {
+        let _ = fs::remove_dir_all(&root);
+        return Err(format!("Self-test persistenza fallito: contacts={}, notes={}", contacts, notes));
+    }
+
+    let backup = create_backup_at(&db, &backups, &root)?;
+    if !backup.exists() {
+        let _ = fs::remove_dir_all(&root);
+        return Err("Self-test backup fallito: file non creato".to_string());
+    }
+
+    let (backup_contacts, backup_notes) = counts(&backup);
+    if backup_contacts != 1 || backup_notes != 1 {
+        let _ = fs::remove_dir_all(&root);
+        return Err(format!(
+            "Self-test backup incoerente: contacts={}, notes={}",
+            backup_contacts, backup_notes
+        ));
+    }
+
+    fs::remove_dir_all(&root).map_err(|e| e.to_string())?;
+    Ok(())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let migrations = vec![Migration {
