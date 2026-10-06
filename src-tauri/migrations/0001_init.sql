@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS contacts (
   do_not_contact INTEGER NOT NULL DEFAULT 0,
   rpo_status TEXT NOT NULL DEFAULT 'DA_VERIFICARE',
   market_data TEXT NOT NULL DEFAULT '{}',
+  notes_summary TEXT NOT NULL DEFAULT '',
   created_by TEXT NOT NULL DEFAULT '',
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL,
