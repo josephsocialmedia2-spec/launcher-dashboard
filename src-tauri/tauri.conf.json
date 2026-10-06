@@ -4,7 +4,9 @@
   "version": "0.1.0",
   "identifier": "it.f1immobiliare.desktop",
   "build": {
-    "frontendDist": ".."
+    "frontendDist": "../desktop-dist",
+    "beforeBuildCommand": "node scripts/prepare-desktop.mjs",
+    "beforeDevCommand": "node scripts/prepare-desktop.mjs"
   },
   "app": {
     "withGlobalTauri": true,
