@@ -46,6 +46,8 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - name: Install JavaScript dependencies
         run: npm install
+      - name: Prepare offline desktop assets
+        run: node scripts/prepare-desktop.mjs
       - name: Rust compile check
         run: cargo check --manifest-path src-tauri/Cargo.toml
       - name: Build F1 Immobiliare Desktop
