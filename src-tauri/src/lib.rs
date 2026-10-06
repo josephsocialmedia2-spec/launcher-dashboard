@@ -59,7 +59,7 @@ fn backup_dir_for_app(app: &tauri::AppHandle) -> Result<PathBuf, String> {
 }
 
 fn escape_sqlite_string(path: &Path) -> String {
-    path.to_string_lossy().replace(''', "''")
+    path.to_string_lossy().replace("'", "''")
 }
 
 fn rotate_backups(dir: &Path) -> Result<(), String> {
