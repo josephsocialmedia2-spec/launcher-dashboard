@@ -29,6 +29,7 @@
       label: "CLIENTI E IMMOBILI",
       items: [
         ["Contatti","crm.html#contatti","contatti"],
+        ["Richieste","f1-demand-engine.html","richieste"],
         ["Immobili","crm.html#immobili","immobili"],
         ["CRM","crm.html","crm"],
         ["Email Radar","f1-email-radar.html","email"]
@@ -61,6 +62,7 @@
     dashboard:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" stroke="currentColor" stroke-width="1.7"/></svg>',
     territorio:'<svg viewBox="0 0 24 24" fill="none"><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2" stroke="currentColor" stroke-width="1.7"/></svg>',
     notizie:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 11v2m3-5v8l9 3V5L7 8Zm9 2h3m-3-4 2-2m-2 12 2 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
+    richieste:'<svg viewBox="0 0 24 24" fill="none"><path d="M5 4h14v16H5z" stroke="currentColor" stroke-width="1.7"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
     immobili:'<svg viewBox="0 0 24 24" fill="none"><path d="m3 11 9-7 9 7v9h-6v-6H9v6H3v-9Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>',
     contatti:'<svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 20c.5-4 2.2-6 5.5-6s5 2 5.5 6M16 8h5m-2.5-2.5V10.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>',
     crm:'<svg viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="5" rx="7" ry="3" stroke="currentColor" stroke-width="1.7"/><path d="M5 5v7c0 1.7 3.1 3 7 3s7-1.3 7-3V5m-14 7v7c0 1.7 3.1 3 7 3s7-1.3 7-3v-7" stroke="currentColor" stroke-width="1.7"/></svg>',
@@ -126,7 +128,7 @@
     if(p==="ricerca-territoriale.html") return href.includes("#territorio") ? "TERRITORIO" : "OGGI";
     if(p==="oggi.html"||p==="telefonate-oggi.html") return "OGGI";
     if(p==="albero-fonti-notizie.html"||p==="territory-mobile.html") return "TERRITORIO";
-    if(p==="crm.html"||p==="f1-email-radar.html") return "CLIENTI E IMMOBILI";
+    if(p==="crm.html"||p==="f1-email-radar.html"||p==="f1-demand-engine.html") return "CLIENTI E IMMOBILI";
     if(p==="documenti-vendita.html"||p==="centrale-risultati.html") return "LAVORO";
     if(p.startsWith("mike-ferry-script-trainer/")) return "FORMAZIONE";
     if(p==="accessi-ufficio.html"||p==="setup-cloud.html") return "SISTEMA";
