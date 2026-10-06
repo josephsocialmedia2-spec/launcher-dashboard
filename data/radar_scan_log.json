@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-10-05T18:05:47.622104+00:00",
+  "started_at": "2026-10-06T05:15:59.058753+00:00",
   "scanner_version": 4,
   "geography": {
     "center": "Susa",
@@ -35,8 +35,11 @@
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 5,
-      "http_status": 200
+      "pages_checked": 4,
+      "http_status": 200,
+      "warnings": [
+        "https://www.halleyweb.com/c001149/mc/mc_p_ricerca.php?servizio=: ConnectionError"
+      ]
     },
     {
       "comune": "Gravere",
@@ -119,8 +122,12 @@
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 4,
-      "http_status": 200
+      "pages_checked": 2,
+      "http_status": 200,
+      "warnings": [
+        "https://halleyweb.com/c001076/mc/mc_matri_gridev_messi.php?x=&servizio=&bck=: ConnectionError",
+        "https://www.halleyweb.com/c001076/mc/mc_gridev_messi.php?x=&servizio=&bck=: ConnectionError"
+      ]
     },
     {
       "comune": "Moncenisio",
@@ -189,5 +196,5 @@
   "new_records": 0,
   "baseline_imported": 0,
   "errors": 0,
-  "finished_at": "2026-10-05T18:06:50.486812+00:00"
+  "finished_at": "2026-10-06T05:17:30.075222+00:00"
 }
