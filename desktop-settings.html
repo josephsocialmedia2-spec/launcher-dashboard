@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>F1 Immobiliare · Dati e Backup</title>
+<style>
+:root{--bg:#070907;--p:#101510;--line:#2a342c;--txt:#fff;--mut:#aeb7b0;--g:#39f28a;--gold:#f4c95d;--red:#ff7777}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#050705,#0b110c);color:var(--txt);font-family:Arial,sans-serif}.wrap{max-width:1040px;margin:auto;padding:20px 14px 60px}
+a{color:var(--g)}h1{margin:4px 0 18px}.ey{font-size:10px;color:var(--g);font-weight:900;letter-spacing:.14em}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.card{background:var(--p);border:1px solid var(--line);border-radius:14px;padding:14px}.card b{display:block;color:var(--g);font-size:20px;margin-top:4px}.wide{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);border-radius:9px;padding:10px 12px;background:#151c17;color:#fff;font-weight:900;cursor:pointer;text-decoration:none}.btn.primary{background:var(--g);color:#07100a;border-color:var(--g)}.btn.red{border-color:#663737;color:#ffb0b0;background:#251515}.btn.gold{border-color:#66552a;color:var(--gold);background:#241e11}.mut{color:var(--mut);font-size:12px;line-height:1.5;word-break:break-word}.list{display:grid;gap:8px;margin-top:10px}.row{border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;justify-content:space-between;gap:10px;align-items:center}.status{padding:9px;border-radius:9px;background:#0d160f;border:1px solid #35513d;color:var(--g);font-size:12px;margin:10px 0}.status.err{color:var(--red);border-color:#663737;background:#211313}input[type=file]{max-width:100%}@media(max-width:760px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.row{display:block}.row .actions{margin-top:8px}}
+</style>
+<script src="supabase-config.js"></script>
+<script src="supabase-sync.js"></script>
+<script src="f1-acquisition-core.js"></script>
+<script src="f1-acquisition-data.js"></script>
+<script src="f1-desktop-data.js?v=20261006-offline1"></script>
+</head>
+<body>
+<main class="wrap">
+<div class="ey">F1 IMMOBILIARE DESKTOP · OFFLINE-FIRST</div>
+<h1>DATI E BACKUP</h1>
+<p><a href="crm.html">← Torna al CRM</a> · <a href="oggi.html">Centrale operativa</a></p>
+<div id="network" class="status">Verifica modalità…</div>
+<section class="grid">
+  <div class="card"><span class="mut">CONTATTI LOCALI</span><b id="contacts">—</b></div>
+  <div class="card"><span class="mut">NOTE LOCALI</span><b id="notes">—</b></div>
+  <div class="card"><span class="mut">DIMENSIONE DATABASE</span><b id="dbSize">—</b></div>
+  <div class="card wide"><span class="mut">DATABASE SQLITE</span><div id="dbPath" class="mut">—</div></div>
+  <div class="card wide"><span class="mut">CARTELLA BACKUP</span><div id="backupPath" class="mut">—</div><div class="mut">Backup automatico: ogni giorno alle 21:00, ora locale.</div></div>
+  <div class="card wide"><span class="mut">ULTIMO BACKUP</span><div id="lastBackup" class="mut">—</div></div>
+</section>
+
+<h2>Backup e copie</h2>
+<div class="actions">
+  <button class="btn primary" id="backupNow">CREA BACKUP ADESSO</button>
+  <button class="btn" id="openBackup">APRI CARTELLA BACKUP</button>
+  <button class="btn" id="secondary">CONFIGURA SECONDA COPIA</button>
+  <button class="btn" id="exportJson">ESPORTA JSON</button>
+  <button class="btn" id="exportCsv">ESPORTA CSV</button>
+</div>
+<div id="msg" class="status" hidden></div>
+<div id="backups" class="list"></div>
+
+<h2>Importa dati</h2>
+<div class="card">
+  <div class="mut">Importa un'esportazione JSON F1. I record vengono uniti per ID senza cancellare il database esistente.</div>
+  <p><input id="importFile" type="file" accept=".json,application/json"></p>
+  <button class="btn" id="importBtn">IMPORTA JSON</button>
+</div>
+
+<h2>Cestino contatti</h2>
+<div id="trash" class="list"><div class="mut">Caricamento…</div></div>
+
+<h2>Zona pericolosa</h2>
+<div class="card">
+  <p class="mut">L'eliminazione completa crea prima un backup di sicurezza e non cancella i backup esistenti.</p>
+  <div class="actions">
+    <button class="btn red" id="deleteAll">ELIMINA TUTTI I DATI LOCALI</button>
+    <button class="btn red" id="deleteBackups">ELIMINA BACKUP</button>
+  </div>
+</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const api=()=>window.F1AcquisitionData;
+const invoke=(name,args)=>window.F1DesktopData.invoke(name,args||{});
+function human(n){n=Number(n)||0;if(n<1024)return n+' B';if(n<1048576)return(n/1024).toFixed(1)+' KB';return(n/1048576).toFixed(1)+' MB'}
+function message(text,err=false){const m=$('msg');m.hidden=false;m.textContent=text;m.className='status'+(err?' err':'')}
+function download(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)}
+function network(){const on=navigator.onLine;$('network').textContent=on?'ONLINE · il CRM continua comunque a usare SQLite locale':'OFFLINE · CRM E NOTE OPERATIVI SU SQLITE LOCALE';$('network').className='status'+(on?'':'')}
+addEventListener('online',network);addEventListener('offline',network);
+
+async function refresh(){
+  await window.F1DesktopData.ready();
+  const s=await invoke('desktop_status');
+  $('contacts').textContent=s.contacts;$('notes').textContent=s.notes;$('dbSize').textContent=human(s.database_size);
+  $('dbPath').textContent=s.database_path;$('backupPath').textContent=s.backup_path;$('lastBackup').textContent=s.latest_backup||'Nessun backup ancora creato';
+  await renderBackups();await renderTrash();network();
+}
+async function renderBackups(){
+  const rows=await invoke('list_backups'),box=$('backups');
+  box.innerHTML=rows.length?'':'<div class="mut">Nessun backup disponibile.</div>';
+  for(const b of rows.slice(0,45)){
+    const el=document.createElement('div');el.className='row';
+    el.innerHTML='<div><b>'+b.name+'</b><div class="mut">'+human(b.size)+'</div></div><div class="actions"><button class="btn gold">RIPRISTINA</button></div>';
+    el.querySelector('button').onclick=async()=>{if(!confirm('Ripristinare '+b.name+'? Verrà creato prima un backup dello stato attuale.'))return;try{await window.F1DesktopData.close();await invoke('restore_backup',{backupPath:b.path});location.reload()}catch(e){message(String(e),true)}};
+    box.appendChild(el);
+  }
+}
+async function renderTrash(){
+  const rows=await api().pullDeletedLeads(),box=$('trash');
+  box.innerHTML=rows.length?'':'<div class="mut">Cestino vuoto.</div>';
+  for(const l of rows){
+    const el=document.createElement('div');el.className='row';
+    const name=[l.nome,l.cognome].filter(Boolean).join(' ')||l.azienda||l.telefono||l.lead_id;
+    el.innerHTML='<div><b>'+name.replace(/[&<>]/g,'')+'</b><div class="mut">'+[l.comune,l.telefono,l.email].filter(Boolean).join(' · ')+'</div></div><div class="actions"><button class="btn primary" data-r>RIPRISTINA</button><button class="btn red" data-p>ELIMINA DEFINITIVAMENTE</button></div>';
+    el.querySelector('[data-r]').onclick=async()=>{await api().restoreLead(l.lead_id);await refresh()};
+    el.querySelector('[data-p]').onclick=async()=>{const x=prompt('Scrivi ELIMINA DEFINITIVAMENTE per cancellare il contatto e le sue note.');if(x!=='ELIMINA DEFINITIVAMENTE')return;await api().purgeLead(l.lead_id);await refresh()};
+    box.appendChild(el);
+  }
+}
+$('backupNow').onclick=async()=>{try{message('Creazione backup…');const p=await invoke('create_backup');message('Backup creato: '+p);await refresh()}catch(e){message(String(e),true)}};
+$('openBackup').onclick=async()=>{try{await invoke('open_backup_dir')}catch(e){message(String(e),true)}};
+$('secondary').onclick=async()=>{const p=prompt('Inserisci il percorso completo della seconda cartella di backup. Lascia vuoto per disattivarla.');if(p===null)return;try{await invoke('set_secondary_backup_dir',{path:p});message(p?'Seconda copia configurata.':'Seconda copia disattivata.')}catch(e){message(String(e),true)}};
+$('exportJson').onclick=async()=>{const [leads,tasks,interactions]=await Promise.all([api().pullLeads(),api().pullTasks(),api().pullInteractions()]);download('F1_CRM_'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({leads,tasks,interactions},null,2),'application/json')};
+$('exportCsv').onclick=async()=>{const leads=await api().pullLeads(),h=['lead_id','nome','cognome','azienda','telefono','email','comune','via','civico','source_type','status','next_action','next_action_date','notes'];const rows=[h,...leads.map(x=>h.map(k=>x[k]??''))];download('F1_CRM_'+new Date().toISOString().slice(0,10)+'.csv',rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n'),'text/csv')};
+$('importBtn').onclick=async()=>{const f=$('importFile').files[0];if(!f)return message('Seleziona un file JSON.',true);try{const j=JSON.parse(await f.text()),leads=Array.isArray(j)?j:(j.leads||[]),tasks=j.tasks||[],notes=j.interactions||j.notes||[];for(const x of leads)await api().upsertLead(x);for(const x of tasks)await api().upsertTask(x);for(const x of notes){if(x.lead_id)try{await api().addInteraction(x)}catch(_){}}message('Importazione completata: '+leads.length+' contatti.');await refresh()}catch(e){message('Importazione non riuscita: '+e,true)}};
+$('deleteAll').onclick=async()=>{const x=prompt('ATTENZIONE: verranno cancellati CRM, contatti e note locali. I backup restano. Scrivi ELIMINA per continuare.');if(x!=='ELIMINA')return;try{const safety=await invoke('delete_all_local_data');message('Dati locali eliminati. Backup di sicurezza: '+safety);await refresh()}catch(e){message(String(e),true)}};
+$('deleteBackups').onclick=async()=>{const x=prompt('Scrivi ELIMINA BACKUP per cancellare tutte le copie di sicurezza.');if(x!=='ELIMINA BACKUP')return;try{const n=await invoke('delete_backups');message('Backup eliminati: '+n);await refresh()}catch(e){message(String(e),true)}};
+refresh().catch(e=>message('Errore inizializzazione desktop: '+e,true));
+</script>
+</body>
+</html>
