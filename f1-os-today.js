@@ -1,7 +1,19 @@
 (function(){
 'use strict';
 
-let DASH={tasks:[],leads:[],feed:{summary:{}},cfg:null,cloud:false,hotNews:[],sellerRadar:[]};
+let DASH={tasks:[],leads:[],feed:{summary:{}},cfg:null,cloud:false,hotNews:[],hotNewsCached:false,sellerRadar:[]};
+const HOT_NEWS_CACHE_KEY='f1HotNewsSnapshotV1';
+function hotNewsCacheRead(){
+  try{
+    const x=JSON.parse(localStorage.getItem(HOT_NEWS_CACHE_KEY)||'null');
+    return x&&Array.isArray(x.rows)?x:null;
+  }catch(_){return null}
+}
+function hotNewsCacheWrite(rows){
+  try{
+    localStorage.setItem(HOT_NEWS_CACHE_KEY,JSON.stringify({savedAt:new Date().toISOString(),rows:(rows||[]).slice(0,20)}));
+  }catch(_){}
+}
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const up=v=>String(v||'').trim().toUpperCase();
@@ -61,7 +73,12 @@ function hotPriority(a){
   return clean(a.interesse)?78:60;
 }
 async function loadHotNews(){
-  if(!DASH.cloud)return[];
+  if(!DASH.cloud){
+    const cached=hotNewsCacheRead();
+    DASH.hotNewsCached=!!cached;
+    return cached?.rows||[];
+  }
+  DASH.hotNewsCached=false;
   const companyFields='id,ragione_sociale,comune,telefono,cellulare,email,stato,interesse,note,ultima_interazione,prossima_azione,data_prossima_azione,processing_status,do_not_contact,updated_at';
   const interactionFields='azienda_id,interaction_type,direction,occurred_at,outcome,note,next_action,next_action_date';
   const [companies,interactions]=await Promise.all([
@@ -76,7 +93,9 @@ async function loadHotNews(){
     const s=up(l.status);
     return /INTERESSAT|APPUNTAMENTO|VALUTAZIONE|INCARICO|TRATTATIVA|RICHIAM|PROPOSTA/.test(s);
   }).map(l=>({...l,_kind:'LEAD',_priority:/APPUNTAMENTO|INCARICO|TRATTATIVA/.test(up(l.status))?96:84}));
-  return [...companyHot,...leadHot].sort((a,b)=>(b._priority||0)-(a._priority||0)||String(b.updated_at||b.last_seen||'').localeCompare(String(a.updated_at||a.last_seen||''))).slice(0,20);
+  const rows=[...companyHot,...leadHot].sort((a,b)=>(b._priority||0)-(a._priority||0)||String(b.updated_at||b.last_seen||'').localeCompare(String(a.updated_at||a.last_seen||''))).slice(0,20);
+  hotNewsCacheWrite(rows);
+  return rows;
 }
 function hotNewsLabel(x){
   if(x._kind==='LEAD')return [x.nome,x.cognome].filter(Boolean).join(' ')||x.azienda||'Lead caldo';
@@ -101,9 +120,13 @@ function renderHotNews(){
   const nav=document.querySelector('[data-hot-news-nav="1"] span');
   if(nav)nav.textContent=rows.length?'Notizie calde · '+rows.length:'Notizie calde';
   const box=$('hotNewsList');if(!box)return;
-  if(!DASH.cloud){box.innerHTML='<div class="empty">Accedi al Cloud F1 per visualizzare le notizie calde.</div>';return}
+  if(!DASH.cloud&&!rows.length){
+    box.innerHTML='<div class="empty"><b>SESSIONE F1 NON ATTIVA</b><br>Per leggere i dati CRM privati serve l’accesso F1.<div class="actions" style="justify-content:center;margin-top:10px"><a class="btn gold" href="setup-cloud.html?return=oggi.html%23hot-news">ACCEDI A F1</a></div></div>';
+    return;
+  }
   if(!rows.length){box.innerHTML='<div class="empty">Nessuna notizia calda aperta in questo momento.</div>';return}
-  box.innerHTML=rows.map(x=>{
+  const cacheNote=(!DASH.cloud&&DASH.hotNewsCached)?'<div class="notice" style="margin:0 0 10px"><b>ULTIMA COPIA LOCALE</b> · dati mostrati dall’ultimo accesso Cloud riuscito. <a href="setup-cloud.html?return=oggi.html%23hot-news">RICONNETTI F1</a></div>':'';
+  box.innerHTML=cacheNote+rows.map(x=>{
     const title=hotNewsLabel(x),status=hotNewsStatus(x),reason=hotNewsReason(x),next=hotNewsNext(x);
     const comune=x.comune||'',phone=x.telefono||x.cellulare||'',email=x.email||'';
     const urgent=(x._priority||0)>=90;
@@ -443,7 +466,7 @@ function renderAll(){renderHeader();renderHotNews();renderSellerRadar();renderSt
 async function load(){
   try{
     const data=await F1AcquisitionData.loadDashboardData();
-    DASH={...data,hotNews:[],sellerRadar:buildSellerRadarResults(data.feed?.tasks||[])};
+    DASH={...data,hotNews:[],hotNewsCached:false,sellerRadar:buildSellerRadarResults(data.feed?.tasks||[])};
     DASH.hotNews=await loadHotNews();
     renderAll();await renderRelationsDue();
   }catch(e){$('taskList').innerHTML=`<div class="empty">Command Center non inizializzato: ${esc(e?.message||e)}</div>`}
