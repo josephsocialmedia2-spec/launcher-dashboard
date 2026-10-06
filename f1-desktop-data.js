@@ -375,14 +375,32 @@ async function migrateTerritoryLocalStorage(){
   await setSetting('territory_local_storage_migration_v1','done');
 }
 
+async function cloudAll(table,filter='',order='updated_at.asc'){
+  const out=[],pageSize=1000;
+  for(let offset=0;;offset+=pageSize){
+    const query=[filter,'select=*',order?'order='+order:'','limit='+pageSize,'offset='+offset].filter(Boolean).join('&');
+    const rows=await CloudData.rest(table+'?'+query)||[];
+    out.push(...rows);
+    if(rows.length<pageSize)break;
+  }
+  return out;
+}
+
 async function migrateCloudIfAvailable(){
-  if(await setting('cloud_migration_v1'))return;
+  if(await setting('cloud_migration_v2'))return;
   if(!CloudData?.cloudReady?.())return;
   try{
-    const [leads,tasks,notes]=await Promise.all([CloudData.pullLeads(),CloudData.pullTasks(),CloudData.pullInteractions()]);
-    for(const x of leads||[])await upsertLeadInternal(x);
-    for(const x of tasks||[])await upsertTask(x);
-    for(const x of notes||[])if(x.lead_id&&await pullLead(x.lead_id,true))await addInteraction(x);
+    const [leads,tasks,notes]=await Promise.all([
+      cloudAll('leads','deleted=eq.false','updated_at.asc'),
+      cloudAll('tasks','','updated_at.asc'),
+      cloudAll('interactions','','occurred_at.asc')
+    ]);
+    for(const x of leads)await upsertLeadInternal(x);
+    for(const x of tasks){
+      if(!x.lead_id||await pullLead(x.lead_id,true))await upsertTask(x).catch(e=>console.warn('Task cloud non migrato',x.task_id||x.id,e));
+    }
+    for(const x of notes)if(x.lead_id&&await pullLead(x.lead_id,true))await addInteraction(x);
+    await setSetting('cloud_migration_v2',JSON.stringify({at:iso(),leads:leads.length,tasks:tasks.length,notes:notes.length}));
     await setSetting('cloud_migration_v1','done');
   }catch(e){
     console.warn('Migrazione Supabase rinviata; il desktop resta operativo offline.',e);
