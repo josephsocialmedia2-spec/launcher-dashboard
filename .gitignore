@@ -1,0 +1,16 @@
+# F1 Immobiliare Desktop - dati utente mai nel repository
+*.sqlite
+*.sqlite3
+*.db
+*.db-wal
+*.db-shm
+backup/
+backups/
+data-user/
+user-data/
+exports/
+src-tauri/target/
+node_modules/
+dist/
+.DS_Store
+Thumbs.db
