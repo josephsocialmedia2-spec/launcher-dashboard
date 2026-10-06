@@ -148,19 +148,60 @@ function francyWriteStore(v){localStorage.setItem(FRANCY_STORE_KEY,JSON.stringif
 function francyTimeToMin(h,m){return Number(h)*60+Number(m||0)}
 function francyFmtMin(n){n=Math.max(0,Math.min(1440,n));return francyPad(Math.floor(n/60)%24)+':'+francyPad(n%60)}
 function francyFreeFromWork(ranges,isRest){
-  if(isRest)return['LIBERA TUTTO IL GIORNO'];
+  const agencyStart=8*60,agencyEnd=20*60;
+  if(isRest)return[francyFmtMin(agencyStart)+'–'+francyFmtMin(agencyEnd)];
   if(!ranges.length)return[];
-  const sorted=ranges.slice().sort((a,b)=>a[0]-b[0]);
+  const clipped=ranges
+    .map(r=>[Math.max(agencyStart,r[0]),Math.min(agencyEnd,r[1])])
+    .filter(r=>r[1]>r[0])
+    .sort((a,b)=>a[0]-b[0]);
+  if(!clipped.length)return[francyFmtMin(agencyStart)+'–'+francyFmtMin(agencyEnd)];
   const merged=[];
-  for(const r of sorted){
+  for(const r of clipped){
     if(!merged.length||r[0]>merged[merged.length-1][1])merged.push(r.slice());
     else merged[merged.length-1][1]=Math.max(merged[merged.length-1][1],r[1]);
   }
   const out=[];
-  if(merged[0][0]>0)out.push('prima delle '+francyFmtMin(merged[0][0]));
+  if(merged[0][0]>agencyStart)out.push(francyFmtMin(agencyStart)+'–'+francyFmtMin(merged[0][0]));
   for(let i=0;i<merged.length-1;i++)if(merged[i][1]<merged[i+1][0])out.push(francyFmtMin(merged[i][1])+'–'+francyFmtMin(merged[i+1][0]));
-  if(merged[merged.length-1][1]<1440)out.push('dopo le '+francyFmtMin(merged[merged.length-1][1]));
+  if(merged[merged.length-1][1]<agencyEnd)out.push(francyFmtMin(merged[merged.length-1][1])+'–'+francyFmtMin(agencyEnd));
   return out;
+}
+function francyExtractRanges(segment){
+  let work=String(segment||'').replace(/\s+/g,' ').trim();
+  const ranges=[];
+  const add=(a,b)=>{
+    a=Number(a);b=Number(b);
+    if(Number.isFinite(a)&&Number.isFinite(b)&&b>a&&a>=0&&b<=24)ranges.push([a*60,b*60]);
+  };
+
+  // Formati espliciti: 8-13, 08:00-13:00, 8 alle 13.
+  work=work.replace(/\b([01]?\d|2[0-3])(?:[:.]([0-5]\d))?\s*(?:-|–|—|\/|alle|a)\s*([01]?\d|2[0-3])(?:[:.]([0-5]\d))?\b/g,(all,h1,m1,h2,m2)=>{
+    const a=francyTimeToMin(h1,m1||0),b=francyTimeToMin(h2,m2||0);
+    if(b>a)ranges.push([a,b]);
+    return ' ';
+  });
+
+  // Formato rapido usato da Francy: 8.13 = dalle 8 alle 13.
+  // Non interpreta 8.00 come intervallo: quello resta una singola ora.
+  work=work.replace(/\b([01]?\d|2[0-3])\.([01]?\d|2[0-3])\b/g,(all,h1,h2)=>{
+    const a=Number(h1),b=Number(h2);
+    if(h2!=='00'&&b>a){add(a,b);return ' '}
+    return all;
+  });
+
+  // Ore rimaste in coppia: "14.00 20.00" => 14:00–20:00.
+  const times=[];
+  const re=/\b([01]?\d|2[0-3])(?:[:.]([0-5]\d))?\b/g;
+  let m;
+  while((m=re.exec(work))){
+    const hour=Number(m[1]),minute=Number(m[2]||0);
+    times.push(francyTimeToMin(hour,minute));
+  }
+  for(let i=0;i+1<times.length;i+=2){
+    if(times[i+1]>times[i])ranges.push([times[i],times[i+1]]);
+  }
+  return ranges.sort((a,b)=>a[0]-b[0]);
 }
 function francyParseSchedule(text){
   const raw=String(text||'').trim(),norm=francyNorm(raw);
@@ -180,16 +221,12 @@ function francyParseSchedule(text){
     }
     const seg=norm.slice(pos+matched.length,end);
     const isRest=/\b(riposo|libera|libero|off|non lavoro|non lavora)\b/.test(seg);
-    const ranges=[];
-    const re=/(?:^|\s)([01]?\d|2[0-3])(?:[:.,]([0-5]\d))?\s*(?:-|–|—|\/|alle|a)\s*([01]?\d|2[0-3])(?:[:.,]([0-5]\d))?(?=\s|$|,|;)/g;
-    let m;
-    while((m=re.exec(seg))){
-      const a=francyTimeToMin(m[1],m[2]||0),b=francyTimeToMin(m[3],m[4]||0);
-      if(b>a)ranges.push([a,b]);
-    }
+    const ranges=isRest?[]:francyExtractRanges(seg);
     found.push({day:d.key,label:d.label,name:d.name,isRest,work:ranges,free:francyFreeFromWork(ranges,isRest)});
   }
   if(!found.length)throw new Error('Non riconosco giorni della settimana nel messaggio.');
+  const incomplete=found.filter(x=>!x.isRest&&!x.work.length);
+  if(incomplete.length)throw new Error('Non riesco a leggere l’orario di: '+incomplete.map(x=>x.name).join(', ')+'. Usa coppie come 8.00 13.00 oppure 8-13.');
   return found;
 }
 function renderFrancyCalendar(){
