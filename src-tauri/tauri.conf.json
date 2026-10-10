@@ -1,0 +1,53 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "F1 Immobiliare Desktop",
+  "version": "0.1.0",
+  "identifier": "it.f1immobiliare.desktop",
+  "build": {
+    "frontendDist": "../desktop-dist",
+    "beforeBuildCommand": "node scripts/prepare-desktop.mjs",
+    "beforeDevCommand": "node scripts/prepare-desktop.mjs"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "appDirectoriesOverride": "$LOCALDATA/F1Immobiliare",
+    "windows": [
+      {
+        "label": "main",
+        "title": "F1 Immobiliare",
+        "url": "oggi.html",
+        "width": 1440,
+        "height": 920,
+        "minWidth": 1024,
+        "minHeight": 700,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "nsis"
+    ],
+    "windows": {
+      "nsis": {
+        "installMode": "currentUser"
+      },
+      "webviewInstallMode": {
+        "type": "offlineInstaller",
+        "silent": true
+      }
+    }
+  },
+  "plugins": {
+    "sql": {
+      "preload": [
+        "sqlite:f1-crm.sqlite"
+      ]
+    }
+  }
+}

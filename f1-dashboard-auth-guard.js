@@ -25,6 +25,7 @@ async function applyRoleUi(){
 async function start(){
   reveal();
   if(!/\/ricerca-territoriale\.html$/i.test(location.pathname)){settled=true;return}
+  if(window.F1_DESKTOP){setLocal('DESKTOP_OFFLINE_FIRST');settled=true;return}
   if(!window.F1Sync?.configured?.()){setLocal('SUPABASE_NOT_CONFIGURED');settled=true;return}
   try{ok=await window.F1Sync.ensureSession()}catch(err){console.warn('F1 territory auth validation',err);setLocal('AUTH_UNAVAILABLE');settled=true;return}
   if(!ok){setLocal('NO_SESSION');settled=true;return}
