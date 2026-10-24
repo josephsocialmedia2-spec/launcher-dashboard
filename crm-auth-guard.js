@@ -1,6 +1,7 @@
 (()=>{
 'use strict';
 if(!/\/crm\.html$/i.test(location.pathname))return;
+if(window.F1_DESKTOP){window.F1CRMPerf={mark:()=>{},measure:()=>{},duration:()=>null,report:()=>[]};window.F1CRMAuthGuard={ready:()=>true,validated:()=>true,ensure:async()=>true,show:()=>{},loginUrl:''};return;}
 const Sync=window.F1Sync,Data=window.F1AcquisitionData;
 if(!Sync||!Data)return;
 const LOGIN='setup-cloud.html?return=crm.html',perfMarks=new Set();

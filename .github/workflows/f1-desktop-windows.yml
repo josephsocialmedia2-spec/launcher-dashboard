@@ -1,0 +1,88 @@
+name: F1 Desktop Windows
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - f1-desktop-offline
+    paths:
+      - "src-tauri/**"
+      - "f1-desktop-data.js"
+      - "f1-desktop-hub.js"
+      - "desktop-settings.html"
+      - "crm.html"
+      - "crm-unified-app.js"
+      - "crm-auth-guard.js"
+      - "oggi.html"
+      - "telefonate-oggi.html"
+      - "giro-acquisizione.html"
+      - "ricerca-territoriale.html"
+      - "f1-territory-local.js"
+      - "package.json"
+      - ".github/workflows/f1-desktop-windows.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: f1-desktop-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify-js:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check desktop adapter syntax
+        run: node --check f1-desktop-data.js && node --check f1-desktop-hub.js && node --check f1-territory-local.js
+      - name: Check modified CRM runtime syntax
+        run: node --check crm-unified-app.js && node --check crm-auth-guard.js && node --check f1-dashboard-auth-guard.js
+
+  build-windows:
+    needs: verify-js
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install JavaScript dependencies
+        run: npm install
+      - name: Prepare offline desktop assets
+        run: node scripts/prepare-desktop.mjs
+      - name: Rust compile check
+        run: cargo check --manifest-path src-tauri/Cargo.toml
+      - name: Build F1 Immobiliare Desktop
+        run: npm run desktop:build
+      - name: Smoke test silent Windows installation
+        shell: pwsh
+        run: |
+          $installer = Get-ChildItem "src-tauri/target/release/bundle/nsis/*.exe" | Select-Object -First 1
+          if (-not $installer) { throw "Installer NSIS non trovato" }
+          $proc = Start-Process -FilePath $installer.FullName -ArgumentList "/S" -Wait -PassThru
+          if ($proc.ExitCode -ne 0) { throw "Installazione silenziosa fallita: exit $($proc.ExitCode)" }
+          $candidates = @(
+            "$env:LOCALAPPDATA\F1 Immobiliare Desktop\f1-immobiliare-desktop.exe",
+            "$env:LOCALAPPDATA\Programs\F1 Immobiliare Desktop\f1-immobiliare-desktop.exe",
+            "$env:LOCALAPPDATA\F1Immobiliare\f1-immobiliare-desktop.exe"
+          )
+          $installed = $candidates | Where-Object { Test-Path $_ } | Select-Object -First 1
+          if (-not $installed) {
+            $installed = Get-ChildItem $env:LOCALAPPDATA -Filter "f1-immobiliare-desktop.exe" -File -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName
+          }
+          if (-not $installed) { throw "Installer terminato ma eseguibile installato non trovato" }
+          Write-Host "F1 Immobiliare Desktop installato correttamente in: $installed"
+          $selfTest = Start-Process -FilePath $installed -ArgumentList "--self-test" -Wait -PassThru
+          if ($selfTest.ExitCode -ne 0) { throw "Self-test SQLite/backup fallito: exit $($selfTest.ExitCode)" }
+          Write-Host "Self-test SQLite: contatto + nota + riapertura + backup = OK"
+      - name: Upload Windows installers
+        uses: actions/upload-artifact@v4
+        with:
+          name: F1-Immobiliare-Desktop-Windows
+          path: |
+            src-tauri/target/release/bundle/nsis/*.exe
+          if-no-files-found: error
