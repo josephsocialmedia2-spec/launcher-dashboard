@@ -1,0 +1,13 @@
+{
+  "name": "Acquisitore Pro",
+  "short_name": "Acquisitore",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f6fa",
+  "theme_color": "#102844",
+  "description": "Assistente operativo di acquisizione immobiliare",
+  "icons": [
+    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
