@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-11-03T11:00:50.645781+00:00",
+  "started_at": "2026-11-04T15:27:29.200979+00:00",
   "scanner_version": 4,
   "geography": {
     "center": "Susa",
@@ -13,7 +13,7 @@
       "km_from_susa": 0.0,
       "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=ss090&RicCro=1",
       "status": "OK",
-      "links": 3,
+      "links": 4,
       "new": 0,
       "pages_checked": 1,
       "http_status": 200
@@ -35,18 +35,15 @@
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 4,
-      "http_status": 200,
-      "warnings": [
-        "https://www.halleyweb.com/c001149/mc/mc_p_ricerca.php?servizio=: ConnectionError"
-      ]
+      "pages_checked": 5,
+      "http_status": 200
     },
     {
       "comune": "Gravere",
       "km_from_susa": 3.2,
       "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=grvr1245&RicCro=1",
       "status": "OK",
-      "links": 3,
+      "links": 4,
       "new": 0,
       "pages_checked": 1,
       "http_status": 200
@@ -122,12 +119,8 @@
       "status": "OK",
       "links": 0,
       "new": 0,
-      "pages_checked": 2,
-      "http_status": 200,
-      "warnings": [
-        "https://halleyweb.com/c001076/mc/mc_matri_gridev_messi.php?x=&servizio=&bck=: ConnectionError",
-        "https://www.halleyweb.com/c001076/mc/mc_gridev_messi.php?x=&servizio=&bck=: ConnectionError"
-      ]
+      "pages_checked": 4,
+      "http_status": 200
     },
     {
       "comune": "Moncenisio",
@@ -196,5 +189,5 @@
   "new_records": 0,
   "baseline_imported": 0,
   "errors": 0,
-  "finished_at": "2026-11-03T11:02:22.373318+00:00"
+  "finished_at": "2026-11-04T15:28:53.281526+00:00"
 }
