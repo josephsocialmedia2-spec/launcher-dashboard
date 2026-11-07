@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generated_at": "2026-11-07T06:38:53.565438+00:00",
+  "generated_at": "2026-11-07T13:34:52.252889+00:00",
   "pipeline": "F1_COMMON_APPROVAL_QUEUE",
   "crm_target": "Supabase public.approval_queue",
   "items": [
@@ -16,7 +16,7 @@
       "score": null,
       "source_url": "",
       "preview_url": "",
-      "created_at": "2026-11-07T06:38:53.504359+00:00",
+      "created_at": "2026-11-07T13:34:52.149160+00:00",
       "origin": "open-social-scheduler/publisher/content_analysis.json",
       "metadata": {
         "analysis_status": "",
