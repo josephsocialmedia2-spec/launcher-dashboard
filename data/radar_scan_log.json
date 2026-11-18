@@ -1,5 +1,5 @@
 {
-  "started_at": "2026-11-11T15:12:03.510378+00:00",
+  "started_at": "2026-11-18T16:28:41.044930+00:00",
   "scanner_version": 4,
   "geography": {
     "center": "Susa",
@@ -13,7 +13,7 @@
       "km_from_susa": 0.0,
       "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=ss090&RicCro=1",
       "status": "OK",
-      "links": 3,
+      "links": 5,
       "new": 0,
       "pages_checked": 1,
       "http_status": 200
@@ -46,7 +46,7 @@
       "km_from_susa": 3.2,
       "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=grvr1245&RicCro=1",
       "status": "OK",
-      "links": 7,
+      "links": 8,
       "new": 0,
       "pages_checked": 1,
       "http_status": 200
@@ -88,7 +88,7 @@
       "status": "OK",
       "links": 1,
       "new": 0,
-      "pages_checked": 1,
+      "pages_checked": 2,
       "http_status": 200
     },
     {
@@ -177,7 +177,7 @@
       "km_from_susa": 12.4,
       "url": "https://www.servizipubblicaamministrazione.it/servizi/saturnweb/Pubblicazioni.aspx?CE=snddr1352&RicCro=1",
       "status": "OK",
-      "links": 0,
+      "links": 2,
       "new": 0,
       "pages_checked": 1,
       "http_status": 200
@@ -196,5 +196,5 @@
   "new_records": 0,
   "baseline_imported": 0,
   "errors": 0,
-  "finished_at": "2026-11-11T15:13:37.122913+00:00"
+  "finished_at": "2026-11-18T16:30:17.943268+00:00"
 }
