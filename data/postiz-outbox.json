@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generated_at": "2026-11-25T16:53:10.221407+01:00",
+  "generated_at": "2026-11-26T16:33:48.239856+01:00",
   "status": "NOT_FOUND",
   "rule": "Non creare credenziali o nuove integrazioni social. Produrre una outbox finche l'installazione Postiz esistente non e tecnicamente mappata.",
   "drafts": [
